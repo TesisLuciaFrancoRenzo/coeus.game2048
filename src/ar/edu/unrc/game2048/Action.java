@@ -14,23 +14,23 @@ import ar.edu.unrc.tdlearning.perceptron.interfaces.IAction;
 public enum Action implements IAction {
 
     /**
-     *
+     * Arriba
      */
     up,
     /**
-     *
+     * Abajo
      */
     down,
     /**
-     *
+     * Izquierda
      */
     left,
     /**
-     *
+     * Derecha
      */
     right,
     /**
-     *
+     * Restablecer
      */
     reset
 }
