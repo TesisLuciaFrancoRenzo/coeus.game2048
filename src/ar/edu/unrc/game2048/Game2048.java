@@ -253,7 +253,6 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
                 }
                 MLData inputData = new BasicMLData(inputs);
                 MLData output = ((BasicNetwork) perceptronConfiguration.getNeuralNetwork()).compute(inputData);
-                //FIXME ACA ESTA CORREGIDO!
                 return new Prediction(perceptronConfiguration.translatePerceptronOutputToPrediction(output.getData(), reward), output.getData());
             }
         }
