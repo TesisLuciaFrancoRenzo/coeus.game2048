@@ -295,13 +295,13 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
 
     public void training(Game2048<NeuralNetworkClass> game, final PrintStream printStream, int lastSaveCounter, File randomPerceptronFile, File perceptronFile, int backupNumber, String filePath, SimpleDateFormat dateFormater, Date now, int zeroNumbers) throws Exception {
         File perceptronFileBackup;
-        for ( int i = 0; i < gamesToPlay; i++ ) {
-            learningAlgorithm.setAlpha(TDLambdaLearning.annealingLearningRate(getInitialAlpha(), i + getLastGamePlayedNumber(), getAlphaT()));
-            learningAlgorithm.solveAndTrain(game);
+        for ( int i = 1; i <= gamesToPlay; i++ ) {
+            //learningAlgorithm.setAlpha(TDLambdaLearning.annealingLearningRate(getInitialAlpha(), i + getLastGamePlayedNumber(), getAlphaT()));
+            learningAlgorithm.solveAndTrainOnce(game, i, gamesToPlay);
             //  learningAlgorithm = instanceOfTdLearninrgImplementation(this.getNeuralNetworkInterfaceFor2048().getPerceptronInterface());
 
             int percent = (int) (((i * 1d) / (gamesToPlay * 1d)) * 100d);
-            System.out.println("Juego número " + i + " (" + percent + "%)    puntaje = " + game.getScore() + "    ficha max = " + game.getMaxNumber() + "    turno alcanzado = " + game.getLastTurn() + "      current alpha = " + learningAlgorithm.getAlpha());
+            System.out.println("Juego número " + i + " (" + percent + "%)    puntaje = " + game.getScore() + "    ficha max = " + game.getMaxNumber() + "    turno alcanzado = " + game.getLastTurn());
             if ( printStream != null ) {
                 printStream.println(game.getScore() + "\t" + game.getMaxNumber());
             }
