@@ -42,8 +42,8 @@ public class Experiment_08 extends LearningExperiment<BasicNetwork> {
         experiment.setLambda(0.7);
         experiment.setGamesToPlay(40_000);
         experiment.setLastGamePlayedNumber(0); //recordar AJUSTAR ESTE VALOR
-        experiment.setInitialAlpha(0.1); //recomendado por sutton para 16 neuronas, ya que el valor ideal es 1/16 y la grafica queda bien con estos valores al llegar a un millon
-        experiment.setAlphaT(800_000);
+//        experiment.setInitialAlpha(0.1); //recomendado por sutton para 16 neuronas, ya que el valor ideal es 1/16 y la grafica queda bien con estos valores al llegar a un millon
+//        experiment.setAlphaT(800_000);
         experiment.setSaveEvery(500);
         experiment.setInitializePerceptronRandomized(true);
 
@@ -69,7 +69,7 @@ public class Experiment_08 extends LearningExperiment<BasicNetwork> {
 
     @Override
     public TDLambdaLearning instanceOfTdLearninrgImplementation(IPerceptronInterface perceptronInterface) {
-        return new TDLambdaLearningAfterstate(perceptronInterface, getAlpha(), getLambda(), true);
+        return new TDLambdaLearningAfterstate(perceptronInterface, getAlpha(), getLearningRateAdaptation(), getLambda(), true);
     }
 
     @Override

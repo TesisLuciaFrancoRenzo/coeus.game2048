@@ -8,6 +8,7 @@ package ar.edu.unrc.game2048.performanceandtraining.configurations;
 import ar.edu.unrc.game2048.Game2048;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IPerceptronInterface;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearning;
+import ar.edu.unrc.tdlearning.perceptron.training.ELearningRateAdaptation;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -37,10 +38,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
     public static final String _RANDOM = "_random";
 
     public static final String _TRAINED = "_trained";
-    private double alpha;
-    private double initialAlpha;
-    private int alphaT;
-    private Integer elegibilityTraceLenght = Integer.MAX_VALUE;
+    private double[] alpha;
     private String experimentName;
     private int gamesToPlay;
     private int gamesToPlayPerThreadForStatistics;
@@ -48,6 +46,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
     private double lambda;
     private int lastGamePlayedNumber = 0;
     private TDLambdaLearning learningAlgorithm;
+    private ELearningRateAdaptation learningRateAdaptation;
     private boolean logsActivated = false;
     private INeuralNetworkInterfaceFor2048<NeuralNetworkClass> neuralNetworkInterfaceFor2048;
     private String perceptronName;
@@ -73,57 +72,17 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
     /**
      * @return the alpha
      */
-    public double getAlpha() {
+    public double[] getAlpha() {
         return alpha;
     }
 
     /**
      * @param alpha the alpha to set
      */
-    public void setAlpha(double alpha) {
+    public void setAlpha(double[] alpha) {
         this.alpha = alpha;
     }
 
-    /**
-     * @return the initialAlpha
-     */
-    public double getInitialAlpha() {
-        return initialAlpha;
-    }
-
-    /**
-     * @param initialAlpha the initialAlpha to set
-     */
-    public void setInitialAlpha(double initialAlpha) {
-        this.initialAlpha = initialAlpha;
-    }
-
-    /**
-     * @return the alphaT
-     */
-    public int getAlphaT() {
-        return alphaT;
-    }
-
-    /**
-     * @param alphaT the alphaT to set
-     */
-    public void setAlphaT(int alphaT) {
-        this.alphaT = alphaT;
-    }
-
-//    /**
-//     * @return the elegibilityTraceLenght
-//     */
-//    public Integer getElegibilityTraceLenght() {
-//        return elegibilityTraceLenght;
-//    }
-//    /**
-//     * @param elegibilityTraceLenght the elegibilityTraceLenght to set
-//     */
-//    public void setElegibilityTraceLenght(Integer elegibilityTraceLenght) {
-//        this.elegibilityTraceLenght = elegibilityTraceLenght;
-//    }
     /**
      * @return the experimentName
      */
@@ -180,6 +139,20 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
      */
     public void setLastGamePlayedNumber(int lastGamePlayedNumber) {
         this.lastGamePlayedNumber = lastGamePlayedNumber;
+    }
+
+    /**
+     * @return the learningRateAdaptation
+     */
+    public ELearningRateAdaptation getLearningRateAdaptation() {
+        return learningRateAdaptation;
+    }
+
+    /**
+     * @param learningRateAdaptation the learningRateAdaptation to set
+     */
+    public void setLearningRateAdaptation(ELearningRateAdaptation learningRateAdaptation) {
+        this.learningRateAdaptation = learningRateAdaptation;
     }
 
     /**
@@ -295,10 +268,8 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
 
     public void training(Game2048<NeuralNetworkClass> game, final PrintStream printStream, int lastSaveCounter, File randomPerceptronFile, File perceptronFile, int backupNumber, String filePath, SimpleDateFormat dateFormater, Date now, int zeroNumbers) throws Exception {
         File perceptronFileBackup;
-        for ( int i = 1; i <= gamesToPlay; i++ ) {
-            //learningAlgorithm.setAlpha(TDLambdaLearning.annealingLearningRate(getInitialAlpha(), i + getLastGamePlayedNumber(), getAlphaT()));
+        for ( int i = 0; i < gamesToPlay; i++ ) { //FIXME menor o igual a gameToPlay? o menor? ver codigo de annealing
             learningAlgorithm.solveAndTrainOnce(game, i, gamesToPlay);
-            //  learningAlgorithm = instanceOfTdLearninrgImplementation(this.getNeuralNetworkInterfaceFor2048().getPerceptronInterface());
 
             int percent = (int) (((i * 1d) / (gamesToPlay * 1d)) * 100d);
             System.out.println("Juego número " + i + " (" + percent + "%)    puntaje = " + game.getScore() + "    ficha max = " + game.getMaxNumber() + "    turno alcanzado = " + game.getLastTurn());
@@ -415,9 +386,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
         if ( learningAlgorithm == null && !this.statisticsOnly ) {
             throw new IllegalArgumentException("learningAlgorithm no puede ser null");
         }
-        if ( alphaT <= 0 ) {
-            throw new IllegalArgumentException("alphaT no puede ser menor o igual a cero");
-        }
+
         SimpleDateFormat dateFormater = new SimpleDateFormat("dd-MM-yyyy_HH'h'mm'm'ss's'");
         Date now = new Date();
 

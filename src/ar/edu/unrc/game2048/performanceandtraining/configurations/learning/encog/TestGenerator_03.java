@@ -6,6 +6,7 @@
 package ar.edu.unrc.game2048.performanceandtraining.configurations.learning.encog;
 
 import ar.edu.unrc.game2048.performanceandtraining.configurations.LearningExperiment;
+import ar.edu.unrc.tdlearning.perceptron.training.ELearningRateAdaptation;
 import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
@@ -112,9 +113,7 @@ public class TestGenerator_03 {
         experiment.setRunStatisticsForBackups(runStatisticsForBackups);
         experiment.createLogs(createLogs);
         experiment.setLambda(lambda);
-        //       experiment.setElegibilityTraceLenght(TDLambdaLearning.calculateBestEligibilityTraceLenght(lambda));
-//        experiment.setElegibilityTraceLenght(Integer.MAX_VALUE);
-        experiment.setAlpha(alpha);
+        experiment.setLearningRateAdaptation(ELearningRateAdaptation.fixed);
         experiment.setGamesToPlay(gamesToPlay);
         experiment.setSaveEvery(saveEvery);
         experiment.setGamesToPlayPerThreadForStatistics(gamesToPlayPerThreadForStatistics);

@@ -12,6 +12,7 @@ import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.Bo
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IPerceptronInterface;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearning;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearningAfterstate;
+import ar.edu.unrc.tdlearning.perceptron.training.ELearningRateAdaptation;
 import java.io.File;
 import org.encog.neural.networks.BasicNetwork;
 
@@ -38,12 +39,12 @@ public class Experiment_01 extends LearningExperiment<BasicNetwork> {
 
 //        boolean statistics = true;
         boolean statistics = false;
-        //experiment.setAlpha(0.01);
+        //experiment.setAlpha();
+        experiment.setLearningRateAdaptation(ELearningRateAdaptation.fixed);
         experiment.setLambda(0.7);
         experiment.setGamesToPlay(20_000);//van 50.000
         experiment.setLastGamePlayedNumber(0); //recordar AJUSTAR ESTE VALOR
-        experiment.setInitialAlpha(0.2);
-        experiment.setAlphaT(5000);
+
         experiment.setSaveEvery(1_000);
         experiment.setInitializePerceptronRandomized(true);
 
@@ -83,7 +84,7 @@ public class Experiment_01 extends LearningExperiment<BasicNetwork> {
 
     @Override
     public TDLambdaLearning instanceOfTdLearninrgImplementation(IPerceptronInterface perceptronInterface) {
-        return new TDLambdaLearningAfterstate(perceptronInterface, getAlpha(), getLambda(), false);
+        return new TDLambdaLearningAfterstate(perceptronInterface, getAlpha(),getLearningRateAdaptation(), getLambda(), false);
     }
 
 }

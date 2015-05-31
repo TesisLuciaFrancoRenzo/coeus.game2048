@@ -41,8 +41,8 @@ public class Experiment_12 extends LearningExperiment<BasicNetwork> {
         experiment.setLambda(0.7);
         experiment.setGamesToPlay(20_000);
         experiment.setLastGamePlayedNumber(0); //recordar AJUSTAR ESTE VALOR
-        experiment.setInitialAlpha(0.03); //optimo para 32 neuronas (la curva se hacerca a 1/32 y se mantiene al llega a 1 milloon de partidos)
-        experiment.setAlphaT(100_000);
+//        experiment.setInitialAlpha(0.03); //optimo para 32 neuronas (la curva se hacerca a 1/32 y se mantiene al llega a 1 milloon de partidos)
+//        experiment.setAlphaT(100_000);
         experiment.setSaveEvery(500);
         experiment.setInitializePerceptronRandomized(true);
 
@@ -68,7 +68,7 @@ public class Experiment_12 extends LearningExperiment<BasicNetwork> {
 
     @Override
     public TDLambdaLearning instanceOfTdLearninrgImplementation(IPerceptronInterface perceptronInterface) {
-        return new TDLambdaLearningAfterstate(perceptronInterface, getAlpha(), getLambda(), true);
+        return new TDLambdaLearningAfterstate(perceptronInterface, getAlpha(), getLearningRateAdaptation(), getLambda(), true);
     }
 
     @Override
