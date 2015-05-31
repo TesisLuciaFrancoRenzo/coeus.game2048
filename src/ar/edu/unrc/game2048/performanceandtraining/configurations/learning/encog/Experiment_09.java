@@ -40,10 +40,10 @@ public class Experiment_09 extends LearningExperiment<BasicNetwork> {
 
         //    experiment.setAlpha(0.01);
         experiment.setLambda(0.7);
+        experiment.setGamma(1);
         experiment.setGamesToPlay(100_000);
         experiment.setLastGamePlayedNumber(100_000); //recordar AJUSTAR ESTE VALOR
-        
-        
+
         experiment.setSaveEvery(5_000);
         experiment.setInitializePerceptronRandomized(true);
 
@@ -69,7 +69,7 @@ public class Experiment_09 extends LearningExperiment<BasicNetwork> {
 
     @Override
     public TDLambdaLearning instanceOfTdLearninrgImplementation(IPerceptronInterface perceptronInterface) {
-        return new TDLambdaLearningAfterstate(perceptronInterface, getAlpha(),getLearningRateAdaptation(), getLambda(), false);
+        return new TDLambdaLearningAfterstate(perceptronInterface, getAlpha(), getLearningRateAdaptation(), getLambda(), false, getGamma());
     }
 
     @Override

@@ -39,6 +39,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
 
     public static final String _TRAINED = "_trained";
     private double[] alpha;
+    private double gamma;
     private String experimentName;
     private int gamesToPlay;
     private int gamesToPlayPerThreadForStatistics;
@@ -111,6 +112,20 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
      */
     public void setGamesToPlayPerThreadForStatistics(int gamesToPlayPerThreadForStatistics) {
         this.gamesToPlayPerThreadForStatistics = gamesToPlayPerThreadForStatistics;
+    }
+
+    /**
+     * @return the gamma
+     */
+    public double getGamma() {
+        return gamma;
+    }
+
+    /**
+     * @param gamma the gamma to set
+     */
+    public void setGamma(double gamma) {
+        this.gamma = gamma;
     }
 
     /**

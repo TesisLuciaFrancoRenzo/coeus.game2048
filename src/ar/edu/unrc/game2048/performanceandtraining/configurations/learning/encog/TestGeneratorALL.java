@@ -113,6 +113,7 @@ public class TestGeneratorALL {
         experiment.setRunStatisticsForBackups(runStatisticsForBackups);
         experiment.createLogs(createLogs);
         experiment.setLambda(lambda);
+        experiment.setGamma(1);
         experiment.setLearningRateAdaptation(ELearningRateAdaptation.fixed);
         experiment.setGamesToPlay(gamesToPlay);
         experiment.setSaveEvery(saveEvery);
