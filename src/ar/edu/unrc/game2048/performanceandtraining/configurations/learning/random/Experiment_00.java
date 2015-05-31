@@ -43,15 +43,15 @@ public class Experiment_00 extends LearningExperiment<BasicNetwork> {
     }
 
     @Override
-    public TDLambdaLearning instanceOfTdLearninrgImplementation(IPerceptronInterface perceptronInterface) {
-        return null;
-    }
-
-    @Override
     public void initialize() throws Exception {
         this.setExperimentName("Experiment_00");
         this.setPerceptronName(this.getExperimentName());
         this.setNeuralNetworkInterfaceFor2048(new RandomExperimentInterface(null));
+    }
+
+    @Override
+    public TDLambdaLearning instanceOfTdLearninrgImplementation(IPerceptronInterface perceptronInterface) {
+        return null;
     }
 
 }

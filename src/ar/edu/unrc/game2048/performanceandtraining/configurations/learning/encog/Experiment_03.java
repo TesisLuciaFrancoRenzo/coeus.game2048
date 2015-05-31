@@ -68,11 +68,6 @@ public class Experiment_03 extends LearningExperiment<BasicNetwork> {
     }
 
     @Override
-    public TDLambdaLearning instanceOfTdLearninrgImplementation(IPerceptronInterface perceptronInterface) {
-        return new TDLambdaLearningAfterstate(perceptronInterface, getAlpha(), getLearningRateAdaptation(), getLambda(), true, getGamma(), getMomentum());
-    }
-
-    @Override
     public void initialize() throws Exception {
         if ( this.getExperimentName() == null ) {
             this.setExperimentName("Experiment_03");
@@ -83,6 +78,11 @@ public class Experiment_03 extends LearningExperiment<BasicNetwork> {
         config.randomMoveProbability = 0.01;
         this.setNeuralNetworkInterfaceFor2048(new EncogExperimentInterface(config));
         this.setLearningAlgorithm(instanceOfTdLearninrgImplementation(this.getNeuralNetworkInterfaceFor2048().getPerceptronInterface()));
+    }
+
+    @Override
+    public TDLambdaLearning instanceOfTdLearninrgImplementation(IPerceptronInterface perceptronInterface) {
+        return new TDLambdaLearningAfterstate(perceptronInterface, getAlpha(), getLearningRateAdaptation(), getLambda(), true, getGamma(), getMomentum());
     }
 
 }

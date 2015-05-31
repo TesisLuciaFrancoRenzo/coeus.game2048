@@ -19,10 +19,16 @@ import org.junit.Test;
  */
 public class GameBoardTest {
 
+    /**
+     *
+     */
     @BeforeClass
     public static void setUpClass() {
     }
 
+    /**
+     *
+     */
     @AfterClass
     public static void tearDownClass() {
     }
@@ -34,6 +40,9 @@ public class GameBoardTest {
     private final Tile[] randomBoard;
     private final TileContainer tileContainer;
 
+    /**
+     *
+     */
     public GameBoardTest() {
         tileContainer = new TileContainer(17);
         Tile[] emptyB = {
@@ -54,11 +63,17 @@ public class GameBoardTest {
         nTupleConfiguration = new NTupleMaxTile();
     }
 
+    /**
+     *
+     */
     @Before
     public void setUp() {
         game = new Game2048(nTupleConfiguration, 2_048, false, 0, true);
     }
 
+    /**
+     *
+     */
     @After
     public void tearDown() {
     }

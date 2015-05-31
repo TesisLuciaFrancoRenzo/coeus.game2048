@@ -60,6 +60,19 @@ public class BinaryBinScore<NeuralNetworkClass> extends PerceptronConfiguration2
         assert currentNeuron == perceptron_input_quantity;
     }
 
+    public double toBinary(int reword, int outputNeuronIndex) {
+        String bits = Integer.toBinaryString(reword); //TODO optimizar esto! no pedir uno a uno! pedir todo junto y despues trabajr conesto
+        if ( outputNeuronIndex > bits.length() - 1 ) {
+            return activationFunctionMin;
+        } else {
+            if ( bits.charAt(outputNeuronIndex) == '0' ) {
+                return activationFunctionMin;
+            } else {
+                return activationFunctionMax;
+            }
+        }
+    }
+
     @Override
     public double translatePerceptronOutputToPrediction(double[] data, double partialReward) {
         StringBuilder stringBits = new StringBuilder();
@@ -82,19 +95,6 @@ public class BinaryBinScore<NeuralNetworkClass> extends PerceptronConfiguration2
             throw new IllegalArgumentException("neuronIndex range for output layer must be [0," + perceptron_output_quantity + "] but was " + outputNeuronIndex);
         }
         return toBinary(board.getPartialScore(), outputNeuronIndex);
-    }
-
-    public double toBinary(int reword, int outputNeuronIndex) {
-        String bits = Integer.toBinaryString(reword); //TODO optimizar esto! no pedir uno a uno! pedir todo junto y despues trabajr conesto
-        if ( outputNeuronIndex > bits.length() - 1 ) {
-            return activationFunctionMin;
-        } else {
-            if ( bits.charAt(outputNeuronIndex) == '0' ) {
-                return activationFunctionMin;
-            } else {
-                return activationFunctionMax;
-            }
-        }
     }
 
 }

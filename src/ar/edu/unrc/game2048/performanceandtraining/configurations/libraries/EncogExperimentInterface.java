@@ -25,16 +25,11 @@ import org.encog.util.obj.SerializeObject;
  */
 public class EncogExperimentInterface extends INeuralNetworkInterfaceFor2048<BasicNetwork> {
 
-    protected Function<Double, Double> activationFunctionOutput;
-    protected Function<Double, Double> derivatedActivationFunctionOutput;
 
     protected Function<Double, Double> activationFunctionHidden;
+    protected Function<Double, Double> activationFunctionOutput;
     protected Function<Double, Double> derivatedActivationFunctionHidden;
-
-    @Override
-    public String getLibName() {
-        return "Encog";
-    }
+    protected Function<Double, Double> derivatedActivationFunctionOutput;
 
     /**
      *
@@ -45,8 +40,30 @@ public class EncogExperimentInterface extends INeuralNetworkInterfaceFor2048<Bas
     }
 
     @Override
-    public IPerceptronInterface getPerceptronInterface() {
+    public void compareNeuralNetworks(File randomFile, File trainedFile) {
+        try {
+            BasicNetwork randomNN = (BasicNetwork) SerializeObject.load(randomFile);
+            BasicNetwork trainedNN = (BasicNetwork) SerializeObject.load(trainedFile);
+            if ( randomNN.equals(trainedNN) ) {
+                throw new Exception("No cambio el perceptron para nada!");
+            }
+        } catch ( Exception ex ) {
+            Logger.getLogger(EncogExperimentInterface.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
+    public void setConfigForTesting(BasicNetwork neuralNetwork) {
+        getPerceptronConfiguration().setNeuralNetwork(neuralNetwork);
+    }
+
+    @Override
+    public String getLibName() {
+        return "Encog";
+    }
+
+    @Override
+    public IPerceptronInterface getPerceptronInterface() {
+        
         if ( getPerceptronConfiguration().activationFunctionHiddenForEncog instanceof ActivationTANH ) {
             this.activationFunctionHidden = FunctionUtils.tanh;
             this.derivatedActivationFunctionHidden = FunctionUtils.derivatedTanh;
@@ -134,18 +151,6 @@ public class EncogExperimentInterface extends INeuralNetworkInterfaceFor2048<Bas
         return encogPerceptronInterface;
     }
 
-    @Override
-    public void loadOrCreatePerceptron(File perceptronFile, boolean randomizedIfNotExist) throws Exception {
-        if ( !perceptronFile.exists() ) {
-            //Si el archivo no existe, creamos un perceptron nuevo inicializado al azar
-            getPerceptronConfiguration().setNeuralNetwork(initializeEncogPerceptron(randomizedIfNotExist));
-            SerializeObject.save(perceptronFile, getPerceptronConfiguration().getNeuralNetwork());
-        } else {
-            //si el archivo existe, lo cargamos como perceptron entrenado al juego
-            getPerceptronConfiguration().setNeuralNetwork((BasicNetwork) SerializeObject.load(perceptronFile));
-        }
-    }
-
     public BasicNetwork initializeEncogPerceptron(boolean randomized) {
         if ( getPerceptronConfiguration().hiddenLayerQuantity < 1 ) {
             throw new IllegalArgumentException("hiddenLayers < 1");
@@ -164,25 +169,20 @@ public class EncogExperimentInterface extends INeuralNetworkInterfaceFor2048<Bas
     }
 
     @Override
-    public void compareNeuralNetworks(File randomFile, File trainedFile) {
-        try {
-            BasicNetwork randomNN = (BasicNetwork) SerializeObject.load(randomFile);
-            BasicNetwork trainedNN = (BasicNetwork) SerializeObject.load(trainedFile);
-            if ( randomNN.equals(trainedNN) ) {
-                throw new Exception("No cambio el perceptron para nada!");
-            }
-        } catch ( Exception ex ) {
-            Logger.getLogger(EncogExperimentInterface.class.getName()).log(Level.SEVERE, null, ex);
+    public void loadOrCreatePerceptron(File perceptronFile, boolean randomizedIfNotExist) throws Exception {
+        if ( !perceptronFile.exists() ) {
+            //Si el archivo no existe, creamos un perceptron nuevo inicializado al azar
+            getPerceptronConfiguration().setNeuralNetwork(initializeEncogPerceptron(randomizedIfNotExist));
+            SerializeObject.save(perceptronFile, getPerceptronConfiguration().getNeuralNetwork());
+        } else {
+            //si el archivo existe, lo cargamos como perceptron entrenado al juego
+            getPerceptronConfiguration().setNeuralNetwork((BasicNetwork) SerializeObject.load(perceptronFile));
         }
     }
 
     @Override
     public void savePerceptron(File perceptronFile) throws Exception {
         SerializeObject.save(perceptronFile, getPerceptronConfiguration().getNeuralNetwork());
-    }
-
-    public void setConfigForTesting(BasicNetwork neuralNetwork) {
-        getPerceptronConfiguration().setNeuralNetwork(neuralNetwork);
     }
 
 }

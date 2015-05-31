@@ -28,22 +28,29 @@ import java.util.stream.IntStream;
  * @param <NeuralNetworkClass>
  */
 public abstract class StatisticExperiment<NeuralNetworkClass> {
+    private Date dateForFileName;
 
     private String experimentName;
 
     private int gamesToPlay;
+    private TDLambdaLearning learningMethod;
     private String perceptronName;
     private int simulations;
-    private Date dateForFileName;
-    private TDLambdaLearning learningMethod;
+    private List<Double> tileStatistics;
 
     private int tileToWin;
     protected LearningExperiment<NeuralNetworkClass> learningExperiment;
 
-    private List<Double> tileStatistics;
 
     public StatisticExperiment(LearningExperiment<NeuralNetworkClass> learningExperiment) {
         this.learningExperiment = learningExperiment;
+    }
+
+    /**
+     * @param gamesToPlay the gamesToPlay to set
+     */
+    public void setGamesToPlayPerThread(int gamesToPlay) {
+        this.gamesToPlay = gamesToPlay;
     }
 
     /**
@@ -112,13 +119,6 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
      */
     protected int getGamesToPlay() {
         return gamesToPlay;
-    }
-
-    /**
-     * @param gamesToPlay the gamesToPlay to set
-     */
-    public void setGamesToPlayPerThread(int gamesToPlay) {
-        this.gamesToPlay = gamesToPlay;
     }
 
     /**

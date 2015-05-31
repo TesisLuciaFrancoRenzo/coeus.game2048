@@ -19,10 +19,10 @@ import org.encog.util.arrayutil.NormalizedField;
  * @param <NeuralNetworkClass>
  */
 public class BinaryScore<NeuralNetworkClass> extends PerceptronConfiguration2048<NeuralNetworkClass> {
+    static final int binaryLenght = 4; //alcanza para escribir el 2048
 
     public int maxScore;
     public int minScore;
-    final static int binaryLenght = 4; //alcanza para escribir el 2048
 
     public BinaryScore() {
 

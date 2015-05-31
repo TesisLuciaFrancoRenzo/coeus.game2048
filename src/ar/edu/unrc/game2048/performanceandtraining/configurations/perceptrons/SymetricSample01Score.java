@@ -18,16 +18,16 @@ import org.encog.util.arrayutil.NormalizedField;
  * @param <NeuralNetworkClass>
  */
 public class SymetricSample01Score<NeuralNetworkClass> extends PerceptronConfiguration2048<NeuralNetworkClass> {
+    public double maxCode2x3;
 
     public int maxCodeLines;
+    public int maxScore;
+
+    public double minCode2x3;
     public int minCodeLines;
 
-    public double maxCode2x3;
-    public double minCode2x3;
-    private final NormalizedField normInput2x3;
-
-    public int maxScore;
     public int minScore;
+    private final NormalizedField normInput2x3;
 
     public SymetricSample01Score() {
         maxCodeLines = 11_111_111; //2048 max
@@ -54,56 +54,56 @@ public class SymetricSample01Score<NeuralNetworkClass> extends PerceptronConfigu
     }
 
     @Override
-    public double translatePerceptronOutputToPrediction(double[] data, double partialReward) {
-        assert data[0] != Double.NaN;
-        return Math.round(normOutput.deNormalize(data[0])) + partialReward;
-    }
-
-    @Override
     public void calculateNormalizedPerceptronInput(GameBoard<NeuralNetworkClass> board, List<Double> normalizedPerceptronInput) {
         //ultimas 2 columnas
         normalizedPerceptronInput.set(0,
                 normInput.normalize(encryptTiles(
-                                board.tileAt(2, 0).getCode(),
-                                board.tileAt(2, 1).getCode(),
-                                board.tileAt(2, 2).getCode(),
-                                board.tileAt(2, 3).getCode()
-                        )
+                        board.tileAt(2, 0).getCode(),
+                        board.tileAt(2, 1).getCode(),
+                        board.tileAt(2, 2).getCode(),
+                        board.tileAt(2, 3).getCode()
+                )
                 )
         );
         normalizedPerceptronInput.set(1,
                 normInput.normalize(encryptTiles(
-                                board.tileAt(3, 0).getCode(),
-                                board.tileAt(3, 1).getCode(),
-                                board.tileAt(3, 2).getCode(),
-                                board.tileAt(3, 3).getCode()
-                        )
+                        board.tileAt(3, 0).getCode(),
+                        board.tileAt(3, 1).getCode(),
+                        board.tileAt(3, 2).getCode(),
+                        board.tileAt(3, 3).getCode()
+                )
                 )
         );
         //primeros 2 rectangulos de 2x3
         normalizedPerceptronInput.set(2,
                 normInput2x3.normalize(encryptTiles(
-                                board.tileAt(0, 0).getCode(),
-                                board.tileAt(0, 1).getCode(),
-                                board.tileAt(0, 2).getCode(),
-                                board.tileAt(1, 0).getCode(),
-                                board.tileAt(1, 1).getCode(),
-                                board.tileAt(1, 2).getCode()
-                        )
+                        board.tileAt(0, 0).getCode(),
+                        board.tileAt(0, 1).getCode(),
+                        board.tileAt(0, 2).getCode(),
+                        board.tileAt(1, 0).getCode(),
+                        board.tileAt(1, 1).getCode(),
+                        board.tileAt(1, 2).getCode()
+                )
                 )
         );
         normalizedPerceptronInput.set(3,
                 normInput2x3.normalize(encryptTiles(
-                                board.tileAt(1, 0).getCode(),
-                                board.tileAt(1, 1).getCode(),
-                                board.tileAt(1, 2).getCode(),
-                                board.tileAt(2, 0).getCode(),
-                                board.tileAt(2, 1).getCode(),
-                                board.tileAt(2, 2).getCode()
-                        )
+                        board.tileAt(1, 0).getCode(),
+                        board.tileAt(1, 1).getCode(),
+                        board.tileAt(1, 2).getCode(),
+                        board.tileAt(2, 0).getCode(),
+                        board.tileAt(2, 1).getCode(),
+                        board.tileAt(2, 2).getCode()
+                )
                 )
         );
+        
+    }
 
+    @Override
+    public double translatePerceptronOutputToPrediction(double[] data, double partialReward) {
+        assert data[0] != Double.NaN;
+        return Math.round(normOutput.deNormalize(data[0])) + partialReward;
     }
 
     @Override

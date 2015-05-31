@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 /**
  *
  * @author Franco
+ * @param <NeuralNetworkClass>
  */
 public abstract class VisualExperiment<NeuralNetworkClass> {
 
@@ -24,16 +25,33 @@ public abstract class VisualExperiment<NeuralNetworkClass> {
     private PerceptronConfiguration2048<NeuralNetworkClass> perceptronConfiguration;
     private String perceptronName;
     private int tileToWin;
+
+    /**
+     *
+     */
     protected LearningExperiment<NeuralNetworkClass> learningExperiment;
 
+    /**
+     *
+     * @param learningExperiment
+     */
     public VisualExperiment(LearningExperiment<NeuralNetworkClass> learningExperiment) {
         this.learningExperiment = learningExperiment;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getPerceptronFileName() {
         return perceptronName;
     }
 
+    /**
+     *
+     * @param experimentPath
+     * @param delayPerMove
+     */
     public void start(String experimentPath, int delayPerMove) {
         forceStop = false;
         File experimentPathFile = new File(experimentPath);
@@ -59,6 +77,9 @@ public abstract class VisualExperiment<NeuralNetworkClass> {
         }
     }
 
+    /**
+     *
+     */
     public void stop() {
         forceStop = true;
     }
@@ -153,6 +174,12 @@ public abstract class VisualExperiment<NeuralNetworkClass> {
      */
     protected abstract void initializeVisual() throws Exception;
 
+    /**
+     *
+     * @param experimentPath
+     * @param delayPerMove
+     * @throws Exception
+     */
     protected void run(String experimentPath, int delayPerMove) throws Exception {
         System.out.println("Starting " + this.getPerceptronName() + " Visual");
         boolean visible = false;

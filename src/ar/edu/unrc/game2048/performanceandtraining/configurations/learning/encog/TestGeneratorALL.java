@@ -17,6 +17,22 @@ import java.util.List;
  */
 public class TestGeneratorALL {
 
+    public static void configAndExcecute(LearningExperiment experiment, boolean statisticsOnly, boolean runStatisticForRandom, boolean runStatisticsForBackups, boolean createLogs, double lambda, double alpha, int gamesToPlay, int saveEvery, int gamesToPlayPerThreadForStatistics, int simulationsForStatistics, String filePath) {
+        experiment.setStatisticsOnly(statisticsOnly);
+        experiment.setRunStatisticForRandom(runStatisticForRandom);
+        experiment.setRunStatisticsForBackups(runStatisticsForBackups);
+        experiment.createLogs(createLogs);
+        experiment.setLambda(lambda);
+        experiment.setGamma(1);
+        experiment.setMomentum(0.5);
+        experiment.setLearningRateAdaptation(ELearningRateAdaptation.fixed);
+        experiment.setGamesToPlay(gamesToPlay);
+        experiment.setSaveEvery(saveEvery);
+        experiment.setGamesToPlayPerThreadForStatistics(gamesToPlayPerThreadForStatistics);
+        experiment.setSimulationsForStatistics(simulationsForStatistics);
+        experiment.start(filePath, 0);
+    }
+
     public static void main(String[] args) throws Exception {
         String filePath;
         if ( args.length == 0 ) {
@@ -105,21 +121,5 @@ public class TestGeneratorALL {
                 configAndExcecute(experiment, statisticsOnly, runStatisticForRandom, runStatisticsForBackups, createLogs, lambda, alpha, gamesToPlay, saveEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, filePath);
             });
         });
-    }
-
-    public static void configAndExcecute(LearningExperiment experiment, boolean statisticsOnly, boolean runStatisticForRandom, boolean runStatisticsForBackups, boolean createLogs, double lambda, double alpha, int gamesToPlay, int saveEvery, int gamesToPlayPerThreadForStatistics, int simulationsForStatistics, String filePath) {
-        experiment.setStatisticsOnly(statisticsOnly);
-        experiment.setRunStatisticForRandom(runStatisticForRandom);
-        experiment.setRunStatisticsForBackups(runStatisticsForBackups);
-        experiment.createLogs(createLogs);
-        experiment.setLambda(lambda);
-        experiment.setGamma(1);
-        experiment.setMomentum(0.5);
-        experiment.setLearningRateAdaptation(ELearningRateAdaptation.fixed);
-        experiment.setGamesToPlay(gamesToPlay);
-        experiment.setSaveEvery(saveEvery);
-        experiment.setGamesToPlayPerThreadForStatistics(gamesToPlayPerThreadForStatistics);
-        experiment.setSimulationsForStatistics(simulationsForStatistics);
-        experiment.start(filePath, 0);
     }
 }

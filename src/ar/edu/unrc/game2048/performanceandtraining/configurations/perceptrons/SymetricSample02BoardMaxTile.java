@@ -18,14 +18,14 @@ import org.encog.util.arrayutil.NormalizedField;
  * @param <NeuralNetworkClass>
  */
 public class SymetricSample02BoardMaxTile<NeuralNetworkClass> extends PerceptronConfiguration2048<NeuralNetworkClass> {
+    public double maxCode2x3;
 
     public int maxCodeLines;
-    public int minCodeLines;
+    public int maxCodedBoardnumber;
 
-    public double maxCode2x3;
     public double minCode2x3;
 
-    public int maxCodedBoardnumber;
+    public int minCodeLines;
     public int minCodedBoardnumber;
 
     private final NormalizedField normInput2x3;

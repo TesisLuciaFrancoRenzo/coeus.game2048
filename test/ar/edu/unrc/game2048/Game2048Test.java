@@ -23,19 +23,19 @@ import org.junit.Test;
  */
 public class Game2048Test {
 
-    private Game2048 game;
-    private final TileContainer tileContainer;
-
-    public Game2048Test() {
-        tileContainer = new TileContainer(17);
-    }
-
     @BeforeClass
     public static void setUpClass() {
     }
 
     @AfterClass
     public static void tearDownClass() {
+    }
+
+    private Game2048 game;
+    private final TileContainer tileContainer;
+
+    public Game2048Test() {
+        tileContainer = new TileContainer(17);
     }
 
     @Before
@@ -156,5 +156,6 @@ public class Game2048Test {
         state2 = game.computeAfterState(board, Action.left);
         Assert.assertNotSame(state1, state2);
     }
+
 
 }

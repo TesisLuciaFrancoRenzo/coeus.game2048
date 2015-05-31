@@ -19,17 +19,17 @@ import org.encog.util.arrayutil.NormalizedField;
  * @param <NeuralNetworkClass>
  */
 public class FullNTupleMaxTile<NeuralNetworkClass> extends PerceptronConfiguration2048<NeuralNetworkClass> {
+    public int maxCodedBoardOutputnumber;
 
     public int maxCodedBoardnumber = 11_111_111; //2048 max
     public int maxCodedNumber = 1;
-    public int minCodedNumber = 0;
-    public int minCodedBoardnumber = 0;
-    public int maxCodedBoardOutputnumber;
-    public int minCodedBoardOutputnumber;
-    private final NormalizedField normInputYTBoard;
-    private final NormalizedField normInputSimpleBoard;
     public int maxCodedSimpleBoardnumber;
+    public int minCodedBoardOutputnumber;
+    public int minCodedBoardnumber = 0;
+    public int minCodedNumber = 0;
     public int minCodedSimpleBoardnumber;
+    private final NormalizedField normInputSimpleBoard;
+    private final NormalizedField normInputYTBoard;
 
     public FullNTupleMaxTile() {
         perceptron_hidden_quantity = 25;
@@ -338,10 +338,6 @@ public class FullNTupleMaxTile<NeuralNetworkClass> extends PerceptronConfigurati
         return 0;
     }
 
-    private double encryptSimpleBoardTile(GameBoard board, int boardTileCode) {
-        return boardTileCode / (board.getMaxTileNumberCode() * 1d);
-    }
-
 //    @Override
 //    public double translateThisFinalStateToNormalizedPerceptronOutput(GameBoard<NeuralNetworkClass> board, int neuronIndex) {
 //        //TODO testear esto cuando lo hagamos abstracto
@@ -362,6 +358,10 @@ public class FullNTupleMaxTile<NeuralNetworkClass> extends PerceptronConfigurati
      */
     private int encryptNTupleTiles(int tileCode1, int tileCode2, int tileCode3, int tileCode4) {
         return tileCode1 * 1_000_000 + tileCode2 * 10_000 + tileCode3 * 100 + tileCode4;
+    }
+
+    private double encryptSimpleBoardTile(GameBoard board, int boardTileCode) {
+        return boardTileCode / (board.getMaxTileNumberCode() * 1d);
     }
 
 }

@@ -39,17 +39,17 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
 
     public static final String _TRAINED = "_trained";
     private double[] alpha;
-    private double gamma;
-    private double momentum;
     private String experimentName;
     private int gamesToPlay;
     private int gamesToPlayPerThreadForStatistics;
+    private double gamma;
     private boolean initializePerceptronRandomized = true;
     private double lambda;
     private int lastGamePlayedNumber = 0;
     private TDLambdaLearning learningAlgorithm;
     private ELearningRateAdaptation learningRateAdaptation;
     private boolean logsActivated = false;
+    private double momentum;
     private INeuralNetworkInterfaceFor2048<NeuralNetworkClass> neuralNetworkInterfaceFor2048;
     private String perceptronName;
     private boolean runStatisticForRandom = false;
@@ -127,6 +127,10 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
      */
     public void setGamma(double gamma) {
         this.gamma = gamma;
+    }
+
+    public void setInitializePerceptronRandomized(boolean randomized) {
+        initializePerceptronRandomized = randomized;
     }
 
     /**
@@ -223,10 +227,6 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
      * @throws Exception
      */
     public abstract void initialize() throws Exception;
-
-    public void setInitializePerceptronRandomized(boolean randomized) {
-        initializePerceptronRandomized = randomized;
-    }
 
     public abstract TDLambdaLearning instanceOfTdLearninrgImplementation(IPerceptronInterface perceptronInterface);
 

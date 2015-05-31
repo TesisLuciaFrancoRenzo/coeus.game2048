@@ -21,8 +21,8 @@ public class BoardScore<NeuralNetworkClass> extends PerceptronConfiguration2048<
 
     public int maxCodedBoardnumber;
     public int maxScore;
-    public int minScore;
     public int minCodedBoardnumber;
+    public int minScore;
 
     public BoardScore() {
         maxCodedBoardnumber = 11; //2048 como maximo
@@ -42,12 +42,6 @@ public class BoardScore<NeuralNetworkClass> extends PerceptronConfiguration2048<
                 null, maxCodedBoardnumber, minCodedBoardnumber, activationFunctionMax, activationFunctionMin);
         normOutput = new NormalizedField(NormalizationAction.Normalize,
                 null, maxScore, minScore, activationFunctionMax, activationFunctionMin);
-    }
-
-    @Override
-    public double translatePerceptronOutputToPrediction(double[] data, double partialReward) {
-        assert data[0] != Double.NaN;
-        return Math.round(normOutput.deNormalize(data[0])) + partialReward;
     }
 
     @Override
@@ -104,6 +98,12 @@ public class BoardScore<NeuralNetworkClass> extends PerceptronConfiguration2048<
         normalizedPerceptronInput.set(15,
                 normInput.normalize(board.tileAt(3, 3).getCode())
         );
+    }
+
+    @Override
+    public double translatePerceptronOutputToPrediction(double[] data, double partialReward) {
+        assert data[0] != Double.NaN;
+        return Math.round(normOutput.deNormalize(data[0])) + partialReward;
     }
 
     @Override

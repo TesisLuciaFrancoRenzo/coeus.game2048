@@ -95,7 +95,17 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
     }
     private GameBoard<NeuralNetworkClass> board;
     private final int delayPerMove;
+    /**
+     * para optimizaciones y no tener que recalcular afterstates luego de llamar
+     * {@code listAllPossibleActions}
+     */
+    private ArrayList<GameBoard> futurePossibleBoards;
     private final JFrame gameFrame;
+    /**
+     * para optimizaciones y no tener que recalcular afterstates luego de llamar
+     * {@code listAllPossibleActions}
+     */
+    private GameBoard<NeuralNetworkClass> lastInitialStateForPossibleActions;
     private int maxNumber = 0;
     private int maxNumberCode = 0;
     private boolean myLoose = false;
@@ -369,16 +379,6 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
         return board;
     }
 
-    /**
-     * para optimizaciones y no tener que recalcular afterstates luego de llamar
-     * {@code listAllPossibleActions}
-     */
-    private ArrayList<GameBoard> futurePossibleBoards;
-    /**
-     * para optimizaciones y no tener que recalcular afterstates luego de llamar
-     * {@code listAllPossibleActions}
-     */
-    private GameBoard<NeuralNetworkClass> lastInitialStateForPossibleActions;
 
     @Override
     public ArrayList<IAction> listAllPossibleActions(IState initialState) {

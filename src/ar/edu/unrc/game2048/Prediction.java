@@ -13,6 +13,9 @@ import ar.edu.unrc.tdlearning.perceptron.interfaces.IPrediction;
  */
 public class Prediction implements IPrediction {
 
+    /**
+     *
+     */
     protected final double[] perceptronOutput;
 
     /**

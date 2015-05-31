@@ -20,10 +20,19 @@ import java.util.Objects;
  */
 public class GameBoard<NeuralNetworkClass> implements IState {
 
-    public static final int tileNumber = 4 * 4;
 
     public static final int maxBoardTileCodedNumber = 17;
     public final static int minBoardTileCodedNumber = 0;
+    public static final int tileNumber = 4 * 4;
+
+    public static int calculateCustomHash(Tile t1, Tile t2, Tile t3, Tile t4) {
+        int result = 1;
+        result = 31 * result + t1.getGameValue();
+        result = 31 * result + t2.getGameValue();
+        result = 31 * result + t3.getGameValue();
+        result = 31 * result + t4.getGameValue();
+        return result;
+    }
 
     private List<Integer> availableSpaceList;
     private boolean canMove;
@@ -37,17 +46,6 @@ public class GameBoard<NeuralNetworkClass> implements IState {
     private int partialScore;
     private final TileContainer tileContainer;
     private Tile[] tiles;
-
-    public void addTile() {
-        List<Integer> list = this.availableSpace();
-        if ( !list.isEmpty() ) {
-            int index = (int) (random() * list.size()) % list.size();
-            Integer tilePos = list.get(index);
-            int value = random() < 0.9 ? 1 : 2;
-            tiles[tilePos] = this.tileContainer.getTile(value);
-        }
-        this.updateInternalState(true);
-    }
 
     /**
      *
@@ -74,10 +72,15 @@ public class GameBoard<NeuralNetworkClass> implements IState {
         }
     }
 
-    public void clearBoard(TileContainer tileContainer) {
-        for ( int i = 0; i < tileNumber; i++ ) {
-            tiles[i] = tileContainer.getTile(0);
+    public void addTile() {
+        List<Integer> list = this.availableSpace();
+        if ( !list.isEmpty() ) {
+            int index = (int) (random() * list.size()) % list.size();
+            Integer tilePos = list.get(index);
+            int value = random() < 0.9 ? 1 : 2;
+            tiles[tilePos] = this.tileContainer.getTile(value);
         }
+        this.updateInternalState(true);
     }
 
     public List<Integer> availableSpace() {
@@ -89,6 +92,12 @@ public class GameBoard<NeuralNetworkClass> implements IState {
      */
     public boolean canMove() {
         return canMove;
+    }
+
+    public void clearBoard(TileContainer tileContainer) {
+        for ( int i = 0; i < tileNumber; i++ ) {
+            tiles[i] = tileContainer.getTile(0);
+        }
     }
 
     @Override
@@ -157,17 +166,17 @@ public class GameBoard<NeuralNetworkClass> implements IState {
     }
 
     /**
-     * @return the maxTileNumberValue
-     */
-    public int getMaxTileNumberValue() {
-        return maxTileNumberValue;
-    }
-
-    /**
      * @return the maxTileNumberCode
      */
     public int getMaxTileNumberCode() {
         return maxTileNumberCode;
+    }
+
+    /**
+     * @return the maxTileNumberValue
+     */
+    public int getMaxTileNumberValue() {
+        return maxTileNumberValue;
     }
 
     /**
@@ -212,15 +221,6 @@ public class GameBoard<NeuralNetworkClass> implements IState {
         hash = 97 * hash + Arrays.deepHashCode(this.tiles);
         hash = 97 * hash + Objects.hashCode(this.availableSpaceList);
         return hash;
-    }
-
-    public static int calculateCustomHash(Tile t1, Tile t2, Tile t3, Tile t4) {
-        int result = 1;
-        result = 31 * result + t1.getGameValue();
-        result = 31 * result + t2.getGameValue();
-        result = 31 * result + t3.getGameValue();
-        result = 31 * result + t4.getGameValue();
-        return result;
     }
 
     /**
@@ -304,63 +304,63 @@ public class GameBoard<NeuralNetworkClass> implements IState {
         return normalizedPerceptronInput.get(neuronIndex);
     }
 
-    /**
+/**
      * actualizamos la traduccion del tablero como entrada del perceptron,
      * encriptado y normalizado. Tambien se actualiza el calculo de si este es
      * un tablero fianl o no.
      * <p>
      * @param updateNormalizedInputs
-     */
-    public void updateInternalState(boolean updateNormalizedInputs) {
-        availableSpaceList = calculateAvailableSpace();
-        isFull = availableSpaceList.isEmpty();
-        canMove = calculateCanMove();
-        calulateMaxTile();
-        if ( getGame().getPerceptronConfiguration() != null && updateNormalizedInputs ) {
-            assert this.getMaxTileNumberCode() != 0;
-            getGame().getPerceptronConfiguration().calculateNormalizedPerceptronInput(this, normalizedPerceptronInput);
-        }
+     */    public void updateInternalState(boolean updateNormalizedInputs) {
+         availableSpaceList = calculateAvailableSpace();
+         isFull = availableSpaceList.isEmpty();
+         canMove = calculateCanMove();
+         calulateMaxTile();
+         if ( getGame().getPerceptronConfiguration() != null && updateNormalizedInputs ) {
+             assert this.getMaxTileNumberCode() != 0;
+             getGame().getPerceptronConfiguration().calculateNormalizedPerceptronInput(this, normalizedPerceptronInput);
+         }
+         
+     }
 
+     private List<Integer> calculateAvailableSpace() {
+         final List<Integer> list = new ArrayList<>(16);
+         for ( int i = 0; i < tiles.length; i++ ) {
+             if ( tiles[i].isEmpty() ) {
+                 list.add(i);
+             }
+         }
+         return list;
     }
 
-    private List<Integer> calculateAvailableSpace() {
-        final List<Integer> list = new ArrayList<>(16);
-        for ( int i = 0; i < tiles.length; i++ ) {
-            if ( tiles[i].isEmpty() ) {
-                list.add(i);
+     private boolean calculateCanMove() {
+         if ( !this.isFull() ) {
+             return true;
+         }
+         for ( int x = 0; x < 4; x++ ) {
+             for ( int y = 0; y < 4; y++ ) {
+                 Tile t = this.tileAt(x, y);
+                 if ( (x < 3 && t.getCode() == this.tileAt(x + 1, y).getCode()) //TODO optimizar con equal??
+                         || ((y < 3) && t.getCode() == this.tileAt(x, y + 1).getCode()) ) {
+                     return true;
+                 }
+             }
+         }
+         return false;
+     }
+     
+     private void calulateMaxTile() {
+         this.maxTileNumberValue = 0;
+         this.maxTileNumberCode = 0;
+         for ( Tile t : tiles ) {
+             if ( t.getGameValue() > this.maxTileNumberValue ) {
+                 this.maxTileNumberValue = t.getGameValue();
+                 this.maxTileNumberCode = t.getCode();
             }
-        }
-        return list;
-    }
-
-    private boolean calculateCanMove() {
-        if ( !this.isFull() ) {
-            return true;
-        }
-        for ( int x = 0; x < 4; x++ ) {
-            for ( int y = 0; y < 4; y++ ) {
-                Tile t = this.tileAt(x, y);
-                if ( (x < 3 && t.getCode() == this.tileAt(x + 1, y).getCode()) //TODO optimizar con equal??
-                        || ((y < 3) && t.getCode() == this.tileAt(x, y + 1).getCode()) ) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    private void calulateMaxTile() {
-        this.maxTileNumberValue = 0;
-        this.maxTileNumberCode = 0;
-        for ( Tile t : tiles ) {
-            if ( t.getGameValue() > this.maxTileNumberValue ) {
-                this.maxTileNumberValue = t.getGameValue();
-                this.maxTileNumberCode = t.getCode();
-            }
-        }
-    }
-
-    void addPartialScore(int value) {
+         }
+     }
+     
+     void addPartialScore(int value) {
         partialScore += value;
     }
+
 }

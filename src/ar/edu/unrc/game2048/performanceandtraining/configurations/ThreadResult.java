@@ -18,8 +18,8 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ThreadResult {
 
     private Map<Integer, Integer> maxScoreAchieved = new ConcurrentHashMap<>();
-    private final List<Integer> tileStatistics;
     private int procesedGames;
+    private final List<Integer> tileStatistics;
     private int winGames = 0;
 
     /**
@@ -34,16 +34,12 @@ public class ThreadResult {
         maxScoreAchieved = new HashMap<>();
     }
 
-    public void addStatisticForTile(int tileCode) {
-        tileStatistics.set(tileCode, tileStatistics.get(tileCode) + 1);
-    }
-
-    public Integer getStatisticForTile(int tileCode) {
-        return tileStatistics.get(tileCode);
-    }
-
     public void addProcesedGames() {
         procesedGames++;
+    }
+
+    public void addStatisticForTile(int tileCode) {
+        tileStatistics.set(tileCode, tileStatistics.get(tileCode) + 1);
     }
 
     /**
@@ -72,6 +68,10 @@ public class ThreadResult {
      */
     public void setProcesedGames(int value) {
         procesedGames = value;
+    }
+
+    public Integer getStatisticForTile(int tileCode) {
+        return tileStatistics.get(tileCode);
     }
 
     /**

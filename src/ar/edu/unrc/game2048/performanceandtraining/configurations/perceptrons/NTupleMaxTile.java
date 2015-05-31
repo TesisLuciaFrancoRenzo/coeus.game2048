@@ -19,10 +19,10 @@ import org.encog.util.arrayutil.NormalizedField;
  */
 public class NTupleMaxTile<NeuralNetworkClass> extends PerceptronConfiguration2048<NeuralNetworkClass> {
 
-    public int maxCodedBoardnumber = 11_111_111; //2048 como maximo
-    public int minCodedBoardnumber = 0;
     public int maxCodedBoardOutputnumber;
+    public int maxCodedBoardnumber = 11_111_111; //2048 como maximo
     public int minCodedBoardOutputnumber;
+    public int minCodedBoardnumber = 0;
     public int minScore = 0;
 
     public NTupleMaxTile() {

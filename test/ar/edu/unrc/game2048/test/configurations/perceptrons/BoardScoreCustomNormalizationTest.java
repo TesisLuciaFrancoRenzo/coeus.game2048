@@ -28,18 +28,26 @@ import org.junit.Test;
  */
 public class BoardScoreCustomNormalizationTest {
 
+    @BeforeClass
+    public static void setUpClass() {
+    }
+
+    @AfterClass
+    public static void tearDownClass() {
+    }
+    public double maxCodedNumber;
+    public double minCodedNumber;
+
     private final ActivationTANH activationFunctionForEncog;
     private final double activationFunctionMax;
     private final double activationFunctionMin;
 
-    private Game2048 game;
 
     private BoardScoreCustomNormalization config;
+    private Game2048 game;
     private final NormalizedField normInputSimpleBoard;
     private final TileContainer tileContainer;
 
-    public double maxCodedNumber;
-    public double minCodedNumber;
 
     public BoardScoreCustomNormalizationTest() {
         tileContainer = new TileContainer(17);
@@ -50,15 +58,6 @@ public class BoardScoreCustomNormalizationTest {
         minCodedNumber = 0;
         normInputSimpleBoard = new NormalizedField(NormalizationAction.Normalize,
                 null, maxCodedNumber, minCodedNumber, activationFunctionMax, activationFunctionMin);
-    }
-
-    @BeforeClass
-    public static void setUpClass() {
-
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
     }
 
     @Before
@@ -113,4 +112,5 @@ public class BoardScoreCustomNormalizationTest {
     //
     // @Test
     // public void hello() {}
+    
 }

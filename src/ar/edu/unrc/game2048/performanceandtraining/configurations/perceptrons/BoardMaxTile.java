@@ -19,9 +19,19 @@ import org.encog.util.arrayutil.NormalizedField;
  */
 public class BoardMaxTile<NeuralNetworkClass> extends PerceptronConfiguration2048<NeuralNetworkClass> {
 
+    /**
+     *
+     */
     public int maxCodedBoardnumber;
+
+    /**
+     *
+     */
     public int minCodedBoardnumber;
 
+    /**
+     *
+     */
     public BoardMaxTile() {
         maxCodedBoardnumber = 11; //2048 como maximo
         minCodedBoardnumber = 0;
@@ -40,6 +50,11 @@ public class BoardMaxTile<NeuralNetworkClass> extends PerceptronConfiguration204
                 null, maxCodedBoardnumber, minCodedBoardnumber, activationFunctionMax, activationFunctionMin);
     }
 
+    /**
+     *
+     * @param board
+     * @param normalizedPerceptronInput
+     */
     @Override
     public void calculateNormalizedPerceptronInput(GameBoard<NeuralNetworkClass> board, List<Double> normalizedPerceptronInput) {
         // primera fila
@@ -102,6 +117,12 @@ public class BoardMaxTile<NeuralNetworkClass> extends PerceptronConfiguration204
         return Math.round(normOutput.deNormalize(data[0]));
     }
 
+    /**
+     *
+     * @param board
+     * @param outputNeuronIndex
+     * @return
+     */
     @Override
     public double translateRewordToNormalizedPerceptronOutputFrom(GameBoard<NeuralNetworkClass> board, int outputNeuronIndex) {
         return 0;

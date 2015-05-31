@@ -19,11 +19,11 @@ import org.encog.util.arrayutil.NormalizedField;
  */
 public class BoardMaxTileCustomNormalization<NeuralNetworkClass> extends PerceptronConfiguration2048<NeuralNetworkClass> {
 
-    public int maxEncriptedTile; //ver teoria
-    public int minEncriptedTile;
 
     public int maxCodedBoardOutputnumber;
+    public int maxEncriptedTile; //ver teoria
     public int minCodedBoardOutputnumber;
+    public int minEncriptedTile;
 
     public BoardMaxTileCustomNormalization() {
 
@@ -44,11 +44,6 @@ public class BoardMaxTileCustomNormalization<NeuralNetworkClass> extends Percept
                 null, maxEncriptedTile, minEncriptedTile, activationFunctionMax, activationFunctionMin);
         normOutput = new NormalizedField(NormalizationAction.Normalize,
                 null, maxCodedBoardOutputnumber, minCodedBoardOutputnumber, activationFunctionMax, activationFunctionMin);
-    }
-
-    private Double encryptTile(GameBoard<NeuralNetworkClass> board, int boardTileCode) {
-        assert board.getMaxTileNumberCode() != 0;
-        return boardTileCode / (board.getMaxTileNumberCode() * 1d);
     }
 
     @Override
@@ -117,7 +112,6 @@ public class BoardMaxTileCustomNormalization<NeuralNetworkClass> extends Percept
     public double translateRewordToNormalizedPerceptronOutputFrom(GameBoard<NeuralNetworkClass> board, int outputNeuronIndex) {
         return 0;
     }
-
 //    @Override
 //    public double translateThisFinalStateToNormalizedPerceptronOutput(GameBoard<NeuralNetworkClass> board, int neuronIndex) {
 //        //TODO testear esto cuando lo hagamos abstracto
@@ -126,4 +120,10 @@ public class BoardMaxTileCustomNormalization<NeuralNetworkClass> extends Percept
 //        }
 //        return normOutput.normalize(board.getMaxTileNumberCode());
 //    }
+    
+    private Double encryptTile(GameBoard<NeuralNetworkClass> board, int boardTileCode) {
+        assert board.getMaxTileNumberCode() != 0;
+        return boardTileCode / (board.getMaxTileNumberCode() * 1d);
+    }
+
 }

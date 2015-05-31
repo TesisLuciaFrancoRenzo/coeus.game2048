@@ -23,12 +23,20 @@ import org.junit.Test;
  */
 public class BoardMaxTileTest {
 
+    @BeforeClass
+    public static void setUpClass() {
+    }
+
+    @AfterClass
+    public static void tearDownClass() {
+    }
+    private Game2048<BasicNetwork> game;
+
     private final Tile[] initialBoard;
-    private final Tile[] randomBoard1;
     private BoardMaxTile<BasicNetwork> perceptronConfiguration;
+    private final Tile[] randomBoard1;
 
     private final TileContainer tileContainer;
-    private Game2048<BasicNetwork> game;
 
     public BoardMaxTileTest() {
         tileContainer = new TileContainer(17);
@@ -47,14 +55,6 @@ public class BoardMaxTileTest {
             tileContainer.getTile(4), tileContainer.getTile(0), tileContainer.getTile(1), tileContainer.getTile(4)
         };
         this.randomBoard1 = randomB;
-    }
-
-    @BeforeClass
-    public static void setUpClass() {
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
     }
 
     @Before
@@ -144,7 +144,7 @@ public class BoardMaxTileTest {
 
     /**
      * Test of translateThisFinalStateToNormalizedPerceptronOutput method, of class
- BoardMaxTile.
+     * BoardMaxTile.
      */
     @Test
     public void testTranslateThisFinalStateToPerceptronOutput() {
@@ -165,4 +165,5 @@ public class BoardMaxTileTest {
         assertEquals(normalization, board.translateThisFinalStateToPerceptronOutput(0), 0.0d);
 
     }
+
 }

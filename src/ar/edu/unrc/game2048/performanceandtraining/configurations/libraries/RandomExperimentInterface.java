@@ -40,10 +40,19 @@ public class RandomExperimentInterface extends INeuralNetworkInterfaceFor2048 {
         return tirada;
     }
 
+    /**
+     *
+     * @param perceptronConfiguration
+     */
     public RandomExperimentInterface(PerceptronConfiguration2048 perceptronConfiguration) {
         super(perceptronConfiguration);
     }
 
+    /**
+     *
+     * @param randomFile
+     * @param trainedFile
+     */
     @Override
     public void compareNeuralNetworks(File randomFile, File trainedFile) {
     }

@@ -23,42 +23,6 @@ import java.io.File;
  */
 public abstract class INeuralNetworkInterfaceFor2048<NeuralNetworkClass> implements Cloneable {
 
-    @Override
-    public Object clone() throws CloneNotSupportedException {
-        return super.clone(); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    /**
-     *
-     * @param game
-     * @param learningMethod metodo usado para entrenar y evaluar, o null si se
-     *                       utiliza una IA al azar
-     */
-    public synchronized void playATurn(Game2048<NeuralNetworkClass> game, TDLambdaLearning learningMethod) {
-
-        // evaluamos cada accion aplicada al estado inicial y elegimos la mejor
-        // accion basada en las predicciones del problema
-        Action bestAction = (Action) learningMethod.computeBestPossibleAction(game, game.getBoard());
-
-        switch ( bestAction ) {
-            case left: {
-                game.processInput(VK_LEFT);
-                break;
-            }
-            case right: {
-                game.processInput(VK_RIGHT);
-                break;
-            }
-            case down: {
-                game.processInput(VK_DOWN);
-                break;
-            }
-            case up: {
-                game.processInput(VK_UP);
-                break;
-            }
-        }
-    }
 
     private PerceptronConfiguration2048<NeuralNetworkClass> perceptronConfiguration;
 
@@ -69,6 +33,13 @@ public abstract class INeuralNetworkInterfaceFor2048<NeuralNetworkClass> impleme
     public INeuralNetworkInterfaceFor2048(PerceptronConfiguration2048<NeuralNetworkClass> perceptronConfiguration) {
         this.perceptronConfiguration = perceptronConfiguration;
     }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone(); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public abstract void compareNeuralNetworks(File randomFile, File trainedFile);
 
     /**
      *
@@ -91,6 +62,12 @@ public abstract class INeuralNetworkInterfaceFor2048<NeuralNetworkClass> impleme
     }
 
     /**
+     *
+     * @return
+     */
+    public abstract IPerceptronInterface getPerceptronInterface();
+
+    /**
      * @param perceptronFile       <p>
      * @param randomizedIfNotExist
      * <p>
@@ -100,17 +77,40 @@ public abstract class INeuralNetworkInterfaceFor2048<NeuralNetworkClass> impleme
 
     /**
      *
+     * @param game
+     * @param learningMethod metodo usado para entrenar y evaluar, o null si se
+     *                       utiliza una IA al azar
+     */
+    public synchronized void playATurn(Game2048<NeuralNetworkClass> game, TDLambdaLearning learningMethod) {
+        // evaluamos cada accion aplicada al estado inicial y elegimos la mejor
+        // accion basada en las predicciones del problema
+        Action bestAction = (Action) learningMethod.computeBestPossibleAction(game, game.getBoard());
+        
+        switch ( bestAction ) {
+            case left: {
+                game.processInput(VK_LEFT);
+                break;
+            }
+            case right: {
+                game.processInput(VK_RIGHT);
+                break;
+            }
+            case down: {
+                game.processInput(VK_DOWN);
+                break;
+            }
+            case up: {
+                game.processInput(VK_UP);
+                break;
+            }
+        }
+    }
+
+    /**
+     *
      * @param perceptronFile <p>
      * @throws Exception
      */
     public abstract void savePerceptron(File perceptronFile) throws Exception;
-
-    /**
-     *
-     * @return
-     */
-    public abstract IPerceptronInterface getPerceptronInterface();
-
-    public abstract void compareNeuralNetworks(File randomFile, File trainedFile);
 
 }

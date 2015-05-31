@@ -82,6 +82,11 @@ public class Experiment_06 extends LearningExperiment<BasicNetwork> {
         this.setLearningAlgorithm(instanceOfTdLearninrgImplementation(this.getNeuralNetworkInterfaceFor2048().getPerceptronInterface()));
     }
 
+    /**
+     *
+     * @param perceptronInterface
+     * @return
+     */
     @Override
     public TDLambdaLearning instanceOfTdLearninrgImplementation(IPerceptronInterface perceptronInterface) {
         return new TDLambdaLearningAfterstate(perceptronInterface, getAlpha(), getLearningRateAdaptation(), getLambda(), true, getGamma(), getMomentum());
