@@ -40,6 +40,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
     public static final String _TRAINED = "_trained";
     private double[] alpha;
     private double gamma;
+    private double momentum;
     private String experimentName;
     private int gamesToPlay;
     private int gamesToPlayPerThreadForStatistics;
@@ -168,6 +169,20 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
      */
     public void setLearningRateAdaptation(ELearningRateAdaptation learningRateAdaptation) {
         this.learningRateAdaptation = learningRateAdaptation;
+    }
+
+    /**
+     * @return the momentum
+     */
+    public double getMomentum() {
+        return momentum;
+    }
+
+    /**
+     * @param momentum the momentum to set
+     */
+    public void setMomentum(double momentum) {
+        this.momentum = momentum;
     }
 
     /**
