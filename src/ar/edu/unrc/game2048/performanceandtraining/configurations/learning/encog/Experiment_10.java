@@ -42,7 +42,7 @@ public class Experiment_10 extends LearningExperiment<BasicNetwork> {
         experiment.setGamma(1);
         experiment.setMomentum(0.5);
         experiment.setGamesToPlay(10_000);
-        experiment.setLastGamePlayedNumber(0); //recordar AJUSTAR ESTE VALOR
+        //experiment.setLastGamePlayedNumber(0); //recordar AJUSTAR ESTE VALOR //TODO volver a agregar un sistema que soporte continuar un entrenamiento a medias para lso alfas dinamicos
         experiment.setSaveEvery(2_000);
         experiment.setInitializePerceptronRandomized(true);
 

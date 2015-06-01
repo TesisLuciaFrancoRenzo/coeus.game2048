@@ -45,7 +45,6 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
     private double gamma;
     private boolean initializePerceptronRandomized = true;
     private double lambda;
-    private int lastGamePlayedNumber = 0;
     private TDLambdaLearning learningAlgorithm;
     private ELearningRateAdaptation learningRateAdaptation;
     private boolean logsActivated = false;
@@ -145,20 +144,6 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
      */
     public void setLambda(double lambda) {
         this.lambda = lambda;
-    }
-
-    /**
-     * @return the lastGamePlayedNumber
-     */
-    public int getLastGamePlayedNumber() {
-        return lastGamePlayedNumber;
-    }
-
-    /**
-     * @param lastGamePlayedNumber the lastGamePlayedNumber to set
-     */
-    public void setLastGamePlayedNumber(int lastGamePlayedNumber) {
-        this.lastGamePlayedNumber = lastGamePlayedNumber;
     }
 
     /**
