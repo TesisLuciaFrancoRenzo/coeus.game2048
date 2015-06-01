@@ -38,13 +38,11 @@ public class Experiment_09 extends LearningExperiment<BasicNetwork> {
 //        boolean statistics = true;
         boolean statistics = false;
 
-        //    experiment.setAlpha(0.01);
         experiment.setLambda(0.7);
         experiment.setGamma(1);
         experiment.setMomentum(0.5);
         experiment.setGamesToPlay(100_000);
         experiment.setLastGamePlayedNumber(100_000); //recordar AJUSTAR ESTE VALOR
-
         experiment.setSaveEvery(5_000);
         experiment.setInitializePerceptronRandomized(true);
 
@@ -64,7 +62,6 @@ public class Experiment_09 extends LearningExperiment<BasicNetwork> {
             experiment.setSimulationsForStatistics(0);
         }
 
-        //experiment.setElegibilityTraceLenght(TDLambdaLearning.calculateBestEligibilityTraceLenght(experiment.getLambda()));
         experiment.start(filePath, 0);
     }
 
@@ -78,7 +75,6 @@ public class Experiment_09 extends LearningExperiment<BasicNetwork> {
         PerceptronConfiguration2048<BasicNetwork> config = new SymetricSample01MaxTile<>();
         config.randomMoveProbability = 0.01;
         this.setNeuralNetworkInterfaceFor2048(new EncogExperimentInterface(config));
-        this.setLearningAlgorithm(instanceOfTdLearninrgImplementation(this.getNeuralNetworkInterfaceFor2048().getPerceptronInterface()));
     }
 
     @Override

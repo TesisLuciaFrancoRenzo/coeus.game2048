@@ -12,6 +12,7 @@ import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.Bo
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IPerceptronInterface;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearning;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearningAfterstate;
+import ar.edu.unrc.tdlearning.perceptron.training.ELearningRateAdaptation;
 import java.io.File;
 import org.encog.neural.networks.BasicNetwork;
 
@@ -36,16 +37,15 @@ public class Experiment_08 extends LearningExperiment<BasicNetwork> {
         }
         LearningExperiment experiment = new Experiment_08();
 
-        boolean statistics = true;
-//        boolean statistics = false;
+//        boolean statistics = true;
+        boolean statistics = false;
 
         experiment.setLambda(0.7);
         experiment.setGamma(1);
         experiment.setMomentum(0.5);
         experiment.setGamesToPlay(40_000);
         experiment.setLastGamePlayedNumber(0); //recordar AJUSTAR ESTE VALOR
-//        experiment.setInitialAlpha(0.1); //recomendado por sutton para 16 neuronas, ya que el valor ideal es 1/16 y la grafica queda bien con estos valores al llegar a un millon
-//        experiment.setAlphaT(800_000);
+        experiment.setLearningRateAdaptation(ELearningRateAdaptation.fixed);
         experiment.setSaveEvery(500);
         experiment.setInitializePerceptronRandomized(true);
 
@@ -65,7 +65,6 @@ public class Experiment_08 extends LearningExperiment<BasicNetwork> {
             experiment.setSimulationsForStatistics(0);
         }
 
-        //experiment.setElegibilityTraceLenght(TDLambdaLearning.calculateBestEligibilityTraceLenght(experiment.getLambda()));
         experiment.start(filePath, 0);
     }
 
@@ -77,10 +76,9 @@ public class Experiment_08 extends LearningExperiment<BasicNetwork> {
         }
         this.setPerceptronName(this.getExperimentName());
         PerceptronConfiguration2048<BasicNetwork> config = new BoardScore<>();
-        //config.randomMoveProbability = 0.01;
+        config.randomMoveProbability = 0.1;
         //config.perceptron_hidden_quantity = config.perceptron_input_quantity;
         this.setNeuralNetworkInterfaceFor2048(new EncogExperimentInterface(config));
-        this.setLearningAlgorithm(instanceOfTdLearninrgImplementation(this.getNeuralNetworkInterfaceFor2048().getPerceptronInterface()));
     }
 
     @Override

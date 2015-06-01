@@ -44,8 +44,6 @@ public class Experiment_02 extends LearningExperiment<BasicNetwork> {
         experiment.setMomentum(0.5);
         experiment.setGamesToPlay(40_000);
         experiment.setLastGamePlayedNumber(0); //recordar AJUSTAR ESTE VALOR
-//        experiment.setInitialAlpha(0.05); //recomendado por sutton para 16 neuronas, ya que el valor ideal es 1/16 y la grafica queda bien con estos valores al llegar a un millon
-//        experiment.setAlphaT(10_000);
         experiment.setSaveEvery(500);
         experiment.setInitializePerceptronRandomized(true);
 
@@ -66,7 +64,6 @@ public class Experiment_02 extends LearningExperiment<BasicNetwork> {
             experiment.setSimulationsForStatistics(0);
         }
 
-        //experiment.setElegibilityTraceLenght(TDLambdaLearning.calculateBestEligibilityTraceLenght(experiment.getLambda()));
         experiment.start(filePath, 0);
     }
 
@@ -80,7 +77,6 @@ public class Experiment_02 extends LearningExperiment<BasicNetwork> {
         PerceptronConfiguration2048<BasicNetwork> config = new BoardScoreCustomNormalization<>();
         //  config.randomMoveProbability = 0.01;
         this.setNeuralNetworkInterfaceFor2048(new EncogExperimentInterface(config));
-        this.setLearningAlgorithm(instanceOfTdLearninrgImplementation(this.getNeuralNetworkInterfaceFor2048().getPerceptronInterface()));
     }
 
     @Override

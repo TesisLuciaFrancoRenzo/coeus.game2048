@@ -38,7 +38,6 @@ public class Experiment_10 extends LearningExperiment<BasicNetwork> {
         boolean statistics = true;
 //        boolean statistics = false;
 
-        //    experiment.setAlpha(0.01);
         experiment.setLambda(0.7);
         experiment.setGamma(1);
         experiment.setMomentum(0.5);
@@ -63,7 +62,6 @@ public class Experiment_10 extends LearningExperiment<BasicNetwork> {
             experiment.setSimulationsForStatistics(0);
         }
 
-        //experiment.setElegibilityTraceLenght(TDLambdaLearning.calculateBestEligibilityTraceLenght(experiment.getLambda()));
         experiment.start(filePath, 0);
     }
 
@@ -77,7 +75,6 @@ public class Experiment_10 extends LearningExperiment<BasicNetwork> {
         PerceptronConfiguration2048<BasicNetwork> config = new SymetricSample01Score<>();
         config.randomMoveProbability = 0.1;
         this.setNeuralNetworkInterfaceFor2048(new EncogExperimentInterface(config));
-        this.setLearningAlgorithm(instanceOfTdLearninrgImplementation(this.getNeuralNetworkInterfaceFor2048().getPerceptronInterface()));
     }
 
     @Override

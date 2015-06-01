@@ -282,14 +282,6 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
         }
         try {
             initialize();
-            statisticExperiment = new StatisticExperiment(this) {
-                @Override
-                protected void initializeStatistics() throws Exception {
-                    this.setGamesToPlayPerThread(gamesToPlayPerThreadForStatistics);
-                    this.setSimulations(simulationsForStatistics);
-                    this.setLearningMethod(learningAlgorithm);
-                }
-            };
             runExperiment(experimentPath, delayPerMove);
         } catch ( Exception ex ) {
             Logger.getLogger(LearningExperiment.class.getName()).log(Level.SEVERE, null, ex);
@@ -413,10 +405,6 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
     }
 
     protected void runExperiment(String experimentPath, int delayPerMove) throws Exception {
-        if ( learningAlgorithm == null && !this.statisticsOnly ) {
-            throw new IllegalArgumentException("learningAlgorithm no puede ser null");
-        }
-
         SimpleDateFormat dateFormater = new SimpleDateFormat("dd-MM-yyyy_HH'h'mm'm'ss's'");
         Date now = new Date();
 
@@ -469,6 +457,19 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
             }
         }
 
+        this.setLearningAlgorithm(instanceOfTdLearninrgImplementation(this.getNeuralNetworkInterfaceFor2048().getPerceptronInterface()));
+        if ( learningAlgorithm == null && !this.statisticsOnly ) {
+            throw new IllegalArgumentException("learningAlgorithm no puede ser null");
+        }
+
+        statisticExperiment = new StatisticExperiment(this) {
+            @Override
+            protected void initializeStatistics() throws Exception {
+                this.setGamesToPlayPerThread(gamesToPlayPerThreadForStatistics);
+                this.setSimulations(simulationsForStatistics);
+                this.setLearningMethod(learningAlgorithm);
+            }
+        };
         statisticExperiment.setDateForFileName(now);
 
         System.out.println("Training...");
