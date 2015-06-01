@@ -39,6 +39,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
 
     public static final String _TRAINED = "_trained";
     private double[] alpha;
+    private int annealingT;
     private String experimentName;
     private int gamesToPlay;
     private int gamesToPlayPerThreadForStatistics;
@@ -160,6 +161,11 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
         this.learningRateAdaptation = learningRateAdaptation;
     }
 
+    public void setLearningRateAdaptationToAnnealing(int annealingT) {
+        this.learningRateAdaptation = ELearningRateAdaptation.annealing;
+        this.annealingT = annealingT;
+    }
+
     /**
      * @return the momentum
      */
@@ -257,6 +263,10 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
         this.statisticsOnly = statisticsOnly;
     }
 
+    public void setLearningRateAdaptationToFixed() {
+        this.learningRateAdaptation = ELearningRateAdaptation.fixed;
+    }
+
     public void start(String experimentPath, int delayPerMove) {
         File experimentPathFile = new File(experimentPath);
         if ( experimentPathFile.exists() && !experimentPathFile.isDirectory() ) {
@@ -275,11 +285,20 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
 
     public void training(Game2048<NeuralNetworkClass> game, final PrintStream printStream, int lastSaveCounter, File randomPerceptronFile, File perceptronFile, int backupNumber, String filePath, SimpleDateFormat dateFormater, Date now, int zeroNumbers) throws Exception {
         File perceptronFileBackup;
+        switch ( this.learningRateAdaptation ) {
+            case fixed: {
+                learningAlgorithm.setLearningRateAdaptationToFixed();
+                break;
+            }
+            case annealing: {
+                learningAlgorithm.setLearningRateAdaptationToAnnealing(annealingT);
+                break;
+            }
+        }
         for ( int i = 0; i < gamesToPlay; i++ ) { //FIXME menor o igual a gameToPlay? o menor? ver codigo de annealing
-            learningAlgorithm.solveAndTrainOnce(game, i, gamesToPlay);
-
+            learningAlgorithm.solveAndTrainOnce(game, i);
             int percent = (int) (((i * 1d) / (gamesToPlay * 1d)) * 100d);
-            System.out.println("Juego número " + i + " (" + percent + "%)    puntaje = " + game.getScore() + "    ficha max = " + game.getMaxNumber() + "    turno alcanzado = " + game.getLastTurn());
+            System.out.println("Juego número " + i + " (" + percent + "%)    puntaje = " + game.getScore() + "    ficha max = " + game.getMaxNumber() + "    turno alcanzado = " + game.getLastTurn() + "      current alpha = " + Arrays.toString(learningAlgorithm.getCurrentAlpha()));
             if ( printStream != null ) {
                 printStream.println(game.getScore() + "\t" + game.getMaxNumber());
             }
@@ -295,6 +314,20 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
                 //  neuralNetworkInterfaceFor2048.compareNeuralNetworks(randomPerceptronFile, perceptronFile);
             }
         }
+    }
+
+    /**
+     * @return the annealingT
+     */
+    protected int getAnnealingT() {
+        return annealingT;
+    }
+
+    /**
+     * @param annealingT the annealingT to set
+     */
+    protected void setAnnealingT(int annealingT) {
+        this.annealingT = annealingT;
     }
 
     /**
