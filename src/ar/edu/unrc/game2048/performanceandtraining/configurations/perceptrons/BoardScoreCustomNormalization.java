@@ -45,7 +45,7 @@ public class BoardScoreCustomNormalization<NeuralNetworkClass> extends Perceptro
      */
     public BoardScoreCustomNormalization() {
 
-        maxScore = 16_384; //ver teoria
+        maxScore = 8_192; //ver teoria, 1024*2*4
         minScore = 0;
         maxEncriptedTile = 1; //ver teoria
         minEncriptedTile = 0;
@@ -149,14 +149,14 @@ public class BoardScoreCustomNormalization<NeuralNetworkClass> extends Perceptro
 //        assert board.isTerminalState();
 //        return new Prediction(board.getPartialScore() * 1d, null);
 //    }
-
     /**
      *
      * @param board
      * @param neuronIndex
+     * <p>
      * @return
      */
-        @Override
+    @Override
     public double translateRealOutputToNormalizedPerceptronOutputFrom(GameBoard<NeuralNetworkClass> board, int neuronIndex) {
         //TODO testear esto cuando lo hagamos abstracto
         if ( neuronIndex < 0 || neuronIndex >= perceptron_output_quantity ) {
@@ -172,6 +172,7 @@ public class BoardScoreCustomNormalization<NeuralNetworkClass> extends Perceptro
      *
      * @param board
      * @param outputNeuronIndex
+     * <p>
      * @return
      */
     @Override

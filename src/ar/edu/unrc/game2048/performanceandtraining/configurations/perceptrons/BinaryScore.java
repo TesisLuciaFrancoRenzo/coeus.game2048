@@ -28,7 +28,7 @@ public class BinaryScore<NeuralNetworkClass> extends PerceptronConfiguration2048
 
     public BinaryScore() {
 
-        maxScore = 16_384; //ver teoria
+        maxScore = 8_192; //ver teoria, 1024*2*4
         minScore = 0;
         perceptron_hidden_quantity = 64;
         perceptron_input_quantity = 64;

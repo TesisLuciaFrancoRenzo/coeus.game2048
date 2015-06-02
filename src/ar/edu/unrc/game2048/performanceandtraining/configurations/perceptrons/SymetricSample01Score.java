@@ -59,7 +59,7 @@ public class SymetricSample01Score<NeuralNetworkClass> extends PerceptronConfigu
         minCodeLines = 0;
         maxCode2x3 = 111_111_111_111d; //2048
         minCode2x3 = 0d;
-        maxScore = 16_384; //ver teoria
+        maxScore = 8_192; //ver teoria, 1024*2*4
         minScore = 0;
         perceptron_hidden_quantity = 4;
         perceptron_input_quantity = 4;

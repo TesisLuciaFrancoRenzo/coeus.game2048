@@ -37,14 +37,14 @@ public class Experiment_06 extends LearningExperiment<BasicNetwork> {
         LearningExperiment experiment = new Experiment_06();
         experiment.createLogs(false);
 
-//        boolean statistics = true;
-        boolean statistics = false;
-        experiment.setLearningRateAdaptationToFixed();
+        boolean statistics = true;
+//        boolean statistics = false;
+        experiment.setLearningRateAdaptationToAnnealing(500_000);
         experiment.setLambda(0.7);
         experiment.setGamma(1);
         experiment.setMomentum(0.8);
         experiment.setGamesToPlay(40_000);
-        //experiment.setLastGamePlayedNumber(0); //recordar AJUSTAR ESTE VALOR //TODO volver a agregar un sistema que soporte continuar un entrenamiento a medias para lso alfas dinamicos
+        experiment.setLastGamePlayedNumber(0); //recordar AJUSTAR ESTE VALOR
         experiment.setSaveEvery(500);
         experiment.setInitializePerceptronRandomized(true);
 
@@ -54,7 +54,7 @@ public class Experiment_06 extends LearningExperiment<BasicNetwork> {
             experiment.setRunStatisticForRandom(true);
             experiment.setRunStatisticsForBackups(true);
             experiment.setGamesToPlayPerThreadForStatistics(1_000);
-            experiment.setSimulationsForStatistics(8);
+            experiment.setSimulationsForStatistics(10);
         } else {
             experiment.setStatisticsOnly(false);
             experiment.setRunStatisticForRandom(false);

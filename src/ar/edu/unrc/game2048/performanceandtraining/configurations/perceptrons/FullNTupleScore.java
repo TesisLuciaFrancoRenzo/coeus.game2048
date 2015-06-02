@@ -34,7 +34,7 @@ public class FullNTupleScore<NeuralNetworkClass> extends PerceptronConfiguration
     /**
      *
      */
-    public int maxScore = 16_384; //ver teoria
+    public int maxScore = 8_192; //ver teoria, 1024*2*4
 
     /**
      *

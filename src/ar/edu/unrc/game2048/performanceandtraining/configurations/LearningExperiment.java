@@ -52,6 +52,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
     private double gamma;
     private boolean initializePerceptronRandomized = true;
     private double lambda;
+    private int lastGamePlayedNumber;
     private TDLambdaLearning learningAlgorithm;
     private ELearningRateAdaptation learningRateAdaptation;
     private boolean logsActivated = false;
@@ -80,7 +81,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
 
     /**
      *
-     * @param experimentPath
+     * @param experimentPath <p>
      * @return
      */
     public String createPathToDir(String experimentPath) {
@@ -170,6 +171,10 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
         this.lambda = lambda;
     }
 
+    public void setLastGamePlayedNumber(int gameNumber) {
+        this.lastGamePlayedNumber = gameNumber;
+    }
+
     /**
      * @return the learningRateAdaptation
      */
@@ -248,7 +253,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
 
     /**
      *
-     * @param perceptronInterface
+     * @param perceptronInterface <p>
      * @return
      */
     public abstract TDLambdaLearning instanceOfTdLearninrgImplementation(IPerceptronInterface perceptronInterface);
@@ -334,7 +339,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
      * @param filePath
      * @param dateFormater
      * @param now
-     * @param zeroNumbers
+     * @param zeroNumbers          <p>
      * @throws Exception
      */
     public void training(Game2048<NeuralNetworkClass> game, final PrintStream printStream, int lastSaveCounter, File randomPerceptronFile, File perceptronFile, int backupNumber, String filePath, SimpleDateFormat dateFormater, Date now, int zeroNumbers) throws Exception {
@@ -349,9 +354,9 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
                 break;
             }
         }
-        for ( int i = 0; i < gamesToPlay; i++ ) { //FIXME menor o igual a gameToPlay? o menor? ver codigo de annealing
+        for ( int i = lastGamePlayedNumber + 1; i < gamesToPlay + lastGamePlayedNumber; i++ ) { //FIXME menor o igual a gameToPlay? o menor? ver codigo de annealing
             learningAlgorithm.solveAndTrainOnce(game, i);
-            int percent = (int) (((i * 1d) / (gamesToPlay * 1d)) * 100d);
+            int percent = (int) (((i * 1d) / ((gamesToPlay + lastGamePlayedNumber) * 1d)) * 100d);
             System.out.println("Juego número " + i + " (" + percent + "%)    puntaje = " + game.getScore() + "    ficha max = " + game.getMaxNumber() + "    turno alcanzado = " + game.getLastTurn() + "      current alpha = " + Arrays.toString(learningAlgorithm.getCurrentAlpha()));
             if ( printStream != null ) {
                 printStream.println(game.getScore() + "\t" + game.getMaxNumber());
@@ -479,7 +484,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
     /**
      *
      * @param experimentPath
-     * @param delayPerMove
+     * @param delayPerMove   <p>
      * @throws Exception
      */
     protected void runExperiment(String experimentPath, int delayPerMove) throws Exception {

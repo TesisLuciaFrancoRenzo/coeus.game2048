@@ -45,7 +45,7 @@ public class BoardScore<NeuralNetworkClass> extends PerceptronConfiguration2048<
      */
     public BoardScore() {
         maxCodedBoardnumber = 11; //2048 como maximo
-        maxScore = 16_384; //ver teoria
+        maxScore = 8_192; //ver teoria, 1024*2*4
         minScore = 0;
         minCodedBoardnumber = 0;
         perceptron_hidden_quantity = 16;
