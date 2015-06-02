@@ -5,6 +5,7 @@
  */
 package ar.edu.unrc.game2048;
 
+import ar.edu.unrc.tdlearning.perceptron.interfaces.IsolatedComputation;
 import java.util.List;
 import org.encog.engine.network.activation.ActivationFunction;
 import org.encog.util.arrayutil.NormalizedField;
@@ -55,11 +56,10 @@ public abstract class PerceptronConfiguration2048<NeuralNetworkClass> implements
 
     /**
      *
-     * @param data
-     * <p>
+     * @param data <p>
      * @return
      */
-    public abstract double translatePerceptronOutputToPrediction(double[] data);
+    public abstract IsolatedComputation<Integer> translatePerceptronOutputToPrediction(double[] data);
 
 //    public abstract double translateThisFinalStateToNormalizedPerceptronOutput(GameBoard<NeuralNetworkClass> board, int outputNeuronIndex);
     public abstract double translateRewordToNormalizedPerceptronOutputFrom(GameBoard<NeuralNetworkClass> board, int outputNeuronIndex);

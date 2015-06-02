@@ -8,6 +8,7 @@ package ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons;
 import ar.edu.unrc.game2048.GameBoard;
 import ar.edu.unrc.game2048.PerceptronConfiguration2048;
 import ar.edu.unrc.game2048.Tile;
+import ar.edu.unrc.tdlearning.perceptron.interfaces.IsolatedComputation;
 import java.util.List;
 import org.encog.engine.network.activation.ActivationTANH;
 import org.encog.util.arrayutil.NormalizationAction;
@@ -74,18 +75,19 @@ public class BinaryBinScore<NeuralNetworkClass> extends PerceptronConfiguration2
     }
 
     @Override
-    public double translatePerceptronOutputToPrediction(double[] data) {
-        StringBuilder stringBits = new StringBuilder();
-        for ( int i = 0; i < data.length; i++ ) {
-            assert data[i] != Double.NaN;
-            if ( normOutput.deNormalize(data[i]) >= 0.5 ) {
-                stringBits.append('1');
-            } else {
-                stringBits.append('0');
+    public IsolatedComputation<Integer> translatePerceptronOutputToPrediction(double[] data) {
+        return () -> {
+            StringBuilder stringBits = new StringBuilder();
+            for ( int i = 0; i < data.length; i++ ) {
+                assert data[i] != Double.NaN;
+                if ( normOutput.deNormalize(data[i]) >= 0.5 ) {
+                    stringBits.append('1');
+                } else {
+                    stringBits.append('0');
+                }
             }
-        }
-        int output = Integer.parseInt(stringBits.toString(), 2);
-        return output;
+            return Integer.parseInt(stringBits.toString(), 2);
+        };
     }
 
     @Override

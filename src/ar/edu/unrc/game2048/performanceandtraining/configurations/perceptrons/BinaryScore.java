@@ -8,6 +8,7 @@ package ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons;
 import ar.edu.unrc.game2048.GameBoard;
 import ar.edu.unrc.game2048.PerceptronConfiguration2048;
 import ar.edu.unrc.game2048.Tile;
+import ar.edu.unrc.tdlearning.perceptron.interfaces.IsolatedComputation;
 import java.util.List;
 import org.encog.engine.network.activation.ActivationTANH;
 import org.encog.util.arrayutil.NormalizationAction;
@@ -65,9 +66,11 @@ public class BinaryScore<NeuralNetworkClass> extends PerceptronConfiguration2048
     }
 
     @Override
-    public double translatePerceptronOutputToPrediction(double[] data) {
-        assert data[0] != Double.NaN;
-        return Math.round(normOutput.deNormalize(data[0]));
+    public IsolatedComputation<Integer> translatePerceptronOutputToPrediction(double[] data) {
+        return () -> {
+            assert data[0] != Double.NaN;
+            return (int) Math.round(normOutput.deNormalize(data[0]));
+        };
     }
 
     @Override

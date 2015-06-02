@@ -7,6 +7,7 @@ package ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons;
 
 import ar.edu.unrc.game2048.GameBoard;
 import ar.edu.unrc.game2048.PerceptronConfiguration2048;
+import ar.edu.unrc.tdlearning.perceptron.interfaces.IsolatedComputation;
 import java.util.List;
 import org.encog.engine.network.activation.ActivationTANH;
 import org.encog.util.arrayutil.NormalizationAction;
@@ -112,15 +113,18 @@ public class BoardMaxTile<NeuralNetworkClass> extends PerceptronConfiguration204
     }
 
     @Override
-    public double translatePerceptronOutputToPrediction(double[] data) {
-        assert data[0] != Double.NaN;
-        return Math.round(normOutput.deNormalize(data[0]));
+    public IsolatedComputation<Integer> translatePerceptronOutputToPrediction(double[] data) {
+        return () -> {
+            assert data[0] != Double.NaN;
+            return (int) Math.round(normOutput.deNormalize(data[0]));
+        };
     }
 
     /**
      *
      * @param board
      * @param outputNeuronIndex
+     * <p>
      * @return
      */
     @Override

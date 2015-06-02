@@ -28,6 +28,7 @@ import ar.edu.unrc.tdlearning.perceptron.interfaces.IAction;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IPrediction;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IProblem;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IState;
+import ar.edu.unrc.tdlearning.perceptron.interfaces.IsolatedComputation;
 import ar.edu.unrc.tdlearning.perceptron.learning.StateProbability;
 import java.awt.Color;
 import java.awt.Font;
@@ -248,20 +249,22 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
     }
 
     @Override
-    public IPrediction evaluateBoardWithPerceptron(IState state) { //FIXME safethread??
-        //dependiendo de que tipo de red neuronal utilizamos, evaluamos las entradas y calculamos una salida
-        if ( perceptronConfiguration.getNeuralNetwork() != null ) {
-            if ( perceptronConfiguration.getNeuralNetwork() instanceof BasicNetwork ) { //es sobre la libreria encog
-                double[] inputs = new double[getPerceptronConfiguration().perceptron_input_quantity];
-                for ( int i = 0; i < getPerceptronConfiguration().perceptron_input_quantity; i++ ) {
-                    inputs[i] = state.translateToPerceptronInput(i);
+    public IsolatedComputation<IPrediction> evaluateBoardWithPerceptron(IState state) { //FIXME safethread??
+        return () -> {
+            //dependiendo de que tipo de red neuronal utilizamos, evaluamos las entradas y calculamos una salida
+            if ( perceptronConfiguration.getNeuralNetwork() != null ) {
+                if ( perceptronConfiguration.getNeuralNetwork() instanceof BasicNetwork ) { //es sobre la libreria encog
+                    double[] inputs = new double[getPerceptronConfiguration().perceptron_input_quantity];
+                    for ( int i = 0; i < getPerceptronConfiguration().perceptron_input_quantity; i++ ) {
+                        inputs[i] = state.translateToPerceptronInput(i);
+                    } //todo reeemplazar esot po algo ams elegante
+                    MLData inputData = new BasicMLData(inputs);
+                    MLData output = ((BasicNetwork) perceptronConfiguration.getNeuralNetwork()).compute(inputData);
+                    return new Prediction(perceptronConfiguration.translatePerceptronOutputToPrediction(output.getData()).compute() * 1d, output.getData());
                 }
-                MLData inputData = new BasicMLData(inputs);
-                MLData output = ((BasicNetwork) perceptronConfiguration.getNeuralNetwork()).compute(inputData);
-                return new Prediction(perceptronConfiguration.translatePerceptronOutputToPrediction(output.getData()), output.getData());
             }
-        }
-        throw new UnsupportedOperationException("only encog is implemented");
+            throw new UnsupportedOperationException("only encog is implemented");
+        };
     }
 
     /**
