@@ -36,8 +36,8 @@ public class Experiment_02 extends LearningExperiment<BasicNetwork> {
         }
         LearningExperiment experiment = new Experiment_02();
 
-        boolean statistics = true;
-//        boolean statistics = false;
+//        boolean statistics = true;
+        boolean statistics = false;
         experiment.setLearningRateAdaptationToAnnealing(500_000);
         experiment.setLambda(0.7);
         experiment.setGamma(1);
@@ -76,13 +76,14 @@ public class Experiment_02 extends LearningExperiment<BasicNetwork> {
         this.setPerceptronName(this.getExperimentName());
         PerceptronConfiguration2048<BasicNetwork> config = new BoardScoreCustomNormalization<>();
         //   config.perceptron_hidden_quantity = config.perceptron_input_quantity * 2;
+        config.hiddenLayerQuantity = 2;
         //  config.randomMoveProbability = 0.01;
         this.setNeuralNetworkInterfaceFor2048(new EncogExperimentInterface(config));
     }
 
     /**
      *
-     * @param perceptronInterface
+     * @param perceptronInterface <p>
      * @return
      */
     @Override

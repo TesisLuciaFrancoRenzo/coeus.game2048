@@ -36,8 +36,8 @@ public class Experiment_08 extends LearningExperiment<BasicNetwork> {
         }
         LearningExperiment experiment = new Experiment_08();
 
-//        boolean statistics = true;
-        boolean statistics = false;
+        boolean statistics = true;
+//        boolean statistics = false;
 
         experiment.setLambda(0.7);
         experiment.setGamma(1);
@@ -75,7 +75,7 @@ public class Experiment_08 extends LearningExperiment<BasicNetwork> {
         }
         this.setPerceptronName(this.getExperimentName());
         PerceptronConfiguration2048<BasicNetwork> config = new BoardScore<>();
-        config.randomMoveProbability = 0.01;
+        // config.randomMoveProbability = 0.01;
         //config.perceptron_hidden_quantity = config.perceptron_input_quantity;
         this.setNeuralNetworkInterfaceFor2048(new EncogExperimentInterface(config));
     }

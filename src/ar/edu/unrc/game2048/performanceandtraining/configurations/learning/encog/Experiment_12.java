@@ -35,8 +35,8 @@ public class Experiment_12 extends LearningExperiment<BasicNetwork> {
             filePath = args[0];
         }
         LearningExperiment experiment = new Experiment_12();
-        boolean statistics = true;
-//        boolean statistics = false;
+//        boolean statistics = true;
+        boolean statistics = false;
         experiment.setLearningRateAdaptationToFixed();
         experiment.setLambda(0.7);
         experiment.setGamma(1);
@@ -81,6 +81,7 @@ public class Experiment_12 extends LearningExperiment<BasicNetwork> {
     /**
      *
      * @param perceptronInterface
+     * <p>
      * @return
      */
     @Override
