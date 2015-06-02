@@ -19,6 +19,7 @@ import org.encog.util.arrayutil.NormalizedField;
  * @param <NeuralNetworkClass>
  */
 public class BinaryScore<NeuralNetworkClass> extends PerceptronConfiguration2048<NeuralNetworkClass> {
+
     static final int binaryLenght = 4; //alcanza para escribir el 2048
 
     public int maxScore;
@@ -64,9 +65,9 @@ public class BinaryScore<NeuralNetworkClass> extends PerceptronConfiguration2048
     }
 
     @Override
-    public double translatePerceptronOutputToPrediction(double[] data, double partialReward) {
+    public double translatePerceptronOutputToPrediction(double[] data) {
         assert data[0] != Double.NaN;
-        return Math.round(normOutput.deNormalize(data[0])) + partialReward;
+        return Math.round(normOutput.deNormalize(data[0]));
     }
 
     @Override

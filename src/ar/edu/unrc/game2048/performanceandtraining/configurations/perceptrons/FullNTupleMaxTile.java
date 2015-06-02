@@ -328,7 +328,7 @@ public class FullNTupleMaxTile<NeuralNetworkClass> extends PerceptronConfigurati
     }
 
     @Override
-    public double translatePerceptronOutputToPrediction(double[] data, double partialReward) {
+    public double translatePerceptronOutputToPrediction(double[] data) {
         assert data[0] != Double.NaN;
         return Math.round(normOutput.deNormalize(data[0]));
     }

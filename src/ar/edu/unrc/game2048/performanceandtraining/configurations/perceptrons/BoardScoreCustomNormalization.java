@@ -111,11 +111,11 @@ public class BoardScoreCustomNormalization<NeuralNetworkClass> extends Perceptro
 //        }
 //        return normOutput.normalize(board.getAsFinalScore()); //TODO revisar esot.. realmente tiene e,l puntaje final? ya que si se trabaja sobre tableros evaluados y no usados no deberia tener el puntaje
 //    }
-    
+
     @Override
-    public double translatePerceptronOutputToPrediction(double[] data, double partialReward) {
+    public double translatePerceptronOutputToPrediction(double[] data) {
         assert data[0] != Double.NaN;
-        return Math.round(normOutput.deNormalize(data[0])) + partialReward;
+        return Math.round(normOutput.deNormalize(data[0]));
     }
 
     @Override

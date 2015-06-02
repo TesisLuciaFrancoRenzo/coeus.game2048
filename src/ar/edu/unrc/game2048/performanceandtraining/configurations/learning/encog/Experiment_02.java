@@ -12,7 +12,6 @@ import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.Bo
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IPerceptronInterface;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearning;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearningAfterstate;
-import ar.edu.unrc.tdlearning.perceptron.training.ELearningRateAdaptation;
 import java.io.File;
 import org.encog.neural.networks.BasicNetwork;
 

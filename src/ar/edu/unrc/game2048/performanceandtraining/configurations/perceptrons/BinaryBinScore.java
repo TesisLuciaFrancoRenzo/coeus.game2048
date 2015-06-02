@@ -74,7 +74,7 @@ public class BinaryBinScore<NeuralNetworkClass> extends PerceptronConfiguration2
     }
 
     @Override
-    public double translatePerceptronOutputToPrediction(double[] data, double partialReward) {
+    public double translatePerceptronOutputToPrediction(double[] data) {
         StringBuilder stringBits = new StringBuilder();
         for ( int i = 0; i < data.length; i++ ) {
             assert data[i] != Double.NaN;
@@ -85,7 +85,7 @@ public class BinaryBinScore<NeuralNetworkClass> extends PerceptronConfiguration2
             }
         }
         int output = Integer.parseInt(stringBits.toString(), 2);
-        return output + partialReward;
+        return output;
     }
 
     @Override

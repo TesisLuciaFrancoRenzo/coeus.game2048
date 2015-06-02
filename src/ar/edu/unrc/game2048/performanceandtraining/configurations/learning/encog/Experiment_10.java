@@ -12,7 +12,6 @@ import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.Sy
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IPerceptronInterface;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearning;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearningAfterstate;
-import ar.edu.unrc.tdlearning.perceptron.training.ELearningRateAdaptation;
 import java.io.File;
 import org.encog.neural.networks.BasicNetwork;
 
@@ -36,15 +35,15 @@ public class Experiment_10 extends LearningExperiment<BasicNetwork> {
             filePath = args[0];
         }
         LearningExperiment experiment = new Experiment_10();
-        boolean statistics = true;
-//        boolean statistics = false;
+//        boolean statistics = true;
+        boolean statistics = false;
         experiment.setLearningRateAdaptationToFixed();
         experiment.setLambda(0.7);
         experiment.setGamma(1);
         experiment.setMomentum(0.5);
-        experiment.setGamesToPlay(10_000);
+        experiment.setGamesToPlay(5_000);
         //experiment.setLastGamePlayedNumber(0); //recordar AJUSTAR ESTE VALOR //TODO volver a agregar un sistema que soporte continuar un entrenamiento a medias para lso alfas dinamicos
-        experiment.setSaveEvery(2_000);
+        experiment.setSaveEvery(1_000);
         experiment.setInitializePerceptronRandomized(true);
 
         experiment.createLogs(false);
@@ -74,7 +73,8 @@ public class Experiment_10 extends LearningExperiment<BasicNetwork> {
         }
         this.setPerceptronName(this.getExperimentName());
         PerceptronConfiguration2048<BasicNetwork> config = new SymetricSample01Score<>();
-        config.randomMoveProbability = 0.1;
+        config.perceptron_hidden_quantity = 16;
+        //config.randomMoveProbability = 0.1;
         this.setNeuralNetworkInterfaceFor2048(new EncogExperimentInterface(config));
     }
 

@@ -28,6 +28,7 @@ import ar.edu.unrc.tdlearning.perceptron.interfaces.IAction;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IPrediction;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IProblem;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IState;
+import ar.edu.unrc.tdlearning.perceptron.learning.StateProbability;
 import java.awt.Color;
 import java.awt.Font;
 import static java.awt.Font.BOLD;
@@ -55,6 +56,7 @@ import static java.lang.System.arraycopy;
 import static java.lang.Thread.sleep;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -246,14 +248,7 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
     }
 
     @Override
-    public IPrediction evaluateBoardWithPerceptron(IState state, boolean accumulativePredicition) { //FIXME safethread??
-        double reward;
-        if ( accumulativePredicition ) {
-            reward = ((GameBoard<NeuralNetworkClass>) state).getPartialScore();
-        } else {
-            reward = 0;
-        }
-
+    public IPrediction evaluateBoardWithPerceptron(IState state) { //FIXME safethread??
         //dependiendo de que tipo de red neuronal utilizamos, evaluamos las entradas y calculamos una salida
         if ( perceptronConfiguration.getNeuralNetwork() != null ) {
             if ( perceptronConfiguration.getNeuralNetwork() instanceof BasicNetwork ) { //es sobre la libreria encog
@@ -263,7 +258,7 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
                 }
                 MLData inputData = new BasicMLData(inputs);
                 MLData output = ((BasicNetwork) perceptronConfiguration.getNeuralNetwork()).compute(inputData);
-                return new Prediction(perceptronConfiguration.translatePerceptronOutputToPrediction(output.getData(), reward), output.getData());
+                return new Prediction(perceptronConfiguration.translatePerceptronOutputToPrediction(output.getData()), output.getData());
             }
         }
         throw new UnsupportedOperationException("only encog is implemented");
@@ -379,7 +374,6 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
         return board;
     }
 
-
     @Override
     public ArrayList<IAction> listAllPossibleActions(IState initialState) {
         ArrayList<IAction> actions = new ArrayList<>(4);
@@ -421,6 +415,11 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
             lastInitialStateForPossibleActions = state;
         }
         return actions;
+    }
+
+    @Override
+    public List<StateProbability> listAllPossibleNextTurnStateFromAfterstate(IState nextTurnState) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override

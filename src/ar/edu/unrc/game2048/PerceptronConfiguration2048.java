@@ -16,7 +16,6 @@ import org.encog.util.arrayutil.NormalizedField;
  */
 public abstract class PerceptronConfiguration2048<NeuralNetworkClass> implements Cloneable {
 
-
     public ActivationFunction activationFunctionHiddenForEncog;
     public double activationFunctionMax;
     public double activationFunctionMin;
@@ -47,22 +46,20 @@ public abstract class PerceptronConfiguration2048<NeuralNetworkClass> implements
         return neuralNetwork;
     }
 
-/**
+    /**
      * @param neuralNetwork the neuralNetwork to set
-     */    public void setNeuralNetwork(NeuralNetworkClass neuralNetwork) {
-         this.neuralNetwork = neuralNetwork;
-     }
+     */
+    public void setNeuralNetwork(NeuralNetworkClass neuralNetwork) {
+        this.neuralNetwork = neuralNetwork;
+    }
 
     /**
      *
      * @param data
-     * @param partialReward el valor a sumar a la prediccion si se esta
-     *                      utilizando metodos acumulativos de prediccion en
-     *                      TDlearning
      * <p>
      * @return
      */
-    public abstract double translatePerceptronOutputToPrediction(double[] data, double partialReward);
+    public abstract double translatePerceptronOutputToPrediction(double[] data);
 
 //    public abstract double translateThisFinalStateToNormalizedPerceptronOutput(GameBoard<NeuralNetworkClass> board, int outputNeuronIndex);
     public abstract double translateRewordToNormalizedPerceptronOutputFrom(GameBoard<NeuralNetworkClass> board, int outputNeuronIndex);

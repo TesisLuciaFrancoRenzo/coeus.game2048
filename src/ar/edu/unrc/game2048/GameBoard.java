@@ -5,6 +5,7 @@
  */
 package ar.edu.unrc.game2048;
 
+import ar.edu.unrc.tdlearning.perceptron.interfaces.IReward;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IState;
 import static java.lang.Math.random;
 import static java.lang.System.arraycopy;
@@ -19,7 +20,6 @@ import java.util.Objects;
  * @param <NeuralNetworkClass>
  */
 public class GameBoard<NeuralNetworkClass> implements IState {
-
 
     public static final int maxBoardTileCodedNumber = 17;
     public final static int minBoardTileCodedNumber = 0;
@@ -193,6 +193,11 @@ public class GameBoard<NeuralNetworkClass> implements IState {
         this.partialScore = partialScore;
     }
 
+    @Override
+    public IReward getReward() {
+        return new PartialScore(this.getPartialScore());
+    }
+
     /**
      * @return the tiles
      */
@@ -304,62 +309,63 @@ public class GameBoard<NeuralNetworkClass> implements IState {
         return normalizedPerceptronInput.get(neuronIndex);
     }
 
-/**
+    /**
      * actualizamos la traduccion del tablero como entrada del perceptron,
      * encriptado y normalizado. Tambien se actualiza el calculo de si este es
      * un tablero fianl o no.
      * <p>
      * @param updateNormalizedInputs
-     */    public void updateInternalState(boolean updateNormalizedInputs) {
-         availableSpaceList = calculateAvailableSpace();
-         isFull = availableSpaceList.isEmpty();
-         canMove = calculateCanMove();
-         calulateMaxTile();
-         if ( getGame().getPerceptronConfiguration() != null && updateNormalizedInputs ) {
-             assert this.getMaxTileNumberCode() != 0;
-             getGame().getPerceptronConfiguration().calculateNormalizedPerceptronInput(this, normalizedPerceptronInput);
-         }
-         
-     }
+     */
+    public void updateInternalState(boolean updateNormalizedInputs) {
+        availableSpaceList = calculateAvailableSpace();
+        isFull = availableSpaceList.isEmpty();
+        canMove = calculateCanMove();
+        calulateMaxTile();
+        if ( getGame().getPerceptronConfiguration() != null && updateNormalizedInputs ) {
+            assert this.getMaxTileNumberCode() != 0;
+            getGame().getPerceptronConfiguration().calculateNormalizedPerceptronInput(this, normalizedPerceptronInput);
+        }
 
-     private List<Integer> calculateAvailableSpace() {
-         final List<Integer> list = new ArrayList<>(16);
-         for ( int i = 0; i < tiles.length; i++ ) {
-             if ( tiles[i].isEmpty() ) {
-                 list.add(i);
-             }
-         }
-         return list;
     }
 
-     private boolean calculateCanMove() {
-         if ( !this.isFull() ) {
-             return true;
-         }
-         for ( int x = 0; x < 4; x++ ) {
-             for ( int y = 0; y < 4; y++ ) {
-                 Tile t = this.tileAt(x, y);
-                 if ( (x < 3 && t.getCode() == this.tileAt(x + 1, y).getCode()) //TODO optimizar con equal??
-                         || ((y < 3) && t.getCode() == this.tileAt(x, y + 1).getCode()) ) {
-                     return true;
-                 }
-             }
-         }
-         return false;
-     }
-     
-     private void calulateMaxTile() {
-         this.maxTileNumberValue = 0;
-         this.maxTileNumberCode = 0;
-         for ( Tile t : tiles ) {
-             if ( t.getGameValue() > this.maxTileNumberValue ) {
-                 this.maxTileNumberValue = t.getGameValue();
-                 this.maxTileNumberCode = t.getCode();
+    private List<Integer> calculateAvailableSpace() {
+        final List<Integer> list = new ArrayList<>(16);
+        for ( int i = 0; i < tiles.length; i++ ) {
+            if ( tiles[i].isEmpty() ) {
+                list.add(i);
             }
-         }
-     }
-     
-     void addPartialScore(int value) {
+        }
+        return list;
+    }
+
+    private boolean calculateCanMove() {
+        if ( !this.isFull() ) {
+            return true;
+        }
+        for ( int x = 0; x < 4; x++ ) {
+            for ( int y = 0; y < 4; y++ ) {
+                Tile t = this.tileAt(x, y);
+                if ( (x < 3 && t.getCode() == this.tileAt(x + 1, y).getCode()) //TODO optimizar con equal??
+                        || ((y < 3) && t.getCode() == this.tileAt(x, y + 1).getCode()) ) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private void calulateMaxTile() {
+        this.maxTileNumberValue = 0;
+        this.maxTileNumberCode = 0;
+        for ( Tile t : tiles ) {
+            if ( t.getGameValue() > this.maxTileNumberValue ) {
+                this.maxTileNumberValue = t.getGameValue();
+                this.maxTileNumberCode = t.getCode();
+            }
+        }
+    }
+
+    void addPartialScore(int value) {
         partialScore += value;
     }
 
