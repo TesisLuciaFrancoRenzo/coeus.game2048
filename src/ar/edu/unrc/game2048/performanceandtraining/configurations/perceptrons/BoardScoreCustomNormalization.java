@@ -27,7 +27,7 @@ public class BoardScoreCustomNormalization<NeuralNetworkClass> extends Perceptro
 
     public BoardScoreCustomNormalization() {
 
-        maxScore = 500_000; //ver teoria
+        maxScore = 16_384; //ver teoria
         minScore = 0;
         maxEncriptedTile = 1; //ver teoria
         minEncriptedTile = 0;
@@ -132,6 +132,9 @@ public class BoardScoreCustomNormalization<NeuralNetworkClass> extends Perceptro
         if ( neuronIndex < 0 || neuronIndex >= perceptron_output_quantity ) {
             throw new IllegalArgumentException("neuronIndex range for output layer must be [0," + perceptron_output_quantity + "] but was " + neuronIndex);
         }
+        if ( board.getPartialScore() > this.maxScore ) {
+            throw new IllegalArgumentException("board.getPartialScore() supera el maximo de " + maxScore + " con el valor " + board.getPartialScore());
+        }
         return normOutput.normalize(board.getPartialScore());
     }
 
@@ -139,6 +142,9 @@ public class BoardScoreCustomNormalization<NeuralNetworkClass> extends Perceptro
     public double translateRewordToNormalizedPerceptronOutputFrom(GameBoard<NeuralNetworkClass> board, int outputNeuronIndex) {
         if ( outputNeuronIndex < 0 || outputNeuronIndex >= perceptron_output_quantity ) {
             throw new IllegalArgumentException("neuronIndex range for output layer must be [0," + perceptron_output_quantity + "] but was " + outputNeuronIndex);
+        }
+        if ( board.getPartialScore() > this.maxScore ) {
+            throw new IllegalArgumentException("board.getPartialScore() supera el maximo de " + maxScore + " con el valor " + board.getPartialScore());
         }
         return normOutput.normalize(board.getPartialScore());
     }

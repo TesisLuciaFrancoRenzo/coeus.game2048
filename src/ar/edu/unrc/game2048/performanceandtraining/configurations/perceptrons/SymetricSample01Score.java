@@ -36,7 +36,7 @@ public class SymetricSample01Score<NeuralNetworkClass> extends PerceptronConfigu
         minCodeLines = 0;
         maxCode2x3 = 111_111_111_111d; //2048
         minCode2x3 = 0d;
-        maxScore = 500_000; //ver teoria
+        maxScore = 16_384; //ver teoria
         minScore = 0;
         perceptron_hidden_quantity = 4;
         perceptron_input_quantity = 4;
@@ -121,6 +121,9 @@ public class SymetricSample01Score<NeuralNetworkClass> extends PerceptronConfigu
         if ( neuronIndex < 0 || neuronIndex >= perceptron_output_quantity ) {
             throw new IllegalArgumentException("neuronIndex range for output layer must be [0," + perceptron_output_quantity + "] but was " + neuronIndex);
         }
+        if ( board.getPartialScore() > this.maxScore ) {
+            throw new IllegalArgumentException("board.getPartialScore() supera el maximo de " + maxScore + " con el valor " + board.getPartialScore());
+        }
         return normOutput.normalize(board.getPartialScore());
     }
 
@@ -128,6 +131,9 @@ public class SymetricSample01Score<NeuralNetworkClass> extends PerceptronConfigu
     public double translateRewordToNormalizedPerceptronOutputFrom(GameBoard<NeuralNetworkClass> board, int outputNeuronIndex) {
         if ( outputNeuronIndex < 0 || outputNeuronIndex >= perceptron_output_quantity ) {
             throw new IllegalArgumentException("neuronIndex range for output layer must be [0," + perceptron_output_quantity + "] but was " + outputNeuronIndex);
+        }
+        if ( board.getPartialScore() > this.maxScore ) {
+            throw new IllegalArgumentException("board.getPartialScore() supera el maximo de " + maxScore + " con el valor " + board.getPartialScore());
         }
         return normOutput.normalize(board.getPartialScore());
     }

@@ -23,7 +23,7 @@ public class FullNTupleScore<NeuralNetworkClass> extends PerceptronConfiguration
 
     public int maxCodedBoardnumber = 11_111_111; //2048 maximo
     public int maxCodedNumber = 1;
-    public int maxScore = 500_000; //ver teoria
+    public int maxScore = 16_384; //ver teoria
     public int minCodedBoardnumber = 0;
     public int minCodedNumber = 0;
     public int minScore = 0;
@@ -284,6 +284,9 @@ public class FullNTupleScore<NeuralNetworkClass> extends PerceptronConfiguration
         if ( neuronIndex < 0 || neuronIndex >= perceptron_output_quantity ) {
             throw new IllegalArgumentException("neuronIndex range for output layer must be [0," + perceptron_output_quantity + "] but was " + neuronIndex);
         }
+        if ( board.getPartialScore() > this.maxScore ) {
+            throw new IllegalArgumentException("board.getPartialScore() supera el maximo de " + maxScore + " con el valor " + board.getPartialScore());
+        }
         return normOutput.normalize(board.getPartialScore());
     }
 
@@ -291,6 +294,9 @@ public class FullNTupleScore<NeuralNetworkClass> extends PerceptronConfiguration
     public double translateRewordToNormalizedPerceptronOutputFrom(GameBoard<NeuralNetworkClass> board, int outputNeuronIndex) {
         if ( outputNeuronIndex < 0 || outputNeuronIndex >= perceptron_output_quantity ) {
             throw new IllegalArgumentException("neuronIndex range for output layer must be [0," + perceptron_output_quantity + "] but was " + outputNeuronIndex);
+        }
+        if ( board.getPartialScore() > this.maxScore ) {
+            throw new IllegalArgumentException("board.getPartialScore() supera el maximo de " + maxScore + " con el valor " + board.getPartialScore());
         }
         return normOutput.normalize(board.getPartialScore());
     }

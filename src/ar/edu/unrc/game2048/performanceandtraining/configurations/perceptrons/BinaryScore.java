@@ -28,7 +28,7 @@ public class BinaryScore<NeuralNetworkClass> extends PerceptronConfiguration2048
 
     public BinaryScore() {
 
-        maxScore = 500_000; //ver teoria
+        maxScore = 16_384; //ver teoria
         minScore = 0;
         perceptron_hidden_quantity = 64;
         perceptron_input_quantity = 64;
@@ -92,6 +92,9 @@ public class BinaryScore<NeuralNetworkClass> extends PerceptronConfiguration2048
     public double translateRewordToNormalizedPerceptronOutputFrom(GameBoard<NeuralNetworkClass> board, int outputNeuronIndex) {
         if ( outputNeuronIndex < 0 || outputNeuronIndex >= perceptron_output_quantity ) {
             throw new IllegalArgumentException("neuronIndex range for output layer must be [0," + perceptron_output_quantity + "] but was " + outputNeuronIndex);
+        }
+        if ( board.getPartialScore() > this.maxScore ) {
+            throw new IllegalArgumentException("board.getPartialScore() supera el maximo de " + maxScore + " con el valor " + board.getPartialScore());
         }
         return normOutput.normalize(board.getPartialScore());
     }
