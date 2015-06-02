@@ -28,6 +28,7 @@ import java.util.stream.IntStream;
  * @param <NeuralNetworkClass>
  */
 public abstract class StatisticExperiment<NeuralNetworkClass> {
+
     private Date dateForFileName;
 
     private String experimentName;
@@ -40,7 +41,6 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
 
     private int tileToWin;
     protected LearningExperiment<NeuralNetworkClass> learningExperiment;
-
 
     public StatisticExperiment(LearningExperiment<NeuralNetworkClass> learningExperiment) {
         this.learningExperiment = learningExperiment;
@@ -220,7 +220,7 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
         List<TDLambdaLearning> tdLambdaLearning = new ArrayList(simulations);
 
         for ( int i = 0; i < simulations; i++ ) {
-            INeuralNetworkInterfaceFor2048<NeuralNetworkClass> neuralNetworkInterfaceClone = null;
+            INeuralNetworkInterfaceFor2048<NeuralNetworkClass> neuralNetworkInterfaceClone;
             PerceptronConfiguration2048<NeuralNetworkClass> tempPerceptronConfiguration = null;
             IPerceptronInterface tempPerceptronInterface = null;
             neuralNetworkInterfaceClone = (INeuralNetworkInterfaceFor2048<NeuralNetworkClass>) learningExperiment.getNeuralNetworkInterfaceFor2048().clone();
@@ -228,7 +228,7 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
                 //FIXME tratar null en caso de ejecutar sin red neuronal
                 tempPerceptronConfiguration = (PerceptronConfiguration2048<NeuralNetworkClass>) learningExperiment.getNeuralNetworkInterfaceFor2048().getPerceptronConfiguration().clone();
                 neuralNetworkInterfaceClone.setPerceptronConfiguration(tempPerceptronConfiguration);
-                tempPerceptronInterface = neuralNetworkInterfaceClone.getPerceptronInterface();
+                tempPerceptronInterface = neuralNetworkInterfaceClone.getPerceptronInterface(); //TODO revisar esto
 
                 //cargamos la red neuronal entrenada
                 File perceptronFile = new File(filePath + ".ser");
@@ -241,7 +241,7 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
             Game2048<NeuralNetworkClass> game = new Game2048<>(tempPerceptronConfiguration, tileToWin, visible, delayPerMove, true);
 
             neuralNetworkInterfaces.add(neuralNetworkInterfaceClone);
-            tdLambdaLearning.add(learningExperiment.instanceOfTdLearninrgImplementation(tempPerceptronInterface));
+            tdLambdaLearning.add(learningExperiment.instanceOfTdLearninrgImplementation(tempPerceptronInterface)); //TODO revisar esto
             games.add(game);
             results.add(new ThreadResult());
         }
