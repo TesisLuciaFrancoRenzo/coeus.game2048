@@ -20,11 +20,29 @@ import org.encog.util.arrayutil.NormalizedField;
  */
 public class BoardScoreCustomNormalization<NeuralNetworkClass> extends PerceptronConfiguration2048<NeuralNetworkClass> {
 
+    /**
+     *
+     */
     public int maxEncriptedTile; //ver teoria
+
+    /**
+     *
+     */
     public int maxScore;
+
+    /**
+     *
+     */
     public int minEncriptedTile;
+
+    /**
+     *
+     */
     public int minScore;
 
+    /**
+     *
+     */
     public BoardScoreCustomNormalization() {
 
         maxScore = 16_384; //ver teoria
@@ -46,6 +64,11 @@ public class BoardScoreCustomNormalization<NeuralNetworkClass> extends Perceptro
                 null, maxScore, minScore, activationFunctionMax, activationFunctionMin);
     }
 
+    /**
+     *
+     * @param board
+     * @param normalizedPerceptronInput
+     */
     @Override
     public void calculateNormalizedPerceptronInput(GameBoard<NeuralNetworkClass> board, List<Double> normalizedPerceptronInput) {
         // primera fila
@@ -126,7 +149,14 @@ public class BoardScoreCustomNormalization<NeuralNetworkClass> extends Perceptro
 //        assert board.isTerminalState();
 //        return new Prediction(board.getPartialScore() * 1d, null);
 //    }
-    @Override
+
+    /**
+     *
+     * @param board
+     * @param neuronIndex
+     * @return
+     */
+        @Override
     public double translateRealOutputToNormalizedPerceptronOutputFrom(GameBoard<NeuralNetworkClass> board, int neuronIndex) {
         //TODO testear esto cuando lo hagamos abstracto
         if ( neuronIndex < 0 || neuronIndex >= perceptron_output_quantity ) {
@@ -138,6 +168,12 @@ public class BoardScoreCustomNormalization<NeuralNetworkClass> extends Perceptro
         return normOutput.normalize(board.getPartialScore());
     }
 
+    /**
+     *
+     * @param board
+     * @param outputNeuronIndex
+     * @return
+     */
     @Override
     public double translateRewordToNormalizedPerceptronOutputFrom(GameBoard<NeuralNetworkClass> board, int outputNeuronIndex) {
         if ( outputNeuronIndex < 0 || outputNeuronIndex >= perceptron_output_quantity ) {

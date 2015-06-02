@@ -36,12 +36,12 @@ public class Experiment_02 extends LearningExperiment<BasicNetwork> {
         }
         LearningExperiment experiment = new Experiment_02();
 
-//        boolean statistics = true;
-        boolean statistics = false;
+        boolean statistics = true;
+//        boolean statistics = false;
         experiment.setLearningRateAdaptationToAnnealing(500_000);
         experiment.setLambda(0.7);
         experiment.setGamma(1);
-        experiment.setMomentum(0.5);
+        experiment.setMomentum(0.8);
         experiment.setGamesToPlay(10_000);
         //experiment.setLastGamePlayedNumber(0); //recordar AJUSTAR ESTE VALOR //TODO volver a agregar un sistema que soporte continuar un entrenamiento a medias para lso alfas dinamicos
         experiment.setSaveEvery(500);
@@ -80,6 +80,11 @@ public class Experiment_02 extends LearningExperiment<BasicNetwork> {
         this.setNeuralNetworkInterfaceFor2048(new EncogExperimentInterface(config));
     }
 
+    /**
+     *
+     * @param perceptronInterface
+     * @return
+     */
     @Override
     public TDLambdaLearning instanceOfTdLearninrgImplementation(IPerceptronInterface perceptronInterface) {
         return new TDLambdaLearningAfterstate(perceptronInterface, getAlpha(), getLambda(), true, getGamma(), getMomentum());

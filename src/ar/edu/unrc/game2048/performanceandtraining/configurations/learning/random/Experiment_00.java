@@ -49,6 +49,11 @@ public class Experiment_00 extends LearningExperiment<BasicNetwork> {
         this.setNeuralNetworkInterfaceFor2048(new RandomExperimentInterface(null));
     }
 
+    /**
+     *
+     * @param perceptronInterface
+     * @return
+     */
     @Override
     public TDLambdaLearning instanceOfTdLearninrgImplementation(IPerceptronInterface perceptronInterface) {
         return null;

@@ -20,19 +20,42 @@ import org.encog.util.arrayutil.NormalizedField;
  */
 public class SymetricSample02BoardMaxTile<NeuralNetworkClass> extends PerceptronConfiguration2048<NeuralNetworkClass> {
 
+    /**
+     *
+     */
     public double maxCode2x3;
 
+    /**
+     *
+     */
     public int maxCodeLines;
+
+    /**
+     *
+     */
     public int maxCodedBoardnumber;
 
+    /**
+     *
+     */
     public double minCode2x3;
 
+    /**
+     *
+     */
     public int minCodeLines;
+
+    /**
+     *
+     */
     public int minCodedBoardnumber;
 
     private final NormalizedField normInput2x3;
     private final NormalizedField normInputSimpleBoard;
 
+    /**
+     *
+     */
     public SymetricSample02BoardMaxTile() {
         maxCodeLines = 11_111_111; //2048 max
         minCodeLines = 0;
@@ -59,6 +82,11 @@ public class SymetricSample02BoardMaxTile<NeuralNetworkClass> extends Perceptron
                 null, maxCodedBoardnumber, minCodedBoardnumber, activationFunctionMax, activationFunctionMin);
     }
 
+    /**
+     *
+     * @param board
+     * @param normalizedPerceptronInput
+     */
     @Override
     public void calculateNormalizedPerceptronInput(GameBoard<NeuralNetworkClass> board, List<Double> normalizedPerceptronInput) {
         //ultimas 2 columnas
@@ -171,7 +199,14 @@ public class SymetricSample02BoardMaxTile<NeuralNetworkClass> extends Perceptron
 //        assert board.isTerminalState();
 //        return new Prediction(board.getPartialScore() * 1d, null);
 //    }
-    @Override
+
+    /**
+     *
+     * @param board
+     * @param neuronIndex
+     * @return
+     */
+        @Override
     public double translateRealOutputToNormalizedPerceptronOutputFrom(GameBoard<NeuralNetworkClass> board, int neuronIndex) {
         //TODO testear esto cuando lo hagamos abstracto
         if ( neuronIndex < 0 || neuronIndex >= perceptron_output_quantity ) {
@@ -180,6 +215,12 @@ public class SymetricSample02BoardMaxTile<NeuralNetworkClass> extends Perceptron
         return normOutput.normalize(board.getMaxTileNumberCode());
     }
 
+    /**
+     *
+     * @param board
+     * @param outputNeuronIndex
+     * @return
+     */
     @Override
     public double translateRewordToNormalizedPerceptronOutputFrom(GameBoard<NeuralNetworkClass> board, int outputNeuronIndex) {
         return 0;

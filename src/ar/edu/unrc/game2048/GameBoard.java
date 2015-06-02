@@ -21,10 +21,29 @@ import java.util.Objects;
  */
 public class GameBoard<NeuralNetworkClass> implements IState {
 
+    /**
+     *
+     */
     public static final int maxBoardTileCodedNumber = 17;
+
+    /**
+     *
+     */
     public final static int minBoardTileCodedNumber = 0;
+
+    /**
+     *
+     */
     public static final int tileNumber = 4 * 4;
 
+    /**
+     *
+     * @param t1
+     * @param t2
+     * @param t3
+     * @param t4
+     * @return
+     */
     public static int calculateCustomHash(Tile t1, Tile t2, Tile t3, Tile t4) {
         int result = 1;
         result = 31 * result + t1.getGameValue();
@@ -72,6 +91,9 @@ public class GameBoard<NeuralNetworkClass> implements IState {
         }
     }
 
+    /**
+     *
+     */
     public void addTile() {
         List<Integer> list = this.availableSpace();
         if ( !list.isEmpty() ) {
@@ -83,6 +105,10 @@ public class GameBoard<NeuralNetworkClass> implements IState {
         this.updateInternalState(true);
     }
 
+    /**
+     *
+     * @return
+     */
     public List<Integer> availableSpace() {
         return availableSpaceList;
     }
@@ -94,6 +120,10 @@ public class GameBoard<NeuralNetworkClass> implements IState {
         return canMove;
     }
 
+    /**
+     *
+     * @param tileContainer
+     */
     public void clearBoard(TileContainer tileContainer) {
         for ( int i = 0; i < tileNumber; i++ ) {
             tiles[i] = tileContainer.getTile(0);
@@ -254,6 +284,10 @@ public class GameBoard<NeuralNetworkClass> implements IState {
         return true;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isFull() {
         return this.isFull;
     }

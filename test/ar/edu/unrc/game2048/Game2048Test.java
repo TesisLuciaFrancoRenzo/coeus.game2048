@@ -23,10 +23,16 @@ import org.junit.Test;
  */
 public class Game2048Test {
 
+    /**
+     *
+     */
     @BeforeClass
     public static void setUpClass() {
     }
 
+    /**
+     *
+     */
     @AfterClass
     public static void tearDownClass() {
     }
@@ -34,14 +40,23 @@ public class Game2048Test {
     private Game2048 game;
     private final TileContainer tileContainer;
 
+    /**
+     *
+     */
     public Game2048Test() {
         tileContainer = new TileContainer(17);
     }
 
+    /**
+     *
+     */
     @Before
     public void setUp() {
     }
 
+    /**
+     *
+     */
     @After
     public void tearDown() {
         if ( game != null ) {

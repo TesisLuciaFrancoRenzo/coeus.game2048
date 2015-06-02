@@ -20,11 +20,29 @@ import org.encog.util.arrayutil.NormalizedField;
  */
 public class BoardMaxTileCustomNormalization<NeuralNetworkClass> extends PerceptronConfiguration2048<NeuralNetworkClass> {
 
+    /**
+     *
+     */
     public int maxCodedBoardOutputnumber;
+
+    /**
+     *
+     */
     public int maxEncriptedTile; //ver teoria
+
+    /**
+     *
+     */
     public int minCodedBoardOutputnumber;
+
+    /**
+     *
+     */
     public int minEncriptedTile;
 
+    /**
+     *
+     */
     public BoardMaxTileCustomNormalization() {
 
         maxEncriptedTile = 1; //ver teoria
@@ -46,6 +64,11 @@ public class BoardMaxTileCustomNormalization<NeuralNetworkClass> extends Percept
                 null, maxCodedBoardOutputnumber, minCodedBoardOutputnumber, activationFunctionMax, activationFunctionMin);
     }
 
+    /**
+     *
+     * @param board
+     * @param normalizedPerceptronInput
+     */
     @Override
     public void calculateNormalizedPerceptronInput(GameBoard<NeuralNetworkClass> board, List<Double> normalizedPerceptronInput) {
         // primera fila
@@ -115,7 +138,14 @@ public class BoardMaxTileCustomNormalization<NeuralNetworkClass> extends Percept
 //        assert board.isTerminalState();
 //        return new Prediction(board.getPartialScore() * 1d, null);
 //    }
-    @Override
+
+    /**
+     *
+     * @param board
+     * @param neuronIndex
+     * @return
+     */
+        @Override
     public double translateRealOutputToNormalizedPerceptronOutputFrom(GameBoard<NeuralNetworkClass> board, int neuronIndex) {
         //TODO testear esto cuando lo hagamos abstracto
         if ( neuronIndex < 0 || neuronIndex >= perceptron_output_quantity ) {
@@ -124,6 +154,12 @@ public class BoardMaxTileCustomNormalization<NeuralNetworkClass> extends Percept
         return normOutput.normalize(board.getMaxTileNumberCode());
     }
 
+    /**
+     *
+     * @param board
+     * @param outputNeuronIndex
+     * @return
+     */
     @Override
     public double translateRewordToNormalizedPerceptronOutputFrom(GameBoard<NeuralNetworkClass> board, int outputNeuronIndex) {
         return 0;

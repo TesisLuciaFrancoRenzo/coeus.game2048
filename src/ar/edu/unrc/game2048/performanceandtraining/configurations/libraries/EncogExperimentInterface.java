@@ -25,10 +25,24 @@ import org.encog.util.obj.SerializeObject;
  */
 public class EncogExperimentInterface extends INeuralNetworkInterfaceFor2048<BasicNetwork> {
 
-
+    /**
+     *
+     */
     protected Function<Double, Double> activationFunctionHidden;
+
+    /**
+     *
+     */
     protected Function<Double, Double> activationFunctionOutput;
+
+    /**
+     *
+     */
     protected Function<Double, Double> derivatedActivationFunctionHidden;
+
+    /**
+     *
+     */
     protected Function<Double, Double> derivatedActivationFunctionOutput;
 
     /**
@@ -39,6 +53,11 @@ public class EncogExperimentInterface extends INeuralNetworkInterfaceFor2048<Bas
         super(perceptronConfiguration);
     }
 
+    /**
+     *
+     * @param randomFile
+     * @param trainedFile
+     */
     @Override
     public void compareNeuralNetworks(File randomFile, File trainedFile) {
         try {
@@ -52,6 +71,10 @@ public class EncogExperimentInterface extends INeuralNetworkInterfaceFor2048<Bas
         }
     }
 
+    /**
+     *
+     * @param neuralNetwork
+     */
     public void setConfigForTesting(BasicNetwork neuralNetwork) {
         getPerceptronConfiguration().setNeuralNetwork(neuralNetwork);
     }
@@ -151,6 +174,11 @@ public class EncogExperimentInterface extends INeuralNetworkInterfaceFor2048<Bas
         return encogPerceptronInterface;
     }
 
+    /**
+     *
+     * @param randomized
+     * @return
+     */
     public BasicNetwork initializeEncogPerceptron(boolean randomized) {
         if ( getPerceptronConfiguration().hiddenLayerQuantity < 1 ) {
             throw new IllegalArgumentException("hiddenLayers < 1");

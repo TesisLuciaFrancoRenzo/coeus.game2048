@@ -20,11 +20,29 @@ import org.encog.util.arrayutil.NormalizedField;
  */
 public class NTupleScore<NeuralNetworkClass> extends PerceptronConfiguration2048<NeuralNetworkClass> {
 
+    /**
+     *
+     */
     public int maxCodedBoardnumber = 11_111_111; //2048 maximo
+
+    /**
+     *
+     */
     public int maxScore = 16_384; //ver teoria
+
+    /**
+     *
+     */
     public int minCodedBoardnumber = 0;
+
+    /**
+     *
+     */
     public int minScore = 0;
 
+    /**
+     *
+     */
     public NTupleScore() {
         perceptron_hidden_quantity = 17;
         perceptron_input_quantity = 17;
@@ -41,6 +59,11 @@ public class NTupleScore<NeuralNetworkClass> extends PerceptronConfiguration2048
                 null, maxScore, minScore, activationFunctionMax, activationFunctionMin);
     }
 
+    /**
+     *
+     * @param board
+     * @param normalizedPerceptronInput
+     */
     @Override
     public void calculateNormalizedPerceptronInput(GameBoard<NeuralNetworkClass> board, List<Double> normalizedPerceptronInput) {
         // verticales
@@ -216,7 +239,14 @@ public class NTupleScore<NeuralNetworkClass> extends PerceptronConfiguration2048
 //        assert board.isTerminalState();
 //        return new Prediction(board.getPartialScore() * 1d, null);
 //    }
-    @Override
+
+    /**
+     *
+     * @param board
+     * @param neuronIndex
+     * @return
+     */
+        @Override
     public double translateRealOutputToNormalizedPerceptronOutputFrom(GameBoard<NeuralNetworkClass> board, int neuronIndex) {
         //TODO testear esto cuando lo hagamos abstracto
         if ( neuronIndex < 0 || neuronIndex >= perceptron_output_quantity ) {
@@ -228,6 +258,12 @@ public class NTupleScore<NeuralNetworkClass> extends PerceptronConfiguration2048
         return normOutput.normalize(board.getPartialScore());
     }
 
+    /**
+     *
+     * @param board
+     * @param outputNeuronIndex
+     * @return
+     */
     @Override
     public double translateRewordToNormalizedPerceptronOutputFrom(GameBoard<NeuralNetworkClass> board, int outputNeuronIndex) {
         if ( outputNeuronIndex < 0 || outputNeuronIndex >= perceptron_output_quantity ) {

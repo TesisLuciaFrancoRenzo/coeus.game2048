@@ -12,7 +12,6 @@ import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.NT
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IPerceptronInterface;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearning;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearningAfterstate;
-import ar.edu.unrc.tdlearning.perceptron.training.ELearningRateAdaptation;
 import java.io.File;
 import org.encog.neural.networks.BasicNetwork;
 
@@ -43,7 +42,7 @@ public class Experiment_06 extends LearningExperiment<BasicNetwork> {
         experiment.setLearningRateAdaptationToFixed();
         experiment.setLambda(0.7);
         experiment.setGamma(1);
-        experiment.setMomentum(0.5);
+        experiment.setMomentum(0.8);
         experiment.setGamesToPlay(40_000);
         //experiment.setLastGamePlayedNumber(0); //recordar AJUSTAR ESTE VALOR //TODO volver a agregar un sistema que soporte continuar un entrenamiento a medias para lso alfas dinamicos
         experiment.setSaveEvery(500);

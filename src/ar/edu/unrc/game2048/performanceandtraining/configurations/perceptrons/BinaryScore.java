@@ -50,15 +50,6 @@ public class BinaryScore<NeuralNetworkClass> extends PerceptronConfiguration2048
 //    }
 
     @Override
-    public double translateRealOutputToNormalizedPerceptronOutputFrom(GameBoard<NeuralNetworkClass> board, int neuronIndex) {
-        //TODO testear esto cuando lo hagamos abstracto
-        if ( neuronIndex < 0 || neuronIndex >= perceptron_output_quantity ) {
-            throw new IllegalArgumentException("neuronIndex range for output layer must be [0," + perceptron_output_quantity + "] but was " + neuronIndex);
-        }
-        return normOutput.normalize(board.getPartialScore());
-    }
-
-    @Override
     public void calculateNormalizedPerceptronInput(GameBoard<NeuralNetworkClass> board, List<Double> normalizedPerceptronInput) {
         Tile[] tiles = board.getTiles();
         int currentNeuron = 0;
@@ -86,6 +77,15 @@ public class BinaryScore<NeuralNetworkClass> extends PerceptronConfiguration2048
             assert data[0] != Double.NaN;
             return (int) Math.round(normOutput.deNormalize(data[0]));
         };
+    }
+
+    @Override
+    public double translateRealOutputToNormalizedPerceptronOutputFrom(GameBoard<NeuralNetworkClass> board, int neuronIndex) {
+        //TODO testear esto cuando lo hagamos abstracto
+        if ( neuronIndex < 0 || neuronIndex >= perceptron_output_quantity ) {
+            throw new IllegalArgumentException("neuronIndex range for output layer must be [0," + perceptron_output_quantity + "] but was " + neuronIndex);
+        }
+        return normOutput.normalize(board.getPartialScore());
     }
 
     @Override

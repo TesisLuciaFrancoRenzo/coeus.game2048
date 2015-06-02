@@ -34,10 +34,17 @@ public class ThreadResult {
         maxScoreAchieved = new HashMap<>();
     }
 
+    /**
+     *
+     */
     public void addProcesedGames() {
         procesedGames++;
     }
 
+    /**
+     *
+     * @param tileCode
+     */
     public void addStatisticForTile(int tileCode) {
         tileStatistics.set(tileCode, tileStatistics.get(tileCode) + 1);
     }
@@ -70,6 +77,11 @@ public class ThreadResult {
         procesedGames = value;
     }
 
+    /**
+     *
+     * @param tileCode
+     * @return
+     */
     public Integer getStatisticForTile(int tileCode) {
         return tileStatistics.get(tileCode);
     }

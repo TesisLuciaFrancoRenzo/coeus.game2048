@@ -23,10 +23,16 @@ import org.junit.Test;
  */
 public class BoardMaxTileTest {
 
+    /**
+     *
+     */
     @BeforeClass
     public static void setUpClass() {
     }
 
+    /**
+     *
+     */
     @AfterClass
     public static void tearDownClass() {
     }
@@ -38,6 +44,9 @@ public class BoardMaxTileTest {
 
     private final TileContainer tileContainer;
 
+    /**
+     *
+     */
     public BoardMaxTileTest() {
         tileContainer = new TileContainer(17);
         Tile[] initial = {
@@ -57,12 +66,18 @@ public class BoardMaxTileTest {
         this.randomBoard1 = randomB;
     }
 
+    /**
+     *
+     */
     @Before
     public void setUp() {
         perceptronConfiguration = new BoardMaxTile<>();
         game = new Game2048(perceptronConfiguration, 2_048, false, 0, true);
     }
 
+    /**
+     *
+     */
     @After
     public void tearDown() {
     }

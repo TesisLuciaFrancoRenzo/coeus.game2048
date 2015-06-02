@@ -39,6 +39,11 @@ public abstract class INeuralNetworkInterfaceFor2048<NeuralNetworkClass> impleme
         return super.clone(); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /**
+     *
+     * @param randomFile
+     * @param trainedFile
+     */
     public abstract void compareNeuralNetworks(File randomFile, File trainedFile);
 
     /**

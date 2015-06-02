@@ -21,14 +21,40 @@ import org.encog.util.arrayutil.NormalizedField;
  */
 public class FullNTupleScore<NeuralNetworkClass> extends PerceptronConfiguration2048<NeuralNetworkClass> {
 
+    /**
+     *
+     */
     public int maxCodedBoardnumber = 11_111_111; //2048 maximo
+
+    /**
+     *
+     */
     public int maxCodedNumber = 1;
+
+    /**
+     *
+     */
     public int maxScore = 16_384; //ver teoria
+
+    /**
+     *
+     */
     public int minCodedBoardnumber = 0;
+
+    /**
+     *
+     */
     public int minCodedNumber = 0;
+
+    /**
+     *
+     */
     public int minScore = 0;
     private final NormalizedField normInputSimpleBoard;
 
+    /**
+     *
+     */
     public FullNTupleScore() {
         perceptron_hidden_quantity = 17;
         perceptron_input_quantity = 33;
@@ -49,6 +75,11 @@ public class FullNTupleScore<NeuralNetworkClass> extends PerceptronConfiguration
                 null, maxScore, minScore, activationFunctionMax, activationFunctionMin);
     }
 
+    /**
+     *
+     * @param board
+     * @param normalizedPerceptronInput
+     */
     @Override
     public void calculateNormalizedPerceptronInput(GameBoard<NeuralNetworkClass> board, List<Double> normalizedPerceptronInput) {
         // verticales
@@ -278,6 +309,12 @@ public class FullNTupleScore<NeuralNetworkClass> extends PerceptronConfiguration
 //        return new Prediction(board.getPartialScore() * 1d, null);
 //    }
 
+    /**
+     *
+     * @param board
+     * @param neuronIndex
+     * @return
+     */
     @Override
     public double translateRealOutputToNormalizedPerceptronOutputFrom(GameBoard<NeuralNetworkClass> board, int neuronIndex) {
         //TODO testear esto cuando lo hagamos abstracto
@@ -290,6 +327,12 @@ public class FullNTupleScore<NeuralNetworkClass> extends PerceptronConfiguration
         return normOutput.normalize(board.getPartialScore());
     }
 
+    /**
+     *
+     * @param board
+     * @param outputNeuronIndex
+     * @return
+     */
     @Override
     public double translateRewordToNormalizedPerceptronOutputFrom(GameBoard<NeuralNetworkClass> board, int outputNeuronIndex) {
         if ( outputNeuronIndex < 0 || outputNeuronIndex >= perceptron_output_quantity ) {

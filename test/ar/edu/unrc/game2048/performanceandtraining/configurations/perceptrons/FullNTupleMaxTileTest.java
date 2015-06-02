@@ -23,10 +23,16 @@ import org.junit.Test;
  */
 public class FullNTupleMaxTileTest {
 
+    /**
+     *
+     */
     @BeforeClass
     public static void setUpClass() {
     }
 
+    /**
+     *
+     */
     @AfterClass
     public static void tearDownClass() {
     }
@@ -38,6 +44,9 @@ public class FullNTupleMaxTileTest {
 
     private final TileContainer tileContainer;
 
+    /**
+     *
+     */
     public FullNTupleMaxTileTest() {
         tileContainer = new TileContainer(17);
         Tile[] initial = {
@@ -57,12 +66,18 @@ public class FullNTupleMaxTileTest {
         this.randomBoard1 = randomB;
     }
 
+    /**
+     *
+     */
     @Before
     public void setUp() {
         perceptronConfiguration = new FullNTupleMaxTile<>();
         game = new Game2048(perceptronConfiguration, 2_048, false, 0, true);
     }
 
+    /**
+     *
+     */
     @After
     public void tearDown() {
     }

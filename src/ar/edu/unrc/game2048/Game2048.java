@@ -305,6 +305,10 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public int getLastTurn() {
         return turnNumber;
     }

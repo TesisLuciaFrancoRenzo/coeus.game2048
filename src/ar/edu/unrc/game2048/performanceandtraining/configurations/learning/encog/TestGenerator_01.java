@@ -6,7 +6,6 @@
 package ar.edu.unrc.game2048.performanceandtraining.configurations.learning.encog;
 
 import ar.edu.unrc.game2048.performanceandtraining.configurations.LearningExperiment;
-import ar.edu.unrc.tdlearning.perceptron.training.ELearningRateAdaptation;
 import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
@@ -24,7 +23,7 @@ public class TestGenerator_01 {
         experiment.createLogs(createLogs);
         experiment.setLambda(lambda);
         experiment.setGamma(1);
-        experiment.setMomentum(0.5);
+        experiment.setMomentum(0.8);
         experiment.setLearningRateAdaptationToFixed();
         experiment.setGamesToPlay(gamesToPlay);
         experiment.setSaveEvery(saveEvery);

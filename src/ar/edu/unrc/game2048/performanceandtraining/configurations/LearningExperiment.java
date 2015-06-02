@@ -35,8 +35,14 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
  */
 public abstract class LearningExperiment<NeuralNetworkClass> {
 
+    /**
+     *
+     */
     public static final String _RANDOM = "_random";
 
+    /**
+     *
+     */
     public static final String _TRAINED = "_trained";
     private double[] alpha;
     private int annealingT;
@@ -58,12 +64,25 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
     private int simulationsForStatistics;
     private boolean statisticsOnly = false;
     private int tileToWin;
+
+    /**
+     *
+     */
     protected StatisticExperiment statisticExperiment;
 
+    /**
+     *
+     * @param logsActivated
+     */
     public void createLogs(boolean logsActivated) {
         this.logsActivated = logsActivated;
     }
 
+    /**
+     *
+     * @param experimentPath
+     * @return
+     */
     public String createPathToDir(String experimentPath) {
         String dirPath = experimentPath
                 + neuralNetworkInterfaceFor2048.getLibName() + File.separator
@@ -129,6 +148,10 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
         this.gamma = gamma;
     }
 
+    /**
+     *
+     * @param randomized
+     */
     public void setInitializePerceptronRandomized(boolean randomized) {
         initializePerceptronRandomized = randomized;
     }
@@ -161,6 +184,10 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
         this.learningRateAdaptation = learningRateAdaptation;
     }
 
+    /**
+     *
+     * @param annealingT
+     */
     public void setLearningRateAdaptationToAnnealing(int annealingT) {
         this.learningRateAdaptation = ELearningRateAdaptation.annealing;
         this.annealingT = annealingT;
@@ -219,6 +246,11 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
      */
     public abstract void initialize() throws Exception;
 
+    /**
+     *
+     * @param perceptronInterface
+     * @return
+     */
     public abstract TDLambdaLearning instanceOfTdLearninrgImplementation(IPerceptronInterface perceptronInterface);
 
     /**
@@ -263,10 +295,18 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
         this.statisticsOnly = statisticsOnly;
     }
 
+    /**
+     *
+     */
     public void setLearningRateAdaptationToFixed() {
         this.learningRateAdaptation = ELearningRateAdaptation.fixed;
     }
 
+    /**
+     *
+     * @param experimentPath
+     * @param delayPerMove
+     */
     public void start(String experimentPath, int delayPerMove) {
         File experimentPathFile = new File(experimentPath);
         if ( experimentPathFile.exists() && !experimentPathFile.isDirectory() ) {
@@ -283,6 +323,20 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
         }
     }
 
+    /**
+     *
+     * @param game
+     * @param printStream
+     * @param lastSaveCounter
+     * @param randomPerceptronFile
+     * @param perceptronFile
+     * @param backupNumber
+     * @param filePath
+     * @param dateFormater
+     * @param now
+     * @param zeroNumbers
+     * @throws Exception
+     */
     public void training(Game2048<NeuralNetworkClass> game, final PrintStream printStream, int lastSaveCounter, File randomPerceptronFile, File perceptronFile, int backupNumber, String filePath, SimpleDateFormat dateFormater, Date now, int zeroNumbers) throws Exception {
         File perceptronFileBackup;
         switch ( this.learningRateAdaptation ) {
@@ -422,6 +476,12 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
         this.tileToWin = tileToWin;
     }
 
+    /**
+     *
+     * @param experimentPath
+     * @param delayPerMove
+     * @throws Exception
+     */
     protected void runExperiment(String experimentPath, int delayPerMove) throws Exception {
         SimpleDateFormat dateFormater = new SimpleDateFormat("dd-MM-yyyy_HH'h'mm'm'ss's'");
         Date now = new Date();

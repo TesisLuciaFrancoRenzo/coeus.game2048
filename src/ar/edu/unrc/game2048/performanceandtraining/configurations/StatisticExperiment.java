@@ -40,8 +40,16 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
     private List<Double> tileStatistics;
 
     private int tileToWin;
+
+    /**
+     *
+     */
     protected LearningExperiment<NeuralNetworkClass> learningExperiment;
 
+    /**
+     *
+     * @param learningExperiment
+     */
     public StatisticExperiment(LearningExperiment<NeuralNetworkClass> learningExperiment) {
         this.learningExperiment = learningExperiment;
     }
@@ -198,6 +206,12 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
      */
     protected abstract void initializeStatistics() throws Exception;
 
+    /**
+     *
+     * @param experimentPath
+     * @param delayPerMove
+     * @throws Exception
+     */
     protected void run(String experimentPath, int delayPerMove) throws Exception {
         System.out.print("Starting " + this.getPerceptronName() + " Statistics... ");
         String dirPath = experimentPath
