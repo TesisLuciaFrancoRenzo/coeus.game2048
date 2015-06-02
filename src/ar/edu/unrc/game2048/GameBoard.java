@@ -105,7 +105,7 @@ public class GameBoard<NeuralNetworkClass> implements IState {
         if ( obj == null ) {
             return false;
         }
-        if ( getClass() != obj.getClass() ) {
+        if ( !Objects.equals(getClass(), obj.getClass()) ) {
             return false;
         }
         final GameBoard<NeuralNetworkClass> other = (GameBoard<NeuralNetworkClass>) obj;
@@ -152,7 +152,10 @@ public class GameBoard<NeuralNetworkClass> implements IState {
         copy.canMove = canMove;
         copy.isFull = isFull;
         copy.maxTileNumberValue = maxTileNumberValue;
-        copy.availableSpaceList = availableSpaceList;
+        copy.availableSpaceList = new ArrayList<>(16);
+        availableSpaceList.stream().forEach((space) -> {
+            copy.availableSpaceList.add(space);
+        });
         copy.needToAddTile = needToAddTile;
         copy.partialScore = partialScore;
         return copy;
@@ -291,6 +294,15 @@ public class GameBoard<NeuralNetworkClass> implements IState {
         return getTiles()[x + y * 4];
     }
 
+//    @Override
+//    public IPrediction translateFinalStateToPrediction() {
+//        return getGame().getPerceptronConfiguration().translateFinalRewordToPrediction(this); //TODO borrar?
+//    }
+    @Override
+    public double translateRealOutputToNormalizedPerceptronOutputFrom(int outputNeuronIndex) {
+        return getGame().getPerceptronConfiguration().translateRealOutputToNormalizedPerceptronOutputFrom(this, outputNeuronIndex);
+    }
+
     @Override
     public double translateRewordToNormalizedPerceptronOutputFrom(int outputNeuronIndex) {
         return getGame().getPerceptronConfiguration().translateRewordToNormalizedPerceptronOutputFrom(this, outputNeuronIndex);
@@ -298,7 +310,7 @@ public class GameBoard<NeuralNetworkClass> implements IState {
 
 //    @Override
 //    public double translateThisFinalStateToPerceptronOutput(int neuronIndex) {
-//        return getGame().getPerceptronConfiguration().translateThisFinalStateToNormalizedPerceptronOutput(this, neuronIndex);
+//        return getGame().getPerceptronConfiguration().translateRealOutputToNormalizedPerceptronOutputFrom(this, neuronIndex);
 //    }
     @Override
     public double translateToPerceptronInput(int neuronIndex) {
@@ -322,14 +334,14 @@ public class GameBoard<NeuralNetworkClass> implements IState {
         canMove = calculateCanMove();
         calulateMaxTile();
         if ( getGame().getPerceptronConfiguration() != null && updateNormalizedInputs ) {
-            assert this.getMaxTileNumberCode() != 0;
+            //   assert this.getMaxTileNumberCode() != 0;
             getGame().getPerceptronConfiguration().calculateNormalizedPerceptronInput(this, normalizedPerceptronInput);
         }
 
     }
 
     private List<Integer> calculateAvailableSpace() {
-        final List<Integer> list = new ArrayList<>(16);
+        List<Integer> list = new ArrayList<>(16);
         for ( int i = 0; i < tiles.length; i++ ) {
             if ( tiles[i].isEmpty() ) {
                 list.add(i);

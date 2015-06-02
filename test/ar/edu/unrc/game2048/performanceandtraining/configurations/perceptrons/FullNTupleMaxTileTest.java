@@ -369,7 +369,7 @@ public class FullNTupleMaxTileTest {
     }
 
     /**
-     * Test of translateThisFinalStateToNormalizedPerceptronOutput method, of class
+     * Test of translateRealOutputToNormalizedPerceptronOutputFrom method, of class
      * BoardMaxTile.
      */
     @Test

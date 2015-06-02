@@ -143,7 +143,7 @@ public class BoardMaxTileTest {
     }
 
     /**
-     * Test of translateThisFinalStateToNormalizedPerceptronOutput method, of class
+     * Test of translateRealOutputToNormalizedPerceptronOutputFrom method, of class
      * BoardMaxTile.
      */
     @Test

@@ -83,7 +83,7 @@ public class EncogExperimentTest {
             }
 
             @Override
-            public double translateThisFinalStateToNormalizedPerceptronOutput(GameBoard<BasicNetwork> board, int neuronIndex) {
+            public double translateRealOutputToNormalizedPerceptronOutputFrom(GameBoard<BasicNetwork> board, int neuronIndex) {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
         };

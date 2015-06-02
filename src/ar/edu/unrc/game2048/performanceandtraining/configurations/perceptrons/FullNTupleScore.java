@@ -9,7 +9,7 @@ import ar.edu.unrc.game2048.GameBoard;
 import ar.edu.unrc.game2048.PerceptronConfiguration2048;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IsolatedComputation;
 import java.util.List;
-import org.encog.engine.network.activation.ActivationTANH;
+import org.encog.engine.network.activation.ActivationSigmoid;
 import org.encog.util.arrayutil.NormalizationAction;
 import org.encog.util.arrayutil.NormalizedField;
 
@@ -34,10 +34,10 @@ public class FullNTupleScore<NeuralNetworkClass> extends PerceptronConfiguration
         perceptron_input_quantity = 33;
         perceptron_output_quantity = 1;
         hiddenLayerQuantity = 1;
-        activationFunctionHiddenForEncog = new ActivationTANH();
-        activationFunctionOutputForEncog = new ActivationTANH();
+        activationFunctionHiddenForEncog = new ActivationSigmoid();
+        activationFunctionOutputForEncog = new ActivationSigmoid();
         activationFunctionMax = 1;
-        activationFunctionMin = -1;
+        activationFunctionMin = 0;
 
         normInput = new NormalizedField(NormalizationAction.Normalize,
                 null, maxCodedBoardnumber, minCodedBoardnumber, activationFunctionMax, activationFunctionMin);
@@ -271,6 +271,21 @@ public class FullNTupleScore<NeuralNetworkClass> extends PerceptronConfiguration
             return (int) Math.round(normOutput.deNormalize(data[0]));
         };
     }
+//
+//    @Override
+//    public Prediction translateFinalRewordToPrediction(GameBoard<NeuralNetworkClass> board) {
+//        assert board.isTerminalState();
+//        return new Prediction(board.getPartialScore() * 1d, null);
+//    }
+
+    @Override
+    public double translateRealOutputToNormalizedPerceptronOutputFrom(GameBoard<NeuralNetworkClass> board, int neuronIndex) {
+        //TODO testear esto cuando lo hagamos abstracto
+        if ( neuronIndex < 0 || neuronIndex >= perceptron_output_quantity ) {
+            throw new IllegalArgumentException("neuronIndex range for output layer must be [0," + perceptron_output_quantity + "] but was " + neuronIndex);
+        }
+        return normOutput.normalize(board.getPartialScore());
+    }
 
     @Override
     public double translateRewordToNormalizedPerceptronOutputFrom(GameBoard<NeuralNetworkClass> board, int outputNeuronIndex) {
@@ -281,7 +296,7 @@ public class FullNTupleScore<NeuralNetworkClass> extends PerceptronConfiguration
     }
 
 //    @Override
-//    public double translateThisFinalStateToNormalizedPerceptronOutput(GameBoard<NeuralNetworkClass> board, int neuronIndex) {
+//    public double translateRealOutputToNormalizedPerceptronOutputFrom(GameBoard<NeuralNetworkClass> board, int neuronIndex) {
 //        //TODO testear esto cuando lo hagamos abstracto
 //        if ( neuronIndex < 0 || neuronIndex >= perceptron_output_quantity ) {
 //            throw new IllegalArgumentException("neuronIndex range for output layer must be [0," + perceptron_output_quantity + "] but was " + neuronIndex);

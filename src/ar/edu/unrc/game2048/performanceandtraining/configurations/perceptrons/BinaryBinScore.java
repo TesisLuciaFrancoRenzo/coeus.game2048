@@ -10,7 +10,7 @@ import ar.edu.unrc.game2048.PerceptronConfiguration2048;
 import ar.edu.unrc.game2048.Tile;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IsolatedComputation;
 import java.util.List;
-import org.encog.engine.network.activation.ActivationTANH;
+import org.encog.engine.network.activation.ActivationSigmoid;
 import org.encog.util.arrayutil.NormalizationAction;
 import org.encog.util.arrayutil.NormalizedField;
 
@@ -28,10 +28,10 @@ public class BinaryBinScore<NeuralNetworkClass> extends PerceptronConfiguration2
         perceptron_input_quantity = 64;
         perceptron_output_quantity = 20; //para poder representar el 500_000 como max score en binaro, que es 111 1010 0010 000
         hiddenLayerQuantity = 1;
-        activationFunctionHiddenForEncog = new ActivationTANH();
-        activationFunctionOutputForEncog = new ActivationTANH();
+        activationFunctionHiddenForEncog = new ActivationSigmoid();
+        activationFunctionOutputForEncog = new ActivationSigmoid();
         activationFunctionMax = 1;
-        activationFunctionMin = -1;
+        activationFunctionMin = 0;
 
         normInput = new NormalizedField(NormalizationAction.Normalize,
                 null, 1, 0, activationFunctionMax, activationFunctionMin);
@@ -74,6 +74,11 @@ public class BinaryBinScore<NeuralNetworkClass> extends PerceptronConfiguration2
         }
     }
 
+//    @Override
+//    public Prediction translateFinalRewordToPrediction(GameBoard<NeuralNetworkClass> board) {
+//        assert board.isTerminalState();
+//        return new Prediction(board.getPartialScore() * 1d, null);
+//    }
     @Override
     public IsolatedComputation<Integer> translatePerceptronOutputToPrediction(double[] data) {
         return () -> {
@@ -97,6 +102,15 @@ public class BinaryBinScore<NeuralNetworkClass> extends PerceptronConfiguration2
             throw new IllegalArgumentException("neuronIndex range for output layer must be [0," + perceptron_output_quantity + "] but was " + outputNeuronIndex);
         }
         return toBinary(board.getPartialScore(), outputNeuronIndex);
+    }
+
+    @Override
+    public double translateRealOutputToNormalizedPerceptronOutputFrom(GameBoard<NeuralNetworkClass> board, int neuronIndex) {
+        //TODO testear esto cuando lo hagamos abstracto
+        if ( neuronIndex < 0 || neuronIndex >= perceptron_output_quantity ) {
+            throw new IllegalArgumentException("neuronIndex range for output layer must be [0," + perceptron_output_quantity + "] but was " + neuronIndex);
+        }
+        return normOutput.normalize(board.getPartialScore());
     }
 
 }

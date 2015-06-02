@@ -61,6 +61,7 @@ public abstract class PerceptronConfiguration2048<NeuralNetworkClass> implements
      */
     public abstract IsolatedComputation<Integer> translatePerceptronOutputToPrediction(double[] data);
 
-//    public abstract double translateThisFinalStateToNormalizedPerceptronOutput(GameBoard<NeuralNetworkClass> board, int outputNeuronIndex);
     public abstract double translateRewordToNormalizedPerceptronOutputFrom(GameBoard<NeuralNetworkClass> board, int outputNeuronIndex);
+
+    public abstract double translateRealOutputToNormalizedPerceptronOutputFrom(GameBoard<NeuralNetworkClass> board, int outputNeuronIndex);
 }

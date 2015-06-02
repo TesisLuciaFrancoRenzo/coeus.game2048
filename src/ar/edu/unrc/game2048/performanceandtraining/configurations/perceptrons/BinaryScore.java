@@ -10,7 +10,7 @@ import ar.edu.unrc.game2048.PerceptronConfiguration2048;
 import ar.edu.unrc.game2048.Tile;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IsolatedComputation;
 import java.util.List;
-import org.encog.engine.network.activation.ActivationTANH;
+import org.encog.engine.network.activation.ActivationSigmoid;
 import org.encog.util.arrayutil.NormalizationAction;
 import org.encog.util.arrayutil.NormalizedField;
 
@@ -34,13 +34,28 @@ public class BinaryScore<NeuralNetworkClass> extends PerceptronConfiguration2048
         perceptron_input_quantity = 64;
         perceptron_output_quantity = 1;
         hiddenLayerQuantity = 1;
-        activationFunctionHiddenForEncog = new ActivationTANH();
-        activationFunctionOutputForEncog = new ActivationTANH();
+        activationFunctionHiddenForEncog = new ActivationSigmoid();
+        activationFunctionOutputForEncog = new ActivationSigmoid();
         activationFunctionMax = 1;
-        activationFunctionMin = -1;
+        activationFunctionMin = 0;
 
         normOutput = new NormalizedField(NormalizationAction.Normalize,
                 null, maxScore, minScore, activationFunctionMax, activationFunctionMin);
+    }
+//
+//    @Override
+//    public Prediction translateFinalRewordToPrediction(GameBoard<NeuralNetworkClass> board) {
+//        assert board.isTerminalState();
+//        return new Prediction(board.getPartialScore() * 1d, null);
+//    }
+
+    @Override
+    public double translateRealOutputToNormalizedPerceptronOutputFrom(GameBoard<NeuralNetworkClass> board, int neuronIndex) {
+        //TODO testear esto cuando lo hagamos abstracto
+        if ( neuronIndex < 0 || neuronIndex >= perceptron_output_quantity ) {
+            throw new IllegalArgumentException("neuronIndex range for output layer must be [0," + perceptron_output_quantity + "] but was " + neuronIndex);
+        }
+        return normOutput.normalize(board.getPartialScore());
     }
 
     @Override
@@ -50,14 +65,14 @@ public class BinaryScore<NeuralNetworkClass> extends PerceptronConfiguration2048
         for ( Tile tile : tiles ) {
             String bits = Integer.toBinaryString(tile.getCode());
             for ( int k = 0; k < binaryLenght - bits.length(); k++ ) {
-                normalizedPerceptronInput.set(currentNeuron, -1d);
+                normalizedPerceptronInput.set(currentNeuron, activationFunctionMin);
                 currentNeuron++;
             }
             for ( int j = 0; j < bits.length(); j++ ) {
                 if ( bits.charAt(j) == '0' ) {
-                    normalizedPerceptronInput.set(currentNeuron, -1d);
+                    normalizedPerceptronInput.set(currentNeuron, activationFunctionMin);
                 } else {
-                    normalizedPerceptronInput.set(currentNeuron, 1d);
+                    normalizedPerceptronInput.set(currentNeuron, activationFunctionMax);
                 }
                 currentNeuron++;
             }
@@ -82,7 +97,7 @@ public class BinaryScore<NeuralNetworkClass> extends PerceptronConfiguration2048
     }
 
 //    @Override
-//    public double translateThisFinalStateToNormalizedPerceptronOutput(GameBoard<NeuralNetworkClass> board, int neuronIndex) {
+//    public double translateRealOutputToNormalizedPerceptronOutputFrom(GameBoard<NeuralNetworkClass> board, int neuronIndex) {
 //        //TODO testear esto cuando lo hagamos abstracto
 //        if ( neuronIndex < 0 || neuronIndex >= perceptron_output_quantity ) {
 //            throw new IllegalArgumentException("neuronIndex range for output layer must be [0," + perceptron_output_quantity + "] but was " + neuronIndex);
