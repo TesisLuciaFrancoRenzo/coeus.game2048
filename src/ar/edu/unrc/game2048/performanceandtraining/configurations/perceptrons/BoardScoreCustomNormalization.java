@@ -124,17 +124,6 @@ public class BoardScoreCustomNormalization<NeuralNetworkClass> extends Perceptro
                 normInput.normalize(encryptTile(board, board.tileAt(3, 3).getCode()))
         );
     }
-//    @Override
-//    public double translateRealOutputToNormalizedPerceptronOutputFrom(GameBoard<NeuralNetworkClass> board, int neuronIndex) {
-//        //TODO testear esto cuando lo hagamos abstracto
-//        if ( neuronIndex < 0 || neuronIndex >= perceptron_output_quantity ) {
-//            throw new IllegalArgumentException("neuronIndex range for output layer must be [0," + perceptron_output_quantity + "] but was " + neuronIndex);
-//        }
-//        if ( board.getGame().getScore() > maxScore ) {
-//            throw new IllegalArgumentException("game score can't exceede " + maxScore + "] points, but was " + board.getGame().getScore());
-//        }
-//        return normOutput.normalize(board.getAsFinalScore()); //TODO revisar esot.. realmente tiene e,l puntaje final? ya que si se trabaja sobre tableros evaluados y no usados no deberia tener el puntaje
-//    }
 
     @Override
     public IsolatedComputation<Integer> translatePerceptronOutputToPrediction(double[] data) {
@@ -144,21 +133,15 @@ public class BoardScoreCustomNormalization<NeuralNetworkClass> extends Perceptro
         };
     }
 
-//    @Override
-//    public Prediction translateFinalRewordToPrediction(GameBoard<NeuralNetworkClass> board) {
-//        assert board.isTerminalState();
-//        return new Prediction(board.getPartialScore() * 1d, null);
-//    }
     /**
      *
      * @param board
-     * @param neuronIndex
-     * <p>
+     * @param neuronIndex <p>
      * @return
      */
     @Override
     public double translateRealOutputToNormalizedPerceptronOutputFrom(GameBoard<NeuralNetworkClass> board, int neuronIndex) {
-        //TODO testear esto cuando lo hagamos abstracto
+
         if ( neuronIndex < 0 || neuronIndex >= perceptron_output_quantity ) {
             throw new IllegalArgumentException("neuronIndex range for output layer must be [0," + perceptron_output_quantity + "] but was " + neuronIndex);
         }
@@ -171,8 +154,7 @@ public class BoardScoreCustomNormalization<NeuralNetworkClass> extends Perceptro
     /**
      *
      * @param board
-     * @param outputNeuronIndex
-     * <p>
+     * @param outputNeuronIndex <p>
      * @return
      */
     @Override

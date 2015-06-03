@@ -241,21 +241,16 @@ public class NTupleMaxTile<NeuralNetworkClass> extends PerceptronConfiguration20
         };
     }
 
-//    @Override
-//    public Prediction translateFinalRewordToPrediction(GameBoard<NeuralNetworkClass> board) {
-//        assert board.isTerminalState();
-//        return new Prediction(board.getPartialScore() * 1d, null);
-//    }
-
     /**
      *
      * @param board
      * @param neuronIndex
+     * <p>
      * @return
      */
-        @Override
+    @Override
     public double translateRealOutputToNormalizedPerceptronOutputFrom(GameBoard<NeuralNetworkClass> board, int neuronIndex) {
-        //TODO testear esto cuando lo hagamos abstracto
+
         if ( neuronIndex < 0 || neuronIndex >= perceptron_output_quantity ) {
             throw new IllegalArgumentException("neuronIndex range for output layer must be [0," + perceptron_output_quantity + "] but was " + neuronIndex);
         }
@@ -266,6 +261,7 @@ public class NTupleMaxTile<NeuralNetworkClass> extends PerceptronConfiguration20
      *
      * @param board
      * @param outputNeuronIndex
+     * <p>
      * @return
      */
     @Override
@@ -273,14 +269,6 @@ public class NTupleMaxTile<NeuralNetworkClass> extends PerceptronConfiguration20
         return 0;
     }
 
-//    @Override
-//    public double translateRealOutputToNormalizedPerceptronOutputFrom(GameBoard<NeuralNetworkClass> board, int neuronIndex) {
-//        //TODO testear esto cuando lo hagamos abstracto
-//        if ( neuronIndex < 0 || neuronIndex >= perceptron_output_quantity ) {
-//            throw new IllegalArgumentException("neuronIndex range for output layer must be [0," + perceptron_output_quantity + "] but was " + neuronIndex);
-//        }
-//        return normOutput.normalize(board.getMaxTileNumberValue());
-//    }
     /**
      * Encriptamos el tablero para relacionar patrones y relaciones entre
      * posiciones del tablero de a 4 baldosas

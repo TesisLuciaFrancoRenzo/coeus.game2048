@@ -119,16 +119,16 @@ public class BoardMaxTile<NeuralNetworkClass> extends PerceptronConfiguration204
             return (int) Math.round(normOutput.deNormalize(data[0]));
         };
     }
-//
-//    @Override
-//    public Prediction translateFinalRewordToPrediction(GameBoard<NeuralNetworkClass> board) {
-//        assert board.isTerminalState();
-//        return new Prediction(board.getPartialScore() * 1d, null);
-//    }
 
+    /**
+     *
+     * @param board
+     * @param neuronIndex
+     * @return
+     */
     @Override
     public double translateRealOutputToNormalizedPerceptronOutputFrom(GameBoard<NeuralNetworkClass> board, int neuronIndex) {
-        //TODO testear esto cuando lo hagamos abstracto
+
         if ( neuronIndex < 0 || neuronIndex >= perceptron_output_quantity ) {
             throw new IllegalArgumentException("neuronIndex range for output layer must be [0," + perceptron_output_quantity + "] but was " + neuronIndex);
         }

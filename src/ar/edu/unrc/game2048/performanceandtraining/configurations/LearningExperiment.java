@@ -171,6 +171,10 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
         this.lambda = lambda;
     }
 
+    /**
+     *
+     * @param gameNumber
+     */
     public void setLastGamePlayedNumber(int gameNumber) {
         this.lastGamePlayedNumber = gameNumber;
     }

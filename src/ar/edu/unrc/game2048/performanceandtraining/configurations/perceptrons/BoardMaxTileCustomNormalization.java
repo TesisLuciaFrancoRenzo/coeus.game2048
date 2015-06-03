@@ -133,21 +133,16 @@ public class BoardMaxTileCustomNormalization<NeuralNetworkClass> extends Percept
         };
     }
 
-//    @Override
-//    public Prediction translateFinalRewordToPrediction(GameBoard<NeuralNetworkClass> board) {
-//        assert board.isTerminalState();
-//        return new Prediction(board.getPartialScore() * 1d, null);
-//    }
-
     /**
      *
      * @param board
      * @param neuronIndex
+     * <p>
      * @return
      */
-        @Override
+    @Override
     public double translateRealOutputToNormalizedPerceptronOutputFrom(GameBoard<NeuralNetworkClass> board, int neuronIndex) {
-        //TODO testear esto cuando lo hagamos abstracto
+
         if ( neuronIndex < 0 || neuronIndex >= perceptron_output_quantity ) {
             throw new IllegalArgumentException("neuronIndex range for output layer must be [0," + perceptron_output_quantity + "] but was " + neuronIndex);
         }
@@ -158,20 +153,13 @@ public class BoardMaxTileCustomNormalization<NeuralNetworkClass> extends Percept
      *
      * @param board
      * @param outputNeuronIndex
+     * <p>
      * @return
      */
     @Override
     public double translateRewordToNormalizedPerceptronOutputFrom(GameBoard<NeuralNetworkClass> board, int outputNeuronIndex) {
         return 0;
     }
-//    @Override
-//    public double translateRealOutputToNormalizedPerceptronOutputFrom(GameBoard<NeuralNetworkClass> board, int neuronIndex) {
-//        //TODO testear esto cuando lo hagamos abstracto
-//        if ( neuronIndex < 0 || neuronIndex >= perceptron_output_quantity ) {
-//            throw new IllegalArgumentException("neuronIndex range for output layer must be [0," + perceptron_output_quantity + "] but was " + neuronIndex);
-//        }
-//        return normOutput.normalize(board.getMaxTileNumberCode());
-//    }
 
     private Double encryptTile(GameBoard<NeuralNetworkClass> board, int boardTileCode) {
         assert board.getMaxTileNumberCode() != 0;

@@ -297,35 +297,6 @@ public class GameBoardTest {
         Assert.assertEquals(expResult, result);
     }
 
-//    /**
-//     * Test of translateRealOutputToNormalizedPerceptronOutputFrom method, of class
-//     * GameBoard.
-//     */
-//    @Test
-//    public void testTranslateThisFinalStateToPerceptronOutput() {
-//        System.out.println("translateRealOutputToNormalizedPerceptronOutputFrom");
-//        int neuronIndex = 0;
-//        GameBoard instance = null;
-//        double expResult = 0.0;
-//        double result = instance.translateRealOutputToNormalizedPerceptronOutputFrom(neuronIndex);
-//        Assert.assertEquals(expResult, result, 0.0);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
-//    /**
-//     * Test of translateToPerceptronInput method, of class GameBoard.
-//     */
-//    @Test
-//    public void testTranslateToPerceptronInput() {
-//        System.out.println("translateToPerceptronInput");
-//        int neuronIndex = 0;
-//        GameBoard instance = null;
-//        double expResult = 0.0;
-//        double result = instance.translateToPerceptronInput(neuronIndex);
-//        Assert.assertEquals(expResult, result, 0.0);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
     /**
      * Test of updateInternalState method, of class GameBoard.
      */

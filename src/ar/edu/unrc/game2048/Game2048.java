@@ -249,7 +249,7 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
     }
 
     @Override
-    public IsolatedComputation<IPrediction> evaluateBoardWithPerceptron(IState state) { //FIXME safethread??
+    public IsolatedComputation<IPrediction> evaluateBoardWithPerceptron(IState state) {
         return () -> {
             //dependiendo de que tipo de red neuronal utilizamos, evaluamos las entradas y calculamos una salida
             if ( perceptronConfiguration.getNeuralNetwork() != null ) {

@@ -16,6 +16,21 @@ import java.util.List;
  */
 public class TestGenerator_03 {
 
+    /**
+     *
+     * @param experiment
+     * @param statisticsOnly
+     * @param runStatisticForRandom
+     * @param runStatisticsForBackups
+     * @param createLogs
+     * @param lambda
+     * @param alpha
+     * @param gamesToPlay
+     * @param saveEvery
+     * @param gamesToPlayPerThreadForStatistics
+     * @param simulationsForStatistics
+     * @param filePath
+     */
     public static void configAndExcecute(LearningExperiment experiment, boolean statisticsOnly, boolean runStatisticForRandom, boolean runStatisticsForBackups, boolean createLogs, double lambda, double alpha, int gamesToPlay, int saveEvery, int gamesToPlayPerThreadForStatistics, int simulationsForStatistics, String filePath) {
         experiment.setStatisticsOnly(statisticsOnly);
         experiment.setRunStatisticForRandom(runStatisticForRandom);
@@ -32,6 +47,11 @@ public class TestGenerator_03 {
         experiment.start(filePath, 0);
     }
 
+    /**
+     *
+     * @param args
+     * @throws Exception
+     */
     public static void main(String[] args) throws Exception {
         String filePath;
         if ( args.length == 0 ) {
@@ -113,6 +133,22 @@ public class TestGenerator_03 {
 
     }
 
+    /**
+     *
+     * @param experimentName
+     * @param experiment
+     * @param alphaList
+     * @param lambdaList
+     * @param statisticsOnly
+     * @param runStatisticForRandom
+     * @param runStatisticsForBackups
+     * @param createLogs
+     * @param gamesToPlay
+     * @param saveEvery
+     * @param gamesToPlayPerThreadForStatistics
+     * @param simulationsForStatistics
+     * @param filePath
+     */
     public static void runAllConfigs(String experimentName, LearningExperiment experiment, List<Double> alphaList, List<Double> lambdaList, boolean statisticsOnly, boolean runStatisticForRandom, boolean runStatisticsForBackups, boolean createLogs, int gamesToPlay, int saveEvery, int gamesToPlayPerThreadForStatistics, int simulationsForStatistics, String filePath) {
         alphaList.stream().forEach((alpha) -> {
             lambdaList.stream().forEach((lambda) -> {

@@ -43,7 +43,7 @@ public class Experiment_02 extends LearningExperiment<BasicNetwork> {
         experiment.setGamma(1);
         experiment.setMomentum(0.8);
         experiment.setGamesToPlay(10_000);
-        experiment.setLastGamePlayedNumber(0); //recordar AJUSTAR ESTE VALOR
+        experiment.setLastGamePlayedNumber(10_000); //recordar AJUSTAR ESTE VALOR
         experiment.setSaveEvery(500);
         experiment.setInitializePerceptronRandomized(true);
 

@@ -17,22 +17,69 @@ import org.encog.util.arrayutil.NormalizedField;
  */
 public abstract class PerceptronConfiguration2048<NeuralNetworkClass> implements Cloneable {
 
+    /**
+     *
+     */
     public ActivationFunction activationFunctionHiddenForEncog;
+
+    /**
+     *
+     */
     public double activationFunctionMax;
+
+    /**
+     *
+     */
     public double activationFunctionMin;
+
+    /**
+     *
+     */
     public ActivationFunction activationFunctionOutputForEncog;
 
+    /**
+     *
+     */
     public int hiddenLayerQuantity = 1;
+
+    /**
+     *
+     */
     public NormalizedField normInput;
+
+    /**
+     *
+     */
     public NormalizedField normOutput;
+
+    /**
+     *
+     */
     public int perceptron_hidden_quantity;
+
+    /**
+     *
+     */
     public int perceptron_input_quantity;
+
+    /**
+     *
+     */
     public int perceptron_output_quantity;
+
+    /**
+     *
+     */
     public double randomMoveProbability = 0;
     //fin de la configuracion de la red neuronal
 
     private NeuralNetworkClass neuralNetwork;
 
+    /**
+     *
+     * @param board
+     * @param normalizedPerceptronInput
+     */
     public abstract void calculateNormalizedPerceptronInput(GameBoard<NeuralNetworkClass> board, List<Double> normalizedPerceptronInput);
 
     @Override
@@ -61,7 +108,19 @@ public abstract class PerceptronConfiguration2048<NeuralNetworkClass> implements
      */
     public abstract IsolatedComputation<Integer> translatePerceptronOutputToPrediction(double[] data);
 
+    /**
+     *
+     * @param board
+     * @param outputNeuronIndex
+     * @return
+     */
     public abstract double translateRealOutputToNormalizedPerceptronOutputFrom(GameBoard<NeuralNetworkClass> board, int outputNeuronIndex);
 
+    /**
+     *
+     * @param board
+     * @param outputNeuronIndex
+     * @return
+     */
     public abstract double translateRewordToNormalizedPerceptronOutputFrom(GameBoard<NeuralNetworkClass> board, int outputNeuronIndex);
 }

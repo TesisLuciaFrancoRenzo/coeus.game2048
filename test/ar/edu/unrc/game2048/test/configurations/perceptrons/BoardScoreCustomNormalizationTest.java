@@ -56,7 +56,6 @@ public class BoardScoreCustomNormalizationTest {
     private final double activationFunctionMax;
     private final double activationFunctionMin;
 
-
     private BoardScoreCustomNormalization config;
     private Game2048 game;
     private final NormalizedField normInputSimpleBoard;
@@ -129,10 +128,5 @@ public class BoardScoreCustomNormalizationTest {
         }
 
     }
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    // @Test
-    // public void hello() {}
-    
+
 }

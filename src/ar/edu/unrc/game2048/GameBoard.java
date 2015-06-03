@@ -348,7 +348,7 @@ public class GameBoard<NeuralNetworkClass> implements IState {
 //    }
     @Override
     public double translateToPerceptronInput(int neuronIndex) {
-        //TODO testear esto cuando lo hagamos abstracto
+        
         if ( neuronIndex < 0 || neuronIndex >= getGame().getPerceptronConfiguration().perceptron_input_quantity ) {
             throw new IllegalArgumentException("neuronIndex range for output layer must be [0," + getGame().getPerceptronConfiguration().perceptron_input_quantity + "] but was " + neuronIndex);
         }
