@@ -521,13 +521,8 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
             backupRandomPerceptron = true;
         }
 
-        boolean visible = false;
-        if ( delayPerMove > 0 ) {
-            visible = true;
-        }
-
         //creamos el juego
-        Game2048<NeuralNetworkClass> game = new Game2048<>(neuralNetworkInterfaceFor2048.getPerceptronConfiguration(), tileToWin, visible, delayPerMove, true);
+        Game2048<NeuralNetworkClass> game = new Game2048<>(neuralNetworkInterfaceFor2048.getPerceptronConfiguration(), tileToWin, delayPerMove);
 
         // Si hay un perceptron ya entrenado, lo buscamos en el archivo.
         // En caso contrario creamos un perceptron vacio, inicializado al azar
@@ -589,7 +584,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
             Map<File, List<Double>> resultsRandom = new HashMap<>();
             if ( backupRandomPerceptron || isRunStatisticForRandom() ) {
                 statisticExperiment.setPerceptronName(this.getExperimentName() + LearningExperiment._RANDOM);
-                statisticExperiment.start(experimentPath, 0);
+                statisticExperiment.start(experimentPath, delayPerMove);
                 resultsRandom.put(randomPerceptronFile, statisticExperiment.getTileStatistics());
             }
 
@@ -610,7 +605,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
                 for ( File f : allFiles ) {
                     if ( f.getName().matches(".*\\_BackupN\\-.*\\.ser") ) {
                         statisticExperiment.setPerceptronName(f.getName().replaceAll("\\.ser$", ""));
-                        statisticExperiment.start(experimentPath, 0);
+                        statisticExperiment.start(experimentPath, delayPerMove);
                         resultsPerFile.put(f, statisticExperiment.getTileStatistics());
                         backupFiles.add(f);
                     }
@@ -656,7 +651,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
             } else {
                 //calculamos estadisticas para el perceptron entrenado
                 statisticExperiment.setPerceptronName(this.getExperimentName() + LearningExperiment._TRAINED);
-                statisticExperiment.start(experimentPath, 0);
+                statisticExperiment.start(experimentPath, delayPerMove);
             }
 
         }

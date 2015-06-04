@@ -84,7 +84,7 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
      */
     @SuppressWarnings( "ResultOfObjectAllocationIgnored" )
     public static void main(String[] args) {
-        new Game2048(null, 2_048, true, 0, false);
+        new Game2048(null, 2_048, 1);
     }
 
     private static void ensureSize(java.util.List<Tile> l, int s, TileContainer tileContainer) {
@@ -102,7 +102,7 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
      * para optimizaciones y no tener que recalcular afterstates luego de llamar
      * {@code listAllPossibleActions}
      */
-    private ArrayList<GameBoard> futurePossibleBoards;
+    private ArrayList<GameBoard<NeuralNetworkClass>> futurePossibleBoards;
     private final JFrame gameFrame;
     /**
      * para optimizaciones y no tener que recalcular afterstates luego de llamar
@@ -125,14 +125,10 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
      * quedan movimientos validos para realizar
      * <p>
      * @param perceptronConfiguration
-     * @param repaint                 true si se debe dibujar lo que se juega.
-     *                                False es utilizado para simulaciones sin
-     *                                graficas
      * @param delayPerMove
-     * @param hiddenWindow
      */
-    public Game2048(PerceptronConfiguration2048<NeuralNetworkClass> perceptronConfiguration, boolean repaint, int delayPerMove, boolean hiddenWindow) {
-        this(perceptronConfiguration, (int) pow(2, 17), repaint, delayPerMove, hiddenWindow);
+    public Game2048(PerceptronConfiguration2048<NeuralNetworkClass> perceptronConfiguration, int delayPerMove) {
+        this(perceptronConfiguration, (int) pow(2, 17), delayPerMove);
     }
 
     /**
@@ -141,14 +137,10 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
      * <p>
      * @param perceptronConfiguration
      * @param numberToWin             puntaje que alcanzar para ganar el juego
-     * @param repaint                 true si se debe dibujar lo que se juega.
-     *                                False es utilizado para simulaciones sin
-     *                                graficas
      * @param delayPerMove
-     * @param hiddenWindow
      */
     @SuppressWarnings( "LeakingThisInConstructor" )
-    public Game2048(PerceptronConfiguration2048<NeuralNetworkClass> perceptronConfiguration, int numberToWin, boolean repaint, int delayPerMove, boolean hiddenWindow) {
+    public Game2048(PerceptronConfiguration2048<NeuralNetworkClass> perceptronConfiguration, int numberToWin, int delayPerMove) {
         this.perceptronConfiguration = perceptronConfiguration;
         this.delayPerMove = delayPerMove;
         gameFrame = new JFrame();
@@ -159,7 +151,7 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
         gameFrame.add(this);
 
         this.numberToWin = numberToWin;
-        this.repaint = repaint;
+
         setFocusable(true);
         addKeyListener(new KeyAdapter() {
             @Override
@@ -171,14 +163,17 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
         tileContainer = new TileContainer(17);
         resetGame();
 
-        if ( hiddenWindow ) {
+        if ( delayPerMove > 0 ) {
+            this.repaint = true;
+            gameFrame.setLocationRelativeTo(null);
+            gameFrame.setVisible(true);
+        } else {
+            this.repaint = false;
             gameFrame.setState(JFrame.ICONIFIED);
             gameFrame.setFocusableWindowState(false);
             gameFrame.setFocusable(false);
+            gameFrame.setVisible(false);
         }
-
-        gameFrame.setLocationRelativeTo(null);
-        gameFrame.setVisible(!hiddenWindow);
     }
 
     @Override
@@ -425,8 +420,8 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
     }
 
     @Override
-    public List<StateProbability> listAllPossibleNextTurnStateFromAfterstate(IState nextTurnState) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<StateProbability> listAllPossibleNextTurnStateFromAfterstate(IState afterState) {
+        return ((GameBoard<NeuralNetworkClass>) afterState).listAllPossibleNextTurnStateFromAfterstate();
     }
 
     @Override

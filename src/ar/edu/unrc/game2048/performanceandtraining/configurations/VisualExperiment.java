@@ -177,16 +177,12 @@ public abstract class VisualExperiment<NeuralNetworkClass> {
     /**
      *
      * @param experimentPath
-     * @param delayPerMove
+     * @param delayPerMove   <p>
      * @throws Exception
      */
     protected void run(String experimentPath, int delayPerMove) throws Exception {
         System.out.println("Starting " + this.getPerceptronName() + " Visual");
-        boolean visible = false;
-        if ( delayPerMove > 0 ) {
-            visible = true;
-        }
-        Game2048<NeuralNetworkClass> game = new Game2048<>(perceptronConfiguration, tileToWin, visible, delayPerMove, false);
+        Game2048<NeuralNetworkClass> game = new Game2048<>(perceptronConfiguration, tileToWin, delayPerMove);
         if ( perceptronConfiguration != null ) {
             //cargamos la red neuronal entrenada
             String dirPath = experimentPath
@@ -204,7 +200,7 @@ public abstract class VisualExperiment<NeuralNetworkClass> {
             this.learningExperiment.getNeuralNetworkInterfaceFor2048().loadOrCreatePerceptron(perceptronFile, true);
         }
         while ( !game.iLoose() && !game.iWin() && !forceStop ) {
-            this.learningExperiment.getNeuralNetworkInterfaceFor2048().playATurn(game, learningExperiment.getLearningAlgorithm());
+            this.learningExperiment.getNeuralNetworkInterfaceFor2048().playATurn(game, learningExperiment.getLearningAlgorithm()).compute();
         }
         if ( !forceStop ) {
             sleep(5_000);

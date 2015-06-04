@@ -9,6 +9,7 @@ import ar.edu.unrc.game2048.Action;
 import ar.edu.unrc.game2048.Game2048;
 import ar.edu.unrc.game2048.PerceptronConfiguration2048;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IPerceptronInterface;
+import ar.edu.unrc.tdlearning.perceptron.interfaces.IsolatedComputation;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearning;
 import static java.awt.event.KeyEvent.VK_DOWN;
 import static java.awt.event.KeyEvent.VK_LEFT;
@@ -22,7 +23,6 @@ import java.io.File;
  * @param <NeuralNetworkClass>
  */
 public abstract class INeuralNetworkInterfaceFor2048<NeuralNetworkClass> implements Cloneable {
-
 
     private PerceptronConfiguration2048<NeuralNetworkClass> perceptronConfiguration;
 
@@ -74,8 +74,7 @@ public abstract class INeuralNetworkInterfaceFor2048<NeuralNetworkClass> impleme
 
     /**
      * @param perceptronFile       <p>
-     * @param randomizedIfNotExist
-     * <p>
+     * @param randomizedIfNotExist <p>
      * @throws Exception
      */
     public abstract void loadOrCreatePerceptron(File perceptronFile, boolean randomizedIfNotExist) throws Exception;
@@ -85,30 +84,35 @@ public abstract class INeuralNetworkInterfaceFor2048<NeuralNetworkClass> impleme
      * @param game
      * @param learningMethod metodo usado para entrenar y evaluar, o null si se
      *                       utiliza una IA al azar
+     * <p>
+     * @return
      */
-    public synchronized void playATurn(Game2048<NeuralNetworkClass> game, TDLambdaLearning learningMethod) {
-        // evaluamos cada accion aplicada al estado inicial y elegimos la mejor
-        // accion basada en las predicciones del problema
-        Action bestAction = (Action) learningMethod.computeBestPossibleAction(game, game.getBoard());
-        
-        switch ( bestAction ) {
-            case left: {
-                game.processInput(VK_LEFT);
-                break;
+    public IsolatedComputation playATurn(Game2048<NeuralNetworkClass> game, TDLambdaLearning learningMethod) {
+        return () -> {
+            // evaluamos cada accion aplicada al estado inicial y elegimos la mejor
+            // accion basada en las predicciones del problema
+            Action bestAction = (Action) learningMethod.computeBestPossibleAction(game, game.getBoard());
+
+            switch ( bestAction ) {
+                case left: {
+                    game.processInput(VK_LEFT);
+                    break;
+                }
+                case right: {
+                    game.processInput(VK_RIGHT);
+                    break;
+                }
+                case down: {
+                    game.processInput(VK_DOWN);
+                    break;
+                }
+                case up: {
+                    game.processInput(VK_UP);
+                    break;
+                }
             }
-            case right: {
-                game.processInput(VK_RIGHT);
-                break;
-            }
-            case down: {
-                game.processInput(VK_DOWN);
-                break;
-            }
-            case up: {
-                game.processInput(VK_UP);
-                break;
-            }
-        }
+            return null;
+        };
     }
 
     /**

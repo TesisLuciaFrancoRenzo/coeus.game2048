@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ar.edu.unrc.game2048.performanceandtraining.configurations.learning.random;
+package ar.edu.unrc.game2048.performanceandtraining.configurations.learning.greedy;
 
 import ar.edu.unrc.game2048.performanceandtraining.configurations.LearningExperiment;
-import ar.edu.unrc.game2048.performanceandtraining.configurations.libraries.RandomExperimentInterface;
+import ar.edu.unrc.game2048.performanceandtraining.configurations.libraries.GreedyExperimentInterface;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IPerceptronInterface;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearning;
 import java.io.File;
@@ -15,7 +15,7 @@ import org.encog.neural.networks.BasicNetwork;
 /**
  * @author Franco
  */
-public class Experiment_00 extends LearningExperiment<BasicNetwork> {
+public class Experiment_100 extends LearningExperiment<BasicNetwork> {
 
     /**
      *
@@ -31,7 +31,7 @@ public class Experiment_00 extends LearningExperiment<BasicNetwork> {
         } else {
             filePath = args[0];
         }
-        LearningExperiment experiment = new Experiment_00();
+        LearningExperiment experiment = new Experiment_100();
         experiment.setStatisticsOnly(true);
         experiment.createLogs(false);
         experiment.setTileToWin(2_048);
@@ -45,9 +45,9 @@ public class Experiment_00 extends LearningExperiment<BasicNetwork> {
 
     @Override
     public void initialize() throws Exception {
-        this.setExperimentName("Experiment_00");
+        this.setExperimentName("Experiment_100");
         this.setPerceptronName(this.getExperimentName());
-        this.setNeuralNetworkInterfaceFor2048(new RandomExperimentInterface(null));
+        this.setNeuralNetworkInterfaceFor2048(new GreedyExperimentInterface(null));
     }
 
     /**

@@ -37,14 +37,14 @@ public class Experiment_07 extends LearningExperiment<BasicNetwork> {
         LearningExperiment experiment = new Experiment_07();
 //        boolean statistics = true;
         boolean statistics = false;
-        experiment.setLearningRateAdaptationToFixed();
+        experiment.setLearningRateAdaptationToAnnealing(100_000);
         experiment.setLambda(0.7);
         experiment.setGamma(1);
         experiment.setMomentum(0.8);
-        experiment.setGamesToPlay(20_000);//van 50.000
-        experiment.setLastGamePlayedNumber(0); //recordar AJUSTAR ESTE VALOR
+        experiment.setGamesToPlay(100_000);
+        experiment.setLastGamePlayedNumber(101_000); //recordar AJUSTAR ESTE VALOR
         experiment.setSaveEvery(1_000);
-        experiment.setInitializePerceptronRandomized(false);
+        experiment.setInitializePerceptronRandomized(true);
 
         experiment.createLogs(false);
         //para calcualar estadisticas
@@ -52,8 +52,8 @@ public class Experiment_07 extends LearningExperiment<BasicNetwork> {
             experiment.setStatisticsOnly(true);
             experiment.setRunStatisticForRandom(true);
             experiment.setRunStatisticsForBackups(true);
-            experiment.setGamesToPlayPerThreadForStatistics(10_000);
-            experiment.setSimulationsForStatistics(8);
+            experiment.setGamesToPlayPerThreadForStatistics(1_000);
+            experiment.setSimulationsForStatistics(10);
         } else {
             experiment.setStatisticsOnly(false);
             experiment.setRunStatisticForRandom(false);
@@ -73,8 +73,8 @@ public class Experiment_07 extends LearningExperiment<BasicNetwork> {
         }
         this.setPerceptronName(this.getExperimentName());
         PerceptronConfiguration2048<BasicNetwork> config = new BoardMaxTile<>();
-        config.randomMoveProbability = 0.01;
-        config.perceptron_hidden_quantity = 8;
+//        config.randomMoveProbability = 0.01;
+//        config.perceptron_hidden_quantity = 8;
         this.setNeuralNetworkInterfaceFor2048(new EncogExperimentInterface(config));
     }
 

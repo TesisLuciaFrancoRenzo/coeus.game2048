@@ -36,7 +36,7 @@ public class BoardMaxTile<NeuralNetworkClass> extends PerceptronConfiguration204
     public BoardMaxTile() {
         maxCodedBoardnumber = 11; //2048 como maximo
         minCodedBoardnumber = 0;
-        perceptron_hidden_quantity = 8;
+        perceptron_hidden_quantity = 16;
         perceptron_input_quantity = 16;
         perceptron_output_quantity = 1;
         hiddenLayerQuantity = 1;
@@ -124,6 +124,7 @@ public class BoardMaxTile<NeuralNetworkClass> extends PerceptronConfiguration204
      *
      * @param board
      * @param neuronIndex
+     * <p>
      * @return
      */
     @Override

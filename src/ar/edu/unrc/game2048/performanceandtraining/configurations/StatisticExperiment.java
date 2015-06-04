@@ -209,7 +209,7 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
     /**
      *
      * @param experimentPath
-     * @param delayPerMove
+     * @param delayPerMove   <p>
      * @throws Exception
      */
     protected void run(String experimentPath, int delayPerMove) throws Exception {
@@ -222,10 +222,6 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
             dirPathFile.mkdirs();
         }
         String filePath = dirPath + perceptronName;
-        boolean visible = false;
-        if ( delayPerMove > 0 ) {
-            visible = true;
-        }
 
         //preparamos los destinos de las siimulaciones para posterior sumatoria final
         List<ThreadResult> results = new ArrayList(simulations);
@@ -252,7 +248,7 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
                 neuralNetworkInterfaceClone.loadOrCreatePerceptron(perceptronFile, true);
             }
 
-            Game2048<NeuralNetworkClass> game = new Game2048<>(tempPerceptronConfiguration, tileToWin, visible, delayPerMove, true);
+            Game2048<NeuralNetworkClass> game = new Game2048<>(tempPerceptronConfiguration, tileToWin, delayPerMove);
 
             neuralNetworkInterfaces.add(neuralNetworkInterfaceClone);
             tdLambdaLearning.add(learningExperiment.instanceOfTdLearninrgImplementation(tempPerceptronInterface)); //TODO revisar esto
@@ -269,7 +265,7 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
                     for ( results.get(i).setProcesedGames(0); results.get(i).getProcesedGames() < gamesToPlay; results.get(i).addProcesedGames() ) {
                         games.get(i).resetGame(); //reset
                         while ( !games.get(i).iLoose() && !games.get(i).iWin() ) {
-                            neuralNetworkInterfaces.get(i).playATurn(games.get(i), tdLambdaLearning.get(i));
+                            neuralNetworkInterfaces.get(i).playATurn(games.get(i), tdLambdaLearning.get(i)).compute();
                         }
                         //calculamos estadisticas
                         results.get(i).addStatisticForTile(games.get(i).getMaxNumberCode());

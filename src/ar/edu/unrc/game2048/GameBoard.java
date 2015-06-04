@@ -7,6 +7,7 @@ package ar.edu.unrc.game2048;
 
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IReward;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IState;
+import ar.edu.unrc.tdlearning.perceptron.learning.StateProbability;
 import static java.lang.Math.random;
 import static java.lang.System.arraycopy;
 import java.util.ArrayList;
@@ -41,7 +42,7 @@ public class GameBoard<NeuralNetworkClass> implements IState {
      * @param t1
      * @param t2
      * @param t3
-     * @param t4
+     * @param t4 <p>
      * @return
      */
     public static int calculateCustomHash(Tile t1, Tile t2, Tile t3, Tile t4) {
@@ -95,14 +96,32 @@ public class GameBoard<NeuralNetworkClass> implements IState {
      *
      */
     public void addTile() {
-        List<Integer> list = this.availableSpace();
-        if ( !list.isEmpty() ) {
-            int index = (int) (random() * list.size()) % list.size();
-            Integer tilePos = list.get(index);
+        if ( !availableSpaceList.isEmpty() ) {
+            int index = (int) (random() * availableSpaceList.size()) % availableSpaceList.size(); //FIXME mejorar randomBetween con esto?? investigar
+            Integer tilePos = availableSpaceList.get(index);
             int value = random() < 0.9 ? 1 : 2;
             tiles[tilePos] = this.tileContainer.getTile(value);
         }
         this.updateInternalState(true);
+    }
+
+    public List<StateProbability> listAllPossibleNextTurnStateFromAfterstate() {
+        List<StateProbability> output = new ArrayList<>(16);
+        for ( int value = 1; value <= 2; value++ ) {
+            double probability;
+            if ( value == 1 ) {
+                probability = 0.9;
+            } else {
+                probability = 0.1;
+            }
+            for ( int index = 0; index < availableSpaceList.size() - 1; index++ ) {
+                GameBoard<NeuralNetworkClass> copy = this.getCopy(tileContainer);
+                copy.tiles[availableSpaceList.get(index)] = this.tileContainer.getTile(value);
+                copy.updateInternalState(true);
+                output.add(new StateProbability(copy, probability));
+            }
+        }
+        return output;
     }
 
     /**
@@ -348,7 +367,7 @@ public class GameBoard<NeuralNetworkClass> implements IState {
 //    }
     @Override
     public double translateToPerceptronInput(int neuronIndex) {
-        
+
         if ( neuronIndex < 0 || neuronIndex >= getGame().getPerceptronConfiguration().perceptron_input_quantity ) {
             throw new IllegalArgumentException("neuronIndex range for output layer must be [0," + getGame().getPerceptronConfiguration().perceptron_input_quantity + "] but was " + neuronIndex);
         }
