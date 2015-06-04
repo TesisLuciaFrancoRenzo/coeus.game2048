@@ -37,22 +37,24 @@ public class Experiment_03 extends LearningExperiment<BasicNetwork> {
         LearningExperiment experiment = new Experiment_03();
         experiment.createLogs(false);
 
-//        boolean statistics = true;
-        boolean statistics = false;
-        experiment.setLearningRateAdaptationToFixed();
+        boolean statistics = true;
+//        boolean statistics = false;
+        double[] alpha = {0.01, 0.01};
+        experiment.setAlpha(alpha);
+        experiment.setLearningRateAdaptationToAnnealing(100_000);
         experiment.setLambda(0.7);
         experiment.setGamma(1);
         experiment.setMomentum(0.8);
-        experiment.setGamesToPlay(20_000);//van 50.000
+        experiment.setGamesToPlay(20_000);
         experiment.setLastGamePlayedNumber(0); //recordar AJUSTAR ESTE VALOR
-        experiment.setSaveEvery(1_000);
+        experiment.setSaveEvery(500);
 
         //para calcualar estadisticas
         if ( statistics ) {
             experiment.setStatisticsOnly(true);
             experiment.setRunStatisticForRandom(true);
             experiment.setRunStatisticsForBackups(true);
-            experiment.setGamesToPlayPerThreadForStatistics(10_000);
+            experiment.setGamesToPlayPerThreadForStatistics(1_000);
             experiment.setSimulationsForStatistics(8);
         } else {
             experiment.setStatisticsOnly(false);
@@ -73,7 +75,7 @@ public class Experiment_03 extends LearningExperiment<BasicNetwork> {
         this.setPerceptronName(this.getExperimentName());
         this.setTileToWin(2_048);
         PerceptronConfiguration2048<BasicNetwork> config = new FullNTupleScore<>();
-        config.randomMoveProbability = 0.01;
+        // config.randomMoveProbability = 0.01;
         this.setNeuralNetworkInterfaceFor2048(new EncogExperimentInterface(config));
     }
 

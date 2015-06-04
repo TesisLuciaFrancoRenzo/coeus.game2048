@@ -89,9 +89,11 @@ public class BinaryScore<NeuralNetworkClass> extends PerceptronConfiguration2048
     }
 
     /**
-     *
+     * Para el ultimo turno
+     * <p>
      * @param board
      * @param neuronIndex
+     * <p>
      * @return
      */
     @Override
@@ -107,6 +109,7 @@ public class BinaryScore<NeuralNetworkClass> extends PerceptronConfiguration2048
      *
      * @param board
      * @param outputNeuronIndex
+     * <p>
      * @return
      */
     @Override

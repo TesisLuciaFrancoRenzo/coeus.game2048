@@ -56,7 +56,7 @@ public class FullNTupleScore<NeuralNetworkClass> extends PerceptronConfiguration
      *
      */
     public FullNTupleScore() {
-        perceptron_hidden_quantity = 17;
+        perceptron_hidden_quantity = 33;
         perceptron_input_quantity = 33;
         perceptron_output_quantity = 1;
         hiddenLayerQuantity = 1;
@@ -306,8 +306,7 @@ public class FullNTupleScore<NeuralNetworkClass> extends PerceptronConfiguration
     /**
      *
      * @param board
-     * @param neuronIndex
-     * <p>
+     * @param neuronIndex <p>
      * @return
      */
     @Override
@@ -325,8 +324,7 @@ public class FullNTupleScore<NeuralNetworkClass> extends PerceptronConfiguration
     /**
      *
      * @param board
-     * @param outputNeuronIndex
-     * <p>
+     * @param outputNeuronIndex <p>
      * @return
      */
     @Override
