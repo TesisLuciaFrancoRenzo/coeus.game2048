@@ -37,15 +37,15 @@ public class Experiment_06 extends LearningExperiment<BasicNetwork> {
         LearningExperiment experiment = new Experiment_06();
         experiment.createLogs(false);
 
-        boolean statistics = true;
-//        boolean statistics = false;
+//        boolean statistics = true;
+        boolean statistics = false;
         experiment.setLearningRateAdaptationToAnnealing(100_000);
         experiment.setLambda(0.7);
         experiment.setGamma(1);
         experiment.setMomentum(0.8);
-        experiment.setGamesToPlay(100_000);
-        experiment.setLastGamePlayedNumber(127_000); //recordar AJUSTAR ESTE VALOR
-        experiment.setSaveEvery(1_000);
+        experiment.setGamesToPlay(20_000);
+        experiment.setLastGamePlayedNumber(0); //recordar AJUSTAR ESTE VALOR
+        experiment.setSaveEvery(500);
         experiment.setInitializePerceptronRandomized(false);
 
         //para calcualar estadisticas
@@ -54,7 +54,7 @@ public class Experiment_06 extends LearningExperiment<BasicNetwork> {
             experiment.setRunStatisticForRandom(false);
             experiment.setRunStatisticsForBackups(true);
             experiment.setGamesToPlayPerThreadForStatistics(1_000);
-            experiment.setSimulationsForStatistics(10);
+            experiment.setSimulationsForStatistics(8);
         } else {
             experiment.setStatisticsOnly(false);
             experiment.setRunStatisticForRandom(false);

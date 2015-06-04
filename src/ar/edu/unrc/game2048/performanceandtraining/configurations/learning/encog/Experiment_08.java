@@ -55,7 +55,7 @@ public class Experiment_08 extends LearningExperiment<BasicNetwork> {
             experiment.setRunStatisticForRandom(true);
             experiment.setRunStatisticsForBackups(true);
             experiment.setGamesToPlayPerThreadForStatistics(1_000);
-            experiment.setSimulationsForStatistics(10);
+            experiment.setSimulationsForStatistics(8);
         } else {
             experiment.setStatisticsOnly(false);
             experiment.setRunStatisticForRandom(false);
