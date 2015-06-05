@@ -311,6 +311,10 @@ public class GameBoard<NeuralNetworkClass> implements IState {
         return iWin || !canMove;
     }
 
+    /**
+     *
+     * @return
+     */
     public List<StateProbability> listAllPossibleNextTurnStateFromAfterstate() {
         List<StateProbability> output = new ArrayList<>(16);
         for ( int value = 1; value <= 2; value++ ) {

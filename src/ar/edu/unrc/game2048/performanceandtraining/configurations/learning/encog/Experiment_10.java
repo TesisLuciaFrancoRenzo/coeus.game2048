@@ -38,13 +38,15 @@ public class Experiment_10 extends LearningExperiment<BasicNetwork> {
 //        boolean statistics = true;
         boolean statistics = false;
         experiment.setLearningRateAdaptationToAnnealing(20_000);
-        double[] alpha = {0.1, 0.01};
+        double[] alpha = {0.1, 0.02};
         experiment.setAlpha(alpha);
         experiment.setLambda(0.7);
         experiment.setGamma(1);
         experiment.setMomentum(0.8);
-        experiment.setExplorationRate(0.2, 1, 0.05, 800_000);
-        experiment.setGamesToPlay(10_000);
+        experiment.setExplorationRateToFixed(0.1);
+        experiment.setReplaceEligibilitiTraces(true);
+        experiment.setResetEligibilitiTraces(true);
+        experiment.setGamesToPlay(40_000);
         experiment.setLastGamePlayedNumber(0); //recordar AJUSTAR ESTE VALOR
         experiment.setSaveEvery(1_000);
         experiment.setInitializePerceptronRandomized(true);
@@ -76,20 +78,18 @@ public class Experiment_10 extends LearningExperiment<BasicNetwork> {
         }
         this.setPerceptronName(this.getExperimentName());
         PerceptronConfiguration2048<BasicNetwork> config = new SymetricSample01Score<>();
-        config.perceptron_hidden_quantity = 16;
-        //config.randomMoveProbability = 0.1;
+        config.perceptron_hidden_quantity = 32;
         this.setNeuralNetworkInterfaceFor2048(new EncogExperimentInterface(config));
     }
 
     /**
      *
-     * @param perceptronInterface
-     * <p>
+     * @param perceptronInterface <p>
      * @return
      */
     @Override
     public TDLambdaLearning instanceOfTdLearninrgImplementation(IPerceptronInterface perceptronInterface) {
-        return new TDLambdaLearningAfterstate(perceptronInterface, getAlpha(), getLambda(), true, getGamma(), getMomentum());
+        return new TDLambdaLearningAfterstate(perceptronInterface, getAlpha(), getLambda(), true, getGamma(), getMomentum(), isResetEligibilitiTraces(), isReplaceEligibilitiTraces());
     }
 
 }

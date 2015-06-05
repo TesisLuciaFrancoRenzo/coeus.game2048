@@ -39,7 +39,9 @@ public class TestGenerator_01 {
         experiment.setLambda(lambda);
         experiment.setGamma(1);
         experiment.setMomentum(0.8);
-        experiment.setExplorationRate(0.2, 1, 0.05, 800_000);
+        experiment.setExplorationRateToFixed(0.1);
+        experiment.setReplaceEligibilitiTraces(true);
+        experiment.setResetEligibilitiTraces(true);
         experiment.setLearningRateAdaptationToFixed();
         experiment.setGamesToPlay(gamesToPlay);
         experiment.setSaveEvery(saveEvery);
@@ -50,8 +52,7 @@ public class TestGenerator_01 {
 
     /**
      *
-     * @param args
-     * <p>
+     * @param args <p>
      * @throws Exception
      */
     public static void main(String[] args) throws Exception {
