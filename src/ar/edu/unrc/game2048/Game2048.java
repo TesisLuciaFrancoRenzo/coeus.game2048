@@ -495,11 +495,6 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
         }
     }
 
-    @Override
-    public double randomMoveProbability() {
-        return this.perceptronConfiguration.randomMoveProbability;
-    }
-
     /**
      *
      */

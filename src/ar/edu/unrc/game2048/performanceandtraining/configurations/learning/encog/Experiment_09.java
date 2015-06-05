@@ -41,6 +41,7 @@ public class Experiment_09 extends LearningExperiment<BasicNetwork> {
         experiment.setLambda(0.7);
         experiment.setGamma(1);
         experiment.setMomentum(0.8);
+        experiment.setExplorationRate(0.17, 1, 0.05, 1_000_000);
         experiment.setGamesToPlay(100_000);
         // experiment.setLastGamePlayedNumber(100_000); //recordar AJUSTAR ESTE VALOR
         experiment.setSaveEvery(5_000);
@@ -73,7 +74,6 @@ public class Experiment_09 extends LearningExperiment<BasicNetwork> {
         }
         this.setPerceptronName(this.getExperimentName());
         PerceptronConfiguration2048<BasicNetwork> config = new SymetricSample01MaxTile<>();
-        config.randomMoveProbability = 0.01;
         this.setNeuralNetworkInterfaceFor2048(new EncogExperimentInterface(config));
     }
 

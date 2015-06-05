@@ -105,25 +105,6 @@ public class GameBoard<NeuralNetworkClass> implements IState {
         this.updateInternalState(true);
     }
 
-    public List<StateProbability> listAllPossibleNextTurnStateFromAfterstate() {
-        List<StateProbability> output = new ArrayList<>(16);
-        for ( int value = 1; value <= 2; value++ ) {
-            double probability;
-            if ( value == 1 ) {
-                probability = 0.9;
-            } else {
-                probability = 0.1;
-            }
-            for ( int index = 0; index < availableSpaceList.size() - 1; index++ ) {
-                GameBoard<NeuralNetworkClass> copy = this.getCopy(tileContainer);
-                copy.tiles[availableSpaceList.get(index)] = this.tileContainer.getTile(value);
-                copy.updateInternalState(true);
-                output.add(new StateProbability(copy, probability));
-            }
-        }
-        return output;
-    }
-
     /**
      *
      * @return
@@ -328,6 +309,25 @@ public class GameBoard<NeuralNetworkClass> implements IState {
     @Override
     public boolean isTerminalState() {
         return iWin || !canMove;
+    }
+
+    public List<StateProbability> listAllPossibleNextTurnStateFromAfterstate() {
+        List<StateProbability> output = new ArrayList<>(16);
+        for ( int value = 1; value <= 2; value++ ) {
+            double probability;
+            if ( value == 1 ) {
+                probability = 0.9;
+            } else {
+                probability = 0.1;
+            }
+            for ( int index = 0; index < availableSpaceList.size() - 1; index++ ) {
+                GameBoard<NeuralNetworkClass> copy = this.getCopy(tileContainer);
+                copy.tiles[availableSpaceList.get(index)] = this.tileContainer.getTile(value);
+                copy.updateInternalState(true);
+                output.add(new StateProbability(copy, probability));
+            }
+        }
+        return output;
     }
 
     /**

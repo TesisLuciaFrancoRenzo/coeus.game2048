@@ -67,12 +67,7 @@ public abstract class PerceptronConfiguration2048<NeuralNetworkClass> implements
      */
     public int perceptron_output_quantity;
 
-    /**
-     *
-     */
-    public double randomMoveProbability = 0;
     //fin de la configuracion de la red neuronal
-
     private NeuralNetworkClass neuralNetwork;
 
     /**
@@ -112,6 +107,7 @@ public abstract class PerceptronConfiguration2048<NeuralNetworkClass> implements
      *
      * @param board
      * @param outputNeuronIndex
+     * <p>
      * @return
      */
     public abstract double translateRealOutputToNormalizedPerceptronOutputFrom(GameBoard<NeuralNetworkClass> board, int outputNeuronIndex);
@@ -120,6 +116,7 @@ public abstract class PerceptronConfiguration2048<NeuralNetworkClass> implements
      *
      * @param board
      * @param outputNeuronIndex
+     * <p>
      * @return
      */
     public abstract double translateRewordToNormalizedPerceptronOutputFrom(GameBoard<NeuralNetworkClass> board, int outputNeuronIndex);

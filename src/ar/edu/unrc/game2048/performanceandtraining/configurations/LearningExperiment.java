@@ -8,6 +8,7 @@ package ar.edu.unrc.game2048.performanceandtraining.configurations;
 import ar.edu.unrc.game2048.Game2048;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IPerceptronInterface;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearning;
+import ar.edu.unrc.tdlearning.perceptron.training.EExplorationRateAlgorithms;
 import ar.edu.unrc.tdlearning.perceptron.training.ELearningRateAdaptation;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -47,6 +48,11 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
     private double[] alpha;
     private int annealingT;
     private String experimentName;
+    private EExplorationRateAlgorithms explorationRate;
+    private double explorationRateFinalValue;
+    private int explorationRateFinishDecrementing;
+    private double explorationRateInitialValue;
+    private int explorationRateStartDecrementing;
     private int gamesToPlay;
     private int gamesToPlayPerThreadForStatistics;
     private double gamma;
@@ -117,6 +123,18 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
      */
     public void setExperimentName(String experimentName) {
         this.experimentName = experimentName;
+    }
+
+    /**
+     *
+     * @param value
+     */
+    public void setExplorationRateToFixed(double value) {
+        if ( value < 0 || value > 1 ) {
+            throw new IllegalArgumentException("value debe estar en el intervalo [0,1]");
+        }
+        this.explorationRate = EExplorationRateAlgorithms.fixed;
+        this.explorationRateInitialValue = value;
     }
 
     /**
@@ -223,6 +241,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
         return perceptronName;
     }
 
+
     /**
      * @param perceptronName the perceptronName to set
      */
@@ -306,6 +325,27 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
 
     /**
      *
+     * @param initialValue
+     * @param startDecrementing
+     * @param finalValue
+     * @param finishDecrementing
+     */
+    public void setExplorationRate(double initialValue, int startDecrementing, double finalValue, int finishDecrementing) {
+        if ( initialValue < 0 || initialValue > 1 ) {
+            throw new IllegalArgumentException("initialValue debe estar en el intervalo [0,1]");
+        }
+        if ( finalValue < 0 || finalValue > 1 ) {
+            throw new IllegalArgumentException("finalValue debe estar en el intervalo [0,1]");
+        }
+        this.explorationRate = EExplorationRateAlgorithms.linear;
+        this.explorationRateInitialValue = initialValue;
+        this.explorationRateStartDecrementing = startDecrementing;
+        this.explorationRateFinalValue = finalValue;
+        this.explorationRateFinishDecrementing = finishDecrementing;
+    }
+
+    /**
+     *
      */
     public void setLearningRateAdaptationToFixed() {
         this.learningRateAdaptation = ELearningRateAdaptation.fixed;
@@ -355,6 +395,21 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
             }
             case annealing: {
                 learningAlgorithm.setLearningRateAdaptationToAnnealing(annealingT);
+                break;
+            }
+        }
+        switch ( this.explorationRate ) {
+            case fixed: {
+                learningAlgorithm.setExplorationRateToFixed(this.explorationRateInitialValue);
+                break;
+            }
+            case linear: {
+                learningAlgorithm.setExplorationRate(
+                        this.explorationRateInitialValue,
+                        this.explorationRateStartDecrementing,
+                        this.explorationRateFinalValue,
+                        this.explorationRateFinishDecrementing
+                );
                 break;
             }
         }

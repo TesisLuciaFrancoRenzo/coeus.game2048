@@ -42,6 +42,7 @@ public class Experiment_08 extends LearningExperiment<BasicNetwork> {
         experiment.setLambda(0.7);
         experiment.setGamma(1);
         experiment.setMomentum(0.8);
+        experiment.setExplorationRate(0.17, 1, 0.05, 1_000_000);
         experiment.setGamesToPlay(20_000);
         experiment.setLastGamePlayedNumber(0); //recordar AJUSTAR ESTE VALOR
         experiment.setLearningRateAdaptationToAnnealing(500_000);
