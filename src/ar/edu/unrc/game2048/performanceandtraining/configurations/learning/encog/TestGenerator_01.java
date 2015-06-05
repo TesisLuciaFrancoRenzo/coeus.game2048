@@ -39,7 +39,7 @@ public class TestGenerator_01 {
         experiment.setLambda(lambda);
         experiment.setGamma(1);
         experiment.setMomentum(0.8);
-        experiment.setExplorationRate(0.17, 1, 0.05, 1_000_000);
+        experiment.setExplorationRate(0.2, 1, 0.05, 800_000);
         experiment.setLearningRateAdaptationToFixed();
         experiment.setGamesToPlay(gamesToPlay);
         experiment.setSaveEvery(saveEvery);
