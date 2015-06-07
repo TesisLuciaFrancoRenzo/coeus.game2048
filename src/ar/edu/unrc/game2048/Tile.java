@@ -11,7 +11,7 @@ import static java.lang.Math.pow;
 /**
  * Representacion de una posicion en el tablero
  * <p>
- * @author franco pellegrini
+ * @author lucia bressan, franco pellegrini, renzo bianchini pellegrini
  */
 public class Tile {
 

@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  *
- * @author franco
+ * @author lucia bressan, franco pellegrini, renzo bianchini
  */
 public class TestGenerator_01 {
 

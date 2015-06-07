@@ -19,7 +19,7 @@ import java.io.File;
 
 /**
  *
- * @author Franco
+ * @author lucia bressan, franco pellegrini, renzo bianchini
  * @param <NeuralNetworkClass>
  */
 public abstract class INeuralNetworkInterfaceFor2048<NeuralNetworkClass> implements Cloneable {

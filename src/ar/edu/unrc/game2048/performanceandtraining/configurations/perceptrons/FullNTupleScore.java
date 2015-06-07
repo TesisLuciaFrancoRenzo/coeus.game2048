@@ -16,7 +16,7 @@ import org.encog.util.arrayutil.NormalizedField;
 /**
  * Codificacion Ntupla + tablero simple
  * <p>
- * @author franco
+ * @author lucia bressan, franco pellegrini, renzo bianchini
  * @param <NeuralNetworkClass>
  */
 public class FullNTupleScore<NeuralNetworkClass> extends PerceptronConfiguration2048<NeuralNetworkClass> {

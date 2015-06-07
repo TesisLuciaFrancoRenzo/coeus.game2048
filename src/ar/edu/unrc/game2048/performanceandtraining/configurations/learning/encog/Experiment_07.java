@@ -16,7 +16,7 @@ import java.io.File;
 import org.encog.neural.networks.BasicNetwork;
 
 /**
- * @author Franco
+ * @author lucia bressan, franco pellegrini, renzo bianchini
  */
 public class Experiment_07 extends LearningExperiment<BasicNetwork> {
 

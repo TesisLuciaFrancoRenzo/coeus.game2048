@@ -21,7 +21,7 @@ import org.encog.util.obj.SerializeObject;
 
 /**
  *
- * @author Franco
+ * @author lucia bressan, franco pellegrini, renzo bianchini
  */
 public class EncogExperimentInterface extends INeuralNetworkInterfaceFor2048<BasicNetwork> {
 

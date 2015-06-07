@@ -19,7 +19,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Franco
+ * @author lucia bressan, franco pellegrini, renzo bianchini
  */
 public class Game2048Test {
 

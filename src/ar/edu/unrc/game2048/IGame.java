@@ -7,7 +7,7 @@ package ar.edu.unrc.game2048;
 
 /**
  *
- * @author franco pellegrini
+ * @author lucia bressan, franco pellegrini, renzo bianchini pellegrini
  */
 public interface IGame {
 

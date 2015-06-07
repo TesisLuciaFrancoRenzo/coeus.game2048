@@ -13,7 +13,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  *
- * @author franco pellegrini
+ * @author lucia bressan, franco pellegrini, renzo bianchini pellegrini
  */
 public class ThreadResult {
 

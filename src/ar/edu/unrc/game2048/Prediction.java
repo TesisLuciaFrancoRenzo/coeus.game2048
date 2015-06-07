@@ -10,7 +10,7 @@ import ar.edu.unrc.tdlearning.perceptron.interfaces.IReward;
 
 /**
  *
- * @author franco
+ * @author lucia bressan, franco pellegrini, renzo bianchini
  */
 public class Prediction implements IPrediction {
 

@@ -12,7 +12,7 @@ import org.encog.util.arrayutil.NormalizedField;
 
 /**
  *
- * @author franco
+ * @author lucia bressan, franco pellegrini, renzo bianchini
  * @param <NeuralNetworkClass>
  */
 public abstract class PerceptronConfiguration2048<NeuralNetworkClass> implements Cloneable {

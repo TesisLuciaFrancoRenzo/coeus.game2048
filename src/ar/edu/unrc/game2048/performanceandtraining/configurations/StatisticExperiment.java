@@ -24,7 +24,7 @@ import java.util.stream.IntStream;
 
 /**
  *
- * @author Franco
+ * @author lucia bressan, franco pellegrini, renzo bianchini
  * @param <NeuralNetworkClass>
  */
 public abstract class StatisticExperiment<NeuralNetworkClass> {

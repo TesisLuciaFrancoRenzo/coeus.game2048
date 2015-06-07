@@ -9,7 +9,7 @@ import ar.edu.unrc.game2048.PerceptronConfiguration2048;
 
 /**
  *
- * @author franco
+ * @author lucia bressan, franco pellegrini, renzo bianchini
  */
 public class ExperimentRunner {
 

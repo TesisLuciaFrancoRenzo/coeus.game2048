@@ -18,7 +18,7 @@ import org.junit.runners.Suite;
 
 /**
  *
- * @author Franco
+ * @author lucia bressan, franco pellegrini, renzo bianchini
  */
 @RunWith( Suite.class )
 @Suite.SuiteClasses( {GameBoardTest.class, EncogExperimentTest.class, Game2048Test.class, BoardScoreCustomNormalizationTest.class, BoardMaxTileTest.class, FullNTupleMaxTileTest.class} )

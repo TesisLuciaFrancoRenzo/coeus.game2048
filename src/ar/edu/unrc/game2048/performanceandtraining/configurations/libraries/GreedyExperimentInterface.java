@@ -24,7 +24,7 @@ import java.util.List;
 
 /**
  *
- * @author Franco
+ * @author lucia bressan, franco pellegrini, renzo bianchini
  */
 public class GreedyExperimentInterface extends INeuralNetworkInterfaceFor2048 {
 

@@ -15,7 +15,7 @@ import org.encog.util.arrayutil.NormalizedField;
 
 /**
  *
- * @author franco
+ * @author lucia bressan, franco pellegrini, renzo bianchini
  * @param <NeuralNetworkClass>
  */
 public class BoardScoreCustomNormalization<NeuralNetworkClass> extends PerceptronConfiguration2048<NeuralNetworkClass> {

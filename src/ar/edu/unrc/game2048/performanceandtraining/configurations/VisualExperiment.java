@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Franco
+ * @author lucia bressan, franco pellegrini, renzo bianchini
  * @param <NeuralNetworkClass>
  */
 public abstract class VisualExperiment<NeuralNetworkClass> {

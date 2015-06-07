@@ -17,7 +17,7 @@ import java.util.Objects;
 
 /**
  *
- * @author franco pellegrini
+ * @author lucia bressan, franco pellegrini, renzo bianchini pellegrini
  * @param <NeuralNetworkClass>
  */
 public class GameBoard<NeuralNetworkClass> implements IState {

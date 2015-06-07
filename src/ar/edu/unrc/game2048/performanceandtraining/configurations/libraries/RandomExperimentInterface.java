@@ -19,7 +19,7 @@ import java.io.File;
 
 /**
  *
- * @author Franco
+ * @author lucia bressan, franco pellegrini, renzo bianchini
  */
 public class RandomExperimentInterface extends INeuralNetworkInterfaceFor2048 {
 

@@ -9,7 +9,7 @@ import ar.edu.unrc.tdlearning.perceptron.interfaces.IAction;
 
 /**
  *
- * @author franco pellegrini
+ * @author lucia bressan, franco pellegrini, renzo bianchini pellegrini
  */
 public enum Action implements IAction {
 

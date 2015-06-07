@@ -7,7 +7,7 @@ package ar.edu.unrc.game2048.performanceandtraining.experiments;
 
 /**
  *
- * @author franco
+ * @author lucia bressan, franco pellegrini, renzo bianchini
  */
 public class ExperimentSetup extends javax.swing.JFrame {
 
