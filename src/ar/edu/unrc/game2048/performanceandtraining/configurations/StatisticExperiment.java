@@ -6,6 +6,7 @@
 package ar.edu.unrc.game2048.performanceandtraining.configurations;
 
 import ar.edu.unrc.game2048.Game2048;
+import ar.edu.unrc.game2048.NTupleConfiguration2048;
 import ar.edu.unrc.game2048.PerceptronConfiguration2048;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IPerceptronInterface;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearning;
@@ -232,14 +233,22 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
         for ( int i = 0; i < simulations; i++ ) {
             INeuralNetworkInterfaceFor2048<NeuralNetworkClass> neuralNetworkInterfaceClone;
             PerceptronConfiguration2048<NeuralNetworkClass> tempPerceptronConfiguration = null;
-            IPerceptronInterface tempPerceptronInterface = null;
             neuralNetworkInterfaceClone = (INeuralNetworkInterfaceFor2048<NeuralNetworkClass>) learningExperiment.getNeuralNetworkInterfaceFor2048().clone();
+
+            NTupleConfiguration2048 tempNTupleConfiguration = null;
+            IPerceptronInterface tempPerceptronInterface = null;
+
             if ( learningExperiment.getNeuralNetworkInterfaceFor2048().getPerceptronConfiguration() != null ) {
-                //FIXME tratar null en caso de ejecutar sin red neuronal
                 tempPerceptronConfiguration = (PerceptronConfiguration2048<NeuralNetworkClass>) learningExperiment.getNeuralNetworkInterfaceFor2048().getPerceptronConfiguration().clone();
                 neuralNetworkInterfaceClone.setPerceptronConfiguration(tempPerceptronConfiguration);
                 tempPerceptronInterface = neuralNetworkInterfaceClone.getPerceptronInterface(); //TODO revisar esto
+            }
+            if ( learningExperiment.getNeuralNetworkInterfaceFor2048().getNTupleConfiguration() != null ) {
+                tempNTupleConfiguration = (NTupleConfiguration2048) learningExperiment.getNeuralNetworkInterfaceFor2048().getNTupleConfiguration().clone();
+                neuralNetworkInterfaceClone.setNTupleConfiguration(tempNTupleConfiguration);
+            }
 
+            if ( tempPerceptronConfiguration != null || tempPerceptronInterface != null ) {
                 //cargamos la red neuronal entrenada
                 File perceptronFile = new File(filePath + ".ser");
                 if ( !perceptronFile.exists() ) {
@@ -248,7 +257,7 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
                 neuralNetworkInterfaceClone.loadOrCreatePerceptron(perceptronFile, true);
             }
 
-            Game2048<NeuralNetworkClass> game = new Game2048<>(tempPerceptronConfiguration, tileToWin, delayPerMove);
+            Game2048<NeuralNetworkClass> game = new Game2048<>(tempPerceptronConfiguration, tempNTupleConfiguration, tileToWin, delayPerMove);
 
             neuralNetworkInterfaces.add(neuralNetworkInterfaceClone);
             tdLambdaLearning.add(learningExperiment.instanceOfTdLearninrgImplementation(tempPerceptronInterface)); //TODO revisar esto

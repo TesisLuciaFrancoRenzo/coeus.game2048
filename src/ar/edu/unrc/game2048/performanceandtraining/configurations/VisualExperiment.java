@@ -6,6 +6,7 @@
 package ar.edu.unrc.game2048.performanceandtraining.configurations;
 
 import ar.edu.unrc.game2048.Game2048;
+import ar.edu.unrc.game2048.NTupleConfiguration2048;
 import ar.edu.unrc.game2048.PerceptronConfiguration2048;
 import java.io.File;
 import static java.lang.Thread.sleep;
@@ -22,6 +23,7 @@ public abstract class VisualExperiment<NeuralNetworkClass> {
     private int delayPerMove = 200;
     private String experimentName;
     private boolean forceStop;
+    private NTupleConfiguration2048 nTupleConfiuguration;
     private PerceptronConfiguration2048<NeuralNetworkClass> perceptronConfiguration;
     private String perceptronName;
     private int tileToWin;
@@ -67,6 +69,7 @@ public abstract class VisualExperiment<NeuralNetworkClass> {
                 this.tileToWin = learningExperiment.getTileToWin();
                 this.experimentName = learningExperiment.getExperimentName();
                 this.perceptronConfiguration = learningExperiment.getNeuralNetworkInterfaceFor2048().getPerceptronConfiguration();
+                this.setnTupleConfiuguration(learningExperiment.getNeuralNetworkInterfaceFor2048().getNTupleConfiguration());
             } else {
                 this.perceptronConfiguration = null;
             }
@@ -155,6 +158,20 @@ public abstract class VisualExperiment<NeuralNetworkClass> {
     }
 
     /**
+     * @return the nTupleConfiuguration
+     */
+    protected NTupleConfiguration2048 getnTupleConfiuguration() {
+        return nTupleConfiuguration;
+    }
+
+    /**
+     * @param nTupleConfiuguration the nTupleConfiuguration to set
+     */
+    protected void setnTupleConfiuguration(NTupleConfiguration2048 nTupleConfiuguration) {
+        this.nTupleConfiuguration = nTupleConfiuguration;
+    }
+
+    /**
      * Se deben inicializar:
      * <ul>
      * <li>private int delayPerMove;</li>
@@ -182,8 +199,8 @@ public abstract class VisualExperiment<NeuralNetworkClass> {
      */
     protected void run(String experimentPath, int delayPerMove) throws Exception {
         System.out.println("Starting " + this.getPerceptronName() + " Visual");
-        Game2048<NeuralNetworkClass> game = new Game2048<>(perceptronConfiguration, tileToWin, delayPerMove);
-        if ( perceptronConfiguration != null ) {
+        Game2048<NeuralNetworkClass> game = new Game2048<>(perceptronConfiguration, nTupleConfiuguration, tileToWin, delayPerMove);
+        if ( perceptronConfiguration != null || nTupleConfiuguration != null ) {
             //cargamos la red neuronal entrenada
             String dirPath = experimentPath
                     + this.learningExperiment.getNeuralNetworkInterfaceFor2048().getLibName() + File.separator

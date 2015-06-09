@@ -5,6 +5,7 @@
  */
 package ar.edu.unrc.game2048;
 
+import ar.edu.unrc.tdlearning.perceptron.ntuple.SamplePointState;
 import java.awt.Color;
 import static java.lang.Math.pow;
 
@@ -13,22 +14,35 @@ import static java.lang.Math.pow;
  * <p>
  * @author lucia bressan, franco pellegrini, renzo bianchini pellegrini
  */
-public class Tile {
+public class Tile implements SamplePointState {
+
 
     private int code;
     private int gameValue;
 
-    Tile() {
+    public Tile() {
         this(0);
     }
 
-    Tile(int num) {
+    public Tile(int num) {
         code = num;
         if ( code == 0 ) {
             gameValue = 0;
         } else {
             gameValue = (int) pow(2, code);
         }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if ( obj == null ) {
+            return false;
+        }
+        if ( getClass() != obj.getClass() ) {
+            return false;
+        }
+        final Tile other = (Tile) obj;
+        return this.code == other.code;
     }
 
     /**
@@ -85,6 +99,13 @@ public class Tile {
      */
     public int getGameValue() {
         return gameValue;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 37 * hash + this.code;
+        return hash;
     }
 
     /**

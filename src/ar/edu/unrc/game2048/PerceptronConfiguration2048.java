@@ -106,8 +106,7 @@ public abstract class PerceptronConfiguration2048<NeuralNetworkClass> implements
     /**
      *
      * @param board
-     * @param outputNeuronIndex
-     * <p>
+     * @param outputNeuronIndex <p>
      * @return
      */
     public abstract double translateRealOutputToNormalizedPerceptronOutputFrom(GameBoard<NeuralNetworkClass> board, int outputNeuronIndex);
@@ -115,8 +114,7 @@ public abstract class PerceptronConfiguration2048<NeuralNetworkClass> implements
     /**
      *
      * @param board
-     * @param outputNeuronIndex
-     * <p>
+     * @param outputNeuronIndex <p>
      * @return
      */
     public abstract double translateRewordToNormalizedPerceptronOutputFrom(GameBoard<NeuralNetworkClass> board, int outputNeuronIndex);

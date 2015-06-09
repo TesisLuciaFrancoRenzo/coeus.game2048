@@ -6,8 +6,10 @@
 package ar.edu.unrc.game2048;
 
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IReward;
+import ar.edu.unrc.tdlearning.perceptron.interfaces.IStateNTuple;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IStatePerceptron;
 import ar.edu.unrc.tdlearning.perceptron.learning.StateProbability;
+import ar.edu.unrc.tdlearning.perceptron.ntuple.SamplePointState;
 import static java.lang.Math.random;
 import static java.lang.System.arraycopy;
 import java.util.ArrayList;
@@ -20,7 +22,7 @@ import java.util.Objects;
  * @author lucia bressan, franco pellegrini, renzo bianchini pellegrini
  * @param <NeuralNetworkClass>
  */
-public class GameBoard<NeuralNetworkClass> implements IStatePerceptron {
+public class GameBoard<NeuralNetworkClass> implements IStatePerceptron, IStateNTuple {
 
     /**
      *
@@ -212,6 +214,11 @@ public class GameBoard<NeuralNetworkClass> implements IStatePerceptron {
         return maxTileNumberValue;
     }
 
+    @Override
+    public SamplePointState[] getNTuple(int nTupleIndex) {
+        return game.getnTupleSystemConfiguration().getNTuple(this, nTupleIndex);
+    }
+
     /**
      * @return the partialScore
      */
@@ -351,13 +358,19 @@ public class GameBoard<NeuralNetworkClass> implements IStatePerceptron {
         return getTiles()[x + y * 4];
     }
 
-//    @Override
-//    public IPrediction translateFinalStateToPrediction() {
-//        return getGame().getPerceptronConfiguration().translateFinalRewordToPrediction(this); //TODO borrar?
-//    }
+    @Override
+    public double translateRealOutputToNormalizedPerceptronOutput() {
+        return game.getnTupleSystemConfiguration().translateRealOutputToNormalizedPerceptronOutput(this);
+    }
+
     @Override
     public double translateRealOutputToNormalizedPerceptronOutputFrom(int outputNeuronIndex) {
         return getGame().getPerceptronConfiguration().translateRealOutputToNormalizedPerceptronOutputFrom(this, outputNeuronIndex);
+    }
+
+    @Override
+    public double translateRewordToNormalizedPerceptronOutput() {
+        return game.getnTupleSystemConfiguration().translateRewordToNormalizedPerceptronOutput(this);
     }
 
     @Override
@@ -365,10 +378,6 @@ public class GameBoard<NeuralNetworkClass> implements IStatePerceptron {
         return getGame().getPerceptronConfiguration().translateRewordToNormalizedPerceptronOutputFrom(this, outputNeuronIndex);
     }
 
-//    @Override
-//    public double translateThisFinalStateToPerceptronOutput(int neuronIndex) {
-//        return getGame().getPerceptronConfiguration().translateRealOutputToNormalizedPerceptronOutputFrom(this, neuronIndex);
-//    }
     @Override
     public double translateToPerceptronInput(int neuronIndex) {
 

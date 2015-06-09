@@ -12,6 +12,7 @@ import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.NT
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IPerceptronInterface;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearning;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearningAfterstate;
+import ar.edu.unrc.tdlearning.perceptron.ntuple.NTupleSystem;
 import java.io.File;
 import org.encog.neural.networks.BasicNetwork;
 
@@ -43,7 +44,7 @@ public class Experiment_05 extends LearningExperiment<BasicNetwork> {
         experiment.setMomentum(0.8);
         experiment.setExplorationRateToFixed(0.1);
         experiment.setReplaceEligibilitiTraces(true);
-                experiment.setResetEligibilitiTraces(true);
+        experiment.setResetEligibilitiTraces(true);
         experiment.setGamesToPlay(20_000);
         experiment.setLastGamePlayedNumber(0); //recordar AJUSTAR ESTE VALOR
         experiment.setSaveEvery(1_000);
@@ -81,6 +82,11 @@ public class Experiment_05 extends LearningExperiment<BasicNetwork> {
     @Override
     public TDLambdaLearning instanceOfTdLearninrgImplementation(IPerceptronInterface perceptronInterface) {
         return new TDLambdaLearningAfterstate(perceptronInterface, getAlpha(), getLambda(), false, getGamma(), getMomentum(), isResetEligibilitiTraces(), isReplaceEligibilitiTraces());
+    }
+
+    @Override
+    public TDLambdaLearning instanceOfTdLearninrgImplementation(NTupleSystem nTupleSystem) {
+        return null;
     }
 
 }

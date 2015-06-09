@@ -86,7 +86,7 @@ public class EncogExperimentInterface extends INeuralNetworkInterfaceFor2048<Bas
 
     @Override
     public IPerceptronInterface getPerceptronInterface() {
-        
+
         if ( getPerceptronConfiguration().activationFunctionHiddenForEncog instanceof ActivationTANH ) {
             this.activationFunctionHidden = FunctionUtils.tanh;
             this.derivatedActivationFunctionHidden = FunctionUtils.derivatedTanh;
@@ -115,7 +115,7 @@ public class EncogExperimentInterface extends INeuralNetworkInterfaceFor2048<Bas
                     throw new IllegalArgumentException("layerIndex out of valid range");
                 } else if ( layerIndex == getLayerQuantity() - 1 ) {
                     //ultima capa
-                    return activationFunctionOutput;
+                    return activationFunctionOutput; //TODO soportar mas capas
                 } else {
                     //capas ocultas
                     return activationFunctionHidden;
@@ -176,7 +176,7 @@ public class EncogExperimentInterface extends INeuralNetworkInterfaceFor2048<Bas
 
     /**
      *
-     * @param randomized
+     * @param randomized <p>
      * @return
      */
     public BasicNetwork initializeEncogPerceptron(boolean randomized) {

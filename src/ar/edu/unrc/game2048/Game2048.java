@@ -85,7 +85,7 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
      */
     @SuppressWarnings( "ResultOfObjectAllocationIgnored" )
     public static void main(String[] args) {
-        new Game2048(null, 2_048, 1);
+        new Game2048(null, null, 2_048, 1);
     }
 
     private static void ensureSize(java.util.List<Tile> l, int s, TileContainer tileContainer) {
@@ -115,6 +115,7 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
     private boolean myLoose = false;
     private int myScore = 0;
     private boolean myWin = false;
+    private final NTupleConfiguration2048 nTupleSystemConfiguration;
     private final int numberToWin;
     private final PerceptronConfiguration2048<NeuralNetworkClass> perceptronConfiguration;
     private final boolean repaint;
@@ -126,10 +127,11 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
      * quedan movimientos validos para realizar
      * <p>
      * @param perceptronConfiguration
+     * @param nTupleSystemConfiguration
      * @param delayPerMove
      */
-    public Game2048(PerceptronConfiguration2048<NeuralNetworkClass> perceptronConfiguration, int delayPerMove) {
-        this(perceptronConfiguration, (int) pow(2, 17), delayPerMove);
+    public Game2048(PerceptronConfiguration2048<NeuralNetworkClass> perceptronConfiguration, NTupleConfiguration2048 nTupleSystemConfiguration, int delayPerMove) {
+        this(perceptronConfiguration, nTupleSystemConfiguration, (int) pow(2, 17), delayPerMove);
     }
 
     /**
@@ -137,11 +139,12 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
      * {@code numberToWin} o si no quedan movimientos validos para realizar
      * <p>
      * @param perceptronConfiguration
-     * @param numberToWin             puntaje que alcanzar para ganar el juego
+     * @param nTupleSystemConfiguration
+     * @param numberToWin               puntaje que alcanzar para ganar el juego
      * @param delayPerMove
      */
     @SuppressWarnings( "LeakingThisInConstructor" )
-    public Game2048(PerceptronConfiguration2048<NeuralNetworkClass> perceptronConfiguration, int numberToWin, int delayPerMove) {
+    public Game2048(PerceptronConfiguration2048<NeuralNetworkClass> perceptronConfiguration, NTupleConfiguration2048 nTupleSystemConfiguration, int numberToWin, int delayPerMove) {
         this.perceptronConfiguration = perceptronConfiguration;
         this.delayPerMove = delayPerMove;
         gameFrame = new JFrame();
@@ -150,6 +153,7 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
         gameFrame.setSize(340, 400);
         gameFrame.setResizable(false);
         gameFrame.add(this);
+        this.nTupleSystemConfiguration = nTupleSystemConfiguration;
 
         this.numberToWin = numberToWin;
 
@@ -248,7 +252,7 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
     public IsolatedComputation<IPrediction> evaluateBoardWithPerceptron(IState state) {
         return () -> {
             //dependiendo de que tipo de red neuronal utilizamos, evaluamos las entradas y calculamos una salida
-            if ( perceptronConfiguration.getNeuralNetwork() != null ) {
+            if ( perceptronConfiguration != null && perceptronConfiguration.getNeuralNetwork() != null ) {
                 if ( perceptronConfiguration.getNeuralNetwork() instanceof BasicNetwork ) { //es sobre la libreria encog
                     double[] inputs = new double[getPerceptronConfiguration().perceptron_input_quantity];
                     for ( int i = 0; i < getPerceptronConfiguration().perceptron_input_quantity; i++ ) {
@@ -256,10 +260,14 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
                     } //todo reeemplazar esot po algo ams elegante
                     MLData inputData = new BasicMLData(inputs);
                     MLData output = ((BasicNetwork) perceptronConfiguration.getNeuralNetwork()).compute(inputData);
-                    return new Prediction(perceptronConfiguration.translatePerceptronOutputToPrediction(output.getData()).compute() * 1d, output.getData());
+                    return new Prediction(perceptronConfiguration.translatePerceptronOutputToPrediction(output.getData()).compute() * 1d);
                 }
             }
-            throw new UnsupportedOperationException("only encog is implemented");
+            if ( nTupleSystemConfiguration != null && nTupleSystemConfiguration.getNTupleSystem() != null ) {
+                double output = nTupleSystemConfiguration.getNTupleSystem().getComputation(board).compute();
+                return new Prediction(nTupleSystemConfiguration.translatePerceptronOutputToPrediction(output).compute() * 1d);
+            }
+            throw new UnsupportedOperationException("only Encog and NTupleSystem is implemented");
         };
     }
 
@@ -658,6 +666,13 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
 
     private void setLine(int index, Tile[] re, GameBoard<NeuralNetworkClass> board) {
         arraycopy(re, 0, board.getTiles(), index * 4, 4);
+    }
+
+    /**
+     * @return the nTupleSystemConfiguration
+     */
+    protected NTupleConfiguration2048 getnTupleSystemConfiguration() {
+        return nTupleSystemConfiguration;
     }
 
 }

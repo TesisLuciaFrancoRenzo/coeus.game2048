@@ -17,23 +17,14 @@ public class Prediction implements IPrediction {
     /**
      *
      */
-    protected final double[] perceptronOutput;
-
-    /**
-     *
-     */
     protected Double prediction;
 
     /**
      *
-     * @param prediction       representacion numerica de la salida de las
-     *                         neuronas
-     * @param perceptronOutput con la salida tal y como se obtuvo del
-     *                         perceptron, en forma de vector
+     * @param prediction representacion numerica de la salida de las neuronas
      */
-    public Prediction(Double prediction, double[] perceptronOutput) {
+    public Prediction(Double prediction) {
         this.prediction = prediction;
-        this.perceptronOutput = perceptronOutput;
     }
 
     @Override

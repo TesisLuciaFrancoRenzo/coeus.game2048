@@ -196,7 +196,7 @@ public class NTupleScore<NeuralNetworkClass> extends PerceptronConfiguration2048
                         )
                 )
         );
-        //segunda fila de rectangulos
+        //tercera fila de rectangulos
         normalizedPerceptronInput.set(14,
                 normInput.normalize(encryptTiles(
                                 board.tileAt(0, 2).getCode(),
@@ -237,8 +237,7 @@ public class NTupleScore<NeuralNetworkClass> extends PerceptronConfiguration2048
     /**
      *
      * @param board
-     * @param neuronIndex
-     * <p>
+     * @param neuronIndex <p>
      * @return
      */
     @Override
@@ -256,8 +255,7 @@ public class NTupleScore<NeuralNetworkClass> extends PerceptronConfiguration2048
     /**
      *
      * @param board
-     * @param outputNeuronIndex
-     * <p>
+     * @param outputNeuronIndex <p>
      * @return
      */
     @Override

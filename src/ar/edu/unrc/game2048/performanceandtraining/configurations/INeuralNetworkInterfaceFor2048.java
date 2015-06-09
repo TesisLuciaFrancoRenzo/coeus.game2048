@@ -7,6 +7,7 @@ package ar.edu.unrc.game2048.performanceandtraining.configurations;
 
 import ar.edu.unrc.game2048.Action;
 import ar.edu.unrc.game2048.Game2048;
+import ar.edu.unrc.game2048.NTupleConfiguration2048;
 import ar.edu.unrc.game2048.PerceptronConfiguration2048;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IPerceptronInterface;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IsolatedComputation;
@@ -24,6 +25,8 @@ import java.io.File;
  */
 public abstract class INeuralNetworkInterfaceFor2048<NeuralNetworkClass> implements Cloneable {
 
+    private NTupleConfiguration2048 nTupleConfiguration;
+
     private PerceptronConfiguration2048<NeuralNetworkClass> perceptronConfiguration;
 
     /**
@@ -32,6 +35,14 @@ public abstract class INeuralNetworkInterfaceFor2048<NeuralNetworkClass> impleme
      */
     public INeuralNetworkInterfaceFor2048(PerceptronConfiguration2048<NeuralNetworkClass> perceptronConfiguration) {
         this.perceptronConfiguration = perceptronConfiguration;
+    }
+
+    /**
+     *
+     * @param nTupleConfiguration
+     */
+    public INeuralNetworkInterfaceFor2048(NTupleConfiguration2048 nTupleConfiguration) {
+        this.nTupleConfiguration = nTupleConfiguration;
     }
 
     @Override
@@ -51,6 +62,17 @@ public abstract class INeuralNetworkInterfaceFor2048<NeuralNetworkClass> impleme
      * @return
      */
     public abstract String getLibName();
+
+    /**
+     * @return the nTupleConfiguration
+     */
+    public NTupleConfiguration2048 getNTupleConfiguration() {
+        return nTupleConfiguration;
+    }
+
+    public void setNTupleConfiguration(NTupleConfiguration2048 nTupleConfiguration) {
+        this.nTupleConfiguration = nTupleConfiguration;
+    }
 
     /**
      * @return the perceptronConfiguration

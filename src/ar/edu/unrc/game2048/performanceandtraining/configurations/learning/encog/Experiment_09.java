@@ -12,6 +12,7 @@ import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.Sy
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IPerceptronInterface;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearning;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearningAfterstate;
+import ar.edu.unrc.tdlearning.perceptron.ntuple.NTupleSystem;
 import java.io.File;
 import org.encog.neural.networks.BasicNetwork;
 
@@ -82,6 +83,11 @@ public class Experiment_09 extends LearningExperiment<BasicNetwork> {
     @Override
     public TDLambdaLearning instanceOfTdLearninrgImplementation(IPerceptronInterface perceptronInterface) {
         return new TDLambdaLearningAfterstate(perceptronInterface, getAlpha(), getLambda(), false, getGamma(), getMomentum(), isResetEligibilitiTraces(), isReplaceEligibilitiTraces());
+    }
+
+    @Override
+    public TDLambdaLearning instanceOfTdLearninrgImplementation(NTupleSystem nTupleSystem) {
+        return null;
     }
 
 }

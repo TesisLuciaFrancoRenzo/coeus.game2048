@@ -8,6 +8,7 @@ package ar.edu.unrc.game2048.performanceandtraining.configurations;
 import ar.edu.unrc.game2048.Game2048;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IPerceptronInterface;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearning;
+import ar.edu.unrc.tdlearning.perceptron.ntuple.NTupleSystem;
 import ar.edu.unrc.tdlearning.perceptron.training.EExplorationRateAlgorithms;
 import ar.edu.unrc.tdlearning.perceptron.training.ELearningRateAdaptation;
 import java.io.File;
@@ -281,6 +282,13 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
      * @return
      */
     public abstract TDLambdaLearning instanceOfTdLearninrgImplementation(IPerceptronInterface perceptronInterface);
+
+    /**
+     *
+     * @param nTupleSystem <p>
+     * @return
+     */
+    public abstract TDLambdaLearning instanceOfTdLearninrgImplementation(NTupleSystem nTupleSystem);
 
     /**
      * @return the replaceEligibilitiTraces
@@ -606,7 +614,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
         }
 
         //creamos el juego
-        Game2048<NeuralNetworkClass> game = new Game2048<>(neuralNetworkInterfaceFor2048.getPerceptronConfiguration(), tileToWin, delayPerMove);
+        Game2048<NeuralNetworkClass> game = new Game2048<>(neuralNetworkInterfaceFor2048.getPerceptronConfiguration(), neuralNetworkInterfaceFor2048.getNTupleConfiguration(), tileToWin, delayPerMove);
 
         // Si hay un perceptron ya entrenado, lo buscamos en el archivo.
         // En caso contrario creamos un perceptron vacio, inicializado al azar
@@ -623,7 +631,13 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
             }
         }
 
-        this.setLearningAlgorithm(instanceOfTdLearninrgImplementation(this.getNeuralNetworkInterfaceFor2048().getPerceptronInterface()));
+        if ( this.getNeuralNetworkInterfaceFor2048().getPerceptronInterface() != null ) {
+            this.setLearningAlgorithm(instanceOfTdLearninrgImplementation(this.getNeuralNetworkInterfaceFor2048().getPerceptronInterface()));
+        }
+        if ( this.getNeuralNetworkInterfaceFor2048().getNTupleConfiguration() != null ) {
+            this.setLearningAlgorithm(instanceOfTdLearninrgImplementation(this.getNeuralNetworkInterfaceFor2048().getNTupleConfiguration().getNTupleSystem()));
+        }
+
         if ( learningAlgorithm == null && !this.statisticsOnly ) {
             throw new IllegalArgumentException("learningAlgorithm no puede ser null");
         }
