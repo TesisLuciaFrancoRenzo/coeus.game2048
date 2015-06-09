@@ -6,7 +6,7 @@
 package ar.edu.unrc.game2048;
 
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IAction;
-import ar.edu.unrc.tdlearning.perceptron.interfaces.IState;
+import ar.edu.unrc.tdlearning.perceptron.interfaces.IStatePerceptron;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -72,7 +72,8 @@ public class Game2048Test {
     public void testListAllPossibleActions() {
         System.out.println("listAllPossibleActions");
         game = new Game2048(null, 2_048, false, 0, true);
-        IState state1, state2;
+        IStatePerceptron state1;
+        IState state2;
 
         //inicializamos un tablero terminal
         GameBoard board = new GameBoard(game, tileContainer);

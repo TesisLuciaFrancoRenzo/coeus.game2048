@@ -28,6 +28,7 @@ import ar.edu.unrc.tdlearning.perceptron.interfaces.IAction;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IPrediction;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IProblem;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IState;
+import ar.edu.unrc.tdlearning.perceptron.interfaces.IStatePerceptron;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IsolatedComputation;
 import ar.edu.unrc.tdlearning.perceptron.learning.StateProbability;
 import java.awt.Color;
@@ -177,7 +178,7 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
     }
 
     @Override
-    public IState computeAfterState(IState turnInitialState, IAction action) {
+    public IStatePerceptron computeAfterState(IState turnInitialState, IAction action) {
         GameBoard<NeuralNetworkClass> futureBoard = ((GameBoard<NeuralNetworkClass>) turnInitialState).getCopy(tileContainer);
         switch ( (Action) action ) {
             case left: {
@@ -230,7 +231,7 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
     }
 
     @Override
-    public IState computeNextTurnStateFromAfterstate(IState s1) {
+    public IStatePerceptron computeNextTurnStateFromAfterstate(IState s1) {
         GameBoard<NeuralNetworkClass> finalBoard = ((GameBoard<NeuralNetworkClass>) s1).getCopy(tileContainer);
         if ( finalBoard.isNeedToAddTile() ) {
             finalBoard.addTile();
@@ -251,7 +252,7 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
                 if ( perceptronConfiguration.getNeuralNetwork() instanceof BasicNetwork ) { //es sobre la libreria encog
                     double[] inputs = new double[getPerceptronConfiguration().perceptron_input_quantity];
                     for ( int i = 0; i < getPerceptronConfiguration().perceptron_input_quantity; i++ ) {
-                        inputs[i] = state.translateToPerceptronInput(i);
+                        inputs[i] = ((IStatePerceptron) state).translateToPerceptronInput(i);
                     } //todo reeemplazar esot po algo ams elegante
                     MLData inputData = new BasicMLData(inputs);
                     MLData output = ((BasicNetwork) perceptronConfiguration.getNeuralNetwork()).compute(inputData);
@@ -382,7 +383,7 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
         lastInitialStateForPossibleActions = null;
         GameBoard state = (GameBoard<NeuralNetworkClass>) initialState;
         if ( !initialState.isTerminalState() ) {
-            IState afterstate = computeAfterState(state, Action.left);
+            IStatePerceptron afterstate = computeAfterState(state, Action.left);
             if ( !state.isEqual((GameBoard<NeuralNetworkClass>) afterstate) ) {
                 actions.add(Action.left);
                 futurePossibleBoards.add(0, (GameBoard<NeuralNetworkClass>) afterstate);
@@ -445,7 +446,7 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
             myLoose = true;
         }
         if ( !myWin && !myLoose ) {
-            IState afterstate = null;
+            IStatePerceptron afterstate = null;
             switch ( keyCode ) {
                 case VK_LEFT: {
                     afterstate = computeAfterState(getBoard(), Action.left);

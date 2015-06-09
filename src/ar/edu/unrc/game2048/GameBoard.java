@@ -6,7 +6,7 @@
 package ar.edu.unrc.game2048;
 
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IReward;
-import ar.edu.unrc.tdlearning.perceptron.interfaces.IState;
+import ar.edu.unrc.tdlearning.perceptron.interfaces.IStatePerceptron;
 import ar.edu.unrc.tdlearning.perceptron.learning.StateProbability;
 import static java.lang.Math.random;
 import static java.lang.System.arraycopy;
@@ -20,7 +20,7 @@ import java.util.Objects;
  * @author lucia bressan, franco pellegrini, renzo bianchini pellegrini
  * @param <NeuralNetworkClass>
  */
-public class GameBoard<NeuralNetworkClass> implements IState {
+public class GameBoard<NeuralNetworkClass> implements IStatePerceptron {
 
     /**
      *
