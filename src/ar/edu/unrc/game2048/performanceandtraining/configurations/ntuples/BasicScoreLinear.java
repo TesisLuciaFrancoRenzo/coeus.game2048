@@ -14,14 +14,12 @@ import ar.edu.unrc.tdlearning.perceptron.interfaces.IsolatedComputation;
 import ar.edu.unrc.tdlearning.perceptron.ntuple.SamplePointState;
 import ar.edu.unrc.tdlearning.perceptron.training.FunctionUtils;
 import java.util.ArrayList;
-import org.encog.util.arrayutil.NormalizationAction;
-import org.encog.util.arrayutil.NormalizedField;
 
 /**
  *
  * @author Franco
  */
-public class BasicScore extends NTupleConfiguration2048 {
+public class BasicScoreLinear extends NTupleConfiguration2048 {
 
     int maxReward = 500_000; //ver teoria, 1024*2*4
     int minReward = 0;
@@ -29,14 +27,9 @@ public class BasicScore extends NTupleConfiguration2048 {
     /**
      *
      */
-    public BasicScore() {
-        this.activationFunction = FunctionUtils.tanh;
-        this.derivatedActivationFunction = FunctionUtils.derivatedTanh;
-        double activationFunctionMax = 1;
-        double activationFunctionMin = -1;
-
-        normOutput = new NormalizedField(NormalizationAction.Normalize,
-                null, maxReward, minReward, activationFunctionMax, activationFunctionMin);
+    public BasicScoreLinear() {
+        this.activationFunction = FunctionUtils.linear;
+        this.derivatedActivationFunction = FunctionUtils.derivatedLinear;
 
         nTuplesLenght = new int[17];
         for ( int i = 0; i < 17; i++ ) {
@@ -217,7 +210,7 @@ public class BasicScore extends NTupleConfiguration2048 {
     public IsolatedComputation<Integer> translatePerceptronOutputToPrediction(double data) {
         return () -> {
             //assert data != Double.NaN;
-            return (int) Math.round(normOutput.deNormalize(data));
+            return (int) Math.round(data);
         };
     }
 
@@ -230,7 +223,7 @@ public class BasicScore extends NTupleConfiguration2048 {
         if ( reward > maxReward ) {
             throw new IllegalArgumentException("score supera el maximo de " + maxReward + " con el valor " + reward);
         }
-        return normOutput.normalize(reward); //TODO esta bien normalizar
+        return reward; //TODO esta bien normalizar
     }
 
     @Override

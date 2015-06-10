@@ -5,8 +5,10 @@
  */
 package ar.edu.unrc.game2048.performanceandtraining.configurations.ntuples;
 
+import ar.edu.unrc.game2048.Game2048;
 import ar.edu.unrc.game2048.GameBoard;
 import ar.edu.unrc.game2048.NTupleConfiguration2048;
+import ar.edu.unrc.game2048.PartialScore;
 import ar.edu.unrc.game2048.Tile;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IsolatedComputation;
 import ar.edu.unrc.tdlearning.perceptron.ntuple.SamplePointState;
@@ -45,6 +47,20 @@ public class BasicMaxTile extends NTupleConfiguration2048 {
         this.allSamplePointStates = new ArrayList<>();
         for ( int i = 0; i <= maxTile; i++ ) {
             allSamplePointStates.add(new Tile(i));
+        }
+    }
+
+    @Override
+    public PartialScore getBoardReward(GameBoard board) {
+        return new PartialScore(0);
+    }
+
+    @Override
+    public PartialScore getCurrentReward(Game2048 game) {
+        if ( game.iLoose() || game.iWin() ) {
+            return new PartialScore(game.getMaxNumberCode());
+        } else {
+            return new PartialScore(0);
         }
     }
 
@@ -222,13 +238,14 @@ public class BasicMaxTile extends NTupleConfiguration2048 {
     @Override
     public double translateRewardToNormalizedPerceptronOutput(GameBoard board) { //TODO si esta correcto el cambio hacer que se pida al GAME y no al BOARD la reward
         if ( !board.isTerminalState() ) {
-            throw new IllegalArgumentException("El juego debe estar en un estado finalizado para invocar esta funcion");
+            return 0;
+        } else {
+            int reward = board.getMaxTileNumberCode();
+            if ( reward > maxReward ) {
+                throw new IllegalArgumentException("score supera el maximo de " + maxReward + " con el valor " + reward);
+            }
+            return normOutput.normalize(reward); //TODO esta bien normalizar
         }
-        int reward = board.getMaxTileNumberCode();
-        if ( reward > maxReward ) {
-            throw new IllegalArgumentException("score supera el maximo de " + maxReward + " con el valor " + reward);
-        }
-        return normOutput.normalize(reward); //TODO esta bien normalizar
     }
 
 }

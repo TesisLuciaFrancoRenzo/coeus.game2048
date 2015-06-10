@@ -27,6 +27,7 @@ import static ar.edu.unrc.game2048.GameBoard.tileNumber;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IAction;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IPrediction;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IProblem;
+import ar.edu.unrc.tdlearning.perceptron.interfaces.IReward;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IState;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IStatePerceptron;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IsolatedComputation;
@@ -276,6 +277,11 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
      */
     public GameBoard<NeuralNetworkClass> getBoard() {
         return board;
+    }
+
+    @Override
+    public IReward getCurrentReward() {
+        return this.getnTupleSystemConfiguration().getCurrentReward(this);
     }
 
     @Override

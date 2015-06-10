@@ -46,4 +46,8 @@ public abstract class NTupleConfiguration2048 implements Cloneable {
     public abstract IsolatedComputation<Integer> translatePerceptronOutputToPrediction(double data);
 
     public abstract double translateRewardToNormalizedPerceptronOutput(GameBoard board);
+
+    public abstract PartialScore getCurrentReward(Game2048 game);
+
+    public abstract PartialScore getBoardReward(GameBoard board);
 }

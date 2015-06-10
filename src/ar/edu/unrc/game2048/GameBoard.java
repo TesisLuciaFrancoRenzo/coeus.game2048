@@ -234,8 +234,9 @@ public class GameBoard<NeuralNetworkClass> implements IStatePerceptron, IStateNT
     }
 
     @Override
-    public IReward getReward() {
-        return new PartialScore(this.getPartialScore());
+    public IReward getStateReward() {
+        return game.getnTupleSystemConfiguration().getBoardReward(this);
+
     }
 
     /**

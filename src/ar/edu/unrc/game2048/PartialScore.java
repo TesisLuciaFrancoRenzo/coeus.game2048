@@ -13,7 +13,7 @@ import ar.edu.unrc.tdlearning.perceptron.interfaces.IReward;
  */
 public class PartialScore implements IReward {
 
-    private final int partialScore;
+    private int partialScore;
 
     /**
      *
@@ -22,6 +22,12 @@ public class PartialScore implements IReward {
     public PartialScore(int partialScore) {
         this.partialScore = partialScore;
 
+    }
+
+    @Override
+    public IReward add(IReward reward) {
+        partialScore += ((PartialScore) reward).partialScore;
+        return this;
     }
 
     /**

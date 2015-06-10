@@ -8,7 +8,7 @@ package ar.edu.unrc.game2048.performanceandtraining.configurations.learning.ntup
 import ar.edu.unrc.game2048.NTupleConfiguration2048;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.LearningExperiment;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.libraries.NTupleExperimentInterface;
-import ar.edu.unrc.game2048.performanceandtraining.configurations.ntuples.BasicMaxTileLineal;
+import ar.edu.unrc.game2048.performanceandtraining.configurations.ntuples.BasicMaxTileLinear;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IPerceptronInterface;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearning;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearningAfterstate;
@@ -42,9 +42,9 @@ public class Experiment_03 extends LearningExperiment<BasicNetwork> {
         //  double[] alphas = {0.01};
         //    experiment.setAlpha(alphas);
         experiment.setLearningRateAdaptationToAnnealing(400_000);
-        experiment.setLambda(0);
+        experiment.setLambda(0.7);
         experiment.setGamma(1);
-        experiment.setMomentum(0);
+        experiment.setMomentum(0.8);
         experiment.setExplorationRateToFixed(0.1);
         experiment.setReplaceEligibilitiTraces(false);
         experiment.setResetEligibilitiTraces(false);
@@ -79,7 +79,7 @@ public class Experiment_03 extends LearningExperiment<BasicNetwork> {
             this.setExperimentName("Experiment_03");
         }
         this.setPerceptronName(this.getExperimentName());
-        NTupleConfiguration2048 config = new BasicMaxTileLineal();
+        NTupleConfiguration2048 config = new BasicMaxTileLinear();
         this.setNeuralNetworkInterfaceFor2048(new NTupleExperimentInterface(config));
     }
 
