@@ -359,18 +359,13 @@ public class GameBoard<NeuralNetworkClass> implements IStatePerceptron, IStateNT
     }
 
     @Override
-    public double translateRealOutputToNormalizedPerceptronOutput() {
-        return game.getnTupleSystemConfiguration().translateRealOutputToNormalizedPerceptronOutput(this);
-    }
-
-    @Override
     public double translateRealOutputToNormalizedPerceptronOutputFrom(int outputNeuronIndex) {
         return getGame().getPerceptronConfiguration().translateRealOutputToNormalizedPerceptronOutputFrom(this, outputNeuronIndex);
     }
 
     @Override
-    public double translateRewordToNormalizedPerceptronOutput() {
-        return game.getnTupleSystemConfiguration().translateRewordToNormalizedPerceptronOutput(this);
+    public double translateRewardToNormalizedPerceptronOutput() {
+        return getGame().getnTupleSystemConfiguration().translateRewardToNormalizedPerceptronOutput(this);
     }
 
     @Override

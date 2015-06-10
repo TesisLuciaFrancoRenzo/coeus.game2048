@@ -21,17 +21,17 @@ import org.encog.util.arrayutil.NormalizedField;
  */
 public class Basic extends NTupleConfiguration2048 {
 
-    int maxScore = 8_192; //ver teoria, 1024*2*4
+    int maxScore = 500_000; //ver teoria, 1024*2*4
     int minScore = 0;
 
     /**
      *
      */
     public Basic() {
-        this.activationFunction = FunctionUtils.sigmoid;
-        this.derivatedActivationFunction = FunctionUtils.derivatedSigmoid;
+        this.activationFunction = FunctionUtils.tanh;
+        this.derivatedActivationFunction = FunctionUtils.derivatedTanh;
         double activationFunctionMax = 1;
-        double activationFunctionMin = 0;
+        double activationFunctionMin = -1;
 
         normOutput = new NormalizedField(NormalizationAction.Normalize,
                 null, maxScore, minScore, activationFunctionMax, activationFunctionMin);
@@ -51,7 +51,7 @@ public class Basic extends NTupleConfiguration2048 {
     /**
      *
      * @param board
-     * @param nTupleIndex
+     * @param nTupleIndex <p>
      * @return
      */
     @Override
@@ -208,7 +208,7 @@ public class Basic extends NTupleConfiguration2048 {
 
     /**
      *
-     * @param data
+     * @param data <p>
      * @return
      */
     @Override
@@ -219,30 +219,16 @@ public class Basic extends NTupleConfiguration2048 {
         };
     }
 
-    /**
-     *
-     * @param board
-     * @return
-     */
     @Override
-    public double translateRealOutputToNormalizedPerceptronOutput(GameBoard board) {
-        if ( board.getPartialScore() > maxScore ) {
-            throw new IllegalArgumentException("board.getPartialScore() supera el maximo de " + maxScore + " con el valor " + board.getPartialScore());
+    public double translateRewardToNormalizedPerceptronOutput(GameBoard board) {
+        if ( !board.isTerminalState() ) {
+            throw new IllegalArgumentException("El juego debe estar en un estado finalizado para invocar esta funcion");
         }
-        return normOutput.normalize(board.getGame().getScore() + board.getPartialScore()); //Esto esta bien? no deberia ser el valor FINAL del partido?? cambiar TODOs los otros cuando se encuntre solucion
-    }
-
-    /**
-     *
-     * @param board
-     * @return
-     */
-    @Override
-    public double translateRewordToNormalizedPerceptronOutput(GameBoard board) {
-        if ( board.getPartialScore() > maxScore ) {
-            throw new IllegalArgumentException("board.getPartialScore() supera el maximo de " + maxScore + " con el valor " + board.getPartialScore());
+        int score = board.getPartialScore() + board.getGame().getScore();
+        if ( score > maxScore ) {
+            throw new IllegalArgumentException("score supera el maximo de " + maxScore + " con el valor " + score);
         }
-        return normOutput.normalize(board.getPartialScore()); //Esto esta bien? no deberia ser el valor FINAL del partido?? cambiar TODOs los otros cuando se encuntre solucion
+        return normOutput.normalize(score); //TODO esta bien normalizar
     }
 
 }
