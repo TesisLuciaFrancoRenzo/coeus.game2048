@@ -220,11 +220,11 @@ public class Basic extends NTupleConfiguration2048 {
     }
 
     @Override
-    public double translateRewardToNormalizedPerceptronOutput(GameBoard board) {
-        if ( !board.isTerminalState() ) {
+    public double translateRewardToNormalizedPerceptronOutput(GameBoard board) { //TODO si esta correcto el cambio hacer que se pida al GAME y no al BOARD la reward
+        if ( !board.isTerminalState() || !(board.getGame().iLoose() || board.getGame().iWin()) ) {
             throw new IllegalArgumentException("El juego debe estar en un estado finalizado para invocar esta funcion");
         }
-        int score = board.getPartialScore() + board.getGame().getScore();
+        int score = board.getGame().getScore();
         if ( score > maxScore ) {
             throw new IllegalArgumentException("score supera el maximo de " + maxScore + " con el valor " + score);
         }
