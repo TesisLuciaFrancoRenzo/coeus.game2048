@@ -171,6 +171,11 @@ public class GameBoard<NeuralNetworkClass> implements IStatePerceptron, IStateNT
         return true;
     }
 
+    @Override
+    public double getBoardRewardToNormalizedPerceptronOutput() {
+        return game.getnTupleSystemConfiguration().getBoardRewardToNormalizedPerceptronOutput(this);
+    }
+
     /**
      *
      * @param tileContainer para reciclar Tiles
@@ -364,8 +369,8 @@ public class GameBoard<NeuralNetworkClass> implements IStatePerceptron, IStateNT
     }
 
     @Override
-    public double translateRewardToNormalizedPerceptronOutput() {
-        return getGame().getnTupleSystemConfiguration().translateRewardToNormalizedPerceptronOutput(this);
+    public double getCurrentRewardNormalizedPerceptronOutput() {
+        return getGame().getnTupleSystemConfiguration().getCurrentRewardNormalizedPerceptronOutput(this);
     }
 
     @Override
