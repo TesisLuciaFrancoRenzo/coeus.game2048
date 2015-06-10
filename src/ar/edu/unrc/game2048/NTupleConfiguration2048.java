@@ -5,6 +5,7 @@
  */
 package ar.edu.unrc.game2048;
 
+import ar.edu.unrc.tdlearning.perceptron.interfaces.IPrediction;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IsolatedComputation;
 import ar.edu.unrc.tdlearning.perceptron.ntuple.NTupleSystem;
 import ar.edu.unrc.tdlearning.perceptron.ntuple.SamplePointState;
@@ -50,4 +51,7 @@ public abstract class NTupleConfiguration2048 implements Cloneable {
     public abstract PartialScore getCurrentReward(Game2048 game);
 
     public abstract PartialScore getBoardReward(GameBoard board);
+
+    public abstract IPrediction getCurrentRewardIf(Game2048 game, GameBoard afterstate);
+
 }

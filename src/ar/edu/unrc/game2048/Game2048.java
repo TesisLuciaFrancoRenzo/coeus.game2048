@@ -285,6 +285,11 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
     }
 
     @Override
+    public IPrediction getCurrentRewardIf(IState afterstate) {
+        return this.getnTupleSystemConfiguration().getCurrentRewardIf(this, (GameBoard) afterstate);
+    }
+
+    @Override
     public void setCurrentState(IState nextTurnState) {
         if ( nextTurnState == null ) {
             throw new IllegalArgumentException("nextTurnState can't be null");

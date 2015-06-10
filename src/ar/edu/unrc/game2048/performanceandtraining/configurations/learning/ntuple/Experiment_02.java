@@ -39,10 +39,10 @@ public class Experiment_02 extends LearningExperiment<BasicNetwork> {
 
 //        boolean statistics = true;
         boolean statistics = false;
-        //  double[] alphas = {0.01};
-        //    experiment.setAlpha(alphas);
-        experiment.setLearningRateAdaptationToAnnealing(400_000);
-        experiment.setLambda(0.7);
+        double[] alphas = {0.01};
+        experiment.setAlpha(alphas);
+        experiment.setLearningRateAdaptationToFixed();
+        experiment.setLambda(0);
         experiment.setGamma(1);
         experiment.setMomentum(0);
         experiment.setExplorationRateToFixed(0.1);

@@ -9,7 +9,9 @@ import ar.edu.unrc.game2048.Game2048;
 import ar.edu.unrc.game2048.GameBoard;
 import ar.edu.unrc.game2048.NTupleConfiguration2048;
 import ar.edu.unrc.game2048.PartialScore;
+import ar.edu.unrc.game2048.Prediction;
 import ar.edu.unrc.game2048.Tile;
+import ar.edu.unrc.tdlearning.perceptron.interfaces.IPrediction;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IsolatedComputation;
 import ar.edu.unrc.tdlearning.perceptron.ntuple.SamplePointState;
 import ar.edu.unrc.tdlearning.perceptron.training.FunctionUtils;
@@ -235,4 +237,10 @@ public class BasicScoreLinear extends NTupleConfiguration2048 {
     public PartialScore getBoardReward(GameBoard board) {
         return new PartialScore(board.getPartialScore());
     }
+
+    @Override
+    public IPrediction getCurrentRewardIf(Game2048 game, GameBoard afterstate) {
+        return new Prediction(game.getScore() + afterstate.getPartialScore() * 1d);
+    }
+
 }
