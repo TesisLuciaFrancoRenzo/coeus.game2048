@@ -19,22 +19,22 @@ import org.encog.util.arrayutil.NormalizedField;
  *
  * @author Franco
  */
-public class Basic extends NTupleConfiguration2048 {
+public class BasicScore extends NTupleConfiguration2048 {
 
-    int maxScore = 500_000; //ver teoria, 1024*2*4
-    int minScore = 0;
+    int maxReward = 500_000; //ver teoria, 1024*2*4
+    int minReward = 0;
 
     /**
      *
      */
-    public Basic() {
+    public BasicScore() {
         this.activationFunction = FunctionUtils.tanh;
         this.derivatedActivationFunction = FunctionUtils.derivatedTanh;
         double activationFunctionMax = 1;
         double activationFunctionMin = -1;
 
         normOutput = new NormalizedField(NormalizationAction.Normalize,
-                null, maxScore, minScore, activationFunctionMax, activationFunctionMin);
+                null, maxReward, minReward, activationFunctionMax, activationFunctionMin);
 
         nTuplesLenght = new int[17];
         for ( int i = 0; i < 17; i++ ) {
@@ -224,11 +224,11 @@ public class Basic extends NTupleConfiguration2048 {
         if ( !board.isTerminalState() || !(board.getGame().iLoose() || board.getGame().iWin()) ) {
             throw new IllegalArgumentException("El juego debe estar en un estado finalizado para invocar esta funcion");
         }
-        int score = board.getGame().getScore();
-        if ( score > maxScore ) {
-            throw new IllegalArgumentException("score supera el maximo de " + maxScore + " con el valor " + score);
+        int reward = board.getGame().getScore();
+        if ( reward > maxReward ) {
+            throw new IllegalArgumentException("score supera el maximo de " + maxReward + " con el valor " + reward);
         }
-        return normOutput.normalize(score); //TODO esta bien normalizar
+        return normOutput.normalize(reward); //TODO esta bien normalizar
     }
 
 }
