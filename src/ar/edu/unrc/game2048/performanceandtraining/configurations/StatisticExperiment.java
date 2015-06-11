@@ -248,7 +248,7 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
                 neuralNetworkInterfaceClone.setNTupleConfiguration(tempNTupleConfiguration);
             }
 
-            if ( tempPerceptronConfiguration != null || tempPerceptronInterface != null ) {
+            if ( tempPerceptronConfiguration != null || tempNTupleConfiguration != null ) {
                 //cargamos la red neuronal entrenada
                 File perceptronFile = new File(filePath + ".ser");
                 if ( !perceptronFile.exists() ) {
@@ -260,7 +260,12 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
             Game2048<NeuralNetworkClass> game = new Game2048<>(tempPerceptronConfiguration, tempNTupleConfiguration, tileToWin, delayPerMove);
 
             neuralNetworkInterfaces.add(neuralNetworkInterfaceClone);
-            tdLambdaLearning.add(learningExperiment.instanceOfTdLearninrgImplementation(tempPerceptronInterface)); //TODO revisar esto
+            if ( tempPerceptronConfiguration != null ) {
+                tdLambdaLearning.add(learningExperiment.instanceOfTdLearninrgImplementation(tempPerceptronInterface)); //TODO revisar esto
+            }
+            if ( tempNTupleConfiguration != null ) {
+                tdLambdaLearning.add(learningExperiment.instanceOfTdLearninrgImplementation(tempNTupleConfiguration.getNTupleSystem())); //TODO revisar esto
+            }
             games.add(game);
             results.add(new ThreadResult());
         }
