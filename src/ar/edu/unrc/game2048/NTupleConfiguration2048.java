@@ -29,6 +29,14 @@ public abstract class NTupleConfiguration2048 implements Cloneable {
         return super.clone(); //To change body of generated methods, choose Tools | Templates.
     }
 
+    public abstract double denormalizeValueFromPerceptronOutput(double value);
+
+    public abstract double getBoardReward(GameBoard board);
+
+    public abstract double getCurrentReward(Game2048 game);
+
+    public abstract double getCurrentRewardIf(Game2048 game, GameBoard afterstate);
+
     public abstract SamplePointState[] getNTuple(GameBoard board, int nTupleIndex);
 
     /**
@@ -41,14 +49,6 @@ public abstract class NTupleConfiguration2048 implements Cloneable {
     public void setNTupleSystem(NTupleSystem nTupleSystem) {
         this.nTupleSystem = nTupleSystem;
     }
-
-    public abstract double getCurrentReward(Game2048 game);
-
-    public abstract double getBoardReward(GameBoard board);
-
-    public abstract double getCurrentRewardIf(Game2048 game, GameBoard afterstate);
-
-    public abstract double denormalizeValueFromPerceptronOutput(double value);
 
     public abstract double normalizeValueToPerceptronOutput(double value);
 

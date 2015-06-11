@@ -70,6 +70,10 @@ public abstract class INeuralNetworkInterfaceFor2048<NeuralNetworkClass> impleme
         return nTupleConfiguration;
     }
 
+    /**
+     *
+     * @param nTupleConfiguration
+     */
     public void setNTupleConfiguration(NTupleConfiguration2048 nTupleConfiguration) {
         this.nTupleConfiguration = nTupleConfiguration;
     }

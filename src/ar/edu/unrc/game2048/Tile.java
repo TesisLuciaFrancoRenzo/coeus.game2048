@@ -20,10 +20,17 @@ public class Tile implements SamplePointState {
     private int code;
     private int gameValue;
 
+    /**
+     *
+     */
     public Tile() {
         this(0);
     }
 
+    /**
+     *
+     * @param num
+     */
     public Tile(int num) {
         code = num;
         if ( code == 0 ) {
