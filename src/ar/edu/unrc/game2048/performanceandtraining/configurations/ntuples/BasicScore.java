@@ -22,7 +22,7 @@ import org.encog.util.arrayutil.NormalizedField;
 public class BasicScore extends NTupleConfiguration2048 {
 
     int maxReward = 500_000; //ver teoria, 1024*2*4
-    int minReward = 0;
+    int minReward = -500_000;
 
     /**
      *
