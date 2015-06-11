@@ -39,19 +39,19 @@ public class Experiment_01 extends LearningExperiment<BasicNetwork> {
 
 //        boolean statistics = true;
         boolean statistics = false;
-        //  double[] alphas = {0.01};
-        //    experiment.setAlpha(alphas);
-        experiment.setLearningRateAdaptationToAnnealing(400_000);
-        experiment.setLambda(0.7);
+        double[] alphas = {0.0025};
+        experiment.setAlpha(alphas);
+        experiment.setLearningRateAdaptationToFixed();
+        experiment.setLambda(0);
         experiment.setGamma(1);
         experiment.setMomentum(0);
-        experiment.setExplorationRateToFixed(0.1);
+        experiment.setExplorationRateToFixed(0);
         experiment.setReplaceEligibilitiTraces(false);
         experiment.setResetEligibilitiTraces(false);
         experiment.setGamesToPlay(1_000_000);
         experiment.setLastGamePlayedNumber(0); //recordar AJUSTAR ESTE VALOR
         experiment.setSaveEvery(10_000);
-        experiment.setInitializePerceptronRandomized(true);
+        experiment.setInitializePerceptronRandomized(false);
 
         experiment.createLogs(false);
         //para calcualar estadisticas
