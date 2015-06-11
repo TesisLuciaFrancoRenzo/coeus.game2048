@@ -25,9 +25,7 @@ import static ar.edu.unrc.game2048.Action.right;
 import static ar.edu.unrc.game2048.Action.up;
 import static ar.edu.unrc.game2048.GameBoard.tileNumber;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IAction;
-import ar.edu.unrc.tdlearning.perceptron.interfaces.IPrediction;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IProblem;
-import ar.edu.unrc.tdlearning.perceptron.interfaces.IReward;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IState;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IStateNTuple;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IStatePerceptron;
@@ -246,12 +244,17 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
     }
 
     @Override
+    public double denormalizeValueFromPerceptronOutput(double value) {
+        return this.getnTupleSystemConfiguration().denormalizeValueFromPerceptronOutput(value);
+    }
+
+    @Override
     public void dispose() {
         gameFrame.dispose();
     }
 
     @Override
-    public IsolatedComputation<IPrediction> evaluateBoardWithPerceptron(IState state) {
+    public IsolatedComputation<Double> evaluateBoardWithPerceptron(IState state) {
         return () -> {
             //dependiendo de que tipo de red neuronal utilizamos, evaluamos las entradas y calculamos una salida
             if ( perceptronConfiguration != null && perceptronConfiguration.getNeuralNetwork() != null ) {
@@ -262,12 +265,11 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
                     } //todo reeemplazar esot po algo ams elegante
                     MLData inputData = new BasicMLData(inputs);
                     MLData output = ((BasicNetwork) perceptronConfiguration.getNeuralNetwork()).compute(inputData);
-                    return new Prediction(perceptronConfiguration.translatePerceptronOutputToPrediction(output.getData()).compute() * 1d);
+                    return perceptronConfiguration.translatePerceptronOutputToPrediction(output.getData()).compute() * 1d;
                 }
             }
             if ( nTupleSystemConfiguration != null && nTupleSystemConfiguration.getNTupleSystem() != null ) {
-                double output = nTupleSystemConfiguration.getNTupleSystem().getComputation((IStateNTuple) state).compute();
-                return new Prediction(nTupleSystemConfiguration.translatePerceptronOutputToPrediction(output).compute() * 1d);
+                return nTupleSystemConfiguration.getNTupleSystem().getComputation((IStateNTuple) state).compute();
             }
             throw new UnsupportedOperationException("only Encog and NTupleSystem is implemented");
         };
@@ -281,12 +283,12 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
     }
 
     @Override
-    public IReward getCurrentReward() {
+    public double getCurrentReward() {
         return this.getnTupleSystemConfiguration().getCurrentReward(this);
     }
 
     @Override
-    public IPrediction getCurrentRewardIf(IState afterstate) {
+    public double getCurrentRewardIf(IState afterstate) {
         return this.getnTupleSystemConfiguration().getCurrentRewardIf(this, (GameBoard) afterstate);
     }
 
@@ -319,6 +321,11 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
                 Logger.getLogger(Game2048.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+    }
+
+    @Override
+    public double getFinalReward() {
+        return this.getScore();
     }
 
     /**
@@ -443,6 +450,11 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
     @Override
     public List<StateProbability> listAllPossibleNextTurnStateFromAfterstate(IState afterState) {
         return ((GameBoard<NeuralNetworkClass>) afterState).listAllPossibleNextTurnStateFromAfterstate();
+    }
+
+    @Override
+    public double normalizeValueToPerceptronOutput(double value) {
+        return this.getnTupleSystemConfiguration().normalizeValueToPerceptronOutput(value);
     }
 
     @Override

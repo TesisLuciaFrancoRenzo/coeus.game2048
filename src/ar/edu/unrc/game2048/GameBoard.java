@@ -5,7 +5,6 @@
  */
 package ar.edu.unrc.game2048;
 
-import ar.edu.unrc.tdlearning.perceptron.interfaces.IReward;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IStateNTuple;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IStatePerceptron;
 import ar.edu.unrc.tdlearning.perceptron.learning.StateProbability;
@@ -171,11 +170,14 @@ public class GameBoard<NeuralNetworkClass> implements IStatePerceptron, IStateNT
         return true;
     }
 
-    @Override
-    public double getBoardRewardToNormalizedPerceptronOutput() {
-        return game.getnTupleSystemConfiguration().getBoardRewardToNormalizedPerceptronOutput(this);
-    }
-
+//    @Override
+//    public double getBoardRewardToNormalizedPerceptronOutput() {
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//    }
+//    @Override
+//    public double getBoardRewardToNormalizedPerceptronOutput() {
+//        return game.getnTupleSystemConfiguration().getBoardRewardToNormalizedPerceptronOutput(this);
+//    }
     /**
      *
      * @param tileContainer para reciclar Tiles
@@ -239,7 +241,7 @@ public class GameBoard<NeuralNetworkClass> implements IStatePerceptron, IStateNT
     }
 
     @Override
-    public IReward getStateReward() {
+    public double getStateReward() {
         return game.getnTupleSystemConfiguration().getBoardReward(this);
     }
 
@@ -362,21 +364,21 @@ public class GameBoard<NeuralNetworkClass> implements IStatePerceptron, IStateNT
     public Tile tileAt(int x, int y) {
         return getTiles()[x + y * 4];
     }
-
-    @Override
-    public double translateRealOutputToNormalizedPerceptronOutputFrom(int outputNeuronIndex) {
-        return getGame().getPerceptronConfiguration().translateRealOutputToNormalizedPerceptronOutputFrom(this, outputNeuronIndex);
-    }
-
-    @Override
-    public double getCurrentRewardNormalizedPerceptronOutput() {
-        return getGame().getnTupleSystemConfiguration().getCurrentRewardNormalizedPerceptronOutput(this);
-    }
-
-    @Override
-    public double translateRewordToNormalizedPerceptronOutputFrom(int outputNeuronIndex) {
-        return getGame().getPerceptronConfiguration().translateRewordToNormalizedPerceptronOutputFrom(this, outputNeuronIndex);
-    }
+//
+//    @Override
+//    public double translateRealOutputToNormalizedPerceptronOutputFrom(int outputNeuronIndex) {
+//        return getGame().getPerceptronConfiguration().translateRealOutputToNormalizedPerceptronOutputFrom(this, outputNeuronIndex);
+//    }
+//
+////    @Override
+////    public double getTotalRewardNormalizedPerceptronOutput() {
+////        return getGame().getnTupleSystemConfiguration().getTotalRewardNormalizedPerceptronOutput(this);
+////    }
+//
+//    @Override
+//    public double translateRewordToNormalizedPerceptronOutputFrom(int outputNeuronIndex) {
+//        return getGame().getPerceptronConfiguration().translateRewordToNormalizedPerceptronOutputFrom(this, outputNeuronIndex);
+//    }
 
     @Override
     public double translateToPerceptronInput(int neuronIndex) {

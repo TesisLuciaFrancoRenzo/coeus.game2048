@@ -8,11 +8,7 @@ package ar.edu.unrc.game2048.performanceandtraining.configurations.ntuples;
 import ar.edu.unrc.game2048.Game2048;
 import ar.edu.unrc.game2048.GameBoard;
 import ar.edu.unrc.game2048.NTupleConfiguration2048;
-import ar.edu.unrc.game2048.PartialScore;
-import ar.edu.unrc.game2048.Prediction;
 import ar.edu.unrc.game2048.Tile;
-import ar.edu.unrc.tdlearning.perceptron.interfaces.IPrediction;
-import ar.edu.unrc.tdlearning.perceptron.interfaces.IsolatedComputation;
 import ar.edu.unrc.tdlearning.perceptron.ntuple.SamplePointState;
 import ar.edu.unrc.tdlearning.perceptron.training.FunctionUtils;
 import java.util.ArrayList;
@@ -203,53 +199,61 @@ public class BasicScoreLinear extends NTupleConfiguration2048 {
         }
     }
 
-    /**
-     *
-     * @param data <p>
-     * @return
-     */
-    @Override
-    public IsolatedComputation<Integer> translatePerceptronOutputToPrediction(double data) {
-        return () -> {
-            //assert data != Double.NaN;
-            return (int) Math.round(data);
-        };
-    }
-
-    @Override
-    public double getCurrentRewardNormalizedPerceptronOutput(GameBoard board) { //TODO si esta correcto el cambio hacer que se pida al GAME y no al BOARD la reward
-//        if ( !board.isTerminalState() || !(board.getGame().iLoose() || board.getGame().iWin()) ) {
-//            throw new IllegalArgumentException("El juego debe estar en un estado finalizado para invocar esta funcion");
+//    /**
+//     *
+//     * @param data <p>
+//     * @return
+//     */
+//    @Override
+//    public IsolatedComputation<Integer> translatePerceptronOutputToPrediction(double data) {
+//        return () -> {
+//            //assert data != Double.NaN;
+//            return (int) Math.round(data);
+//        };
+//    }
+//    @Override
+//    public double getTotalRewardNormalizedPerceptronOutput(GameBoard board) { //TODO si esta correcto el cambio hacer que se pida al GAME y no al BOARD la reward
+////        if ( !board.isTerminalState() || !(board.getGame().iLoose() || board.getGame().iWin()) ) {
+////            throw new IllegalArgumentException("El juego debe estar en un estado finalizado para invocar esta funcion");
+////        }
+//        int reward = board.getGame().getScore();
+//        if ( reward > maxReward ) {
+//            throw new IllegalArgumentException("score supera el maximo de " + maxReward + " con el valor " + reward);
 //        }
-        int reward = board.getGame().getScore();
-        if ( reward > maxReward ) {
-            throw new IllegalArgumentException("score supera el maximo de " + maxReward + " con el valor " + reward);
-        }
-        return reward; //TODO esta bien normalizar
+//        return reward; //TODO esta bien normalizar
+//    }
+//
+//    @Override
+//    public double getBoardRewardToNormalizedPerceptronOutput(GameBoard board) {
+//        int reward = board.getPartialScore();
+//        if ( reward > maxReward ) {
+//            throw new IllegalArgumentException("score supera el maximo de " + maxReward + " con el valor " + reward);
+//        }
+//        return reward; //TODO esta bien normalizar
+//    }
+    @Override
+    public double getCurrentReward(Game2048 game) {
+        return game.getScore();
     }
 
     @Override
-    public double getBoardRewardToNormalizedPerceptronOutput(GameBoard board) {
-        int reward = board.getPartialScore();
-        if ( reward > maxReward ) {
-            throw new IllegalArgumentException("score supera el maximo de " + maxReward + " con el valor " + reward);
-        }
-        return reward; //TODO esta bien normalizar
+    public double getBoardReward(GameBoard board) {
+        return board.getPartialScore();
     }
 
     @Override
-    public PartialScore getCurrentReward(Game2048 game) {
-        return new PartialScore(game.getScore());
+    public double getCurrentRewardIf(Game2048 game, GameBoard afterstate) {
+        return game.getScore() + afterstate.getPartialScore();
     }
 
     @Override
-    public PartialScore getBoardReward(GameBoard board) {
-        return new PartialScore(board.getPartialScore());
+    public double normalizeValueToPerceptronOutput(double value) {
+        return value;
     }
 
     @Override
-    public IPrediction getCurrentRewardIf(Game2048 game, GameBoard afterstate) {
-        return new Prediction(game.getScore() + afterstate.getPartialScore() * 1d);
+    public double denormalizeValueFromPerceptronOutput(double value) {
+        return value;
     }
 
 }

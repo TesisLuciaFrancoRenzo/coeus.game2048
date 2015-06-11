@@ -5,8 +5,6 @@
  */
 package ar.edu.unrc.game2048;
 
-import ar.edu.unrc.tdlearning.perceptron.interfaces.IPrediction;
-import ar.edu.unrc.tdlearning.perceptron.interfaces.IsolatedComputation;
 import ar.edu.unrc.tdlearning.perceptron.ntuple.NTupleSystem;
 import ar.edu.unrc.tdlearning.perceptron.ntuple.SamplePointState;
 import java.util.List;
@@ -44,16 +42,14 @@ public abstract class NTupleConfiguration2048 implements Cloneable {
         this.nTupleSystem = nTupleSystem;
     }
 
-    public abstract IsolatedComputation<Integer> translatePerceptronOutputToPrediction(double data);
+    public abstract double getCurrentReward(Game2048 game);
 
-    public abstract double getCurrentRewardNormalizedPerceptronOutput(GameBoard board);
+    public abstract double getBoardReward(GameBoard board);
 
-    public abstract double getBoardRewardToNormalizedPerceptronOutput(GameBoard board);
+    public abstract double getCurrentRewardIf(Game2048 game, GameBoard afterstate);
 
-    public abstract PartialScore getCurrentReward(Game2048 game);
+    public abstract double denormalizeValueFromPerceptronOutput(double value);
 
-    public abstract PartialScore getBoardReward(GameBoard board);
-
-    public abstract IPrediction getCurrentRewardIf(Game2048 game, GameBoard afterstate);
+    public abstract double normalizeValueToPerceptronOutput(double value);
 
 }
