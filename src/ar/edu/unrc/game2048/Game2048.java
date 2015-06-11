@@ -29,6 +29,7 @@ import ar.edu.unrc.tdlearning.perceptron.interfaces.IPrediction;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IProblem;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IReward;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IState;
+import ar.edu.unrc.tdlearning.perceptron.interfaces.IStateNTuple;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IStatePerceptron;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IsolatedComputation;
 import ar.edu.unrc.tdlearning.perceptron.learning.StateProbability;
@@ -265,7 +266,7 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
                 }
             }
             if ( nTupleSystemConfiguration != null && nTupleSystemConfiguration.getNTupleSystem() != null ) {
-                double output = nTupleSystemConfiguration.getNTupleSystem().getComputation(board).compute();
+                double output = nTupleSystemConfiguration.getNTupleSystem().getComputation((IStateNTuple) state).compute();
                 return new Prediction(nTupleSystemConfiguration.translatePerceptronOutputToPrediction(output).compute() * 1d);
             }
             throw new UnsupportedOperationException("only Encog and NTupleSystem is implemented");
