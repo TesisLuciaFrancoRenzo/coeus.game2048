@@ -51,7 +51,7 @@ public class Experiment_01 extends LearningExperiment<BasicNetwork> {
         experiment.setGamesToPlay(1_000_000);
         experiment.setLastGamePlayedNumber(0); //recordar AJUSTAR ESTE VALOR
         experiment.setSaveEvery(10_000);
-        experiment.setInitializePerceptronRandomized(false);
+        experiment.setInitializePerceptronRandomized(true);
 
         experiment.createLogs(false);
         //para calcualar estadisticas
@@ -59,7 +59,7 @@ public class Experiment_01 extends LearningExperiment<BasicNetwork> {
             experiment.setStatisticsOnly(true);
             experiment.setRunStatisticForRandom(true);
             experiment.setRunStatisticsForBackups(true);
-            experiment.setGamesToPlayPerThreadForStatistics(10_000);
+            experiment.setGamesToPlayPerThreadForStatistics(1_000);
             experiment.setSimulationsForStatistics(8);
         } else {
             experiment.setStatisticsOnly(false);

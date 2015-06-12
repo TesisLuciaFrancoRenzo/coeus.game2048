@@ -22,16 +22,16 @@ import org.encog.util.arrayutil.NormalizedField;
 public class BasicScore extends NTupleConfiguration2048 {
 
     int maxReward = 500_000; //ver teoria, 1024*2*4
-    int minReward = -500_000;
+    int minReward = 0;
 
     /**
      *
      */
     public BasicScore() {
-        this.activationFunction = FunctionUtils.tanh;
-        this.derivatedActivationFunction = FunctionUtils.derivatedTanh;
+        this.activationFunction = FunctionUtils.sigmoid;
+        this.derivatedActivationFunction = FunctionUtils.derivatedSigmoid;
         double activationFunctionMax = 1;
-        double activationFunctionMin = -1;
+        double activationFunctionMin = 0;
 
         normOutput = new NormalizedField(NormalizationAction.Normalize,
                 null, maxReward, minReward, activationFunctionMax, activationFunctionMin);
