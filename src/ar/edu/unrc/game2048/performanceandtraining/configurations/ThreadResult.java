@@ -43,6 +43,10 @@ public class ThreadResult {
         procesedGames++;
     }
 
+    /**
+     *
+     * @param score
+     */
     public void addScore(double score) {
         totalScore += score;
         if ( score > getMaxScore() ) {

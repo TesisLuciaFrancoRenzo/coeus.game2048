@@ -43,8 +43,8 @@ public class Experiment_10 extends LearningExperiment<BasicNetwork> {
         experiment.setAlpha(alpha);
         experiment.setLambda(0.7);
         experiment.setGamma(1);
-        experiment.setMomentum(0.8);
-        experiment.setExplorationRateToFixed(0.1);
+        experiment.setMomentum(0);
+        experiment.setExplorationRateToFixed(0);
         experiment.setReplaceEligibilitiTraces(true);
         experiment.setResetEligibilitiTraces(true);
         experiment.setGamesToPlay(40_000);

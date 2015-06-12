@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ar.edu.unrc.game2048.performanceandtraining.configurations.learning.encog;
+package ar.edu.unrc.game2048.performanceandtraining.configurations.learning.ntuple;
 
-import ar.edu.unrc.game2048.PerceptronConfiguration2048;
+import ar.edu.unrc.game2048.NTupleConfiguration2048;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.LearningExperiment;
-import ar.edu.unrc.game2048.performanceandtraining.configurations.libraries.EncogExperimentInterface;
-import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.BoardScoreCustomNormalization;
+import ar.edu.unrc.game2048.performanceandtraining.configurations.libraries.NTupleExperimentInterface;
+import ar.edu.unrc.game2048.performanceandtraining.configurations.ntuples.BasicMaxTile;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IPerceptronInterface;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearning;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearningAfterstate;
@@ -19,7 +19,7 @@ import org.encog.neural.networks.BasicNetwork;
 /**
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
-public class Experiment_02 extends LearningExperiment<BasicNetwork> {
+public class Experiment_03 extends LearningExperiment<BasicNetwork> {
 
     /**
      *
@@ -35,21 +35,23 @@ public class Experiment_02 extends LearningExperiment<BasicNetwork> {
         } else {
             filePath = args[0];
         }
-        LearningExperiment experiment = new Experiment_02();
+        LearningExperiment experiment = new Experiment_03();
 
 //        boolean statistics = true;
         boolean statistics = false;
-        experiment.setLearningRateAdaptationToAnnealing(500_000);
-        experiment.setLambda(0.7);
+        double[] alphas = {0.0025};
+        experiment.setAlpha(alphas);
+        experiment.setLearningRateAdaptationToFixed();
+        experiment.setLambda(0);
         experiment.setGamma(1);
         experiment.setMomentum(0);
         experiment.setExplorationRateToFixed(0);
-        experiment.setReplaceEligibilitiTraces(true);
-        experiment.setResetEligibilitiTraces(true);
-        experiment.setGamesToPlay(10_000);
-        experiment.setLastGamePlayedNumber(10_000); //recordar AJUSTAR ESTE VALOR
-        experiment.setSaveEvery(500);
-        experiment.setInitializePerceptronRandomized(true);
+        experiment.setReplaceEligibilitiTraces(false);
+        experiment.setResetEligibilitiTraces(false);
+        experiment.setGamesToPlay(1_000_000);
+        experiment.setLastGamePlayedNumber(0); //recordar AJUSTAR ESTE VALOR
+        experiment.setSaveEvery(10_000);
+        experiment.setInitializePerceptronRandomized(false);
 
         experiment.createLogs(false);
         //para calcualar estadisticas
@@ -77,26 +79,18 @@ public class Experiment_02 extends LearningExperiment<BasicNetwork> {
             this.setExperimentName("Experiment_02");
         }
         this.setPerceptronName(this.getExperimentName());
-        PerceptronConfiguration2048<BasicNetwork> config = new BoardScoreCustomNormalization<>();
-        //   config.perceptron_hidden_quantity = config.perceptron_input_quantity * 2;
-        config.hiddenLayerQuantity = 2;
-        //  config.randomMoveProbability = 0.01;
-        this.setNeuralNetworkInterfaceFor2048(new EncogExperimentInterface(config));
+        NTupleConfiguration2048 config = new BasicMaxTile();
+        this.setNeuralNetworkInterfaceFor2048(new NTupleExperimentInterface(config));
     }
 
-    /**
-     *
-     * @param perceptronInterface <p>
-     * @return
-     */
     @Override
     public TDLambdaLearning instanceOfTdLearninrgImplementation(IPerceptronInterface perceptronInterface) {
-        return new TDLambdaLearningAfterstate(perceptronInterface, getAlpha(), getLambda(), true, getGamma(), getMomentum(), isResetEligibilitiTraces(), isReplaceEligibilitiTraces());
+        return null;
     }
 
     @Override
     public TDLambdaLearning instanceOfTdLearninrgImplementation(NTupleSystem nTupleSystem) {
-        return null;
+        return new TDLambdaLearningAfterstate(nTupleSystem, (getAlpha() != null) ? getAlpha()[0] : null, getLambda(), false, getGamma(), getMomentum(), isResetEligibilitiTraces(), isReplaceEligibilitiTraces());
     }
 
 }

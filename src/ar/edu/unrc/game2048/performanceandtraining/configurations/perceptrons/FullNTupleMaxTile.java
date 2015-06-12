@@ -5,6 +5,7 @@
  */
 package ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons;
 
+import ar.edu.unrc.game2048.Game2048;
 import ar.edu.unrc.game2048.GameBoard;
 import ar.edu.unrc.game2048.PerceptronConfiguration2048;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IsolatedComputation;
@@ -366,41 +367,67 @@ public class FullNTupleMaxTile<NeuralNetworkClass> extends PerceptronConfigurati
                 normInputSimpleBoard.normalize(board.tileAt(3, 3).getCode())
         );
     }
+//
+//    @Override
+//    public IsolatedComputation<Integer> translatePerceptronOutputToPrediction(double[] data) {
+//        return () -> {
+//            assert data[0] != Double.NaN;
+//            return (int) Math.round(normOutput.deNormalize(data[0]));
+//        };
+//    }
+//
+//    /**
+//     *
+//     * @param board
+//     * @param neuronIndex <p>
+//     * @return
+//     */
+//    @Override
+//    public double translateRealOutputToNormalizedPerceptronOutputFrom(GameBoard<NeuralNetworkClass> board, int neuronIndex) {
+//
+//        if ( neuronIndex < 0 || neuronIndex >= perceptron_output_quantity ) {
+//            throw new IllegalArgumentException("neuronIndex range for output layer must be [0," + perceptron_output_quantity + "] but was " + neuronIndex);
+//        }
+//        return normOutput.normalize(board.getMaxTileNumberCode());
+//    }
+//
+//    /**
+//     *
+//     * @param board
+//     * @param outputNeuronIndex <p>
+//     * @return
+//     */
+//    @Override
+//    public double translateRewordToNormalizedPerceptronOutputFrom(GameBoard<NeuralNetworkClass> board, int outputNeuronIndex) {
+//        return 0;
+//    }
 
     @Override
-    public IsolatedComputation<Integer> translatePerceptronOutputToPrediction(double[] data) {
+    public IsolatedComputation<Double> computeNumericRepresentationFor(Game2048 game, Double[] output) {
         return () -> {
-            assert data[0] != Double.NaN;
-            return (int) Math.round(normOutput.deNormalize(data[0]));
+            assert output.length == 1;
+            return output[0];
         };
     }
 
-    /**
-     *
-     * @param board
-     * @param neuronIndex
-     * <p>
-     * @return
-     */
     @Override
-    public double translateRealOutputToNormalizedPerceptronOutputFrom(GameBoard<NeuralNetworkClass> board, int neuronIndex) {
-
-        if ( neuronIndex < 0 || neuronIndex >= perceptron_output_quantity ) {
-            throw new IllegalArgumentException("neuronIndex range for output layer must be [0," + perceptron_output_quantity + "] but was " + neuronIndex);
-        }
-        return normOutput.normalize(board.getMaxTileNumberCode());
+    public double denormalizeValueFromPerceptronOutput(double value) {
+        return normOutput.deNormalize(value);
     }
 
-    /**
-     *
-     * @param board
-     * @param outputNeuronIndex
-     * <p>
-     * @return
-     */
     @Override
-    public double translateRewordToNormalizedPerceptronOutputFrom(GameBoard<NeuralNetworkClass> board, int outputNeuronIndex) {
-        return 0;
+    public double getBoardReward(GameBoard board, int outputNeuron) {
+        return 0d;
+    }
+
+    @Override
+    public double getFinalReward(Game2048 game, int outputNeuron) {
+        return game.getMaxNumberCode();
+    }
+
+    @Override
+    public double normalizeValueToPerceptronOutput(double value) {
+        return normOutput.normalize(value);
     }
 
     /**

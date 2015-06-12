@@ -243,9 +243,30 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
         return finalBoard;
     }
 
+    /**
+     *
+     * @param output <p>
+     * @return
+     */
+    @Override
+    public IsolatedComputation<Double> computeNumericRepresentationFor(Double[] output) {
+        if ( this.getPerceptronConfiguration() != null ) {
+            return this.getPerceptronConfiguration().computeNumericRepresentationFor(this, output);
+        } else {
+            return () -> {
+                assert output.length == 1;
+                return output[0];
+            };
+        }
+    }
+
     @Override
     public double denormalizeValueFromPerceptronOutput(double value) {
-        return this.getnTupleSystemConfiguration().denormalizeValueFromPerceptronOutput(value);
+        if ( this.getPerceptronConfiguration() != null ) {
+            return this.getPerceptronConfiguration().denormalizeValueFromPerceptronOutput(value);
+        } else {
+            return this.getnTupleSystemConfiguration().denormalizeValueFromPerceptronOutput(value);
+        }
     }
 
     @Override
@@ -254,7 +275,7 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
     }
 
     @Override
-    public IsolatedComputation<Double> evaluateBoardWithPerceptron(IState state) {
+    public IsolatedComputation<Double[]> evaluateBoardWithPerceptron(IState state) {
         return () -> {
             //dependiendo de que tipo de red neuronal utilizamos, evaluamos las entradas y calculamos una salida
             if ( perceptronConfiguration != null && perceptronConfiguration.getNeuralNetwork() != null ) {
@@ -265,11 +286,16 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
                     } //todo reeemplazar esot po algo ams elegante
                     MLData inputData = new BasicMLData(inputs);
                     MLData output = ((BasicNetwork) perceptronConfiguration.getNeuralNetwork()).compute(inputData);
-                    return perceptronConfiguration.translatePerceptronOutputToPrediction(output.getData()).compute() * 1d;
+                    Double[] out = new Double[output.getData().length];
+                    for ( int i = 0; i < output.size(); i++ ) {
+                        out[i] = output.getData()[i];
+                    }
+                    return out;
                 }
             }
             if ( nTupleSystemConfiguration != null && nTupleSystemConfiguration.getNTupleSystem() != null ) {
-                return nTupleSystemConfiguration.getNTupleSystem().getComputation((IStateNTuple) state).compute();
+                Double[] out = {nTupleSystemConfiguration.getNTupleSystem().getComputation((IStateNTuple) state).compute()};
+                return out;
             }
             throw new UnsupportedOperationException("only Encog and NTupleSystem is implemented");
         };
@@ -323,8 +349,12 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
     }
 
     @Override
-    public double getFinalReward() {
-        return this.getScore();
+    public double getFinalReward(int outputNeuron) {
+        if ( perceptronConfiguration != null ) {
+            return perceptronConfiguration.getFinalReward(this, outputNeuron);
+        } else {
+            return nTupleSystemConfiguration.getFinalReward(this, outputNeuron);
+        }
     }
 
     /**
@@ -453,7 +483,11 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
 
     @Override
     public double normalizeValueToPerceptronOutput(double value) {
-        return this.getnTupleSystemConfiguration().normalizeValueToPerceptronOutput(value);
+        if ( this.getnTupleSystemConfiguration() != null ) {
+            return this.getnTupleSystemConfiguration().normalizeValueToPerceptronOutput(value);
+        } else {
+            return this.getPerceptronConfiguration().normalizeValueToPerceptronOutput(value);
+        }
     }
 
     @Override

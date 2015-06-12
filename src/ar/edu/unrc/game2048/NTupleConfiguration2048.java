@@ -15,7 +15,7 @@ import org.encog.util.arrayutil.NormalizedField;
  *
  * @author Franco
  */
-public abstract class NTupleConfiguration2048 implements Cloneable {
+public abstract class NTupleConfiguration2048 implements Cloneable, IConfiguration2048 {
 
     /**
      *
@@ -50,37 +50,8 @@ public abstract class NTupleConfiguration2048 implements Cloneable {
 
     /**
      *
-     * @param value
-     * @return
-     */
-    public abstract double denormalizeValueFromPerceptronOutput(double value);
-
-    /**
-     *
      * @param board
-     * @return
-     */
-    public abstract double getBoardReward(GameBoard board);
-
-    /**
-     *
-     * @param game
-     * @return
-     */
-    public abstract double getCurrentReward(Game2048 game);
-
-    /**
-     *
-     * @param game
-     * @param afterstate
-     * @return
-     */
-    public abstract double getCurrentRewardIf(Game2048 game, GameBoard afterstate);
-
-    /**
-     *
-     * @param board
-     * @param nTupleIndex
+     * @param nTupleIndex <p>
      * @return
      */
     public abstract SamplePointState[] getNTuple(GameBoard board, int nTupleIndex);
@@ -99,12 +70,5 @@ public abstract class NTupleConfiguration2048 implements Cloneable {
     public void setNTupleSystem(NTupleSystem nTupleSystem) {
         this.nTupleSystem = nTupleSystem;
     }
-
-    /**
-     *
-     * @param value
-     * @return
-     */
-    public abstract double normalizeValueToPerceptronOutput(double value);
 
 }

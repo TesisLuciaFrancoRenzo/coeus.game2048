@@ -37,8 +37,8 @@ public class Experiment_02 extends LearningExperiment<BasicNetwork> {
         }
         LearningExperiment experiment = new Experiment_02();
 
-        boolean statistics = true;
-//        boolean statistics = false;
+//        boolean statistics = true;
+        boolean statistics = false;
         double[] alphas = {0.0025};
         experiment.setAlpha(alphas);
         experiment.setLearningRateAdaptationToFixed();
@@ -49,7 +49,7 @@ public class Experiment_02 extends LearningExperiment<BasicNetwork> {
         experiment.setReplaceEligibilitiTraces(false);
         experiment.setResetEligibilitiTraces(false);
         experiment.setGamesToPlay(1_000_000);
-        experiment.setLastGamePlayedNumber(390_000); //recordar AJUSTAR ESTE VALOR
+        experiment.setLastGamePlayedNumber(0); //recordar AJUSTAR ESTE VALOR
         experiment.setSaveEvery(10_000);
         experiment.setInitializePerceptronRandomized(false);
 

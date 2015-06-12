@@ -12,19 +12,29 @@ import ar.edu.unrc.game2048.Tile;
 import ar.edu.unrc.tdlearning.perceptron.ntuple.SamplePointState;
 import ar.edu.unrc.tdlearning.perceptron.training.FunctionUtils;
 import java.util.ArrayList;
+import org.encog.util.arrayutil.NormalizationAction;
+import org.encog.util.arrayutil.NormalizedField;
 
 /**
  *
  * @author Franco
  */
-public class BasicScoreLinear extends NTupleConfiguration2048 {
+public class BasicMaxTile extends NTupleConfiguration2048 {
+
+    int maxReward = 11;
+    int minReward = 0;
 
     /**
      *
      */
-    public BasicScoreLinear() {
-        this.activationFunction = FunctionUtils.linear;
-        this.derivatedActivationFunction = FunctionUtils.derivatedLinear;
+    public BasicMaxTile() {
+        this.activationFunction = FunctionUtils.sigmoid;
+        this.derivatedActivationFunction = FunctionUtils.derivatedSigmoid;
+        double activationFunctionMax = 1;
+        double activationFunctionMin = 0;
+
+        normOutput = new NormalizedField(NormalizationAction.Normalize,
+                null, maxReward, minReward, activationFunctionMax, activationFunctionMin);
 
         nTuplesLenght = new int[17];
         for ( int i = 0; i < 17; i++ ) {
@@ -45,26 +55,30 @@ public class BasicScoreLinear extends NTupleConfiguration2048 {
      */
     @Override
     public double denormalizeValueFromPerceptronOutput(double value) {
-        return value;
+        return normOutput.deNormalize(value);
     }
 
     /**
      *
-     * @param board        <p>
-     * @param outputNeuron
-     * <p>
+     * @param board
+     * @param outputNeuron <p>
      * @return
      */
     @Override
     public double getBoardReward(GameBoard board, int outputNeuron) {
-        return board.getPartialScore();
+        return 0;
     }
 
     @Override
     public double getFinalReward(Game2048 game, int outputNeuron) {
-        return game.getScore();
+        return game.getMaxNumberCode();
     }
 
+//    /**
+//     *
+//     * @param game <p>
+//     * @return
+//     */
 //    @Override
 //    public double getCurrentReward(Game2048 game) {
 //        return game.getScore();
@@ -234,7 +248,6 @@ public class BasicScoreLinear extends NTupleConfiguration2048 {
      */
     @Override
     public double normalizeValueToPerceptronOutput(double value) {
-        return value;
+        return normOutput.normalize(value);
     }
-
 }

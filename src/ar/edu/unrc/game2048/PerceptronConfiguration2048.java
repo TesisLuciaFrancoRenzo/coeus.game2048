@@ -15,7 +15,7 @@ import org.encog.util.arrayutil.NormalizedField;
  * @author lucia bressan, franco pellegrini, renzo bianchini
  * @param <NeuralNetworkClass>
  */
-public abstract class PerceptronConfiguration2048<NeuralNetworkClass> implements Cloneable {
+public abstract class PerceptronConfiguration2048<NeuralNetworkClass> implements Cloneable, IConfiguration2048 {
 
     /**
      *
@@ -83,6 +83,14 @@ public abstract class PerceptronConfiguration2048<NeuralNetworkClass> implements
     }
 
     /**
+     *
+     * @param game
+     * @param output
+     * @return
+     */
+    public abstract IsolatedComputation<Double> computeNumericRepresentationFor(Game2048 game, Double[] output);
+
+    /**
      * @return the neuralNetwork
      */
     public NeuralNetworkClass getNeuralNetwork() {
@@ -96,26 +104,4 @@ public abstract class PerceptronConfiguration2048<NeuralNetworkClass> implements
         this.neuralNetwork = neuralNetwork;
     }
 
-    /**
-     *
-     * @param data <p>
-     * @return
-     */
-    public abstract IsolatedComputation<Integer> translatePerceptronOutputToPrediction(double[] data);
-
-    /**
-     *
-     * @param board
-     * @param outputNeuronIndex <p>
-     * @return
-     */
-    public abstract double translateRealOutputToNormalizedPerceptronOutputFrom(GameBoard<NeuralNetworkClass> board, int outputNeuronIndex);
-
-    /**
-     *
-     * @param board
-     * @param outputNeuronIndex <p>
-     * @return
-     */
-    public abstract double translateRewordToNormalizedPerceptronOutputFrom(GameBoard<NeuralNetworkClass> board, int outputNeuronIndex);
 }
