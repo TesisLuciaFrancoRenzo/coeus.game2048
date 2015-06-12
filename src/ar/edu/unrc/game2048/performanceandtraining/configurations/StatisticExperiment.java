@@ -34,11 +34,15 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
 
     private int gamesToPlay;
     private TDLambdaLearning learningMethod;
+    private double maxScore;
+    private double meanScore;
+    private double minScore;
     private String perceptronName;
     private int simulations;
     private List<Double> tileStatistics;
 
     private int tileToWin;
+    private double winRate;
 
     /**
      *
@@ -350,8 +354,4 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
         }
     }
 
-    private double winRate;
-    private double maxScore;
-    private double minScore;
-    private double meanScore;
 }

@@ -13,11 +13,11 @@ import java.util.List;
  */
 public class StatisticForCalc {
 
+    private double maxScore;
+    private double meanScore;
+    private double minScore;
     private List<Double> tileStatistics;
     private double winRate;
-    private double maxScore;
-    private double minScore;
-    private double meanScore;
 
     /**
      * @return the maxScore

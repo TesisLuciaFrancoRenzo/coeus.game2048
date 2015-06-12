@@ -38,11 +38,21 @@ public class BasicScoreLinear extends NTupleConfiguration2048 {
         }
     }
 
+    /**
+     *
+     * @param value
+     * @return
+     */
     @Override
     public double denormalizeValueFromPerceptronOutput(double value) {
         return value;
     }
 
+    /**
+     *
+     * @param board
+     * @return
+     */
     @Override
     public double getBoardReward(GameBoard board) {
         return board.getPartialScore();
@@ -80,11 +90,23 @@ public class BasicScoreLinear extends NTupleConfiguration2048 {
 //        }
 //        return reward; //TODO esta bien normalizar
 //    }
-    @Override
+
+    /**
+     *
+     * @param game
+     * @return
+     */
+        @Override
     public double getCurrentReward(Game2048 game) {
         return game.getScore();
     }
 
+    /**
+     *
+     * @param game
+     * @param afterstate
+     * @return
+     */
     @Override
     public double getCurrentRewardIf(Game2048 game, GameBoard afterstate) {
         return game.getScore() + afterstate.getPartialScore();
@@ -248,6 +270,11 @@ public class BasicScoreLinear extends NTupleConfiguration2048 {
         }
     }
 
+    /**
+     *
+     * @param value
+     * @return
+     */
     @Override
     public double normalizeValueToPerceptronOutput(double value) {
         return value;

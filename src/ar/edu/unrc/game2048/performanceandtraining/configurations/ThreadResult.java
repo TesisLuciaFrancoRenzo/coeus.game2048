@@ -14,13 +14,13 @@ import java.util.List;
  */
 public class ThreadResult {
 
-    double totalScore;
     private double maxScore;
     private double minScore;
 
     private int procesedGames;
     private final List<Integer> tileStatistics;
     private int winGames = 0;
+    double totalScore;
 
     /**
      *
@@ -36,6 +36,13 @@ public class ThreadResult {
         minScore = Integer.MAX_VALUE;
     }
 
+    /**
+     *
+     */
+    public void addProcesedGames() {
+        procesedGames++;
+    }
+
     public void addScore(double score) {
         totalScore += score;
         if ( score > getMaxScore() ) {
@@ -44,13 +51,6 @@ public class ThreadResult {
         if ( score < getMinScore() ) {
             minScore = score;
         }
-    }
-
-    /**
-     *
-     */
-    public void addProcesedGames() {
-        procesedGames++;
     }
 
     /**
@@ -65,6 +65,27 @@ public class ThreadResult {
      */
     public void addWin() {
         winGames++;
+    }
+
+    /**
+     * @return the maxScore
+     */
+    public double getMaxScore() {
+        return maxScore;
+    }
+
+    /**
+     * @return the maxScore
+     */
+    public double getMeanScore() {
+        return totalScore / (procesedGames * 1d);
+    }
+
+    /**
+     * @return the minScore
+     */
+    public double getMinScore() {
+        return minScore;
     }
 
     /**
@@ -96,26 +117,5 @@ public class ThreadResult {
      */
     public double getWinRate() {
         return (winGames * 100d) / (procesedGames * 1d);
-    }
-
-    /**
-     * @return the maxScore
-     */
-    public double getMeanScore() {
-        return totalScore / (procesedGames * 1d);
-    }
-
-    /**
-     * @return the maxScore
-     */
-    public double getMaxScore() {
-        return maxScore;
-    }
-
-    /**
-     * @return the minScore
-     */
-    public double getMinScore() {
-        return minScore;
     }
 }
