@@ -16,9 +16,7 @@ import static java.lang.Math.round;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.IntStream;
@@ -65,8 +63,14 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
     /**
      * @return the tileStatistics
      */
-    public List<Double> getTileStatistics() {
-        return tileStatistics;
+    public StatisticForCalc getTileStatistics() {
+        StatisticForCalc statistic = new StatisticForCalc();
+        statistic.setWinRate(winRate);
+        statistic.setMaxScore(maxScore);
+        statistic.setMeanScore(meanScore);
+        statistic.setMinScore(minScore);
+        statistic.setTileStatistics(tileStatistics);
+        return statistic;
     }
 
     /**
@@ -276,20 +280,14 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
                 .forEach(i -> {
                     // Si hay un perceptron ya entrenado, lo buscamos en el archivo.
                     // En caso contrario creamos un perceptron vacio, inicializado al azar
-                    for ( results.get(i).setProcesedGames(0); results.get(i).getProcesedGames() < gamesToPlay; results.get(i).addProcesedGames() ) {
+                    for ( results.get(i).setProcesedGames(1); results.get(i).getProcesedGames() <= gamesToPlay; results.get(i).addProcesedGames() ) {
                         games.get(i).resetGame(); //reset
                         while ( !games.get(i).iLoose() && !games.get(i).iWin() ) {
                             neuralNetworkInterfaces.get(i).playATurn(games.get(i), tdLambdaLearning.get(i)).compute();
                         }
                         //calculamos estadisticas
                         results.get(i).addStatisticForTile(games.get(i).getMaxNumberCode());
-
-                        if ( results.get(i).getMaxScoreAchieved().containsKey(games.get(i).getScore()) ) {
-                            Integer number = results.get(i).getMaxScoreAchieved().get(games.get(i).getScore());
-                            results.get(i).getMaxScoreAchieved().put(games.get(i).getScore(), number + 1);
-                        } else {
-                            results.get(i).getMaxScoreAchieved().put(games.get(i).getScore(), 1);
-                        }
+                        results.get(i).addScore(games.get(i).getScore());
 
                         if ( games.get(i).iWin() ) {
                             results.get(i).addWin();
@@ -298,32 +296,32 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
                     games.get(i).dispose();
                 });
 
-        int winGames = 0;
+        winRate = 0;
+        maxScore = 0;
+        minScore = 0;
+        meanScore = 0;
 
         tileStatistics = new ArrayList<>(18);
         for ( int i = 0; i <= 17; i++ ) {
             tileStatistics.add(0d);
         }
-        Map<Integer, Integer> maxScoreAchieved = new HashMap<>();
-        for ( ThreadResult result : results ) {
-            winGames += result.getWinGames();
+        results.stream().forEach((result) -> {
+            winRate += result.getWinRate();
+            maxScore += result.getMaxScore();
+            minScore += result.getMinScore();
+            meanScore += result.getMeanScore();
             for ( int i = 0; i <= 17; i++ ) {
                 tileStatistics.set(i, tileStatistics.get(i) + result.getStatisticForTile(i));
             }
-            result.getMaxScoreAchieved().entrySet().stream().forEach((entry) -> {
-                if ( maxScoreAchieved.containsKey(entry.getKey()) ) {
-                    Integer oldScore = maxScoreAchieved.get(entry.getKey());
-                    maxScoreAchieved.put(entry.getKey(), entry.getValue() + oldScore);
-                } else {
-                    maxScoreAchieved.put(entry.getKey(), entry.getValue());
-                }
-            });
-        }
+        });
+
         for ( int i = 0; i <= 17; i++ ) {
             tileStatistics.set(i, tileStatistics.get(i) / (simulations * 1d));
         }
-
-        double winRate = (winGames * 100) / gamesToPlay;
+        winRate = winRate / (simulations * 1d);
+        maxScore = maxScore / (simulations * 1d);
+        minScore = minScore / (simulations * 1d);
+        meanScore = meanScore / (simulations * 1d);
 
         if ( !results.isEmpty() ) {
             //creamos un archivo de logs para acumular estadisticas
@@ -337,20 +335,23 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
             File logFile = new File(filePath + "_" + dateFormater.format(now) + "_STATISTICS" + ".txt");
 
             try ( PrintStream printStream = new PrintStream(logFile, "UTF-8") ) {
-                printStream.print("Gano: " + winGames + " (" + round(winRate) + "%) - Total de partidas: " + gamesToPlay + " (promedios obtenidos con " + simulations + " simulaciones)");
+                printStream.print("Gano: " + round(winRate) + "% - Total de partidas: " + gamesToPlay + " (promedios obtenidos con " + simulations + " simulaciones)");
                 printStream.println("\nValores alcanzados:");
                 for ( int i = 0; i <= 17; i++ ) {
                     printStream.println(tileStatistics.get(i).toString().replaceAll("\\.", ","));
                 }
                 printStream.println("\nPuntajes alcanzados (valor/veces):");
-                maxScoreAchieved.entrySet().stream().sorted(
-                        (e1, e2) -> e1.getKey().compareTo(e2.getKey())
-                ).forEach((e) -> {
-                    printStream.println(e.getKey() + "\t" + e.getValue());
-                });
+
+                printStream.println("Maximo puntaje:" + maxScore);
+                printStream.println("Media  puntaje:" + meanScore);
+                printStream.println("Minimo puntaje:" + minScore);
             }
             System.out.println("Finished.");
         }
     }
 
+    private double winRate;
+    private double maxScore;
+    private double minScore;
+    private double meanScore;
 }

@@ -6,10 +6,7 @@
 package ar.edu.unrc.game2048.performanceandtraining.configurations;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  *
@@ -17,7 +14,10 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class ThreadResult {
 
-    private Map<Integer, Integer> maxScoreAchieved = new ConcurrentHashMap<>();
+    double totalScore;
+    private double maxScore;
+    private double minScore;
+
     private int procesedGames;
     private final List<Integer> tileStatistics;
     private int winGames = 0;
@@ -31,7 +31,19 @@ public class ThreadResult {
         for ( int i = 0; i <= 17; i++ ) {
             tileStatistics.add(0);
         }
-        maxScoreAchieved = new HashMap<>();
+        totalScore = 0;
+        maxScore = 0;
+        minScore = Integer.MAX_VALUE;
+    }
+
+    public void addScore(double score) {
+        totalScore += score;
+        if ( score > getMaxScore() ) {
+            maxScore = score;
+        }
+        if ( score < getMinScore() ) {
+            minScore = score;
+        }
     }
 
     /**
@@ -56,13 +68,6 @@ public class ThreadResult {
     }
 
     /**
-     * @return the maxScoreAchieved
-     */
-    public Map<Integer, Integer> getMaxScoreAchieved() {
-        return maxScoreAchieved;
-    }
-
-    /**
      * @return the procesedGames
      */
     public int getProcesedGames() {
@@ -79,7 +84,7 @@ public class ThreadResult {
 
     /**
      *
-     * @param tileCode
+     * @param tileCode <p>
      * @return
      */
     public Integer getStatisticForTile(int tileCode) {
@@ -89,7 +94,28 @@ public class ThreadResult {
     /**
      * @return the winGames
      */
-    public int getWinGames() {
-        return winGames;
+    public double getWinRate() {
+        return (winGames * 100d) / (procesedGames * 1d);
+    }
+
+    /**
+     * @return the maxScore
+     */
+    public double getMeanScore() {
+        return totalScore / (procesedGames * 1d);
+    }
+
+    /**
+     * @return the maxScore
+     */
+    public double getMaxScore() {
+        return maxScore;
+    }
+
+    /**
+     * @return the minScore
+     */
+    public double getMinScore() {
+        return minScore;
     }
 }

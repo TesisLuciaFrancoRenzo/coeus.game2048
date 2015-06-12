@@ -679,7 +679,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
 
         if ( this.simulationsForStatistics > 0 && this.gamesToPlayPerThreadForStatistics > 0 ) {
             //hacemos estadisticas del perceptron random, si es necesario
-            Map<File, List<Double>> resultsRandom = new HashMap<>();
+            Map<File, StatisticForCalc> resultsRandom = new HashMap<>();
             if ( backupRandomPerceptron || isRunStatisticForRandom() ) {
                 statisticExperiment.setPerceptronName(this.getExperimentName() + LearningExperiment._RANDOM);
                 statisticExperiment.start(experimentPath, delayPerMove);
@@ -699,7 +699,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
                     }
                 });
                 List<File> backupFiles = new ArrayList<>();
-                Map<File, List<Double>> resultsPerFile = new HashMap<>();
+                Map<File, StatisticForCalc> resultsPerFile = new HashMap<>();
                 for ( File f : allFiles ) {
                     if ( f.getName().matches(".*\\_BackupN\\-.*\\.ser") ) {
                         statisticExperiment.setPerceptronName(f.getName().replaceAll("\\.ser$", ""));
@@ -720,18 +720,21 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
 
                 InputStream inputXLSX = this.getClass().getResourceAsStream("/ar/edu/unrc/game2048/resources/Estadisticas.xlsx");
                 Workbook wb = WorkbookFactory.create(inputXLSX);
-                Sheet sheet = wb.getSheetAt(0);
-                int tiles = 17;
 
-                //configuraciones basadas en el spreadsheet
-                int rowStart = 2;
-                int colStart = 3;
                 try ( FileOutputStream outputXLSX = new FileOutputStream(filePath + "_" + dateFormater.format(now) + "_STATISTICS" + ".xlsx") ) {
+                    //============= imptimimos en la hoja de tiles ===================
+
+                    Sheet sheet = wb.getSheetAt(0);
+                    int tiles = 17;
+
+                    //configuraciones basadas en el spreadsheet
+                    int rowStart = 2;
+                    int colStart = 3;
                     for ( int tile = 0; tile <= tiles; tile++ ) {
                         Row row = sheet.getRow(tile + rowStart - 1);
                         for ( int file = 0; file < backupFiles.size(); file++ ) {
                             Cell cell = row.createCell(file + colStart, Cell.CELL_TYPE_NUMERIC);
-                            Double cellValue = resultsPerFile.get(backupFiles.get(file)).get(tile);
+                            Double cellValue = resultsPerFile.get(backupFiles.get(file)).getTileStatistics().get(tile);
                             cell.setCellValue(cellValue);
                         }
                     }
@@ -740,12 +743,76 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
                             int file = 0;
                             Row row = sheet.getRow(tile + rowStart - 1);
                             Cell cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
-                            Double cellValue = resultsRandom.get(randomPerceptronFile).get(tile);
+                            Double cellValue = resultsRandom.get(randomPerceptronFile).getTileStatistics().get(tile);
                             cell.setCellValue(cellValue);
                         }
                     }
+
+                    //============= imptimimos en la hoja de Score ===================
+                    sheet = wb.getSheetAt(1);
+                    rowStart = 2;
+
+                    Row row = sheet.getRow(rowStart - 1);
+                    for ( int file = 0; file < backupFiles.size(); file++ ) {
+                        Cell cell = row.createCell(file + colStart, Cell.CELL_TYPE_NUMERIC);
+                        Double cellValue = resultsPerFile.get(backupFiles.get(file)).getMinScore();
+                        cell.setCellValue(cellValue);
+                    }
+                    if ( !resultsRandom.isEmpty() ) {
+                        int file = 0;
+                        Cell cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
+                        Double cellValue = resultsPerFile.get(backupFiles.get(file)).getMinScore();
+                        cell.setCellValue(cellValue);
+                    }
+
+                    rowStart = 3;
+                    row = sheet.getRow(rowStart - 1);
+                    for ( int file = 0; file < backupFiles.size(); file++ ) {
+                        Cell cell = row.createCell(file + colStart, Cell.CELL_TYPE_NUMERIC);
+                        Double cellValue = resultsPerFile.get(backupFiles.get(file)).getMeanScore();
+                        cell.setCellValue(cellValue);
+                    }
+                    if ( !resultsRandom.isEmpty() ) {
+                        int file = 0;
+                        Cell cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
+                        Double cellValue = resultsPerFile.get(backupFiles.get(file)).getMeanScore();
+                        cell.setCellValue(cellValue);
+                    }
+
+                    rowStart = 4;
+                    row = sheet.getRow(rowStart - 1);
+                    for ( int file = 0; file < backupFiles.size(); file++ ) {
+                        Cell cell = row.createCell(file + colStart, Cell.CELL_TYPE_NUMERIC);
+                        Double cellValue = resultsPerFile.get(backupFiles.get(file)).getMaxScore();
+                        cell.setCellValue(cellValue);
+                    }
+                    if ( !resultsRandom.isEmpty() ) {
+                        int file = 0;
+                        Cell cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
+                        Double cellValue = resultsPerFile.get(backupFiles.get(file)).getMaxScore();
+                        cell.setCellValue(cellValue);
+                    }
+
+                    //============= imptimimos en la hoja de Win ===================
+                    sheet = wb.getSheetAt(2);
+                    rowStart = 2;
+
+                    row = sheet.getRow(rowStart - 1);
+                    for ( int file = 0; file < backupFiles.size(); file++ ) {
+                        Cell cell = row.createCell(file + colStart, Cell.CELL_TYPE_NUMERIC);
+                        Double cellValue = resultsPerFile.get(backupFiles.get(file)).getWinRate();
+                        cell.setCellValue(cellValue);
+                    }
+                    if ( !resultsRandom.isEmpty() ) {
+                        int file = 0;
+                        Cell cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
+                        Double cellValue = resultsPerFile.get(backupFiles.get(file)).getWinRate();
+                        cell.setCellValue(cellValue);
+                    }
+
                     wb.write(outputXLSX);
                 }
+
             } else {
                 //calculamos estadisticas para el perceptron entrenado
                 statisticExperiment.setPerceptronName(this.getExperimentName() + LearningExperiment._TRAINED);

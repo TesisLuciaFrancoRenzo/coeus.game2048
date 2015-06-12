@@ -19,9 +19,6 @@ import java.util.ArrayList;
  */
 public class BasicScoreLinear extends NTupleConfiguration2048 {
 
-    int maxReward = 500_000; //ver teoria, 1024*2*4
-    int minReward = 0;
-
     /**
      *
      */
@@ -45,6 +42,7 @@ public class BasicScoreLinear extends NTupleConfiguration2048 {
     public double denormalizeValueFromPerceptronOutput(double value) {
         return value;
     }
+
     @Override
     public double getBoardReward(GameBoard board) {
         return board.getPartialScore();

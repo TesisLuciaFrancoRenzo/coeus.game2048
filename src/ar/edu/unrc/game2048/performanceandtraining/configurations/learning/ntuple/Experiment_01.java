@@ -37,8 +37,8 @@ public class Experiment_01 extends LearningExperiment<BasicNetwork> {
         }
         LearningExperiment experiment = new Experiment_01();
 
-//        boolean statistics = true;
-        boolean statistics = false;
+        boolean statistics = true;
+//        boolean statistics = false;
         double[] alphas = {0.0025};
         experiment.setAlpha(alphas);
         experiment.setLearningRateAdaptationToFixed();
@@ -59,7 +59,7 @@ public class Experiment_01 extends LearningExperiment<BasicNetwork> {
             experiment.setStatisticsOnly(true);
             experiment.setRunStatisticForRandom(true);
             experiment.setRunStatisticsForBackups(true);
-            experiment.setGamesToPlayPerThreadForStatistics(1_000);
+            experiment.setGamesToPlayPerThreadForStatistics(10);
             experiment.setSimulationsForStatistics(8);
         } else {
             experiment.setStatisticsOnly(false);
