@@ -41,7 +41,6 @@ public class Experiment_05 extends LearningExperiment<BasicNetwork> {
         experiment.setLearningRateAdaptationToFixed();
         experiment.setLambda(0.7);
         experiment.setGamma(1);
-        experiment.setMomentum(0);
         experiment.setExplorationRateToFixed(0);
         experiment.setReplaceEligibilitiTraces(true);
         experiment.setResetEligibilitiTraces(true);
@@ -81,7 +80,7 @@ public class Experiment_05 extends LearningExperiment<BasicNetwork> {
 
     @Override
     public TDLambdaLearning instanceOfTdLearninrgImplementation(IPerceptronInterface perceptronInterface) {
-        return new TDLambdaLearningAfterstate(perceptronInterface, getAlpha(), getLambda(), false, getGamma(), getMomentum(), isResetEligibilitiTraces(), isReplaceEligibilitiTraces());
+        return new TDLambdaLearningAfterstate(perceptronInterface, getAlpha(), getLambda(), false, getGamma(), isResetEligibilitiTraces(), isReplaceEligibilitiTraces());
     }
 
     @Override

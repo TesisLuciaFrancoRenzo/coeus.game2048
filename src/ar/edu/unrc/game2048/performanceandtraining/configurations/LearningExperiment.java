@@ -63,7 +63,6 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
     private TDLambdaLearning learningAlgorithm;
     private ELearningRateAdaptation learningRateAdaptation;
     private boolean logsActivated = false;
-    private double momentum;
     private INeuralNetworkInterfaceFor2048<NeuralNetworkClass> neuralNetworkInterfaceFor2048;
     private String perceptronName;
     private boolean replaceEligibilitiTraces;
@@ -221,20 +220,6 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
     public void setLearningRateAdaptationToAnnealing(int annealingT) {
         this.learningRateAdaptation = ELearningRateAdaptation.annealing;
         this.annealingT = annealingT;
-    }
-
-    /**
-     * @return the momentum
-     */
-    public double getMomentum() {
-        return momentum;
-    }
-
-    /**
-     * @param momentum the momentum to set
-     */
-    public void setMomentum(double momentum) {
-        this.momentum = momentum;
     }
 
     /**

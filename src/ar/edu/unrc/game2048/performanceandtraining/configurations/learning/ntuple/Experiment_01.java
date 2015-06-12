@@ -44,7 +44,7 @@ public class Experiment_01 extends LearningExperiment<BasicNetwork> {
         experiment.setLearningRateAdaptationToFixed();
         experiment.setLambda(0);
         experiment.setGamma(1);
-        experiment.setMomentum(0);
+        
         experiment.setExplorationRateToFixed(0);
         experiment.setReplaceEligibilitiTraces(false);
         experiment.setResetEligibilitiTraces(false);
@@ -90,7 +90,7 @@ public class Experiment_01 extends LearningExperiment<BasicNetwork> {
 
     @Override
     public TDLambdaLearning instanceOfTdLearninrgImplementation(NTupleSystem nTupleSystem) {
-        return new TDLambdaLearningAfterstate(nTupleSystem, (getAlpha() != null) ? getAlpha()[0] : null, getLambda(), false, getGamma(), getMomentum(), isResetEligibilitiTraces(), isReplaceEligibilitiTraces());
+        return new TDLambdaLearningAfterstate(nTupleSystem, (getAlpha() != null) ? getAlpha()[0] : null, getLambda(), false, getGamma(),  isResetEligibilitiTraces(), isReplaceEligibilitiTraces());
     }
 
 }

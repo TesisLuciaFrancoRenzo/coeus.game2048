@@ -44,7 +44,7 @@ public class Experiment_03 extends LearningExperiment<BasicNetwork> {
         experiment.setLearningRateAdaptationToFixed();
         experiment.setLambda(0);
         experiment.setGamma(1);
-        experiment.setMomentum(0);
+        
         experiment.setExplorationRateToFixed(0);
         experiment.setReplaceEligibilitiTraces(false);
         experiment.setResetEligibilitiTraces(false);
@@ -76,7 +76,7 @@ public class Experiment_03 extends LearningExperiment<BasicNetwork> {
     public void initialize() throws Exception {
         this.setTileToWin(2_048);
         if ( this.getExperimentName() == null ) {
-            this.setExperimentName("Experiment_02");
+            this.setExperimentName("Experiment_03");
         }
         this.setPerceptronName(this.getExperimentName());
         NTupleConfiguration2048 config = new BasicMaxTile();
@@ -90,7 +90,7 @@ public class Experiment_03 extends LearningExperiment<BasicNetwork> {
 
     @Override
     public TDLambdaLearning instanceOfTdLearninrgImplementation(NTupleSystem nTupleSystem) {
-        return new TDLambdaLearningAfterstate(nTupleSystem, (getAlpha() != null) ? getAlpha()[0] : null, getLambda(), false, getGamma(), getMomentum(), isResetEligibilitiTraces(), isReplaceEligibilitiTraces());
+        return new TDLambdaLearningAfterstate(nTupleSystem, (getAlpha() != null) ? getAlpha()[0] : null, getLambda(), false, getGamma(),  isResetEligibilitiTraces(), isReplaceEligibilitiTraces());
     }
 
 }

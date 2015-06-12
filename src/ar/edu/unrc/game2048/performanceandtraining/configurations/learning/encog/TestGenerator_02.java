@@ -38,7 +38,6 @@ public class TestGenerator_02 {
         experiment.createLogs(createLogs);
         experiment.setLambda(lambda);
         experiment.setGamma(1);
-        experiment.setMomentum(0);
         experiment.setExplorationRateToFixed(0);
         experiment.setReplaceEligibilitiTraces(true);
         experiment.setResetEligibilitiTraces(true);
