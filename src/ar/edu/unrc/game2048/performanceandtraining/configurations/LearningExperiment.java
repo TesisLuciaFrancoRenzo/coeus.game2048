@@ -25,6 +25,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -787,12 +788,18 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
                         Cell cell = row.createCell(file + colStart, Cell.CELL_TYPE_NUMERIC);
                         Double cellValue = resultsPerFile.get(backupFiles.get(file)).getWinRate();
                         cell.setCellValue(cellValue);
+                        CellStyle style = wb.createCellStyle();
+                        style.setDataFormat(wb.createDataFormat().getFormat("0.0%"));
+                        cell.setCellStyle(style);
                     }
                     if ( !resultsRandom.isEmpty() ) {
                         int file = 0;
                         Cell cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
                         Double cellValue = resultsPerFile.get(backupFiles.get(file)).getWinRate();
                         cell.setCellValue(cellValue);
+                        CellStyle style = wb.createCellStyle();
+                        style.setDataFormat(wb.createDataFormat().getFormat("0.0%"));
+                        cell.setCellStyle(style);
                     }
 
                     wb.write(outputXLSX);

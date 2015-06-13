@@ -38,18 +38,18 @@ public class Experiment_06b extends LearningExperiment<BasicNetwork> {
         LearningExperiment experiment = new Experiment_06b();
         experiment.createLogs(false);
 
-//        boolean statistics = true;
-        boolean statistics = false;
+        boolean statistics = true;
+//        boolean statistics = false;
         double[] alphas = {0.0025, 0.0025};
         experiment.setAlpha(alphas);
         experiment.setLearningRateAdaptationToAnnealing(1_000_000);
-        experiment.setLambda(0.7);
+        experiment.setLambda(0);
         experiment.setGamma(1);
         experiment.setExplorationRateToFixed(0);
         experiment.setReplaceEligibilitiTraces(false);
         experiment.setResetEligibilitiTraces(false);
         experiment.setGamesToPlay(20_000);
-        experiment.setLastGamePlayedNumber(0); //recordar AJUSTAR ESTE VALOR
+        experiment.setLastGamePlayedNumber(20_000); //recordar AJUSTAR ESTE VALOR
         experiment.setSaveEvery(500);
         experiment.setInitializePerceptronRandomized(true);
 
@@ -58,7 +58,7 @@ public class Experiment_06b extends LearningExperiment<BasicNetwork> {
             experiment.setStatisticsOnly(true);
             experiment.setRunStatisticForRandom(true);
             experiment.setRunStatisticsForBackups(true);
-            experiment.setGamesToPlayPerThreadForStatistics(1_000);
+            experiment.setGamesToPlayPerThreadForStatistics(1);
             experiment.setSimulationsForStatistics(8);
         } else {
             experiment.setStatisticsOnly(false);

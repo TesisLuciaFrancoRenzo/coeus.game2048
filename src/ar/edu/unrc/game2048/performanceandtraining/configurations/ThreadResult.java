@@ -120,6 +120,6 @@ public class ThreadResult {
      * @return the winGames
      */
     public double getWinRate() {
-        return winGames / (procesedGames * 1d);
+        return (winGames * 100d) / (procesedGames * 1d);
     }
 }
