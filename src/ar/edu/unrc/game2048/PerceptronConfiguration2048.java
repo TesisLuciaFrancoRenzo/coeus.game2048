@@ -31,6 +31,10 @@ public abstract class PerceptronConfiguration2048<NeuralNetworkClass> implements
      *
      */
     public double activationFunctionMin;
+    /**
+     *
+     */
+    public int[] neuronQuantityInLayer;
 
     /**
      *
@@ -42,10 +46,6 @@ public abstract class PerceptronConfiguration2048<NeuralNetworkClass> implements
      */
     public NormalizedField normOutput;
 
-    /**
-     *
-     */
-    public int[] neuronQuantityInLayer;
 
     //fin de la configuracion de la red neuronal
     private NeuralNetworkClass neuralNetwork;

@@ -8,7 +8,7 @@ package ar.edu.unrc.game2048.performanceandtraining.configurations.learning.enco
 import ar.edu.unrc.game2048.PerceptronConfiguration2048;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.LearningExperiment;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.libraries.EncogExperimentInterface;
-import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.NTupleScore;
+import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.NTupleScoreLineal;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IPerceptronInterface;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearning;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearningAfterstate;
@@ -19,7 +19,7 @@ import org.encog.neural.networks.BasicNetwork;
 /**
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
-public class Experiment_06 extends LearningExperiment<BasicNetwork> {
+public class Experiment_06b extends LearningExperiment<BasicNetwork> {
 
     /**
      *
@@ -35,7 +35,7 @@ public class Experiment_06 extends LearningExperiment<BasicNetwork> {
         } else {
             filePath = args[0];
         }
-        LearningExperiment experiment = new Experiment_06();
+        LearningExperiment experiment = new Experiment_06b();
         experiment.createLogs(false);
 
 //        boolean statistics = true;
@@ -49,7 +49,7 @@ public class Experiment_06 extends LearningExperiment<BasicNetwork> {
         experiment.setReplaceEligibilitiTraces(false);
         experiment.setResetEligibilitiTraces(false);
         experiment.setGamesToPlay(20_000);
-        experiment.setLastGamePlayedNumber(4_500); //recordar AJUSTAR ESTE VALOR
+        experiment.setLastGamePlayedNumber(0); //recordar AJUSTAR ESTE VALOR
         experiment.setSaveEvery(500);
         experiment.setInitializePerceptronRandomized(true);
 
@@ -75,10 +75,10 @@ public class Experiment_06 extends LearningExperiment<BasicNetwork> {
     public void initialize() throws Exception {
         this.setTileToWin(2_048);
         if ( this.getExperimentName() == null ) {
-            this.setExperimentName("Experiment_06");
+            this.setExperimentName("Experiment_06b");
         }
         this.setPerceptronName(this.getExperimentName());
-        PerceptronConfiguration2048<BasicNetwork> config = new NTupleScore<>();
+        PerceptronConfiguration2048<BasicNetwork> config = new NTupleScoreLineal<>();
         //config.hiddenLayerQuantity = 2;
         this.setNeuralNetworkInterfaceFor2048(new EncogExperimentInterface(config));
     }

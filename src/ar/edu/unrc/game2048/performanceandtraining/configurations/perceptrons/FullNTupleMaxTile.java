@@ -75,10 +75,10 @@ public class FullNTupleMaxTile<NeuralNetworkClass> extends PerceptronConfigurati
         neuronQuantityInLayer[1] = 49;
         neuronQuantityInLayer[2] = 1;
 
-        this.activationFunctionForEncog = new ActivationFunction[3];
-        activationFunctionForEncog[0] = null;
+        this.activationFunctionForEncog = new ActivationFunction[2];
+        
+        activationFunctionForEncog[0] = new ActivationSigmoid();
         activationFunctionForEncog[1] = new ActivationSigmoid();
-        activationFunctionForEncog[2] = new ActivationSigmoid();
 
         maxCodedSimpleBoardnumber = 11; //2048 max
         minCodedSimpleBoardnumber = 0;

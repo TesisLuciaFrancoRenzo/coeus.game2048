@@ -11,6 +11,7 @@ import ar.edu.unrc.game2048.PerceptronConfiguration2048;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IsolatedComputation;
 import java.util.List;
 import org.encog.engine.network.activation.ActivationFunction;
+import org.encog.engine.network.activation.ActivationLinear;
 import org.encog.engine.network.activation.ActivationSigmoid;
 import org.encog.util.arrayutil.NormalizationAction;
 import org.encog.util.arrayutil.NormalizedField;
@@ -20,22 +21,12 @@ import org.encog.util.arrayutil.NormalizedField;
  * @author lucia bressan, franco pellegrini, renzo bianchini
  * @param <NeuralNetworkClass>
  */
-public class NTupleMaxTile<NeuralNetworkClass> extends PerceptronConfiguration2048<NeuralNetworkClass> {
+public class NTupleScoreLineal<NeuralNetworkClass> extends PerceptronConfiguration2048<NeuralNetworkClass> {
 
     /**
      *
      */
-    public int maxCodedBoardOutputnumber;
-
-    /**
-     *
-     */
-    public int maxCodedBoardnumber = 11_111_111; //2048 como maximo
-
-    /**
-     *
-     */
-    public int minCodedBoardOutputnumber;
+    public int maxCodedBoardnumber = 11_111_111; //2048 maximo
 
     /**
      *
@@ -45,32 +36,22 @@ public class NTupleMaxTile<NeuralNetworkClass> extends PerceptronConfiguration20
     /**
      *
      */
-    public int minScore = 0;
-
-    /**
-     *
-     */
-    public NTupleMaxTile() {
-
+    public NTupleScoreLineal() {
         this.neuronQuantityInLayer = new int[3];
         neuronQuantityInLayer[0] = 17;
         neuronQuantityInLayer[1] = 17;
         neuronQuantityInLayer[2] = 1;
 
         this.activationFunctionForEncog = new ActivationFunction[2];
-        
-        activationFunctionForEncog[0] = new ActivationSigmoid();
-        activationFunctionForEncog[1] = new ActivationSigmoid();
 
-        maxCodedBoardOutputnumber = 11; //2048 max
-        minCodedBoardOutputnumber = 0;
+        activationFunctionForEncog[0] = new ActivationSigmoid();
+        activationFunctionForEncog[1] = new ActivationLinear();
+
         activationFunctionMax = 1;
         activationFunctionMin = 0;
 
         normInput = new NormalizedField(NormalizationAction.Normalize,
                 null, maxCodedBoardnumber, minCodedBoardnumber, activationFunctionMax, activationFunctionMin);
-        normOutput = new NormalizedField(NormalizationAction.Normalize,
-                null, maxCodedBoardOutputnumber, minCodedBoardOutputnumber, activationFunctionMax, activationFunctionMin);
     }
 
     /**
@@ -210,7 +191,7 @@ public class NTupleMaxTile<NeuralNetworkClass> extends PerceptronConfiguration20
                         )
                 )
         );
-        //segunda fila de rectangulos
+        //tercera fila de rectangulos
         normalizedPerceptronInput.set(14,
                 normInput.normalize(encryptTiles(
                                 board.tileAt(0, 2).getCode(),
@@ -239,40 +220,6 @@ public class NTupleMaxTile<NeuralNetworkClass> extends PerceptronConfiguration20
                 )
         );
     }
-//
-//    @Override
-//    public IsolatedComputation<Integer> translatePerceptronOutputToPrediction(double[] data) {
-//        return () -> {
-//            assert data[0] != Double.NaN;
-//            return (int) Math.round(normOutput.deNormalize(data[0]));
-//        };
-//    }
-//
-//    /**
-//     *
-//     * @param board
-//     * @param neuronIndex <p>
-//     * @return
-//     */
-//    @Override
-//    public double translateRealOutputToNormalizedPerceptronOutputFrom(GameBoard<NeuralNetworkClass> board, int neuronIndex) {
-//
-//        if ( neuronIndex < 0 || neuronIndex >= perceptron_output_quantity ) {
-//            throw new IllegalArgumentException("neuronIndex range for output layer must be [0," + perceptron_output_quantity + "] but was " + neuronIndex);
-//        }
-//        return normOutput.normalize(board.getMaxTileNumberCode());
-//    }
-//
-//    /**
-//     *
-//     * @param board
-//     * @param outputNeuronIndex <p>
-//     * @return
-//     */
-//    @Override
-//    public double translateRewordToNormalizedPerceptronOutputFrom(GameBoard<NeuralNetworkClass> board, int outputNeuronIndex) {
-//        return 0;
-//    }
 
     @Override
     public IsolatedComputation<Double> computeNumericRepresentationFor(Game2048 game, Double[] output) {
@@ -284,22 +231,22 @@ public class NTupleMaxTile<NeuralNetworkClass> extends PerceptronConfiguration20
 
     @Override
     public double denormalizeValueFromPerceptronOutput(double value) {
-        return normOutput.deNormalize(value);
+        return value;
     }
 
     @Override
     public double getBoardReward(GameBoard board, int outputNeuron) {
-        return 0d;
+        return board.getPartialScore();
     }
 
     @Override
     public double getFinalReward(Game2048 game, int outputNeuron) {
-        return game.getMaxNumberCode();
+        return game.getScore();
     }
 
     @Override
     public double normalizeValueToPerceptronOutput(double value) {
-        return normOutput.normalize(value);
+        return value;
     }
 
     /**

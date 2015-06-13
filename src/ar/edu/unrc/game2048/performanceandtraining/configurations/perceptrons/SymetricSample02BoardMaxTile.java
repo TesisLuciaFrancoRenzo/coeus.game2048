@@ -73,10 +73,10 @@ public class SymetricSample02BoardMaxTile<NeuralNetworkClass> extends Perceptron
         neuronQuantityInLayer[1] = 20;
         neuronQuantityInLayer[2] = 1;
 
-        this.activationFunctionForEncog = new ActivationFunction[3];
-        activationFunctionForEncog[0] = null;
+        this.activationFunctionForEncog = new ActivationFunction[2];
+        
+        activationFunctionForEncog[0] = new ActivationSigmoid();
         activationFunctionForEncog[1] = new ActivationSigmoid();
-        activationFunctionForEncog[2] = new ActivationSigmoid();
 
         normInput = new NormalizedField(NormalizationAction.Normalize,
                 null, maxCodeLines, minCodeLines, activationFunctionMax, activationFunctionMin);

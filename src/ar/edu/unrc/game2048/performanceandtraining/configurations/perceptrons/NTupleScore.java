@@ -51,10 +51,10 @@ public class NTupleScore<NeuralNetworkClass> extends PerceptronConfiguration2048
         neuronQuantityInLayer[1] = 17;
         neuronQuantityInLayer[2] = 1;
 
-        this.activationFunctionForEncog = new ActivationFunction[3];
-        activationFunctionForEncog[0] = null;
+        this.activationFunctionForEncog = new ActivationFunction[2];
+
+        activationFunctionForEncog[0] = new ActivationSigmoid();
         activationFunctionForEncog[1] = new ActivationSigmoid();
-        activationFunctionForEncog[2] = new ActivationSigmoid();
 
         activationFunctionMax = 1;
         activationFunctionMin = 0;
