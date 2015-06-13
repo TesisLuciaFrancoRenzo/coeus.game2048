@@ -45,8 +45,8 @@ public class Experiment_02 extends LearningExperiment<BasicNetwork> {
         experiment.setExplorationRateToFixed(0);
         experiment.setReplaceEligibilitiTraces(true);
         experiment.setResetEligibilitiTraces(true);
-        experiment.setGamesToPlay(10_000);
-        experiment.setLastGamePlayedNumber(10_000); //recordar AJUSTAR ESTE VALOR
+        experiment.setGamesToPlay(20_000);
+        experiment.setLastGamePlayedNumber(0); //recordar AJUSTAR ESTE VALOR
         experiment.setSaveEvery(500);
         experiment.setInitializePerceptronRandomized(true);
 
@@ -78,7 +78,7 @@ public class Experiment_02 extends LearningExperiment<BasicNetwork> {
         this.setPerceptronName(this.getExperimentName());
         PerceptronConfiguration2048<BasicNetwork> config = new BoardScoreCustomNormalization<>();
         //   config.perceptron_hidden_quantity = config.perceptron_input_quantity * 2;
-        config.hiddenLayerQuantity = 2;
+//        config.hiddenLayerQuantity = 2;
         //  config.randomMoveProbability = 0.01;
         this.setNeuralNetworkInterfaceFor2048(new EncogExperimentInterface(config));
     }
@@ -90,7 +90,7 @@ public class Experiment_02 extends LearningExperiment<BasicNetwork> {
      */
     @Override
     public TDLambdaLearning instanceOfTdLearninrgImplementation(IPerceptronInterface perceptronInterface) {
-        return new TDLambdaLearningAfterstate(perceptronInterface, getAlpha(), getLambda(), true, getGamma(), isResetEligibilitiTraces(), isReplaceEligibilitiTraces());
+        return new TDLambdaLearningAfterstate(perceptronInterface, getAlpha(), getLambda(), getGamma(), isResetEligibilitiTraces(), isReplaceEligibilitiTraces());
     }
 
     @Override
