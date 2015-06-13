@@ -19,19 +19,19 @@ import org.encog.util.arrayutil.NormalizedField;
  *
  * @author Franco
  */
-public class BasicScore extends NTupleConfiguration2048 {
+public class BasicTanH extends NTupleConfiguration2048 {
 
-    int maxReward = 100_000;
-    int minReward = 0;
+    int maxReward = 500_000;
+    int minReward = -500_000;
 
     /**
      *
      */
-    public BasicScore() {
-        this.activationFunction = FunctionUtils.sigmoid;
-        this.derivatedActivationFunction = FunctionUtils.derivatedSigmoid;
+    public BasicTanH() {
+        this.activationFunction = FunctionUtils.tanh;
+        this.derivatedActivationFunction = FunctionUtils.derivatedTanh;
         double activationFunctionMax = 1;
-        double activationFunctionMin = 0;
+        double activationFunctionMin = -1;
 
         normOutput = new NormalizedField(NormalizationAction.Normalize,
                 null, maxReward, minReward, activationFunctionMax, activationFunctionMin);
@@ -41,7 +41,7 @@ public class BasicScore extends NTupleConfiguration2048 {
             nTuplesLenght[i] = 4;
         }
 
-        int maxTile = 11;
+        int maxTile = 15;
         this.allSamplePointStates = new ArrayList<>();
         for ( int i = 0; i <= maxTile; i++ ) {
             allSamplePointStates.add(new Tile(i));
@@ -74,15 +74,6 @@ public class BasicScore extends NTupleConfiguration2048 {
         return game.getScore();
     }
 
-//    /**
-//     *
-//     * @param game <p>
-//     * @return
-//     */
-//    @Override
-//    public double getCurrentReward(Game2048 game) {
-//        return game.getScore();
-//    }
     /**
      *
      * @param board
@@ -248,6 +239,9 @@ public class BasicScore extends NTupleConfiguration2048 {
      */
     @Override
     public double normalizeValueToPerceptronOutput(double value) {
+        if ( value > maxReward ) {
+            throw new IllegalArgumentException("value no puede ser mayor a maxReward=" + maxReward);
+        }
         return normOutput.normalize(value);
     }
 }

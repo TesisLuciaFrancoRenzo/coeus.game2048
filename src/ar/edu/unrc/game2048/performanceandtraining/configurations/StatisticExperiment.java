@@ -293,7 +293,7 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
                         results.get(i).addStatisticForTile(games.get(i).getMaxNumberCode());
                         results.get(i).addScore(games.get(i).getScore());
 
-                        if ( games.get(i).iWin() ) {
+                        if ( games.get(i).getScore() >= 2_048 ) {
                             results.get(i).addWin();
                         }
                     }

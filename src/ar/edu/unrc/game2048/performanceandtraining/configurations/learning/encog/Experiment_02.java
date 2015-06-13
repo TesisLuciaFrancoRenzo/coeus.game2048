@@ -39,16 +39,18 @@ public class Experiment_02 extends LearningExperiment<BasicNetwork> {
 
 //        boolean statistics = true;
         boolean statistics = false;
+        double[] alpha = {0.02, 0.02, 0.02, 0.02};
+        experiment.setAlpha(alpha);
         experiment.setLearningRateAdaptationToAnnealing(500_000);
         experiment.setLambda(0.7);
         experiment.setGamma(1);
         experiment.setExplorationRateToFixed(0);
-        experiment.setReplaceEligibilitiTraces(true);
-        experiment.setResetEligibilitiTraces(true);
-        experiment.setGamesToPlay(20_000);
-        experiment.setLastGamePlayedNumber(0); //recordar AJUSTAR ESTE VALOR
+        experiment.setReplaceEligibilitiTraces(false);
+        experiment.setResetEligibilitiTraces(false);
+        experiment.setGamesToPlay(100_000);
+        experiment.setLastGamePlayedNumber(40_000); //recordar AJUSTAR ESTE VALOR
         experiment.setSaveEvery(500);
-        experiment.setInitializePerceptronRandomized(true);
+        experiment.setInitializePerceptronRandomized(false);
 
         experiment.createLogs(false);
         //para calcualar estadisticas
@@ -77,8 +79,8 @@ public class Experiment_02 extends LearningExperiment<BasicNetwork> {
         }
         this.setPerceptronName(this.getExperimentName());
         PerceptronConfiguration2048<BasicNetwork> config = new BoardScoreCustomNormalization<>();
-        //   config.perceptron_hidden_quantity = config.perceptron_input_quantity * 2;
-//        config.hiddenLayerQuantity = 2;
+//           config.perceptron_hidden_quantity = config.perceptron_input_quantity * 2;
+        config.hiddenLayerQuantity = 3;
         //  config.randomMoveProbability = 0.01;
         this.setNeuralNetworkInterfaceFor2048(new EncogExperimentInterface(config));
     }

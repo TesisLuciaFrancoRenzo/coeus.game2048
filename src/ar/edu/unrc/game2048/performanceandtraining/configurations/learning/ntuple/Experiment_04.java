@@ -8,7 +8,7 @@ package ar.edu.unrc.game2048.performanceandtraining.configurations.learning.ntup
 import ar.edu.unrc.game2048.NTupleConfiguration2048;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.LearningExperiment;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.libraries.NTupleExperimentInterface;
-import ar.edu.unrc.game2048.performanceandtraining.configurations.ntuples.BasicScoreLinear;
+import ar.edu.unrc.game2048.performanceandtraining.configurations.ntuples.BasicMaxTile;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IPerceptronInterface;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearning;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearningAfterstate;
@@ -19,7 +19,7 @@ import org.encog.neural.networks.BasicNetwork;
 /**
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
-public class Experiment_01 extends LearningExperiment<BasicNetwork> {
+public class Experiment_04 extends LearningExperiment<BasicNetwork> {
 
     /**
      *
@@ -35,7 +35,7 @@ public class Experiment_01 extends LearningExperiment<BasicNetwork> {
         } else {
             filePath = args[0];
         }
-        LearningExperiment experiment = new Experiment_01();
+        LearningExperiment experiment = new Experiment_04();
 
 //        boolean statistics = true;
         boolean statistics = false;
@@ -75,10 +75,10 @@ public class Experiment_01 extends LearningExperiment<BasicNetwork> {
     public void initialize() throws Exception {
         this.setTileToWin(32_768);
         if ( this.getExperimentName() == null ) {
-            this.setExperimentName("Experiment_01");
+            this.setExperimentName("Experiment_04");
         }
         this.setPerceptronName(this.getExperimentName());
-        NTupleConfiguration2048 config = new BasicScoreLinear();
+        NTupleConfiguration2048 config = new BasicMaxTile();
         this.setNeuralNetworkInterfaceFor2048(new NTupleExperimentInterface(config));
     }
 

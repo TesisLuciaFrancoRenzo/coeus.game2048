@@ -8,7 +8,7 @@ package ar.edu.unrc.game2048.performanceandtraining.configurations.learning.ntup
 import ar.edu.unrc.game2048.NTupleConfiguration2048;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.LearningExperiment;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.libraries.NTupleExperimentInterface;
-import ar.edu.unrc.game2048.performanceandtraining.configurations.ntuples.BasicScoreLinear;
+import ar.edu.unrc.game2048.performanceandtraining.configurations.ntuples.BasicSigmoid;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IPerceptronInterface;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearning;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearningAfterstate;
@@ -44,7 +44,6 @@ public class Experiment_02 extends LearningExperiment<BasicNetwork> {
         experiment.setLearningRateAdaptationToFixed();
         experiment.setLambda(0);
         experiment.setGamma(1);
-        
         experiment.setExplorationRateToFixed(0);
         experiment.setReplaceEligibilitiTraces(false);
         experiment.setResetEligibilitiTraces(false);
@@ -74,12 +73,12 @@ public class Experiment_02 extends LearningExperiment<BasicNetwork> {
 
     @Override
     public void initialize() throws Exception {
-        this.setTileToWin(2_048);
+        this.setTileToWin(32_768);
         if ( this.getExperimentName() == null ) {
             this.setExperimentName("Experiment_02");
         }
         this.setPerceptronName(this.getExperimentName());
-        NTupleConfiguration2048 config = new BasicScoreLinear();
+        NTupleConfiguration2048 config = new BasicSigmoid();
         this.setNeuralNetworkInterfaceFor2048(new NTupleExperimentInterface(config));
     }
 
@@ -90,7 +89,7 @@ public class Experiment_02 extends LearningExperiment<BasicNetwork> {
 
     @Override
     public TDLambdaLearning instanceOfTdLearninrgImplementation(NTupleSystem nTupleSystem) {
-        return new TDLambdaLearningAfterstate(nTupleSystem, (getAlpha() != null) ? getAlpha()[0] : null, getLambda(), getGamma(),  isResetEligibilitiTraces(), isReplaceEligibilitiTraces());
+        return new TDLambdaLearningAfterstate(nTupleSystem, (getAlpha() != null) ? getAlpha()[0] : null, getLambda(), getGamma(), isResetEligibilitiTraces(), isReplaceEligibilitiTraces());
     }
 
 }

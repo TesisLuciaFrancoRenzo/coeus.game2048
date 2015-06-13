@@ -21,7 +21,7 @@ import org.encog.util.arrayutil.NormalizedField;
  */
 public class BasicMaxTile extends NTupleConfiguration2048 {
 
-    int maxReward = 11;
+    int maxReward = 15;
     int minReward = 0;
 
     /**
@@ -41,10 +41,9 @@ public class BasicMaxTile extends NTupleConfiguration2048 {
             nTuplesLenght[i] = 4;
         }
 
-        int maxTile = 11;
         this.allSamplePointStates = new ArrayList<>();
-        for ( int i = 0; i <= maxTile; i++ ) {
-            allSamplePointStates.add(new Tile(i));
+        for ( int i = 0; i <= maxReward; i++ ) {
+            allSamplePointStates.add(new Tile(maxReward));
         }
     }
 
@@ -74,15 +73,6 @@ public class BasicMaxTile extends NTupleConfiguration2048 {
         return game.getMaxNumberCode();
     }
 
-//    /**
-//     *
-//     * @param game <p>
-//     * @return
-//     */
-//    @Override
-//    public double getCurrentReward(Game2048 game) {
-//        return game.getScore();
-//    }
     /**
      *
      * @param board

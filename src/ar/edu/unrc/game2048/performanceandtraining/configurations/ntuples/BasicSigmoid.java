@@ -12,19 +12,29 @@ import ar.edu.unrc.game2048.Tile;
 import ar.edu.unrc.tdlearning.perceptron.ntuple.SamplePointState;
 import ar.edu.unrc.tdlearning.perceptron.training.FunctionUtils;
 import java.util.ArrayList;
+import org.encog.util.arrayutil.NormalizationAction;
+import org.encog.util.arrayutil.NormalizedField;
 
 /**
  *
  * @author Franco
  */
-public class BasicScoreLinear extends NTupleConfiguration2048 {
+public class BasicSigmoid extends NTupleConfiguration2048 {
+
+    int maxReward = 500_000;
+    int minReward = 0;
 
     /**
      *
      */
-    public BasicScoreLinear() {
-        this.activationFunction = FunctionUtils.linear;
-        this.derivatedActivationFunction = FunctionUtils.derivatedLinear;
+    public BasicSigmoid() {
+        this.activationFunction = FunctionUtils.sigmoid;
+        this.derivatedActivationFunction = FunctionUtils.derivatedSigmoid;
+        double activationFunctionMax = 1;
+        double activationFunctionMin = 0;
+
+        normOutput = new NormalizedField(NormalizationAction.Normalize,
+                null, maxReward, minReward, activationFunctionMax, activationFunctionMin);
 
         nTuplesLenght = new int[17];
         for ( int i = 0; i < 17; i++ ) {
@@ -45,12 +55,12 @@ public class BasicScoreLinear extends NTupleConfiguration2048 {
      */
     @Override
     public double denormalizeValueFromPerceptronOutput(double value) {
-        return value;
+        return normOutput.deNormalize(value);
     }
 
     /**
      *
-     * @param board        <p>
+     * @param board
      * @param outputNeuron <p>
      * @return
      */
@@ -229,7 +239,9 @@ public class BasicScoreLinear extends NTupleConfiguration2048 {
      */
     @Override
     public double normalizeValueToPerceptronOutput(double value) {
-        return value;
+        if ( value > maxReward ) {
+            throw new IllegalArgumentException("value no puede ser mayor a maxReward=" + maxReward);
+        }
+        return normOutput.normalize(value);
     }
-
 }
