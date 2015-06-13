@@ -10,6 +10,7 @@ import ar.edu.unrc.game2048.GameBoard;
 import ar.edu.unrc.game2048.PerceptronConfiguration2048;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IsolatedComputation;
 import java.util.List;
+import org.encog.engine.network.activation.ActivationFunction;
 import org.encog.engine.network.activation.ActivationSigmoid;
 import org.encog.util.arrayutil.NormalizationAction;
 import org.encog.util.arrayutil.NormalizedField;
@@ -50,14 +51,19 @@ public class NTupleMaxTile<NeuralNetworkClass> extends PerceptronConfiguration20
      *
      */
     public NTupleMaxTile() {
-        perceptron_hidden_quantity = 9;
-        perceptron_input_quantity = 17;
-        perceptron_output_quantity = 1;
+
+        this.neuronQuantityInLayer = new int[3];
+        neuronQuantityInLayer[0] = 17;
+        neuronQuantityInLayer[1] = 17;
+        neuronQuantityInLayer[2] = 1;
+
+        this.activationFunctionForEncog = new ActivationFunction[3];
+        activationFunctionForEncog[0] = null;
+        activationFunctionForEncog[1] = new ActivationSigmoid();
+        activationFunctionForEncog[2] = new ActivationSigmoid();
+
         maxCodedBoardOutputnumber = 11; //2048 max
         minCodedBoardOutputnumber = 0;
-        hiddenLayerQuantity = 1;
-        activationFunctionHiddenForEncog = new ActivationSigmoid();
-        activationFunctionOutputForEncog = new ActivationSigmoid();
         activationFunctionMax = 1;
         activationFunctionMin = 0;
 

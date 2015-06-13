@@ -79,8 +79,7 @@ public class Experiment_06 extends LearningExperiment<BasicNetwork> {
         }
         this.setPerceptronName(this.getExperimentName());
         PerceptronConfiguration2048<BasicNetwork> config = new NTupleScore<>();
-        config.hiddenLayerQuantity = 2;
-        config.perceptron_hidden_quantity = config.perceptron_input_quantity * 3;
+        //config.hiddenLayerQuantity = 2;
         this.setNeuralNetworkInterfaceFor2048(new EncogExperimentInterface(config));
     }
 

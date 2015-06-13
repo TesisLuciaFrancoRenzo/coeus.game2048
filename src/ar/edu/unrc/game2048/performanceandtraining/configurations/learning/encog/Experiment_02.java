@@ -80,7 +80,6 @@ public class Experiment_02 extends LearningExperiment<BasicNetwork> {
         this.setPerceptronName(this.getExperimentName());
         PerceptronConfiguration2048<BasicNetwork> config = new BoardScoreCustomNormalization<>();
 //           config.perceptron_hidden_quantity = config.perceptron_input_quantity * 2;
-        config.hiddenLayerQuantity = 3;
         //  config.randomMoveProbability = 0.01;
         this.setNeuralNetworkInterfaceFor2048(new EncogExperimentInterface(config));
     }

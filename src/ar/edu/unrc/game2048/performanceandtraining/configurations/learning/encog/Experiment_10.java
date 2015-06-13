@@ -78,7 +78,7 @@ public class Experiment_10 extends LearningExperiment<BasicNetwork> {
         }
         this.setPerceptronName(this.getExperimentName());
         PerceptronConfiguration2048<BasicNetwork> config = new SymetricSample01Score<>();
-        config.perceptron_hidden_quantity = 32;
+        // config.perceptron_hidden_quantity = 32;
         this.setNeuralNetworkInterfaceFor2048(new EncogExperimentInterface(config));
     }
 

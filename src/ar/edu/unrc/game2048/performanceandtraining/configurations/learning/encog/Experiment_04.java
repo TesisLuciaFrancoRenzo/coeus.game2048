@@ -76,7 +76,7 @@ public class Experiment_04 extends LearningExperiment<BasicNetwork> {
         }
         this.setPerceptronName(this.getExperimentName());
         PerceptronConfiguration2048<BasicNetwork> config = new FullNTupleMaxTile<>();
-        config.hiddenLayerQuantity = 1;
+        //config.hiddenLayerQuantity = 1;
         this.setNeuralNetworkInterfaceFor2048(new EncogExperimentInterface(config));
     }
 

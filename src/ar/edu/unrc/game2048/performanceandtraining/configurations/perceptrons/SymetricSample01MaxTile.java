@@ -10,6 +10,7 @@ import ar.edu.unrc.game2048.GameBoard;
 import ar.edu.unrc.game2048.PerceptronConfiguration2048;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IsolatedComputation;
 import java.util.List;
+import org.encog.engine.network.activation.ActivationFunction;
 import org.encog.engine.network.activation.ActivationSigmoid;
 import org.encog.util.arrayutil.NormalizationAction;
 import org.encog.util.arrayutil.NormalizedField;
@@ -62,14 +63,18 @@ public class SymetricSample01MaxTile<NeuralNetworkClass> extends PerceptronConfi
         minCode2x3 = 0d;
         maxCodedBoardOutputnumber = 11; //2048 max
         minCodedBoardOutputnumber = 0;
-        perceptron_hidden_quantity = 8;
-        perceptron_input_quantity = 4;
-        perceptron_output_quantity = 1;
-        hiddenLayerQuantity = 1;
-        activationFunctionHiddenForEncog = new ActivationSigmoid();
-        activationFunctionOutputForEncog = new ActivationSigmoid();
         activationFunctionMax = 1;
         activationFunctionMin = 0;
+
+        this.neuronQuantityInLayer = new int[3];
+        neuronQuantityInLayer[0] = 4;
+        neuronQuantityInLayer[1] = 8;
+        neuronQuantityInLayer[2] = 1;
+
+        this.activationFunctionForEncog = new ActivationFunction[3];
+        activationFunctionForEncog[0] = null;
+        activationFunctionForEncog[1] = new ActivationSigmoid();
+        activationFunctionForEncog[2] = new ActivationSigmoid();
 
         normInput = new NormalizedField(NormalizationAction.Normalize,
                 null, maxCodeLines, minCodeLines, activationFunctionMax, activationFunctionMin);

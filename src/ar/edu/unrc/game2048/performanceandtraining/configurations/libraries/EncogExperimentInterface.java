@@ -13,6 +13,7 @@ import java.io.File;
 import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.encog.engine.network.activation.ActivationLinear;
 import org.encog.engine.network.activation.ActivationSigmoid;
 import org.encog.engine.network.activation.ActivationTANH;
 import org.encog.neural.networks.BasicNetwork;
@@ -28,22 +29,12 @@ public class EncogExperimentInterface extends INeuralNetworkInterfaceFor2048<Bas
     /**
      *
      */
-    protected Function<Double, Double> activationFunctionHidden;
+    protected Function<Double, Double>[] activationFunction;
 
     /**
      *
      */
-    protected Function<Double, Double> activationFunctionOutput;
-
-    /**
-     *
-     */
-    protected Function<Double, Double> derivatedActivationFunctionHidden;
-
-    /**
-     *
-     */
-    protected Function<Double, Double> derivatedActivationFunctionOutput;
+    protected Function<Double, Double>[] derivatedActivationFunction;
 
     /**
      *
@@ -87,40 +78,30 @@ public class EncogExperimentInterface extends INeuralNetworkInterfaceFor2048<Bas
     @Override
     public IPerceptronInterface getPerceptronInterface() {
 
-        if ( getPerceptronConfiguration().activationFunctionHiddenForEncog instanceof ActivationTANH ) {
-            this.activationFunctionHidden = FunctionUtils.tanh;
-            this.derivatedActivationFunctionHidden = FunctionUtils.derivatedTanh;
-        } else if ( getPerceptronConfiguration().activationFunctionHiddenForEncog instanceof ActivationSigmoid ) {
-            this.activationFunctionHidden = FunctionUtils.sigmoid;
-            this.derivatedActivationFunctionHidden = FunctionUtils.derivatedSigmoid;
-        } else {
-            throw new IllegalArgumentException("El test esta pensado para utilizar TANH o Simoid como funcion de activacion");
-        }
+        for ( int i = 0; i < getPerceptronConfiguration().activationFunctionForEncog.length; i++ ) {
 
-        if ( getPerceptronConfiguration().activationFunctionOutputForEncog instanceof ActivationTANH ) {
-            this.activationFunctionOutput = FunctionUtils.tanh;
-            this.derivatedActivationFunctionOutput = FunctionUtils.derivatedTanh;
-        } else if ( getPerceptronConfiguration().activationFunctionOutputForEncog instanceof ActivationSigmoid ) {
-            this.activationFunctionOutput = FunctionUtils.sigmoid;
-            this.derivatedActivationFunctionOutput = FunctionUtils.derivatedSigmoid;
-        } else {
-            throw new IllegalArgumentException("El test esta pensado para utilizar TANH o Simoid como funcion de activacion");
+            if ( getPerceptronConfiguration().activationFunctionForEncog[i] instanceof ActivationTANH ) {
+                this.activationFunction[i] = FunctionUtils.tanh;
+                this.derivatedActivationFunction[i] = FunctionUtils.derivatedTanh;
+            } else if ( getPerceptronConfiguration().activationFunctionForEncog[i] instanceof ActivationSigmoid ) {
+                this.activationFunction[i] = FunctionUtils.sigmoid;
+                this.derivatedActivationFunction[i] = FunctionUtils.derivatedSigmoid;
+            } else if ( getPerceptronConfiguration().activationFunctionForEncog[i] instanceof ActivationLinear ) {
+                this.activationFunction[i] = FunctionUtils.linear;
+                this.derivatedActivationFunction[i] = FunctionUtils.derivatedLinear;
+            } else {
+                throw new IllegalArgumentException("El test esta pensado para utilizar TANH, Simoid o Linear como funcion de activacion");
+            }
         }
 
         IPerceptronInterface encogPerceptronInterface = new IPerceptronInterface() {
 
             @Override
             public Function<Double, Double> getActivationFunction(int layerIndex) {
-                if ( layerIndex <= 0 || layerIndex >= getLayerQuantity() ) {
-                    throw new IllegalArgumentException("layerIndex out of valid range");
-                } else if ( layerIndex == getLayerQuantity() - 1 ) {
-                    //ultima capa
-                    return activationFunctionOutput; //TODO soportar mas capas
-                } else {
-                    //capas ocultas
-                    return activationFunctionHidden;
-                }
-
+//                if ( layerIndex <= 0 || layerIndex >= getLayerQuantity() ) {
+//                    throw new IllegalArgumentException("layerIndex out of valid range");
+//                }
+                return activationFunction[layerIndex];
             }
 
             @Override
@@ -130,15 +111,7 @@ public class EncogExperimentInterface extends INeuralNetworkInterfaceFor2048<Bas
 
             @Override
             public Function<Double, Double> getDerivatedActivationFunction(int layerIndex) {
-                if ( layerIndex <= 0 || layerIndex >= getLayerQuantity() ) {
-                    throw new IllegalArgumentException("layerIndex out of valid range");
-                } else if ( layerIndex == getLayerQuantity() - 1 ) {
-                    //ultima capa
-                    return derivatedActivationFunctionOutput;
-                } else {
-                    //capas ocultas
-                    return derivatedActivationFunctionHidden;
-                }
+                return derivatedActivationFunction[layerIndex];
             }
 
             @Override
@@ -180,15 +153,16 @@ public class EncogExperimentInterface extends INeuralNetworkInterfaceFor2048<Bas
      * @return
      */
     public BasicNetwork initializeEncogPerceptron(boolean randomized) {
-        if ( getPerceptronConfiguration().hiddenLayerQuantity < 1 ) {
-            throw new IllegalArgumentException("hiddenLayers < 1");
+        if ( getPerceptronConfiguration().neuronQuantityInLayer == null || getPerceptronConfiguration().neuronQuantityInLayer.length < 2 ) {
+            throw new IllegalArgumentException("la cantidad de capas es de minimo 2 para un perceptrón (incluyendo entrada y salida)");
         }
         BasicNetwork perceptron = new BasicNetwork();
-        perceptron.addLayer(new BasicLayer(null, true, getPerceptronConfiguration().perceptron_input_quantity));
-        for ( int i = 0; i < getPerceptronConfiguration().hiddenLayerQuantity; i++ ) {
-            perceptron.addLayer(new BasicLayer(getPerceptronConfiguration().activationFunctionHiddenForEncog.clone(), true, getPerceptronConfiguration().perceptron_hidden_quantity));
+        perceptron.addLayer(new BasicLayer(null, true, getPerceptronConfiguration().neuronQuantityInLayer[0]));
+        for ( int i = 1; i < getPerceptronConfiguration().neuronQuantityInLayer.length - 1; i++ ) {
+            perceptron.addLayer(new BasicLayer(getPerceptronConfiguration().activationFunctionForEncog[i].clone(), true, getPerceptronConfiguration().neuronQuantityInLayer[i]));
         }
-        perceptron.addLayer(new BasicLayer(getPerceptronConfiguration().activationFunctionOutputForEncog.clone(), false, getPerceptronConfiguration().perceptron_output_quantity));
+        perceptron.addLayer(new BasicLayer(getPerceptronConfiguration().activationFunctionForEncog[getPerceptronConfiguration().neuronQuantityInLayer.length - 1].clone(),
+                false, getPerceptronConfiguration().neuronQuantityInLayer[getPerceptronConfiguration().neuronQuantityInLayer.length - 1]));
         perceptron.getStructure().finalizeStructure();
         if ( randomized ) {
             perceptron.reset();

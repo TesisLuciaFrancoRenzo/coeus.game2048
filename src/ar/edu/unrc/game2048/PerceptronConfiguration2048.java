@@ -20,7 +20,7 @@ public abstract class PerceptronConfiguration2048<NeuralNetworkClass> implements
     /**
      *
      */
-    public ActivationFunction activationFunctionHiddenForEncog;
+    public ActivationFunction[] activationFunctionForEncog;
 
     /**
      *
@@ -35,16 +35,6 @@ public abstract class PerceptronConfiguration2048<NeuralNetworkClass> implements
     /**
      *
      */
-    public ActivationFunction activationFunctionOutputForEncog;
-
-    /**
-     *
-     */
-    public int hiddenLayerQuantity = 1;
-
-    /**
-     *
-     */
     public NormalizedField normInput;
 
     /**
@@ -55,17 +45,7 @@ public abstract class PerceptronConfiguration2048<NeuralNetworkClass> implements
     /**
      *
      */
-    public int perceptron_hidden_quantity;
-
-    /**
-     *
-     */
-    public int perceptron_input_quantity;
-
-    /**
-     *
-     */
-    public int perceptron_output_quantity;
+    public int[] neuronQuantityInLayer;
 
     //fin de la configuracion de la red neuronal
     private NeuralNetworkClass neuralNetwork;
@@ -85,7 +65,7 @@ public abstract class PerceptronConfiguration2048<NeuralNetworkClass> implements
     /**
      *
      * @param game
-     * @param output
+     * @param output <p>
      * @return
      */
     public abstract IsolatedComputation<Double> computeNumericRepresentationFor(Game2048 game, Double[] output);
