@@ -40,7 +40,7 @@ public class Experiment_06b extends LearningExperiment<BasicNetwork> {
 
         boolean statistics = true;
 //        boolean statistics = false;
-        double[] alphas = {0.0025, 0.0025};
+        double[] alphas = {0.0025, 0.0025, 0.0025};
         experiment.setAlpha(alphas);
         experiment.setLearningRateAdaptationToAnnealing(1_000_000);
         experiment.setLambda(0);
@@ -49,7 +49,7 @@ public class Experiment_06b extends LearningExperiment<BasicNetwork> {
         experiment.setReplaceEligibilitiTraces(false);
         experiment.setResetEligibilitiTraces(false);
         experiment.setGamesToPlay(20_000);
-        experiment.setLastGamePlayedNumber(20_000); //recordar AJUSTAR ESTE VALOR
+        experiment.setLastGamePlayedNumber(0); //recordar AJUSTAR ESTE VALOR
         experiment.setSaveEvery(500);
         experiment.setInitializePerceptronRandomized(true);
 
@@ -58,7 +58,7 @@ public class Experiment_06b extends LearningExperiment<BasicNetwork> {
             experiment.setStatisticsOnly(true);
             experiment.setRunStatisticForRandom(true);
             experiment.setRunStatisticsForBackups(true);
-            experiment.setGamesToPlayPerThreadForStatistics(1);
+            experiment.setGamesToPlayPerThreadForStatistics(1_000);
             experiment.setSimulationsForStatistics(8);
         } else {
             experiment.setStatisticsOnly(false);
@@ -79,7 +79,6 @@ public class Experiment_06b extends LearningExperiment<BasicNetwork> {
         }
         this.setPerceptronName(this.getExperimentName());
         PerceptronConfiguration2048<BasicNetwork> config = new NTupleScoreLineal<>();
-        //config.hiddenLayerQuantity = 2;
         this.setNeuralNetworkInterfaceFor2048(new EncogExperimentInterface(config));
     }
 

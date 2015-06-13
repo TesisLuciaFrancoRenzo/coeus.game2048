@@ -37,15 +37,17 @@ public class NTupleScoreLineal<NeuralNetworkClass> extends PerceptronConfigurati
      *
      */
     public NTupleScoreLineal() {
-        this.neuronQuantityInLayer = new int[3];
+        this.neuronQuantityInLayer = new int[4];
         neuronQuantityInLayer[0] = 17;
-        neuronQuantityInLayer[1] = 17;
-        neuronQuantityInLayer[2] = 1;
+        neuronQuantityInLayer[1] = 35;
+        neuronQuantityInLayer[2] = 17;
+        neuronQuantityInLayer[3] = 1;
 
-        this.activationFunctionForEncog = new ActivationFunction[2];
+        this.activationFunctionForEncog = new ActivationFunction[3];
 
         activationFunctionForEncog[0] = new ActivationSigmoid();
-        activationFunctionForEncog[1] = new ActivationLinear();
+        activationFunctionForEncog[1] = new ActivationSigmoid();
+        activationFunctionForEncog[2] = new ActivationLinear();
 
         activationFunctionMax = 1;
         activationFunctionMin = 0;
