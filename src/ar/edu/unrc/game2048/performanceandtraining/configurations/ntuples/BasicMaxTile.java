@@ -53,8 +53,8 @@ public class BasicMaxTile extends NTupleConfiguration2048 {
      * @return
      */
     @Override
-    public double denormalizeValueFromPerceptronOutput(double value) {
-        return normOutput.deNormalize(value);
+    public double denormalizeValueFromPerceptronOutput(Object value) {
+        return normOutput.deNormalize((double) value);
     }
 
     /**
@@ -237,7 +237,7 @@ public class BasicMaxTile extends NTupleConfiguration2048 {
      * @return
      */
     @Override
-    public double normalizeValueToPerceptronOutput(double value) {
-        return normOutput.normalize(value);
+    public double normalizeValueToPerceptronOutput(Object value) {
+        return normOutput.normalize((Double)value);
     }
 }

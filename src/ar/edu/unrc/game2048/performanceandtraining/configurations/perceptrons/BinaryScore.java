@@ -49,7 +49,7 @@ public class BinaryScore<NeuralNetworkClass> extends PerceptronConfiguration2048
         neuronQuantityInLayer[2] = 1;
 
         this.activationFunctionForEncog = new ActivationFunction[2];
-        
+
         activationFunctionForEncog[0] = new ActivationSigmoid();
         activationFunctionForEncog[1] = new ActivationSigmoid();
 
@@ -88,16 +88,16 @@ public class BinaryScore<NeuralNetworkClass> extends PerceptronConfiguration2048
     }
 
     @Override
-    public IsolatedComputation<Double> computeNumericRepresentationFor(Game2048 game, Double[] output) {
+    public IsolatedComputation<Double> computeNumericRepresentationFor(Game2048 game, Object[] output) {
         return () -> {
             assert output.length == 1;
-            return output[0];
+            return (Double) output[0];
         };
     }
 
     @Override
-    public double denormalizeValueFromPerceptronOutput(double value) {
-        return normOutput.deNormalize(value);
+    public double denormalizeValueFromPerceptronOutput(Object value) {
+        return normOutput.deNormalize((Double)value);
     }
 
     @Override
@@ -154,8 +154,8 @@ public class BinaryScore<NeuralNetworkClass> extends PerceptronConfiguration2048
 //    }
 
     @Override
-    public double normalizeValueToPerceptronOutput(double value) {
-        return normOutput.normalize(value);
+    public double normalizeValueToPerceptronOutput(Object value) {
+        return normOutput.normalize((Double)value);
     }
 
 }

@@ -227,16 +227,16 @@ public class SymetricSample02BoardMaxTile<NeuralNetworkClass> extends Perceptron
 //        return 0;
 //    }
     @Override
-    public IsolatedComputation<Double> computeNumericRepresentationFor(Game2048 game, Double[] output) {
+    public IsolatedComputation<Double> computeNumericRepresentationFor(Game2048 game, Object[] output) {
         return () -> {
             assert output.length == 1;
-            return output[0];
+            return (Double) output[0];
         };
     }
 
     @Override
-    public double denormalizeValueFromPerceptronOutput(double value) {
-        return normOutput.deNormalize(value);
+    public double denormalizeValueFromPerceptronOutput(Object value) {
+        return normOutput.deNormalize((Double)value);
     }
 
     @Override
@@ -250,8 +250,8 @@ public class SymetricSample02BoardMaxTile<NeuralNetworkClass> extends Perceptron
     }
 
     @Override
-    public double normalizeValueToPerceptronOutput(double value) {
-        return normOutput.normalize(value);
+    public double normalizeValueToPerceptronOutput(Object value) {
+        return normOutput.normalize((Double)value);
     }
 
     /**

@@ -224,16 +224,16 @@ public class NTupleScoreLineal<NeuralNetworkClass> extends PerceptronConfigurati
     }
 
     @Override
-    public IsolatedComputation<Double> computeNumericRepresentationFor(Game2048 game, Double[] output) {
+    public IsolatedComputation<Double> computeNumericRepresentationFor(Game2048 game, Object[] output) {
         return () -> {
             assert output.length == 1;
-            return output[0];
+            return (Double) output[0];
         };
     }
 
     @Override
-    public double denormalizeValueFromPerceptronOutput(double value) {
-        return value;
+    public double denormalizeValueFromPerceptronOutput(Object value) {
+        return (Double) value;
     }
 
     @Override
@@ -247,8 +247,8 @@ public class NTupleScoreLineal<NeuralNetworkClass> extends PerceptronConfigurati
     }
 
     @Override
-    public double normalizeValueToPerceptronOutput(double value) {
-        return value;
+    public double normalizeValueToPerceptronOutput(Object value) {
+        return (Double) value;
     }
 
     /**

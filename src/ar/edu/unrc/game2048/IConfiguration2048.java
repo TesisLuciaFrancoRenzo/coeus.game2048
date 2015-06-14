@@ -16,7 +16,7 @@ public interface IConfiguration2048 {
      * @param value <p>
      * @return
      */
-    public abstract double denormalizeValueFromPerceptronOutput(double value);
+    public abstract double denormalizeValueFromPerceptronOutput(Object value);
 
     /**
      *
@@ -39,6 +39,6 @@ public interface IConfiguration2048 {
      * @param value <p>
      * @return
      */
-    public abstract double normalizeValueToPerceptronOutput(double value);
+    public abstract double normalizeValueToPerceptronOutput(Object value);
 
 }

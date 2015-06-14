@@ -44,8 +44,8 @@ public class BasicScoreLinear extends NTupleConfiguration2048 {
      * @return
      */
     @Override
-    public double denormalizeValueFromPerceptronOutput(double value) {
-        return value;
+    public double denormalizeValueFromPerceptronOutput(Object value) {
+        return (double) value;
     }
 
     /**
@@ -228,8 +228,8 @@ public class BasicScoreLinear extends NTupleConfiguration2048 {
      * @return
      */
     @Override
-    public double normalizeValueToPerceptronOutput(double value) {
-        return value;
+    public double normalizeValueToPerceptronOutput(Object value) {
+        return (Double) value;
     }
 
 }

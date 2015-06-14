@@ -46,7 +46,6 @@ public abstract class PerceptronConfiguration2048<NeuralNetworkClass> implements
      */
     public NormalizedField normOutput;
 
-
     //fin de la configuracion de la red neuronal
     private NeuralNetworkClass neuralNetwork;
 
@@ -68,7 +67,7 @@ public abstract class PerceptronConfiguration2048<NeuralNetworkClass> implements
      * @param output <p>
      * @return
      */
-    public abstract IsolatedComputation<Double> computeNumericRepresentationFor(Game2048 game, Double[] output);
+    public abstract IsolatedComputation<Double> computeNumericRepresentationFor(Game2048 game, Object[] output);
 
     /**
      * @return the neuralNetwork

@@ -54,8 +54,8 @@ public class BasicSigmoid extends NTupleConfiguration2048 {
      * @return
      */
     @Override
-    public double denormalizeValueFromPerceptronOutput(double value) {
-        return normOutput.deNormalize(value);
+    public double denormalizeValueFromPerceptronOutput(Object value) {
+        return normOutput.deNormalize((double) value);
     }
 
     /**
@@ -238,10 +238,10 @@ public class BasicSigmoid extends NTupleConfiguration2048 {
      * @return
      */
     @Override
-    public double normalizeValueToPerceptronOutput(double value) {
-        if ( value > maxReward ) {
+    public double normalizeValueToPerceptronOutput(Object value) {
+        if ( (Double) value > maxReward ) {
             throw new IllegalArgumentException("value no puede ser mayor a maxReward=" + maxReward);
         }
-        return normOutput.normalize(value);
+        return normOutput.normalize((Double)value);
     }
 }
