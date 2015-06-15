@@ -42,10 +42,10 @@ public class Experiment_01 extends LearningExperiment<BasicNetwork> {
         double[] alphas = {0.0025};
         experiment.setAlpha(alphas);
         experiment.setLearningRateAdaptationToFixed();
-        experiment.setLambda(0);
+        experiment.setLambda(0.7);
         experiment.setGamma(1);
         experiment.setExplorationRateToFixed(0);
-        experiment.setReplaceEligibilitiTraces(false);
+        experiment.setReplaceEligibilitiTraces(true);
         experiment.setResetEligibilitiTraces(false);
         experiment.setGamesToPlay(2_000_000);
         experiment.setLastGamePlayedNumber(0); //recordar AJUSTAR ESTE VALOR

@@ -798,7 +798,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
                         Double cellValue = resultsPerFile.get(backupFiles.get(file)).getWinRate();
                         cell.setCellValue(cellValue);
                         CellStyle style = wb.createCellStyle();
-                        style.setDataFormat(wb.createDataFormat().getFormat("0.0%"));
+                        style.setDataFormat(wb.createDataFormat().getFormat("0.00%")); //FIXME Muestra mal los porcentajes, arreglar
                         cell.setCellStyle(style);
                     }
 
