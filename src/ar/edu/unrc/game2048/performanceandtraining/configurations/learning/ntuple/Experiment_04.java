@@ -42,13 +42,13 @@ public class Experiment_04 extends LearningExperiment<BasicNetwork> {
         double[] alphas = {0.0025};
         experiment.setAlpha(alphas);
         experiment.setLearningRateAdaptationToFixed();
-        experiment.setLambda(0);
+        experiment.setLambda(0.7);
         experiment.setGamma(1);
         experiment.setExplorationRateToFixed(0);
-        experiment.setReplaceEligibilitiTraces(false);
-        experiment.setResetEligibilitiTraces(false);
+        experiment.setReplaceEligibilitiTraces(true);
+        experiment.setResetEligibilitiTraces(true);
         experiment.setGamesToPlay(2_000_000);
-        experiment.setLastGamePlayedNumber(140_000); //recordar AJUSTAR ESTE VALOR
+        experiment.setLastGamePlayedNumber(0); //recordar AJUSTAR ESTE VALOR
         experiment.setSaveEvery(20_000);
         experiment.setInitializePerceptronRandomized(false);
 

@@ -28,11 +28,6 @@ public class BasicMaxTile extends NTupleConfiguration2048 {
     public BasicMaxTile() {
         this.activationFunction = FunctionUtils.linear;
         this.derivatedActivationFunction = FunctionUtils.derivatedLinear;
-        // double activationFunctionMax = 1;
-        //double activationFunctionMin = 0;
-
-//        normOutput = new NormalizedField(NormalizationAction.Normalize,
-//                null, maxReward, minReward, activationFunctionMax, activationFunctionMin);
         nTuplesLenght = new int[17];
         for ( int i = 0; i < 17; i++ ) {
             nTuplesLenght[i] = 4;
