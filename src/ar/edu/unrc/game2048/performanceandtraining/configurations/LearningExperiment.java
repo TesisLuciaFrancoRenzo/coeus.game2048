@@ -436,9 +436,9 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
                 break;
             }
         }
-        for ( int i = lastGamePlayedNumber + 1; i < gamesToPlay + lastGamePlayedNumber; i++ ) { //FIXME menor o igual a gameToPlay? o menor? ver codigo de annealing
+        for ( int i = lastGamePlayedNumber + 1; i < gamesToPlay; i++ ) { //FIXME menor o igual a gameToPlay? o menor? ver codigo de annealing
             learningAlgorithm.solveAndTrainOnce(game, i);
-            int percent = (int) (((i * 1d) / ((gamesToPlay + lastGamePlayedNumber) * 1d)) * 100d);
+            int percent = (int) (((i * 1d) / (gamesToPlay * 1d)) * 100d);
             System.out.println("Juego número " + i + " (" + percent + "%)    puntaje = " + game.getScore() + "    ficha max = " + game.getMaxNumber() + "    turno alcanzado = " + game.getLastTurn() + "      current alpha = " + Arrays.toString(learningAlgorithm.getCurrentAlpha()));
             if ( printStream != null ) {
                 printStream.println(game.getScore() + "\t" + game.getMaxNumber());
