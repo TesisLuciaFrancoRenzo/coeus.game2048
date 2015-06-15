@@ -12,8 +12,6 @@ import ar.edu.unrc.game2048.Tile;
 import ar.edu.unrc.tdlearning.perceptron.ntuple.SamplePointState;
 import ar.edu.unrc.tdlearning.perceptron.training.FunctionUtils;
 import java.util.ArrayList;
-import org.encog.util.arrayutil.NormalizationAction;
-import org.encog.util.arrayutil.NormalizedField;
 
 /**
  *
@@ -28,14 +26,13 @@ public class BasicMaxTile extends NTupleConfiguration2048 {
      *
      */
     public BasicMaxTile() {
-        this.activationFunction = FunctionUtils.sigmoid;
-        this.derivatedActivationFunction = FunctionUtils.derivatedSigmoid;
-        double activationFunctionMax = 1;
-        double activationFunctionMin = 0;
+        this.activationFunction = FunctionUtils.linear;
+        this.derivatedActivationFunction = FunctionUtils.derivatedLinear;
+        // double activationFunctionMax = 1;
+        //double activationFunctionMin = 0;
 
-        normOutput = new NormalizedField(NormalizationAction.Normalize,
-                null, maxReward, minReward, activationFunctionMax, activationFunctionMin);
-
+//        normOutput = new NormalizedField(NormalizationAction.Normalize,
+//                null, maxReward, minReward, activationFunctionMax, activationFunctionMin);
         nTuplesLenght = new int[17];
         for ( int i = 0; i < 17; i++ ) {
             nTuplesLenght[i] = 4;
@@ -43,7 +40,7 @@ public class BasicMaxTile extends NTupleConfiguration2048 {
 
         this.allSamplePointStates = new ArrayList<>();
         for ( int i = 0; i <= maxReward; i++ ) {
-            allSamplePointStates.add(new Tile(maxReward));
+            allSamplePointStates.add(new Tile(i));
         }
     }
 
@@ -54,7 +51,7 @@ public class BasicMaxTile extends NTupleConfiguration2048 {
      */
     @Override
     public double denormalizeValueFromPerceptronOutput(Object value) {
-        return normOutput.deNormalize((double) value);
+        return (double) value;
     }
 
     /**
@@ -238,6 +235,6 @@ public class BasicMaxTile extends NTupleConfiguration2048 {
      */
     @Override
     public double normalizeValueToPerceptronOutput(Object value) {
-        return normOutput.normalize((Double)value);
+        return (Double) value;
     }
 }
