@@ -5,6 +5,8 @@
  */
 package ar.edu.unrc.game2048;
 
+import ar.edu.unrc.game2048.performanceandtraining.PerformanceandtrainingSuite;
+import ar.edu.unrc.game2048.resources.ResourcesSuite;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -17,7 +19,7 @@ import org.junit.runners.Suite;
  * @author franco
  */
 @RunWith( Suite.class )
-@Suite.SuiteClasses( {ar.edu.unrc.game2048.IConfiguration2048Test.class, ar.edu.unrc.game2048.TileContainerTest.class, ar.edu.unrc.game2048.PerceptronConfiguration2048Test.class, ar.edu.unrc.game2048.NTupleConfiguration2048Test.class, ar.edu.unrc.game2048.IGameTest.class, ar.edu.unrc.game2048.Game2048Test.class, ar.edu.unrc.game2048.TileTest.class, ar.edu.unrc.game2048.resources.ResourcesSuite.class, ar.edu.unrc.game2048.performanceandtraining.PerformanceandtrainingSuite.class, ar.edu.unrc.game2048.GameBoardTest.class, ar.edu.unrc.game2048.ActionTest.class} )
+@Suite.SuiteClasses( {PerformanceandtrainingSuite.class, ResourcesSuite.class, IConfiguration2048Test.class, GameBoardTest.class, ActionTest.class, IGameTest.class, NTupleConfiguration2048Test.class, Game2048Test.class, TileContainerTest.class, TileTest.class, PerceptronConfiguration2048Test.class})
 public class Game2048Suite {
 
     /**

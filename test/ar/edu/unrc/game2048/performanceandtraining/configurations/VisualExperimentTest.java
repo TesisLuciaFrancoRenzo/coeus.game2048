@@ -276,4 +276,14 @@ public class VisualExperimentTest {
         }
     }
 
+    public class VisualExperimentImpl extends VisualExperiment {
+
+        public VisualExperimentImpl() {
+            super(null);
+        }
+
+        public void initializeVisual() throws Exception {
+        }
+    }
+
 }

@@ -148,4 +148,29 @@ public class IGameTest {
         }
     }
 
+    public class IGameImpl implements IGame {
+
+        public void processInput(int keyCode) {
+        }
+
+        public boolean iWin() {
+            return false;
+        }
+
+        public boolean iLoose() {
+            return false;
+        }
+
+        public int getScore() {
+            return 0;
+        }
+
+        public int getMaxNumber() {
+            return 0;
+        }
+
+        public void dispose() {
+        }
+    }
+
 }

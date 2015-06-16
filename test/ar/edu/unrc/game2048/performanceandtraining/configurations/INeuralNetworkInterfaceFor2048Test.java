@@ -220,4 +220,28 @@ public class INeuralNetworkInterfaceFor2048Test {
         }
     }
 
+    public class INeuralNetworkInterfaceFor2048Impl extends INeuralNetworkInterfaceFor2048 {
+
+        public INeuralNetworkInterfaceFor2048Impl() {
+            super(null);
+        }
+
+        public void compareNeuralNetworks(File randomFile, File trainedFile) {
+        }
+
+        public String getLibName() {
+            return "";
+        }
+
+        public IPerceptronInterface getPerceptronInterface() {
+            return null;
+        }
+
+        public void loadOrCreatePerceptron(File perceptronFile, boolean randomizedIfNotExist) throws Exception {
+        }
+
+        public void savePerceptron(File perceptronFile) throws Exception {
+        }
+    }
+
 }

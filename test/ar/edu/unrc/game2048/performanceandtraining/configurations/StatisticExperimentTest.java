@@ -292,4 +292,14 @@ public class StatisticExperimentTest {
         }
     }
 
+    public class StatisticExperimentImpl extends StatisticExperiment {
+
+        public StatisticExperimentImpl() {
+            super(null);
+        }
+
+        public void initializeStatistics() throws Exception {
+        }
+    }
+
 }

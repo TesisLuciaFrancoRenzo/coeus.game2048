@@ -3,8 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ar.edu.unrc.game2048;
+package ar.edu.unrc.game2048.performanceandtraining.configurations.ntuples;
 
+import ar.edu.unrc.game2048.Game2048;
+import ar.edu.unrc.game2048.GameBoard;
+import ar.edu.unrc.tdlearning.perceptron.ntuple.SamplePointState;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -13,9 +16,12 @@ import org.junit.Test;
 
 /**
  *
- * @author franco
+ * @author lucy
  */
-public class IConfiguration2048Test {
+public class BasicScoreTanHTest {
+
+    public BasicScoreTanHTest() {
+    }
 
     @BeforeClass
     public static void setUpClass() {
@@ -23,9 +29,6 @@ public class IConfiguration2048Test {
 
     @AfterClass
     public static void tearDownClass() {
-    }
-
-    public IConfiguration2048Test() {
     }
 
     @Before
@@ -37,13 +40,13 @@ public class IConfiguration2048Test {
     }
 
     /**
-     * Test of denormalizeValueFromPerceptronOutput method, of class IConfiguration2048.
+     * Test of denormalizeValueFromPerceptronOutput method, of class BasicScoreTanH.
      */
     @Test
     public void testDenormalizeValueFromPerceptronOutput() {
         System.out.println("denormalizeValueFromPerceptronOutput");
         Object value = null;
-        IConfiguration2048 instance = new IConfiguration2048Impl();
+        BasicScoreTanH instance = new BasicScoreTanH();
         double expResult = 0.0;
         double result = instance.denormalizeValueFromPerceptronOutput(value);
         assertEquals(expResult, result, 0.0);
@@ -52,14 +55,14 @@ public class IConfiguration2048Test {
     }
 
     /**
-     * Test of getBoardReward method, of class IConfiguration2048.
+     * Test of getBoardReward method, of class BasicScoreTanH.
      */
     @Test
     public void testGetBoardReward() {
         System.out.println("getBoardReward");
         GameBoard board = null;
         int outputNeuron = 0;
-        IConfiguration2048 instance = new IConfiguration2048Impl();
+        BasicScoreTanH instance = new BasicScoreTanH();
         double expResult = 0.0;
         double result = instance.getBoardReward(board, outputNeuron);
         assertEquals(expResult, result, 0.0);
@@ -68,14 +71,14 @@ public class IConfiguration2048Test {
     }
 
     /**
-     * Test of getFinalReward method, of class IConfiguration2048.
+     * Test of getFinalReward method, of class BasicScoreTanH.
      */
     @Test
     public void testGetFinalReward() {
         System.out.println("getFinalReward");
         Game2048 game = null;
         int outputNeuron = 0;
-        IConfiguration2048 instance = new IConfiguration2048Impl();
+        BasicScoreTanH instance = new BasicScoreTanH();
         double expResult = 0.0;
         double result = instance.getFinalReward(game, outputNeuron);
         assertEquals(expResult, result, 0.0);
@@ -84,60 +87,34 @@ public class IConfiguration2048Test {
     }
 
     /**
-     * Test of normalizeValueToPerceptronOutput method, of class IConfiguration2048.
+     * Test of getNTuple method, of class BasicScoreTanH.
+     */
+    @Test
+    public void testGetNTuple() {
+        System.out.println("getNTuple");
+        GameBoard board = null;
+        int nTupleIndex = 0;
+        BasicScoreTanH instance = new BasicScoreTanH();
+        SamplePointState[] expResult = null;
+        SamplePointState[] result = instance.getNTuple(board, nTupleIndex);
+        assertArrayEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of normalizeValueToPerceptronOutput method, of class BasicScoreTanH.
      */
     @Test
     public void testNormalizeValueToPerceptronOutput() {
         System.out.println("normalizeValueToPerceptronOutput");
         Object value = null;
-        IConfiguration2048 instance = new IConfiguration2048Impl();
+        BasicScoreTanH instance = new BasicScoreTanH();
         double expResult = 0.0;
         double result = instance.normalizeValueToPerceptronOutput(value);
         assertEquals(expResult, result, 0.0);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
-    }
-
-    public class IConfiguration2048Impl implements IConfiguration2048 {
-
-        @Override
-        public double denormalizeValueFromPerceptronOutput(Object value) {
-            return 0.0;
-        }
-
-        @Override
-        public double getBoardReward(GameBoard board, int outputNeuron) {
-            return 0.0;
-        }
-
-        @Override
-        public double getFinalReward(Game2048 game, int outputNeuron) {
-            return 0.0;
-        }
-
-        @Override
-        public double normalizeValueToPerceptronOutput(Object value) {
-            return 0.0;
-        }
-    }
-
-    public class IConfiguration2048Impl implements IConfiguration2048 {
-
-        public double denormalizeValueFromPerceptronOutput(Object value) {
-            return 0.0;
-        }
-
-        public double getBoardReward(GameBoard board, int outputNeuron) {
-            return 0.0;
-        }
-
-        public double getFinalReward(Game2048 game, int outputNeuron) {
-            return 0.0;
-        }
-
-        public double normalizeValueToPerceptronOutput(Object value) {
-            return 0.0;
-        }
     }
 
 }

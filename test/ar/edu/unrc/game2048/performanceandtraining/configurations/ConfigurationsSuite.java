@@ -5,6 +5,10 @@
  */
 package ar.edu.unrc.game2048.performanceandtraining.configurations;
 
+import ar.edu.unrc.game2048.performanceandtraining.configurations.learning.LearningSuite;
+import ar.edu.unrc.game2048.performanceandtraining.configurations.libraries.LibrariesSuite;
+import ar.edu.unrc.game2048.performanceandtraining.configurations.ntuples.NtuplesSuite;
+import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.PerceptronsSuite;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -17,7 +21,7 @@ import org.junit.runners.Suite;
  * @author franco
  */
 @RunWith( Suite.class )
-@Suite.SuiteClasses( {ar.edu.unrc.game2048.performanceandtraining.configurations.learning.LearningSuite.class, ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.PerceptronsSuite.class, ar.edu.unrc.game2048.performanceandtraining.configurations.libraries.LibrariesSuite.class, ar.edu.unrc.game2048.performanceandtraining.configurations.INeuralNetworkInterfaceFor2048Test.class, ar.edu.unrc.game2048.performanceandtraining.configurations.StatisticForCalcTest.class, ar.edu.unrc.game2048.performanceandtraining.configurations.VisualExperimentTest.class, ar.edu.unrc.game2048.performanceandtraining.configurations.LearningExperimentTest.class, ar.edu.unrc.game2048.performanceandtraining.configurations.StatisticExperimentTest.class, ar.edu.unrc.game2048.performanceandtraining.configurations.ThreadResultTest.class, ar.edu.unrc.game2048.performanceandtraining.configurations.ntuples.NtuplesSuite.class} )
+@Suite.SuiteClasses( {NtuplesSuite.class, LearningExperimentTest.class, LearningSuite.class, INeuralNetworkInterfaceFor2048Test.class, StatisticForCalcTest.class, ThreadResultTest.class, PerceptronsSuite.class, VisualExperimentTest.class, LibrariesSuite.class, StatisticExperimentTest.class})
 public class ConfigurationsSuite {
 
     /**

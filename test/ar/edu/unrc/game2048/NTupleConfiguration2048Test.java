@@ -103,4 +103,11 @@ public class NTupleConfiguration2048Test {
         }
     }
 
+    public class NTupleConfiguration2048Impl extends NTupleConfiguration2048 {
+
+        public SamplePointState[] getNTuple(GameBoard board, int nTupleIndex) {
+            return null;
+        }
+    }
+
 }

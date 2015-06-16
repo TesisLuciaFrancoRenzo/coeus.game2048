@@ -17,7 +17,7 @@ import org.junit.runners.Suite;
  * @author franco
  */
 @RunWith( Suite.class )
-@Suite.SuiteClasses( {ar.edu.unrc.game2048.performanceandtraining.configurations.libraries.RandomExperimentInterfaceTest.class, ar.edu.unrc.game2048.performanceandtraining.configurations.libraries.NTupleExperimentInterfaceTest.class, ar.edu.unrc.game2048.performanceandtraining.configurations.libraries.EncogExperimentInterfaceTest.class, ar.edu.unrc.game2048.performanceandtraining.configurations.libraries.GreedyExperimentInterfaceTest.class} )
+@Suite.SuiteClasses( {EncogExperimentInterfaceTest.class, NTupleExperimentInterfaceTest.class, RandomExperimentInterfaceTest.class, GreedyExperimentInterfaceTest.class})
 public class LibrariesSuite {
 
     /**

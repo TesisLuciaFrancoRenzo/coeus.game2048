@@ -123,4 +123,14 @@ public class PerceptronConfiguration2048Test {
         }
     }
 
+    public class PerceptronConfiguration2048Impl extends PerceptronConfiguration2048 {
+
+        public void calculateNormalizedPerceptronInput(GameBoard<NeuralNetworkClass> board, List<Double> normalizedPerceptronInput) {
+        }
+
+        public IsolatedComputation<Double> computeNumericRepresentationFor(Game2048 game, Object[] output) {
+            return null;
+        }
+    }
+
 }

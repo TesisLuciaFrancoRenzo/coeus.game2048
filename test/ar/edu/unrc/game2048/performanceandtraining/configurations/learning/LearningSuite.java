@@ -5,6 +5,10 @@
  */
 package ar.edu.unrc.game2048.performanceandtraining.configurations.learning;
 
+import ar.edu.unrc.game2048.performanceandtraining.configurations.learning.encog.EncogSuite;
+import ar.edu.unrc.game2048.performanceandtraining.configurations.learning.greedy.GreedySuite;
+import ar.edu.unrc.game2048.performanceandtraining.configurations.learning.ntuple.NtupleSuite;
+import ar.edu.unrc.game2048.performanceandtraining.configurations.learning.random.RandomSuite;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -17,7 +21,7 @@ import org.junit.runners.Suite;
  * @author franco
  */
 @RunWith( Suite.class )
-@Suite.SuiteClasses( {ar.edu.unrc.game2048.performanceandtraining.configurations.learning.encog.EncogSuite.class, ar.edu.unrc.game2048.performanceandtraining.configurations.learning.random.RandomSuite.class, ar.edu.unrc.game2048.performanceandtraining.configurations.learning.greedy.GreedySuite.class, ar.edu.unrc.game2048.performanceandtraining.configurations.learning.ntuple.NtupleSuite.class} )
+@Suite.SuiteClasses( {EncogSuite.class, GreedySuite.class, NtupleSuite.class, RandomSuite.class})
 public class LearningSuite {
 
     /**
