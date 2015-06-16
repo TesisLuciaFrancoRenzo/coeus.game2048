@@ -229,7 +229,7 @@ public class BasicScoreLinear extends NTupleConfiguration2048 {
      */
     @Override
     public double normalizeValueToPerceptronOutput(Object value) {
-        return (Double) value;
+        return (double) value;
     }
 
 }

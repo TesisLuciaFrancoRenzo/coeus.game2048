@@ -19,7 +19,7 @@ import org.encog.util.arrayutil.NormalizedField;
  *
  * @author Franco
  */
-public class BasicTanH extends NTupleConfiguration2048 {
+public class BasicScoreTanH extends NTupleConfiguration2048 {
 
     int maxReward = 500_000;
     int minReward = -500_000;
@@ -27,7 +27,7 @@ public class BasicTanH extends NTupleConfiguration2048 {
     /**
      *
      */
-    public BasicTanH() {
+    public BasicScoreTanH() {
         this.activationFunction = FunctionUtils.tanh;
         this.derivatedActivationFunction = FunctionUtils.derivatedTanh;
         double activationFunctionMax = 1;
@@ -242,6 +242,6 @@ public class BasicTanH extends NTupleConfiguration2048 {
         if ( (Double) value > maxReward ) {
             throw new IllegalArgumentException("value no puede ser mayor a maxReward=" + maxReward);
         }
-        return normOutput.normalize((Double)value);
+        return normOutput.normalize((Double) value);
     }
 }

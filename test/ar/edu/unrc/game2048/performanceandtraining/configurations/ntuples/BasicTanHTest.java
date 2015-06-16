@@ -40,13 +40,13 @@ public class BasicTanHTest {
     }
 
     /**
-     * Test of denormalizeValueFromPerceptronOutput method, of class BasicTanH.
+     * Test of denormalizeValueFromPerceptronOutput method, of class BasicScoreTanH.
      */
     @Test
     public void testDenormalizeValueFromPerceptronOutput() {
         System.out.println("denormalizeValueFromPerceptronOutput");
         Object value = null;
-        BasicTanH instance = new BasicTanH();
+        BasicScoreTanH instance = new BasicScoreTanH();
         double expResult = 0.0;
         double result = instance.denormalizeValueFromPerceptronOutput(value);
         assertEquals(expResult, result, 0.0);
@@ -55,14 +55,14 @@ public class BasicTanHTest {
     }
 
     /**
-     * Test of getBoardReward method, of class BasicTanH.
+     * Test of getBoardReward method, of class BasicScoreTanH.
      */
     @Test
     public void testGetBoardReward() {
         System.out.println("getBoardReward");
         GameBoard board = null;
         int outputNeuron = 0;
-        BasicTanH instance = new BasicTanH();
+        BasicScoreTanH instance = new BasicScoreTanH();
         double expResult = 0.0;
         double result = instance.getBoardReward(board, outputNeuron);
         assertEquals(expResult, result, 0.0);
@@ -71,14 +71,14 @@ public class BasicTanHTest {
     }
 
     /**
-     * Test of getFinalReward method, of class BasicTanH.
+     * Test of getFinalReward method, of class BasicScoreTanH.
      */
     @Test
     public void testGetFinalReward() {
         System.out.println("getFinalReward");
         Game2048 game = null;
         int outputNeuron = 0;
-        BasicTanH instance = new BasicTanH();
+        BasicScoreTanH instance = new BasicScoreTanH();
         double expResult = 0.0;
         double result = instance.getFinalReward(game, outputNeuron);
         assertEquals(expResult, result, 0.0);
@@ -87,14 +87,14 @@ public class BasicTanHTest {
     }
 
     /**
-     * Test of getNTuple method, of class BasicTanH.
+     * Test of getNTuple method, of class BasicScoreTanH.
      */
     @Test
     public void testGetNTuple() {
         System.out.println("getNTuple");
         GameBoard board = null;
         int nTupleIndex = 0;
-        BasicTanH instance = new BasicTanH();
+        BasicScoreTanH instance = new BasicScoreTanH();
         SamplePointState[] expResult = null;
         SamplePointState[] result = instance.getNTuple(board, nTupleIndex);
         assertArrayEquals(expResult, result);
@@ -103,13 +103,13 @@ public class BasicTanHTest {
     }
 
     /**
-     * Test of normalizeValueToPerceptronOutput method, of class BasicTanH.
+     * Test of normalizeValueToPerceptronOutput method, of class BasicScoreTanH.
      */
     @Test
     public void testNormalizeValueToPerceptronOutput() {
         System.out.println("normalizeValueToPerceptronOutput");
         Object value = null;
-        BasicTanH instance = new BasicTanH();
+        BasicScoreTanH instance = new BasicScoreTanH();
         double expResult = 0.0;
         double result = instance.normalizeValueToPerceptronOutput(value);
         assertEquals(expResult, result, 0.0);

@@ -19,7 +19,7 @@ import org.encog.util.arrayutil.NormalizedField;
  *
  * @author Franco
  */
-public class BasicSigmoid extends NTupleConfiguration2048 {
+public class BasicScoreSigmoid extends NTupleConfiguration2048 {
 
     int maxReward = 500_000;
     int minReward = 0;
@@ -27,7 +27,7 @@ public class BasicSigmoid extends NTupleConfiguration2048 {
     /**
      *
      */
-    public BasicSigmoid() {
+    public BasicScoreSigmoid() {
         this.activationFunction = FunctionUtils.sigmoid;
         this.derivatedActivationFunction = FunctionUtils.derivatedSigmoid;
         double activationFunctionMax = 1;
@@ -242,6 +242,6 @@ public class BasicSigmoid extends NTupleConfiguration2048 {
         if ( (Double) value > maxReward ) {
             throw new IllegalArgumentException("value no puede ser mayor a maxReward=" + maxReward);
         }
-        return normOutput.normalize((Double)value);
+        return normOutput.normalize((Double) value);
     }
 }

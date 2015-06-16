@@ -8,7 +8,7 @@ package ar.edu.unrc.game2048.performanceandtraining.configurations.learning.ntup
 import ar.edu.unrc.game2048.NTupleConfiguration2048;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.LearningExperiment;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.libraries.NTupleExperimentInterface;
-import ar.edu.unrc.game2048.performanceandtraining.configurations.ntuples.BasicScoreSigmoid;
+import ar.edu.unrc.game2048.performanceandtraining.configurations.ntuples.BasicMaxTile;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IPerceptronInterface;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearning;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearningAfterstate;
@@ -19,7 +19,7 @@ import org.encog.neural.networks.BasicNetwork;
 /**
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
-public class Experiment_02 extends LearningExperiment<BasicNetwork> {
+public class Experiment_04b extends LearningExperiment<BasicNetwork> {
 
     /**
      *
@@ -35,17 +35,17 @@ public class Experiment_02 extends LearningExperiment<BasicNetwork> {
         } else {
             filePath = args[0];
         }
-        LearningExperiment experiment = new Experiment_02();
+        LearningExperiment experiment = new Experiment_04b();
 
 //        boolean statistics = true;
         boolean statistics = false;
         double[] alphas = {0.0025};
         experiment.setAlpha(alphas);
         experiment.setLearningRateAdaptationToFixed();
-        experiment.setLambda(0);
+        experiment.setLambda(0.7);
         experiment.setGamma(1);
-        experiment.setExplorationRateToFixed(0);
-        experiment.setResetEligibilitiTraces(true);
+        experiment.setExplorationRate(0.1, 50_000, 0.01, 100_000);
+        experiment.setResetEligibilitiTraces(false);
         experiment.setGamesToPlay(2_000_000);
         experiment.setLastGamePlayedNumber(0); //recordar AJUSTAR ESTE VALOR
         experiment.setSaveEvery(20_000);
@@ -74,10 +74,10 @@ public class Experiment_02 extends LearningExperiment<BasicNetwork> {
     public void initialize() throws Exception {
         this.setTileToWin(32_768);
         if ( this.getExperimentName() == null ) {
-            this.setExperimentName("Experiment_02");
+            this.setExperimentName("Experiment_04b");
         }
         this.setPerceptronName(this.getExperimentName());
-        NTupleConfiguration2048 config = new BasicScoreSigmoid();
+        NTupleConfiguration2048 config = new BasicMaxTile();
         this.setNeuralNetworkInterfaceFor2048(new NTupleExperimentInterface(config));
     }
 
