@@ -44,7 +44,7 @@ public class Experiment_04 extends LearningExperiment<BasicNetwork> {
         experiment.setLearningRateAdaptationToFixed();
         experiment.setLambda(0.7);
         experiment.setGamma(1);
-        experiment.setExplorationRateToFixed(0.1);
+        experiment.setExplorationRate(0.1, 50_000, 0.01, 100_000);
         experiment.setReplaceEligibilitiTraces(false);
         experiment.setResetEligibilitiTraces(false);
         experiment.setGamesToPlay(2_000_000);
