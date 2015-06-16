@@ -385,30 +385,6 @@ public class FullNTupleMaxTileTest {
     }
 
     /**
-     * Test of translateRealOutputToNormalizedPerceptronOutputFrom method, of class
-     * BoardMaxTile.
-     */
-    @Test
-    public void testTranslateThisFinalStateToPerceptronOutput() {
-        System.out.println("translateThisFinalStateToPerceptronOutput");
-
-        GameBoard<BasicNetwork> board = new GameBoard<>(game, tileContainer);
-        board.setTiles(initialBoard);
-        board.updateInternalState(true);
-
-        double temp = ((4d - 0d) / (17d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(temp, board.translateThisFinalStateToPerceptronOutput(0), 0.0d);
-
-        board = new GameBoard<>(game, tileContainer);
-        board.setTiles(randomBoard1);
-        board.updateInternalState(true);
-
-        temp = ((17d - 0d) / (17d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(temp, board.translateThisFinalStateToPerceptronOutput(0), 0.0d);
-
-    }
-
-    /**
      * Test of computeNumericRepresentationFor method, of class FullNTupleMaxTile.
      */
     @Test
@@ -484,6 +460,30 @@ public class FullNTupleMaxTileTest {
         assertEquals(expResult, result, 0.0);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of translateRealOutputToNormalizedPerceptronOutputFrom method, of class
+     * BoardMaxTile.
+     */
+    @Test
+    public void testTranslateThisFinalStateToPerceptronOutput() {
+        System.out.println("translateThisFinalStateToPerceptronOutput");
+        
+        GameBoard<BasicNetwork> board = new GameBoard<>(game, tileContainer);
+        board.setTiles(initialBoard);
+        board.updateInternalState(true);
+        
+        double temp = ((4d - 0d) / (17d - 0d)) * (1d - -1d) + -1d;
+        assertEquals(temp, board.translateThisFinalStateToPerceptronOutput(0), 0.0d);
+        
+        board = new GameBoard<>(game, tileContainer);
+        board.setTiles(randomBoard1);
+        board.updateInternalState(true);
+        
+        temp = ((17d - 0d) / (17d - 0d)) * (1d - -1d) + -1d;
+        assertEquals(temp, board.translateThisFinalStateToPerceptronOutput(0), 0.0d);
+        
     }
 
 }

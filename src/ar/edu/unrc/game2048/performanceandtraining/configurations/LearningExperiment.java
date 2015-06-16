@@ -7,10 +7,10 @@ package ar.edu.unrc.game2048.performanceandtraining.configurations;
 
 import ar.edu.unrc.game2048.Game2048;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IPerceptronInterface;
-import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearning;
-import ar.edu.unrc.tdlearning.perceptron.ntuple.NTupleSystem;
 import ar.edu.unrc.tdlearning.perceptron.learning.EExplorationRateAlgorithms;
 import ar.edu.unrc.tdlearning.perceptron.learning.ELearningRateAdaptation;
+import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearning;
+import ar.edu.unrc.tdlearning.perceptron.ntuple.NTupleSystem;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;

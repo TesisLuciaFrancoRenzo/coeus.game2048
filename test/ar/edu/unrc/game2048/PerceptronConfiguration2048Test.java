@@ -19,15 +19,15 @@ import org.junit.Test;
  */
 public class PerceptronConfiguration2048Test {
 
-    public PerceptronConfiguration2048Test() {
-    }
-
     @BeforeClass
     public static void setUpClass() {
     }
 
     @AfterClass
     public static void tearDownClass() {
+    }
+
+    public PerceptronConfiguration2048Test() {
     }
 
     @Before
@@ -109,9 +109,15 @@ public class PerceptronConfiguration2048Test {
 
     public class PerceptronConfiguration2048Impl extends PerceptronConfiguration2048 {
 
+        /**
+         *
+         * @param board
+         * @param normalizedPerceptronInput
+         */
         public void calculateNormalizedPerceptronInput(GameBoard<NeuralNetworkClass> board, List<Double> normalizedPerceptronInput) {
         }
 
+        @Override
         public IsolatedComputation<Double> computeNumericRepresentationFor(Game2048 game, Object[] output) {
             return null;
         }

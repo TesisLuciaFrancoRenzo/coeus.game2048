@@ -20,15 +20,15 @@ import org.junit.Test;
  */
 public class EncogExperimentInterfaceTest {
 
-    public EncogExperimentInterfaceTest() {
-    }
-
     @BeforeClass
     public static void setUpClass() {
     }
 
     @AfterClass
     public static void tearDownClass() {
+    }
+
+    public EncogExperimentInterfaceTest() {
     }
 
     @Before
@@ -49,19 +49,6 @@ public class EncogExperimentInterfaceTest {
         File trainedFile = null;
         EncogExperimentInterface instance = null;
         instance.compareNeuralNetworks(randomFile, trainedFile);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setConfigForTesting method, of class EncogExperimentInterface.
-     */
-    @Test
-    public void testSetConfigForTesting() {
-        System.out.println("setConfigForTesting");
-        BasicNetwork neuralNetwork = null;
-        EncogExperimentInterface instance = null;
-        instance.setConfigForTesting(neuralNetwork);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -132,6 +119,19 @@ public class EncogExperimentInterfaceTest {
         File perceptronFile = null;
         EncogExperimentInterface instance = null;
         instance.savePerceptron(perceptronFile);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setConfigForTesting method, of class EncogExperimentInterface.
+     */
+    @Test
+    public void testSetConfigForTesting() {
+        System.out.println("setConfigForTesting");
+        BasicNetwork neuralNetwork = null;
+        EncogExperimentInterface instance = null;
+        instance.setConfigForTesting(neuralNetwork);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

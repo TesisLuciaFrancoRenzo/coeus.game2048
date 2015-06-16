@@ -17,15 +17,15 @@ import org.junit.Test;
  */
 public class IGameTest {
 
-    public IGameTest() {
-    }
-
     @BeforeClass
     public static void setUpClass() {
     }
 
     @AfterClass
     public static void tearDownClass() {
+    }
+
+    public IGameTest() {
     }
 
     @Before
@@ -37,41 +37,26 @@ public class IGameTest {
     }
 
     /**
-     * Test of processInput method, of class IGame.
+     * Test of dispose method, of class IGame.
      */
     @Test
-    public void testProcessInput() {
-        System.out.println("processInput");
-        int keyCode = 0;
+    public void testDispose() {
+        System.out.println("dispose");
         IGame instance = new IGameImpl();
-        instance.processInput(keyCode);
+        instance.dispose();
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
     /**
-     * Test of iWin method, of class IGame.
+     * Test of getMaxNumber method, of class IGame.
      */
     @Test
-    public void testIWin() {
-        System.out.println("iWin");
+    public void testGetMaxNumber() {
+        System.out.println("getMaxNumber");
         IGame instance = new IGameImpl();
-        boolean expResult = false;
-        boolean result = instance.iWin();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of iLoose method, of class IGame.
-     */
-    @Test
-    public void testILoose() {
-        System.out.println("iLoose");
-        IGame instance = new IGameImpl();
-        boolean expResult = false;
-        boolean result = instance.iLoose();
+        int expResult = 0;
+        int result = instance.getMaxNumber();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -92,52 +77,73 @@ public class IGameTest {
     }
 
     /**
-     * Test of getMaxNumber method, of class IGame.
+     * Test of iLoose method, of class IGame.
      */
     @Test
-    public void testGetMaxNumber() {
-        System.out.println("getMaxNumber");
+    public void testILoose() {
+        System.out.println("iLoose");
         IGame instance = new IGameImpl();
-        int expResult = 0;
-        int result = instance.getMaxNumber();
+        boolean expResult = false;
+        boolean result = instance.iLoose();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
     /**
-     * Test of dispose method, of class IGame.
+     * Test of iWin method, of class IGame.
      */
     @Test
-    public void testDispose() {
-        System.out.println("dispose");
+    public void testIWin() {
+        System.out.println("iWin");
         IGame instance = new IGameImpl();
-        instance.dispose();
+        boolean expResult = false;
+        boolean result = instance.iWin();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of processInput method, of class IGame.
+     */
+    @Test
+    public void testProcessInput() {
+        System.out.println("processInput");
+        int keyCode = 0;
+        IGame instance = new IGameImpl();
+        instance.processInput(keyCode);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
     public class IGameImpl implements IGame {
 
+        @Override
         public void processInput(int keyCode) {
         }
 
+        @Override
         public boolean iWin() {
             return false;
         }
 
+        @Override
         public boolean iLoose() {
             return false;
         }
 
+        @Override
         public int getScore() {
             return 0;
         }
 
+        @Override
         public int getMaxNumber() {
             return 0;
         }
 
+        @Override
         public void dispose() {
         }
     }

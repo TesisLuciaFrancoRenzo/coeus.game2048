@@ -19,15 +19,15 @@ import org.junit.Test;
  */
 public class NTupleConfiguration2048Test {
 
-    public NTupleConfiguration2048Test() {
-    }
-
     @BeforeClass
     public static void setUpClass() {
     }
 
     @AfterClass
     public static void tearDownClass() {
+    }
+
+    public NTupleConfiguration2048Test() {
     }
 
     @Before
@@ -97,6 +97,7 @@ public class NTupleConfiguration2048Test {
 
     public class NTupleConfiguration2048Impl extends NTupleConfiguration2048 {
 
+        @Override
         public SamplePointState[] getNTuple(GameBoard board, int nTupleIndex) {
             return null;
         }

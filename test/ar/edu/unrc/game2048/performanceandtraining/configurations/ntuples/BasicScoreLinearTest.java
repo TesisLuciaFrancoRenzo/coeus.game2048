@@ -20,15 +20,15 @@ import org.junit.Test;
  */
 public class BasicScoreLinearTest {
 
-    public BasicScoreLinearTest() {
-    }
-
     @BeforeClass
     public static void setUpClass() {
     }
 
     @AfterClass
     public static void tearDownClass() {
+    }
+
+    public BasicScoreLinearTest() {
     }
 
     @Before

@@ -82,6 +82,104 @@ public class GameBoardTest {
     }
 
     /**
+     * Test of addPartialScore method, of class GameBoard.
+     */
+    @Test
+    public void testAddPartialScore() {
+        System.out.println("addPartialScore");
+        int value = 0;
+        GameBoard instance = null;
+        instance.addPartialScore(value);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+/**
+     * Test of addTile method, of class GameBoard.
+     */
+    @Test
+    public void testAddTile() {
+        System.out.println("addTile");
+        GameBoard instance = null;
+        instance.addTile();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of availableSpace method, of class GameBoard.
+     */
+    @Test
+    public void testAvailableSpace() {
+        System.out.println("availableSpace");
+        GameBoard instance = null;
+        List<Integer> expResult = null;
+        List<Integer> result = instance.availableSpace();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of calculateCustomHash method, of class GameBoard.
+     */
+    @Test
+    public void testCalculateCustomHash() {
+        System.out.println("calculateCustomHash");
+        Tile t1 = null;
+        Tile t2 = null;
+        Tile t3 = null;
+        Tile t4 = null;
+        int expResult = 0;
+        int result = GameBoard.calculateCustomHash(t1, t2, t3, t4);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of canMove method, of class GameBoard.
+     */
+    @Test
+    public void testCanMove() {
+        System.out.println("canMove");
+        GameBoard instance = null;
+        boolean expResult = false;
+        boolean result = instance.canMove();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of clearBoard method, of class GameBoard.
+     */
+    @Test
+    public void testClearBoard() {
+        System.out.println("clearBoard");
+        TileContainer tileContainer = null;
+        GameBoard instance = null;
+        instance.clearBoard(tileContainer);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of equals method, of class GameBoard.
+     */
+    @Test
+    public void testEquals() {
+        System.out.println("equals");
+        Object obj = null;
+        GameBoard instance = null;
+        boolean expResult = false;
+        boolean result = instance.equals(obj);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
      * Test of tileAt method, of class GameBoard.
      */
     @Test( expected = java.lang.ArrayIndexOutOfBoundsException.class )
@@ -106,6 +204,7 @@ public class GameBoardTest {
     }
 
 //    /**
+
 //     * Test of isFull method, of class GameBoard.
 //     */
 //    @Test
@@ -183,229 +282,6 @@ public class GameBoardTest {
     }
 
     /**
-     * Test of isEqual method, of class GameBoard.
-     */
-    @Test
-    public void testIsEqual() {
-        System.out.println("isEqual");
-
-        GameBoard board1 = new GameBoard(game, tileContainer);
-        board1.setTiles(emptyBoard);
-        board1.updateInternalState(false);
-
-        GameBoard board2 = new GameBoard(game, tileContainer);
-        board2.setTiles(emptyBoard);
-        board2.updateInternalState(false);
-
-        boolean expResult = true;
-        boolean result = board1.isEqual(board2);
-        Assert.assertEquals(expResult, result);
-
-        // =========================================== //
-        board1 = new GameBoard(game, tileContainer);
-        board1.setTiles(randomBoard);
-        board1.updateInternalState(true);
-
-        board2 = new GameBoard(game, tileContainer);
-        board2.setTiles(randomBoard);
-        board2.updateInternalState(true);
-
-        expResult = true;
-        result = board1.isEqual(board2);
-        Assert.assertEquals(expResult, result);
-    }
-
-    /**
-     * Test of isTerminalState method, of class GameBoard.
-     */
-    @Test
-    public void testIsTerminalState() {
-        System.out.println("isTerminalState");
-        GameBoard board = new GameBoard(game, tileContainer);
-        Tile[] terminalBoard = {
-            tileContainer.getTile(7), tileContainer.getTile(1), tileContainer.getTile(3), tileContainer.getTile(2),
-            tileContainer.getTile(1), tileContainer.getTile(4), tileContainer.getTile(5), tileContainer.getTile(1),
-            tileContainer.getTile(3), tileContainer.getTile(5), tileContainer.getTile(1), tileContainer.getTile(6),
-            tileContainer.getTile(1), tileContainer.getTile(8), tileContainer.getTile(5), tileContainer.getTile(2)
-        };
-        board.setTiles(terminalBoard);
-        board.updateInternalState(true);
-
-        boolean expResult = true;
-        boolean result = board.isTerminalState();
-        Assert.assertEquals(expResult, result);
-
-        // =========================================== //
-        board = new GameBoard(game, tileContainer);
-        Tile[] fullNotTerminalBoard = {
-            tileContainer.getTile(7), tileContainer.getTile(1), tileContainer.getTile(3), tileContainer.getTile(2),
-            tileContainer.getTile(1), tileContainer.getTile(4), tileContainer.getTile(5), tileContainer.getTile(1),
-            tileContainer.getTile(3), tileContainer.getTile(5), tileContainer.getTile(1), tileContainer.getTile(6),
-            tileContainer.getTile(1), tileContainer.getTile(8), tileContainer.getTile(1), tileContainer.getTile(2)
-        };
-        board.setTiles(fullNotTerminalBoard);
-        board.updateInternalState(true);
-
-        expResult = false;
-        result = board.isTerminalState();
-        Assert.assertEquals(expResult, result);
-
-        // =========================================== //
-        board = new GameBoard(game, tileContainer);
-        board.setTiles(randomBoard);
-        board.updateInternalState(true);
-
-        expResult = false;
-        result = board.isTerminalState();
-        Assert.assertEquals(expResult, result);
-
-        // =========================================== //
-        board = new GameBoard(game, tileContainer);
-        Tile[] winBoard = {
-            tileContainer.getTile(7), tileContainer.getTile(1), tileContainer.getTile(3), tileContainer.getTile(2),
-            tileContainer.getTile(1), tileContainer.getTile(0), tileContainer.getTile(5), tileContainer.getTile(1),
-            tileContainer.getTile(3), tileContainer.getTile(5), tileContainer.getTile(1), tileContainer.getTile(6),
-            tileContainer.getTile(1), tileContainer.getTile(8), tileContainer.getTile(1), tileContainer.getTile(2)
-        };
-        board.setTiles(winBoard);
-        board.updateInternalState(true);
-        board.setToWin(); //simulamos ser el juego, configurando este tablero como ganador
-
-        expResult = true;
-        result = board.isTerminalState();
-        Assert.assertEquals(expResult, result);
-    }
-
-    /**
-     * Test of tileAt method, of class GameBoard.
-     */
-    @Test
-    public void testTileAt() {
-        System.out.println("tileAt");
-
-        GameBoard board = new GameBoard(game, tileContainer);
-        board.setTiles(randomBoard);
-        board.updateInternalState(true);
-
-        int x = 0;
-        int y = 0;
-        Tile expResult = tileContainer.getTile(0);
-        Tile result = board.tileAt(x, y);
-        Assert.assertEquals(expResult, result);
-
-        x = 3;
-        y = 3;
-        expResult = tileContainer.getTile(4);
-        result = board.tileAt(x, y);
-        Assert.assertEquals(expResult, result);
-    }
-
-    /**
-     * Test of updateInternalState method, of class GameBoard.
-     */
-    @Test
-    public void testUpdateInternalState() {
-        System.out.println("updateInternalState");
-
-        GameBoard board = new GameBoard(game, tileContainer);
-        board.setTiles(randomBoard);
-        board.updateInternalState(true);
-
-        Integer[] expResult = {0, 2, 13};
-        Integer[] result = new Integer[3];
-        board.availableSpace().toArray(result);
-
-        Assert.assertArrayEquals(expResult, result);
-
-        // =========================================== //
-    }
-
-    /**
-     * Test of calculateCustomHash method, of class GameBoard.
-     */
-    @Test
-    public void testCalculateCustomHash() {
-        System.out.println("calculateCustomHash");
-        Tile t1 = null;
-        Tile t2 = null;
-        Tile t3 = null;
-        Tile t4 = null;
-        int expResult = 0;
-        int result = GameBoard.calculateCustomHash(t1, t2, t3, t4);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of addTile method, of class GameBoard.
-     */
-    @Test
-    public void testAddTile() {
-        System.out.println("addTile");
-        GameBoard instance = null;
-        instance.addTile();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of availableSpace method, of class GameBoard.
-     */
-    @Test
-    public void testAvailableSpace() {
-        System.out.println("availableSpace");
-        GameBoard instance = null;
-        List<Integer> expResult = null;
-        List<Integer> result = instance.availableSpace();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of canMove method, of class GameBoard.
-     */
-    @Test
-    public void testCanMove() {
-        System.out.println("canMove");
-        GameBoard instance = null;
-        boolean expResult = false;
-        boolean result = instance.canMove();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of clearBoard method, of class GameBoard.
-     */
-    @Test
-    public void testClearBoard() {
-        System.out.println("clearBoard");
-        TileContainer tileContainer = null;
-        GameBoard instance = null;
-        instance.clearBoard(tileContainer);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of equals method, of class GameBoard.
-     */
-    @Test
-    public void testEquals() {
-        System.out.println("equals");
-        Object obj = null;
-        GameBoard instance = null;
-        boolean expResult = false;
-        boolean result = instance.equals(obj);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
      * Test of getGame method, of class GameBoard.
      */
     @Test
@@ -477,19 +353,6 @@ public class GameBoardTest {
     }
 
     /**
-     * Test of setPartialScore method, of class GameBoard.
-     */
-    @Test
-    public void testSetPartialScore() {
-        System.out.println("setPartialScore");
-        int partialScore = 0;
-        GameBoard instance = null;
-        instance.setPartialScore(partialScore);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
      * Test of getStateReward method, of class GameBoard.
      */
     @Test
@@ -514,19 +377,6 @@ public class GameBoardTest {
         Tile[] expResult = null;
         Tile[] result = instance.getTiles();
         assertArrayEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setTiles method, of class GameBoard.
-     */
-    @Test
-    public void testSetTiles() {
-        System.out.println("setTiles");
-        Tile[] tiles = null;
-        GameBoard instance = null;
-        instance.setTiles(tiles);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -560,6 +410,39 @@ public class GameBoardTest {
     }
 
     /**
+     * Test of isEqual method, of class GameBoard.
+     */
+    @Test
+    public void testIsEqual() {
+        System.out.println("isEqual");
+        
+        GameBoard board1 = new GameBoard(game, tileContainer);
+        board1.setTiles(emptyBoard);
+        board1.updateInternalState(false);
+        
+        GameBoard board2 = new GameBoard(game, tileContainer);
+        board2.setTiles(emptyBoard);
+        board2.updateInternalState(false);
+        
+        boolean expResult = true;
+        boolean result = board1.isEqual(board2);
+        Assert.assertEquals(expResult, result);
+        
+        // =========================================== //
+        board1 = new GameBoard(game, tileContainer);
+        board1.setTiles(randomBoard);
+        board1.updateInternalState(true);
+        
+        board2 = new GameBoard(game, tileContainer);
+        board2.setTiles(randomBoard);
+        board2.updateInternalState(true);
+        
+        expResult = true;
+        result = board1.isEqual(board2);
+        Assert.assertEquals(expResult, result);
+    }
+    
+    /**
      * Test of isFull method, of class GameBoard.
      */
     @Test
@@ -586,7 +469,82 @@ public class GameBoardTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
+    
+    /**
+     * Test of isTerminalState method, of class GameBoard.
+     */
+    @Test
+    public void testIsTerminalState() {
+        System.out.println("isTerminalState");
+        GameBoard board = new GameBoard(game, tileContainer);
+        Tile[] terminalBoard = {
+            tileContainer.getTile(7), tileContainer.getTile(1), tileContainer.getTile(3), tileContainer.getTile(2),
+            tileContainer.getTile(1), tileContainer.getTile(4), tileContainer.getTile(5), tileContainer.getTile(1),
+            tileContainer.getTile(3), tileContainer.getTile(5), tileContainer.getTile(1), tileContainer.getTile(6),
+            tileContainer.getTile(1), tileContainer.getTile(8), tileContainer.getTile(5), tileContainer.getTile(2)
+        };
+        board.setTiles(terminalBoard);
+        board.updateInternalState(true);
+        
+        boolean expResult = true;
+        boolean result = board.isTerminalState();
+        Assert.assertEquals(expResult, result);
+        
+        // =========================================== //
+        board = new GameBoard(game, tileContainer);
+        Tile[] fullNotTerminalBoard = {
+            tileContainer.getTile(7), tileContainer.getTile(1), tileContainer.getTile(3), tileContainer.getTile(2),
+            tileContainer.getTile(1), tileContainer.getTile(4), tileContainer.getTile(5), tileContainer.getTile(1),
+            tileContainer.getTile(3), tileContainer.getTile(5), tileContainer.getTile(1), tileContainer.getTile(6),
+            tileContainer.getTile(1), tileContainer.getTile(8), tileContainer.getTile(1), tileContainer.getTile(2)
+        };
+        board.setTiles(fullNotTerminalBoard);
+        board.updateInternalState(true);
+        
+        expResult = false;
+        result = board.isTerminalState();
+        Assert.assertEquals(expResult, result);
+        
+        // =========================================== //
+        board = new GameBoard(game, tileContainer);
+        board.setTiles(randomBoard);
+        board.updateInternalState(true);
+        
+        expResult = false;
+        result = board.isTerminalState();
+        Assert.assertEquals(expResult, result);
+        
+        // =========================================== //
+        board = new GameBoard(game, tileContainer);
+        Tile[] winBoard = {
+            tileContainer.getTile(7), tileContainer.getTile(1), tileContainer.getTile(3), tileContainer.getTile(2),
+            tileContainer.getTile(1), tileContainer.getTile(0), tileContainer.getTile(5), tileContainer.getTile(1),
+            tileContainer.getTile(3), tileContainer.getTile(5), tileContainer.getTile(1), tileContainer.getTile(6),
+            tileContainer.getTile(1), tileContainer.getTile(8), tileContainer.getTile(1), tileContainer.getTile(2)
+        };
+        board.setTiles(winBoard);
+        board.updateInternalState(true);
+        board.setToWin(); //simulamos ser el juego, configurando este tablero como ganador
 
+        expResult = true;
+        result = board.isTerminalState();
+        Assert.assertEquals(expResult, result);
+    }
+    
+    /**
+     * Test of listAllPossibleNextTurnStateFromAfterstate method, of class GameBoard.
+     */
+    @Test
+    public void testListAllPossibleNextTurnStateFromAfterstate() {
+        System.out.println("listAllPossibleNextTurnStateFromAfterstate");
+        GameBoard instance = null;
+        List<StateProbability> expResult = null;
+        List<StateProbability> result = instance.listAllPossibleNextTurnStateFromAfterstate();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+    
     /**
      * Test of setNeedToAddTile method, of class GameBoard.
      */
@@ -601,19 +559,31 @@ public class GameBoardTest {
     }
 
     /**
-     * Test of listAllPossibleNextTurnStateFromAfterstate method, of class GameBoard.
+     * Test of setPartialScore method, of class GameBoard.
      */
     @Test
-    public void testListAllPossibleNextTurnStateFromAfterstate() {
-        System.out.println("listAllPossibleNextTurnStateFromAfterstate");
+    public void testSetPartialScore() {
+        System.out.println("setPartialScore");
+        int partialScore = 0;
         GameBoard instance = null;
-        List<StateProbability> expResult = null;
-        List<StateProbability> result = instance.listAllPossibleNextTurnStateFromAfterstate();
-        assertEquals(expResult, result);
+        instance.setPartialScore(partialScore);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
+    /**
+     * Test of setTiles method, of class GameBoard.
+     */
+    @Test
+    public void testSetTiles() {
+        System.out.println("setTiles");
+        Tile[] tiles = null;
+        GameBoard instance = null;
+        instance.setTiles(tiles);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+    
     /**
      * Test of setToWin method, of class GameBoard.
      */
@@ -624,6 +594,30 @@ public class GameBoardTest {
         instance.setToWin();
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
+    }
+    
+    /**
+     * Test of tileAt method, of class GameBoard.
+     */
+    @Test
+    public void testTileAt() {
+        System.out.println("tileAt");
+        
+        GameBoard board = new GameBoard(game, tileContainer);
+        board.setTiles(randomBoard);
+        board.updateInternalState(true);
+        
+        int x = 0;
+        int y = 0;
+        Tile expResult = tileContainer.getTile(0);
+        Tile result = board.tileAt(x, y);
+        Assert.assertEquals(expResult, result);
+
+        x = 3;
+        y = 3;
+        expResult = tileContainer.getTile(4);
+        result = board.tileAt(x, y);
+        Assert.assertEquals(expResult, result);
     }
 
     /**
@@ -642,16 +636,23 @@ public class GameBoardTest {
     }
 
     /**
-     * Test of addPartialScore method, of class GameBoard.
+     * Test of updateInternalState method, of class GameBoard.
      */
     @Test
-    public void testAddPartialScore() {
-        System.out.println("addPartialScore");
-        int value = 0;
-        GameBoard instance = null;
-        instance.addPartialScore(value);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testUpdateInternalState() {
+        System.out.println("updateInternalState");
+        
+        GameBoard board = new GameBoard(game, tileContainer);
+        board.setTiles(randomBoard);
+        board.updateInternalState(true);
+
+        Integer[] expResult = {0, 2, 13};
+        Integer[] result = new Integer[3];
+        board.availableSpace().toArray(result);
+
+        Assert.assertArrayEquals(expResult, result);
+
+        // =========================================== //
     }
 
 }

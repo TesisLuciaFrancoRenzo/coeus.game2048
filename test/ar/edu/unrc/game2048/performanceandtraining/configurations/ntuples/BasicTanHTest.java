@@ -20,15 +20,15 @@ import org.junit.Test;
  */
 public class BasicTanHTest {
 
-    public BasicTanHTest() {
-    }
-
     @BeforeClass
     public static void setUpClass() {
     }
 
     @AfterClass
     public static void tearDownClass() {
+    }
+
+    public BasicTanHTest() {
     }
 
     @Before

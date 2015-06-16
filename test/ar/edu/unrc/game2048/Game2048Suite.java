@@ -20,18 +20,34 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses( {ar.edu.unrc.game2048.IConfiguration2048Test.class, ar.edu.unrc.game2048.TileContainerTest.class, ar.edu.unrc.game2048.PerceptronConfiguration2048Test.class, ar.edu.unrc.game2048.NTupleConfiguration2048Test.class, ar.edu.unrc.game2048.IGameTest.class, ar.edu.unrc.game2048.Game2048Test.class, ar.edu.unrc.game2048.TileTest.class, ar.edu.unrc.game2048.resources.ResourcesSuite.class, ar.edu.unrc.game2048.performanceandtraining.PerformanceandtrainingSuite.class, ar.edu.unrc.game2048.GameBoardTest.class, ar.edu.unrc.game2048.ActionTest.class} )
 public class Game2048Suite {
 
+    /**
+     *
+     * @throws Exception
+     */
     @BeforeClass
     public static void setUpClass() throws Exception {
     }
 
+    /**
+     *
+     * @throws Exception
+     */
     @AfterClass
     public static void tearDownClass() throws Exception {
     }
 
+    /**
+     *
+     * @throws Exception
+     */
     @Before
     public void setUp() throws Exception {
     }
 
+    /**
+     *
+     * @throws Exception
+     */
     @After
     public void tearDown() throws Exception {
     }

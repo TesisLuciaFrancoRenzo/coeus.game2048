@@ -19,15 +19,15 @@ import org.junit.Test;
  */
 public class TestGeneratorALLTest {
 
-    public TestGeneratorALLTest() {
-    }
-
     @BeforeClass
     public static void setUpClass() {
     }
 
     @AfterClass
     public static void tearDownClass() {
+    }
+
+    public TestGeneratorALLTest() {
     }
 
     @Before

@@ -20,15 +20,15 @@ import org.junit.Test;
  */
 public class BinaryScoreTest {
 
-    public BinaryScoreTest() {
-    }
-
     @BeforeClass
     public static void setUpClass() {
     }
 
     @AfterClass
     public static void tearDownClass() {
+    }
+
+    public BinaryScoreTest() {
     }
 
     @Before

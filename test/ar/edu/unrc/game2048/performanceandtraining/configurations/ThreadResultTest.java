@@ -17,15 +17,15 @@ import org.junit.Test;
  */
 public class ThreadResultTest {
 
-    public ThreadResultTest() {
-    }
-
     @BeforeClass
     public static void setUpClass() {
     }
 
     @AfterClass
     public static void tearDownClass() {
+    }
+
+    public ThreadResultTest() {
     }
 
     @Before
@@ -143,19 +143,6 @@ public class ThreadResultTest {
     }
 
     /**
-     * Test of setProcesedGames method, of class ThreadResult.
-     */
-    @Test
-    public void testSetProcesedGames() {
-        System.out.println("setProcesedGames");
-        int value = 0;
-        ThreadResult instance = new ThreadResult();
-        instance.setProcesedGames(value);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
      * Test of getStatisticForTile method, of class ThreadResult.
      */
     @Test
@@ -180,6 +167,19 @@ public class ThreadResultTest {
         double expResult = 0.0;
         double result = instance.getWinRate();
         assertEquals(expResult, result, 0.0);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setProcesedGames method, of class ThreadResult.
+     */
+    @Test
+    public void testSetProcesedGames() {
+        System.out.println("setProcesedGames");
+        int value = 0;
+        ThreadResult instance = new ThreadResult();
+        instance.setProcesedGames(value);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

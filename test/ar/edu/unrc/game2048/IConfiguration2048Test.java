@@ -17,15 +17,15 @@ import org.junit.Test;
  */
 public class IConfiguration2048Test {
 
-    public IConfiguration2048Test() {
-    }
-
     @BeforeClass
     public static void setUpClass() {
     }
 
     @AfterClass
     public static void tearDownClass() {
+    }
+
+    public IConfiguration2048Test() {
     }
 
     @Before
@@ -100,18 +100,22 @@ public class IConfiguration2048Test {
 
     public class IConfiguration2048Impl implements IConfiguration2048 {
 
+        @Override
         public double denormalizeValueFromPerceptronOutput(Object value) {
             return 0.0;
         }
 
+        @Override
         public double getBoardReward(GameBoard board, int outputNeuron) {
             return 0.0;
         }
 
+        @Override
         public double getFinalReward(Game2048 game, int outputNeuron) {
             return 0.0;
         }
 
+        @Override
         public double normalizeValueToPerceptronOutput(Object value) {
             return 0.0;
         }

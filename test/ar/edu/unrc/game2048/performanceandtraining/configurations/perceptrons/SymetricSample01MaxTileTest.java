@@ -20,15 +20,15 @@ import org.junit.Test;
  */
 public class SymetricSample01MaxTileTest {
 
-    public SymetricSample01MaxTileTest() {
-    }
-
     @BeforeClass
     public static void setUpClass() {
     }
 
     @AfterClass
     public static void tearDownClass() {
+    }
+
+    public SymetricSample01MaxTileTest() {
     }
 
     @Before

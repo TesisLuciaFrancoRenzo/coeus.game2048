@@ -20,15 +20,15 @@ import org.junit.Test;
  */
 public class NTupleMaxTileTest {
 
-    public NTupleMaxTileTest() {
-    }
-
     @BeforeClass
     public static void setUpClass() {
     }
 
     @AfterClass
     public static void tearDownClass() {
+    }
+
+    public NTupleMaxTileTest() {
     }
 
     @Before

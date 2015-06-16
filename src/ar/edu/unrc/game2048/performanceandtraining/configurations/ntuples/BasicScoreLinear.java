@@ -9,8 +9,8 @@ import ar.edu.unrc.game2048.Game2048;
 import ar.edu.unrc.game2048.GameBoard;
 import ar.edu.unrc.game2048.NTupleConfiguration2048;
 import ar.edu.unrc.game2048.Tile;
-import ar.edu.unrc.tdlearning.perceptron.ntuple.SamplePointState;
 import ar.edu.unrc.tdlearning.perceptron.learning.FunctionUtils;
+import ar.edu.unrc.tdlearning.perceptron.ntuple.SamplePointState;
 import java.util.ArrayList;
 
 /**

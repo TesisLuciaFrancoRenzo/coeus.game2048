@@ -17,15 +17,15 @@ import org.junit.Test;
  */
 public class TileContainerTest {
 
-    public TileContainerTest() {
-    }
-
     @BeforeClass
     public static void setUpClass() {
     }
 
     @AfterClass
     public static void tearDownClass() {
+    }
+
+    public TileContainerTest() {
     }
 
     @Before

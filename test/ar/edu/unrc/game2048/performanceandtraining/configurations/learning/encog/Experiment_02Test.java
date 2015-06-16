@@ -20,9 +20,6 @@ import org.junit.Test;
  */
 public class Experiment_02Test {
 
-    public Experiment_02Test() {
-    }
-
     @BeforeClass
     public static void setUpClass() {
     }
@@ -31,24 +28,15 @@ public class Experiment_02Test {
     public static void tearDownClass() {
     }
 
+    public Experiment_02Test() {
+    }
+
     @Before
     public void setUp() {
     }
 
     @After
     public void tearDown() {
-    }
-
-    /**
-     * Test of main method, of class Experiment_02.
-     */
-    @Test
-    public void testMain() throws Exception {
-        System.out.println("main");
-        String[] args = null;
-        Experiment_02.main(args);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -89,6 +77,18 @@ public class Experiment_02Test {
         TDLambdaLearning expResult = null;
         TDLambdaLearning result = instance.instanceOfTdLearninrgImplementation(nTupleSystem);
         assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of main method, of class Experiment_02.
+     */
+    @Test
+    public void testMain() throws Exception {
+        System.out.println("main");
+        String[] args = null;
+        Experiment_02.main(args);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

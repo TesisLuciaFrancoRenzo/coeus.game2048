@@ -20,18 +20,34 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses( {ar.edu.unrc.game2048.performanceandtraining.configurations.ntuples.BasicScoreLinearTest.class, ar.edu.unrc.game2048.performanceandtraining.configurations.ntuples.BasicMaxTileTest.class, ar.edu.unrc.game2048.performanceandtraining.configurations.ntuples.BasicTanHTest.class, ar.edu.unrc.game2048.performanceandtraining.configurations.ntuples.BasicSigmoidTest.class} )
 public class NtuplesSuite {
 
+    /**
+     *
+     * @throws Exception
+     */
     @BeforeClass
     public static void setUpClass() throws Exception {
     }
 
+    /**
+     *
+     * @throws Exception
+     */
     @AfterClass
     public static void tearDownClass() throws Exception {
     }
 
+    /**
+     *
+     * @throws Exception
+     */
     @Before
     public void setUp() throws Exception {
     }
 
+    /**
+     *
+     * @throws Exception
+     */
     @After
     public void tearDown() throws Exception {
     }

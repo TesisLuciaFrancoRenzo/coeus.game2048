@@ -19,9 +19,6 @@ import org.junit.Test;
  */
 public class StatisticExperimentTest {
 
-    public StatisticExperimentTest() {
-    }
-
     @BeforeClass
     public static void setUpClass() {
     }
@@ -30,53 +27,15 @@ public class StatisticExperimentTest {
     public static void tearDownClass() {
     }
 
+    public StatisticExperimentTest() {
+    }
+
     @Before
     public void setUp() {
     }
 
     @After
     public void tearDown() {
-    }
-
-    /**
-     * Test of setGamesToPlayPerThread method, of class StatisticExperiment.
-     */
-    @Test
-    public void testSetGamesToPlayPerThread() {
-        System.out.println("setGamesToPlayPerThread");
-        int gamesToPlay = 0;
-        StatisticExperiment instance = null;
-        instance.setGamesToPlayPerThread(gamesToPlay);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getTileStatistics method, of class StatisticExperiment.
-     */
-    @Test
-    public void testGetTileStatistics() {
-        System.out.println("getTileStatistics");
-        StatisticExperiment instance = null;
-        StatisticForCalc expResult = null;
-        StatisticForCalc result = instance.getTileStatistics();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of start method, of class StatisticExperiment.
-     */
-    @Test
-    public void testStart() {
-        System.out.println("start");
-        String experimentPath = "";
-        int delayPerMove = 0;
-        StatisticExperiment instance = null;
-        instance.start(experimentPath, delayPerMove);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -94,19 +53,6 @@ public class StatisticExperimentTest {
     }
 
     /**
-     * Test of setDateForFileName method, of class StatisticExperiment.
-     */
-    @Test
-    public void testSetDateForFileName() {
-        System.out.println("setDateForFileName");
-        Date dateForFileName = null;
-        StatisticExperiment instance = null;
-        instance.setDateForFileName(dateForFileName);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
      * Test of getExperimentName method, of class StatisticExperiment.
      */
     @Test
@@ -116,19 +62,6 @@ public class StatisticExperimentTest {
         String expResult = "";
         String result = instance.getExperimentName();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setExperimentName method, of class StatisticExperiment.
-     */
-    @Test
-    public void testSetExperimentName() {
-        System.out.println("setExperimentName");
-        String experimentName = "";
-        StatisticExperiment instance = null;
-        instance.setExperimentName(experimentName);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -162,19 +95,6 @@ public class StatisticExperimentTest {
     }
 
     /**
-     * Test of setLearningMethod method, of class StatisticExperiment.
-     */
-    @Test
-    public void testSetLearningMethod() {
-        System.out.println("setLearningMethod");
-        TDLambdaLearning learningMethod = null;
-        StatisticExperiment instance = null;
-        instance.setLearningMethod(learningMethod);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
      * Test of getPerceptronName method, of class StatisticExperiment.
      */
     @Test
@@ -184,19 +104,6 @@ public class StatisticExperimentTest {
         String expResult = "";
         String result = instance.getPerceptronName();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setPerceptronName method, of class StatisticExperiment.
-     */
-    @Test
-    public void testSetPerceptronName() {
-        System.out.println("setPerceptronName");
-        String perceptronName = "";
-        StatisticExperiment instance = null;
-        instance.setPerceptronName(perceptronName);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -216,14 +123,15 @@ public class StatisticExperimentTest {
     }
 
     /**
-     * Test of setSimulations method, of class StatisticExperiment.
+     * Test of getTileStatistics method, of class StatisticExperiment.
      */
     @Test
-    public void testSetSimulations() {
-        System.out.println("setSimulations");
-        int threads = 0;
+    public void testGetTileStatistics() {
+        System.out.println("getTileStatistics");
         StatisticExperiment instance = null;
-        instance.setSimulations(threads);
+        StatisticForCalc expResult = null;
+        StatisticForCalc result = instance.getTileStatistics();
+        assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -238,19 +146,6 @@ public class StatisticExperimentTest {
         int expResult = 0;
         int result = instance.getTileToWin();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setTileToWin method, of class StatisticExperiment.
-     */
-    @Test
-    public void testSetTileToWin() {
-        System.out.println("setTileToWin");
-        int tileToWin = 0;
-        StatisticExperiment instance = null;
-        instance.setTileToWin(tileToWin);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -281,12 +176,118 @@ public class StatisticExperimentTest {
         fail("The test case is a prototype.");
     }
 
+    /**
+     * Test of setDateForFileName method, of class StatisticExperiment.
+     */
+    @Test
+    public void testSetDateForFileName() {
+        System.out.println("setDateForFileName");
+        Date dateForFileName = null;
+        StatisticExperiment instance = null;
+        instance.setDateForFileName(dateForFileName);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setExperimentName method, of class StatisticExperiment.
+     */
+    @Test
+    public void testSetExperimentName() {
+        System.out.println("setExperimentName");
+        String experimentName = "";
+        StatisticExperiment instance = null;
+        instance.setExperimentName(experimentName);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setGamesToPlayPerThread method, of class StatisticExperiment.
+     */
+    @Test
+    public void testSetGamesToPlayPerThread() {
+        System.out.println("setGamesToPlayPerThread");
+        int gamesToPlay = 0;
+        StatisticExperiment instance = null;
+        instance.setGamesToPlayPerThread(gamesToPlay);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setLearningMethod method, of class StatisticExperiment.
+     */
+    @Test
+    public void testSetLearningMethod() {
+        System.out.println("setLearningMethod");
+        TDLambdaLearning learningMethod = null;
+        StatisticExperiment instance = null;
+        instance.setLearningMethod(learningMethod);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setPerceptronName method, of class StatisticExperiment.
+     */
+    @Test
+    public void testSetPerceptronName() {
+        System.out.println("setPerceptronName");
+        String perceptronName = "";
+        StatisticExperiment instance = null;
+        instance.setPerceptronName(perceptronName);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setSimulations method, of class StatisticExperiment.
+     */
+    @Test
+    public void testSetSimulations() {
+        System.out.println("setSimulations");
+        int threads = 0;
+        StatisticExperiment instance = null;
+        instance.setSimulations(threads);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setTileToWin method, of class StatisticExperiment.
+     */
+    @Test
+    public void testSetTileToWin() {
+        System.out.println("setTileToWin");
+        int tileToWin = 0;
+        StatisticExperiment instance = null;
+        instance.setTileToWin(tileToWin);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of start method, of class StatisticExperiment.
+     */
+    @Test
+    public void testStart() {
+        System.out.println("start");
+        String experimentPath = "";
+        int delayPerMove = 0;
+        StatisticExperiment instance = null;
+        instance.start(experimentPath, delayPerMove);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
     public class StatisticExperimentImpl extends StatisticExperiment {
 
         public StatisticExperimentImpl() {
             super(null);
         }
 
+        @Override
         public void initializeStatistics() throws Exception {
         }
     }

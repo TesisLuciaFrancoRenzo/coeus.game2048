@@ -20,15 +20,15 @@ import org.junit.Test;
  */
 public class BoardScoreCustomNormalizationTest {
 
-    public BoardScoreCustomNormalizationTest() {
-    }
-
     @BeforeClass
     public static void setUpClass() {
     }
 
     @AfterClass
     public static void tearDownClass() {
+    }
+
+    public BoardScoreCustomNormalizationTest() {
     }
 
     @Before

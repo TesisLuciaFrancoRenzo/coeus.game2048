@@ -22,15 +22,15 @@ import org.junit.Test;
  */
 public class INeuralNetworkInterfaceFor2048Test {
 
-    public INeuralNetworkInterfaceFor2048Test() {
-    }
-
     @BeforeClass
     public static void setUpClass() {
     }
 
     @AfterClass
     public static void tearDownClass() {
+    }
+
+    public INeuralNetworkInterfaceFor2048Test() {
     }
 
     @Before
@@ -98,19 +98,6 @@ public class INeuralNetworkInterfaceFor2048Test {
     }
 
     /**
-     * Test of setNTupleConfiguration method, of class INeuralNetworkInterfaceFor2048.
-     */
-    @Test
-    public void testSetNTupleConfiguration() {
-        System.out.println("setNTupleConfiguration");
-        NTupleConfiguration2048 nTupleConfiguration = null;
-        INeuralNetworkInterfaceFor2048 instance = null;
-        instance.setNTupleConfiguration(nTupleConfiguration);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
      * Test of getPerceptronConfiguration method, of class INeuralNetworkInterfaceFor2048.
      */
     @Test
@@ -120,18 +107,6 @@ public class INeuralNetworkInterfaceFor2048Test {
         PerceptronConfiguration2048 expResult = null;
         PerceptronConfiguration2048 result = instance.getPerceptronConfiguration();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setPerceptronConfiguration method, of class INeuralNetworkInterfaceFor2048.
-     */
-    @Test
-    public void testSetPerceptronConfiguration() {
-        System.out.println("setPerceptronConfiguration");
-        INeuralNetworkInterfaceFor2048 instance = null;
-        instance.setPerceptronConfiguration(null);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -191,26 +166,56 @@ public class INeuralNetworkInterfaceFor2048Test {
         fail("The test case is a prototype.");
     }
 
+    /**
+     * Test of setNTupleConfiguration method, of class INeuralNetworkInterfaceFor2048.
+     */
+    @Test
+    public void testSetNTupleConfiguration() {
+        System.out.println("setNTupleConfiguration");
+        NTupleConfiguration2048 nTupleConfiguration = null;
+        INeuralNetworkInterfaceFor2048 instance = null;
+        instance.setNTupleConfiguration(nTupleConfiguration);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setPerceptronConfiguration method, of class INeuralNetworkInterfaceFor2048.
+     */
+    @Test
+    public void testSetPerceptronConfiguration() {
+        System.out.println("setPerceptronConfiguration");
+        INeuralNetworkInterfaceFor2048 instance = null;
+        instance.setPerceptronConfiguration(null);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
     public class INeuralNetworkInterfaceFor2048Impl extends INeuralNetworkInterfaceFor2048 {
 
         public INeuralNetworkInterfaceFor2048Impl() {
             super(null);
         }
 
+        @Override
         public void compareNeuralNetworks(File randomFile, File trainedFile) {
         }
 
+        @Override
         public String getLibName() {
             return "";
         }
 
+        @Override
         public IPerceptronInterface getPerceptronInterface() {
             return null;
         }
 
+        @Override
         public void loadOrCreatePerceptron(File perceptronFile, boolean randomizedIfNotExist) throws Exception {
         }
 
+        @Override
         public void savePerceptron(File perceptronFile) throws Exception {
         }
     }

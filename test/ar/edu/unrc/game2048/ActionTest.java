@@ -17,9 +17,6 @@ import org.junit.Test;
  */
 public class ActionTest {
 
-    public ActionTest() {
-    }
-
     @BeforeClass
     public static void setUpClass() {
     }
@@ -28,25 +25,15 @@ public class ActionTest {
     public static void tearDownClass() {
     }
 
+    public ActionTest() {
+    }
+
     @Before
     public void setUp() {
     }
 
     @After
     public void tearDown() {
-    }
-
-    /**
-     * Test of values method, of class Action.
-     */
-    @Test
-    public void testValues() {
-        System.out.println("values");
-        Action[] expResult = null;
-        Action[] result = Action.values();
-        assertArrayEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -59,6 +46,19 @@ public class ActionTest {
         Action expResult = null;
         Action result = Action.valueOf(name);
         assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of values method, of class Action.
+     */
+    @Test
+    public void testValues() {
+        System.out.println("values");
+        Action[] expResult = null;
+        Action[] result = Action.values();
+        assertArrayEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

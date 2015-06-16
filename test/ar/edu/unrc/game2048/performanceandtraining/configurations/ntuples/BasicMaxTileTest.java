@@ -20,15 +20,15 @@ import org.junit.Test;
  */
 public class BasicMaxTileTest {
 
-    public BasicMaxTileTest() {
-    }
-
     @BeforeClass
     public static void setUpClass() {
     }
 
     @AfterClass
     public static void tearDownClass() {
+    }
+
+    public BasicMaxTileTest() {
     }
 
     @Before

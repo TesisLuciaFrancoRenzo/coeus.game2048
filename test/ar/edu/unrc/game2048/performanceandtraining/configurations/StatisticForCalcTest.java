@@ -18,15 +18,15 @@ import org.junit.Test;
  */
 public class StatisticForCalcTest {
 
-    public StatisticForCalcTest() {
-    }
-
     @BeforeClass
     public static void setUpClass() {
     }
 
     @AfterClass
     public static void tearDownClass() {
+    }
+
+    public StatisticForCalcTest() {
     }
 
     @Before
@@ -52,19 +52,6 @@ public class StatisticForCalcTest {
     }
 
     /**
-     * Test of setMaxScore method, of class StatisticForCalc.
-     */
-    @Test
-    public void testSetMaxScore() {
-        System.out.println("setMaxScore");
-        double maxScore = 0.0;
-        StatisticForCalc instance = new StatisticForCalc();
-        instance.setMaxScore(maxScore);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
      * Test of getMeanScore method, of class StatisticForCalc.
      */
     @Test
@@ -74,19 +61,6 @@ public class StatisticForCalcTest {
         double expResult = 0.0;
         double result = instance.getMeanScore();
         assertEquals(expResult, result, 0.0);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setMeanScore method, of class StatisticForCalc.
-     */
-    @Test
-    public void testSetMeanScore() {
-        System.out.println("setMeanScore");
-        double meanScore = 0.0;
-        StatisticForCalc instance = new StatisticForCalc();
-        instance.setMeanScore(meanScore);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -106,19 +80,6 @@ public class StatisticForCalcTest {
     }
 
     /**
-     * Test of setMinScore method, of class StatisticForCalc.
-     */
-    @Test
-    public void testSetMinScore() {
-        System.out.println("setMinScore");
-        double minScore = 0.0;
-        StatisticForCalc instance = new StatisticForCalc();
-        instance.setMinScore(minScore);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
      * Test of getTileStatistics method, of class StatisticForCalc.
      */
     @Test
@@ -133,19 +94,6 @@ public class StatisticForCalcTest {
     }
 
     /**
-     * Test of setTileStatistics method, of class StatisticForCalc.
-     */
-    @Test
-    public void testSetTileStatistics() {
-        System.out.println("setTileStatistics");
-        List<Double> tileStatistics = null;
-        StatisticForCalc instance = new StatisticForCalc();
-        instance.setTileStatistics(tileStatistics);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
      * Test of getWinRate method, of class StatisticForCalc.
      */
     @Test
@@ -155,6 +103,58 @@ public class StatisticForCalcTest {
         double expResult = 0.0;
         double result = instance.getWinRate();
         assertEquals(expResult, result, 0.0);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setMaxScore method, of class StatisticForCalc.
+     */
+    @Test
+    public void testSetMaxScore() {
+        System.out.println("setMaxScore");
+        double maxScore = 0.0;
+        StatisticForCalc instance = new StatisticForCalc();
+        instance.setMaxScore(maxScore);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setMeanScore method, of class StatisticForCalc.
+     */
+    @Test
+    public void testSetMeanScore() {
+        System.out.println("setMeanScore");
+        double meanScore = 0.0;
+        StatisticForCalc instance = new StatisticForCalc();
+        instance.setMeanScore(meanScore);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setMinScore method, of class StatisticForCalc.
+     */
+    @Test
+    public void testSetMinScore() {
+        System.out.println("setMinScore");
+        double minScore = 0.0;
+        StatisticForCalc instance = new StatisticForCalc();
+        instance.setMinScore(minScore);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setTileStatistics method, of class StatisticForCalc.
+     */
+    @Test
+    public void testSetTileStatistics() {
+        System.out.println("setTileStatistics");
+        List<Double> tileStatistics = null;
+        StatisticForCalc instance = new StatisticForCalc();
+        instance.setTileStatistics(tileStatistics);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

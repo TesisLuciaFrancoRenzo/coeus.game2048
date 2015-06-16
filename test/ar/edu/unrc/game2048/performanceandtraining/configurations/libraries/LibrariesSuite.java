@@ -20,18 +20,34 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses( {ar.edu.unrc.game2048.performanceandtraining.configurations.libraries.RandomExperimentInterfaceTest.class, ar.edu.unrc.game2048.performanceandtraining.configurations.libraries.NTupleExperimentInterfaceTest.class, ar.edu.unrc.game2048.performanceandtraining.configurations.libraries.EncogExperimentInterfaceTest.class, ar.edu.unrc.game2048.performanceandtraining.configurations.libraries.GreedyExperimentInterfaceTest.class} )
 public class LibrariesSuite {
 
+    /**
+     *
+     * @throws Exception
+     */
     @BeforeClass
     public static void setUpClass() throws Exception {
     }
 
+    /**
+     *
+     * @throws Exception
+     */
     @AfterClass
     public static void tearDownClass() throws Exception {
     }
 
+    /**
+     *
+     * @throws Exception
+     */
     @Before
     public void setUp() throws Exception {
     }
 
+    /**
+     *
+     * @throws Exception
+     */
     @After
     public void tearDown() throws Exception {
     }

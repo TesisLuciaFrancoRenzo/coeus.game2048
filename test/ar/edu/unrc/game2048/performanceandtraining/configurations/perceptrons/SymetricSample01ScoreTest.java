@@ -20,15 +20,15 @@ import org.junit.Test;
  */
 public class SymetricSample01ScoreTest {
 
-    public SymetricSample01ScoreTest() {
-    }
-
     @BeforeClass
     public static void setUpClass() {
     }
 
     @AfterClass
     public static void tearDownClass() {
+    }
+
+    public SymetricSample01ScoreTest() {
     }
 
     @Before

@@ -20,15 +20,15 @@ import org.junit.Test;
  */
 public class FullNTupleScoreTest {
 
-    public FullNTupleScoreTest() {
-    }
-
     @BeforeClass
     public static void setUpClass() {
     }
 
     @AfterClass
     public static void tearDownClass() {
+    }
+
+    public FullNTupleScoreTest() {
     }
 
     @Before

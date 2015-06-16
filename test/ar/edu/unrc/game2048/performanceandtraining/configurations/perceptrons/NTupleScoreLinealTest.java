@@ -20,15 +20,15 @@ import org.junit.Test;
  */
 public class NTupleScoreLinealTest {
 
-    public NTupleScoreLinealTest() {
-    }
-
     @BeforeClass
     public static void setUpClass() {
     }
 
     @AfterClass
     public static void tearDownClass() {
+    }
+
+    public NTupleScoreLinealTest() {
     }
 
     @Before

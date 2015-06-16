@@ -19,9 +19,6 @@ import org.junit.Test;
  */
 public class VisualExperimentTest {
 
-    public VisualExperimentTest() {
-    }
-
     @BeforeClass
     public static void setUpClass() {
     }
@@ -30,52 +27,15 @@ public class VisualExperimentTest {
     public static void tearDownClass() {
     }
 
+    public VisualExperimentTest() {
+    }
+
     @Before
     public void setUp() {
     }
 
     @After
     public void tearDown() {
-    }
-
-    /**
-     * Test of getPerceptronFileName method, of class VisualExperiment.
-     */
-    @Test
-    public void testGetPerceptronFileName() {
-        System.out.println("getPerceptronFileName");
-        VisualExperiment instance = null;
-        String expResult = "";
-        String result = instance.getPerceptronFileName();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of start method, of class VisualExperiment.
-     */
-    @Test
-    public void testStart() {
-        System.out.println("start");
-        String experimentPath = "";
-        int delayPerMove = 0;
-        VisualExperiment instance = null;
-        instance.start(experimentPath, delayPerMove);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of stop method, of class VisualExperiment.
-     */
-    @Test
-    public void testStop() {
-        System.out.println("stop");
-        VisualExperiment instance = null;
-        instance.stop();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -88,19 +48,6 @@ public class VisualExperimentTest {
         int expResult = 0;
         int result = instance.getDelayPerMove();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setDelayPerMove method, of class VisualExperiment.
-     */
-    @Test
-    public void testSetDelayPerMove() {
-        System.out.println("setDelayPerMove");
-        int delayPerMove = 0;
-        VisualExperiment instance = null;
-        instance.setDelayPerMove(delayPerMove);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -120,19 +67,6 @@ public class VisualExperimentTest {
     }
 
     /**
-     * Test of setExperimentName method, of class VisualExperiment.
-     */
-    @Test
-    public void testSetExperimentName() {
-        System.out.println("setExperimentName");
-        String experimentName = "";
-        VisualExperiment instance = null;
-        instance.setExperimentName(experimentName);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
      * Test of getPerceptronConfiguration method, of class VisualExperiment.
      */
     @Test
@@ -147,13 +81,15 @@ public class VisualExperimentTest {
     }
 
     /**
-     * Test of setPerceptronConfiguration method, of class VisualExperiment.
+     * Test of getPerceptronFileName method, of class VisualExperiment.
      */
     @Test
-    public void testSetPerceptronConfiguration() {
-        System.out.println("setPerceptronConfiguration");
+    public void testGetPerceptronFileName() {
+        System.out.println("getPerceptronFileName");
         VisualExperiment instance = null;
-        instance.setPerceptronConfiguration(null);
+        String expResult = "";
+        String result = instance.getPerceptronFileName();
+        assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -173,19 +109,6 @@ public class VisualExperimentTest {
     }
 
     /**
-     * Test of setPerceptronName method, of class VisualExperiment.
-     */
-    @Test
-    public void testSetPerceptronName() {
-        System.out.println("setPerceptronName");
-        String perceptronName = "";
-        VisualExperiment instance = null;
-        instance.setPerceptronName(perceptronName);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
      * Test of getTileToWin method, of class VisualExperiment.
      */
     @Test
@@ -200,19 +123,6 @@ public class VisualExperimentTest {
     }
 
     /**
-     * Test of setTileToWin method, of class VisualExperiment.
-     */
-    @Test
-    public void testSetTileToWin() {
-        System.out.println("setTileToWin");
-        int tileToWin = 0;
-        VisualExperiment instance = null;
-        instance.setTileToWin(tileToWin);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
      * Test of getnTupleConfiuguration method, of class VisualExperiment.
      */
     @Test
@@ -222,19 +132,6 @@ public class VisualExperimentTest {
         NTupleConfiguration2048 expResult = null;
         NTupleConfiguration2048 result = instance.getnTupleConfiuguration();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setnTupleConfiuguration method, of class VisualExperiment.
-     */
-    @Test
-    public void testSetnTupleConfiuguration() {
-        System.out.println("setnTupleConfiuguration");
-        NTupleConfiguration2048 nTupleConfiuguration = null;
-        VisualExperiment instance = null;
-        instance.setnTupleConfiuguration(nTupleConfiuguration);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -265,12 +162,116 @@ public class VisualExperimentTest {
         fail("The test case is a prototype.");
     }
 
+    /**
+     * Test of setDelayPerMove method, of class VisualExperiment.
+     */
+    @Test
+    public void testSetDelayPerMove() {
+        System.out.println("setDelayPerMove");
+        int delayPerMove = 0;
+        VisualExperiment instance = null;
+        instance.setDelayPerMove(delayPerMove);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setExperimentName method, of class VisualExperiment.
+     */
+    @Test
+    public void testSetExperimentName() {
+        System.out.println("setExperimentName");
+        String experimentName = "";
+        VisualExperiment instance = null;
+        instance.setExperimentName(experimentName);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setPerceptronConfiguration method, of class VisualExperiment.
+     */
+    @Test
+    public void testSetPerceptronConfiguration() {
+        System.out.println("setPerceptronConfiguration");
+        VisualExperiment instance = null;
+        instance.setPerceptronConfiguration(null);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setPerceptronName method, of class VisualExperiment.
+     */
+    @Test
+    public void testSetPerceptronName() {
+        System.out.println("setPerceptronName");
+        String perceptronName = "";
+        VisualExperiment instance = null;
+        instance.setPerceptronName(perceptronName);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setTileToWin method, of class VisualExperiment.
+     */
+    @Test
+    public void testSetTileToWin() {
+        System.out.println("setTileToWin");
+        int tileToWin = 0;
+        VisualExperiment instance = null;
+        instance.setTileToWin(tileToWin);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setnTupleConfiuguration method, of class VisualExperiment.
+     */
+    @Test
+    public void testSetnTupleConfiuguration() {
+        System.out.println("setnTupleConfiuguration");
+        NTupleConfiguration2048 nTupleConfiuguration = null;
+        VisualExperiment instance = null;
+        instance.setnTupleConfiuguration(nTupleConfiuguration);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of start method, of class VisualExperiment.
+     */
+    @Test
+    public void testStart() {
+        System.out.println("start");
+        String experimentPath = "";
+        int delayPerMove = 0;
+        VisualExperiment instance = null;
+        instance.start(experimentPath, delayPerMove);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of stop method, of class VisualExperiment.
+     */
+    @Test
+    public void testStop() {
+        System.out.println("stop");
+        VisualExperiment instance = null;
+        instance.stop();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
     public class VisualExperimentImpl extends VisualExperiment {
 
         public VisualExperimentImpl() {
             super(null);
         }
 
+        @Override
         public void initializeVisual() throws Exception {
         }
     }
