@@ -12,6 +12,8 @@ import ar.edu.unrc.game2048.Tile;
 import ar.edu.unrc.tdlearning.perceptron.ntuple.SamplePointState;
 import ar.edu.unrc.tdlearning.perceptron.training.FunctionUtils;
 import java.util.ArrayList;
+import org.encog.util.arrayutil.NormalizationAction;
+import org.encog.util.arrayutil.NormalizedField;
 
 /**
  *
@@ -20,18 +22,23 @@ import java.util.ArrayList;
 public class BasicMaxTile extends NTupleConfiguration2048 {
 
     int maxReward = 15;
-    int minReward = 0;
+    int minReward = -15;
 
     /**
      *
      */
     public BasicMaxTile() {
-        this.activationFunction = FunctionUtils.linear;
-        this.derivatedActivationFunction = FunctionUtils.derivatedLinear;
+        this.activationFunction = FunctionUtils.tanh;
+        this.derivatedActivationFunction = FunctionUtils.derivatedTanh;
         nTuplesLenght = new int[17];
         for ( int i = 0; i < 17; i++ ) {
             nTuplesLenght[i] = 4;
         }
+
+        double activationFunctionMax = 1;
+        double activationFunctionMin = -1;
+        normOutput = new NormalizedField(NormalizationAction.Normalize,
+                null, maxReward, minReward, activationFunctionMax, activationFunctionMin);
 
         this.allSamplePointStates = new ArrayList<>();
         for ( int i = 0; i <= maxReward; i++ ) {
@@ -46,7 +53,7 @@ public class BasicMaxTile extends NTupleConfiguration2048 {
      */
     @Override
     public double denormalizeValueFromPerceptronOutput(Object value) {
-        return (double) value;
+        return normOutput.deNormalize((double) value);
     }
 
     /**
@@ -230,6 +237,9 @@ public class BasicMaxTile extends NTupleConfiguration2048 {
      */
     @Override
     public double normalizeValueToPerceptronOutput(Object value) {
-        return (Double) value;
+        if ( (Double) value > maxReward ) {
+            throw new IllegalArgumentException("value no puede ser mayor a maxReward=" + maxReward);
+        }
+        return normOutput.normalize((Double) value);
     }
 }
