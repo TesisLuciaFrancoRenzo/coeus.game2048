@@ -6,6 +6,9 @@
 package ar.edu.unrc.game2048;
 
 import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.NTupleMaxTile;
+import ar.edu.unrc.tdlearning.perceptron.learning.StateProbability;
+import ar.edu.unrc.tdlearning.perceptron.ntuple.SamplePointState;
+import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -315,6 +318,340 @@ public class GameBoardTest {
         Assert.assertArrayEquals(expResult, result);
 
         // =========================================== //
+    }
+
+    /**
+     * Test of calculateCustomHash method, of class GameBoard.
+     */
+    @Test
+    public void testCalculateCustomHash() {
+        System.out.println("calculateCustomHash");
+        Tile t1 = null;
+        Tile t2 = null;
+        Tile t3 = null;
+        Tile t4 = null;
+        int expResult = 0;
+        int result = GameBoard.calculateCustomHash(t1, t2, t3, t4);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of addTile method, of class GameBoard.
+     */
+    @Test
+    public void testAddTile() {
+        System.out.println("addTile");
+        GameBoard instance = null;
+        instance.addTile();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of availableSpace method, of class GameBoard.
+     */
+    @Test
+    public void testAvailableSpace() {
+        System.out.println("availableSpace");
+        GameBoard instance = null;
+        List<Integer> expResult = null;
+        List<Integer> result = instance.availableSpace();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of canMove method, of class GameBoard.
+     */
+    @Test
+    public void testCanMove() {
+        System.out.println("canMove");
+        GameBoard instance = null;
+        boolean expResult = false;
+        boolean result = instance.canMove();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of clearBoard method, of class GameBoard.
+     */
+    @Test
+    public void testClearBoard() {
+        System.out.println("clearBoard");
+        TileContainer tileContainer = null;
+        GameBoard instance = null;
+        instance.clearBoard(tileContainer);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of equals method, of class GameBoard.
+     */
+    @Test
+    public void testEquals() {
+        System.out.println("equals");
+        Object obj = null;
+        GameBoard instance = null;
+        boolean expResult = false;
+        boolean result = instance.equals(obj);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getGame method, of class GameBoard.
+     */
+    @Test
+    public void testGetGame() {
+        System.out.println("getGame");
+        GameBoard instance = null;
+        Game2048 expResult = null;
+        Game2048 result = instance.getGame();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getMaxTileNumberCode method, of class GameBoard.
+     */
+    @Test
+    public void testGetMaxTileNumberCode() {
+        System.out.println("getMaxTileNumberCode");
+        GameBoard instance = null;
+        int expResult = 0;
+        int result = instance.getMaxTileNumberCode();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getMaxTileNumberValue method, of class GameBoard.
+     */
+    @Test
+    public void testGetMaxTileNumberValue() {
+        System.out.println("getMaxTileNumberValue");
+        GameBoard instance = null;
+        int expResult = 0;
+        int result = instance.getMaxTileNumberValue();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getNTuple method, of class GameBoard.
+     */
+    @Test
+    public void testGetNTuple() {
+        System.out.println("getNTuple");
+        int nTupleIndex = 0;
+        GameBoard instance = null;
+        SamplePointState[] expResult = null;
+        SamplePointState[] result = instance.getNTuple(nTupleIndex);
+        assertArrayEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getPartialScore method, of class GameBoard.
+     */
+    @Test
+    public void testGetPartialScore() {
+        System.out.println("getPartialScore");
+        GameBoard instance = null;
+        int expResult = 0;
+        int result = instance.getPartialScore();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setPartialScore method, of class GameBoard.
+     */
+    @Test
+    public void testSetPartialScore() {
+        System.out.println("setPartialScore");
+        int partialScore = 0;
+        GameBoard instance = null;
+        instance.setPartialScore(partialScore);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getStateReward method, of class GameBoard.
+     */
+    @Test
+    public void testGetStateReward() {
+        System.out.println("getStateReward");
+        int outputNeuron = 0;
+        GameBoard instance = null;
+        double expResult = 0.0;
+        double result = instance.getStateReward(outputNeuron);
+        assertEquals(expResult, result, 0.0);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getTiles method, of class GameBoard.
+     */
+    @Test
+    public void testGetTiles() {
+        System.out.println("getTiles");
+        GameBoard instance = null;
+        Tile[] expResult = null;
+        Tile[] result = instance.getTiles();
+        assertArrayEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setTiles method, of class GameBoard.
+     */
+    @Test
+    public void testSetTiles() {
+        System.out.println("setTiles");
+        Tile[] tiles = null;
+        GameBoard instance = null;
+        instance.setTiles(tiles);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of hashCode method, of class GameBoard.
+     */
+    @Test
+    public void testHashCode() {
+        System.out.println("hashCode");
+        GameBoard instance = null;
+        int expResult = 0;
+        int result = instance.hashCode();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isAWin method, of class GameBoard.
+     */
+    @Test
+    public void testIsAWin() {
+        System.out.println("isAWin");
+        GameBoard instance = null;
+        boolean expResult = false;
+        boolean result = instance.isAWin();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isFull method, of class GameBoard.
+     */
+    @Test
+    public void testIsFull() {
+        System.out.println("isFull");
+        GameBoard instance = null;
+        boolean expResult = false;
+        boolean result = instance.isFull();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isNeedToAddTile method, of class GameBoard.
+     */
+    @Test
+    public void testIsNeedToAddTile() {
+        System.out.println("isNeedToAddTile");
+        GameBoard instance = null;
+        boolean expResult = false;
+        boolean result = instance.isNeedToAddTile();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setNeedToAddTile method, of class GameBoard.
+     */
+    @Test
+    public void testSetNeedToAddTile() {
+        System.out.println("setNeedToAddTile");
+        boolean needToAddTile = false;
+        GameBoard instance = null;
+        instance.setNeedToAddTile(needToAddTile);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of listAllPossibleNextTurnStateFromAfterstate method, of class GameBoard.
+     */
+    @Test
+    public void testListAllPossibleNextTurnStateFromAfterstate() {
+        System.out.println("listAllPossibleNextTurnStateFromAfterstate");
+        GameBoard instance = null;
+        List<StateProbability> expResult = null;
+        List<StateProbability> result = instance.listAllPossibleNextTurnStateFromAfterstate();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setToWin method, of class GameBoard.
+     */
+    @Test
+    public void testSetToWin() {
+        System.out.println("setToWin");
+        GameBoard instance = null;
+        instance.setToWin();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of translateToPerceptronInput method, of class GameBoard.
+     */
+    @Test
+    public void testTranslateToPerceptronInput() {
+        System.out.println("translateToPerceptronInput");
+        int neuronIndex = 0;
+        GameBoard instance = null;
+        double expResult = 0.0;
+        double result = instance.translateToPerceptronInput(neuronIndex);
+        assertEquals(expResult, result, 0.0);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of addPartialScore method, of class GameBoard.
+     */
+    @Test
+    public void testAddPartialScore() {
+        System.out.println("addPartialScore");
+        int value = 0;
+        GameBoard instance = null;
+        instance.addPartialScore(value);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 
 }

@@ -8,7 +8,7 @@ package ar.edu.unrc.game2048.performanceandtraining.configurations.libraries;
 import ar.edu.unrc.game2048.PerceptronConfiguration2048;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.INeuralNetworkInterfaceFor2048;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IPerceptronInterface;
-import ar.edu.unrc.tdlearning.perceptron.training.FunctionUtils;
+import ar.edu.unrc.tdlearning.perceptron.learning.FunctionUtils;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;

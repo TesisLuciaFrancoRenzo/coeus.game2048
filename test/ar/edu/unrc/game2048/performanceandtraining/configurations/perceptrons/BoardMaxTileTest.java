@@ -9,6 +9,7 @@ import ar.edu.unrc.game2048.Game2048;
 import ar.edu.unrc.game2048.GameBoard;
 import ar.edu.unrc.game2048.Tile;
 import ar.edu.unrc.game2048.TileContainer;
+import ar.edu.unrc.tdlearning.perceptron.interfaces.IsolatedComputation;
 import static junit.framework.Assert.assertEquals;
 import org.encog.neural.networks.BasicNetwork;
 import org.junit.After;
@@ -179,6 +180,84 @@ public class BoardMaxTileTest {
         normalization = ((17d - 0d) / (17d - 0d)) * (1d - -1d) + -1d;
         assertEquals(normalization, board.translateThisFinalStateToPerceptronOutput(0), 0.0d);
 
+    }
+
+    /**
+     * Test of computeNumericRepresentationFor method, of class BoardMaxTile.
+     */
+    @Test
+    public void testComputeNumericRepresentationFor() {
+        System.out.println("computeNumericRepresentationFor");
+        Game2048 game = null;
+        Object[] output = null;
+        BoardMaxTile instance = new BoardMaxTile();
+        IsolatedComputation<Double> expResult = null;
+        IsolatedComputation<Double> result = instance.computeNumericRepresentationFor(game, output);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of denormalizeValueFromPerceptronOutput method, of class BoardMaxTile.
+     */
+    @Test
+    public void testDenormalizeValueFromPerceptronOutput() {
+        System.out.println("denormalizeValueFromPerceptronOutput");
+        Object value = null;
+        BoardMaxTile instance = new BoardMaxTile();
+        double expResult = 0.0;
+        double result = instance.denormalizeValueFromPerceptronOutput(value);
+        assertEquals(expResult, result, 0.0);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getBoardReward method, of class BoardMaxTile.
+     */
+    @Test
+    public void testGetBoardReward() {
+        System.out.println("getBoardReward");
+        GameBoard board = null;
+        int outputNeuron = 0;
+        BoardMaxTile instance = new BoardMaxTile();
+        double expResult = 0.0;
+        double result = instance.getBoardReward(board, outputNeuron);
+        assertEquals(expResult, result, 0.0);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getFinalReward method, of class BoardMaxTile.
+     */
+    @Test
+    public void testGetFinalReward() {
+        System.out.println("getFinalReward");
+        Game2048 game = null;
+        int outputNeuron = 0;
+        BoardMaxTile instance = new BoardMaxTile();
+        double expResult = 0.0;
+        double result = instance.getFinalReward(game, outputNeuron);
+        assertEquals(expResult, result, 0.0);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of normalizeValueToPerceptronOutput method, of class BoardMaxTile.
+     */
+    @Test
+    public void testNormalizeValueToPerceptronOutput() {
+        System.out.println("normalizeValueToPerceptronOutput");
+        Object value = null;
+        BoardMaxTile instance = new BoardMaxTile();
+        double expResult = 0.0;
+        double result = instance.normalizeValueToPerceptronOutput(value);
+        assertEquals(expResult, result, 0.0);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 
 }

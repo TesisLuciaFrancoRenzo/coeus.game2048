@@ -10,7 +10,7 @@ import ar.edu.unrc.game2048.GameBoard;
 import ar.edu.unrc.game2048.NTupleConfiguration2048;
 import ar.edu.unrc.game2048.Tile;
 import ar.edu.unrc.tdlearning.perceptron.ntuple.SamplePointState;
-import ar.edu.unrc.tdlearning.perceptron.training.FunctionUtils;
+import ar.edu.unrc.tdlearning.perceptron.learning.FunctionUtils;
 import java.util.ArrayList;
 import org.encog.util.arrayutil.NormalizationAction;
 import org.encog.util.arrayutil.NormalizedField;
