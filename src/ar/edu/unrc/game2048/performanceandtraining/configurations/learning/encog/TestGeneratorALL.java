@@ -39,7 +39,7 @@ public class TestGeneratorALL {
         experiment.setLambda(lambda);
         experiment.setGamma(1);
         experiment.setExplorationRateToFixed(0);
-        experiment.setReplaceEligibilitiTraces(true);
+        
         experiment.setResetEligibilitiTraces(true);
         experiment.setLearningRateAdaptationToFixed();
         experiment.setGamesToPlay(gamesToPlay);

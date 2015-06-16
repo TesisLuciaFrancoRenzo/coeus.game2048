@@ -66,7 +66,6 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
     private boolean logsActivated = false;
     private INeuralNetworkInterfaceFor2048<NeuralNetworkClass> neuralNetworkInterfaceFor2048;
     private String perceptronName;
-    private boolean replaceEligibilitiTraces;
     private boolean resetEligibilitiTraces;
     private boolean runStatisticForRandom = false;
     private boolean runStatisticsForBackups = false;
@@ -275,20 +274,6 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
      * @return
      */
     public abstract TDLambdaLearning instanceOfTdLearninrgImplementation(NTupleSystem nTupleSystem);
-
-    /**
-     * @return the replaceEligibilitiTraces
-     */
-    public boolean isReplaceEligibilitiTraces() {
-        return replaceEligibilitiTraces;
-    }
-
-    /**
-     * @param replaceEligibilitiTraces the replaceEligibilitiTraces to set
-     */
-    public void setReplaceEligibilitiTraces(boolean replaceEligibilitiTraces) {
-        this.replaceEligibilitiTraces = replaceEligibilitiTraces;
-    }
 
     /**
      * @return the resetEligibilitiTraces

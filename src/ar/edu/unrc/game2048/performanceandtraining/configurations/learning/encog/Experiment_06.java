@@ -37,16 +37,15 @@ public class Experiment_06 extends LearningExperiment<BasicNetwork> {
         }
         LearningExperiment experiment = new Experiment_06();
         experiment.createLogs(false);
-
 //        boolean statistics = true;
         boolean statistics = false;
+
         double[] alphas = {0.0025, 0.0025};
         experiment.setAlpha(alphas);
         experiment.setLearningRateAdaptationToAnnealing(1_000_000);
         experiment.setLambda(0.7);
         experiment.setGamma(1);
         experiment.setExplorationRateToFixed(0);
-        experiment.setReplaceEligibilitiTraces(false);
         experiment.setResetEligibilitiTraces(false);
         experiment.setGamesToPlay(20_000);
         experiment.setLastGamePlayedNumber(4_500); //recordar AJUSTAR ESTE VALOR
@@ -90,7 +89,7 @@ public class Experiment_06 extends LearningExperiment<BasicNetwork> {
      */
     @Override
     public TDLambdaLearning instanceOfTdLearninrgImplementation(IPerceptronInterface perceptronInterface) {
-        return new TDLambdaLearningAfterstate(perceptronInterface, getAlpha(), getLambda(), getGamma(), isResetEligibilitiTraces(), isReplaceEligibilitiTraces());
+        return new TDLambdaLearningAfterstate(perceptronInterface, getAlpha(), getLambda(), getGamma(), isResetEligibilitiTraces());
     }
 
     @Override
