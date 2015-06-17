@@ -19,7 +19,7 @@ import org.encog.neural.networks.BasicNetwork;
 /**
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
-public class Experiment_04 extends LearningExperiment<BasicNetwork> {
+public class Experiment_04a extends LearningExperiment<BasicNetwork> {
 
     /**
      *
@@ -35,7 +35,7 @@ public class Experiment_04 extends LearningExperiment<BasicNetwork> {
         } else {
             filePath = args[0];
         }
-        LearningExperiment experiment = new Experiment_04();
+        LearningExperiment experiment = new Experiment_04a();
 
 //        boolean statistics = true;
         boolean statistics = false;
@@ -74,7 +74,7 @@ public class Experiment_04 extends LearningExperiment<BasicNetwork> {
     public void initialize() throws Exception {
         this.setTileToWin(32_768);
         if ( this.getExperimentName() == null ) {
-            this.setExperimentName("Experiment_04");
+            this.setExperimentName("Experiment_04a");
         }
         this.setPerceptronName(this.getExperimentName());
         NTupleConfiguration2048 config = new BasicMaxTileTanH();

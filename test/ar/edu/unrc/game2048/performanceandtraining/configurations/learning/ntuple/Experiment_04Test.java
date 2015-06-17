@@ -42,12 +42,12 @@ public class Experiment_04Test {
     }
 
     /**
-     * Test of initialize method, of class Experiment_04.
+     * Test of initialize method, of class Experiment_04a.
      */
     @Test
     public void testInitialize() throws Exception {
         System.out.println("initialize");
-        Experiment_04 instance = new Experiment_04();
+        Experiment_04a instance = new Experiment_04a();
         instance.initialize();
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -55,13 +55,13 @@ public class Experiment_04Test {
 
     /**
      * Test of instanceOfTdLearninrgImplementation method, of class
-     * Experiment_04.
+ Experiment_04a.
      */
     @Test
     public void testInstanceOfTdLearninrgImplementation_IPerceptronInterface() {
         System.out.println("instanceOfTdLearninrgImplementation");
         IPerceptronInterface perceptronInterface = null;
-        Experiment_04 instance = new Experiment_04();
+        Experiment_04a instance = new Experiment_04a();
         TDLambdaLearning expResult = null;
         TDLambdaLearning result = instance.instanceOfTdLearninrgImplementation(perceptronInterface);
         assertEquals(expResult, result);
@@ -71,13 +71,13 @@ public class Experiment_04Test {
 
     /**
      * Test of instanceOfTdLearninrgImplementation method, of class
-     * Experiment_04.
+ Experiment_04a.
      */
     @Test
     public void testInstanceOfTdLearninrgImplementation_NTupleSystem() {
         System.out.println("instanceOfTdLearninrgImplementation");
         NTupleSystem nTupleSystem = null;
-        Experiment_04 instance = new Experiment_04();
+        Experiment_04a instance = new Experiment_04a();
         TDLambdaLearning expResult = null;
         TDLambdaLearning result = instance.instanceOfTdLearninrgImplementation(nTupleSystem);
         assertEquals(expResult, result);
@@ -86,13 +86,13 @@ public class Experiment_04Test {
     }
 
     /**
-     * Test of main method, of class Experiment_04.
+     * Test of main method, of class Experiment_04a.
      */
     @Test
     public void testMain() throws Exception {
         System.out.println("main");
         String[] args = null;
-        Experiment_04.main(args);
+        Experiment_04a.main(args);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

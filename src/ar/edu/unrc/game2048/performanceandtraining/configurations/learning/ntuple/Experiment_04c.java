@@ -74,7 +74,7 @@ public class Experiment_04c extends LearningExperiment<BasicNetwork> {
     public void initialize() throws Exception {
         this.setTileToWin(32_768);
         if ( this.getExperimentName() == null ) {
-            this.setExperimentName("Experiment_04b");
+            this.setExperimentName("Experiment_04c");
         }
         this.setPerceptronName(this.getExperimentName());
         NTupleConfiguration2048 config = new BasicMaxTileTanH();
