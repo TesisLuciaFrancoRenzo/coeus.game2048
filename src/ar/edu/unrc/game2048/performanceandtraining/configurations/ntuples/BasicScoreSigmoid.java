@@ -31,7 +31,7 @@ public class BasicScoreSigmoid extends NTupleConfiguration2048 {
         this.activationFunction = FunctionUtils.sigmoid;
         this.derivatedActivationFunction = FunctionUtils.derivatedSigmoid;
         double activationFunctionMax = 1;
-        double activationFunctionMin = 0.5;
+        double activationFunctionMin = 0;
 
         normOutput = new NormalizedField(NormalizationAction.Normalize,
                 null, maxReward, minReward, activationFunctionMax, activationFunctionMin);

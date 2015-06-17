@@ -22,7 +22,7 @@ import org.encog.util.arrayutil.NormalizedField;
 public class BasicScoreTanH extends NTupleConfiguration2048 {
 
     int maxReward = 500_000;
-    int minReward = 0;
+    int minReward = -500_000;
 
     /**
      *
@@ -31,7 +31,7 @@ public class BasicScoreTanH extends NTupleConfiguration2048 {
         this.activationFunction = FunctionUtils.tanh;
         this.derivatedActivationFunction = FunctionUtils.derivatedTanh;
         double activationFunctionMax = 1;
-        double activationFunctionMin = 0; //nos interesa solo la parte positiva de la funcion de activacion
+        double activationFunctionMin = -1;
 
         normOutput = new NormalizedField(NormalizationAction.Normalize,
                 null, maxReward, minReward, activationFunctionMax, activationFunctionMin);
