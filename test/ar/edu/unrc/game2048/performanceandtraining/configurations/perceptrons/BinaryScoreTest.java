@@ -8,6 +8,8 @@ package ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons;
 import ar.edu.unrc.game2048.Game2048;
 import ar.edu.unrc.game2048.GameBoard;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IsolatedComputation;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -46,7 +48,7 @@ public class BinaryScoreTest {
     public void testCalculateNormalizedPerceptronInput() {
         System.out.println("calculateNormalizedPerceptronInput");
         BinaryScore instance = new BinaryScore();
-        instance.calculateNormalizedPerceptronInput(null);
+        // instance.calculateNormalizedPerceptronInput(null);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -68,7 +70,8 @@ public class BinaryScoreTest {
     }
 
     /**
-     * Test of denormalizeValueFromPerceptronOutput method, of class BinaryScore.
+     * Test of denormalizeValueFromPerceptronOutput method, of class
+     * BinaryScore.
      */
     @Test
     public void testDenormalizeValueFromPerceptronOutput() {

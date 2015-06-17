@@ -7,6 +7,8 @@ package ar.edu.unrc.game2048.performanceandtraining.configurations;
 
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearning;
 import java.util.Date;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

@@ -5,6 +5,8 @@
  */
 package ar.edu.unrc.game2048;
 
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -37,7 +39,8 @@ public class IConfiguration2048Test {
     }
 
     /**
-     * Test of denormalizeValueFromPerceptronOutput method, of class IConfiguration2048.
+     * Test of denormalizeValueFromPerceptronOutput method, of class
+     * IConfiguration2048.
      */
     @Test
     public void testDenormalizeValueFromPerceptronOutput() {
@@ -84,7 +87,8 @@ public class IConfiguration2048Test {
     }
 
     /**
-     * Test of normalizeValueToPerceptronOutput method, of class IConfiguration2048.
+     * Test of normalizeValueToPerceptronOutput method, of class
+     * IConfiguration2048.
      */
     @Test
     public void testNormalizeValueToPerceptronOutput() {
@@ -139,5 +143,4 @@ public class IConfiguration2048Test {
             return 0.0;
         }
     }
-
 }

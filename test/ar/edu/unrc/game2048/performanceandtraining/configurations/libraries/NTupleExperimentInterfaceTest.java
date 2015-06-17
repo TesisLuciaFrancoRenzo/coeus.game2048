@@ -8,6 +8,8 @@ package ar.edu.unrc.game2048.performanceandtraining.configurations.libraries;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IPerceptronInterface;
 import ar.edu.unrc.tdlearning.perceptron.ntuple.NTupleSystem;
 import java.io.File;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -68,7 +70,8 @@ public class NTupleExperimentInterfaceTest {
     }
 
     /**
-     * Test of getPerceptronInterface method, of class NTupleExperimentInterface.
+     * Test of getPerceptronInterface method, of class
+     * NTupleExperimentInterface.
      */
     @Test
     public void testGetPerceptronInterface() {
@@ -82,7 +85,8 @@ public class NTupleExperimentInterfaceTest {
     }
 
     /**
-     * Test of initializeEncogPerceptron method, of class NTupleExperimentInterface.
+     * Test of initializeEncogPerceptron method, of class
+     * NTupleExperimentInterface.
      */
     @Test
     public void testInitializeEncogPerceptron() {
@@ -97,7 +101,8 @@ public class NTupleExperimentInterfaceTest {
     }
 
     /**
-     * Test of loadOrCreatePerceptron method, of class NTupleExperimentInterface.
+     * Test of loadOrCreatePerceptron method, of class
+     * NTupleExperimentInterface.
      */
     @Test
     public void testLoadOrCreatePerceptron() throws Exception {

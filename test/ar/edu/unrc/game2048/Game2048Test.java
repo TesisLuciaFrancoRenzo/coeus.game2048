@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -336,7 +338,7 @@ public class Game2048Test {
         game = new Game2048(null, 2_048, false, 0, true);
         IStatePerceptron state1;
         IState state2;
-        
+
         //inicializamos un tablero terminal
         GameBoard board = new GameBoard(game, tileContainer);
         Tile[] terminalBoard = {
@@ -347,10 +349,10 @@ public class Game2048Test {
         };
         board.setTiles(terminalBoard);
         board.updateInternalState(true);
-        
+
         ArrayList<IAction> result = game.listAllPossibleActions(board);
         Assert.assertTrue(result.isEmpty());
-        
+
         // =========================================== //
         //inicializamos un tablero no terminal
         board = new GameBoard(game, tileContainer);
@@ -362,44 +364,44 @@ public class Game2048Test {
         };
         board.setTiles(fullNotTerminalBoard);
         board.updateInternalState(true);
-        
+
         Set<IAction> expResult = new HashSet<>();
         expResult.add(Action.down);
         expResult.add(Action.up);
-        
+
         state1 = game.computeAfterState(board, Action.down); //para comparar luego
         Assert.assertNotNull(state1);
-        
+
         result = game.listAllPossibleActions(board);
         Assert.assertTrue(result.size() == 2);
-        
+
         Set<IAction> resultSet = new HashSet<>(game.listAllPossibleActions(board));
         for ( IAction action : resultSet ) {
             Assert.assertTrue(resultSet.contains(action));
         }
-        
+
         //verificamos que si se llama al afterstate antes de listAllPossibleActions
         // con los mismos tableros, devuelven instancias diferentes, pero con el mismo contenido logico
         state2 = game.computeAfterState(board, Action.down);
         Assert.assertNotSame(state1, state2);
         Assert.assertTrue(((GameBoard) state1).isEqual((GameBoard) state2));
-        
+
         //verificamos que proximas llamadas a computeafterstate retorne valores ya calculados y no los calcule otra vez
         state1 = game.computeAfterState(board, Action.down);
         Assert.assertNotNull(state1);
         state2 = game.computeAfterState(board, Action.down);
         Assert.assertNotNull(state2);
         Assert.assertEquals(state1, state2);
-        
+
         state2 = game.computeAfterState(board, Action.up);
         Assert.assertNotSame(state1, state2);
-        
+
         //verificamos que valores no calculados retornen null
         state1 = game.computeAfterState(board, Action.left);
         Assert.assertNull(state1);
         state1 = game.computeAfterState(board, Action.right);
         Assert.assertNull(state1);
-        
+
         // =========================================== //
         //inicializamos un tablero con muchos movimientos terminal
         board = new GameBoard(game, tileContainer);
@@ -411,7 +413,7 @@ public class Game2048Test {
         };
         board.setTiles(multipleMovesTerminalBoard);
         board.updateInternalState(true);
-        
+
         expResult.clear();
         expResult.add(Action.down);
         expResult.add(Action.up);
@@ -423,20 +425,21 @@ public class Game2048Test {
         for ( IAction action : resultSet ) {
             Assert.assertTrue(resultSet.contains(action));
         }
-        
+
         //verificamos que proximas llamadas a computeafterstate retorne valores ya calculados y no los calcule otra vez
         state1 = game.computeAfterState(board, Action.right);
         Assert.assertNotNull(state1);
         state2 = game.computeAfterState(board, Action.right);
         Assert.assertNotNull(state2);
         Assert.assertEquals(state1, state2);
-        
+
         state2 = game.computeAfterState(board, Action.left);
         Assert.assertNotSame(state1, state2);
     }
 
     /**
-     * Test of listAllPossibleNextTurnStateFromAfterstate method, of class Game2048.
+     * Test of listAllPossibleNextTurnStateFromAfterstate method, of class
+     * Game2048.
      */
     @Test
     public void testListAllPossibleNextTurnStateFromAfterstate() {
@@ -449,7 +452,7 @@ public class Game2048Test {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
-    
+
     /**
      * Test of main method, of class Game2048.
      */
@@ -527,6 +530,5 @@ public class Game2048Test {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
-
 
 }

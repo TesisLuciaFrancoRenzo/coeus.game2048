@@ -7,8 +7,8 @@ package ar.edu.unrc.game2048;
  */
 import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.BoardMaxTileTest;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.FullNTupleMaxTileTest;
-import ar.edu.unrc.game2048.test.configurations.experiments.EncogExperimentTest;
-import ar.edu.unrc.game2048.test.configurations.perceptrons.BoardScoreCustomNormalizationTest;
+import ar.edu.unrc.game2048.performanceandtraining.configurations.libraries.EncogExperimentInterfaceTest;
+import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.BoardScoreCustomNormalizationTest;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -21,7 +21,7 @@ import org.junit.runners.Suite;
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
 @RunWith( Suite.class )
-@Suite.SuiteClasses( {GameBoardTest.class, EncogExperimentTest.class, Game2048Test.class, BoardScoreCustomNormalizationTest.class, BoardMaxTileTest.class, FullNTupleMaxTileTest.class} )
+@Suite.SuiteClasses( {GameBoardTest.class, EncogExperimentInterfaceTest.class, Game2048Test.class, BoardScoreCustomNormalizationTest.class, BoardMaxTileTest.class, FullNTupleMaxTileTest.class} )
 public class TestSuite {
 
     /**

@@ -6,6 +6,8 @@
 package ar.edu.unrc.game2048;
 
 import java.awt.Color;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

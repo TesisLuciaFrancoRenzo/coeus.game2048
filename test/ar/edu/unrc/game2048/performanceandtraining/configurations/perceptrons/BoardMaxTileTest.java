@@ -10,6 +10,7 @@ import ar.edu.unrc.game2048.GameBoard;
 import ar.edu.unrc.game2048.Tile;
 import ar.edu.unrc.game2048.TileContainer;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IsolatedComputation;
+import static junit.framework.Assert.fail;
 import static junit.framework.Assert.assertEquals;
 import org.encog.neural.networks.BasicNetwork;
 import org.junit.After;
@@ -175,7 +176,8 @@ public class BoardMaxTileTest {
     }
 
     /**
-     * Test of denormalizeValueFromPerceptronOutput method, of class BoardMaxTile.
+     * Test of denormalizeValueFromPerceptronOutput method, of class
+     * BoardMaxTile.
      */
     @Test
     public void testDenormalizeValueFromPerceptronOutput() {
@@ -237,27 +239,27 @@ public class BoardMaxTileTest {
     }
 
     /**
-     * Test of translateRealOutputToNormalizedPerceptronOutputFrom method, of class
-     * BoardMaxTile.
+     * Test of translateRealOutputToNormalizedPerceptronOutputFrom method, of
+     * class BoardMaxTile.
      */
     @Test
     public void testTranslateThisFinalStateToPerceptronOutput() {
         System.out.println("translateThisFinalStateToPerceptronOutput");
-        
+
         GameBoard<BasicNetwork> board = new GameBoard<>(game, tileContainer);
         board.setTiles(initialBoard);
         board.updateInternalState(true);
-        
+
         double normalization = ((4d - 0d) / (17d - 0d)) * (1d - -1d) + -1d;
         assertEquals(normalization, board.translateThisFinalStateToPerceptronOutput(0), 0.0d);
-        
+
         board = new GameBoard<>(game, tileContainer);
         board.setTiles(randomBoard1);
         board.updateInternalState(true);
-        
+
         normalization = ((17d - 0d) / (17d - 0d)) * (1d - -1d) + -1d;
         assertEquals(normalization, board.translateThisFinalStateToPerceptronOutput(0), 0.0d);
-        
+
     }
 
 }

@@ -7,8 +7,11 @@ package ar.edu.unrc.game2048;
 
 import ar.edu.unrc.tdlearning.perceptron.ntuple.NTupleSystem;
 import ar.edu.unrc.tdlearning.perceptron.ntuple.SamplePointState;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.assertArrayEquals;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -98,8 +101,28 @@ public class NTupleConfiguration2048Test {
     public class NTupleConfiguration2048Impl extends NTupleConfiguration2048 {
 
         @Override
+        public double denormalizeValueFromPerceptronOutput(Object value) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public double getBoardReward(GameBoard board, int outputNeuron) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public double getFinalReward(Game2048 game, int outputNeuron) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
         public SamplePointState[] getNTuple(GameBoard board, int nTupleIndex) {
             return null;
+        }
+
+        @Override
+        public double normalizeValueToPerceptronOutput(Object value) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
     }
 

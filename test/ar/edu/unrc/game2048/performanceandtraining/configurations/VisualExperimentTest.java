@@ -7,6 +7,8 @@ package ar.edu.unrc.game2048.performanceandtraining.configurations;
 
 import ar.edu.unrc.game2048.NTupleConfiguration2048;
 import ar.edu.unrc.game2048.PerceptronConfiguration2048;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

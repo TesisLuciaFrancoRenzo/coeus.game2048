@@ -6,6 +6,8 @@
 package ar.edu.unrc.game2048.performanceandtraining.configurations.learning.encog;
 
 import ar.edu.unrc.game2048.performanceandtraining.configurations.LearningExperiment;
+import static junit.framework.Assert.fail;
+
 import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;

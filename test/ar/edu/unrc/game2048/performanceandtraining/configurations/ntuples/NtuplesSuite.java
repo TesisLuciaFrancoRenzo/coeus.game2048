@@ -17,7 +17,7 @@ import org.junit.runners.Suite;
  * @author franco
  */
 @RunWith( Suite.class )
-@Suite.SuiteClasses( {BasicScoreTanHTest.class, BasicScoreLinearTest.class, BasicScoreSigmoidTest.class, BasicMaxTileTest.class})
+@Suite.SuiteClasses( {BasicScoreLinearTest.class, BasicMaxTileTest.class, BasicScoreTanHTest.class, BasicScoreSigmoidTest.class})
 public class NtuplesSuite {
 
     /**

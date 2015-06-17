@@ -10,6 +10,8 @@ import ar.edu.unrc.tdlearning.perceptron.interfaces.IPerceptronInterface;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IsolatedComputation;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearning;
 import java.io.File;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -70,7 +72,8 @@ public class GreedyExperimentInterfaceTest {
     }
 
     /**
-     * Test of getPerceptronInterface method, of class GreedyExperimentInterface.
+     * Test of getPerceptronInterface method, of class
+     * GreedyExperimentInterface.
      */
     @Test
     public void testGetPerceptronInterface() {
@@ -84,7 +87,8 @@ public class GreedyExperimentInterfaceTest {
     }
 
     /**
-     * Test of loadOrCreatePerceptron method, of class GreedyExperimentInterface.
+     * Test of loadOrCreatePerceptron method, of class
+     * GreedyExperimentInterface.
      */
     @Test
     public void testLoadOrCreatePerceptron() throws Exception {

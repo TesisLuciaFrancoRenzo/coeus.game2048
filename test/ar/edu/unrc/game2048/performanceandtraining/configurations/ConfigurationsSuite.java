@@ -21,7 +21,7 @@ import org.junit.runners.Suite;
  * @author franco
  */
 @RunWith( Suite.class )
-@Suite.SuiteClasses( {NtuplesSuite.class, LearningExperimentTest.class, LearningSuite.class, INeuralNetworkInterfaceFor2048Test.class, StatisticForCalcTest.class, ThreadResultTest.class, PerceptronsSuite.class, VisualExperimentTest.class, LibrariesSuite.class, StatisticExperimentTest.class})
+@Suite.SuiteClasses( {LearningSuite.class, PerceptronsSuite.class, LibrariesSuite.class, INeuralNetworkInterfaceFor2048Test.class, StatisticForCalcTest.class, VisualExperimentTest.class, LearningExperimentTest.class, StatisticExperimentTest.class, ThreadResultTest.class, NtuplesSuite.class})
 public class ConfigurationsSuite {
 
     /**

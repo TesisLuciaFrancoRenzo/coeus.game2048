@@ -17,7 +17,7 @@ import org.junit.runners.Suite;
  * @author franco
  */
 @RunWith( Suite.class )
-@Suite.SuiteClasses( {Experiment_11Test.class, Experiment_01Test.class, TestGenerator_03Test.class, Experiment_10Test.class, Experiment_09Test.class, Experiment_07Test.class, Experiment_12Test.class, Experiment_04Test.class, TestGenerator_01Test.class, TestGeneratorALLTest.class, Experiment_02Test.class, Experiment_05Test.class, Experiment_06bTest.class, TestGenerator_02Test.class, Experiment_06Test.class, Experiment_03Test.class, Experiment_08Test.class})
+@Suite.SuiteClasses( {Experiment_10Test.class, TestGenerator_01Test.class, Experiment_03Test.class, TestGeneratorALLTest.class, Experiment_02Test.class, Experiment_08Test.class, Experiment_05Test.class, TestGenerator_03Test.class, TestGenerator_02Test.class, Experiment_04Test.class, Experiment_06bTest.class, Experiment_11Test.class, Experiment_07Test.class, Experiment_06Test.class, Experiment_12Test.class, Experiment_09Test.class, Experiment_01Test.class})
 public class EncogSuite {
 
     /**

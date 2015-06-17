@@ -9,6 +9,8 @@ import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.NT
 import ar.edu.unrc.tdlearning.perceptron.learning.StateProbability;
 import ar.edu.unrc.tdlearning.perceptron.ntuple.SamplePointState;
 import java.util.List;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -94,7 +96,7 @@ public class GameBoardTest {
         fail("The test case is a prototype.");
     }
 
-/**
+    /**
      * Test of addTile method, of class GameBoard.
      */
     @Test
@@ -204,7 +206,6 @@ public class GameBoardTest {
     }
 
 //    /**
-
 //     * Test of isFull method, of class GameBoard.
 //     */
 //    @Test
@@ -415,33 +416,33 @@ public class GameBoardTest {
     @Test
     public void testIsEqual() {
         System.out.println("isEqual");
-        
+
         GameBoard board1 = new GameBoard(game, tileContainer);
         board1.setTiles(emptyBoard);
         board1.updateInternalState(false);
-        
+
         GameBoard board2 = new GameBoard(game, tileContainer);
         board2.setTiles(emptyBoard);
         board2.updateInternalState(false);
-        
+
         boolean expResult = true;
         boolean result = board1.isEqual(board2);
         Assert.assertEquals(expResult, result);
-        
+
         // =========================================== //
         board1 = new GameBoard(game, tileContainer);
         board1.setTiles(randomBoard);
         board1.updateInternalState(true);
-        
+
         board2 = new GameBoard(game, tileContainer);
         board2.setTiles(randomBoard);
         board2.updateInternalState(true);
-        
+
         expResult = true;
         result = board1.isEqual(board2);
         Assert.assertEquals(expResult, result);
     }
-    
+
     /**
      * Test of isFull method, of class GameBoard.
      */
@@ -469,7 +470,7 @@ public class GameBoardTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
-    
+
     /**
      * Test of isTerminalState method, of class GameBoard.
      */
@@ -485,11 +486,11 @@ public class GameBoardTest {
         };
         board.setTiles(terminalBoard);
         board.updateInternalState(true);
-        
+
         boolean expResult = true;
         boolean result = board.isTerminalState();
         Assert.assertEquals(expResult, result);
-        
+
         // =========================================== //
         board = new GameBoard(game, tileContainer);
         Tile[] fullNotTerminalBoard = {
@@ -500,20 +501,20 @@ public class GameBoardTest {
         };
         board.setTiles(fullNotTerminalBoard);
         board.updateInternalState(true);
-        
+
         expResult = false;
         result = board.isTerminalState();
         Assert.assertEquals(expResult, result);
-        
+
         // =========================================== //
         board = new GameBoard(game, tileContainer);
         board.setTiles(randomBoard);
         board.updateInternalState(true);
-        
+
         expResult = false;
         result = board.isTerminalState();
         Assert.assertEquals(expResult, result);
-        
+
         // =========================================== //
         board = new GameBoard(game, tileContainer);
         Tile[] winBoard = {
@@ -530,9 +531,10 @@ public class GameBoardTest {
         result = board.isTerminalState();
         Assert.assertEquals(expResult, result);
     }
-    
+
     /**
-     * Test of listAllPossibleNextTurnStateFromAfterstate method, of class GameBoard.
+     * Test of listAllPossibleNextTurnStateFromAfterstate method, of class
+     * GameBoard.
      */
     @Test
     public void testListAllPossibleNextTurnStateFromAfterstate() {
@@ -544,7 +546,7 @@ public class GameBoardTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
-    
+
     /**
      * Test of setNeedToAddTile method, of class GameBoard.
      */
@@ -583,7 +585,7 @@ public class GameBoardTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
-    
+
     /**
      * Test of setToWin method, of class GameBoard.
      */
@@ -595,18 +597,18 @@ public class GameBoardTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
-    
+
     /**
      * Test of tileAt method, of class GameBoard.
      */
     @Test
     public void testTileAt() {
         System.out.println("tileAt");
-        
+
         GameBoard board = new GameBoard(game, tileContainer);
         board.setTiles(randomBoard);
         board.updateInternalState(true);
-        
+
         int x = 0;
         int y = 0;
         Tile expResult = tileContainer.getTile(0);
@@ -641,7 +643,7 @@ public class GameBoardTest {
     @Test
     public void testUpdateInternalState() {
         System.out.println("updateInternalState");
-        
+
         GameBoard board = new GameBoard(game, tileContainer);
         board.setTiles(randomBoard);
         board.updateInternalState(true);

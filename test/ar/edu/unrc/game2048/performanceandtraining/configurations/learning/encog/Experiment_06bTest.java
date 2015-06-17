@@ -8,6 +8,8 @@ package ar.edu.unrc.game2048.performanceandtraining.configurations.learning.enco
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IPerceptronInterface;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearning;
 import ar.edu.unrc.tdlearning.perceptron.ntuple.NTupleSystem;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -52,7 +54,8 @@ public class Experiment_06bTest {
     }
 
     /**
-     * Test of instanceOfTdLearninrgImplementation method, of class Experiment_06b.
+     * Test of instanceOfTdLearninrgImplementation method, of class
+     * Experiment_06b.
      */
     @Test
     public void testInstanceOfTdLearninrgImplementation_IPerceptronInterface() {
@@ -67,7 +70,8 @@ public class Experiment_06bTest {
     }
 
     /**
-     * Test of instanceOfTdLearninrgImplementation method, of class Experiment_06b.
+     * Test of instanceOfTdLearninrgImplementation method, of class
+     * Experiment_06b.
      */
     @Test
     public void testInstanceOfTdLearninrgImplementation_NTupleSystem() {

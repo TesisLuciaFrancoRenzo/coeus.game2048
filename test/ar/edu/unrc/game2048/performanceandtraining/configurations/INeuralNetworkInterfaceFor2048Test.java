@@ -10,6 +10,8 @@ import ar.edu.unrc.game2048.PerceptronConfiguration2048;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IPerceptronInterface;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IsolatedComputation;
 import java.io.File;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -56,7 +58,8 @@ public class INeuralNetworkInterfaceFor2048Test {
     }
 
     /**
-     * Test of compareNeuralNetworks method, of class INeuralNetworkInterfaceFor2048.
+     * Test of compareNeuralNetworks method, of class
+     * INeuralNetworkInterfaceFor2048.
      */
     @Test
     public void testCompareNeuralNetworks() {
@@ -84,7 +87,8 @@ public class INeuralNetworkInterfaceFor2048Test {
     }
 
     /**
-     * Test of getNTupleConfiguration method, of class INeuralNetworkInterfaceFor2048.
+     * Test of getNTupleConfiguration method, of class
+     * INeuralNetworkInterfaceFor2048.
      */
     @Test
     public void testGetNTupleConfiguration() {
@@ -98,7 +102,8 @@ public class INeuralNetworkInterfaceFor2048Test {
     }
 
     /**
-     * Test of getPerceptronConfiguration method, of class INeuralNetworkInterfaceFor2048.
+     * Test of getPerceptronConfiguration method, of class
+     * INeuralNetworkInterfaceFor2048.
      */
     @Test
     public void testGetPerceptronConfiguration() {
@@ -112,7 +117,8 @@ public class INeuralNetworkInterfaceFor2048Test {
     }
 
     /**
-     * Test of getPerceptronInterface method, of class INeuralNetworkInterfaceFor2048.
+     * Test of getPerceptronInterface method, of class
+     * INeuralNetworkInterfaceFor2048.
      */
     @Test
     public void testGetPerceptronInterface() {
@@ -126,7 +132,8 @@ public class INeuralNetworkInterfaceFor2048Test {
     }
 
     /**
-     * Test of loadOrCreatePerceptron method, of class INeuralNetworkInterfaceFor2048.
+     * Test of loadOrCreatePerceptron method, of class
+     * INeuralNetworkInterfaceFor2048.
      */
     @Test
     public void testLoadOrCreatePerceptron() throws Exception {
@@ -147,7 +154,7 @@ public class INeuralNetworkInterfaceFor2048Test {
         System.out.println("playATurn");
         INeuralNetworkInterfaceFor2048 instance = null;
         IsolatedComputation expResult = null;
-        IsolatedComputation result = instance.playATurn(null);
+        IsolatedComputation result = instance.playATurn(null, null);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -167,7 +174,8 @@ public class INeuralNetworkInterfaceFor2048Test {
     }
 
     /**
-     * Test of setNTupleConfiguration method, of class INeuralNetworkInterfaceFor2048.
+     * Test of setNTupleConfiguration method, of class
+     * INeuralNetworkInterfaceFor2048.
      */
     @Test
     public void testSetNTupleConfiguration() {
@@ -180,7 +188,8 @@ public class INeuralNetworkInterfaceFor2048Test {
     }
 
     /**
-     * Test of setPerceptronConfiguration method, of class INeuralNetworkInterfaceFor2048.
+     * Test of setPerceptronConfiguration method, of class
+     * INeuralNetworkInterfaceFor2048.
      */
     @Test
     public void testSetPerceptronConfiguration() {

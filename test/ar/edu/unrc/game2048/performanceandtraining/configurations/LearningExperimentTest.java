@@ -9,6 +9,8 @@ import ar.edu.unrc.tdlearning.perceptron.interfaces.IPerceptronInterface;
 import ar.edu.unrc.tdlearning.perceptron.learning.ELearningRateAdaptation;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearning;
 import ar.edu.unrc.tdlearning.perceptron.ntuple.NTupleSystem;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -125,7 +127,8 @@ public class LearningExperimentTest {
     }
 
     /**
-     * Test of getGamesToPlayPerThreadForStatistics method, of class LearningExperiment.
+     * Test of getGamesToPlayPerThreadForStatistics method, of class
+     * LearningExperiment.
      */
     @Test
     public void testGetGamesToPlayPerThreadForStatistics() {
@@ -195,7 +198,8 @@ public class LearningExperimentTest {
     }
 
     /**
-     * Test of getNeuralNetworkInterfaceFor2048 method, of class LearningExperiment.
+     * Test of getNeuralNetworkInterfaceFor2048 method, of class
+     * LearningExperiment.
      */
     @Test
     public void testGetNeuralNetworkInterfaceFor2048() {
@@ -291,7 +295,8 @@ public class LearningExperimentTest {
     }
 
     /**
-     * Test of instanceOfTdLearninrgImplementation method, of class LearningExperiment.
+     * Test of instanceOfTdLearninrgImplementation method, of class
+     * LearningExperiment.
      */
     @Test
     public void testInstanceOfTdLearninrgImplementation_IPerceptronInterface() {
@@ -306,7 +311,8 @@ public class LearningExperimentTest {
     }
 
     /**
-     * Test of instanceOfTdLearninrgImplementation method, of class LearningExperiment.
+     * Test of instanceOfTdLearninrgImplementation method, of class
+     * LearningExperiment.
      */
     @Test
     public void testInstanceOfTdLearninrgImplementation_NTupleSystem() {
@@ -472,7 +478,8 @@ public class LearningExperimentTest {
     }
 
     /**
-     * Test of setGamesToPlayPerThreadForStatistics method, of class LearningExperiment.
+     * Test of setGamesToPlayPerThreadForStatistics method, of class
+     * LearningExperiment.
      */
     @Test
     public void testSetGamesToPlayPerThreadForStatistics() {
@@ -498,7 +505,8 @@ public class LearningExperimentTest {
     }
 
     /**
-     * Test of setInitializePerceptronRandomized method, of class LearningExperiment.
+     * Test of setInitializePerceptronRandomized method, of class
+     * LearningExperiment.
      */
     @Test
     public void testSetInitializePerceptronRandomized() {
@@ -563,7 +571,8 @@ public class LearningExperimentTest {
     }
 
     /**
-     * Test of setLearningRateAdaptationToAnnealing method, of class LearningExperiment.
+     * Test of setLearningRateAdaptationToAnnealing method, of class
+     * LearningExperiment.
      */
     @Test
     public void testSetLearningRateAdaptationToAnnealing() {
@@ -576,7 +585,8 @@ public class LearningExperimentTest {
     }
 
     /**
-     * Test of setLearningRateAdaptationToFixed method, of class LearningExperiment.
+     * Test of setLearningRateAdaptationToFixed method, of class
+     * LearningExperiment.
      */
     @Test
     public void testSetLearningRateAdaptationToFixed() {
@@ -588,7 +598,8 @@ public class LearningExperimentTest {
     }
 
     /**
-     * Test of setNeuralNetworkInterfaceFor2048 method, of class LearningExperiment.
+     * Test of setNeuralNetworkInterfaceFor2048 method, of class
+     * LearningExperiment.
      */
     @Test
     public void testSetNeuralNetworkInterfaceFor2048() {
@@ -741,6 +752,20 @@ public class LearningExperimentTest {
         }
 
         @Override
+        public TDLambdaLearning instanceOfTdLearninrgImplementation(NTupleSystem nTupleSystem) {
+            return null;
+        }
+    }
+
+    public class LearningExperimentImpl extends LearningExperiment {
+
+        public void initialize() throws Exception {
+        }
+
+        public TDLambdaLearning instanceOfTdLearninrgImplementation(IPerceptronInterface perceptronInterface) {
+            return null;
+        }
+
         public TDLambdaLearning instanceOfTdLearninrgImplementation(NTupleSystem nTupleSystem) {
             return null;
         }

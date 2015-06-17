@@ -8,6 +8,7 @@ package ar.edu.unrc.game2048.performanceandtraining.experiments;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
+import static junit.framework.Assert.fail;
 import org.junit.BeforeClass;
 import org.junit.Test;
 

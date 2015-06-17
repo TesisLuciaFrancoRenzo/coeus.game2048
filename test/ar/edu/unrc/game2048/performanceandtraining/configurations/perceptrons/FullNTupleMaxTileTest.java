@@ -10,6 +10,7 @@ import ar.edu.unrc.game2048.GameBoard;
 import ar.edu.unrc.game2048.Tile;
 import ar.edu.unrc.game2048.TileContainer;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IsolatedComputation;
+import static junit.framework.Assert.fail;
 import static junit.framework.Assert.assertEquals;
 import org.encog.neural.networks.BasicNetwork;
 import org.junit.After;
@@ -385,7 +386,8 @@ public class FullNTupleMaxTileTest {
     }
 
     /**
-     * Test of computeNumericRepresentationFor method, of class FullNTupleMaxTile.
+     * Test of computeNumericRepresentationFor method, of class
+     * FullNTupleMaxTile.
      */
     @Test
     public void testComputeNumericRepresentationFor() {
@@ -401,7 +403,8 @@ public class FullNTupleMaxTileTest {
     }
 
     /**
-     * Test of denormalizeValueFromPerceptronOutput method, of class FullNTupleMaxTile.
+     * Test of denormalizeValueFromPerceptronOutput method, of class
+     * FullNTupleMaxTile.
      */
     @Test
     public void testDenormalizeValueFromPerceptronOutput() {
@@ -448,7 +451,8 @@ public class FullNTupleMaxTileTest {
     }
 
     /**
-     * Test of normalizeValueToPerceptronOutput method, of class FullNTupleMaxTile.
+     * Test of normalizeValueToPerceptronOutput method, of class
+     * FullNTupleMaxTile.
      */
     @Test
     public void testNormalizeValueToPerceptronOutput() {
@@ -463,27 +467,27 @@ public class FullNTupleMaxTileTest {
     }
 
     /**
-     * Test of translateRealOutputToNormalizedPerceptronOutputFrom method, of class
-     * BoardMaxTile.
+     * Test of translateRealOutputToNormalizedPerceptronOutputFrom method, of
+     * class BoardMaxTile.
      */
     @Test
     public void testTranslateThisFinalStateToPerceptronOutput() {
         System.out.println("translateThisFinalStateToPerceptronOutput");
-        
+
         GameBoard<BasicNetwork> board = new GameBoard<>(game, tileContainer);
         board.setTiles(initialBoard);
         board.updateInternalState(true);
-        
+
         double temp = ((4d - 0d) / (17d - 0d)) * (1d - -1d) + -1d;
         assertEquals(temp, board.translateThisFinalStateToPerceptronOutput(0), 0.0d);
-        
+
         board = new GameBoard<>(game, tileContainer);
         board.setTiles(randomBoard1);
         board.updateInternalState(true);
-        
+
         temp = ((17d - 0d) / (17d - 0d)) * (1d - -1d) + -1d;
         assertEquals(temp, board.translateThisFinalStateToPerceptronOutput(0), 0.0d);
-        
+
     }
 
 }

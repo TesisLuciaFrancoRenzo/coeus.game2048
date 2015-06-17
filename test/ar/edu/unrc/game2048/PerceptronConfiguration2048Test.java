@@ -7,6 +7,8 @@ package ar.edu.unrc.game2048;
 
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IsolatedComputation;
 import java.util.List;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -39,13 +41,14 @@ public class PerceptronConfiguration2048Test {
     }
 
     /**
-     * Test of calculateNormalizedPerceptronInput method, of class PerceptronConfiguration2048.
+     * Test of calculateNormalizedPerceptronInput method, of class
+     * PerceptronConfiguration2048.
      */
     @Test
     public void testCalculateNormalizedPerceptronInput() {
         System.out.println("calculateNormalizedPerceptronInput");
         PerceptronConfiguration2048 instance = new PerceptronConfiguration2048Impl();
-        instance.calculateNormalizedPerceptronInput(null);
+        //   instance.calculateNormalizedPerceptronInput(null);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -65,7 +68,8 @@ public class PerceptronConfiguration2048Test {
     }
 
     /**
-     * Test of computeNumericRepresentationFor method, of class PerceptronConfiguration2048.
+     * Test of computeNumericRepresentationFor method, of class
+     * PerceptronConfiguration2048.
      */
     @Test
     public void testComputeNumericRepresentationFor() {
@@ -109,17 +113,34 @@ public class PerceptronConfiguration2048Test {
 
     public class PerceptronConfiguration2048Impl extends PerceptronConfiguration2048 {
 
-        /**
-         *
-         * @param board
-         * @param normalizedPerceptronInput
-         */
-        public void calculateNormalizedPerceptronInput(GameBoard<NeuralNetworkClass> board, List<Double> normalizedPerceptronInput) {
+        @Override
+        public void calculateNormalizedPerceptronInput(GameBoard board, List normalizedPerceptronInput) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
 
         @Override
         public IsolatedComputation<Double> computeNumericRepresentationFor(Game2048 game, Object[] output) {
             return null;
+        }
+
+        @Override
+        public double denormalizeValueFromPerceptronOutput(Object value) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public double getBoardReward(GameBoard board, int outputNeuron) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public double getFinalReward(Game2048 game, int outputNeuron) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public double normalizeValueToPerceptronOutput(Object value) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
     }
 
