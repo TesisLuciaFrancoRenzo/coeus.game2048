@@ -19,7 +19,7 @@ import org.encog.util.arrayutil.NormalizedField;
  *
  * @author Franco
  */
-public class BasicMaxTile extends NTupleConfiguration2048 {
+public class BasicMaxTileTanH extends NTupleConfiguration2048 {
 
     int maxReward = 15;
     int minReward = -15;
@@ -27,7 +27,7 @@ public class BasicMaxTile extends NTupleConfiguration2048 {
     /**
      *
      */
-    public BasicMaxTile() {
+    public BasicMaxTileTanH() {
         this.activationFunction = FunctionUtils.tanh;
         this.derivatedActivationFunction = FunctionUtils.derivatedTanh;
         nTuplesLenght = new int[17];
