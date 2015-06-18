@@ -89,7 +89,11 @@ public class ThreadResult {
      * @return the maxTurn
      */
     public double getMaxTurn() {
-        return maxTurn;
+        if ( winGames > 0 ) {
+            return maxTurn;
+        } else {
+            return 0;
+        }
     }
 
     /**
@@ -103,7 +107,11 @@ public class ThreadResult {
      * @return the maxScore
      */
     public double getMeanTurn() {
-        return totalTurn / (winGames * 1d);
+        if ( winGames > 0 ) {
+            return totalTurn / (winGames * 1d);
+        } else {
+            return 0;
+        }
     }
 
     /**
@@ -117,7 +125,11 @@ public class ThreadResult {
      * @return the minTurn
      */
     public double getMinTurn() {
-        return minTurn;
+        if ( winGames > 0 ) {
+            return minTurn;
+        } else {
+            return 0;
+        }
     }
 
     /**
