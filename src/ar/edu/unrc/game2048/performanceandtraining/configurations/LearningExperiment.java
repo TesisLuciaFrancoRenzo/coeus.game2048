@@ -25,7 +25,6 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -772,19 +771,15 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
                     for ( int file = 0; file < backupFiles.size(); file++ ) {
                         Cell cell = row.createCell(file + colStart, Cell.CELL_TYPE_NUMERIC);
                         Double cellValue = resultsPerFile.get(backupFiles.get(file)).getWinRate();
+                        assert cellValue <= 100 && cellValue >= 0;
                         cell.setCellValue(cellValue);
-                        CellStyle style = wb.createCellStyle();
-                        style.setDataFormat(wb.createDataFormat().getFormat("0.000%"));
-                        cell.setCellStyle(style);
                     }
                     if ( !resultsRandom.isEmpty() ) {
                         int file = 0;
                         Cell cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
                         Double cellValue = resultsPerFile.get(backupFiles.get(file)).getWinRate();
+                        assert cellValue <= 100 && cellValue >= 0;
                         cell.setCellValue(cellValue);
-                        CellStyle style = wb.createCellStyle();
-                        style.setDataFormat(wb.createDataFormat().getFormat("0.000%")); //FIXME Muestra mal los porcentajes, arreglar
-                        cell.setCellStyle(style);
                     }
 
                     //============= imptimimos en la hoja de Turns ===================

@@ -533,8 +533,8 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
                     throw new IllegalArgumentException("Cant use the action keyCode = " + keyCode);
                 }
             }
-
             if ( afterstate != null ) {
+                turnNumber++;
                 myScore += ((GameBoard<NeuralNetworkClass>) afterstate).getPartialScore();
                 board = (GameBoard<NeuralNetworkClass>) computeNextTurnStateFromAfterstate(afterstate);
                 if ( getBoard().isAWin() ) {

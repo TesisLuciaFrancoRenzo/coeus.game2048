@@ -164,6 +164,7 @@ public class ThreadResult {
     }
 
     void addLastTurn(int lastTurn) {
+        assert lastTurn != 0;
         totalTurn += lastTurn;
         if ( lastTurn > maxTurn ) {
             maxTurn = lastTurn;

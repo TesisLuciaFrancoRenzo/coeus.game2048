@@ -302,8 +302,6 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
                         if ( games.get(i).getMaxNumber() >= 2_048 ) {
                             results.get(i).addWin();
                             results.get(i).addLastTurn(games.get(i).getLastTurn());
-                        } else {
-                            results.get(i).addLastTurn(0);
                         }
 
                     }
