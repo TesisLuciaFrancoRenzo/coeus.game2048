@@ -21,21 +21,36 @@ import org.junit.Test;
  */
 public class StatisticExperimentTest {
 
+    /**
+     *
+     */
     @BeforeClass
     public static void setUpClass() {
     }
 
+    /**
+     *
+     */
     @AfterClass
     public static void tearDownClass() {
     }
 
+    /**
+     *
+     */
     public StatisticExperimentTest() {
     }
 
+    /**
+     *
+     */
     @Before
     public void setUp() {
     }
 
+    /**
+     *
+     */
     @After
     public void tearDown() {
     }
@@ -154,6 +169,7 @@ public class StatisticExperimentTest {
 
     /**
      * Test of initializeStatistics method, of class StatisticExperiment.
+     * @throws java.lang.Exception
      */
     @Test
     public void testInitializeStatistics() throws Exception {
@@ -166,6 +182,7 @@ public class StatisticExperimentTest {
 
     /**
      * Test of run method, of class StatisticExperiment.
+     * @throws java.lang.Exception
      */
     @Test
     public void testRun() throws Exception {
@@ -283,8 +300,14 @@ public class StatisticExperimentTest {
         fail("The test case is a prototype.");
     }
 
+    /**
+     *
+     */
     public class StatisticExperimentImpl extends StatisticExperiment {
 
+        /**
+         *
+         */
         public StatisticExperimentImpl() {
             super(null);
         }
@@ -294,12 +317,23 @@ public class StatisticExperimentTest {
         }
     }
 
+    /**
+     *
+     */
     public class StatisticExperimentImpl extends StatisticExperiment {
 
+        /**
+         *
+         */
         public StatisticExperimentImpl() {
             super(null);
         }
 
+        /**
+         *
+         * @throws Exception
+         */
+        @Override
         public void initializeStatistics() throws Exception {
         }
     }

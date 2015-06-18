@@ -22,27 +22,43 @@ import org.junit.Test;
  */
 public class NTupleConfiguration2048Test {
 
+    /**
+     *
+     */
     @BeforeClass
     public static void setUpClass() {
     }
 
+    /**
+     *
+     */
     @AfterClass
     public static void tearDownClass() {
     }
 
+    /**
+     *
+     */
     public NTupleConfiguration2048Test() {
     }
 
+    /**
+     *
+     */
     @Before
     public void setUp() {
     }
 
+    /**
+     *
+     */
     @After
     public void tearDown() {
     }
 
     /**
      * Test of clone method, of class NTupleConfiguration2048.
+     * @throws java.lang.Exception
      */
     @Test
     public void testClone() throws Exception {
@@ -98,6 +114,9 @@ public class NTupleConfiguration2048Test {
         fail("The test case is a prototype.");
     }
 
+    /**
+     *
+     */
     public class NTupleConfiguration2048Impl extends NTupleConfiguration2048 {
 
         @Override
@@ -126,8 +145,18 @@ public class NTupleConfiguration2048Test {
         }
     }
 
+    /**
+     *
+     */
     public class NTupleConfiguration2048Impl extends NTupleConfiguration2048 {
 
+        /**
+         *
+         * @param board
+         * @param nTupleIndex
+         * @return
+         */
+        @Override
         public SamplePointState[] getNTuple(GameBoard board, int nTupleIndex) {
             return null;
         }

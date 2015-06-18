@@ -24,21 +24,36 @@ import org.junit.Test;
  */
 public class RandomExperimentInterfaceTest {
 
+    /**
+     *
+     */
     @BeforeClass
     public static void setUpClass() {
     }
 
+    /**
+     *
+     */
     @AfterClass
     public static void tearDownClass() {
     }
 
+    /**
+     *
+     */
     public RandomExperimentInterfaceTest() {
     }
 
+    /**
+     *
+     */
     @Before
     public void setUp() {
     }
 
+    /**
+     *
+     */
     @After
     public void tearDown() {
     }
@@ -89,6 +104,7 @@ public class RandomExperimentInterfaceTest {
     /**
      * Test of loadOrCreatePerceptron method, of class
      * RandomExperimentInterface.
+     * @throws java.lang.Exception
      */
     @Test
     public void testLoadOrCreatePerceptron() throws Exception {
@@ -119,6 +135,7 @@ public class RandomExperimentInterfaceTest {
 
     /**
      * Test of savePerceptron method, of class RandomExperimentInterface.
+     * @throws java.lang.Exception
      */
     @Test
     public void testSavePerceptron() throws Exception {

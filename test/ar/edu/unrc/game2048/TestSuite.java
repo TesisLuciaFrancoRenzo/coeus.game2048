@@ -5,10 +5,10 @@ package ar.edu.unrc.game2048;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.BoardMaxTileTest;
-import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.FullNTupleMaxTileTest;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.libraries.EncogExperimentInterfaceTest;
+import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.BoardMaxTileTest;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.BoardScoreCustomNormalizationTest;
+import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.FullNTupleMaxTileTest;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

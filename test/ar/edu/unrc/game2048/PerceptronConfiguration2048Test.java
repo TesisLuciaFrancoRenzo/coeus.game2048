@@ -21,21 +21,36 @@ import org.junit.Test;
  */
 public class PerceptronConfiguration2048Test {
 
+    /**
+     *
+     */
     @BeforeClass
     public static void setUpClass() {
     }
 
+    /**
+     *
+     */
     @AfterClass
     public static void tearDownClass() {
     }
 
+    /**
+     *
+     */
     public PerceptronConfiguration2048Test() {
     }
 
+    /**
+     *
+     */
     @Before
     public void setUp() {
     }
 
+    /**
+     *
+     */
     @After
     public void tearDown() {
     }
@@ -55,6 +70,7 @@ public class PerceptronConfiguration2048Test {
 
     /**
      * Test of clone method, of class PerceptronConfiguration2048.
+     * @throws java.lang.Exception
      */
     @Test
     public void testClone() throws Exception {
@@ -111,6 +127,9 @@ public class PerceptronConfiguration2048Test {
         fail("The test case is a prototype.");
     }
 
+    /**
+     *
+     */
     public class PerceptronConfiguration2048Impl extends PerceptronConfiguration2048 {
 
         @Override
@@ -144,11 +163,27 @@ public class PerceptronConfiguration2048Test {
         }
     }
 
+    /**
+     *
+     */
     public class PerceptronConfiguration2048Impl extends PerceptronConfiguration2048 {
 
+        /**
+         *
+         * @param board
+         * @param normalizedPerceptronInput
+         */
+        @Override
         public void calculateNormalizedPerceptronInput(GameBoard<NeuralNetworkClass> board, List<Double> normalizedPerceptronInput) {
         }
 
+        /**
+         *
+         * @param game
+         * @param output
+         * @return
+         */
+        @Override
         public IsolatedComputation<Double> computeNumericRepresentationFor(Game2048 game, Object[] output) {
             return null;
         }

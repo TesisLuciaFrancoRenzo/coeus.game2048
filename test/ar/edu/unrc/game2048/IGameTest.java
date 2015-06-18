@@ -19,21 +19,36 @@ import org.junit.Test;
  */
 public class IGameTest {
 
+    /**
+     *
+     */
     @BeforeClass
     public static void setUpClass() {
     }
 
+    /**
+     *
+     */
     @AfterClass
     public static void tearDownClass() {
     }
 
+    /**
+     *
+     */
     public IGameTest() {
     }
 
+    /**
+     *
+     */
     @Before
     public void setUp() {
     }
 
+    /**
+     *
+     */
     @After
     public void tearDown() {
     }
@@ -119,25 +134,13 @@ public class IGameTest {
         fail("The test case is a prototype.");
     }
 
+    /**
+     *
+     */
     public class IGameImpl implements IGame {
 
         @Override
-        public void processInput(int keyCode) {
-        }
-
-        @Override
-        public boolean iWin() {
-            return false;
-        }
-
-        @Override
-        public boolean iLoose() {
-            return false;
-        }
-
-        @Override
-        public int getScore() {
-            return 0;
+        public void dispose() {
         }
 
         @Override
@@ -146,32 +149,56 @@ public class IGameTest {
         }
 
         @Override
-        public void dispose() {
+        public int getScore() {
+            return 0;
+        }
+
+        @Override
+        public boolean iLoose() {
+            return false;
+        }
+
+        @Override
+        public boolean iWin() {
+            return false;
+        }
+
+        @Override
+        public void processInput(int keyCode) {
         }
     }
 
+    /**
+     *
+     */
     public class IGameImpl implements IGame {
 
-        public void processInput(int keyCode) {
+        @Override
+        public void dispose() {
         }
 
-        public boolean iWin() {
-            return false;
-        }
-
-        public boolean iLoose() {
-            return false;
-        }
-
-        public int getScore() {
-            return 0;
-        }
-
+        @Override
         public int getMaxNumber() {
             return 0;
         }
 
-        public void dispose() {
+        @Override
+        public int getScore() {
+            return 0;
+        }
+
+        @Override
+        public boolean iLoose() {
+            return false;
+        }
+
+        @Override
+        public boolean iWin() {
+            return false;
+        }
+
+        @Override
+        public void processInput(int keyCode) {
         }
     }
 

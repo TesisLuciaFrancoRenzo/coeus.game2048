@@ -35,10 +35,10 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
     private int gamesToPlay;
     private TDLambdaLearning learningMethod;
     private double maxScore;
-    private double meanScore;
-    private double minScore;
     private double maxTurn;
+    private double meanScore;
     private double meanTurn;
+    private double minScore;
     private double minTurn;
     private String perceptronName;
     private int simulations;
@@ -339,6 +339,7 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
             tileStatistics.set(i, tileStatistics.get(i) / (simulations * 1d));
         }
         winRate = winRate / (simulations * 1d);
+        assert winRate < 100;
         maxScore = maxScore / (simulations * 1d);
         minScore = minScore / (simulations * 1d);
         meanScore = meanScore / (simulations * 1d);

@@ -24,27 +24,43 @@ import org.junit.Test;
  */
 public class INeuralNetworkInterfaceFor2048Test {
 
+    /**
+     *
+     */
     @BeforeClass
     public static void setUpClass() {
     }
 
+    /**
+     *
+     */
     @AfterClass
     public static void tearDownClass() {
     }
 
+    /**
+     *
+     */
     public INeuralNetworkInterfaceFor2048Test() {
     }
 
+    /**
+     *
+     */
     @Before
     public void setUp() {
     }
 
+    /**
+     *
+     */
     @After
     public void tearDown() {
     }
 
     /**
      * Test of clone method, of class INeuralNetworkInterfaceFor2048.
+     * @throws java.lang.Exception
      */
     @Test
     public void testClone() throws Exception {
@@ -134,6 +150,7 @@ public class INeuralNetworkInterfaceFor2048Test {
     /**
      * Test of loadOrCreatePerceptron method, of class
      * INeuralNetworkInterfaceFor2048.
+     * @throws java.lang.Exception
      */
     @Test
     public void testLoadOrCreatePerceptron() throws Exception {
@@ -162,6 +179,7 @@ public class INeuralNetworkInterfaceFor2048Test {
 
     /**
      * Test of savePerceptron method, of class INeuralNetworkInterfaceFor2048.
+     * @throws java.lang.Exception
      */
     @Test
     public void testSavePerceptron() throws Exception {
@@ -200,8 +218,14 @@ public class INeuralNetworkInterfaceFor2048Test {
         fail("The test case is a prototype.");
     }
 
+    /**
+     *
+     */
     public class INeuralNetworkInterfaceFor2048Impl extends INeuralNetworkInterfaceFor2048 {
 
+        /**
+         *
+         */
         public INeuralNetworkInterfaceFor2048Impl() {
             super(null);
         }
@@ -229,26 +253,61 @@ public class INeuralNetworkInterfaceFor2048Test {
         }
     }
 
+    /**
+     *
+     */
     public class INeuralNetworkInterfaceFor2048Impl extends INeuralNetworkInterfaceFor2048 {
 
+        /**
+         *
+         */
         public INeuralNetworkInterfaceFor2048Impl() {
             super(null);
         }
 
+        /**
+         *
+         * @param randomFile
+         * @param trainedFile
+         */
+        @Override
         public void compareNeuralNetworks(File randomFile, File trainedFile) {
         }
 
+        /**
+         *
+         * @return
+         */
+        @Override
         public String getLibName() {
             return "";
         }
 
+        /**
+         *
+         * @return
+         */
+        @Override
         public IPerceptronInterface getPerceptronInterface() {
             return null;
         }
 
+        /**
+         *
+         * @param perceptronFile
+         * @param randomizedIfNotExist
+         * @throws Exception
+         */
+        @Override
         public void loadOrCreatePerceptron(File perceptronFile, boolean randomizedIfNotExist) throws Exception {
         }
 
+        /**
+         *
+         * @param perceptronFile
+         * @throws Exception
+         */
+        @Override
         public void savePerceptron(File perceptronFile) throws Exception {
         }
     }

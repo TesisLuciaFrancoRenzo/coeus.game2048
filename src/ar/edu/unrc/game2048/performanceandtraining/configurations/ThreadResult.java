@@ -15,15 +15,16 @@ import java.util.List;
 public class ThreadResult {
 
     private double maxScore;
-    private double minScore;
 
     private double maxTurn;
+    private double minScore;
     private double minTurn;
 
     private int procesedGames;
     private final List<Integer> tileStatistics;
+    private double totalScore;
     private int winGames = 0;
-    double totalScore;
+    double totalTurn;
 
     /**
      *
@@ -99,6 +100,13 @@ public class ThreadResult {
     }
 
     /**
+     * @return the maxScore
+     */
+    public double getMeanTurn() {
+        return totalTurn / (procesedGames * 1d);
+    }
+
+    /**
      * @return the minScore
      */
     public double getMinScore() {
@@ -136,20 +144,12 @@ public class ThreadResult {
         return tileStatistics.get(tileCode);
     }
 
+
     /**
      * @return the winGames
      */
     public double getWinRate() {
         return (winGames * 100d) / (procesedGames * 1d);
-    }
-
-    double totalTurn;
-
-    /**
-     * @return the maxScore
-     */
-    public double getMeanTurn() {
-        return totalTurn / (procesedGames * 1d);
     }
 
     void addLastTurn(int lastTurn) {

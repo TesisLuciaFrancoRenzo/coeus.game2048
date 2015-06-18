@@ -22,21 +22,36 @@ import org.junit.Test;
  */
 public class NTupleExperimentInterfaceTest {
 
+    /**
+     *
+     */
     @BeforeClass
     public static void setUpClass() {
     }
 
+    /**
+     *
+     */
     @AfterClass
     public static void tearDownClass() {
     }
 
+    /**
+     *
+     */
     public NTupleExperimentInterfaceTest() {
     }
 
+    /**
+     *
+     */
     @Before
     public void setUp() {
     }
 
+    /**
+     *
+     */
     @After
     public void tearDown() {
     }
@@ -103,6 +118,7 @@ public class NTupleExperimentInterfaceTest {
     /**
      * Test of loadOrCreatePerceptron method, of class
      * NTupleExperimentInterface.
+     * @throws java.lang.Exception
      */
     @Test
     public void testLoadOrCreatePerceptron() throws Exception {
@@ -117,6 +133,7 @@ public class NTupleExperimentInterfaceTest {
 
     /**
      * Test of savePerceptron method, of class NTupleExperimentInterface.
+     * @throws java.lang.Exception
      */
     @Test
     public void testSavePerceptron() throws Exception {

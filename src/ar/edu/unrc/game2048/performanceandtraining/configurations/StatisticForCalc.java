@@ -13,12 +13,12 @@ import java.util.List;
  */
 public class StatisticForCalc {
 
-    private double maxTurn;
-    private double meanTurn;
-    private double minTurn;
     private double maxScore;
+    private double maxTurn;
     private double meanScore;
+    private double meanTurn;
     private double minScore;
+    private double minTurn;
     private List<Double> tileStatistics;
     private double winRate;
 

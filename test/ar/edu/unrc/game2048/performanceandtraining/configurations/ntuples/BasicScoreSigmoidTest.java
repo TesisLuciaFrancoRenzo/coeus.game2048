@@ -23,15 +23,15 @@ import org.junit.Test;
  */
 public class BasicScoreSigmoidTest {
 
-    public BasicScoreSigmoidTest() {
-    }
-
     @BeforeClass
     public static void setUpClass() {
     }
 
     @AfterClass
     public static void tearDownClass() {
+    }
+
+    public BasicScoreSigmoidTest() {
     }
 
     @Before

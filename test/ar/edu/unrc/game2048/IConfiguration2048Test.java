@@ -19,21 +19,36 @@ import org.junit.Test;
  */
 public class IConfiguration2048Test {
 
+    /**
+     *
+     */
     @BeforeClass
     public static void setUpClass() {
     }
 
+    /**
+     *
+     */
     @AfterClass
     public static void tearDownClass() {
     }
 
+    /**
+     *
+     */
     public IConfiguration2048Test() {
     }
 
+    /**
+     *
+     */
     @Before
     public void setUp() {
     }
 
+    /**
+     *
+     */
     @After
     public void tearDown() {
     }
@@ -102,6 +117,9 @@ public class IConfiguration2048Test {
         fail("The test case is a prototype.");
     }
 
+    /**
+     *
+     */
     public class IConfiguration2048Impl implements IConfiguration2048 {
 
         @Override
@@ -125,20 +143,49 @@ public class IConfiguration2048Test {
         }
     }
 
+    /**
+     *
+     */
     public class IConfiguration2048Impl implements IConfiguration2048 {
 
+        /**
+         *
+         * @param value
+         * @return
+         */
+        @Override
         public double denormalizeValueFromPerceptronOutput(Object value) {
             return 0.0;
         }
 
+        /**
+         *
+         * @param board
+         * @param outputNeuron
+         * @return
+         */
+        @Override
         public double getBoardReward(GameBoard board, int outputNeuron) {
             return 0.0;
         }
 
+        /**
+         *
+         * @param game
+         * @param outputNeuron
+         * @return
+         */
+        @Override
         public double getFinalReward(Game2048 game, int outputNeuron) {
             return 0.0;
         }
 
+        /**
+         *
+         * @param value
+         * @return
+         */
+        @Override
         public double normalizeValueToPerceptronOutput(Object value) {
             return 0.0;
         }

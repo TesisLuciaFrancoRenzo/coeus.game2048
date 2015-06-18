@@ -22,27 +22,43 @@ import org.junit.Test;
  */
 public class Experiment_07Test {
 
+    /**
+     *
+     */
     @BeforeClass
     public static void setUpClass() {
     }
 
+    /**
+     *
+     */
     @AfterClass
     public static void tearDownClass() {
     }
 
+    /**
+     *
+     */
     public Experiment_07Test() {
     }
 
+    /**
+     *
+     */
     @Before
     public void setUp() {
     }
 
+    /**
+     *
+     */
     @After
     public void tearDown() {
     }
 
     /**
      * Test of initialize method, of class Experiment_07.
+     * @throws java.lang.Exception
      */
     @Test
     public void testInitialize() throws Exception {
@@ -87,6 +103,7 @@ public class Experiment_07Test {
 
     /**
      * Test of main method, of class Experiment_07.
+     * @throws java.lang.Exception
      */
     @Test
     public void testMain() throws Exception {

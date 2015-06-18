@@ -21,21 +21,36 @@ import org.junit.Test;
  */
 public class VisualExperimentTest {
 
+    /**
+     *
+     */
     @BeforeClass
     public static void setUpClass() {
     }
 
+    /**
+     *
+     */
     @AfterClass
     public static void tearDownClass() {
     }
 
+    /**
+     *
+     */
     public VisualExperimentTest() {
     }
 
+    /**
+     *
+     */
     @Before
     public void setUp() {
     }
 
+    /**
+     *
+     */
     @After
     public void tearDown() {
     }
@@ -140,6 +155,7 @@ public class VisualExperimentTest {
 
     /**
      * Test of initializeVisual method, of class VisualExperiment.
+     * @throws java.lang.Exception
      */
     @Test
     public void testInitializeVisual() throws Exception {
@@ -152,6 +168,7 @@ public class VisualExperimentTest {
 
     /**
      * Test of run method, of class VisualExperiment.
+     * @throws java.lang.Exception
      */
     @Test
     public void testRun() throws Exception {
@@ -267,8 +284,14 @@ public class VisualExperimentTest {
         fail("The test case is a prototype.");
     }
 
+    /**
+     *
+     */
     public class VisualExperimentImpl extends VisualExperiment {
 
+        /**
+         *
+         */
         public VisualExperimentImpl() {
             super(null);
         }
@@ -278,12 +301,23 @@ public class VisualExperimentTest {
         }
     }
 
+    /**
+     *
+     */
     public class VisualExperimentImpl extends VisualExperiment {
 
+        /**
+         *
+         */
         public VisualExperimentImpl() {
             super(null);
         }
 
+        /**
+         *
+         * @throws Exception
+         */
+        @Override
         public void initializeVisual() throws Exception {
         }
     }

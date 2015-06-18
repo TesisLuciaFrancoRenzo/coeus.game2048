@@ -23,21 +23,36 @@ import org.junit.Test;
  */
 public class LearningExperimentTest {
 
+    /**
+     *
+     */
     @BeforeClass
     public static void setUpClass() {
     }
 
+    /**
+     *
+     */
     @AfterClass
     public static void tearDownClass() {
     }
 
+    /**
+     *
+     */
     public LearningExperimentTest() {
     }
 
+    /**
+     *
+     */
     @Before
     public void setUp() {
     }
 
+    /**
+     *
+     */
     @After
     public void tearDown() {
     }
@@ -284,6 +299,7 @@ public class LearningExperimentTest {
 
     /**
      * Test of initialize method, of class LearningExperiment.
+     * @throws java.lang.Exception
      */
     @Test
     public void testInitialize() throws Exception {
@@ -384,6 +400,7 @@ public class LearningExperimentTest {
 
     /**
      * Test of runExperiment method, of class LearningExperiment.
+     * @throws java.lang.Exception
      */
     @Test
     public void testRunExperiment() throws Exception {
@@ -730,6 +747,7 @@ public class LearningExperimentTest {
 
     /**
      * Test of training method, of class LearningExperiment.
+     * @throws java.lang.Exception
      */
     @Test
     public void testTraining() throws Exception {
@@ -740,6 +758,9 @@ public class LearningExperimentTest {
         fail("The test case is a prototype.");
     }
 
+    /**
+     *
+     */
     public class LearningExperimentImpl extends LearningExperiment {
 
         @Override
@@ -757,29 +778,69 @@ public class LearningExperimentTest {
         }
     }
 
+    /**
+     *
+     */
     public class LearningExperimentImpl extends LearningExperiment {
 
+        /**
+         *
+         * @throws Exception
+         */
+        @Override
         public void initialize() throws Exception {
         }
 
+        /**
+         *
+         * @param perceptronInterface
+         * @return
+         */
+        @Override
         public TDLambdaLearning instanceOfTdLearninrgImplementation(IPerceptronInterface perceptronInterface) {
             return null;
         }
 
+        /**
+         *
+         * @param nTupleSystem
+         * @return
+         */
+        @Override
         public TDLambdaLearning instanceOfTdLearninrgImplementation(NTupleSystem nTupleSystem) {
             return null;
         }
     }
 
+    /**
+     *
+     */
     public class LearningExperimentImpl extends LearningExperiment {
 
+        /**
+         *
+         * @throws Exception
+         */
+        @Override
         public void initialize() throws Exception {
         }
 
+        /**
+         *
+         * @param perceptronInterface
+         * @return
+         */
+        @Override
         public TDLambdaLearning instanceOfTdLearninrgImplementation(IPerceptronInterface perceptronInterface) {
             return null;
         }
 
+        /**
+         *
+         * @param nTupleSystem
+         * @return
+         */
+        @Override
         public TDLambdaLearning instanceOfTdLearninrgImplementation(NTupleSystem nTupleSystem) {
             return null;
         }
