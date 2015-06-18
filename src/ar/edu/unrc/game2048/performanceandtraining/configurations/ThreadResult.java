@@ -17,6 +17,9 @@ public class ThreadResult {
     private double maxScore;
     private double minScore;
 
+    private double maxTurn;
+    private double minTurn;
+
     private int procesedGames;
     private final List<Integer> tileStatistics;
     private int winGames = 0;
@@ -32,8 +35,11 @@ public class ThreadResult {
             tileStatistics.add(0);
         }
         totalScore = 0;
+        totalTurn = 0;
         maxScore = 0;
         minScore = Integer.MAX_VALUE;
+        maxTurn = 0;
+        minTurn = Integer.MAX_VALUE;
     }
 
     /**
@@ -79,6 +85,13 @@ public class ThreadResult {
     }
 
     /**
+     * @return the maxTurn
+     */
+    public double getMaxTurn() {
+        return maxTurn;
+    }
+
+    /**
      * @return the maxScore
      */
     public double getMeanScore() {
@@ -90,6 +103,13 @@ public class ThreadResult {
      */
     public double getMinScore() {
         return minScore;
+    }
+
+    /**
+     * @return the minTurn
+     */
+    public double getMinTurn() {
+        return minTurn;
     }
 
     /**
@@ -121,5 +141,24 @@ public class ThreadResult {
      */
     public double getWinRate() {
         return (winGames * 100d) / (procesedGames * 1d);
+    }
+
+    double totalTurn;
+
+    /**
+     * @return the maxScore
+     */
+    public double getMeanTurn() {
+        return totalTurn / (procesedGames * 1d);
+    }
+
+    void addLastTurn(int lastTurn) {
+        totalTurn += lastTurn;
+        if ( lastTurn > maxTurn ) {
+            maxTurn = lastTurn;
+        }
+        if ( lastTurn < minTurn ) {
+            minTurn = lastTurn;
+        }
     }
 }

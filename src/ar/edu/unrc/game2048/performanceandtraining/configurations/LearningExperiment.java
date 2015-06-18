@@ -774,7 +774,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
                         Double cellValue = resultsPerFile.get(backupFiles.get(file)).getWinRate();
                         cell.setCellValue(cellValue);
                         CellStyle style = wb.createCellStyle();
-                        style.setDataFormat(wb.createDataFormat().getFormat("0.0%"));
+                        style.setDataFormat(wb.createDataFormat().getFormat("0.000%"));
                         cell.setCellStyle(style);
                     }
                     if ( !resultsRandom.isEmpty() ) {
@@ -783,8 +783,53 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
                         Double cellValue = resultsPerFile.get(backupFiles.get(file)).getWinRate();
                         cell.setCellValue(cellValue);
                         CellStyle style = wb.createCellStyle();
-                        style.setDataFormat(wb.createDataFormat().getFormat("0.00%")); //FIXME Muestra mal los porcentajes, arreglar
+                        style.setDataFormat(wb.createDataFormat().getFormat("0.000%")); //FIXME Muestra mal los porcentajes, arreglar
                         cell.setCellStyle(style);
+                    }
+
+                    //============= imptimimos en la hoja de Turns ===================
+                    sheet = wb.getSheetAt(3);
+                    rowStart = 2;
+
+                    row = sheet.getRow(rowStart - 1);
+                    for ( int file = 0; file < backupFiles.size(); file++ ) {
+                        Cell cell = row.createCell(file + colStart, Cell.CELL_TYPE_NUMERIC);
+                        Double cellValue = resultsPerFile.get(backupFiles.get(file)).getMinTurn();
+                        cell.setCellValue(cellValue);
+                    }
+                    if ( !resultsRandom.isEmpty() ) {
+                        int file = 0;
+                        Cell cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
+                        Double cellValue = resultsPerFile.get(backupFiles.get(file)).getMinTurn();
+                        cell.setCellValue(cellValue);
+                    }
+
+                    rowStart = 3;
+                    row = sheet.getRow(rowStart - 1);
+                    for ( int file = 0; file < backupFiles.size(); file++ ) {
+                        Cell cell = row.createCell(file + colStart, Cell.CELL_TYPE_NUMERIC);
+                        Double cellValue = resultsPerFile.get(backupFiles.get(file)).getMeanTurn();
+                        cell.setCellValue(cellValue);
+                    }
+                    if ( !resultsRandom.isEmpty() ) {
+                        int file = 0;
+                        Cell cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
+                        Double cellValue = resultsPerFile.get(backupFiles.get(file)).getMeanTurn();
+                        cell.setCellValue(cellValue);
+                    }
+
+                    rowStart = 4;
+                    row = sheet.getRow(rowStart - 1);
+                    for ( int file = 0; file < backupFiles.size(); file++ ) {
+                        Cell cell = row.createCell(file + colStart, Cell.CELL_TYPE_NUMERIC);
+                        Double cellValue = resultsPerFile.get(backupFiles.get(file)).getMaxTurn();
+                        cell.setCellValue(cellValue);
+                    }
+                    if ( !resultsRandom.isEmpty() ) {
+                        int file = 0;
+                        Cell cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
+                        Double cellValue = resultsPerFile.get(backupFiles.get(file)).getMaxTurn();
+                        cell.setCellValue(cellValue);
                     }
 
                     wb.write(outputXLSX);

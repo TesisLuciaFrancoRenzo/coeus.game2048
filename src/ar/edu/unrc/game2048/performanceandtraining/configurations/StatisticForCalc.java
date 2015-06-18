@@ -13,6 +13,9 @@ import java.util.List;
  */
 public class StatisticForCalc {
 
+    private double maxTurn;
+    private double meanTurn;
+    private double minTurn;
     private double maxScore;
     private double meanScore;
     private double minScore;
@@ -34,6 +37,20 @@ public class StatisticForCalc {
     }
 
     /**
+     * @return the maxTurn
+     */
+    public double getMaxTurn() {
+        return maxTurn;
+    }
+
+    /**
+     * @param maxTurn the maxTurn to set
+     */
+    public void setMaxTurn(double maxTurn) {
+        this.maxTurn = maxTurn;
+    }
+
+    /**
      * @return the meanScore
      */
     public double getMeanScore() {
@@ -48,6 +65,20 @@ public class StatisticForCalc {
     }
 
     /**
+     * @return the meanTurn
+     */
+    public double getMeanTurn() {
+        return meanTurn;
+    }
+
+    /**
+     * @param meanTurn the meanTurn to set
+     */
+    public void setMeanTurn(double meanTurn) {
+        this.meanTurn = meanTurn;
+    }
+
+    /**
      * @return the minScore
      */
     public double getMinScore() {
@@ -59,6 +90,20 @@ public class StatisticForCalc {
      */
     public void setMinScore(double minScore) {
         this.minScore = minScore;
+    }
+
+    /**
+     * @return the minTurn
+     */
+    public double getMinTurn() {
+        return minTurn;
+    }
+
+    /**
+     * @param minTurn the minTurn to set
+     */
+    public void setMinTurn(double minTurn) {
+        this.minTurn = minTurn;
     }
 
     /**

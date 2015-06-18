@@ -37,6 +37,9 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
     private double maxScore;
     private double meanScore;
     private double minScore;
+    private double maxTurn;
+    private double meanTurn;
+    private double minTurn;
     private String perceptronName;
     private int simulations;
     private List<Double> tileStatistics;
@@ -73,6 +76,9 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
         statistic.setMaxScore(maxScore);
         statistic.setMeanScore(meanScore);
         statistic.setMinScore(minScore);
+        statistic.setMaxTurn(maxTurn);
+        statistic.setMeanTurn(meanTurn);
+        statistic.setMinTurn(minTurn);
         statistic.setTileStatistics(tileStatistics);
         return statistic;
     }
@@ -295,7 +301,11 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
 
                         if ( games.get(i).getMaxNumber() >= 2_048 ) {
                             results.get(i).addWin();
+                            results.get(i).addLastTurn(games.get(i).getLastTurn());
+                        } else {
+                            results.get(i).addLastTurn(0);
                         }
+
                     }
                     games.get(i).dispose();
                 });
@@ -304,6 +314,9 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
         maxScore = 0;
         minScore = 0;
         meanScore = 0;
+        maxTurn = 0;
+        minTurn = 0;
+        meanTurn = 0;
 
         tileStatistics = new ArrayList<>(18);
         for ( int i = 0; i <= 17; i++ ) {
@@ -314,6 +327,9 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
             maxScore += result.getMaxScore();
             minScore += result.getMinScore();
             meanScore += result.getMeanScore();
+            maxTurn += result.getMaxTurn();
+            minTurn += result.getMinTurn();
+            meanTurn += result.getMeanTurn();
             for ( int i = 0; i <= 17; i++ ) {
                 tileStatistics.set(i, tileStatistics.get(i) + result.getStatisticForTile(i));
             }
@@ -326,6 +342,9 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
         maxScore = maxScore / (simulations * 1d);
         minScore = minScore / (simulations * 1d);
         meanScore = meanScore / (simulations * 1d);
+        maxTurn = maxTurn / (simulations * 1d);
+        minTurn = minTurn / (simulations * 1d);
+        meanTurn = meanTurn / (simulations * 1d);
 
         if ( !results.isEmpty() ) {
             //creamos un archivo de logs para acumular estadisticas
@@ -349,6 +368,10 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
                 printStream.println("Maximo puntaje:" + maxScore);
                 printStream.println("Media  puntaje:" + meanScore);
                 printStream.println("Minimo puntaje:" + minScore);
+
+                printStream.println("Maximo turno:" + maxTurn);
+                printStream.println("Media  turno:" + meanTurn);
+                printStream.println("Minimo turno:" + minTurn);
             }
             System.out.println("Finished.");
         }
