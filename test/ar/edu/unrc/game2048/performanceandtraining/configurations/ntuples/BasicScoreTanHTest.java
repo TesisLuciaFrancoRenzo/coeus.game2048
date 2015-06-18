@@ -23,21 +23,36 @@ import org.junit.Test;
  */
 public class BasicScoreTanHTest {
 
+    /**
+     *
+     */
     @BeforeClass
     public static void setUpClass() {
     }
 
+    /**
+     *
+     */
     @AfterClass
     public static void tearDownClass() {
     }
 
+    /**
+     *
+     */
     public BasicScoreTanHTest() {
     }
 
+    /**
+     *
+     */
     @Before
     public void setUp() {
     }
 
+    /**
+     *
+     */
     @After
     public void tearDown() {
     }

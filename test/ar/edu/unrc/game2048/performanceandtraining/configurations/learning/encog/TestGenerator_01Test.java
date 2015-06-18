@@ -20,21 +20,36 @@ import org.junit.Test;
  */
 public class TestGenerator_01Test {
 
+    /**
+     *
+     */
     @BeforeClass
     public static void setUpClass() {
     }
 
+    /**
+     *
+     */
     @AfterClass
     public static void tearDownClass() {
     }
 
+    /**
+     *
+     */
     public TestGenerator_01Test() {
     }
 
+    /**
+     *
+     */
     @Before
     public void setUp() {
     }
 
+    /**
+     *
+     */
     @After
     public void tearDown() {
     }
@@ -64,6 +79,7 @@ public class TestGenerator_01Test {
 
     /**
      * Test of main method, of class TestGenerator_01.
+     * @throws java.lang.Exception
      */
     @Test
     public void testMain() throws Exception {

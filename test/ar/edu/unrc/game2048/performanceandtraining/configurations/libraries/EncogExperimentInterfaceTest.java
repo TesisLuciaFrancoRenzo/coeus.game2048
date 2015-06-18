@@ -485,6 +485,7 @@ public class EncogExperimentInterfaceTest {
 
     /**
      * Test of loadOrCreatePerceptron method, of class EncogExperimentInterface.
+     * @throws java.lang.Exception
      */
     @Test
     public void testLoadOrCreatePerceptron() throws Exception {
@@ -499,6 +500,7 @@ public class EncogExperimentInterfaceTest {
 
     /**
      * Test of savePerceptron method, of class EncogExperimentInterface.
+     * @throws java.lang.Exception
      */
     @Test
     public void testSavePerceptron() throws Exception {

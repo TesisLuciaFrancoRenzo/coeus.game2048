@@ -58,7 +58,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
     private int gamesToPlay;
     private int gamesToPlayPerThreadForStatistics;
     private double gamma;
-    private boolean initializePerceptronRandomized = true;
+    private boolean initializePerceptronRandomized = false;
     private double lambda;
     private int lastGamePlayedNumber;
     private TDLambdaLearning learningAlgorithm;
@@ -66,7 +66,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
     private boolean logsActivated = false;
     private INeuralNetworkInterfaceFor2048<NeuralNetworkClass> neuralNetworkInterfaceFor2048;
     private String perceptronName;
-    private boolean resetEligibilitiTraces;
+    private boolean resetEligibilitiTraces = false;
     private boolean runStatisticForRandom = false;
     private boolean runStatisticsForBackups = false;
     private int saveEvery;
