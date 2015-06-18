@@ -22,7 +22,7 @@ import org.encog.util.arrayutil.NormalizedField;
 public class BasicMaxTileTanH extends NTupleConfiguration2048 {
 
     int maxReward = 15;
-    int minReward = 0;
+    int minReward = -15;
 
     /**
      *
@@ -31,7 +31,7 @@ public class BasicMaxTileTanH extends NTupleConfiguration2048 {
         this.activationFunction = FunctionUtils.tanh;
         this.derivatedActivationFunction = FunctionUtils.derivatedTanh;
         double activationFunctionMax = 1;
-        double activationFunctionMin = 0; //usamos solo la parte positiva
+        double activationFunctionMin = -1; //usamos solo la parte positiva
         nTuplesLenght = new int[17];
         for ( int i = 0; i < 17; i++ ) {
             nTuplesLenght[i] = 4;
