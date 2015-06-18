@@ -103,7 +103,7 @@ public class ThreadResult {
      * @return the maxScore
      */
     public double getMeanTurn() {
-        return totalTurn / (procesedGames * 1d);
+        return totalTurn / (winGames * 1d);
     }
 
     /**
@@ -143,7 +143,6 @@ public class ThreadResult {
     public Integer getStatisticForTile(int tileCode) {
         return tileStatistics.get(tileCode);
     }
-
 
     /**
      * @return the winGames
