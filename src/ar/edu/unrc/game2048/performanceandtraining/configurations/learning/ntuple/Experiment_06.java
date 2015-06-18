@@ -74,7 +74,7 @@ public class Experiment_06 extends LearningExperiment<BasicNetwork> {
     public void initialize() throws Exception {
         this.setTileToWin(32_768);
         if ( this.getExperimentName() == null ) {
-            this.setExperimentName("Experiment_03");
+            this.setExperimentName("Experiment_06");
         }
         this.setPerceptronName(this.getExperimentName());
         NTupleConfiguration2048 config = new BasicScoreTanH();
