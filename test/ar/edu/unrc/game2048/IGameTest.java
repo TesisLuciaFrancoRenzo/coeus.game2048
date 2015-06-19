@@ -225,4 +225,38 @@ public class IGameTest {
         }
     }
 
+    /**
+     *
+     */
+    public class IGameImpl implements IGame {
+
+        @Override
+        public void dispose() {
+        }
+
+        @Override
+        public int getMaxNumber() {
+            return 0;
+        }
+
+        @Override
+        public int getScore() {
+            return 0;
+        }
+
+        @Override
+        public boolean iLoose() {
+            return false;
+        }
+
+        @Override
+        public boolean iWin() {
+            return false;
+        }
+
+        @Override
+        public void processInput(int keyCode) {
+        }
+    }
+
 }

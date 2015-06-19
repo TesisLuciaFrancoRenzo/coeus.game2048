@@ -19,7 +19,7 @@ import org.junit.runners.Suite;
  * @author franco
  */
 @RunWith( Suite.class )
-@Suite.SuiteClasses( {IConfiguration2048Test.class, TileContainerTest.class, PerceptronConfiguration2048Test.class, NTupleConfiguration2048Test.class, IGameTest.class, Game2048Test.class, TileTest.class, ResourcesSuite.class, PerformanceandtrainingSuite.class, GameBoardTest.class, ActionTest.class} )
+@Suite.SuiteClasses( {ResourcesSuite.class, ActionTest.class, PerceptronConfiguration2048Test.class, PerformanceandtrainingSuite.class, TileTest.class, Game2048Test.class, NTupleConfiguration2048Test.class, IConfiguration2048Test.class, IGameTest.class, GameBoardTest.class, TileContainerTest.class})
 public class Game2048Suite {
 
     /**

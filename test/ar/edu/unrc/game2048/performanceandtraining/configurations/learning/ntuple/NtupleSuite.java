@@ -17,7 +17,7 @@ import org.junit.runners.Suite;
  * @author franco
  */
 @RunWith( Suite.class )
-@Suite.SuiteClasses( {Experiment_04bTest.class, Experiment_02Test.class, Experiment_03Test.class, Experiment_04Test.class, Experiment_01Test.class})
+@Suite.SuiteClasses( {Experiment_03Test.class, Experiment_06Test.class, Experiment_04aTest.class, Experiment_01Test.class, Experiment_04bTest.class, Experiment_05Test.class, Experiment_02Test.class, Experiment_04cTest.class})
 public class NtupleSuite {
 
     /**

@@ -17,7 +17,7 @@ import org.junit.runners.Suite;
  * @author franco
  */
 @RunWith( Suite.class )
-@Suite.SuiteClasses( {ar.edu.unrc.game2048.performanceandtraining.experiments.ExperimentSetupTest.class, ar.edu.unrc.game2048.performanceandtraining.experiments.ExperimentRunnerTest.class} )
+@Suite.SuiteClasses( {ExperimentRunnerTest.class, ExperimentSetupTest.class})
 public class ExperimentsSuite {
 
     /**

@@ -322,4 +322,25 @@ public class VisualExperimentTest {
         }
     }
 
+    /**
+     *
+     */
+    public class VisualExperimentImpl extends VisualExperiment {
+
+        /**
+         *
+         */
+        public VisualExperimentImpl() {
+            super(null);
+        }
+
+        /**
+         *
+         * @throws Exception
+         */
+        @Override
+        public void initializeVisual() throws Exception {
+        }
+    }
+
 }

@@ -190,4 +190,52 @@ public class IConfiguration2048Test {
             return 0.0;
         }
     }
+
+    /**
+     *
+     */
+    public class IConfiguration2048Impl implements IConfiguration2048 {
+
+        /**
+         *
+         * @param value
+         * @return
+         */
+        @Override
+        public double denormalizeValueFromPerceptronOutput(Object value) {
+            return 0.0;
+        }
+
+        /**
+         *
+         * @param board
+         * @param outputNeuron
+         * @return
+         */
+        @Override
+        public double getBoardReward(GameBoard board, int outputNeuron) {
+            return 0.0;
+        }
+
+        /**
+         *
+         * @param game
+         * @param outputNeuron
+         * @return
+         */
+        @Override
+        public double getFinalReward(Game2048 game, int outputNeuron) {
+            return 0.0;
+        }
+
+        /**
+         *
+         * @param value
+         * @return
+         */
+        @Override
+        public double normalizeValueToPerceptronOutput(Object value) {
+            return 0.0;
+        }
+    }
 }

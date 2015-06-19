@@ -17,7 +17,7 @@ import org.junit.runners.Suite;
  * @author franco
  */
 @RunWith( Suite.class )
-@Suite.SuiteClasses( {NTupleScoreTest.class, NTupleScoreLinealTest.class, SymetricSample01MaxTileTest.class, BoardMaxTileTest.class, BoardScoreTest.class, FullNTupleMaxTileTest.class, NTupleMaxTileTest.class, SymetricSample02BoardMaxTileTest.class, BoardScoreCustomNormalizationTest.class, SymetricSample01ScoreTest.class, BoardMaxTileCustomNormalizationTest.class, FullNTupleScoreTest.class, BinaryScoreTest.class})
+@Suite.SuiteClasses( {BoardScoreCustomNormalizationTest.class, FullNTupleMaxTileTest.class, SymetricSample01ScoreTest.class, NTupleScoreLinealTest.class, BoardMaxTileCustomNormalizationTest.class, FullNTupleScoreTest.class, SymetricSample02BoardMaxTileTest.class, BinaryScoreTest.class, NTupleMaxTileTest.class, NTupleScoreTest.class, BoardScoreTest.class, BoardMaxTileTest.class, SymetricSample01MaxTileTest.class})
 public class PerceptronsSuite {
 
     /**

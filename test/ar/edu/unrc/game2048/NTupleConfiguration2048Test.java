@@ -162,4 +162,21 @@ public class NTupleConfiguration2048Test {
         }
     }
 
+    /**
+     *
+     */
+    public class NTupleConfiguration2048Impl extends NTupleConfiguration2048 {
+
+        /**
+         *
+         * @param board
+         * @param nTupleIndex
+         * @return
+         */
+        @Override
+        public SamplePointState[] getNTuple(GameBoard board, int nTupleIndex) {
+            return null;
+        }
+    }
+
 }

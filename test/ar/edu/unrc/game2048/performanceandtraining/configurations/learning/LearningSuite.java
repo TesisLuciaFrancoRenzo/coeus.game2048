@@ -21,7 +21,7 @@ import org.junit.runners.Suite;
  * @author franco
  */
 @RunWith( Suite.class )
-@Suite.SuiteClasses( {EncogSuite.class, RandomSuite.class, GreedySuite.class, NtupleSuite.class})
+@Suite.SuiteClasses( {NtupleSuite.class, RandomSuite.class, GreedySuite.class, EncogSuite.class})
 public class LearningSuite {
 
     /**

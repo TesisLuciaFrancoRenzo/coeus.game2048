@@ -54,6 +54,19 @@ public class ThreadResultTest {
     }
 
     /**
+     * Test of addLastTurn method, of class ThreadResult.
+     */
+    @Test
+    public void testAddLastTurn() {
+        System.out.println("addLastTurn");
+        int lastTurn = 0;
+        ThreadResult instance = new ThreadResult();
+        instance.addLastTurn(lastTurn);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
      * Test of addProcesedGames method, of class ThreadResult.
      */
     @Test
@@ -118,6 +131,20 @@ public class ThreadResultTest {
     }
 
     /**
+     * Test of getMaxTurn method, of class ThreadResult.
+     */
+    @Test
+    public void testGetMaxTurn() {
+        System.out.println("getMaxTurn");
+        ThreadResult instance = new ThreadResult();
+        double expResult = 0.0;
+        double result = instance.getMaxTurn();
+        assertEquals(expResult, result, 0.0);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
      * Test of getMeanScore method, of class ThreadResult.
      */
     @Test
@@ -132,6 +159,20 @@ public class ThreadResultTest {
     }
 
     /**
+     * Test of getMeanTurn method, of class ThreadResult.
+     */
+    @Test
+    public void testGetMeanTurn() {
+        System.out.println("getMeanTurn");
+        ThreadResult instance = new ThreadResult();
+        double expResult = 0.0;
+        double result = instance.getMeanTurn();
+        assertEquals(expResult, result, 0.0);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
      * Test of getMinScore method, of class ThreadResult.
      */
     @Test
@@ -140,6 +181,20 @@ public class ThreadResultTest {
         ThreadResult instance = new ThreadResult();
         double expResult = 0.0;
         double result = instance.getMinScore();
+        assertEquals(expResult, result, 0.0);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getMinTurn method, of class ThreadResult.
+     */
+    @Test
+    public void testGetMinTurn() {
+        System.out.println("getMinTurn");
+        ThreadResult instance = new ThreadResult();
+        double expResult = 0.0;
+        double result = instance.getMinTurn();
         assertEquals(expResult, result, 0.0);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");

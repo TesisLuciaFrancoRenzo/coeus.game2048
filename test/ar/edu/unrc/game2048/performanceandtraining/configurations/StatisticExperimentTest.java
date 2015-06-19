@@ -338,4 +338,25 @@ public class StatisticExperimentTest {
         }
     }
 
+    /**
+     *
+     */
+    public class StatisticExperimentImpl extends StatisticExperiment {
+
+        /**
+         *
+         */
+        public StatisticExperimentImpl() {
+            super(null);
+        }
+
+        /**
+         *
+         * @throws Exception
+         */
+        @Override
+        public void initializeStatistics() throws Exception {
+        }
+    }
+
 }

@@ -17,7 +17,7 @@ import org.junit.runners.Suite;
  * @author franco
  */
 @RunWith( Suite.class )
-@Suite.SuiteClasses( {RandomExperimentInterfaceTest.class, NTupleExperimentInterfaceTest.class, EncogExperimentInterfaceTest.class, GreedyExperimentInterfaceTest.class})
+@Suite.SuiteClasses( {NTupleExperimentInterfaceTest.class, EncogExperimentInterfaceTest.class, RandomExperimentInterfaceTest.class, GreedyExperimentInterfaceTest.class})
 public class LibrariesSuite {
 
     /**
