@@ -9,6 +9,7 @@ import ar.edu.unrc.game2048.Action;
 import ar.edu.unrc.game2048.Game2048;
 import ar.edu.unrc.game2048.NTupleConfiguration2048;
 import ar.edu.unrc.game2048.PerceptronConfiguration2048;
+import ar.edu.unrc.tdlearning.perceptron.interfaces.IAction;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IPerceptronInterface;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IsolatedComputation;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearning;
@@ -17,6 +18,7 @@ import static java.awt.event.KeyEvent.VK_LEFT;
 import static java.awt.event.KeyEvent.VK_RIGHT;
 import static java.awt.event.KeyEvent.VK_UP;
 import java.io.File;
+import java.util.List;
 
 /**
  *
@@ -117,7 +119,8 @@ public abstract class INeuralNetworkInterfaceFor2048<NeuralNetworkClass> impleme
         return () -> {
             // evaluamos cada accion aplicada al estado inicial y elegimos la mejor
             // accion basada en las predicciones del problema
-            Action bestAction = (Action) learningMethod.computeBestPossibleAction(game, game.getBoard()).compute();
+            List<IAction> possibleActions = game.listAllPossibleActions(game.getBoard());
+            Action bestAction = (Action) learningMethod.computeBestPossibleAction(game, game.getBoard(), possibleActions).compute();
 
             switch ( bestAction ) {
                 case left: {
