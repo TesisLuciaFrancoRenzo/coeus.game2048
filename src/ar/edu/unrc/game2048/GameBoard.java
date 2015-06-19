@@ -7,6 +7,7 @@ package ar.edu.unrc.game2048;
 
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IStateNTuple;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IStatePerceptron;
+import ar.edu.unrc.tdlearning.perceptron.interfaces.IsolatedComputation;
 import ar.edu.unrc.tdlearning.perceptron.learning.StateProbability;
 import ar.edu.unrc.tdlearning.perceptron.ntuple.SamplePointState;
 import static java.lang.Math.random;
@@ -385,12 +386,13 @@ public class GameBoard<NeuralNetworkClass> implements IStatePerceptron, IStateNT
 //    }
 
     @Override
-    public double translateToPerceptronInput(int neuronIndex) {
-
-        if ( neuronIndex < 0 || neuronIndex >= getGame().getPerceptronConfiguration().neuronQuantityInLayer[0] ) {
-            throw new IllegalArgumentException("neuronIndex range for output layer must be [0," + getGame().getPerceptronConfiguration().neuronQuantityInLayer[0] + "] but was " + neuronIndex);
-        }
-        return normalizedPerceptronInput.get(neuronIndex);
+    public IsolatedComputation<Double> translateToPerceptronInput(int neuronIndex) {
+        return () -> {
+            if ( neuronIndex < 0 || neuronIndex >= getGame().getPerceptronConfiguration().neuronQuantityInLayer[0] ) {
+                throw new IllegalArgumentException("neuronIndex range for output layer must be [0," + getGame().getPerceptronConfiguration().neuronQuantityInLayer[0] + "] but was " + neuronIndex);
+            }
+            return normalizedPerceptronInput.get(neuronIndex);
+        };
     }
 
     /**

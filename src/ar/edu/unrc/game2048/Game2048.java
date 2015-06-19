@@ -282,7 +282,7 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
                 if ( perceptronConfiguration.getNeuralNetwork() instanceof BasicNetwork ) { //es sobre la libreria encog
                     double[] inputs = new double[getPerceptronConfiguration().neuronQuantityInLayer[0]];
                     for ( int i = 0; i < getPerceptronConfiguration().neuronQuantityInLayer[0]; i++ ) {
-                        inputs[i] = ((IStatePerceptron) state).translateToPerceptronInput(i);
+                        inputs[i] = ((IStatePerceptron) state).translateToPerceptronInput(i).compute();
                     } //todo reeemplazar esot po algo ams elegante
                     MLData inputData = new BasicMLData(inputs);
                     MLData output = ((BasicNetwork) perceptronConfiguration.getNeuralNetwork()).compute(inputData);
