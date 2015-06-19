@@ -174,7 +174,7 @@ public class PerceptronConfiguration2048Test {
          * @param normalizedPerceptronInput
          */
         @Override
-        public void calculateNormalizedPerceptronInput(GameBoard<NeuralNetworkClass> board, List<Double> normalizedPerceptronInput) {
+        public IsolatedComputation calculateNormalizedPerceptronInput(GameBoard<NeuralNetworkClass> board, List<Double> normalizedPerceptronInput) {
         }
 
         /**
@@ -200,7 +200,7 @@ public class PerceptronConfiguration2048Test {
          * @param normalizedPerceptronInput
          */
         @Override
-        public void calculateNormalizedPerceptronInput(GameBoard<NeuralNetworkClass> board, List<Double> normalizedPerceptronInput) {
+        public IsolatedComputation calculateNormalizedPerceptronInput(GameBoard<NeuralNetworkClass> board, List<Double> normalizedPerceptronInput) {
         }
 
         /**

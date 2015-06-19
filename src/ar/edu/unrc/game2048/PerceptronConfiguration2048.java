@@ -53,8 +53,10 @@ public abstract class PerceptronConfiguration2048<NeuralNetworkClass> implements
      *
      * @param board
      * @param normalizedPerceptronInput
+     * <p>
+     * @return
      */
-    public abstract void calculateNormalizedPerceptronInput(GameBoard<NeuralNetworkClass> board, List<Double> normalizedPerceptronInput);
+    public abstract IsolatedComputation calculateNormalizedPerceptronInput(GameBoard<NeuralNetworkClass> board, List<Double> normalizedPerceptronInput);
 
     @Override
     public Object clone() throws CloneNotSupportedException {

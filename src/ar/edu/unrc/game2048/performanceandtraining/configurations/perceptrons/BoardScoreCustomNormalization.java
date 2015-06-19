@@ -58,7 +58,7 @@ public class BoardScoreCustomNormalization<NeuralNetworkClass> extends Perceptro
         neuronQuantityInLayer[2] = 1;
 
         this.activationFunctionForEncog = new ActivationFunction[2];
-        
+
         activationFunctionForEncog[0] = new ActivationSigmoid();
         activationFunctionForEncog[1] = new ActivationSigmoid();
 
@@ -77,59 +77,62 @@ public class BoardScoreCustomNormalization<NeuralNetworkClass> extends Perceptro
      * @param normalizedPerceptronInput
      */
     @Override
-    public void calculateNormalizedPerceptronInput(GameBoard<NeuralNetworkClass> board, List<Double> normalizedPerceptronInput) {
-        // primera fila
-        normalizedPerceptronInput.set(0,
-                normInput.normalize(encryptTile(board, board.tileAt(0, 0).getCode()))
-        );
-        normalizedPerceptronInput.set(1,
-                normInput.normalize(encryptTile(board, board.tileAt(1, 0).getCode()))
-        );
-        normalizedPerceptronInput.set(2,
-                normInput.normalize(encryptTile(board, board.tileAt(2, 0).getCode()))
-        );
-        normalizedPerceptronInput.set(3,
-                normInput.normalize(encryptTile(board, board.tileAt(3, 0).getCode()))
-        );
-        // segunda fila
-        normalizedPerceptronInput.set(4,
-                normInput.normalize(encryptTile(board, board.tileAt(0, 1).getCode()))
-        );
-        normalizedPerceptronInput.set(5,
-                normInput.normalize(encryptTile(board, board.tileAt(1, 1).getCode()))
-        );
-        normalizedPerceptronInput.set(6,
-                normInput.normalize(encryptTile(board, board.tileAt(2, 1).getCode()))
-        );
-        normalizedPerceptronInput.set(7,
-                normInput.normalize(encryptTile(board, board.tileAt(3, 1).getCode()))
-        );
-        // tercera fila
-        normalizedPerceptronInput.set(8,
-                normInput.normalize(encryptTile(board, board.tileAt(0, 2).getCode()))
-        );
-        normalizedPerceptronInput.set(9,
-                normInput.normalize(encryptTile(board, board.tileAt(1, 2).getCode()))
-        );
-        normalizedPerceptronInput.set(10,
-                normInput.normalize(encryptTile(board, board.tileAt(2, 2).getCode()))
-        );
-        normalizedPerceptronInput.set(11,
-                normInput.normalize(encryptTile(board, board.tileAt(3, 2).getCode()))
-        );
-        // cuarta fila
-        normalizedPerceptronInput.set(12,
-                normInput.normalize(encryptTile(board, board.tileAt(0, 3).getCode()))
-        );
-        normalizedPerceptronInput.set(13,
-                normInput.normalize(encryptTile(board, board.tileAt(1, 3).getCode()))
-        );
-        normalizedPerceptronInput.set(14,
-                normInput.normalize(encryptTile(board, board.tileAt(2, 3).getCode()))
-        );
-        normalizedPerceptronInput.set(15,
-                normInput.normalize(encryptTile(board, board.tileAt(3, 3).getCode()))
-        );
+    public IsolatedComputation calculateNormalizedPerceptronInput(GameBoard<NeuralNetworkClass> board, List<Double> normalizedPerceptronInput) {
+        return () -> {
+            // primera fila
+            normalizedPerceptronInput.set(0,
+                    normInput.normalize(encryptTile(board, board.tileAt(0, 0).getCode()))
+            );
+            normalizedPerceptronInput.set(1,
+                    normInput.normalize(encryptTile(board, board.tileAt(1, 0).getCode()))
+            );
+            normalizedPerceptronInput.set(2,
+                    normInput.normalize(encryptTile(board, board.tileAt(2, 0).getCode()))
+            );
+            normalizedPerceptronInput.set(3,
+                    normInput.normalize(encryptTile(board, board.tileAt(3, 0).getCode()))
+            );
+            // segunda fila
+            normalizedPerceptronInput.set(4,
+                    normInput.normalize(encryptTile(board, board.tileAt(0, 1).getCode()))
+            );
+            normalizedPerceptronInput.set(5,
+                    normInput.normalize(encryptTile(board, board.tileAt(1, 1).getCode()))
+            );
+            normalizedPerceptronInput.set(6,
+                    normInput.normalize(encryptTile(board, board.tileAt(2, 1).getCode()))
+            );
+            normalizedPerceptronInput.set(7,
+                    normInput.normalize(encryptTile(board, board.tileAt(3, 1).getCode()))
+            );
+            // tercera fila
+            normalizedPerceptronInput.set(8,
+                    normInput.normalize(encryptTile(board, board.tileAt(0, 2).getCode()))
+            );
+            normalizedPerceptronInput.set(9,
+                    normInput.normalize(encryptTile(board, board.tileAt(1, 2).getCode()))
+            );
+            normalizedPerceptronInput.set(10,
+                    normInput.normalize(encryptTile(board, board.tileAt(2, 2).getCode()))
+            );
+            normalizedPerceptronInput.set(11,
+                    normInput.normalize(encryptTile(board, board.tileAt(3, 2).getCode()))
+            );
+            // cuarta fila
+            normalizedPerceptronInput.set(12,
+                    normInput.normalize(encryptTile(board, board.tileAt(0, 3).getCode()))
+            );
+            normalizedPerceptronInput.set(13,
+                    normInput.normalize(encryptTile(board, board.tileAt(1, 3).getCode()))
+            );
+            normalizedPerceptronInput.set(14,
+                    normInput.normalize(encryptTile(board, board.tileAt(2, 3).getCode()))
+            );
+            normalizedPerceptronInput.set(15,
+                    normInput.normalize(encryptTile(board, board.tileAt(3, 3).getCode()))
+            );
+            return null;
+        };
     }
 //
 //    @Override
@@ -178,8 +181,7 @@ public class BoardScoreCustomNormalization<NeuralNetworkClass> extends Perceptro
     /**
      *
      * @param game
-     * @param output
-     * <p>
+     * @param output <p>
      * @return
      */
     @Override
@@ -192,7 +194,7 @@ public class BoardScoreCustomNormalization<NeuralNetworkClass> extends Perceptro
 
     @Override
     public double denormalizeValueFromPerceptronOutput(Object value) {
-        return normOutput.deNormalize((Double)value);
+        return normOutput.deNormalize((Double) value);
     }
 
     @Override
@@ -207,7 +209,7 @@ public class BoardScoreCustomNormalization<NeuralNetworkClass> extends Perceptro
 
     @Override
     public double normalizeValueToPerceptronOutput(Object value) {
-        return normOutput.normalize((Double)value);
+        return normOutput.normalize((Double) value);
     }
 
     private Double encryptTile(GameBoard<NeuralNetworkClass> board, int boardTileCode) {

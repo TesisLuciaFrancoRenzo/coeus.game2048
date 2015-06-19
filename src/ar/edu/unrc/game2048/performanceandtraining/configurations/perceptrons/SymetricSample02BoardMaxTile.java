@@ -74,7 +74,7 @@ public class SymetricSample02BoardMaxTile<NeuralNetworkClass> extends Perceptron
         neuronQuantityInLayer[2] = 1;
 
         this.activationFunctionForEncog = new ActivationFunction[2];
-        
+
         activationFunctionForEncog[0] = new ActivationSigmoid();
         activationFunctionForEncog[1] = new ActivationSigmoid();
 
@@ -94,102 +94,104 @@ public class SymetricSample02BoardMaxTile<NeuralNetworkClass> extends Perceptron
      * @param normalizedPerceptronInput
      */
     @Override
-    public void calculateNormalizedPerceptronInput(GameBoard<NeuralNetworkClass> board, List<Double> normalizedPerceptronInput) {
-        //ultimas 2 columnas
-        normalizedPerceptronInput.set(0,
-                normInput.normalize(encryptTiles(
-                                board.tileAt(2, 0).getCode(),
-                                board.tileAt(2, 1).getCode(),
-                                board.tileAt(2, 2).getCode(),
-                                board.tileAt(2, 3).getCode()
-                        )
-                )
-        );
-        normalizedPerceptronInput.set(1,
-                normInput.normalize(encryptTiles(
-                                board.tileAt(3, 0).getCode(),
-                                board.tileAt(3, 1).getCode(),
-                                board.tileAt(3, 2).getCode(),
-                                board.tileAt(3, 3).getCode()
-                        )
-                )
-        );
-        //primeros 2 rectangulos de 2x3
-        normalizedPerceptronInput.set(2,
-                normInput2x3.normalize(encryptTiles(
-                                board.tileAt(0, 0).getCode(),
-                                board.tileAt(0, 1).getCode(),
-                                board.tileAt(0, 2).getCode(),
-                                board.tileAt(1, 0).getCode(),
-                                board.tileAt(1, 1).getCode(),
-                                board.tileAt(1, 2).getCode()
-                        )
-                )
-        );
-        normalizedPerceptronInput.set(3,
-                normInput2x3.normalize(encryptTiles(
-                                board.tileAt(1, 0).getCode(),
-                                board.tileAt(1, 1).getCode(),
-                                board.tileAt(1, 2).getCode(),
-                                board.tileAt(2, 0).getCode(),
-                                board.tileAt(2, 1).getCode(),
-                                board.tileAt(2, 2).getCode()
-                        )
-                )
-        );
-        // primera fila
-        normalizedPerceptronInput.set(4,
-                normInputSimpleBoard.normalize(board.tileAt(0, 0).getCode())
-        );
-        normalizedPerceptronInput.set(5,
-                normInputSimpleBoard.normalize(board.tileAt(0, 1).getCode())
-        );
-        normalizedPerceptronInput.set(6,
-                normInputSimpleBoard.normalize(board.tileAt(0, 2).getCode())
-        );
-        normalizedPerceptronInput.set(7,
-                normInputSimpleBoard.normalize(board.tileAt(0, 3).getCode())
-        );
-        // segunda fila
-        normalizedPerceptronInput.set(8,
-                normInputSimpleBoard.normalize(board.tileAt(1, 0).getCode())
-        );
-        normalizedPerceptronInput.set(9,
-                normInputSimpleBoard.normalize(board.tileAt(1, 1).getCode())
-        );
-        normalizedPerceptronInput.set(10,
-                normInputSimpleBoard.normalize(board.tileAt(1, 2).getCode())
-        );
-        normalizedPerceptronInput.set(11,
-                normInputSimpleBoard.normalize(board.tileAt(1, 3).getCode())
-        );
-        // tercera fila
-        normalizedPerceptronInput.set(12,
-                normInputSimpleBoard.normalize(board.tileAt(2, 0).getCode())
-        );
-        normalizedPerceptronInput.set(13,
-                normInputSimpleBoard.normalize(board.tileAt(2, 1).getCode())
-        );
-        normalizedPerceptronInput.set(14,
-                normInputSimpleBoard.normalize(board.tileAt(2, 2).getCode())
-        );
-        normalizedPerceptronInput.set(15,
-                normInputSimpleBoard.normalize(board.tileAt(2, 3).getCode())
-        );
-        // cuarta fila
-        normalizedPerceptronInput.set(16,
-                normInputSimpleBoard.normalize(board.tileAt(3, 0).getCode())
-        );
-        normalizedPerceptronInput.set(17,
-                normInputSimpleBoard.normalize(board.tileAt(3, 1).getCode())
-        );
-        normalizedPerceptronInput.set(18,
-                normInputSimpleBoard.normalize(board.tileAt(3, 2).getCode())
-        );
-        normalizedPerceptronInput.set(19,
-                normInputSimpleBoard.normalize(board.tileAt(3, 3).getCode())
-        );
-
+    public IsolatedComputation calculateNormalizedPerceptronInput(GameBoard<NeuralNetworkClass> board, List<Double> normalizedPerceptronInput) {
+        return () -> {
+            //ultimas 2 columnas
+            normalizedPerceptronInput.set(0,
+                    normInput.normalize(encryptTiles(
+                                    board.tileAt(2, 0).getCode(),
+                                    board.tileAt(2, 1).getCode(),
+                                    board.tileAt(2, 2).getCode(),
+                                    board.tileAt(2, 3).getCode()
+                            )
+                    )
+            );
+            normalizedPerceptronInput.set(1,
+                    normInput.normalize(encryptTiles(
+                                    board.tileAt(3, 0).getCode(),
+                                    board.tileAt(3, 1).getCode(),
+                                    board.tileAt(3, 2).getCode(),
+                                    board.tileAt(3, 3).getCode()
+                            )
+                    )
+            );
+            //primeros 2 rectangulos de 2x3
+            normalizedPerceptronInput.set(2,
+                    normInput2x3.normalize(encryptTiles(
+                                    board.tileAt(0, 0).getCode(),
+                                    board.tileAt(0, 1).getCode(),
+                                    board.tileAt(0, 2).getCode(),
+                                    board.tileAt(1, 0).getCode(),
+                                    board.tileAt(1, 1).getCode(),
+                                    board.tileAt(1, 2).getCode()
+                            )
+                    )
+            );
+            normalizedPerceptronInput.set(3,
+                    normInput2x3.normalize(encryptTiles(
+                                    board.tileAt(1, 0).getCode(),
+                                    board.tileAt(1, 1).getCode(),
+                                    board.tileAt(1, 2).getCode(),
+                                    board.tileAt(2, 0).getCode(),
+                                    board.tileAt(2, 1).getCode(),
+                                    board.tileAt(2, 2).getCode()
+                            )
+                    )
+            );
+            // primera fila
+            normalizedPerceptronInput.set(4,
+                    normInputSimpleBoard.normalize(board.tileAt(0, 0).getCode())
+            );
+            normalizedPerceptronInput.set(5,
+                    normInputSimpleBoard.normalize(board.tileAt(0, 1).getCode())
+            );
+            normalizedPerceptronInput.set(6,
+                    normInputSimpleBoard.normalize(board.tileAt(0, 2).getCode())
+            );
+            normalizedPerceptronInput.set(7,
+                    normInputSimpleBoard.normalize(board.tileAt(0, 3).getCode())
+            );
+            // segunda fila
+            normalizedPerceptronInput.set(8,
+                    normInputSimpleBoard.normalize(board.tileAt(1, 0).getCode())
+            );
+            normalizedPerceptronInput.set(9,
+                    normInputSimpleBoard.normalize(board.tileAt(1, 1).getCode())
+            );
+            normalizedPerceptronInput.set(10,
+                    normInputSimpleBoard.normalize(board.tileAt(1, 2).getCode())
+            );
+            normalizedPerceptronInput.set(11,
+                    normInputSimpleBoard.normalize(board.tileAt(1, 3).getCode())
+            );
+            // tercera fila
+            normalizedPerceptronInput.set(12,
+                    normInputSimpleBoard.normalize(board.tileAt(2, 0).getCode())
+            );
+            normalizedPerceptronInput.set(13,
+                    normInputSimpleBoard.normalize(board.tileAt(2, 1).getCode())
+            );
+            normalizedPerceptronInput.set(14,
+                    normInputSimpleBoard.normalize(board.tileAt(2, 2).getCode())
+            );
+            normalizedPerceptronInput.set(15,
+                    normInputSimpleBoard.normalize(board.tileAt(2, 3).getCode())
+            );
+            // cuarta fila
+            normalizedPerceptronInput.set(16,
+                    normInputSimpleBoard.normalize(board.tileAt(3, 0).getCode())
+            );
+            normalizedPerceptronInput.set(17,
+                    normInputSimpleBoard.normalize(board.tileAt(3, 1).getCode())
+            );
+            normalizedPerceptronInput.set(18,
+                    normInputSimpleBoard.normalize(board.tileAt(3, 2).getCode())
+            );
+            normalizedPerceptronInput.set(19,
+                    normInputSimpleBoard.normalize(board.tileAt(3, 3).getCode())
+            );
+            return null;
+        };
     }
 
 //
@@ -236,7 +238,7 @@ public class SymetricSample02BoardMaxTile<NeuralNetworkClass> extends Perceptron
 
     @Override
     public double denormalizeValueFromPerceptronOutput(Object value) {
-        return normOutput.deNormalize((Double)value);
+        return normOutput.deNormalize((Double) value);
     }
 
     @Override
@@ -251,7 +253,7 @@ public class SymetricSample02BoardMaxTile<NeuralNetworkClass> extends Perceptron
 
     @Override
     public double normalizeValueToPerceptronOutput(Object value) {
-        return normOutput.normalize((Double)value);
+        return normOutput.normalize((Double) value);
     }
 
     /**

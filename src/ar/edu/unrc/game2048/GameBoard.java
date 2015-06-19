@@ -409,7 +409,7 @@ public class GameBoard<NeuralNetworkClass> implements IStatePerceptron, IStateNT
         calulateMaxTile();
         if ( getGame().getPerceptronConfiguration() != null && updateNormalizedInputs ) {
             //   assert this.getMaxTileNumberCode() != 0;
-            getGame().getPerceptronConfiguration().calculateNormalizedPerceptronInput(this, normalizedPerceptronInput);
+            getGame().getPerceptronConfiguration().calculateNormalizedPerceptronInput(this, normalizedPerceptronInput).compute();
         }
 
     }

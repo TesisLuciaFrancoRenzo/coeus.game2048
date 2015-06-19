@@ -66,25 +66,28 @@ public class BinaryScore<NeuralNetworkClass> extends PerceptronConfiguration2048
      * @param normalizedPerceptronInput
      */
     @Override
-    public void calculateNormalizedPerceptronInput(GameBoard<NeuralNetworkClass> board, List<Double> normalizedPerceptronInput) {
-        Tile[] tiles = board.getTiles();
-        int currentNeuron = 0;
-        for ( Tile tile : tiles ) {
-            String bits = Integer.toBinaryString(tile.getCode());
-            for ( int k = 0; k < binaryLenght - bits.length(); k++ ) {
-                normalizedPerceptronInput.set(currentNeuron, activationFunctionMin);
-                currentNeuron++;
-            }
-            for ( int j = 0; j < bits.length(); j++ ) {
-                if ( bits.charAt(j) == '0' ) {
+    public IsolatedComputation calculateNormalizedPerceptronInput(GameBoard<NeuralNetworkClass> board, List<Double> normalizedPerceptronInput) {
+        return () -> {
+            Tile[] tiles = board.getTiles();
+            int currentNeuron = 0;
+            for ( Tile tile : tiles ) {
+                String bits = Integer.toBinaryString(tile.getCode());
+                for ( int k = 0; k < binaryLenght - bits.length(); k++ ) {
                     normalizedPerceptronInput.set(currentNeuron, activationFunctionMin);
-                } else {
-                    normalizedPerceptronInput.set(currentNeuron, activationFunctionMax);
+                    currentNeuron++;
                 }
-                currentNeuron++;
+                for ( int j = 0; j < bits.length(); j++ ) {
+                    if ( bits.charAt(j) == '0' ) {
+                        normalizedPerceptronInput.set(currentNeuron, activationFunctionMin);
+                    } else {
+                        normalizedPerceptronInput.set(currentNeuron, activationFunctionMax);
+                    }
+                    currentNeuron++;
+                }
             }
-        }
-        assert currentNeuron == this.neuronQuantityInLayer[0];
+            assert currentNeuron == this.neuronQuantityInLayer[0];
+            return null;
+        };
     }
 
     @Override
@@ -97,7 +100,7 @@ public class BinaryScore<NeuralNetworkClass> extends PerceptronConfiguration2048
 
     @Override
     public double denormalizeValueFromPerceptronOutput(Object value) {
-        return normOutput.deNormalize((Double)value);
+        return normOutput.deNormalize((Double) value);
     }
 
     @Override
@@ -155,7 +158,7 @@ public class BinaryScore<NeuralNetworkClass> extends PerceptronConfiguration2048
 
     @Override
     public double normalizeValueToPerceptronOutput(Object value) {
-        return normOutput.normalize((Double)value);
+        return normOutput.normalize((Double) value);
     }
 
 }
