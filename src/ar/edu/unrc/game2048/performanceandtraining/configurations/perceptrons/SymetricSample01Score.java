@@ -88,6 +88,7 @@ public class SymetricSample01Score<NeuralNetworkClass> extends PerceptronConfigu
      *
      * @param board
      * @param normalizedPerceptronInput
+     * @return 
      */
     @Override
     public IsolatedComputation calculateNormalizedPerceptronInput(GameBoard<NeuralNetworkClass> board, List<Double> normalizedPerceptronInput) {

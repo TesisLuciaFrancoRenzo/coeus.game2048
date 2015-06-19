@@ -85,6 +85,7 @@ public class FullNTupleScore<NeuralNetworkClass> extends PerceptronConfiguration
      *
      * @param board
      * @param normalizedPerceptronInput
+     * @return 
      */
     @Override
     public IsolatedComputation calculateNormalizedPerceptronInput(GameBoard<NeuralNetworkClass> board, List<Double> normalizedPerceptronInput) {

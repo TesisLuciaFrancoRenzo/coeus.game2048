@@ -64,6 +64,7 @@ public class BinaryScore<NeuralNetworkClass> extends PerceptronConfiguration2048
      *
      * @param board
      * @param normalizedPerceptronInput
+     * @return 
      */
     @Override
     public IsolatedComputation calculateNormalizedPerceptronInput(GameBoard<NeuralNetworkClass> board, List<Double> normalizedPerceptronInput) {

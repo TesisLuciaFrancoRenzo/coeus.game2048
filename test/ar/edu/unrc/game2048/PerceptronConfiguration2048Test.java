@@ -172,6 +172,7 @@ public class PerceptronConfiguration2048Test {
          *
          * @param board
          * @param normalizedPerceptronInput
+         * @return 
          */
         @Override
         public IsolatedComputation calculateNormalizedPerceptronInput(GameBoard<NeuralNetworkClass> board, List<Double> normalizedPerceptronInput) {
@@ -198,6 +199,7 @@ public class PerceptronConfiguration2048Test {
          *
          * @param board
          * @param normalizedPerceptronInput
+         * @return 
          */
         @Override
         public IsolatedComputation calculateNormalizedPerceptronInput(GameBoard<NeuralNetworkClass> board, List<Double> normalizedPerceptronInput) {
@@ -210,6 +212,17 @@ public class PerceptronConfiguration2048Test {
          * @return
          */
         @Override
+        public IsolatedComputation<Double> computeNumericRepresentationFor(Game2048 game, Object[] output) {
+            return null;
+        }
+    }
+
+    public class PerceptronConfiguration2048Impl extends PerceptronConfiguration2048 {
+
+        public IsolatedComputation calculateNormalizedPerceptronInput(GameBoard<NeuralNetworkClass> board, List<Double> normalizedPerceptronInput) {
+            return null;
+        }
+
         public IsolatedComputation<Double> computeNumericRepresentationFor(Game2048 game, Object[] output) {
             return null;
         }

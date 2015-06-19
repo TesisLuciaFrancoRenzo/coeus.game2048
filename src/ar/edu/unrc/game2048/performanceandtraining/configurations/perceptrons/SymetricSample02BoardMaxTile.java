@@ -92,6 +92,7 @@ public class SymetricSample02BoardMaxTile<NeuralNetworkClass> extends Perceptron
      *
      * @param board
      * @param normalizedPerceptronInput
+     * @return 
      */
     @Override
     public IsolatedComputation calculateNormalizedPerceptronInput(GameBoard<NeuralNetworkClass> board, List<Double> normalizedPerceptronInput) {

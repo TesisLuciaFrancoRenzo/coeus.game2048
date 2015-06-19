@@ -20,21 +20,36 @@ import org.junit.Test;
  */
 public class BasicMaxTileTanHTest {
 
+    /**
+     *
+     */
     @BeforeClass
     public static void setUpClass() {
     }
 
+    /**
+     *
+     */
     @AfterClass
     public static void tearDownClass() {
     }
 
+    /**
+     *
+     */
     public BasicMaxTileTanHTest() {
     }
 
+    /**
+     *
+     */
     @Before
     public void setUp() {
     }
 
+    /**
+     *
+     */
     @After
     public void tearDown() {
     }

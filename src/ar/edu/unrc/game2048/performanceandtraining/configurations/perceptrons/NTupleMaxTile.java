@@ -77,6 +77,7 @@ public class NTupleMaxTile<NeuralNetworkClass> extends PerceptronConfiguration20
      *
      * @param board
      * @param normalizedPerceptronInput
+     * @return 
      */
     @Override
     public IsolatedComputation calculateNormalizedPerceptronInput(GameBoard<NeuralNetworkClass> board, List<Double> normalizedPerceptronInput) {

@@ -69,6 +69,7 @@ public class NTupleScore<NeuralNetworkClass> extends PerceptronConfiguration2048
      *
      * @param board
      * @param normalizedPerceptronInput
+     * @return 
      */
     @Override
     public IsolatedComputation calculateNormalizedPerceptronInput(GameBoard<NeuralNetworkClass> board, List<Double> normalizedPerceptronInput) {

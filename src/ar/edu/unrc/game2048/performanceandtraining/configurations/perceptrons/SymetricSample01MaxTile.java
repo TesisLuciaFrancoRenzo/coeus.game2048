@@ -88,6 +88,7 @@ public class SymetricSample01MaxTile<NeuralNetworkClass> extends PerceptronConfi
      *
      * @param board
      * @param normalizedPerceptronInput
+     * @return 
      */
     @Override
     public IsolatedComputation calculateNormalizedPerceptronInput(GameBoard<NeuralNetworkClass> board, List<Double> normalizedPerceptronInput) {
