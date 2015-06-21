@@ -5,6 +5,7 @@
  */
 package ar.edu.unrc.game2048;
 
+import ar.edu.unrc.tdlearning.perceptron.interfaces.IState;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IStateNTuple;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IStatePerceptron;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IsolatedComputation;
@@ -181,11 +182,10 @@ public class GameBoard<NeuralNetworkClass> implements IStatePerceptron, IStateNT
 //    }
     /**
      *
-     * @param tileContainer para reciclar Tiles
-     * <p>
      * @return una copia del tablero
      */
-    public GameBoard<NeuralNetworkClass> getCopy(TileContainer tileContainer) {
+    @Override
+    public IState getCopy() {
         GameBoard<NeuralNetworkClass> copy = new GameBoard<>(getGame(), tileContainer);
         arraycopy(getTiles(), 0, copy.getTiles(), 0, GameBoard.tileNumber);
         copy.iWin = iWin;
@@ -344,7 +344,7 @@ public class GameBoard<NeuralNetworkClass> implements IStatePerceptron, IStateNT
                 probability = 0.1;
             }
             for ( int index = 0; index < availableSpaceList.size() - 1; index++ ) {
-                GameBoard<NeuralNetworkClass> copy = this.getCopy(tileContainer);
+                GameBoard<NeuralNetworkClass> copy = (GameBoard<NeuralNetworkClass>) this.getCopy();
                 copy.tiles[availableSpaceList.get(index)] = this.tileContainer.getTile(value);
                 copy.updateInternalState(true);
                 output.add(new StateProbability(copy, probability));

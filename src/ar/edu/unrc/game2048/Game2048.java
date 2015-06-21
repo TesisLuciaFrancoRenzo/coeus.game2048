@@ -184,7 +184,7 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
 
     @Override
     public IStatePerceptron computeAfterState(IState turnInitialState, IAction action) {
-        GameBoard<NeuralNetworkClass> futureBoard = ((GameBoard<NeuralNetworkClass>) turnInitialState).getCopy(tileContainer);
+        GameBoard<NeuralNetworkClass> futureBoard = (GameBoard<NeuralNetworkClass>) turnInitialState.getCopy();
         switch ( (Action) action ) {
             case left: {
                 if ( lastInitialStateForPossibleActions != null && lastInitialStateForPossibleActions.equals(turnInitialState) ) {
@@ -237,7 +237,7 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
 
     @Override
     public IStatePerceptron computeNextTurnStateFromAfterstate(IState s1) {
-        GameBoard<NeuralNetworkClass> finalBoard = ((GameBoard<NeuralNetworkClass>) s1).getCopy(tileContainer);
+        GameBoard<NeuralNetworkClass> finalBoard = (GameBoard<NeuralNetworkClass>) s1.getCopy();
         if ( finalBoard.isNeedToAddTile() ) {
             finalBoard.addTile();
         }
@@ -409,7 +409,7 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
     public IState initialize(IActor actor) {
         this.resetGame();
         assert this.getBoard().getMaxTileNumberCode() != 0;
-        return getBoard().getCopy(tileContainer);
+        return getBoard().getCopy();
     }
 
     /**
