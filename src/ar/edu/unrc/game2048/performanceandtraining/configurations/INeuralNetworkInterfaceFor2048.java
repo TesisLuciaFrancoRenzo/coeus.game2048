@@ -120,7 +120,7 @@ public abstract class INeuralNetworkInterfaceFor2048<NeuralNetworkClass> impleme
             // evaluamos cada accion aplicada al estado inicial y elegimos la mejor
             // accion basada en las predicciones del problema
             List<IAction> possibleActions = game.listAllPossibleActions(game.getBoard());
-            Action bestAction = (Action) learningMethod.computeBestPossibleAction(game, game.getBoard(), possibleActions).compute();
+            Action bestAction = (Action) learningMethod.computeBestPossibleAction(game, game.getBoard(), possibleActions, null).compute();
 
             switch ( bestAction ) {
                 case left: {

@@ -25,6 +25,7 @@ import static ar.edu.unrc.game2048.Action.right;
 import static ar.edu.unrc.game2048.Action.up;
 import static ar.edu.unrc.game2048.GameBoard.tileNumber;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IAction;
+import ar.edu.unrc.tdlearning.perceptron.interfaces.IActor;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IProblem;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IState;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IStateNTuple;
@@ -249,7 +250,7 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
      * @return
      */
     @Override
-    public IsolatedComputation<Double> computeNumericRepresentationFor(Object[] output) {
+    public IsolatedComputation<Double> computeNumericRepresentationFor(Object[] output, IActor actor) {
         if ( this.getPerceptronConfiguration() != null ) {
             return this.getPerceptronConfiguration().computeNumericRepresentationFor(this, output);
         } else {
@@ -299,6 +300,11 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
             }
             throw new UnsupportedOperationException("only Encog and NTupleSystem is implemented");
         };
+    }
+
+    @Override
+    public IActor getActorToTrain() {
+        return null;
     }
 
     /**
@@ -400,7 +406,7 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
     }
 
     @Override
-    public IState initialize() {
+    public IState initialize(IActor actor) {
         this.resetGame();
         assert this.getBoard().getMaxTileNumberCode() != 0;
         return getBoard().getCopy(tileContainer);
