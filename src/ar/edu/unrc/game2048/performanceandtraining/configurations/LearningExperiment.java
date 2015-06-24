@@ -36,6 +36,7 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
  * @param <NeuralNetworkClass>
  */
 public abstract class LearningExperiment<NeuralNetworkClass> {
+    public static final String _CONFIG = "_config";
 
     /**
      *
@@ -48,6 +49,8 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
     public static final String _TRAINED = "_trained";
     private double[] alpha;
     private int annealingT;
+    private int backupNumber;
+    private long elapsedTime = 0;
     private String experimentName;
     private EExplorationRateAlgorithms explorationRate;
     private double explorationRateFinalValue;
@@ -60,7 +63,6 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
     private boolean initializePerceptronRandomized = false;
     private double lambda;
     private int lastSavedGamePlayedNumber;
-    private int backupNumber;
     private TDLambdaLearning learningAlgorithm;
     private ELearningRateAdaptation learningRateAdaptation;
     private boolean logsActivated = false;
@@ -71,7 +73,6 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
     private boolean runStatisticsForBackups = false;
     private int saveBackupEvery = 0;
     private int saveEvery = 0;
-    private long elapsedTime = 0;
     private int simulationsForStatistics;
     private boolean statisticsOnly = false;
     private int tileToWin;
@@ -228,6 +229,20 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
      */
     public void setPerceptronName(String perceptronName) {
         this.perceptronName = perceptronName;
+    }
+
+    /**
+     * @return the saveEvery
+     */
+    public int getSaveEvery() {
+        return saveEvery;
+    }
+
+    /**
+     * @param saveEvery the saveEvery to set
+     */
+    public void setSaveEvery(int saveEvery) {
+        this.saveEvery = saveEvery;
     }
 
     /**
@@ -514,20 +529,6 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
      */
     public void setSaveBackupEvery(int saveBackupEvery) {
         this.saveBackupEvery = saveBackupEvery;
-    }
-
-    /**
-     * @return the saveEvery
-     */
-    public int getSaveEvery() {
-        return saveEvery;
-    }
-
-    /**
-     * @param saveEvery the saveEvery to set
-     */
-    public void setSaveEvery(int saveEvery) {
-        this.saveEvery = saveEvery;
     }
 
     /**
@@ -879,6 +880,5 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
 
         }
     }
-    public static final String _CONFIG = "_config";
 
 }

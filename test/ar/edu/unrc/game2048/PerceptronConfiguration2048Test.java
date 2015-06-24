@@ -217,12 +217,28 @@ public class PerceptronConfiguration2048Test {
         }
     }
 
+    /**
+     *
+     */
     public class PerceptronConfiguration2048Impl extends PerceptronConfiguration2048 {
 
+        /**
+         *
+         * @param board
+         * @param normalizedPerceptronInput
+         * @return
+         */
         public IsolatedComputation calculateNormalizedPerceptronInput(GameBoard<NeuralNetworkClass> board, List<Double> normalizedPerceptronInput) {
             return null;
         }
 
+        /**
+         *
+         * @param game
+         * @param output
+         * @return
+         */
+        @Override
         public IsolatedComputation<Double> computeNumericRepresentationFor(Game2048 game, Object[] output) {
             return null;
         }

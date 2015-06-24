@@ -880,15 +880,35 @@ public class LearningExperimentTest {
         }
     }
 
+    /**
+     *
+     */
     public class LearningExperimentImpl extends LearningExperiment {
 
+        /**
+         *
+         * @throws Exception
+         */
+        @Override
         public void initialize() throws Exception {
         }
 
+        /**
+         *
+         * @param perceptronInterface
+         * @return
+         */
+        @Override
         public TDLambdaLearning instanceOfTdLearninrgImplementation(IPerceptronInterface perceptronInterface) {
             return null;
         }
 
+        /**
+         *
+         * @param nTupleSystem
+         * @return
+         */
+        @Override
         public TDLambdaLearning instanceOfTdLearninrgImplementation(NTupleSystem nTupleSystem) {
             return null;
         }

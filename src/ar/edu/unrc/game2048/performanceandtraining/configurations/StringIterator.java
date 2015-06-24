@@ -10,10 +10,21 @@ package ar.edu.unrc.game2048.performanceandtraining.configurations;
  */
 public class StringIterator {
 
-    private final String txt;
-    private int renglon = 0;
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        String ejemplo = "hola\ncomo\nestas, poroto";
+        StringIterator iterador = new StringIterator(ejemplo, null, ",");
+        String renglon;
+        while ( (renglon = iterador.readLine()) != null ) {
+            System.out.println("renglon = " + renglon);
+        }
+    }
     private final String comentarios;
     private final String nuevaLinea;
+    private int renglon = 0;
+    private final String txt;
 
     /**
      * Itera sobre textos
@@ -89,15 +100,4 @@ public class StringIterator {
         renglon = 0;
     }
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        String ejemplo = "hola\ncomo\nestas, poroto";
-        StringIterator iterador = new StringIterator(ejemplo, null, ",");
-        String renglon;
-        while ( (renglon = iterador.readLine()) != null ) {
-            System.out.println("renglon = " + renglon);
-        }
-    }
 }

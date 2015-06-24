@@ -47,7 +47,7 @@ public class Experiment_02 extends LearningExperiment<BasicNetwork> {
         experiment.setExplorationRateToFixed(0);
         // experiment.setResetEligibilitiTraces(true);
         experiment.setGamesToPlay(2_000_000);
-        experiment.setSaveEvery(2_000);
+        experiment.setSaveEvery(500);
         experiment.setSaveBackupEvery(20_000);
         experiment.setInitializePerceptronRandomized(false);
 
