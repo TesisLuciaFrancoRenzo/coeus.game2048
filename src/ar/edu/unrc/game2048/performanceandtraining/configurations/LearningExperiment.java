@@ -59,7 +59,8 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
     private double gamma;
     private boolean initializePerceptronRandomized = false;
     private double lambda;
-    private int lastGamePlayedNumber;
+    private int lastSavedGamePlayedNumber;
+    private int backupNumber;
     private TDLambdaLearning learningAlgorithm;
     private ELearningRateAdaptation learningRateAdaptation;
     private boolean logsActivated = false;
@@ -68,7 +69,8 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
     private boolean resetEligibilitiTraces = false;
     private boolean runStatisticForRandom = false;
     private boolean runStatisticsForBackups = false;
-    private int saveEvery;
+    private int saveBackupEvery = 0;
+    private int saveEvery = 0;
     private int simulationsForStatistics;
     private boolean statisticsOnly = false;
     private int tileToWin;
@@ -191,14 +193,6 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
     }
 
     /**
-     *
-     * @param gameNumber
-     */
-    public void setLastGamePlayedNumber(int gameNumber) {
-        this.lastGamePlayedNumber = gameNumber;
-    }
-
-    /**
      * @return the learningRateAdaptation
      */
     public ELearningRateAdaptation getLearningRateAdaptation() {
@@ -241,7 +235,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
      * <li>private double alpha;</li>
      * <li>private double lambda;</li>
      * <li>private int gamesToPlay;</li>
-     * <li>private int saveEvery;</li>
+     * <li>private int saveBackupEvery;</li>
      * <li>private int tileToWin;</li>
      * <li>private String experimentName;</li>
      * <li>private String perceptronName;</li>
@@ -383,17 +377,16 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
      *
      * @param game
      * @param printStream
-     * @param lastSaveCounter
      * @param randomPerceptronFile
      * @param perceptronFile
-     * @param backupNumber
+     * @param configFile
      * @param filePath
      * @param dateFormater
      * @param now
      * @param zeroNumbers          <p>
      * @throws Exception
      */
-    public void training(Game2048<NeuralNetworkClass> game, final PrintStream printStream, int lastSaveCounter, File randomPerceptronFile, File perceptronFile, int backupNumber, String filePath, SimpleDateFormat dateFormater, Date now, int zeroNumbers) throws Exception {
+    public void training(Game2048<NeuralNetworkClass> game, final PrintStream printStream, File randomPerceptronFile, File perceptronFile, File configFile, String filePath, SimpleDateFormat dateFormater, Date now, int zeroNumbers) throws Exception {
         File perceptronFileBackup;
         switch ( this.learningRateAdaptation ) {
             case fixed: {
@@ -420,23 +413,30 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
                 break;
             }
         }
-        for ( int i = lastGamePlayedNumber + 1; i < gamesToPlay; i++ ) { //FIXME menor o igual a gameToPlay? o menor? ver codigo de annealing
+
+        for ( int i = lastSavedGamePlayedNumber + 1; i <= gamesToPlay; i++ ) { //FIXME menor o igual a gameToPlay? o menor? ver codigo de annealing
             learningAlgorithm.solveAndTrainOnce(game, i);
             int percent = (int) (((i * 1d) / (gamesToPlay * 1d)) * 100d);
             System.out.println("Juego número " + i + " (" + percent + "%)    puntaje = " + game.getScore() + "    ficha max = " + game.getMaxNumber() + "    turno alcanzado = " + game.getLastTurn() + "      current alpha = " + Arrays.toString(learningAlgorithm.getCurrentAlpha()));
             if ( printStream != null ) {
                 printStream.println(game.getScore() + "\t" + game.getMaxNumber());
             }
-            lastSaveCounter++;
-            if ( lastSaveCounter >= saveEvery ) {
+            boolean writeConfig = false;
+            if ( i % saveEvery == 0 || i % saveBackupEvery == 0 ) {
                 neuralNetworkInterfaceFor2048.savePerceptron(perceptronFile);
+                System.out.println("============ Perceptron Exportado Exitosamente (SAVE) ============");
+                writeConfig = true;
+            }
+            if ( i % saveBackupEvery == 0 ) {
                 backupNumber++;
                 perceptronFileBackup = new File(filePath + _TRAINED + "_" + dateFormater.format(now) + "_BackupN-" + String.format("%0" + zeroNumbers + "d", backupNumber)
                         + ".ser");
                 neuralNetworkInterfaceFor2048.savePerceptron(perceptronFileBackup);
-                lastSaveCounter = 0;
-                System.out.println("============ Perceptron Exportado Exitosamente ============");
-                //  neuralNetworkInterfaceFor2048.compareNeuralNetworks(randomPerceptronFile, perceptronFile);
+                System.out.println("============ Perceptron Exportado Exitosamente (BACKUP " + backupNumber + ") ============");
+                writeConfig = true;
+            }
+            if ( writeConfig ) {
+                StringAndFiles.stringToFile(configFile, Integer.toString(i) + "\n" + Integer.toString(backupNumber), StringAndFiles.UTF_8);
             }
         }
     }
@@ -499,9 +499,23 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
     }
 
     /**
+     * @return the saveBackupEvery
+     */
+    protected int getSaveBackupEvery() {
+        return saveBackupEvery;
+    }
+
+    /**
+     * @param saveBackupEvery the saveBackupEvery to set
+     */
+    public void setSaveBackupEvery(int saveBackupEvery) {
+        this.saveBackupEvery = saveBackupEvery;
+    }
+
+    /**
      * @return the saveEvery
      */
-    protected int getSaveEvery() {
+    public int getSaveEvery() {
         return saveEvery;
     }
 
@@ -554,6 +568,12 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
      * @throws Exception
      */
     protected void runExperiment(String experimentPath, int delayPerMove) throws Exception {
+        if ( saveEvery == 0 ) {
+            throw new IllegalArgumentException("se debe configurar cada cuanto guardar el perceptron mediante la variable saveEvery");
+        }
+        if ( saveBackupEvery == 0 ) {
+            throw new IllegalArgumentException("se debe configurar cada cuanto guardar backups del perceptron mediante la variable saveBackupEvery");
+        }
         SimpleDateFormat dateFormater = new SimpleDateFormat("dd-MM-yyyy_HH'h'mm'm'ss's'");
         Date now = new Date();
 
@@ -566,13 +586,30 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
         }
         String filePath = dirPath + perceptronName;
         File perceptronFile = new File(filePath + _TRAINED + ".ser");
+        File configFile = new File(filePath + _CONFIG + ".txt");
+
+        backupNumber = 0;
+        lastSavedGamePlayedNumber = 0;
+        if ( configFile.exists() ) {
+            String configs = StringAndFiles.fileToString(configFile, StringAndFiles.UTF_8);
+            StringIterator iterator = new StringIterator(configs, null, "\n");
+            String line = iterator.readLine();
+            if ( line == null ) {
+                throw new IllegalArgumentException("el archivo de configuracion no tiene un formato válido");
+            }
+            this.lastSavedGamePlayedNumber = Integer.parseInt(line);
+            line = iterator.readLine();
+            if ( line == null ) {
+                throw new IllegalArgumentException("el archivo de configuracion no tiene un formato válido");
+            }
+            this.backupNumber = Integer.parseInt(line);
+        }
+
         int zeroNumbers = 1;
         if ( !this.statisticsOnly ) {
-            zeroNumbers = Integer.toString(this.gamesToPlay / this.saveEvery).length();
+            zeroNumbers = Integer.toString(this.gamesToPlay / this.saveBackupEvery).length();
         }
-        int backupNumber = 0;
-        File perceptronFileBackup = new File(filePath + _TRAINED + "_" + dateFormater.format(now) + "_BackupN-" + String.format("%0" + zeroNumbers + "d", backupNumber)
-                + ".ser");
+
         File randomPerceptronFile = new File(filePath + _RANDOM + ".ser");
 
         boolean backupRandomPerceptron = false;
@@ -594,11 +631,6 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
         if ( backupRandomPerceptron ) {
             //guardamos el perceptron inicial para ahcer estadisticas
             neuralNetworkInterfaceFor2048.savePerceptron(randomPerceptronFile);
-        } else {
-            if ( !this.statisticsOnly ) {
-                //guardamos un backup del perceptron antes de entrenar
-                neuralNetworkInterfaceFor2048.savePerceptron(perceptronFileBackup);
-            }
         }
 
         if ( this.getNeuralNetworkInterfaceFor2048().getPerceptronInterface() != null ) {
@@ -629,13 +661,12 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
 
         if ( !this.statisticsOnly ) {
             //comenzamos a entrenar y guardar estadisticas en el archivo de log
-            int lastSaveCounter = 0;
             if ( logsActivated ) {
                 try ( PrintStream printStream = new PrintStream(logFile, "UTF-8") ) {
-                    training(game, printStream, lastSaveCounter, randomPerceptronFile, perceptronFile, backupNumber, filePath, dateFormater, now, zeroNumbers);
+                    training(game, printStream, randomPerceptronFile, perceptronFile, configFile, filePath, dateFormater, now, zeroNumbers);
                 }
             } else {
-                training(game, null, lastSaveCounter, randomPerceptronFile, perceptronFile, backupNumber, filePath, dateFormater, now, zeroNumbers);
+                training(game, null, randomPerceptronFile, perceptronFile, configFile, filePath, dateFormater, now, zeroNumbers);
             }
 
             //guardamos los progresos en un archivo
@@ -838,5 +869,6 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
 
         }
     }
+    public static final String _CONFIG = "_config";
 
 }

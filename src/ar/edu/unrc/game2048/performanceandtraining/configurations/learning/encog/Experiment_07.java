@@ -44,8 +44,8 @@ public class Experiment_07 extends LearningExperiment<BasicNetwork> {
         experiment.setExplorationRateToFixed(0);
         experiment.setResetEligibilitiTraces(true);
         experiment.setGamesToPlay(100_000);
-        experiment.setLastGamePlayedNumber(101_000); //recordar AJUSTAR ESTE VALOR
-        experiment.setSaveEvery(1_000);
+        experiment.setSaveEvery(500);
+        experiment.setSaveBackupEvery(1_000);
         experiment.setInitializePerceptronRandomized(true);
 
         experiment.createLogs(false);

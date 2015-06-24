@@ -249,7 +249,7 @@ public class LearningExperimentTest {
         System.out.println("getSaveEvery");
         LearningExperiment instance = new LearningExperimentImpl();
         int expResult = 0;
-        int result = instance.getSaveEvery();
+        int result = instance.getSaveBackupEvery();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -687,7 +687,7 @@ public class LearningExperimentTest {
         System.out.println("setSaveEvery");
         int saveEvery = 0;
         LearningExperiment instance = new LearningExperimentImpl();
-        instance.setSaveEvery(saveEvery);
+        instance.setSaveBackupEvery(saveEvery);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

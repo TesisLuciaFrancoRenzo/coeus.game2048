@@ -43,7 +43,7 @@ public class TestGenerator_02 {
         experiment.setResetEligibilitiTraces(true);
         experiment.setLearningRateAdaptationToFixed();
         experiment.setGamesToPlay(gamesToPlay);
-        experiment.setSaveEvery(saveEvery);
+        experiment.setSaveBackupEvery(saveEvery);
         experiment.setGamesToPlayPerThreadForStatistics(gamesToPlayPerThreadForStatistics);
         experiment.setSimulationsForStatistics(simulationsForStatistics);
         experiment.start(filePath, 0);
