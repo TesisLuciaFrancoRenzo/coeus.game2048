@@ -71,6 +71,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
     private boolean runStatisticsForBackups = false;
     private int saveBackupEvery = 0;
     private int saveEvery = 0;
+    private long elapsedTime = 0;
     private int simulationsForStatistics;
     private boolean statisticsOnly = false;
     private int tileToWin;
@@ -414,8 +415,11 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
             }
         }
 
-        for ( int i = lastSavedGamePlayedNumber + 1; i <= gamesToPlay; i++ ) { //FIXME menor o igual a gameToPlay? o menor? ver codigo de annealing
+        for ( int i = lastSavedGamePlayedNumber + 1; i <= gamesToPlay; i++ ) {
+            long start = System.nanoTime();
             learningAlgorithm.solveAndTrainOnce(game, i);
+            elapsedTime += System.nanoTime() - start;
+
             int percent = (int) (((i * 1d) / (gamesToPlay * 1d)) * 100d);
             System.out.println("Juego número " + i + " (" + percent + "%)    puntaje = " + game.getScore() + "    ficha max = " + game.getMaxNumber() + "    turno alcanzado = " + game.getLastTurn() + "      current alpha = " + Arrays.toString(learningAlgorithm.getCurrentAlpha()));
             if ( printStream != null ) {
@@ -436,7 +440,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
                 writeConfig = true;
             }
             if ( writeConfig ) {
-                StringAndFiles.stringToFile(configFile, Integer.toString(i) + "\n" + Integer.toString(backupNumber), StringAndFiles.UTF_8);
+                StringAndFiles.stringToFile(configFile, Integer.toString(i) + "\n" + Integer.toString(backupNumber) + "\n" + Long.toString(elapsedTime), StringAndFiles.UTF_8);
             }
         }
     }
@@ -590,6 +594,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
 
         backupNumber = 0;
         lastSavedGamePlayedNumber = 0;
+        elapsedTime = 0;
         if ( configFile.exists() ) {
             String configs = StringAndFiles.fileToString(configFile, StringAndFiles.UTF_8);
             StringIterator iterator = new StringIterator(configs, null, "\n");
@@ -603,6 +608,11 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
                 throw new IllegalArgumentException("el archivo de configuracion no tiene un formato válido");
             }
             this.backupNumber = Integer.parseInt(line);
+            line = iterator.readLine();
+            if ( line == null ) {
+                throw new IllegalArgumentException("el archivo de configuracion no tiene un formato válido");
+            }
+            this.elapsedTime = Long.parseLong(line);
         }
 
         int zeroNumbers = 1;
