@@ -287,30 +287,53 @@ public class IGameTest {
      */
     public class IGameImpl implements IGame {
 
+        /**
+         *
+         */
         @Override
         public void dispose() {
         }
 
+        /**
+         *
+         * @return
+         */
         @Override
         public int getMaxNumber() {
             return 0;
         }
 
+        /**
+         *
+         * @return
+         */
         @Override
         public int getScore() {
             return 0;
         }
 
+        /**
+         *
+         * @return
+         */
         @Override
         public boolean iLoose() {
             return false;
         }
 
+        /**
+         *
+         * @return
+         */
         @Override
         public boolean iWin() {
             return false;
         }
 
+        /**
+         *
+         * @param keyCode
+         */
         @Override
         public void processInput(int keyCode) {
         }

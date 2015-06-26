@@ -11,7 +11,7 @@ import ar.edu.unrc.game2048.PerceptronConfiguration2048;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IsolatedComputation;
 import java.util.List;
 import org.encog.engine.network.activation.ActivationFunction;
-import org.encog.engine.network.activation.ActivationSigmoid;
+import org.encog.engine.network.activation.ActivationTANH;
 import org.encog.util.arrayutil.NormalizationAction;
 import org.encog.util.arrayutil.NormalizedField;
 
@@ -47,8 +47,9 @@ public class BoardScore<NeuralNetworkClass> extends PerceptronConfiguration2048<
      */
     public BoardScore() {
         maxCodedBoardnumber = 11; //2048 como maximo
-        maxScore = 100_000;
-        minScore = 0;
+        maxScore = 500_000;
+        minScore = -500_000;
+
         minCodedBoardnumber = 0;
 
         this.neuronQuantityInLayer = new int[3];
@@ -58,11 +59,11 @@ public class BoardScore<NeuralNetworkClass> extends PerceptronConfiguration2048<
 
         this.activationFunctionForEncog = new ActivationFunction[2];
 
-        activationFunctionForEncog[0] = new ActivationSigmoid();
-        activationFunctionForEncog[1] = new ActivationSigmoid();
+        activationFunctionForEncog[0] = new ActivationTANH();
+        activationFunctionForEncog[1] = new ActivationTANH();
 
         activationFunctionMax = 1;
-        activationFunctionMin = 0;
+        activationFunctionMin = -1;
 
         normInput = new NormalizedField(NormalizationAction.Normalize,
                 null, maxCodedBoardnumber, minCodedBoardnumber, activationFunctionMax, activationFunctionMin);
@@ -73,8 +74,8 @@ public class BoardScore<NeuralNetworkClass> extends PerceptronConfiguration2048<
     /**
      *
      * @param board
-     * @param normalizedPerceptronInput
-     * @return 
+     * @param normalizedPerceptronInput <p>
+     * @return
      */
     @Override
     public IsolatedComputation calculateNormalizedPerceptronInput(GameBoard<NeuralNetworkClass> board, List<Double> normalizedPerceptronInput) {
@@ -134,49 +135,6 @@ public class BoardScore<NeuralNetworkClass> extends PerceptronConfiguration2048<
             return null;
         };
     }
-//
-//    @Override
-//    public IsolatedComputation<Integer> translatePerceptronOutputToPrediction(double[] data) {
-//        return () -> {
-//            assert data[0] != Double.NaN;
-//            return (int) Math.round(normOutput.deNormalize(data[0]));
-//        };
-//    }
-//
-//    /**
-//     *
-//     * @param board
-//     * @param neuronIndex <p>
-//     * @return
-//     */
-//    @Override
-//    public double translateRealOutputToNormalizedPerceptronOutputFrom(GameBoard<NeuralNetworkClass> board, int neuronIndex) {
-//
-//        if ( neuronIndex < 0 || neuronIndex >= perceptron_output_quantity ) {
-//            throw new IllegalArgumentException("neuronIndex range for output layer must be [0," + perceptron_output_quantity + "] but was " + neuronIndex);
-//        }
-//        if ( board.getPartialScore() > this.maxScore ) {
-//            throw new IllegalArgumentException("board.getPartialScore() supera el maximo de " + maxScore + " con el valor " + board.getPartialScore());
-//        }
-//        return normOutput.normalize(board.getPartialScore());
-//    }
-//
-//    /**
-//     *
-//     * @param board
-//     * @param outputNeuronIndex <p>
-//     * @return
-//     */
-//    @Override
-//    public double translateRewordToNormalizedPerceptronOutputFrom(GameBoard<NeuralNetworkClass> board, int outputNeuronIndex) {
-//        if ( outputNeuronIndex < 0 || outputNeuronIndex >= perceptron_output_quantity ) {
-//            throw new IllegalArgumentException("neuronIndex range for output layer must be [0," + perceptron_output_quantity + "] but was " + outputNeuronIndex);
-//        }
-//        if ( board.getPartialScore() > this.maxScore ) {
-//            throw new IllegalArgumentException("board.getPartialScore() supera el maximo de " + maxScore + " con el valor " + board.getPartialScore());
-//        }
-//        return normOutput.normalize(board.getPartialScore());
-//    }
 
     @Override
     public IsolatedComputation<Double> computeNumericRepresentationFor(Game2048 game, Object[] output) {

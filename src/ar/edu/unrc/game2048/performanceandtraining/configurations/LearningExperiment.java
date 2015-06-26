@@ -36,6 +36,10 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
  * @param <NeuralNetworkClass>
  */
 public abstract class LearningExperiment<NeuralNetworkClass> {
+
+    /**
+     *
+     */
     public static final String _CONFIG = "_config";
 
     /**
