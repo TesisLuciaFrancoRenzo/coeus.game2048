@@ -12,7 +12,7 @@ import ar.edu.unrc.game2048.Tile;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IsolatedComputation;
 import java.util.List;
 import org.encog.engine.network.activation.ActivationFunction;
-import org.encog.engine.network.activation.ActivationSigmoid;
+import org.encog.engine.network.activation.ActivationTANH;
 import org.encog.util.arrayutil.NormalizationAction;
 import org.encog.util.arrayutil.NormalizedField;
 
@@ -39,9 +39,8 @@ public class BinaryScore<NeuralNetworkClass> extends PerceptronConfiguration2048
      *
      */
     public BinaryScore() {
-
-        maxScore = 100_000;
-        minScore = 0;
+        maxScore = 500_000;
+        minScore = -500_000;
 
         this.neuronQuantityInLayer = new int[3];
         neuronQuantityInLayer[0] = 64;
@@ -50,11 +49,11 @@ public class BinaryScore<NeuralNetworkClass> extends PerceptronConfiguration2048
 
         this.activationFunctionForEncog = new ActivationFunction[2];
 
-        activationFunctionForEncog[0] = new ActivationSigmoid();
-        activationFunctionForEncog[1] = new ActivationSigmoid();
+        activationFunctionForEncog[0] = new ActivationTANH();
+        activationFunctionForEncog[1] = new ActivationTANH();
 
         activationFunctionMax = 1;
-        activationFunctionMin = 0;
+        activationFunctionMin = -1;
 
         normOutput = new NormalizedField(NormalizationAction.Normalize,
                 null, maxScore, minScore, activationFunctionMax, activationFunctionMin);
@@ -63,8 +62,8 @@ public class BinaryScore<NeuralNetworkClass> extends PerceptronConfiguration2048
     /**
      *
      * @param board
-     * @param normalizedPerceptronInput
-     * @return 
+     * @param normalizedPerceptronInput <p>
+     * @return
      */
     @Override
     public IsolatedComputation calculateNormalizedPerceptronInput(GameBoard<NeuralNetworkClass> board, List<Double> normalizedPerceptronInput) {

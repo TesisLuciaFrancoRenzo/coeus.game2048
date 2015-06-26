@@ -11,7 +11,7 @@ import ar.edu.unrc.game2048.PerceptronConfiguration2048;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IsolatedComputation;
 import java.util.List;
 import org.encog.engine.network.activation.ActivationFunction;
-import org.encog.engine.network.activation.ActivationSigmoid;
+import org.encog.engine.network.activation.ActivationTANH;
 import org.encog.util.arrayutil.NormalizationAction;
 import org.encog.util.arrayutil.NormalizedField;
 
@@ -50,7 +50,7 @@ public class BoardMaxTileCustomNormalization<NeuralNetworkClass> extends Percept
         maxEncriptedTile = 1; //ver teoria
         minEncriptedTile = 0;
         maxCodedBoardOutputnumber = 11; //2048 maximo
-        minCodedBoardOutputnumber = 0;
+        minCodedBoardOutputnumber = -11;
 
         this.neuronQuantityInLayer = new int[3];
         neuronQuantityInLayer[0] = 16;
@@ -59,11 +59,11 @@ public class BoardMaxTileCustomNormalization<NeuralNetworkClass> extends Percept
 
         this.activationFunctionForEncog = new ActivationFunction[2];
 
-        activationFunctionForEncog[0] = new ActivationSigmoid();
-        activationFunctionForEncog[1] = new ActivationSigmoid();
+        activationFunctionForEncog[0] = new ActivationTANH();
+        activationFunctionForEncog[1] = new ActivationTANH();
 
         activationFunctionMax = 1;
-        activationFunctionMin = 0;
+        activationFunctionMin = -1;
 
         normInput = new NormalizedField(NormalizationAction.Normalize,
                 null, maxEncriptedTile, minEncriptedTile, activationFunctionMax, activationFunctionMin);

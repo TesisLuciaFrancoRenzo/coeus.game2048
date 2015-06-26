@@ -11,7 +11,7 @@ import ar.edu.unrc.game2048.PerceptronConfiguration2048;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IsolatedComputation;
 import java.util.List;
 import org.encog.engine.network.activation.ActivationFunction;
-import org.encog.engine.network.activation.ActivationSigmoid;
+import org.encog.engine.network.activation.ActivationTANH;
 import org.encog.util.arrayutil.NormalizationAction;
 import org.encog.util.arrayutil.NormalizedField;
 
@@ -47,8 +47,8 @@ public class BoardScoreCustomNormalization<NeuralNetworkClass> extends Perceptro
      */
     public BoardScoreCustomNormalization() {
 
-        maxScore = 100_000;
-        minScore = 0;
+        maxScore = 500_000;
+        minScore = -500_000;
         maxEncriptedTile = 1; //ver teoria
         minEncriptedTile = 0;
 
@@ -59,11 +59,11 @@ public class BoardScoreCustomNormalization<NeuralNetworkClass> extends Perceptro
 
         this.activationFunctionForEncog = new ActivationFunction[2];
 
-        activationFunctionForEncog[0] = new ActivationSigmoid();
-        activationFunctionForEncog[1] = new ActivationSigmoid();
+        activationFunctionForEncog[0] = new ActivationTANH();
+        activationFunctionForEncog[1] = new ActivationTANH();
 
         activationFunctionMax = 1;
-        activationFunctionMin = 0;
+        activationFunctionMin = -1;
 
         normInput = new NormalizedField(NormalizationAction.Normalize,
                 null, maxEncriptedTile, minEncriptedTile, activationFunctionMax, activationFunctionMin);
@@ -74,8 +74,8 @@ public class BoardScoreCustomNormalization<NeuralNetworkClass> extends Perceptro
     /**
      *
      * @param board
-     * @param normalizedPerceptronInput
-     * @return 
+     * @param normalizedPerceptronInput <p>
+     * @return
      */
     @Override
     public IsolatedComputation calculateNormalizedPerceptronInput(GameBoard<NeuralNetworkClass> board, List<Double> normalizedPerceptronInput) {
