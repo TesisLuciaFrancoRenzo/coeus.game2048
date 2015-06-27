@@ -25,6 +25,9 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -236,6 +239,20 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
     }
 
     /**
+     * @return the saveBackupEvery
+     */
+    public int getSaveBackupEvery() {
+        return saveBackupEvery;
+    }
+
+    /**
+     * @param saveBackupEvery the saveBackupEvery to set
+     */
+    public void setSaveBackupEvery(int saveBackupEvery) {
+        this.saveBackupEvery = saveBackupEvery;
+    }
+
+    /**
      * @return the saveEvery
      */
     public int getSaveEvery() {
@@ -342,6 +359,22 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
      */
     public void setStatisticsOnly(boolean statisticsOnly) {
         this.statisticsOnly = statisticsOnly;
+    }
+
+    public void loadTitle(int rowStartTitle, int colStartTitle, Sheet sheet, int backupFilesSize, CellStyle CellStyleTitle) {
+        int total_juegos = saveBackupEvery;
+        Row row1 = sheet.getRow(rowStartTitle);
+        for ( int file = 1; file <= backupFilesSize; file++ ) {
+            Cell cell = row1.createCell(file + colStartTitle, Cell.CELL_TYPE_NUMERIC);
+            cell.setCellStyle(CellStyleTitle);
+            Integer value = total_juegos * file;
+            String valueStr = value.toString();
+            String cellV = valueStr;
+            if ( valueStr.length() > 3 ) {
+                cellV = valueStr.substring(0, valueStr.length() - 3) + "K";
+            }
+            cell.setCellValue(cellV);
+        }
     }
 
     /**
@@ -522,20 +555,6 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
     }
 
     /**
-     * @return the saveBackupEvery
-     */
-    protected int getSaveBackupEvery() {
-        return saveBackupEvery;
-    }
-
-    /**
-     * @param saveBackupEvery the saveBackupEvery to set
-     */
-    public void setSaveBackupEvery(int saveBackupEvery) {
-        this.saveBackupEvery = saveBackupEvery;
-    }
-
-    /**
      * @return the simulationsForStatistics
      */
     protected int getSimulationsForStatistics() {
@@ -576,6 +595,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
      * @param delayPerMove   <p>
      * @throws Exception
      */
+    @SuppressWarnings( "static-access" )
     protected void runExperiment(String experimentPath, int delayPerMove) throws Exception {
         if ( saveEvery == 0 ) {
             throw new IllegalArgumentException("se debe configurar cada cuanto guardar el perceptron mediante la variable saveEvery");
@@ -742,6 +762,39 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
 
                     Sheet sheet = wb.getSheetAt(0);
                     int tiles = 17;
+                    //Estilo par los titulos de las tablas
+                    int rowStartTitle = 0;
+                    int colStartTitle = 2;
+                    // Luego creamos el objeto que se encargará de aplicar el estilo a la celda
+                    Font fontCellTitle = wb.createFont();
+                    fontCellTitle.setFontHeightInPoints((short) 10);
+                    fontCellTitle.setFontName("Arial");
+                    fontCellTitle.setBoldweight(Font.BOLDWEIGHT_BOLD);
+                    CellStyle CellStyleTitle = wb.createCellStyle();
+                    CellStyleTitle.setWrapText(true);
+                    CellStyleTitle.setAlignment(CellStyle.ALIGN_CENTER);
+                    CellStyleTitle.setVerticalAlignment(CellStyle.VERTICAL_TOP);
+                    CellStyleTitle.setFont(fontCellTitle);
+
+                    // Establecemos el tipo de sombreado de nuestra celda
+                    CellStyleTitle.setFillBackgroundColor(IndexedColors.LIGHT_CORNFLOWER_BLUE.getIndex());
+                    CellStyleTitle.setFillPattern(CellStyle.SOLID_FOREGROUND);
+                    loadTitle(rowStartTitle, colStartTitle, sheet, backupFiles.size(), CellStyleTitle);
+                    //estilo titulo finalizado
+
+                    //Estilo de celdas con los valores de las estadisticas
+                    CellStyle cellStyle = wb.createCellStyle();
+                    cellStyle.setWrapText(true);
+                    /* We are now ready to set borders for this style */
+                    /* Draw a thin left border */
+                    cellStyle.setBorderLeft(cellStyle.BORDER_THIN);
+                    /* Add medium right border */
+                    cellStyle.setBorderRight(cellStyle.BORDER_THIN);
+                    /* Add dashed top border */
+                    cellStyle.setBorderTop(cellStyle.BORDER_THIN);
+                    /* Add dotted bottom border */
+                    cellStyle.setBorderBottom(cellStyle.BORDER_THIN);
+                    //estilo celdas finalizado
 
                     //configuraciones basadas en el spreadsheet
                     int rowStart = 2;
@@ -750,6 +803,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
                         Row row = sheet.getRow(tile + rowStart - 1);
                         for ( int file = 0; file < backupFiles.size(); file++ ) {
                             Cell cell = row.createCell(file + colStart, Cell.CELL_TYPE_NUMERIC);
+                            cell.setCellStyle(cellStyle);
                             Double cellValue = resultsPerFile.get(backupFiles.get(file)).getTileStatistics().get(tile);
                             cell.setCellValue(cellValue);
                         }
@@ -760,6 +814,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
                             Row row = sheet.getRow(tile + rowStart - 1);
                             Cell cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
                             Double cellValue = resultsRandom.get(randomPerceptronFile).getTileStatistics().get(tile);
+                            cell.setCellStyle(cellStyle);
                             cell.setCellValue(cellValue);
                         }
                     }
@@ -767,10 +822,11 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
                     //============= imptimimos en la hoja de Score ===================
                     sheet = wb.getSheetAt(1);
                     rowStart = 2;
-
+                    loadTitle(rowStartTitle, colStartTitle, sheet, backupFiles.size(), CellStyleTitle);
                     Row row = sheet.getRow(rowStart - 1);
                     for ( int file = 0; file < backupFiles.size(); file++ ) {
                         Cell cell = row.createCell(file + colStart, Cell.CELL_TYPE_NUMERIC);
+                        cell.setCellStyle(cellStyle);
                         Double cellValue = resultsPerFile.get(backupFiles.get(file)).getMinScore();
                         cell.setCellValue(cellValue);
                     }
@@ -778,6 +834,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
                         int file = 0;
                         Cell cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
                         Double cellValue = resultsPerFile.get(backupFiles.get(file)).getMinScore();
+                        cell.setCellStyle(cellStyle);
                         cell.setCellValue(cellValue);
                     }
 
@@ -786,12 +843,14 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
                     for ( int file = 0; file < backupFiles.size(); file++ ) {
                         Cell cell = row.createCell(file + colStart, Cell.CELL_TYPE_NUMERIC);
                         Double cellValue = resultsPerFile.get(backupFiles.get(file)).getMeanScore();
+                        cell.setCellStyle(cellStyle);
                         cell.setCellValue(cellValue);
                     }
                     if ( !resultsRandom.isEmpty() ) {
                         int file = 0;
                         Cell cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
                         Double cellValue = resultsPerFile.get(backupFiles.get(file)).getMeanScore();
+                        cell.setCellStyle(cellStyle);
                         cell.setCellValue(cellValue);
                     }
 
@@ -800,22 +859,25 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
                     for ( int file = 0; file < backupFiles.size(); file++ ) {
                         Cell cell = row.createCell(file + colStart, Cell.CELL_TYPE_NUMERIC);
                         Double cellValue = resultsPerFile.get(backupFiles.get(file)).getMaxScore();
+                        cell.setCellStyle(cellStyle);
                         cell.setCellValue(cellValue);
                     }
                     if ( !resultsRandom.isEmpty() ) {
                         int file = 0;
                         Cell cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
                         Double cellValue = resultsPerFile.get(backupFiles.get(file)).getMaxScore();
+                        cell.setCellStyle(cellStyle);
                         cell.setCellValue(cellValue);
                     }
 
                     //============= imptimimos en la hoja de Win ===================
                     sheet = wb.getSheetAt(2);
                     rowStart = 2;
-
+                    loadTitle(rowStartTitle, colStartTitle, sheet, backupFiles.size(), CellStyleTitle);
                     row = sheet.getRow(rowStart - 1);
                     for ( int file = 0; file < backupFiles.size(); file++ ) {
                         Cell cell = row.createCell(file + colStart, Cell.CELL_TYPE_NUMERIC);
+                        cell.setCellStyle(cellStyle);
                         Double cellValue = resultsPerFile.get(backupFiles.get(file)).getWinRate();
                         assert cellValue <= 100 && cellValue >= 0;
                         cell.setCellValue(cellValue);
@@ -823,6 +885,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
                     if ( !resultsRandom.isEmpty() ) {
                         int file = 0;
                         Cell cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
+                        cell.setCellStyle(cellStyle);
                         Double cellValue = resultsPerFile.get(backupFiles.get(file)).getWinRate();
                         assert cellValue <= 100 && cellValue >= 0;
                         cell.setCellValue(cellValue);
@@ -831,16 +894,18 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
                     //============= imptimimos en la hoja de Turns ===================
                     sheet = wb.getSheetAt(3);
                     rowStart = 2;
-
+                    loadTitle(rowStartTitle, colStartTitle, sheet, backupFiles.size(), CellStyleTitle);
                     row = sheet.getRow(rowStart - 1);
                     for ( int file = 0; file < backupFiles.size(); file++ ) {
                         Cell cell = row.createCell(file + colStart, Cell.CELL_TYPE_NUMERIC);
+                        cell.setCellStyle(cellStyle);
                         Double cellValue = resultsPerFile.get(backupFiles.get(file)).getMinTurn();
                         cell.setCellValue(cellValue);
                     }
                     if ( !resultsRandom.isEmpty() ) {
                         int file = 0;
                         Cell cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
+                        cell.setCellStyle(cellStyle);
                         Double cellValue = resultsPerFile.get(backupFiles.get(file)).getMinTurn();
                         cell.setCellValue(cellValue);
                     }
@@ -849,12 +914,14 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
                     row = sheet.getRow(rowStart - 1);
                     for ( int file = 0; file < backupFiles.size(); file++ ) {
                         Cell cell = row.createCell(file + colStart, Cell.CELL_TYPE_NUMERIC);
+                        cell.setCellStyle(cellStyle);
                         Double cellValue = resultsPerFile.get(backupFiles.get(file)).getMeanTurn();
                         cell.setCellValue(cellValue);
                     }
                     if ( !resultsRandom.isEmpty() ) {
                         int file = 0;
                         Cell cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
+                        cell.setCellStyle(cellStyle);
                         Double cellValue = resultsPerFile.get(backupFiles.get(file)).getMeanTurn();
                         cell.setCellValue(cellValue);
                     }
@@ -863,12 +930,14 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
                     row = sheet.getRow(rowStart - 1);
                     for ( int file = 0; file < backupFiles.size(); file++ ) {
                         Cell cell = row.createCell(file + colStart, Cell.CELL_TYPE_NUMERIC);
+                        cell.setCellStyle(cellStyle);
                         Double cellValue = resultsPerFile.get(backupFiles.get(file)).getMaxTurn();
                         cell.setCellValue(cellValue);
                     }
                     if ( !resultsRandom.isEmpty() ) {
                         int file = 0;
                         Cell cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
+                        cell.setCellStyle(cellStyle);
                         Double cellValue = resultsPerFile.get(backupFiles.get(file)).getMaxTurn();
                         cell.setCellValue(cellValue);
                     }
@@ -884,5 +953,4 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
 
         }
     }
-
 }
