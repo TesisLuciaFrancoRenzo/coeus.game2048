@@ -26,7 +26,7 @@ import static ar.edu.unrc.game2048.Action.up;
 import static ar.edu.unrc.game2048.GameBoard.tileNumber;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IAction;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IActor;
-import ar.edu.unrc.tdlearning.perceptron.interfaces.IProblem;
+import ar.edu.unrc.tdlearning.perceptron.interfaces.IProblemState;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IState;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IStateNTuple;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IStatePerceptron;
@@ -73,7 +73,7 @@ import org.encog.neural.networks.BasicNetwork;
  * @author Konstantin Bulenkov, franco pellegrini
  * @param <NeuralNetworkClass>
  */
-public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame, IProblem {
+public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame, IProblemState {
 
     private static final Color BG_COLOR = new Color(0xbb_ada0);
     private static final String FONT_NAME = "Arial";
