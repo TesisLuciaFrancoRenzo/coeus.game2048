@@ -36,17 +36,20 @@ public class Experiment_12 extends LearningExperiment<BasicNetwork> {
             filePath = args[0];
         }
         LearningExperiment experiment = new Experiment_12();
-//        boolean statistics = true;
-        boolean statistics = false;
-        experiment.setLearningRateAdaptationToFixed();
-        experiment.setLambda(0.7);
+        boolean statistics = true;
+//        boolean statistics = false;
+
+        experiment.setLambda(0);
         experiment.setGamma(1);
-        experiment.setExplorationRateToFixed(0);
-        experiment.setResetEligibilitiTraces(true);
-        experiment.setGamesToPlay(20_000);
+        double[] alpha = {0.0025, 0.0025};
+        experiment.setAlpha(alpha);
+        experiment.setLearningRateAdaptationToFixed();
+        experiment.setExplorationRateToFixed(0.1);
+        experiment.setResetEligibilitiTraces(false);
+        experiment.setGamesToPlay(25_000);
         experiment.setSaveEvery(500);
-        experiment.setSaveBackupEvery(500);
-        experiment.setInitializePerceptronRandomized(true);
+        experiment.setSaveBackupEvery(1_000);
+        experiment.setInitializePerceptronRandomized(false);
 
         experiment.createLogs(false);
         //para calcualar estadisticas
