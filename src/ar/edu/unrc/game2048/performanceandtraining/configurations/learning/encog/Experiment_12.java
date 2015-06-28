@@ -36,8 +36,8 @@ public class Experiment_12 extends LearningExperiment<BasicNetwork> {
             filePath = args[0];
         }
         LearningExperiment experiment = new Experiment_12();
-        boolean statistics = true;
-//        boolean statistics = false;
+//        boolean statistics = true;
+        boolean statistics = false;
 
         experiment.setLambda(0);
         experiment.setGamma(1);
