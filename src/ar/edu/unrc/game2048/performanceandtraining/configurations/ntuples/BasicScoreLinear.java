@@ -40,12 +40,14 @@ public class BasicScoreLinear extends NTupleConfiguration2048 {
 
     /**
      *
-     * @param value <p>
+     * @param value             <p>
+     * @param outputNeuronIndex
+     * <p>
      * @return
      */
     @Override
-    public double denormalizeValueFromPerceptronOutput(Object value) {
-        return (double) value;
+    public double denormalizeValueFromPerceptronOutput(Object[] value, int outputNeuronIndex) {
+        return (double) value[outputNeuronIndex];
     }
 
     /**

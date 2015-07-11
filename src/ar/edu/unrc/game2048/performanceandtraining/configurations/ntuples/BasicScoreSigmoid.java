@@ -54,8 +54,8 @@ public class BasicScoreSigmoid extends NTupleConfiguration2048 {
      * @return
      */
     @Override
-    public double denormalizeValueFromPerceptronOutput(Object value) {
-        return normOutput.deNormalize((double) value);
+    public double denormalizeValueFromPerceptronOutput(Object[] value, int outputNeuronIndex) {
+        return normOutput.deNormalize((Double) value[outputNeuronIndex]);
     }
 
     /**

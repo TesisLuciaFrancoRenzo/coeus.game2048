@@ -287,8 +287,8 @@ public class NTupleMaxTile<NeuralNetworkClass> extends PerceptronConfiguration20
     }
 
     @Override
-    public double denormalizeValueFromPerceptronOutput(Object value) {
-        return normOutput.deNormalize((Double) value);
+    public double denormalizeValueFromPerceptronOutput(Object[] value, int outputNeuronIndex) {
+        return normOutput.deNormalize((Double) value[outputNeuronIndex]);
     }
 
     @Override

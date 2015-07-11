@@ -60,7 +60,8 @@ public class NTupleScoreLineal<NeuralNetworkClass> extends PerceptronConfigurati
      *
      * @param board
      * @param normalizedPerceptronInput
-     * @return 
+     * <p>
+     * @return
      */
     @Override
     public IsolatedComputation calculateNormalizedPerceptronInput(GameBoard<NeuralNetworkClass> board, List<Double> normalizedPerceptronInput) {
@@ -236,8 +237,8 @@ public class NTupleScoreLineal<NeuralNetworkClass> extends PerceptronConfigurati
     }
 
     @Override
-    public double denormalizeValueFromPerceptronOutput(Object value) {
-        return (Double) value;
+    public double denormalizeValueFromPerceptronOutput(Object[] value, int outputNeuronIndex) {
+        return (Double) value[outputNeuronIndex];
     }
 
     @Override

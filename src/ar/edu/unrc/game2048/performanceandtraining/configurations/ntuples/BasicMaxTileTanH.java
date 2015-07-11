@@ -47,12 +47,14 @@ public class BasicMaxTileTanH extends NTupleConfiguration2048 {
 
     /**
      *
-     * @param value <p>
+     * @param value             <p>
+     * @param outputNeuronIndex
+     * <p>
      * @return
      */
     @Override
-    public double denormalizeValueFromPerceptronOutput(Object value) {
-        return normOutput.deNormalize((double) value);
+    public double denormalizeValueFromPerceptronOutput(Object[] value, int outputNeuronIndex) {
+        return normOutput.deNormalize((double) value[outputNeuronIndex]);
     }
 
     /**

@@ -123,7 +123,7 @@ public class IConfiguration2048Test {
     public class IConfiguration2048Impl implements IConfiguration2048 {
 
         @Override
-        public double denormalizeValueFromPerceptronOutput(Object value) {
+        public double denormalizeValueFromPerceptronOutput(Object[] value, int outputNeuronIndex) {
             return 0.0;
         }
 
@@ -154,7 +154,7 @@ public class IConfiguration2048Test {
          * @return
          */
         @Override
-        public double denormalizeValueFromPerceptronOutput(Object value) {
+        public double denormalizeValueFromPerceptronOutput(Object[] value, int outputNeuronIndex) {
             return 0.0;
         }
 
@@ -202,7 +202,7 @@ public class IConfiguration2048Test {
          * @return
          */
         @Override
-        public double denormalizeValueFromPerceptronOutput(Object value) {
+        public double denormalizeValueFromPerceptronOutput(Object[] value, int outputNeuronIndex) {
             return 0.0;
         }
 

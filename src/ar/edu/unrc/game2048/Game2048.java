@@ -262,11 +262,11 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
     }
 
     @Override
-    public double denormalizeValueFromPerceptronOutput(Object value) {
+    public double denormalizeValueFromPerceptronOutput(Object[] value, int outputNeuronIndex) {
         if ( this.getPerceptronConfiguration() != null ) {
-            return this.getPerceptronConfiguration().denormalizeValueFromPerceptronOutput(value);
+            return this.getPerceptronConfiguration().denormalizeValueFromPerceptronOutput(value, outputNeuronIndex);
         } else {
-            return this.getnTupleSystemConfiguration().denormalizeValueFromPerceptronOutput(value);
+            return this.getnTupleSystemConfiguration().denormalizeValueFromPerceptronOutput(value, outputNeuronIndex);
         }
     }
 

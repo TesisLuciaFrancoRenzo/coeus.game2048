@@ -120,7 +120,7 @@ public class NTupleConfiguration2048Test {
     public class NTupleConfiguration2048Impl extends NTupleConfiguration2048 {
 
         @Override
-        public double denormalizeValueFromPerceptronOutput(Object value) {
+        public double denormalizeValueFromPerceptronOutput(Object[] value, int outputNeuronIndex) {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
 

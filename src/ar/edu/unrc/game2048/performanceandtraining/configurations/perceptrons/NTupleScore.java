@@ -288,8 +288,8 @@ public class NTupleScore<NeuralNetworkClass> extends PerceptronConfiguration2048
     }
 
     @Override
-    public double denormalizeValueFromPerceptronOutput(Object value) {
-        return normOutput.deNormalize((Double) value);
+    public double denormalizeValueFromPerceptronOutput(Object[] value, int outputNeuronIndex) {
+        return normOutput.deNormalize((Double) value[outputNeuronIndex]);
     }
 
     @Override
