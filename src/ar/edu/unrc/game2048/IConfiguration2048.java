@@ -13,12 +13,10 @@ public interface IConfiguration2048 {
 
     /**
      *
-     * @param value             <p>
-     * @param outputNeuronIndex
-     * <p>
+     * @param value <p>
      * @return
      */
-    public abstract double denormalizeValueFromPerceptronOutput(Object[] value, int outputNeuronIndex);
+    public abstract double denormalizeValueFromPerceptronOutput(Object value);
 
     /**
      *

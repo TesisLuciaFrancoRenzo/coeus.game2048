@@ -145,8 +145,8 @@ public class BoardMaxTileCustomNormalization<NeuralNetworkClass> extends Percept
     }
 
     @Override
-    public double denormalizeValueFromPerceptronOutput(Object[] value, int outputNeuronIndex) {
-        return normOutput.deNormalize((Double) value[outputNeuronIndex]);
+    public double denormalizeValueFromPerceptronOutput(Object value) {
+        return normOutput.deNormalize((Double) value);
     }
 
     @Override

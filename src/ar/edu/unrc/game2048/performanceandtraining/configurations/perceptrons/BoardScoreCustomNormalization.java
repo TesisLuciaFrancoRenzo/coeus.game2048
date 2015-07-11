@@ -194,8 +194,8 @@ public class BoardScoreCustomNormalization<NeuralNetworkClass> extends Perceptro
     }
 
     @Override
-    public double denormalizeValueFromPerceptronOutput(Object[] value, int outputNeuronIndex) {
-        return normOutput.deNormalize((Double) value[outputNeuronIndex]);
+    public double denormalizeValueFromPerceptronOutput(Object value) {
+        return normOutput.deNormalize((Double) value);
     }
 
     @Override

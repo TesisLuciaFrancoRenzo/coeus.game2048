@@ -54,8 +54,8 @@ public class BasicScoreTanH extends NTupleConfiguration2048 {
      * @return
      */
     @Override
-    public double denormalizeValueFromPerceptronOutput(Object[] value, int outputNeuronIndex) {
-        return normOutput.deNormalize((Double) value[outputNeuronIndex]);
+    public double denormalizeValueFromPerceptronOutput(Object value) {
+        return normOutput.deNormalize((double) value);
     }
 
     /**

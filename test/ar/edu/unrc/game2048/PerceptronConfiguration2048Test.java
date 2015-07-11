@@ -143,7 +143,7 @@ public class PerceptronConfiguration2048Test {
         }
 
         @Override
-        public double denormalizeValueFromPerceptronOutput(Object[] value, int outputNeuronIndex) {
+        public double denormalizeValueFromPerceptronOutput(Object value) {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
 
