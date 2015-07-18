@@ -13,6 +13,7 @@ import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearning;
 import ar.edu.unrc.utils.ThreadResult;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
 import static java.lang.Math.round;
@@ -26,6 +27,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.IntStream;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Font;
@@ -129,15 +131,15 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
         List<Game2048<NeuralNetworkClass>> games = new ArrayList(simulations);
         List<INeuralNetworkInterfaceFor2048<NeuralNetworkClass>> neuralNetworkInterfaces = new ArrayList(simulations);
         List<TDLambdaLearning> tdLambdaLearning = new ArrayList(simulations);
-        
+
         for ( int i = 0; i < simulations; i++ ) {
             INeuralNetworkInterfaceFor2048<NeuralNetworkClass> neuralNetworkInterfaceClone;
             PerceptronConfiguration2048<NeuralNetworkClass> tempPerceptronConfiguration = null;
             neuralNetworkInterfaceClone = (INeuralNetworkInterfaceFor2048<NeuralNetworkClass>) learningExperiment.getNeuralNetworkInterfaceFor2048().clone();
-            
+
             NTupleConfiguration2048 tempNTupleConfiguration = null;
             IPerceptronInterface tempPerceptronInterface = null;
-            
+
             if ( learningExperiment.getNeuralNetworkInterfaceFor2048().getPerceptronConfiguration() != null ) {
                 tempPerceptronConfiguration = (PerceptronConfiguration2048<NeuralNetworkClass>) learningExperiment.getNeuralNetworkInterfaceFor2048().getPerceptronConfiguration().clone();
                 neuralNetworkInterfaceClone.setPerceptronConfiguration(tempPerceptronConfiguration);
@@ -147,7 +149,7 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
                 tempNTupleConfiguration = (NTupleConfiguration2048) learningExperiment.getNeuralNetworkInterfaceFor2048().getNTupleConfiguration().clone();
                 neuralNetworkInterfaceClone.setNTupleConfiguration(tempNTupleConfiguration);
             }
-            
+
             if ( tempPerceptronConfiguration != null || tempNTupleConfiguration != null ) {
                 //cargamos la red neuronal entrenada
                 File perceptronFile = new File(fileToProcess + ".ser");
@@ -156,9 +158,9 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
                 }
                 neuralNetworkInterfaceClone.loadOrCreatePerceptron(perceptronFile, true);
             }
-            
+
             Game2048<NeuralNetworkClass> game = new Game2048<>(tempPerceptronConfiguration, tempNTupleConfiguration, tileToWin, delayPerMove);
-            
+
             neuralNetworkInterfaces.add(neuralNetworkInterfaceClone);
             if ( tempPerceptronConfiguration != null ) {
                 tdLambdaLearning.add(learningExperiment.instanceOfTdLearninrgImplementation(tempPerceptronInterface)); //TODO revisar esto
@@ -169,7 +171,7 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
             games.add(game);
             results.add(new ThreadResult());
         }
-        
+
         IntStream
                 .range(0, simulations)
                 .parallel()
@@ -188,16 +190,16 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
                         //calculamos estadisticas
                         results.get(i).addStatisticForTile(games.get(i).getMaxNumberCode());
                         results.get(i).addScore(games.get(i).getScore());
-                        
+
                         if ( games.get(i).getMaxNumber() >= 2_048 ) {
                             results.get(i).addWin();
                             results.get(i).addLastTurn(games.get(i).getLastTurn());
                         }
-                        
+
                     }
                     games.get(i).dispose();
                 });
-        
+
         winRate = 0;
         maxScore = 0;
         minScore = 0;
@@ -205,7 +207,7 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
         maxTurn = 0;
         minTurn = 0;
         meanTurn = 0;
-        
+
         tileStatistics = new ArrayList<>(18);
         for ( int i = 0; i <= 17; i++ ) {
             tileStatistics.add(0d);
@@ -222,7 +224,7 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
                 tileStatistics.set(i, tileStatistics.get(i) + result.getStatisticForTile(i));
             }
         });
-        
+
         for ( int i = 0; i <= 17; i++ ) {
             tileStatistics.set(i, tileStatistics.get(i) / (simulations * 1d));
         }
@@ -234,7 +236,7 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
         maxTurn = maxTurn / (simulations * 1d);
         minTurn = minTurn / (simulations * 1d);
         meanTurn = meanTurn / (simulations * 1d);
-        
+
         if ( !results.isEmpty() ) {
             //creamos un archivo de logs para acumular estadisticas
             Date now;
@@ -245,7 +247,7 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
             }
             SimpleDateFormat dateFormater = new SimpleDateFormat("dd-MM-yyyy_HH'h'mm'm'ss's'");
             File logFile = new File(fileToProcess + "_" + dateFormater.format(now) + "_STATISTICS" + ".txt");
-            
+
             try ( PrintStream printStream = new PrintStream(logFile, "UTF-8") ) {
                 printStream.print("Gano: " + round(winRate) + "% - Total de partidas: " + gamesToPlay + " (promedios obtenidos con " + simulations + " simulaciones)");
                 printStream.println("\nValores alcanzados:");
@@ -253,11 +255,11 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
                     printStream.println(tileStatistics.get(i).toString().replaceAll("\\.", ","));
                 }
                 printStream.println("\nPuntajes alcanzados (valor/veces):");
-                
+
                 printStream.println("Maximo puntaje:" + maxScore);
                 printStream.println("Media  puntaje:" + meanScore);
                 printStream.println("Minimo puntaje:" + minScore);
-                
+
                 printStream.println("Maximo turno:" + maxTurn);
                 printStream.println("Media  turno:" + meanTurn);
                 printStream.println("Minimo turno:" + minTurn);
@@ -265,7 +267,7 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
             System.out.println("Finished.");
         }
     }
-    
+
     /**
      *
      * @param experimentPath
@@ -461,6 +463,11 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
             }
         });
 
+        exportToExcel(filePath, backupFiles, resultsPerFile, resultsRandom, randomPerceptronFile);
+
+    }
+
+    public void exportToExcel(String filePath, List<File> backupFiles, Map<File, StatisticForCalc> resultsPerFile, Map<File, StatisticForCalc> resultsRandom, File randomPerceptronFile) throws IOException, InvalidFormatException {
         InputStream inputXLSX = this.getClass().getResourceAsStream("/ar/edu/unrc/game2048/resources/Estadisticas.xlsx");
         Workbook wb = WorkbookFactory.create(inputXLSX);
 
@@ -651,7 +658,6 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
 
             wb.write(outputXLSX);
         }
-
     }
 
     protected void saveBackupEvery(int saveBackupEvery) {
