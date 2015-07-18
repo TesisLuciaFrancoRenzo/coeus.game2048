@@ -119,7 +119,7 @@ public class StatisticExperimentTest {
         System.out.println("getPerceptronName");
         StatisticExperiment instance = null;
         String expResult = "";
-        String result = instance.getPerceptronName();
+        String result = instance.getFileName();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -248,14 +248,14 @@ public class StatisticExperimentTest {
     }
 
     /**
-     * Test of setPerceptronName method, of class StatisticExperiment.
+     * Test of setFileName method, of class StatisticExperiment.
      */
     @Test
     public void testSetPerceptronName() {
         System.out.println("setPerceptronName");
         String perceptronName = "";
         StatisticExperiment instance = null;
-        instance.setPerceptronName(perceptronName);
+        instance.setFileName(perceptronName);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

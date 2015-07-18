@@ -16,10 +16,6 @@ import java.io.File;
  */
 public class VisualRandom extends VisualExperiment {
 
-    public VisualRandom(LearningExperiment learningExperiment) {
-        super(learningExperiment);
-    }
-
     public static void main(String[] args) throws Exception {
         String filePath;
         if ( args.length == 0 ) {
@@ -33,6 +29,10 @@ public class VisualRandom extends VisualExperiment {
         VisualRandom game = new VisualRandom(experiment);
 
         game.start(filePath, 250);
+    }
+
+    public VisualRandom(LearningExperiment learningExperiment) {
+        super(learningExperiment);
     }
 
     @Override
