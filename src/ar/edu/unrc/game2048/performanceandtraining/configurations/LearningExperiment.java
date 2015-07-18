@@ -11,6 +11,8 @@ import ar.edu.unrc.tdlearning.perceptron.learning.EExplorationRateAlgorithms;
 import ar.edu.unrc.tdlearning.perceptron.learning.ELearningRateAdaptation;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearning;
 import ar.edu.unrc.tdlearning.perceptron.ntuple.NTupleSystem;
+import ar.edu.unrc.utils.StringAndFiles;
+import ar.edu.unrc.utils.StringIterator;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;

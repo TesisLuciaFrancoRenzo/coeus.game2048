@@ -10,6 +10,7 @@ import ar.edu.unrc.game2048.NTupleConfiguration2048;
 import ar.edu.unrc.game2048.PerceptronConfiguration2048;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IPerceptronInterface;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearning;
+import ar.edu.unrc.utils.ThreadResult;
 import java.io.File;
 import java.io.PrintStream;
 import static java.lang.Math.round;
