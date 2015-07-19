@@ -126,6 +126,7 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
     }
 
     public void processFile(String fileToProcess, int delayPerMove) throws Exception {
+
         //preparamos los destinos de las siimulaciones para posterior sumatoria final
         List<ThreadResult> results = new ArrayList(simulations);
         List<Game2048<NeuralNetworkClass>> games = new ArrayList(simulations);
@@ -154,7 +155,7 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
                 //cargamos la red neuronal entrenada
                 File perceptronFile = new File(fileToProcess + ".ser");
                 if ( !perceptronFile.exists() ) {
-                    throw new IllegalArgumentException("perceptron file must exists");
+                    throw new IllegalArgumentException("perceptron file must exists: " + perceptronFile.getCanonicalPath());
                 }
                 neuralNetworkInterfaceClone.loadOrCreatePerceptron(perceptronFile, true);
             }
@@ -245,7 +246,6 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
             } else {
                 now = new Date();
             }
-            SimpleDateFormat dateFormater = new SimpleDateFormat("dd-MM-yyyy_HH'h'mm'm'ss's'");
             File logFile = new File(fileToProcess + "_" + dateFormater.format(now) + "_STATISTICS" + ".txt");
 
             try ( PrintStream printStream = new PrintStream(logFile, "UTF-8") ) {
@@ -417,7 +417,6 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
      * @throws Exception
      */
     protected void run(String experimentPath, int delayPerMove) throws Exception {
-        System.out.print("Starting " + this.getFileName() + " Statistics... ");
         String dirPath = experimentPath
                 + this.learningExperiment.getNeuralNetworkInterfaceFor2048().getLibName() + File.separator
                 + experimentName + File.separator;
@@ -426,11 +425,12 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
             dirPathFile.mkdirs();
         }
         String filePath = dirPath + fileName;
-        File randomPerceptronFile = new File(this.getExperimentName() + LearningExperiment._RANDOM + ".ser");
+        File randomPerceptronFile = new File(dirPath + this.getExperimentName() + LearningExperiment._RANDOM + ".ser");
 
         //hacemos estadisticas del perceptron random, si es necesario
         Map<File, StatisticForCalc> resultsRandom = new HashMap<>();
-        processFile(this.getExperimentName() + LearningExperiment._RANDOM, delayPerMove);
+        System.out.print("Starting " + this.getExperimentName() + LearningExperiment._RANDOM + " Statistics... ");
+        processFile(dirPath + this.getExperimentName() + LearningExperiment._RANDOM, delayPerMove);
         resultsRandom.put(randomPerceptronFile, getTileStatistics());
 
         //calculamos las estadisticas de los backup si es necesario
@@ -448,7 +448,8 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
         Map<File, StatisticForCalc> resultsPerFile = new HashMap<>();
         for ( File f : allFiles ) {
             if ( f.getName().matches(".*\\_BackupN\\-.*\\.ser") ) {
-                processFile(f.getName().replaceAll("\\.ser$", ""), delayPerMove);
+                System.out.print("Starting " + f.getName() + " Statistics... ");
+                processFile(dirPath + f.getName().replaceAll("\\.ser$", ""), delayPerMove);
                 resultsPerFile.put(f, getTileStatistics());
                 backupFiles.add(f);
             }
