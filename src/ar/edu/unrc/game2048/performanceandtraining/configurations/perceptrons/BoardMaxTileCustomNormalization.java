@@ -155,8 +155,8 @@ public class BoardMaxTileCustomNormalization<NeuralNetworkClass> extends Percept
     }
 
     @Override
-    public double getFinalReward(Game2048 game, int outputNeuron) {
-        return game.getMaxNumberCode();
+    public double getFinalReward(GameBoard board, int outputNeuron) {
+        return board.getMaxTileNumberCode();
     }
 
     @Override

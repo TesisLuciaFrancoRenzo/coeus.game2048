@@ -5,7 +5,6 @@
  */
 package ar.edu.unrc.game2048.performanceandtraining.configurations.ntuples;
 
-import ar.edu.unrc.game2048.Game2048;
 import ar.edu.unrc.game2048.GameBoard;
 import ar.edu.unrc.game2048.NTupleConfiguration2048;
 import ar.edu.unrc.game2048.Tile;
@@ -60,8 +59,8 @@ public class BasicScoreLinear extends NTupleConfiguration2048 {
     }
 
     @Override
-    public double getFinalReward(Game2048 game, int outputNeuron) {
-        return game.getScore();
+    public double getFinalReward(GameBoard board, int outputNeuron) {
+        return board.getGame().getScore();
     }
 
     /**

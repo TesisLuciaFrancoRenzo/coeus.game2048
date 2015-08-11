@@ -355,11 +355,11 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
     }
 
     @Override
-    public double getFinalReward(int outputNeuron) {
+    public double getFinalReward(IState finalState, int outputNeuron) {
         if ( perceptronConfiguration != null ) {
-            return perceptronConfiguration.getFinalReward(this, outputNeuron);
+            return perceptronConfiguration.getFinalReward((GameBoard) finalState, outputNeuron);
         } else {
-            return nTupleSystemConfiguration.getFinalReward(this, outputNeuron);
+            return nTupleSystemConfiguration.getFinalReward((GameBoard) finalState, outputNeuron);
         }
     }
 

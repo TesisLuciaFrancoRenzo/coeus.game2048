@@ -104,7 +104,8 @@ public class FullNTupleMaxTile<NeuralNetworkClass> extends PerceptronConfigurati
      *
      * @param board
      * @param normalizedPerceptronInput
-     * @return 
+     * <p>
+     * @return
      */
     @Override
     public IsolatedComputation calculateNormalizedPerceptronInput(GameBoard<NeuralNetworkClass> board, List<Double> normalizedPerceptronInput) {
@@ -321,7 +322,7 @@ public class FullNTupleMaxTile<NeuralNetworkClass> extends PerceptronConfigurati
                     normInputYTBoard.normalize(encryptSimpleBoardTile(board, board.tileAt(3, 3).getCode()))
             );
 
-        //-------------------- Tablero Simple -------------------------------
+            //-------------------- Tablero Simple -------------------------------
             // primera fila
             normalizedPerceptronInput.set(33,
                     normInputSimpleBoard.normalize(board.tileAt(0, 0).getCode())
@@ -431,8 +432,8 @@ public class FullNTupleMaxTile<NeuralNetworkClass> extends PerceptronConfigurati
     }
 
     @Override
-    public double getFinalReward(Game2048 game, int outputNeuron) {
-        return game.getMaxNumberCode();
+    public double getFinalReward(GameBoard board, int outputNeuron) {
+        return board.getMaxTileNumberCode();
     }
 
     @Override

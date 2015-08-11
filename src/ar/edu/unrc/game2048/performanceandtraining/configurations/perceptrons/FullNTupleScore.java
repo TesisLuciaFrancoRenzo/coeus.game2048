@@ -85,7 +85,8 @@ public class FullNTupleScore<NeuralNetworkClass> extends PerceptronConfiguration
      *
      * @param board
      * @param normalizedPerceptronInput
-     * @return 
+     * <p>
+     * @return
      */
     @Override
     public IsolatedComputation calculateNormalizedPerceptronInput(GameBoard<NeuralNetworkClass> board, List<Double> normalizedPerceptronInput) {
@@ -367,8 +368,8 @@ public class FullNTupleScore<NeuralNetworkClass> extends PerceptronConfiguration
     }
 
     @Override
-    public double getFinalReward(Game2048 game, int outputNeuron) {
-        return game.getScore();
+    public double getFinalReward(GameBoard board, int outputNeuron) {
+        return board.getGame().getScore();
     }
 
     @Override

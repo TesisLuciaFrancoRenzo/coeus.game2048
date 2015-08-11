@@ -155,8 +155,8 @@ public class BoardScore<NeuralNetworkClass> extends PerceptronConfiguration2048<
     }
 
     @Override
-    public double getFinalReward(Game2048 game, int outputNeuron) {
-        return game.getScore();
+    public double getFinalReward(GameBoard board, int outputNeuron) {
+        return board.getGame().getScore();
     }
 
     @Override

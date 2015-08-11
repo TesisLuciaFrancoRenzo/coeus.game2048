@@ -130,7 +130,7 @@ public class NTupleConfiguration2048Test {
         }
 
         @Override
-        public double getFinalReward(Game2048 game, int outputNeuron) {
+        public double getFinalReward(GameBoard board, int outputNeuron) {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
 

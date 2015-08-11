@@ -28,11 +28,11 @@ public interface IConfiguration2048 {
 
     /**
      *
-     * @param game
+     * @param board
      * @param outputNeuron <p>
      * @return
      */
-    public abstract double getFinalReward(Game2048 game, int outputNeuron);
+    public abstract double getFinalReward(GameBoard board, int outputNeuron);
 
     /**
      *

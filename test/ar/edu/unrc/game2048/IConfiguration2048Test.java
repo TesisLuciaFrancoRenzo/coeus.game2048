@@ -133,7 +133,7 @@ public class IConfiguration2048Test {
         }
 
         @Override
-        public double getFinalReward(Game2048 game, int outputNeuron) {
+        public double getFinalReward(GameBoard board, int outputNeuron) {
             return 0.0;
         }
 
@@ -176,7 +176,7 @@ public class IConfiguration2048Test {
          * @return
          */
         @Override
-        public double getFinalReward(Game2048 game, int outputNeuron) {
+        public double getFinalReward(GameBoard board, int outputNeuron) {
             return 0.0;
         }
 
@@ -224,7 +224,7 @@ public class IConfiguration2048Test {
          * @return
          */
         @Override
-        public double getFinalReward(Game2048 game, int outputNeuron) {
+        public double getFinalReward(GameBoard board, int outputNeuron) {
             return 0.0;
         }
 
