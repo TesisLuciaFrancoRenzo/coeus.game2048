@@ -16,6 +16,11 @@ import java.io.File;
  */
 public class VisualRandom extends VisualExperiment {
 
+    /**
+     *
+     * @param args
+     * @throws Exception
+     */
     public static void main(String[] args) throws Exception {
         String filePath;
         if ( args.length == 0 ) {
@@ -31,6 +36,10 @@ public class VisualRandom extends VisualExperiment {
         game.start(filePath, 250);
     }
 
+    /**
+     *
+     * @param learningExperiment
+     */
     public VisualRandom(LearningExperiment learningExperiment) {
         super(learningExperiment);
     }

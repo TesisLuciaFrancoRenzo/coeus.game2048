@@ -10,7 +10,6 @@ import ar.edu.unrc.game2048.NTupleConfiguration2048;
 import ar.edu.unrc.game2048.PerceptronConfiguration2048;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IPerceptronInterface;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearning;
-import ar.edu.unrc.utils.ThreadResult;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -78,6 +77,199 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
         this.learningExperiment = learningExperiment;
     }
 
+    public void exportToExcel(String filePath, List<File> backupFiles, Map<File, StatisticForCalc> resultsPerFile, Map<File, StatisticForCalc> resultsRandom, File randomPerceptronFile) throws IOException, InvalidFormatException {
+        InputStream inputXLSX = this.getClass().getResourceAsStream("/ar/edu/unrc/game2048/resources/Estadisticas.xlsx");
+        Workbook wb = WorkbookFactory.create(inputXLSX);
+        
+        try ( FileOutputStream outputXLSX = new FileOutputStream(filePath + "_" + dateFormater.format(dateForFileName) + "_STATISTICS" + ".xlsx") ) {
+            //============= imptimimos en la hoja de tiles ===================
+            
+            Sheet sheet = wb.getSheetAt(0);
+            int tiles = 17;
+            //Estilo par los titulos de las tablas
+            int rowStartTitle = 0;
+            int colStartTitle = 2;
+            // Luego creamos el objeto que se encargará de aplicar el estilo a la celda
+            Font fontCellTitle = wb.createFont();
+            fontCellTitle.setFontHeightInPoints((short) 10);
+            fontCellTitle.setFontName("Arial");
+            fontCellTitle.setBoldweight(Font.BOLDWEIGHT_BOLD);
+            CellStyle CellStyleTitle = wb.createCellStyle();
+            CellStyleTitle.setWrapText(true);
+            CellStyleTitle.setAlignment(CellStyle.ALIGN_CENTER);
+            CellStyleTitle.setVerticalAlignment(CellStyle.VERTICAL_TOP);
+            CellStyleTitle.setFont(fontCellTitle);
+            
+            // Establecemos el tipo de sombreado de nuestra celda
+            CellStyleTitle.setFillBackgroundColor(IndexedColors.LIGHT_CORNFLOWER_BLUE.getIndex());
+            CellStyleTitle.setFillPattern(CellStyle.SOLID_FOREGROUND);
+            loadTitle(rowStartTitle, colStartTitle, sheet, backupFiles.size(), CellStyleTitle);
+            //estilo titulo finalizado
+            
+            //Estilo de celdas con los valores de las estadisticas
+            CellStyle cellStyle = wb.createCellStyle();
+            cellStyle.setWrapText(true);
+            /* We are now ready to set borders for this style */
+            /* Draw a thin left border */
+            cellStyle.setBorderLeft(CellStyle.BORDER_THIN);
+            /* Add medium right border */
+            cellStyle.setBorderRight(CellStyle.BORDER_THIN);
+            /* Add dashed top border */
+            cellStyle.setBorderTop(CellStyle.BORDER_THIN);
+            /* Add dotted bottom border */
+            cellStyle.setBorderBottom(CellStyle.BORDER_THIN);
+            //estilo celdas finalizado
+            
+            //configuraciones basadas en el spreadsheet
+            int rowStart = 2;
+            int colStart = 3;
+            for ( int tile = 0; tile <= tiles; tile++ ) {
+                Row row = sheet.getRow(tile + rowStart - 1);
+                for ( int file = 0; file < backupFiles.size(); file++ ) {
+                    Cell cell = row.createCell(file + colStart, Cell.CELL_TYPE_NUMERIC);
+                    cell.setCellStyle(cellStyle);
+                    Double cellValue = resultsPerFile.get(backupFiles.get(file)).getTileStatistics().get(tile);
+                    cell.setCellValue(cellValue);
+                }
+            }
+            if ( !resultsRandom.isEmpty() ) {
+                for ( int tile = 0; tile <= tiles; tile++ ) {
+                    int file = 0;
+                    Row row = sheet.getRow(tile + rowStart - 1);
+                    Cell cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
+                    Double cellValue = resultsRandom.get(randomPerceptronFile).getTileStatistics().get(tile);
+                    cell.setCellStyle(cellStyle);
+                    cell.setCellValue(cellValue);
+                }
+            }
+            
+            //============= imptimimos en la hoja de Score ===================
+            sheet = wb.getSheetAt(1);
+            rowStart = 2;
+            loadTitle(rowStartTitle, colStartTitle, sheet, backupFiles.size(), CellStyleTitle);
+            Row row = sheet.getRow(rowStart - 1);
+            for ( int file = 0; file < backupFiles.size(); file++ ) {
+                Cell cell = row.createCell(file + colStart, Cell.CELL_TYPE_NUMERIC);
+                cell.setCellStyle(cellStyle);
+                Double cellValue = resultsPerFile.get(backupFiles.get(file)).getMinScore();
+                cell.setCellValue(cellValue);
+            }
+            if ( !resultsRandom.isEmpty() ) {
+                int file = 0;
+                Cell cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
+                Double cellValue = resultsPerFile.get(backupFiles.get(file)).getMinScore();
+                cell.setCellStyle(cellStyle);
+                cell.setCellValue(cellValue);
+            }
+            
+            rowStart = 3;
+            row = sheet.getRow(rowStart - 1);
+            for ( int file = 0; file < backupFiles.size(); file++ ) {
+                Cell cell = row.createCell(file + colStart, Cell.CELL_TYPE_NUMERIC);
+                Double cellValue = resultsPerFile.get(backupFiles.get(file)).getMeanScore();
+                cell.setCellStyle(cellStyle);
+                cell.setCellValue(cellValue);
+            }
+            if ( !resultsRandom.isEmpty() ) {
+                int file = 0;
+                Cell cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
+                Double cellValue = resultsPerFile.get(backupFiles.get(file)).getMeanScore();
+                cell.setCellStyle(cellStyle);
+                cell.setCellValue(cellValue);
+            }
+            
+            rowStart = 4;
+            row = sheet.getRow(rowStart - 1);
+            for ( int file = 0; file < backupFiles.size(); file++ ) {
+                Cell cell = row.createCell(file + colStart, Cell.CELL_TYPE_NUMERIC);
+                Double cellValue = resultsPerFile.get(backupFiles.get(file)).getMaxScore();
+                cell.setCellStyle(cellStyle);
+                cell.setCellValue(cellValue);
+            }
+            if ( !resultsRandom.isEmpty() ) {
+                int file = 0;
+                Cell cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
+                Double cellValue = resultsPerFile.get(backupFiles.get(file)).getMaxScore();
+                cell.setCellStyle(cellStyle);
+                cell.setCellValue(cellValue);
+            }
+            
+            //============= imptimimos en la hoja de Win ===================
+            sheet = wb.getSheetAt(2);
+            rowStart = 2;
+            loadTitle(rowStartTitle, colStartTitle, sheet, backupFiles.size(), CellStyleTitle);
+            row = sheet.getRow(rowStart - 1);
+            for ( int file = 0; file < backupFiles.size(); file++ ) {
+                Cell cell = row.createCell(file + colStart, Cell.CELL_TYPE_NUMERIC);
+                cell.setCellStyle(cellStyle);
+                Double cellValue = resultsPerFile.get(backupFiles.get(file)).getWinRate();
+                assert cellValue <= 100 && cellValue >= 0;
+                cell.setCellValue(cellValue);
+            }
+            if ( !resultsRandom.isEmpty() ) {
+                int file = 0;
+                Cell cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
+                cell.setCellStyle(cellStyle);
+                Double cellValue = resultsPerFile.get(backupFiles.get(file)).getWinRate();
+                assert cellValue <= 100 && cellValue >= 0;
+                cell.setCellValue(cellValue);
+            }
+            
+            //============= imptimimos en la hoja de Turns ===================
+            sheet = wb.getSheetAt(3);
+            rowStart = 2;
+            loadTitle(rowStartTitle, colStartTitle, sheet, backupFiles.size(), CellStyleTitle);
+            row = sheet.getRow(rowStart - 1);
+            for ( int file = 0; file < backupFiles.size(); file++ ) {
+                Cell cell = row.createCell(file + colStart, Cell.CELL_TYPE_NUMERIC);
+                cell.setCellStyle(cellStyle);
+                Double cellValue = resultsPerFile.get(backupFiles.get(file)).getMinTurn();
+                cell.setCellValue(cellValue);
+            }
+            if ( !resultsRandom.isEmpty() ) {
+                int file = 0;
+                Cell cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
+                cell.setCellStyle(cellStyle);
+                Double cellValue = resultsPerFile.get(backupFiles.get(file)).getMinTurn();
+                cell.setCellValue(cellValue);
+            }
+            
+            rowStart = 3;
+            row = sheet.getRow(rowStart - 1);
+            for ( int file = 0; file < backupFiles.size(); file++ ) {
+                Cell cell = row.createCell(file + colStart, Cell.CELL_TYPE_NUMERIC);
+                cell.setCellStyle(cellStyle);
+                Double cellValue = resultsPerFile.get(backupFiles.get(file)).getMeanTurn();
+                cell.setCellValue(cellValue);
+            }
+            if ( !resultsRandom.isEmpty() ) {
+                int file = 0;
+                Cell cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
+                cell.setCellStyle(cellStyle);
+                Double cellValue = resultsPerFile.get(backupFiles.get(file)).getMeanTurn();
+                cell.setCellValue(cellValue);
+            }
+            
+            rowStart = 4;
+            row = sheet.getRow(rowStart - 1);
+            for ( int file = 0; file < backupFiles.size(); file++ ) {
+                Cell cell = row.createCell(file + colStart, Cell.CELL_TYPE_NUMERIC);
+                cell.setCellStyle(cellStyle);
+                Double cellValue = resultsPerFile.get(backupFiles.get(file)).getMaxTurn();
+                cell.setCellValue(cellValue);
+            }
+            if ( !resultsRandom.isEmpty() ) {
+                int file = 0;
+                Cell cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
+                cell.setCellStyle(cellStyle);
+                Double cellValue = resultsPerFile.get(backupFiles.get(file)).getMaxTurn();
+                cell.setCellValue(cellValue);
+            }
+            
+            wb.write(outputXLSX);
+        }
+    }
+    
     /**
      * @param gamesToPlay the gamesToPlay to set
      */
@@ -466,199 +658,6 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
 
         exportToExcel(filePath, backupFiles, resultsPerFile, resultsRandom, randomPerceptronFile);
 
-    }
-
-    public void exportToExcel(String filePath, List<File> backupFiles, Map<File, StatisticForCalc> resultsPerFile, Map<File, StatisticForCalc> resultsRandom, File randomPerceptronFile) throws IOException, InvalidFormatException {
-        InputStream inputXLSX = this.getClass().getResourceAsStream("/ar/edu/unrc/game2048/resources/Estadisticas.xlsx");
-        Workbook wb = WorkbookFactory.create(inputXLSX);
-
-        try ( FileOutputStream outputXLSX = new FileOutputStream(filePath + "_" + dateFormater.format(dateForFileName) + "_STATISTICS" + ".xlsx") ) {
-            //============= imptimimos en la hoja de tiles ===================
-
-            Sheet sheet = wb.getSheetAt(0);
-            int tiles = 17;
-            //Estilo par los titulos de las tablas
-            int rowStartTitle = 0;
-            int colStartTitle = 2;
-            // Luego creamos el objeto que se encargará de aplicar el estilo a la celda
-            Font fontCellTitle = wb.createFont();
-            fontCellTitle.setFontHeightInPoints((short) 10);
-            fontCellTitle.setFontName("Arial");
-            fontCellTitle.setBoldweight(Font.BOLDWEIGHT_BOLD);
-            CellStyle CellStyleTitle = wb.createCellStyle();
-            CellStyleTitle.setWrapText(true);
-            CellStyleTitle.setAlignment(CellStyle.ALIGN_CENTER);
-            CellStyleTitle.setVerticalAlignment(CellStyle.VERTICAL_TOP);
-            CellStyleTitle.setFont(fontCellTitle);
-
-            // Establecemos el tipo de sombreado de nuestra celda
-            CellStyleTitle.setFillBackgroundColor(IndexedColors.LIGHT_CORNFLOWER_BLUE.getIndex());
-            CellStyleTitle.setFillPattern(CellStyle.SOLID_FOREGROUND);
-            loadTitle(rowStartTitle, colStartTitle, sheet, backupFiles.size(), CellStyleTitle);
-            //estilo titulo finalizado
-
-            //Estilo de celdas con los valores de las estadisticas
-            CellStyle cellStyle = wb.createCellStyle();
-            cellStyle.setWrapText(true);
-            /* We are now ready to set borders for this style */
-            /* Draw a thin left border */
-            cellStyle.setBorderLeft(CellStyle.BORDER_THIN);
-            /* Add medium right border */
-            cellStyle.setBorderRight(CellStyle.BORDER_THIN);
-            /* Add dashed top border */
-            cellStyle.setBorderTop(CellStyle.BORDER_THIN);
-            /* Add dotted bottom border */
-            cellStyle.setBorderBottom(CellStyle.BORDER_THIN);
-            //estilo celdas finalizado
-
-            //configuraciones basadas en el spreadsheet
-            int rowStart = 2;
-            int colStart = 3;
-            for ( int tile = 0; tile <= tiles; tile++ ) {
-                Row row = sheet.getRow(tile + rowStart - 1);
-                for ( int file = 0; file < backupFiles.size(); file++ ) {
-                    Cell cell = row.createCell(file + colStart, Cell.CELL_TYPE_NUMERIC);
-                    cell.setCellStyle(cellStyle);
-                    Double cellValue = resultsPerFile.get(backupFiles.get(file)).getTileStatistics().get(tile);
-                    cell.setCellValue(cellValue);
-                }
-            }
-            if ( !resultsRandom.isEmpty() ) {
-                for ( int tile = 0; tile <= tiles; tile++ ) {
-                    int file = 0;
-                    Row row = sheet.getRow(tile + rowStart - 1);
-                    Cell cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
-                    Double cellValue = resultsRandom.get(randomPerceptronFile).getTileStatistics().get(tile);
-                    cell.setCellStyle(cellStyle);
-                    cell.setCellValue(cellValue);
-                }
-            }
-
-            //============= imptimimos en la hoja de Score ===================
-            sheet = wb.getSheetAt(1);
-            rowStart = 2;
-            loadTitle(rowStartTitle, colStartTitle, sheet, backupFiles.size(), CellStyleTitle);
-            Row row = sheet.getRow(rowStart - 1);
-            for ( int file = 0; file < backupFiles.size(); file++ ) {
-                Cell cell = row.createCell(file + colStart, Cell.CELL_TYPE_NUMERIC);
-                cell.setCellStyle(cellStyle);
-                Double cellValue = resultsPerFile.get(backupFiles.get(file)).getMinScore();
-                cell.setCellValue(cellValue);
-            }
-            if ( !resultsRandom.isEmpty() ) {
-                int file = 0;
-                Cell cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
-                Double cellValue = resultsPerFile.get(backupFiles.get(file)).getMinScore();
-                cell.setCellStyle(cellStyle);
-                cell.setCellValue(cellValue);
-            }
-
-            rowStart = 3;
-            row = sheet.getRow(rowStart - 1);
-            for ( int file = 0; file < backupFiles.size(); file++ ) {
-                Cell cell = row.createCell(file + colStart, Cell.CELL_TYPE_NUMERIC);
-                Double cellValue = resultsPerFile.get(backupFiles.get(file)).getMeanScore();
-                cell.setCellStyle(cellStyle);
-                cell.setCellValue(cellValue);
-            }
-            if ( !resultsRandom.isEmpty() ) {
-                int file = 0;
-                Cell cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
-                Double cellValue = resultsPerFile.get(backupFiles.get(file)).getMeanScore();
-                cell.setCellStyle(cellStyle);
-                cell.setCellValue(cellValue);
-            }
-
-            rowStart = 4;
-            row = sheet.getRow(rowStart - 1);
-            for ( int file = 0; file < backupFiles.size(); file++ ) {
-                Cell cell = row.createCell(file + colStart, Cell.CELL_TYPE_NUMERIC);
-                Double cellValue = resultsPerFile.get(backupFiles.get(file)).getMaxScore();
-                cell.setCellStyle(cellStyle);
-                cell.setCellValue(cellValue);
-            }
-            if ( !resultsRandom.isEmpty() ) {
-                int file = 0;
-                Cell cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
-                Double cellValue = resultsPerFile.get(backupFiles.get(file)).getMaxScore();
-                cell.setCellStyle(cellStyle);
-                cell.setCellValue(cellValue);
-            }
-
-            //============= imptimimos en la hoja de Win ===================
-            sheet = wb.getSheetAt(2);
-            rowStart = 2;
-            loadTitle(rowStartTitle, colStartTitle, sheet, backupFiles.size(), CellStyleTitle);
-            row = sheet.getRow(rowStart - 1);
-            for ( int file = 0; file < backupFiles.size(); file++ ) {
-                Cell cell = row.createCell(file + colStart, Cell.CELL_TYPE_NUMERIC);
-                cell.setCellStyle(cellStyle);
-                Double cellValue = resultsPerFile.get(backupFiles.get(file)).getWinRate();
-                assert cellValue <= 100 && cellValue >= 0;
-                cell.setCellValue(cellValue);
-            }
-            if ( !resultsRandom.isEmpty() ) {
-                int file = 0;
-                Cell cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
-                cell.setCellStyle(cellStyle);
-                Double cellValue = resultsPerFile.get(backupFiles.get(file)).getWinRate();
-                assert cellValue <= 100 && cellValue >= 0;
-                cell.setCellValue(cellValue);
-            }
-
-            //============= imptimimos en la hoja de Turns ===================
-            sheet = wb.getSheetAt(3);
-            rowStart = 2;
-            loadTitle(rowStartTitle, colStartTitle, sheet, backupFiles.size(), CellStyleTitle);
-            row = sheet.getRow(rowStart - 1);
-            for ( int file = 0; file < backupFiles.size(); file++ ) {
-                Cell cell = row.createCell(file + colStart, Cell.CELL_TYPE_NUMERIC);
-                cell.setCellStyle(cellStyle);
-                Double cellValue = resultsPerFile.get(backupFiles.get(file)).getMinTurn();
-                cell.setCellValue(cellValue);
-            }
-            if ( !resultsRandom.isEmpty() ) {
-                int file = 0;
-                Cell cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
-                cell.setCellStyle(cellStyle);
-                Double cellValue = resultsPerFile.get(backupFiles.get(file)).getMinTurn();
-                cell.setCellValue(cellValue);
-            }
-
-            rowStart = 3;
-            row = sheet.getRow(rowStart - 1);
-            for ( int file = 0; file < backupFiles.size(); file++ ) {
-                Cell cell = row.createCell(file + colStart, Cell.CELL_TYPE_NUMERIC);
-                cell.setCellStyle(cellStyle);
-                Double cellValue = resultsPerFile.get(backupFiles.get(file)).getMeanTurn();
-                cell.setCellValue(cellValue);
-            }
-            if ( !resultsRandom.isEmpty() ) {
-                int file = 0;
-                Cell cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
-                cell.setCellStyle(cellStyle);
-                Double cellValue = resultsPerFile.get(backupFiles.get(file)).getMeanTurn();
-                cell.setCellValue(cellValue);
-            }
-
-            rowStart = 4;
-            row = sheet.getRow(rowStart - 1);
-            for ( int file = 0; file < backupFiles.size(); file++ ) {
-                Cell cell = row.createCell(file + colStart, Cell.CELL_TYPE_NUMERIC);
-                cell.setCellStyle(cellStyle);
-                Double cellValue = resultsPerFile.get(backupFiles.get(file)).getMaxTurn();
-                cell.setCellValue(cellValue);
-            }
-            if ( !resultsRandom.isEmpty() ) {
-                int file = 0;
-                Cell cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
-                cell.setCellStyle(cellStyle);
-                Double cellValue = resultsPerFile.get(backupFiles.get(file)).getMaxTurn();
-                cell.setCellValue(cellValue);
-            }
-
-            wb.write(outputXLSX);
-        }
     }
 
     protected void saveBackupEvery(int saveBackupEvery) {
