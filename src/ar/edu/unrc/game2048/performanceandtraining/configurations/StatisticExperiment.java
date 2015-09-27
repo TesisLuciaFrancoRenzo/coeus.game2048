@@ -371,7 +371,7 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
                 .forEach(i -> {
                     // Si hay un perceptron ya entrenado, lo buscamos en el archivo.
                     // En caso contrario creamos un perceptron vacio, inicializado al azar
-                    for ( results.get(i).setProcesedGames(1); results.get(i).getProcesedGames() <= gamesToPlay; results.get(i).addProcesedGames() ) {
+                    for ( results.get(i).setProcesedGames(1); results.get(i).getProcesedGames() < gamesToPlay; results.get(i).addProcesedGames() ) {
                         games.get(i).resetGame(); //reset
                         while ( !games.get(i).iLoose() && !games.get(i).iWin() ) {
                             if ( tdLambdaLearning.isEmpty() ) {
