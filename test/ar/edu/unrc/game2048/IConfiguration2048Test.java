@@ -172,7 +172,6 @@ public class IConfiguration2048Test {
         /**
          *
          * @param board
-         * @param game
          * @param outputNeuron
          * @return
          */
@@ -221,7 +220,6 @@ public class IConfiguration2048Test {
         /**
          *
          * @param board
-         * @param game
          * @param outputNeuron
          * @return
          */

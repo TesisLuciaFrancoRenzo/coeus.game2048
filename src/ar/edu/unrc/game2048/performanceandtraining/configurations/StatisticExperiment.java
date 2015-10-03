@@ -77,6 +77,16 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
         this.learningExperiment = learningExperiment;
     }
 
+    /**
+     *
+     * @param filePath
+     * @param backupFiles
+     * @param resultsPerFile
+     * @param resultsRandom
+     * @param randomPerceptronFile
+     * @throws IOException
+     * @throws InvalidFormatException
+     */
     public void exportToExcel(String filePath, List<File> backupFiles, Map<File, StatisticForCalc> resultsPerFile, Map<File, StatisticForCalc> resultsRandom, File randomPerceptronFile) throws IOException, InvalidFormatException {
         InputStream inputXLSX = this.getClass().getResourceAsStream("/ar/edu/unrc/game2048/resources/Estadisticas.xlsx");
         Workbook wb = WorkbookFactory.create(inputXLSX);
@@ -317,6 +327,12 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
         }
     }
 
+    /**
+     *
+     * @param fileToProcess
+     * @param delayPerMove
+     * @throws Exception
+     */
     public void processFile(String fileToProcess, int delayPerMove) throws Exception {
 
         //preparamos los destinos de las siimulaciones para posterior sumatoria final
@@ -549,6 +565,10 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
         this.learningMethod = learningMethod;
     }
 
+    /**
+     *
+     * @param dateFormater
+     */
     protected void setSimpleDateFormat(SimpleDateFormat dateFormater) {
         this.dateFormater = dateFormater;
     }
@@ -660,6 +680,10 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
 
     }
 
+    /**
+     *
+     * @param saveBackupEvery
+     */
     protected void saveBackupEvery(int saveBackupEvery) {
         this.saveBackupEvery = saveBackupEvery;
     }
