@@ -18,11 +18,6 @@
  */
 package ar.edu.unrc.game2048;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 import ar.edu.unrc.game2048.performanceandtraining.configurations.libraries.EncogExperimentInterfaceTest;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.BoardMaxTileTest;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.BoardScoreCustomNormalizationTest;
