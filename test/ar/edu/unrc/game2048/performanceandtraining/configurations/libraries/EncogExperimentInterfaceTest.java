@@ -23,9 +23,9 @@ import ar.edu.unrc.game2048.GameBoard;
 import ar.edu.unrc.game2048.PerceptronConfiguration2048;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IPerceptronInterface;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IsolatedComputation;
-import java.io.File;
 import java.util.List;
 import static junit.framework.Assert.assertEquals;
+import org.encog.engine.network.activation.ActivationFunction;
 import org.encog.engine.network.activation.ActivationSigmoid;
 import org.encog.ml.data.MLData;
 import org.encog.ml.data.basic.BasicMLData;
@@ -76,34 +76,6 @@ public class EncogExperimentInterfaceTest {
      */
     @After
     public void tearDown() {
-    }
-
-    /**
-     * Test of compareNeuralNetworks method, of class EncogExperimentInterface.
-     */
-    @Test
-    public void testCompareNeuralNetworks() {
-        System.out.println("compareNeuralNetworks");
-        File randomFile = null;
-        File trainedFile = null;
-        EncogExperimentInterface instance = null;
-        instance.compareNeuralNetworks(randomFile, trainedFile);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getLibName method, of class EncogExperimentInterface.
-     */
-    @Test
-    public void testGetLibName() {
-        System.out.println("getLibName");
-        EncogExperimentInterface instance = null;
-        String expResult = "";
-        String result = instance.getLibName();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -185,14 +157,17 @@ public class EncogExperimentInterfaceTest {
         perceptron.setWeight(1, 2, 0, weightsA[10]);
         perceptron.setWeight(1, 2, 1, weightsA[11]);
 
-        perceptronConfiguration.activationFunctionOutputForEncog = new ActivationSigmoid();
-        perceptronConfiguration.activationFunctionHiddenForEncog = new ActivationSigmoid();
+        perceptronConfiguration.activationFunctionForEncog = new ActivationFunction[3];
+        perceptronConfiguration.activationFunctionForEncog[0] = new ActivationSigmoid();
+        perceptronConfiguration.activationFunctionForEncog[1] = new ActivationSigmoid();
+        perceptronConfiguration.activationFunctionForEncog[2] = new ActivationSigmoid();
         perceptronConfiguration.activationFunctionMax = 1;
         perceptronConfiguration.activationFunctionMin = 0;
-        perceptronConfiguration.perceptron_hidden_quantity = PERCEPTRON_HIDDEN_QUANTITY;
-        perceptronConfiguration.perceptron_input_quantity = PERCEPTRON_INPUTS_QUANTITY;
-        perceptronConfiguration.perceptron_output_quantity = PERCEPTRON_OUTPUTS_QUANTITY;
-        perceptronConfiguration.hiddenLayerQuantity = 1;
+
+        perceptronConfiguration.neuronQuantityInLayer = new int[3];
+        perceptronConfiguration.neuronQuantityInLayer[0] = PERCEPTRON_INPUTS_QUANTITY;
+        perceptronConfiguration.neuronQuantityInLayer[1] = PERCEPTRON_HIDDEN_QUANTITY;
+        perceptronConfiguration.neuronQuantityInLayer[2] = PERCEPTRON_OUTPUTS_QUANTITY;
 
         EncogExperimentInterface experiment = new EncogExperimentInterface(perceptronConfiguration);
         experiment.setConfigForTesting(perceptron);
@@ -422,139 +397,4 @@ public class EncogExperimentInterfaceTest {
         double[] resultArray2 = outut.getData();
         Assert.assertArrayEquals(expResultArray2, resultArray2, 0.0000000000000001);
     }
-//
-//
-//    /**
-//     * Test of setPerceptronCopyTo method, of class EncogExperimentInterface.
-//     */
-//    @Test
-//    public void testSetPerceptronCopyTo() {
-//        System.out.println("setPerceptronCopyTo");
-//        Game2048 game = null;
-//        EncogExperimentInterface instance = new EncogExperimentInterface();
-//        instance.setPerceptronCopyTo(game);
-//        fail("The test case is a prototype.");
-//    }
-//
-//    /**
-//     * Test of setPerceptronTo method, of class EncogExperimentInterface.
-//     */
-//    @Test
-//    public void testSetPerceptronTo() {
-//        System.out.println("setPerceptronTo");
-//        Game2048 game = null;
-//        EncogExperimentInterface instance = new EncogExperimentInterface();
-//        instance.setPerceptronTo(game);
-//        fail("The test case is a prototype.");
-//    }
-//
-//    /**
-//     * Test of loadActivationFunctionsFromConfiguration method, of class EncogExperimentInterface.
-//     */
-//    @Test
-//    public void testLoadActivationFunctionsFrom() {
-//        System.out.println("loadActivationFunctionsFromConfiguration");
-//        PerceptronConfiguration2048 perceptronConfiguration = null;
-//        EncogExperimentInterface instance = new EncogExperimentInterface();
-//        instance.loadActivationFunctionsFromConfiguration(perceptronConfiguration);
-//        fail("The test case is a prototype.");
-//    }
-//
-//    /**
-//     * Test of loadOrCreatePerceptron method, of class EncogExperimentInterface.
-//     */
-//    @Test
-//    public void testLoadOrCreatePerceptron() throws Exception {
-//        System.out.println("loadOrCreatePerceptron");
-//        Game2048 game = null;
-//        File perceptronFile = null;
-//        EncogExperimentInterface instance = new EncogExperimentInterface();
-//        instance.loadOrCreatePerceptron(game, perceptronFile);
-//        fail("The test case is a prototype.");
-//    }
-//
-//    /**
-//     * Test of playATurn method, of class EncogExperimentInterface.
-//     */
-//    @Test
-//    public void testPlayATurn() {
-//        System.out.println("playATurn");
-//        Game2048 game = null;
-//        EncogExperimentInterface instance = new EncogExperimentInterface();
-//        instance.playATurn(game);
-//        fail("The test case is a prototype.");
-//    }
-//
-//    /**
-//     * Test of savePerceptron method, of class EncogExperimentInterface.
-//     */
-//    @Test
-//    public void testSavePerceptron() throws Exception {
-//        System.out.println("savePerceptron");
-//        File perceptronFile = null;
-//        EncogExperimentInterface instance = new EncogExperimentInterface();
-//        instance.savePerceptron(perceptronFile);
-//        fail("The test case is a prototype.");
-//    }
-
-    /**
-     * Test of initializeEncogPerceptron method, of class
-     * EncogExperimentInterface.
-     */
-    @Test
-    public void testInitializeEncogPerceptron() {
-        System.out.println("initializeEncogPerceptron");
-        boolean randomized = false;
-        EncogExperimentInterface instance = null;
-        BasicNetwork expResult = null;
-        BasicNetwork result = instance.initializeEncogPerceptron(randomized);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of loadOrCreatePerceptron method, of class EncogExperimentInterface.
-     *
-     * @throws java.lang.Exception
-     */
-    @Test
-    public void testLoadOrCreatePerceptron() throws Exception {
-        System.out.println("loadOrCreatePerceptron");
-        File perceptronFile = null;
-        boolean randomizedIfNotExist = false;
-        EncogExperimentInterface instance = null;
-        instance.loadOrCreatePerceptron(perceptronFile, randomizedIfNotExist);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of savePerceptron method, of class EncogExperimentInterface.
-     *
-     * @throws java.lang.Exception
-     */
-    @Test
-    public void testSavePerceptron() throws Exception {
-        System.out.println("savePerceptron");
-        File perceptronFile = null;
-        EncogExperimentInterface instance = null;
-        instance.savePerceptron(perceptronFile);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setConfigForTesting method, of class EncogExperimentInterface.
-     */
-    @Test
-    public void testSetConfigForTesting() {
-        System.out.println("setConfigForTesting");
-        BasicNetwork neuralNetwork = null;
-        EncogExperimentInterface instance = null;
-        instance.setConfigForTesting(neuralNetwork);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
 }

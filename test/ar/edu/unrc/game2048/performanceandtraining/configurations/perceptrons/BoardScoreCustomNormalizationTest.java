@@ -22,7 +22,6 @@ import ar.edu.unrc.game2048.Game2048;
 import ar.edu.unrc.game2048.GameBoard;
 import ar.edu.unrc.game2048.Tile;
 import ar.edu.unrc.game2048.TileContainer;
-import ar.edu.unrc.tdlearning.perceptron.interfaces.IsolatedComputation;
 import java.util.ArrayList;
 import java.util.List;
 import org.encog.engine.network.activation.ActivationTANH;
@@ -94,7 +93,7 @@ public class BoardScoreCustomNormalizationTest {
     @Before
     public void setUp() {
         config = new BoardScoreCustomNormalization();
-        game = new Game2048(config, 2_048, false, 0, true);
+        game = new Game2048(config, null, 2_048, 0);
     }
 
     /**
@@ -129,8 +128,8 @@ public class BoardScoreCustomNormalizationTest {
         board.setTiles(example1);
         board.updateInternalState(true);
 
-        List<Double> translation = new ArrayList<>(config.perceptron_input_quantity);
-        for ( int i = 0; i < config.perceptron_input_quantity; i++ ) {
+        List<Double> translation = new ArrayList<>(config.neuronQuantityInLayer.length);
+        for ( int i = 0; i < config.neuronQuantityInLayer.length; i++ ) {
             translation.add(null);
         }
 
@@ -140,87 +139,6 @@ public class BoardScoreCustomNormalizationTest {
             Assert.assertEquals("Index =" + i, expectedResults[i], translation.get(i), 0.000000000001);
         }
 
-    }
-
-    /**
-     * Test of computeNumericRepresentationFor method, of class
-     * BoardScoreCustomNormalization.
-     */
-    @Test
-    public void testComputeNumericRepresentationFor() {
-        System.out.println("computeNumericRepresentationFor");
-        Game2048 game = null;
-        Object[] output = null;
-        BoardScoreCustomNormalization instance = new BoardScoreCustomNormalization();
-        IsolatedComputation<Double> expResult = null;
-        IsolatedComputation<Double> result = instance.computeNumericRepresentationFor(game, output);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of denormalizeValueFromPerceptronOutput method, of class
-     * BoardScoreCustomNormalization.
-     */
-    @Test
-    public void testDenormalizeValueFromPerceptronOutput() {
-        System.out.println("denormalizeValueFromPerceptronOutput");
-        Object value = null;
-        BoardScoreCustomNormalization instance = new BoardScoreCustomNormalization();
-        double expResult = 0.0;
-        double result = instance.denormalizeValueFromPerceptronOutput(value);
-        assertEquals(expResult, result, 0.0);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getBoardReward method, of class BoardScoreCustomNormalization.
-     */
-    @Test
-    public void testGetBoardReward() {
-        System.out.println("getBoardReward");
-        GameBoard board = null;
-        int outputNeuron = 0;
-        BoardScoreCustomNormalization instance = new BoardScoreCustomNormalization();
-        double expResult = 0.0;
-        double result = instance.getBoardReward(board, outputNeuron);
-        assertEquals(expResult, result, 0.0);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getFinalReward method, of class BoardScoreCustomNormalization.
-     */
-    @Test
-    public void testGetFinalReward() {
-        System.out.println("getFinalReward");
-        Game2048 game = null;
-        int outputNeuron = 0;
-        BoardScoreCustomNormalization instance = new BoardScoreCustomNormalization();
-        double expResult = 0.0;
-        double result = instance.getFinalReward(game, outputNeuron);
-        assertEquals(expResult, result, 0.0);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of normalizeValueToPerceptronOutput method, of class
-     * BoardScoreCustomNormalization.
-     */
-    @Test
-    public void testNormalizeValueToPerceptronOutput() {
-        System.out.println("normalizeValueToPerceptronOutput");
-        Object value = null;
-        BoardScoreCustomNormalization instance = new BoardScoreCustomNormalization();
-        double expResult = 0.0;
-        double result = instance.normalizeValueToPerceptronOutput(value);
-        assertEquals(expResult, result, 0.0);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
 }
