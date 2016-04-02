@@ -1,7 +1,20 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright (C) 2016  Lucia Bressan <lucyluz333@gmial.com>,
+ *                     Franco Pellegrini <francogpellegrini@gmail.com>,
+ *                     Renzo Bianchini <renzobianchini85@gmail.com
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package ar.edu.unrc.game2048.performanceandtraining.configurations;
 
@@ -84,16 +97,17 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
      * @param resultsPerFile
      * @param resultsRandom
      * @param randomPerceptronFile
+     *
      * @throws IOException
      * @throws InvalidFormatException
      */
     public void exportToExcel(String filePath, List<File> backupFiles, Map<File, StatisticForCalc> resultsPerFile, Map<File, StatisticForCalc> resultsRandom, File randomPerceptronFile) throws IOException, InvalidFormatException {
         InputStream inputXLSX = this.getClass().getResourceAsStream("/ar/edu/unrc/game2048/resources/Estadisticas.xlsx");
         Workbook wb = WorkbookFactory.create(inputXLSX);
-        
+
         try ( FileOutputStream outputXLSX = new FileOutputStream(filePath + "_" + dateFormater.format(dateForFileName) + "_STATISTICS" + ".xlsx") ) {
             //============= imptimimos en la hoja de tiles ===================
-            
+
             Sheet sheet = wb.getSheetAt(0);
             int tiles = 17;
             //Estilo par los titulos de las tablas
@@ -109,18 +123,18 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
             CellStyleTitle.setAlignment(CellStyle.ALIGN_CENTER);
             CellStyleTitle.setVerticalAlignment(CellStyle.VERTICAL_TOP);
             CellStyleTitle.setFont(fontCellTitle);
-            
+
             // Establecemos el tipo de sombreado de nuestra celda
             CellStyleTitle.setFillBackgroundColor(IndexedColors.LIGHT_CORNFLOWER_BLUE.getIndex());
             CellStyleTitle.setFillPattern(CellStyle.SOLID_FOREGROUND);
             loadTitle(rowStartTitle, colStartTitle, sheet, backupFiles.size(), CellStyleTitle);
             //estilo titulo finalizado
-            
+
             //Estilo de celdas con los valores de las estadisticas
             CellStyle cellStyle = wb.createCellStyle();
             cellStyle.setWrapText(true);
             /* We are now ready to set borders for this style */
-            /* Draw a thin left border */
+ /* Draw a thin left border */
             cellStyle.setBorderLeft(CellStyle.BORDER_THIN);
             /* Add medium right border */
             cellStyle.setBorderRight(CellStyle.BORDER_THIN);
@@ -129,7 +143,7 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
             /* Add dotted bottom border */
             cellStyle.setBorderBottom(CellStyle.BORDER_THIN);
             //estilo celdas finalizado
-            
+
             //configuraciones basadas en el spreadsheet
             int rowStart = 2;
             int colStart = 3;
@@ -152,7 +166,7 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
                     cell.setCellValue(cellValue);
                 }
             }
-            
+
             //============= imptimimos en la hoja de Score ===================
             sheet = wb.getSheetAt(1);
             rowStart = 2;
@@ -171,7 +185,7 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
                 cell.setCellStyle(cellStyle);
                 cell.setCellValue(cellValue);
             }
-            
+
             rowStart = 3;
             row = sheet.getRow(rowStart - 1);
             for ( int file = 0; file < backupFiles.size(); file++ ) {
@@ -187,7 +201,7 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
                 cell.setCellStyle(cellStyle);
                 cell.setCellValue(cellValue);
             }
-            
+
             rowStart = 4;
             row = sheet.getRow(rowStart - 1);
             for ( int file = 0; file < backupFiles.size(); file++ ) {
@@ -203,7 +217,7 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
                 cell.setCellStyle(cellStyle);
                 cell.setCellValue(cellValue);
             }
-            
+
             //============= imptimimos en la hoja de Win ===================
             sheet = wb.getSheetAt(2);
             rowStart = 2;
@@ -224,7 +238,7 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
                 assert cellValue <= 100 && cellValue >= 0;
                 cell.setCellValue(cellValue);
             }
-            
+
             //============= imptimimos en la hoja de Turns ===================
             sheet = wb.getSheetAt(3);
             rowStart = 2;
@@ -243,7 +257,7 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
                 Double cellValue = resultsPerFile.get(backupFiles.get(file)).getMinTurn();
                 cell.setCellValue(cellValue);
             }
-            
+
             rowStart = 3;
             row = sheet.getRow(rowStart - 1);
             for ( int file = 0; file < backupFiles.size(); file++ ) {
@@ -259,7 +273,7 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
                 Double cellValue = resultsPerFile.get(backupFiles.get(file)).getMeanTurn();
                 cell.setCellValue(cellValue);
             }
-            
+
             rowStart = 4;
             row = sheet.getRow(rowStart - 1);
             for ( int file = 0; file < backupFiles.size(); file++ ) {
@@ -275,11 +289,11 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
                 Double cellValue = resultsPerFile.get(backupFiles.get(file)).getMaxTurn();
                 cell.setCellValue(cellValue);
             }
-            
+
             wb.write(outputXLSX);
         }
     }
-    
+
     /**
      * @param gamesToPlay the gamesToPlay to set
      */
@@ -331,6 +345,7 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
      *
      * @param fileToProcess
      * @param delayPerMove
+     *
      * @throws Exception
      */
     public void processFile(String fileToProcess, int delayPerMove) throws Exception {
