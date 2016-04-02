@@ -5,9 +5,11 @@
  */
 package ar.edu.unrc.game2048.performanceandtraining.configurations.libraries;
 
+import ar.edu.unrc.game2048.Game2048;
 import ar.edu.unrc.game2048.GameBoard;
 import ar.edu.unrc.game2048.PerceptronConfiguration2048;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IPerceptronInterface;
+import ar.edu.unrc.tdlearning.perceptron.interfaces.IsolatedComputation;
 import java.io.File;
 import java.util.List;
 import static junit.framework.Assert.assertEquals;
@@ -99,21 +101,36 @@ public class EncogExperimentInterfaceTest {
         System.out.println("getPerceptronInterface");
 
         PerceptronConfiguration2048<BasicNetwork> perceptronConfiguration = new PerceptronConfiguration2048<BasicNetwork>() {
-
             @Override
-            public void calculateNormalizedPerceptronInput(GameBoard<BasicNetwork> board, List<Double> normalizedPerceptronInput) {
+            public IsolatedComputation calculateNormalizedPerceptronInput(GameBoard<BasicNetwork> board, List<Double> normalizedPerceptronInput) {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
 
             @Override
-            public double translateRealOutputToNormalizedPerceptronOutputFrom(GameBoard<BasicNetwork> board, int neuronIndex) {
+            public IsolatedComputation<Double> computeNumericRepresentationFor(Game2048 game, Object[] output) {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
 
             @Override
-            public double translateRewordToNormalizedPerceptronOutputFrom(GameBoard<BasicNetwork> board, int outputNeuronIndex) {
+            public double denormalizeValueFromPerceptronOutput(Object value) {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
+
+            @Override
+            public double getBoardReward(GameBoard board, int outputNeuron) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public double getFinalReward(GameBoard board, int outputNeuron) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public double normalizeValueToPerceptronOutput(Object value) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
         };
 
         BasicNetwork perceptron = new BasicNetwork();
@@ -485,6 +502,7 @@ public class EncogExperimentInterfaceTest {
 
     /**
      * Test of loadOrCreatePerceptron method, of class EncogExperimentInterface.
+     *
      * @throws java.lang.Exception
      */
     @Test
@@ -500,6 +518,7 @@ public class EncogExperimentInterfaceTest {
 
     /**
      * Test of savePerceptron method, of class EncogExperimentInterface.
+     *
      * @throws java.lang.Exception
      */
     @Test

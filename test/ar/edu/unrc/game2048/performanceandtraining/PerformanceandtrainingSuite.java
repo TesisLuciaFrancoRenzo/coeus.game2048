@@ -30,7 +30,7 @@ import org.junit.runners.Suite;
  * @author franco
  */
 @RunWith( Suite.class )
-@Suite.SuiteClasses( {ar.edu.unrc.game2048.performanceandtraining.configurations.ConfigurationsSuite.class, ar.edu.unrc.game2048.performanceandtraining.experiments.ExperimentsSuite.class} )
+@Suite.SuiteClasses( {ar.edu.unrc.game2048.performanceandtraining.configurations.ConfigurationsSuite.class} )
 public class PerformanceandtrainingSuite {
 
     /**
