@@ -22,7 +22,6 @@ import ar.edu.unrc.game2048.Game2048;
 import ar.edu.unrc.game2048.PerceptronConfiguration2048;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.INeuralNetworkInterfaceFor2048;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IPerceptronInterface;
-import ar.edu.unrc.tdlearning.perceptron.interfaces.IsolatedComputation;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearning;
 import static java.awt.event.KeyEvent.VK_DOWN;
 import static java.awt.event.KeyEvent.VK_LEFT;
@@ -68,28 +67,25 @@ public class RandomExperimentInterface extends INeuralNetworkInterfaceFor2048 {
     }
 
     @Override
-    public IsolatedComputation playATurn(Game2048 game, TDLambdaLearning learningMethod) {
-        return () -> {
-            switch ( TDLambdaLearning.randomBetween(1, 4) ) {
-                case 1: {
-                    game.processInput(VK_LEFT);
-                    break;
-                }
-                case 2: {
-                    game.processInput(VK_RIGHT);
-                    break;
-                }
-                case 3: {
-                    game.processInput(VK_DOWN);
-                    break;
-                }
-                case 4: {
-                    game.processInput(VK_UP);
-                    break;
-                }
+    public void playATurn(Game2048 game, TDLambdaLearning learningMethod) {
+        switch ( TDLambdaLearning.randomBetween(1, 4) ) {
+            case 1: {
+                game.processInput(VK_LEFT);
+                break;
             }
-            return null;
-        };
+            case 2: {
+                game.processInput(VK_RIGHT);
+                break;
+            }
+            case 3: {
+                game.processInput(VK_DOWN);
+                break;
+            }
+            case 4: {
+                game.processInput(VK_UP);
+                break;
+            }
+        }
     }
 
     @Override

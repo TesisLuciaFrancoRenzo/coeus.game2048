@@ -21,14 +21,9 @@ package ar.edu.unrc.game2048;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IAction;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IState;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IStatePerceptron;
-import ar.edu.unrc.tdlearning.perceptron.learning.StateProbability;
-import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.fail;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -190,100 +185,6 @@ public class Game2048Test {
 
         state2 = game.computeAfterState(board, Action.left);
         Assert.assertNotSame(state1, state2);
-    }
-
-    /**
-     * Test of listAllPossibleNextTurnStateFromAfterstate method, of class
-     * Game2048.
-     */
-    @Test
-    public void testListAllPossibleNextTurnStateFromAfterstate() {
-        System.out.println("listAllPossibleNextTurnStateFromAfterstate");
-        IState afterState = null;
-        Game2048 instance = null;
-        List<StateProbability> expResult = null;
-        List<StateProbability> result = instance.listAllPossibleNextTurnStateFromAfterstate(afterState);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of main method, of class Game2048.
-     */
-    @Test
-    public void testMain() {
-        System.out.println("main");
-        String[] args = null;
-        Game2048.main(args);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of normalizeValueToPerceptronOutput method, of class Game2048.
-     */
-    @Test
-    public void testNormalizeValueToPerceptronOutput() {
-        System.out.println("normalizeValueToPerceptronOutput");
-        Object value = null;
-        Game2048 instance = null;
-        double expResult = 0.0;
-        double result = instance.normalizeValueToPerceptronOutput(value);
-        assertEquals(expResult, result, 0.0);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of paint method, of class Game2048.
-     */
-    @Test
-    public void testPaint() {
-        System.out.println("paint");
-        Graphics g = null;
-        Game2048 instance = null;
-        instance.paint(g);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of processInput method, of class Game2048.
-     */
-    @Test
-    public void testProcessInput() {
-        System.out.println("processInput");
-        int keyCode = 0;
-        Game2048 instance = null;
-        instance.processInput(keyCode);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of resetGame method, of class Game2048.
-     */
-    @Test
-    public void testResetGame() {
-        System.out.println("resetGame");
-        Game2048 instance = null;
-        instance.resetGame();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setCurrentState method, of class Game2048.
-     */
-    @Test
-    public void testSetCurrentState() {
-        System.out.println("setCurrentState");
-        IState nextTurnState = null;
-        Game2048 instance = null;
-        instance.setCurrentState(nextTurnState);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
 }

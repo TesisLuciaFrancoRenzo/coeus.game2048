@@ -22,7 +22,6 @@ import ar.edu.unrc.game2048.Game2048;
 import ar.edu.unrc.game2048.GameBoard;
 import ar.edu.unrc.game2048.PerceptronConfiguration2048;
 import ar.edu.unrc.game2048.Tile;
-import ar.edu.unrc.tdlearning.perceptron.interfaces.IsolatedComputation;
 import java.util.List;
 import org.encog.engine.network.activation.ActivationFunction;
 import org.encog.engine.network.activation.ActivationTANH;
@@ -78,36 +77,31 @@ public class BinaryScore<NeuralNetworkClass> extends PerceptronConfiguration2048
      * @return
      */
     @Override
-    public IsolatedComputation calculateNormalizedPerceptronInput(GameBoard<NeuralNetworkClass> board, List<Double> normalizedPerceptronInput) {
-        return () -> {
-            Tile[] tiles = board.getTiles();
-            int currentNeuron = 0;
-            for ( Tile tile : tiles ) {
-                String bits = Integer.toBinaryString(tile.getCode());
-                for ( int k = 0; k < binaryLenght - bits.length(); k++ ) {
-                    normalizedPerceptronInput.set(currentNeuron, activationFunctionMin);
-                    currentNeuron++;
-                }
-                for ( int j = 0; j < bits.length(); j++ ) {
-                    if ( bits.charAt(j) == '0' ) {
-                        normalizedPerceptronInput.set(currentNeuron, activationFunctionMin);
-                    } else {
-                        normalizedPerceptronInput.set(currentNeuron, activationFunctionMax);
-                    }
-                    currentNeuron++;
-                }
+    public void calculateNormalizedPerceptronInput(GameBoard<NeuralNetworkClass> board, List<Double> normalizedPerceptronInput) {
+        Tile[] tiles = board.getTiles();
+        int currentNeuron = 0;
+        for ( Tile tile : tiles ) {
+            String bits = Integer.toBinaryString(tile.getCode());
+            for ( int k = 0; k < binaryLenght - bits.length(); k++ ) {
+                normalizedPerceptronInput.set(currentNeuron, activationFunctionMin);
+                currentNeuron++;
             }
-            assert currentNeuron == this.neuronQuantityInLayer[0];
-            return null;
-        };
+            for ( int j = 0; j < bits.length(); j++ ) {
+                if ( bits.charAt(j) == '0' ) {
+                    normalizedPerceptronInput.set(currentNeuron, activationFunctionMin);
+                } else {
+                    normalizedPerceptronInput.set(currentNeuron, activationFunctionMax);
+                }
+                currentNeuron++;
+            }
+        }
+        assert currentNeuron == this.neuronQuantityInLayer[0];
     }
 
     @Override
-    public IsolatedComputation<Double> computeNumericRepresentationFor(Game2048 game, Object[] output) {
-        return () -> {
-            assert output.length == 1;
-            return (Double) output[0];
-        };
+    public Double computeNumericRepresentationFor(Game2048 game, Object[] output) {
+        assert output.length == 1;
+        return (Double) output[0];
     }
 
     @Override

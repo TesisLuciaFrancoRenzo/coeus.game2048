@@ -109,143 +109,143 @@ public class FullNTupleMaxTileTest {
         //verticales
         double encript = 0 * 1_000_000 + 0 * 10_000 + 0 * 100 + 0;
         double normalization = ((encript - 0d) / (17171717d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(0).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(0), 0.0d);
 
         encript = 0 * 1_000_000 + 0 * 10_000 + 2 * 100 + 0;
         normalization = ((encript - 0d) / (17171717d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(1).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(1), 0.0d);
 
         encript = 0 * 1_000_000 + 0 * 10_000 + 0 * 100 + 0;
         normalization = ((encript - 0d) / (17171717d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(2).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(2), 0.0d);
 
         encript = 4 * 1_000_000 + 0 * 10_000 + 0 * 100 + 0;
         normalization = ((encript - 0d) / (17171717d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(3).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(3), 0.0d);
 
         //horizontales
         encript = 0 * 1_000_000 + 0 * 10_000 + 0 * 100 + 4;
         normalization = ((encript - 0d) / (17171717d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(4).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(4), 0.0d);
 
         encript = 0 * 1_000_000 + 0 * 10_000 + 0 * 100 + 0;
         normalization = ((encript - 0d) / (17171717d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(5).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(5), 0.0d);
 
         encript = 0 * 1_000_000 + 2 * 10_000 + 0 * 100 + 0;
         normalization = ((encript - 0d) / (17171717d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(6).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(6), 0.0d);
 
         encript = 0 * 1_000_000 + 0 * 10_000 + 0 * 100 + 0;
         normalization = ((encript - 0d) / (17171717d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(7).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(7), 0.0d);
 
         //cuadraditos arriba
         encript = 0 * 1_000_000 + 0 * 10_000 + 0 * 100 + 0;
         normalization = ((encript - 0d) / (17171717d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(8).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(8), 0.0d);
 
         encript = 0 * 1_000_000 + 0 * 10_000 + 0 * 100 + 0;
         normalization = ((encript - 0d) / (17171717d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(9).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(9), 0.0d);
 
         encript = 0 * 1_000_000 + 0 * 10_000 + 0 * 100 + 4;
         normalization = ((encript - 0d) / (17171717d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(10).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(10), 0.0d);
 
         //cuadraditos centro
         encript = 0 * 1_000_000 + 0 * 10_000 + 2 * 100 + 0;
         normalization = ((encript - 0d) / (17171717d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(11).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(11), 0.0d);
 
         encript = 0 * 1_000_000 + 2 * 10_000 + 0 * 100 + 0;
         normalization = ((encript - 0d) / (17171717d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(12).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(12), 0.0d);
 
         encript = 0 * 1_000_000 + 0 * 10_000 + 0 * 100 + 0;
         normalization = ((encript - 0d) / (17171717d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(13).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(13), 0.0d);
 
         //cuadraditos abajo
         encript = 0 * 1_000_000 + 0 * 10_000 + 0 * 100 + 2;
         normalization = ((encript - 0d) / (17171717d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(14).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(14), 0.0d);
 
         encript = 2 * 1_000_000 + 0 * 10_000 + 0 * 100 + 0;
         normalization = ((encript - 0d) / (17171717d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(15).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(15), 0.0d);
 
         encript = 0 * 1_000_000 + 0 * 10_000 + 0 * 100 + 0;
         normalization = ((encript - 0d) / (17171717d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(16).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(16), 0.0d);
 
         //custom normalization primer columna
         encript = 0d / 4d;
         normalization = ((encript - 0d) / (1d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(17).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(17), 0.0d);
 
         encript = 0d / 4d;
         normalization = ((encript - 0d) / (1d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(18).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(18), 0.0d);
 
         encript = 0d / 4d;
         normalization = ((encript - 0d) / (1d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(19).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(19), 0.0d);
 
         encript = 0d / 4d;
         normalization = ((encript - 0d) / (1d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(20).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(20), 0.0d);
 
         //custom normalization segunda columna
         encript = 0d / 4d;
         normalization = ((encript - 0d) / (1d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(21).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(21), 0.0d);
 
         encript = 0d / 4d;
         normalization = ((encript - 0d) / (1d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(22).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(22), 0.0d);
 
         encript = 2d / 4d;
         normalization = ((encript - 0d) / (1d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(23).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(23), 0.0d);
 
         encript = 0d / 4d;
         normalization = ((encript - 0d) / (1d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(24).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(24), 0.0d);
 
         //custom normalization tercer columna
         encript = 0d / 4d;
         normalization = ((encript - 0d) / (1d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(25).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(25), 0.0d);
 
         encript = 0d / 4d;
         normalization = ((encript - 0d) / (1d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(26).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(26), 0.0d);
 
         encript = 0d / 4d;
         normalization = ((encript - 0d) / (1d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(27).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(27), 0.0d);
 
         encript = 0d / 4d;
         normalization = ((encript - 0d) / (1d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(28).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(28), 0.0d);
 
         //custom normalization tercer columna
         encript = 4d / 4d;
         normalization = ((encript - 0d) / (1d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(29).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(29), 0.0d);
 
         encript = 0d / 4d;
         normalization = ((encript - 0d) / (1d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(30).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(30), 0.0d);
 
         encript = 0d / 4d;
         normalization = ((encript - 0d) / (1d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(31).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(31), 0.0d);
 
         encript = 0d / 4d;
         normalization = ((encript - 0d) / (1d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(32).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(32), 0.0d);
 
         //TODO agregar los testings de la otra parte del tablero codificado (tablero simple)
         //============================================================================================================================
@@ -256,143 +256,143 @@ public class FullNTupleMaxTileTest {
         //verticales
         encript = 0 * 1_000_000 + 4 * 10_000 + 2 * 100 + 4;
         normalization = ((encript - 0d) / (17171717d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(0).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(0), 0.0d);
 
         encript = 4 * 1_000_000 + 6 * 10_000 + 4 * 100 + 0;
         normalization = ((encript - 0d) / (17171717d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(1).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(1), 0.0d);
 
         encript = 0 * 1_000_000 + 4 * 10_000 + 5 * 100 + 1;
         normalization = ((encript - 0d) / (17171717d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(2).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(2), 0.0d);
 
         encript = 17 * 1_000_000 + 4 * 10_000 + 7 * 100 + 4;
         normalization = ((encript - 0d) / (17171717d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(3).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(3), 0.0d);
 
         //horizontales
         encript = 0 * 1_000_000 + 4 * 10_000 + 0 * 100 + 17;
         normalization = ((encript - 0d) / (17171717d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(4).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(4), 0.0d);
 
         encript = 4 * 1_000_000 + 6 * 10_000 + 4 * 100 + 4;
         normalization = ((encript - 0d) / (17171717d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(5).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(5), 0.0d);
 
         encript = 2 * 1_000_000 + 4 * 10_000 + 5 * 100 + 7;
         normalization = ((encript - 0d) / (17171717d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(6).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(6), 0.0d);
 
         encript = 4 * 1_000_000 + 0 * 10_000 + 1 * 100 + 4;
         normalization = ((encript - 0d) / (17171717d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(7).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(7), 0.0d);
 
         //cuadraditos arriba
         encript = 0 * 1_000_000 + 4 * 10_000 + 6 * 100 + 4;
         normalization = ((encript - 0d) / (17171717d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(8).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(8), 0.0d);
 
         encript = 4 * 1_000_000 + 6 * 10_000 + 4 * 100 + 0;
         normalization = ((encript - 0d) / (17171717d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(9).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(9), 0.0d);
 
         encript = 0 * 1_000_000 + 4 * 10_000 + 4 * 100 + 17;
         normalization = ((encript - 0d) / (17171717d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(10).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(10), 0.0d);
 
         //cuadraditos centro
         encript = 4 * 1_000_000 + 2 * 10_000 + 4 * 100 + 6;
         normalization = ((encript - 0d) / (17171717d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(11).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(11), 0.0d);
 
         encript = 6 * 1_000_000 + 4 * 10_000 + 5 * 100 + 4;
         normalization = ((encript - 0d) / (17171717d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(12).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(12), 0.0d);
 
         encript = 4 * 1_000_000 + 5 * 10_000 + 7 * 100 + 4;
         normalization = ((encript - 0d) / (17171717d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(13).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(13), 0.0d);
 
         //cuadraditos abajo
         encript = 2 * 1_000_000 + 4 * 10_000 + 0 * 100 + 4;
         normalization = ((encript - 0d) / (17171717d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(14).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(14), 0.0d);
 
         encript = 4 * 1_000_000 + 0 * 10_000 + 1 * 100 + 5;
         normalization = ((encript - 0d) / (17171717d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(15).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(15), 0.0d);
 
         encript = 5 * 1_000_000 + 1 * 10_000 + 4 * 100 + 7;
         normalization = ((encript - 0d) / (17171717d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(16).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(16), 0.0d);
 
         //custom normalization primer columna
         encript = 0d / 17d;
         normalization = ((encript - 0d) / (1d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(17).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(17), 0.0d);
 
         encript = 4d / 17d;
         normalization = ((encript - 0d) / (1d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(18).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(18), 0.0d);
 
         encript = 2d / 17d;
         normalization = ((encript - 0d) / (1d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(19).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(19), 0.0d);
 
         encript = 4d / 17d;
         normalization = ((encript - 0d) / (1d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(20).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(20), 0.0d);
 
         //custom normalization segunda columna
         encript = 4d / 17d;
         normalization = ((encript - 0d) / (1d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(21).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(21), 0.0d);
 
         encript = 6d / 17d;
         normalization = ((encript - 0d) / (1d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(22).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(22), 0.0d);
 
         encript = 4d / 17d;
         normalization = ((encript - 0d) / (1d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(23).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(23), 0.0d);
 
         encript = 0d / 17d;
         normalization = ((encript - 0d) / (1d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(24).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(24), 0.0d);
 
         //custom normalization tercer columna
         encript = 0d / 17d;
         normalization = ((encript - 0d) / (1d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(25).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(25), 0.0d);
 
         encript = 4d / 17d;
         normalization = ((encript - 0d) / (1d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(26).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(26), 0.0d);
 
         encript = 5d / 17d;
         normalization = ((encript - 0d) / (1d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(27).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(27), 0.0d);
 
         encript = 1d / 17d;
         normalization = ((encript - 0d) / (1d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(28).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(28), 0.0d);
 
         //custom normalization tercer columna
         encript = 17d / 17d;
         normalization = ((encript - 0d) / (1d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(29).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(29), 0.0d);
 
         encript = 4d / 17d;
         normalization = ((encript - 0d) / (1d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(30).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(30), 0.0d);
 
         encript = 7d / 17d;
         normalization = ((encript - 0d) / (1d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(31).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(31), 0.0d);
 
         encript = 4d / 17d;
         normalization = ((encript - 0d) / (1d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.translateToPerceptronInput(32).compute(), 0.0d);
+        assertEquals(normalization, board.translateToPerceptronInput(32), 0.0d);
 
     }
 

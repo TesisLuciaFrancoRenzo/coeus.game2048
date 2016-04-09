@@ -22,7 +22,6 @@ import ar.edu.unrc.game2048.Game2048;
 import ar.edu.unrc.game2048.GameBoard;
 import ar.edu.unrc.game2048.PerceptronConfiguration2048;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IPerceptronInterface;
-import ar.edu.unrc.tdlearning.perceptron.interfaces.IsolatedComputation;
 import java.util.List;
 import static junit.framework.Assert.assertEquals;
 import org.encog.engine.network.activation.ActivationFunction;
@@ -87,12 +86,12 @@ public class EncogExperimentInterfaceTest {
 
         PerceptronConfiguration2048<BasicNetwork> perceptronConfiguration = new PerceptronConfiguration2048<BasicNetwork>() {
             @Override
-            public IsolatedComputation calculateNormalizedPerceptronInput(GameBoard<BasicNetwork> board, List<Double> normalizedPerceptronInput) {
+            public void calculateNormalizedPerceptronInput(GameBoard<BasicNetwork> board, List<Double> normalizedPerceptronInput) {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
 
             @Override
-            public IsolatedComputation<Double> computeNumericRepresentationFor(Game2048 game, Object[] output) {
+            public Double computeNumericRepresentationFor(Game2048 game, Object[] output) {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
 

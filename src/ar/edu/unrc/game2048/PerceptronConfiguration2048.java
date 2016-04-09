@@ -18,7 +18,6 @@
  */
 package ar.edu.unrc.game2048;
 
-import ar.edu.unrc.tdlearning.perceptron.interfaces.IsolatedComputation;
 import java.util.List;
 import org.encog.engine.network.activation.ActivationFunction;
 import org.encog.util.arrayutil.NormalizedField;
@@ -66,9 +65,8 @@ public abstract class PerceptronConfiguration2048<NeuralNetworkClass> implements
      *
      * @param board
      * @param normalizedPerceptronInput <p>
-     * @return
      */
-    public abstract IsolatedComputation calculateNormalizedPerceptronInput(GameBoard<NeuralNetworkClass> board, List<Double> normalizedPerceptronInput);
+    public abstract void calculateNormalizedPerceptronInput(GameBoard<NeuralNetworkClass> board, List<Double> normalizedPerceptronInput);
 
     @Override
     public Object clone() throws CloneNotSupportedException {
@@ -81,7 +79,7 @@ public abstract class PerceptronConfiguration2048<NeuralNetworkClass> implements
      * @param output <p>
      * @return
      */
-    public abstract IsolatedComputation<Double> computeNumericRepresentationFor(Game2048 game, Object[] output);
+    public abstract Double computeNumericRepresentationFor(Game2048 game, Object[] output);
 
     /**
      * @return the neuralNetwork

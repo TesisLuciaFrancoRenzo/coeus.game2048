@@ -19,9 +19,6 @@
 package ar.edu.unrc.game2048;
 
 import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.NTupleMaxTile;
-import java.util.List;
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.fail;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -95,104 +92,6 @@ public class GameBoardTest {
     }
 
     /**
-     * Test of addPartialScore method, of class GameBoard.
-     */
-    @Test
-    public void testAddPartialScore() {
-        System.out.println("addPartialScore");
-        int value = 0;
-        GameBoard instance = null;
-        instance.addPartialScore(value);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of addTile method, of class GameBoard.
-     */
-    @Test
-    public void testAddTile() {
-        System.out.println("addTile");
-        GameBoard instance = null;
-        instance.addTile();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of availableSpace method, of class GameBoard.
-     */
-    @Test
-    public void testAvailableSpace() {
-        System.out.println("availableSpace");
-        GameBoard instance = null;
-        List<Integer> expResult = null;
-        List<Integer> result = instance.availableSpace();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of calculateCustomHash method, of class GameBoard.
-     */
-    @Test
-    public void testCalculateCustomHash() {
-        System.out.println("calculateCustomHash");
-        Tile t1 = null;
-        Tile t2 = null;
-        Tile t3 = null;
-        Tile t4 = null;
-        int expResult = 0;
-        int result = GameBoard.calculateCustomHash(t1, t2, t3, t4);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of canMove method, of class GameBoard.
-     */
-    @Test
-    public void testCanMove() {
-        System.out.println("canMove");
-        GameBoard instance = null;
-        boolean expResult = false;
-        boolean result = instance.canMove();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of clearBoard method, of class GameBoard.
-     */
-    @Test
-    public void testClearBoard() {
-        System.out.println("clearBoard");
-        TileContainer tileContainer = null;
-        GameBoard instance = null;
-        instance.clearBoard(tileContainer);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of equals method, of class GameBoard.
-     */
-    @Test
-    public void testEquals() {
-        System.out.println("equals");
-        Object obj = null;
-        GameBoard instance = null;
-        boolean expResult = false;
-        boolean result = instance.equals(obj);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
      * Test of tileAt method, of class GameBoard.
      */
     @Test( expected = java.lang.ArrayIndexOutOfBoundsException.class )
@@ -216,36 +115,6 @@ public class GameBoardTest {
         result = board.tileAt(x, y);
     }
 
-//    /**
-//     * Test of isFull method, of class GameBoard.
-//     */
-//    @Test
-//    public void testIsFull() {
-//        System.out.println("isFull");
-//        GameBoard board = new GameBoard(nTupleConfiguration, tileContainer);
-//        Tile[] emptyBoard = {
-//            tileContainer.getTile(0), tileContainer.getTile(0), tileContainer.getTile(0), tileContainer.getTile(0),
-//            tileContainer.getTile(0), tileContainer.getTile(0), tileContainer.getTile(0), tileContainer.getTile(0),
-//            tileContainer.getTile(0), tileContainer.getTile(0), tileContainer.getTile(0), tileContainer.getTile(0),
-//            tileContainer.getTile(0), tileContainer.getTile(0), tileContainer.getTile(0), tileContainer.getTile(0)
-//        };
-//        board.setTiles(emptyBoard);
-//        board.
-//        boolean expResult = false;
-//        boolean result = board.isFull();
-//        Assert.assertEquals(expResult, result);
-//
-//        Tile[] emptyBoard = {
-//            tileContainer.getTile(0), tileContainer.getTile(0), tileContainer.getTile(0), tileContainer.getTile(0),
-//            tileContainer.getTile(0), tileContainer.getTile(0), tileContainer.getTile(0), tileContainer.getTile(0),
-//            tileContainer.getTile(0), tileContainer.getTile(0), tileContainer.getTile(0), tileContainer.getTile(0),
-//            tileContainer.getTile(0), tileContainer.getTile(0), tileContainer.getTile(0), tileContainer.getTile(0)
-//        };
-//        board.setTiles(emptyBoard);
-//        boolean expResult = false;
-//        boolean result = board.isFull();
-//        Assert.assertEquals(expResult, result);
-//    }
     /**
      * Test of getCopy method, of class GameBoard.
      */

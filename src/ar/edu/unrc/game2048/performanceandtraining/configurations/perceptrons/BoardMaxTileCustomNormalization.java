@@ -21,7 +21,6 @@ package ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons;
 import ar.edu.unrc.game2048.Game2048;
 import ar.edu.unrc.game2048.GameBoard;
 import ar.edu.unrc.game2048.PerceptronConfiguration2048;
-import ar.edu.unrc.tdlearning.perceptron.interfaces.IsolatedComputation;
 import java.util.List;
 import org.encog.engine.network.activation.ActivationFunction;
 import org.encog.engine.network.activation.ActivationTANH;
@@ -91,70 +90,65 @@ public class BoardMaxTileCustomNormalization<NeuralNetworkClass> extends Percept
      * @return
      */
     @Override
-    public IsolatedComputation calculateNormalizedPerceptronInput(GameBoard<NeuralNetworkClass> board, List<Double> normalizedPerceptronInput) {
-        return () -> {
-            // primera fila
-            normalizedPerceptronInput.set(0,
-                    normInput.normalize(encryptTile(board, board.tileAt(0, 0).getCode()))
-            );
-            normalizedPerceptronInput.set(1,
-                    normInput.normalize(encryptTile(board, board.tileAt(1, 0).getCode()))
-            );
-            normalizedPerceptronInput.set(2,
-                    normInput.normalize(encryptTile(board, board.tileAt(2, 0).getCode()))
-            );
-            normalizedPerceptronInput.set(3,
-                    normInput.normalize(encryptTile(board, board.tileAt(3, 0).getCode()))
-            );
-            // segunda fila
-            normalizedPerceptronInput.set(4,
-                    normInput.normalize(encryptTile(board, board.tileAt(0, 1).getCode()))
-            );
-            normalizedPerceptronInput.set(5,
-                    normInput.normalize(encryptTile(board, board.tileAt(1, 1).getCode()))
-            );
-            normalizedPerceptronInput.set(6,
-                    normInput.normalize(encryptTile(board, board.tileAt(2, 1).getCode()))
-            );
-            normalizedPerceptronInput.set(7,
-                    normInput.normalize(encryptTile(board, board.tileAt(3, 1).getCode()))
-            );
-            // tercera fila
-            normalizedPerceptronInput.set(8,
-                    normInput.normalize(encryptTile(board, board.tileAt(0, 2).getCode()))
-            );
-            normalizedPerceptronInput.set(9,
-                    normInput.normalize(encryptTile(board, board.tileAt(1, 2).getCode()))
-            );
-            normalizedPerceptronInput.set(10,
-                    normInput.normalize(encryptTile(board, board.tileAt(2, 2).getCode()))
-            );
-            normalizedPerceptronInput.set(11,
-                    normInput.normalize(encryptTile(board, board.tileAt(3, 2).getCode()))
-            );
-            // cuarta fila
-            normalizedPerceptronInput.set(12,
-                    normInput.normalize(encryptTile(board, board.tileAt(0, 3).getCode()))
-            );
-            normalizedPerceptronInput.set(13,
-                    normInput.normalize(encryptTile(board, board.tileAt(1, 3).getCode()))
-            );
-            normalizedPerceptronInput.set(14,
-                    normInput.normalize(encryptTile(board, board.tileAt(2, 3).getCode()))
-            );
-            normalizedPerceptronInput.set(15,
-                    normInput.normalize(encryptTile(board, board.tileAt(3, 3).getCode()))
-            );
-            return null;
-        };
+    public void calculateNormalizedPerceptronInput(GameBoard<NeuralNetworkClass> board, List<Double> normalizedPerceptronInput) {
+        // primera fila
+        normalizedPerceptronInput.set(0,
+                normInput.normalize(encryptTile(board, board.tileAt(0, 0).getCode()))
+        );
+        normalizedPerceptronInput.set(1,
+                normInput.normalize(encryptTile(board, board.tileAt(1, 0).getCode()))
+        );
+        normalizedPerceptronInput.set(2,
+                normInput.normalize(encryptTile(board, board.tileAt(2, 0).getCode()))
+        );
+        normalizedPerceptronInput.set(3,
+                normInput.normalize(encryptTile(board, board.tileAt(3, 0).getCode()))
+        );
+        // segunda fila
+        normalizedPerceptronInput.set(4,
+                normInput.normalize(encryptTile(board, board.tileAt(0, 1).getCode()))
+        );
+        normalizedPerceptronInput.set(5,
+                normInput.normalize(encryptTile(board, board.tileAt(1, 1).getCode()))
+        );
+        normalizedPerceptronInput.set(6,
+                normInput.normalize(encryptTile(board, board.tileAt(2, 1).getCode()))
+        );
+        normalizedPerceptronInput.set(7,
+                normInput.normalize(encryptTile(board, board.tileAt(3, 1).getCode()))
+        );
+        // tercera fila
+        normalizedPerceptronInput.set(8,
+                normInput.normalize(encryptTile(board, board.tileAt(0, 2).getCode()))
+        );
+        normalizedPerceptronInput.set(9,
+                normInput.normalize(encryptTile(board, board.tileAt(1, 2).getCode()))
+        );
+        normalizedPerceptronInput.set(10,
+                normInput.normalize(encryptTile(board, board.tileAt(2, 2).getCode()))
+        );
+        normalizedPerceptronInput.set(11,
+                normInput.normalize(encryptTile(board, board.tileAt(3, 2).getCode()))
+        );
+        // cuarta fila
+        normalizedPerceptronInput.set(12,
+                normInput.normalize(encryptTile(board, board.tileAt(0, 3).getCode()))
+        );
+        normalizedPerceptronInput.set(13,
+                normInput.normalize(encryptTile(board, board.tileAt(1, 3).getCode()))
+        );
+        normalizedPerceptronInput.set(14,
+                normInput.normalize(encryptTile(board, board.tileAt(2, 3).getCode()))
+        );
+        normalizedPerceptronInput.set(15,
+                normInput.normalize(encryptTile(board, board.tileAt(3, 3).getCode()))
+        );
     }
 
     @Override
-    public IsolatedComputation<Double> computeNumericRepresentationFor(Game2048 game, Object[] output) {
-        return () -> {
-            assert output.length == 1;
-            return (Double) output[0];
-        };
+    public Double computeNumericRepresentationFor(Game2048 game, Object[] output) {
+        assert output.length == 1;
+        return (Double) output[0];
     }
 
     @Override

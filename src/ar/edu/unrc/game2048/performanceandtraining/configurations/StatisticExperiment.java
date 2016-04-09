@@ -406,9 +406,9 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
                         games.get(i).resetGame(); //reset
                         while ( !games.get(i).iLoose() && !games.get(i).iWin() ) {
                             if ( tdLambdaLearning.isEmpty() ) {
-                                neuralNetworkInterfaces.get(i).playATurn(games.get(i), null).compute();
+                                neuralNetworkInterfaces.get(i).playATurn(games.get(i), null);
                             } else {
-                                neuralNetworkInterfaces.get(i).playATurn(games.get(i), tdLambdaLearning.get(i)).compute();
+                                neuralNetworkInterfaces.get(i).playATurn(games.get(i), tdLambdaLearning.get(i));
                             }
                         }
                         //calculamos estadisticas

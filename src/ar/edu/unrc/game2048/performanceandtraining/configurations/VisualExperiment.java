@@ -230,7 +230,7 @@ public abstract class VisualExperiment<NeuralNetworkClass> {
             this.learningExperiment.getNeuralNetworkInterfaceFor2048().loadOrCreatePerceptron(perceptronFile, true);
         }
         while ( !game.iLoose() && !game.iWin() && !forceStop ) {
-            this.learningExperiment.getNeuralNetworkInterfaceFor2048().playATurn(game, learningExperiment.getLearningAlgorithm()).compute();
+            this.learningExperiment.getNeuralNetworkInterfaceFor2048().playATurn(game, learningExperiment.getLearningAlgorithm());
         }
         if ( !forceStop ) {
             sleep(5_000);

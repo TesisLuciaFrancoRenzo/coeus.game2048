@@ -43,7 +43,6 @@ import ar.edu.unrc.tdlearning.perceptron.interfaces.IProblemState;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IState;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IStateNTuple;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IStatePerceptron;
-import ar.edu.unrc.tdlearning.perceptron.interfaces.IsolatedComputation;
 import ar.edu.unrc.tdlearning.perceptron.learning.StateProbability;
 import java.awt.Color;
 import java.awt.Font;
@@ -264,14 +263,12 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
      * @return
      */
     @Override
-    public IsolatedComputation<Double> computeNumericRepresentationFor(Object[] output, IActor actor) {
+    public Double computeNumericRepresentationFor(Object[] output, IActor actor) {
         if ( this.getPerceptronConfiguration() != null ) {
             return this.getPerceptronConfiguration().computeNumericRepresentationFor(this, output);
         } else {
-            return () -> {
-                assert output.length == 1;
-                return (Double) output[0];
-            };
+            assert output.length == 1;
+            return (Double) output[0];
         }
     }
 
@@ -290,30 +287,28 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
     }
 
     @Override
-    public IsolatedComputation<Object[]> evaluateBoardWithPerceptron(IState state) {
-        return () -> {
-            //dependiendo de que tipo de red neuronal utilizamos, evaluamos las entradas y calculamos una salida
-            if ( perceptronConfiguration != null && perceptronConfiguration.getNeuralNetwork() != null ) {
-                if ( perceptronConfiguration.getNeuralNetwork() instanceof BasicNetwork ) { //es sobre la libreria encog
-                    double[] inputs = new double[getPerceptronConfiguration().neuronQuantityInLayer[0]];
-                    for ( int i = 0; i < getPerceptronConfiguration().neuronQuantityInLayer[0]; i++ ) {
-                        inputs[i] = ((IStatePerceptron) state).translateToPerceptronInput(i).compute();
-                    } //todo reeemplazar esot po algo ams elegante
-                    MLData inputData = new BasicMLData(inputs);
-                    MLData output = ((BasicNetwork) perceptronConfiguration.getNeuralNetwork()).compute(inputData);
-                    Double[] out = new Double[output.getData().length];
-                    for ( int i = 0; i < output.size(); i++ ) {
-                        out[i] = output.getData()[i];
-                    }
-                    return out;
+    public Object[] evaluateBoardWithPerceptron(IState state) {
+        //dependiendo de que tipo de red neuronal utilizamos, evaluamos las entradas y calculamos una salida
+        if ( perceptronConfiguration != null && perceptronConfiguration.getNeuralNetwork() != null ) {
+            if ( perceptronConfiguration.getNeuralNetwork() instanceof BasicNetwork ) { //es sobre la libreria encog
+                double[] inputs = new double[getPerceptronConfiguration().neuronQuantityInLayer[0]];
+                for ( int i = 0; i < getPerceptronConfiguration().neuronQuantityInLayer[0]; i++ ) {
+                    inputs[i] = ((IStatePerceptron) state).translateToPerceptronInput(i);
+                } //todo reeemplazar esot po algo ams elegante
+                MLData inputData = new BasicMLData(inputs);
+                MLData output = ((BasicNetwork) perceptronConfiguration.getNeuralNetwork()).compute(inputData);
+                Double[] out = new Double[output.getData().length];
+                for ( int i = 0; i < output.size(); i++ ) {
+                    out[i] = output.getData()[i];
                 }
-            }
-            if ( nTupleSystemConfiguration != null && nTupleSystemConfiguration.getNTupleSystem() != null ) {
-                Double[] out = {nTupleSystemConfiguration.getNTupleSystem().getComputation((IStateNTuple) state).compute()};
                 return out;
             }
-            throw new UnsupportedOperationException("only Encog and NTupleSystem is implemented");
-        };
+        }
+        if ( nTupleSystemConfiguration != null && nTupleSystemConfiguration.getNTupleSystem() != null ) {
+            Double[] out = {nTupleSystemConfiguration.getNTupleSystem().getComputation((IStateNTuple) state)};
+            return out;
+        }
+        throw new UnsupportedOperationException("only Encog and NTupleSystem is implemented");
     }
 
     @Override

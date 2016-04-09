@@ -24,7 +24,6 @@ import ar.edu.unrc.game2048.NTupleConfiguration2048;
 import ar.edu.unrc.game2048.PerceptronConfiguration2048;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IAction;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IPerceptronInterface;
-import ar.edu.unrc.tdlearning.perceptron.interfaces.IsolatedComputation;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearning;
 import static java.awt.event.KeyEvent.VK_DOWN;
 import static java.awt.event.KeyEvent.VK_LEFT;
@@ -126,35 +125,31 @@ public abstract class INeuralNetworkInterfaceFor2048<NeuralNetworkClass> impleme
      * @param learningMethod metodo usado para entrenar y evaluar, o null si se
      *                       utiliza una IA al azar
      * <p>
-     * @return
      */
-    public IsolatedComputation playATurn(Game2048<NeuralNetworkClass> game, TDLambdaLearning learningMethod) {
-        return () -> {
-            // evaluamos cada accion aplicada al estado inicial y elegimos la mejor
-            // accion basada en las predicciones del problema
-            List<IAction> possibleActions = game.listAllPossibleActions(game.getBoard());
-            Action bestAction = (Action) learningMethod.computeBestPossibleAction(game, game.getBoard(), possibleActions, null).compute();
+    public void playATurn(Game2048<NeuralNetworkClass> game, TDLambdaLearning learningMethod) {
+        // evaluamos cada accion aplicada al estado inicial y elegimos la mejor
+        // accion basada en las predicciones del problema
+        List<IAction> possibleActions = game.listAllPossibleActions(game.getBoard());
+        Action bestAction = (Action) learningMethod.computeBestPossibleAction(game, game.getBoard(), possibleActions, null);
 
-            switch ( bestAction ) {
-                case left: {
-                    game.processInput(VK_LEFT);
-                    break;
-                }
-                case right: {
-                    game.processInput(VK_RIGHT);
-                    break;
-                }
-                case down: {
-                    game.processInput(VK_DOWN);
-                    break;
-                }
-                case up: {
-                    game.processInput(VK_UP);
-                    break;
-                }
+        switch ( bestAction ) {
+            case left: {
+                game.processInput(VK_LEFT);
+                break;
             }
-            return null;
-        };
+            case right: {
+                game.processInput(VK_RIGHT);
+                break;
+            }
+            case down: {
+                game.processInput(VK_DOWN);
+                break;
+            }
+            case up: {
+                game.processInput(VK_UP);
+                break;
+            }
+        }
     }
 
     /**
