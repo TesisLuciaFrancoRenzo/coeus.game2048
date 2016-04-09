@@ -71,7 +71,7 @@ public class BoardMaxTileTest {
         this.initialBoard = initial;
 
         Tile[] randomB = {
-            tileContainer.getTile(0), tileContainer.getTile(4), tileContainer.getTile(0), tileContainer.getTile(17),
+            tileContainer.getTile(0), tileContainer.getTile(4), tileContainer.getTile(0), tileContainer.getTile(11),
             tileContainer.getTile(4), tileContainer.getTile(6), tileContainer.getTile(4), tileContainer.getTile(4),
             tileContainer.getTile(2), tileContainer.getTile(4), tileContainer.getTile(5), tileContainer.getTile(7),
             tileContainer.getTile(4), tileContainer.getTile(0), tileContainer.getTile(1), tileContainer.getTile(4)
@@ -106,67 +106,108 @@ public class BoardMaxTileTest {
         board.setTiles(initialBoard);
         board.updateInternalState(true); //dentro de este metodo se utiliza el "calculateNormalizedPerceptronInput"
 
-        assertEquals(-1d, board.translateToPerceptronInput(0), 0.0d);
-        assertEquals(-1d, board.translateToPerceptronInput(1), 0.0d);
-        assertEquals(-1d, board.translateToPerceptronInput(2), 0.0d);
-        assertEquals(-1d, board.translateToPerceptronInput(3), 0.0d);
+        double actualLow = -11;
+        double actualHigh = 11;
+        double normalizedHigh = 1;
+        double normalizedLow = -1;
 
-        assertEquals(-1d, board.translateToPerceptronInput(4), 0.0d);
-        assertEquals(-1d, board.translateToPerceptronInput(5), 0.0d);
+        assertEquals(0d, board.translateToPerceptronInput(0), 0.0d);
+        assertEquals(0d, board.translateToPerceptronInput(1), 0.0d);
+        assertEquals(0d, board.translateToPerceptronInput(2), 0.0d);
+        assertEquals(0d, board.translateToPerceptronInput(3), 0.0d);
 
-        double normalization = ((2d - 0d) / (17d - 0d)) * (1d - -1d) + -1d;
+        assertEquals(0d, board.translateToPerceptronInput(4), 0.0d);
+        assertEquals(0d, board.translateToPerceptronInput(5), 0.0d);
+
+        double normalization = ((2d - actualLow) / (actualHigh - actualLow))
+                * (normalizedHigh - normalizedLow)
+                + normalizedLow;
         assertEquals(normalization, board.translateToPerceptronInput(6), 0.0d);
-        assertEquals(-1d, board.translateToPerceptronInput(7), 0.0d);
+        assertEquals(0d, board.translateToPerceptronInput(7), 0.0d);
 
-        assertEquals(-1d, board.translateToPerceptronInput(8), 0.0d);
-        assertEquals(-1d, board.translateToPerceptronInput(9), 0.0d);
-        assertEquals(-1d, board.translateToPerceptronInput(10), 0.0d);
-        assertEquals(-1d, board.translateToPerceptronInput(11), 0.0d);
+        assertEquals(0d, board.translateToPerceptronInput(8), 0.0d);
+        assertEquals(0d, board.translateToPerceptronInput(9), 0.0d);
+        assertEquals(0d, board.translateToPerceptronInput(10), 0.0d);
+        assertEquals(0d, board.translateToPerceptronInput(11), 0.0d);
 
-        normalization = ((4d - 0d) / (17d - 0d)) * (1d - -1d) + -1d;
+        normalization = ((4d - actualLow) / (actualHigh - actualLow))
+                * (normalizedHigh - normalizedLow)
+                + normalizedLow;
         assertEquals(normalization, board.translateToPerceptronInput(12), 0.0d);
-        assertEquals(-1d, board.translateToPerceptronInput(13), 0.0d);
-        assertEquals(-1d, board.translateToPerceptronInput(14), 0.0d);
-        assertEquals(-1d, board.translateToPerceptronInput(15), 0.0d);
+        assertEquals(0d, board.translateToPerceptronInput(13), 0.0d);
+        assertEquals(0d, board.translateToPerceptronInput(14), 0.0d);
+        assertEquals(0d, board.translateToPerceptronInput(15), 0.0d);
 
         board = new GameBoard<>(game, tileContainer);
         board.setTiles(randomBoard1);
         board.updateInternalState(true); //dentro de este metodo se utiliza el "calculateNormalizedPerceptronInput"
 
-        normalization = ((0d - 0d) / (17d - 0d)) * (1d - -1d) + -1d;
+        normalization = ((0d - actualLow) / (actualHigh - actualLow))
+                * (normalizedHigh - normalizedLow)
+                + normalizedLow;
         assertEquals(normalization, board.translateToPerceptronInput(0), 0.0d);
-        normalization = ((4d - 0d) / (17d - 0d)) * (1d - -1d) + -1d;
+        normalization = ((4d - actualLow) / (actualHigh - actualLow))
+                * (normalizedHigh - normalizedLow)
+                + normalizedLow;
         assertEquals(normalization, board.translateToPerceptronInput(1), 0.0d);
-        normalization = ((2d - 0d) / (17d - 0d)) * (1d - -1d) + -1d;
+        normalization = ((2d - actualLow) / (actualHigh - actualLow))
+                * (normalizedHigh - normalizedLow)
+                + normalizedLow;
         assertEquals(normalization, board.translateToPerceptronInput(2), 0.0d);
-        normalization = ((4d - 0d) / (17d - 0d)) * (1d - -1d) + -1d;
+        normalization = ((4d - actualLow) / (actualHigh - actualLow))
+                * (normalizedHigh - normalizedLow)
+                + normalizedLow;
         assertEquals(normalization, board.translateToPerceptronInput(3), 0.0d);
 
-        normalization = ((4d - 0d) / (17d - 0d)) * (1d - -1d) + -1d;
+        normalization = ((4d - actualLow) / (actualHigh - actualLow))
+                * (normalizedHigh - normalizedLow)
+                + normalizedLow;
         assertEquals(normalization, board.translateToPerceptronInput(4), 0.0d);
-        normalization = ((6d - 0d) / (17d - 0d)) * (1d - -1d) + -1d;
+        normalization = ((6d - actualLow) / (actualHigh - actualLow))
+                * (normalizedHigh - normalizedLow)
+                + normalizedLow;
         assertEquals(normalization, board.translateToPerceptronInput(5), 0.0d);
-        normalization = ((4d - 0d) / (17d - 0d)) * (1d - -1d) + -1d;
+        normalization = ((4d - actualLow) / (actualHigh - actualLow))
+                * (normalizedHigh - normalizedLow)
+                + normalizedLow;
         assertEquals(normalization, board.translateToPerceptronInput(6), 0.0d);
-        normalization = ((0d - 0d) / (17d - 0d)) * (1d - -1d) + -1d;
+        normalization = ((0d - actualLow) / (actualHigh - actualLow))
+                * (normalizedHigh - normalizedLow)
+                + normalizedLow;
         assertEquals(normalization, board.translateToPerceptronInput(7), 0.0d);
 
-        normalization = ((0d - 0d) / (17d - 0d)) * (1d - -1d) + -1d;
+        normalization = ((0d - actualLow) / (actualHigh - actualLow))
+                * (normalizedHigh - normalizedLow)
+                + normalizedLow;
         assertEquals(normalization, board.translateToPerceptronInput(8), 0.0d);
-        normalization = ((4d - 0d) / (17d - 0d)) * (1d - -1d) + -1d;
+        normalization = ((4d - actualLow) / (actualHigh - actualLow))
+                * (normalizedHigh - normalizedLow)
+                + normalizedLow;
         assertEquals(normalization, board.translateToPerceptronInput(9), 0.0d);
-        normalization = ((5d - 0d) / (17d - 0d)) * (1d - -1d) + -1d;
+        normalization = ((5d - actualLow) / (actualHigh - actualLow))
+                * (normalizedHigh - normalizedLow)
+                + normalizedLow;
         assertEquals(normalization, board.translateToPerceptronInput(10), 0.0d);
-        normalization = ((1d - 0d) / (17d - 0d)) * (1d - -1d) + -1d;
+        normalization = ((1d - actualLow) / (actualHigh - actualLow))
+                * (normalizedHigh - normalizedLow)
+                + normalizedLow;
         assertEquals(normalization, board.translateToPerceptronInput(11), 0.0d);
 
-        normalization = ((17d - 0d) / (17d - 0d)) * (1d - -1d) + -1d;
+        normalization = ((11d - actualLow) / (actualHigh - actualLow))
+                * (normalizedHigh - normalizedLow)
+                + normalizedLow;
         assertEquals(normalization, board.translateToPerceptronInput(12), 0.0d);
-        normalization = ((4d - 0d) / (17d - 0d)) * (1d - -1d) + -1d;
+        normalization = ((4d - actualLow) / (actualHigh - actualLow))
+                * (normalizedHigh - normalizedLow)
+                + normalizedLow;
         assertEquals(normalization, board.translateToPerceptronInput(13), 0.0d);
-        normalization = ((7d - 0d) / (17d - 0d)) * (1d - -1d) + -1d;
+        normalization = ((7d - actualLow) / (actualHigh - actualLow))
+                * (normalizedHigh - normalizedLow)
+                + normalizedLow;
         assertEquals(normalization, board.translateToPerceptronInput(14), 0.0d);
-        normalization = ((4d - 0d) / (17d - 0d)) * (1d - -1d) + -1d;
+        normalization = ((4d - actualLow) / (actualHigh - actualLow))
+                * (normalizedHigh - normalizedLow)
+                + normalizedLow;
         assertEquals(normalization, board.translateToPerceptronInput(15), 0.0d);
     }
 
@@ -182,16 +223,13 @@ public class BoardMaxTileTest {
         board.setTiles(initialBoard);
         board.updateInternalState(true);
 
-        double normalization = ((4d - 0d) / (17d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.getMaxTileNumberValue(), 0.0d);
+        assertEquals(Math.pow(2, 4), board.getMaxTileNumberValue(), 0.0d);
 
         board = new GameBoard<>(game, tileContainer);
         board.setTiles(randomBoard1);
         board.updateInternalState(true);
 
-        normalization = ((17d - 0d) / (17d - 0d)) * (1d - -1d) + -1d;
-        assertEquals(normalization, board.getMaxTileNumberValue(), 0.0d);
-
+        assertEquals(Math.pow(2, 11), board.getMaxTileNumberValue(), 0.0d);
     }
 
 }

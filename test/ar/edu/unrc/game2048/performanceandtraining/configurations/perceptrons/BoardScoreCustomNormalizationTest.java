@@ -128,8 +128,8 @@ public class BoardScoreCustomNormalizationTest {
         board.setTiles(example1);
         board.updateInternalState(true);
 
-        List<Double> translation = new ArrayList<>(config.neuronQuantityInLayer.length);
-        for ( int i = 0; i < config.neuronQuantityInLayer.length; i++ ) {
+        List<Double> translation = new ArrayList<>(config.neuronQuantityInLayer[0]);
+        for ( int i = 0; i < config.neuronQuantityInLayer[0]; i++ ) {
             translation.add(null);
         }
 

@@ -74,7 +74,6 @@ public class BoardMaxTile<NeuralNetworkClass> extends PerceptronConfiguration204
      *
      * @param board
      * @param normalizedPerceptronInput <p>
-     * @return
      */
     @Override
     public void calculateNormalizedPerceptronInput(GameBoard<NeuralNetworkClass> board, List<Double> normalizedPerceptronInput) {
