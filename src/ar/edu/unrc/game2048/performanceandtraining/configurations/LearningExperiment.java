@@ -125,6 +125,14 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
         this.alpha = alpha;
     }
 
+    public boolean[] getConcurrencyInLayer() {
+        return concurrencyInLayer;
+    }
+
+    public void setConcurrencyInLayer(boolean[] concurrencyInLayer) {
+        this.concurrencyInLayer = concurrencyInLayer;
+    }
+
     /**
      * @return the experimentName
      */
@@ -173,6 +181,8 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
     public double getGamma() {
         return gamma;
     }
+    
+    private boolean[] concurrencyInLayer;
 
     /**
      * @param gamma the gamma to set
