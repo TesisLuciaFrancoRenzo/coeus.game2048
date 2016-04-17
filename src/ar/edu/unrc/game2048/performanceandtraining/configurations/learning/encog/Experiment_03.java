@@ -21,7 +21,7 @@ package ar.edu.unrc.game2048.performanceandtraining.configurations.learning.enco
 import ar.edu.unrc.game2048.PerceptronConfiguration2048;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.LearningExperiment;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.libraries.EncogExperimentInterface;
-import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.FullNTupleScore;
+import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.NTupleScore;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IPerceptronInterface;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearning;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearningAfterstate;
@@ -49,20 +49,23 @@ public class Experiment_03 extends LearningExperiment<BasicNetwork> {
             filePath = args[0];
         }
         LearningExperiment experiment = new Experiment_03();
-        experiment.createLogs(false);
 
-        boolean statistics = true;
-//        boolean statistics = false;
-        double[] alpha = {0.01, 0.01};
-        experiment.setAlpha(alpha);
-        experiment.setLearningRateAdaptationToAnnealing(100_000);
+//        boolean statistics = true;
+        boolean statistics = false;
+
+        boolean[] concurrentLayer = {true, true, false};
+        experiment.setConcurrencyInLayer(concurrentLayer);
+        experiment.setLearningRateAdaptationToAnnealing(500_000);
         experiment.setLambda(0.7);
         experiment.setGamma(1);
-        experiment.setExplorationRateToFixed(0);
+        experiment.setExplorationRateToFixed(0.1);
         experiment.setResetEligibilitiTraces(true);
-        experiment.setGamesToPlay(20_000);
+        experiment.setGamesToPlay(100_000);
         experiment.setSaveEvery(500);
         experiment.setSaveBackupEvery(500);
+        experiment.setInitializePerceptronRandomized(true);
+
+        experiment.createLogs(false);
         //para calcualar estadisticas
         if ( statistics ) {
             experiment.setStatisticsOnly(true);
@@ -83,13 +86,14 @@ public class Experiment_03 extends LearningExperiment<BasicNetwork> {
 
     @Override
     public void initialize() throws Exception {
+        this.setTileToWin(2_048);
         if ( this.getExperimentName() == null ) {
             this.setExperimentName("Experiment_03");
         }
         this.setPerceptronName(this.getExperimentName());
-        this.setTileToWin(2_048);
-        PerceptronConfiguration2048<BasicNetwork> config = new FullNTupleScore<>();
+        PerceptronConfiguration2048<BasicNetwork> config = new NTupleScore<>();
         // config.randomMoveProbability = 0.01;
+        //config.perceptron_hidden_quantity = config.perceptron_input_quantity;
         this.setNeuralNetworkInterfaceFor2048(new EncogExperimentInterface(config));
     }
 
@@ -102,5 +106,4 @@ public class Experiment_03 extends LearningExperiment<BasicNetwork> {
     public TDLambdaLearning instanceOfTdLearninrgImplementation(NTupleSystem nTupleSystem) {
         return null;
     }
-
 }

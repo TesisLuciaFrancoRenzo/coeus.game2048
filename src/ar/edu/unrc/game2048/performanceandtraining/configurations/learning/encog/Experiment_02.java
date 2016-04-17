@@ -21,7 +21,7 @@ package ar.edu.unrc.game2048.performanceandtraining.configurations.learning.enco
 import ar.edu.unrc.game2048.PerceptronConfiguration2048;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.LearningExperiment;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.libraries.EncogExperimentInterface;
-import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.BoardScoreCustomNormalization;
+import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.BoardScore;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IPerceptronInterface;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearning;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearningAfterstate;
@@ -52,17 +52,18 @@ public class Experiment_02 extends LearningExperiment<BasicNetwork> {
 
 //        boolean statistics = true;
         boolean statistics = false;
-        double[] alpha = {0.02, 0.02, 0.02, 0.02};
-        experiment.setAlpha(alpha);
+
+        boolean[] concurrentLayer = {true, true, false};
+        experiment.setConcurrencyInLayer(concurrentLayer);
         experiment.setLearningRateAdaptationToAnnealing(500_000);
         experiment.setLambda(0.7);
         experiment.setGamma(1);
-        experiment.setExplorationRateToFixed(0);
+        experiment.setExplorationRateToFixed(0.1);
         experiment.setResetEligibilitiTraces(true);
         experiment.setGamesToPlay(100_000);
         experiment.setSaveEvery(500);
         experiment.setSaveBackupEvery(500);
-        experiment.setInitializePerceptronRandomized(false);
+        experiment.setInitializePerceptronRandomized(true);
 
         experiment.createLogs(false);
         //para calcualar estadisticas
@@ -90,9 +91,8 @@ public class Experiment_02 extends LearningExperiment<BasicNetwork> {
             this.setExperimentName("Experiment_02");
         }
         this.setPerceptronName(this.getExperimentName());
-        PerceptronConfiguration2048<BasicNetwork> config = new BoardScoreCustomNormalization<>();
-//           config.perceptron_hidden_quantity = config.perceptron_input_quantity * 2;
-        //  config.randomMoveProbability = 0.01;
+        PerceptronConfiguration2048<BasicNetwork> config = new BoardScore<>();
+        //config.hiddenLayerQuantity = 2;
         this.setNeuralNetworkInterfaceFor2048(new EncogExperimentInterface(config));
     }
 

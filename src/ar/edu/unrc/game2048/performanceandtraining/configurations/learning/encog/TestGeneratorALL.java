@@ -138,13 +138,8 @@ public class TestGeneratorALL {
         }
 
         runAllConfigs("Experiment_01", new Experiment_01(), alphaList, lambdaList, statisticsOnly, runStatisticForRandom, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, filePath);
-        runAllConfigs("Experiment_02", new Experiment_02(), alphaList, lambdaList, statisticsOnly, runStatisticForRandom, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, filePath);
+        runAllConfigs("Experiment_02", new Experiment_01(), alphaList, lambdaList, statisticsOnly, runStatisticForRandom, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, filePath);
         runAllConfigs("Experiment_03", new Experiment_03(), alphaList, lambdaList, statisticsOnly, runStatisticForRandom, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, filePath);
-        runAllConfigs("Experiment_04", new Experiment_04(), alphaList, lambdaList, statisticsOnly, runStatisticForRandom, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, filePath);
-        runAllConfigs("Experiment_05", new Experiment_05(), alphaList, lambdaList, statisticsOnly, runStatisticForRandom, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, filePath);
-        runAllConfigs("Experiment_06", new Experiment_06(), alphaList, lambdaList, statisticsOnly, runStatisticForRandom, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, filePath);
-        runAllConfigs("Experiment_07", new Experiment_07(), alphaList, lambdaList, statisticsOnly, runStatisticForRandom, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, filePath);
-        runAllConfigs("Experiment_08", new Experiment_08(), alphaList, lambdaList, statisticsOnly, runStatisticForRandom, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, filePath);
 
     }
 

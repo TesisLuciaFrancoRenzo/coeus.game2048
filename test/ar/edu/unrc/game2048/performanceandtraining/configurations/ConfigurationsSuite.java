@@ -19,7 +19,6 @@
 package ar.edu.unrc.game2048.performanceandtraining.configurations;
 
 import ar.edu.unrc.game2048.performanceandtraining.configurations.libraries.LibrariesSuite;
-import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.PerceptronsSuite;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -32,7 +31,7 @@ import org.junit.runners.Suite;
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
 @RunWith( Suite.class )
-@Suite.SuiteClasses( {PerceptronsSuite.class, LibrariesSuite.class} )
+@Suite.SuiteClasses( {LibrariesSuite.class} )
 public class ConfigurationsSuite {
 
     /**
