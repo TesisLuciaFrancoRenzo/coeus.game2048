@@ -345,10 +345,11 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
      *
      * @param fileToProcess
      * @param delayPerMove
+     * @param createPerceptronFile
      *
      * @throws Exception
      */
-    public void processFile(String fileToProcess, int delayPerMove) throws Exception {
+    public void processFile(String fileToProcess, int delayPerMove, boolean createPerceptronFile) throws Exception {
 
         //preparamos los destinos de las siimulaciones para posterior sumatoria final
         List<ThreadResult> results = new ArrayList(simulations);
@@ -380,7 +381,7 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
                 if ( !perceptronFile.exists() ) {
                     throw new IllegalArgumentException("perceptron file must exists: " + perceptronFile.getCanonicalPath());
                 }
-                neuralNetworkInterfaceClone.loadOrCreatePerceptron(perceptronFile, true);
+                neuralNetworkInterfaceClone.loadOrCreatePerceptron(perceptronFile, true, createPerceptronFile);
             }
 
             Game2048<NeuralNetworkClass> game = new Game2048<>(tempPerceptronConfiguration, tempNTupleConfiguration, tileToWin, delayPerMove);
@@ -495,8 +496,9 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
      *
      * @param experimentPath
      * @param delayPerMove
+     * @param createPerceptronFile
      */
-    public void start(String experimentPath, int delayPerMove) {
+    public void start(String experimentPath, int delayPerMove, boolean createPerceptronFile) {
         File experimentPathFile = new File(experimentPath);
         if ( experimentPathFile.exists() && !experimentPathFile.isDirectory() ) {
             throw new IllegalArgumentException("experimentPath must be a directory");
@@ -511,7 +513,7 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
                 this.experimentName = learningExperiment.getExperimentName();
             }
             initializeStatistics();
-            run(experimentPath, delayPerMove);
+            run(experimentPath, delayPerMove, createPerceptronFile);
         } catch ( Exception ex ) {
             Logger.getLogger(StatisticExperiment.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -641,9 +643,10 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
      *
      * @param experimentPath
      * @param delayPerMove   <p>
+     * @param createPerceptronFile
      * @throws Exception
      */
-    protected void run(String experimentPath, int delayPerMove) throws Exception {
+    protected void run(String experimentPath, int delayPerMove, boolean createPerceptronFile) throws Exception {
         String dirPath = experimentPath
                 + this.learningExperiment.getNeuralNetworkInterfaceFor2048().getLibName() + File.separator
                 + experimentName + File.separator;
@@ -657,7 +660,7 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
         //hacemos estadisticas del perceptron random, si es necesario
         Map<File, StatisticForCalc> resultsRandom = new HashMap<>();
         System.out.print("Starting " + this.getExperimentName() + LearningExperiment._RANDOM + " Statistics... ");
-        processFile(dirPath + this.getExperimentName() + LearningExperiment._RANDOM, delayPerMove);
+        processFile(dirPath + this.getExperimentName() + LearningExperiment._RANDOM, delayPerMove, createPerceptronFile);
         resultsRandom.put(randomPerceptronFile, getTileStatistics());
 
         //calculamos las estadisticas de los backup si es necesario
@@ -676,7 +679,7 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
         for ( File f : allFiles ) {
             if ( f.getName().matches(".*\\_BackupN\\-.*\\.ser") ) {
                 System.out.print("Starting " + f.getName() + " Statistics... ");
-                processFile(dirPath + f.getName().replaceAll("\\.ser$", ""), delayPerMove);
+                processFile(dirPath + f.getName().replaceAll("\\.ser$", ""), delayPerMove, createPerceptronFile);
                 resultsPerFile.put(f, getTileStatistics());
                 backupFiles.add(f);
             }

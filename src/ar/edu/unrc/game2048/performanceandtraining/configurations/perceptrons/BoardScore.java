@@ -87,7 +87,6 @@ public class BoardScore<NeuralNetworkClass> extends PerceptronConfiguration2048<
      *
      * @param board
      * @param normalizedPerceptronInput <p>
-     * @return
      */
     @Override
     public void calculateNormalizedPerceptronInput(GameBoard<NeuralNetworkClass> board, List<Double> normalizedPerceptronInput) {

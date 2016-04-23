@@ -54,7 +54,7 @@ public class Experiment_01 extends LearningExperiment<BasicNetwork> {
         experiment.setSimulationsForStatistics(8);
         experiment.setRunStatisticForRandom(false); //FIXME hacer que solo corra las estadisticas de uno de los archivos ficticios
         experiment.setRunStatisticsForBackups(false);
-        experiment.start(filePath, 0);
+        experiment.start(filePath, 0, true);
     }
 
     @Override

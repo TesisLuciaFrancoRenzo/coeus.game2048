@@ -72,14 +72,16 @@ public class NTupleExperimentInterface extends INeuralNetworkInterfaceFor2048<Ba
     }
 
     @Override
-    public void loadOrCreatePerceptron(File perceptronFile, boolean randomizedIfNotExist) throws Exception {
+    public void loadOrCreatePerceptron(File perceptronFile, boolean randomizedIfNotExist, boolean createPerceptronFile) throws Exception {
         this.getNTupleConfiguration().setNTupleSystem(initializeEncogPerceptron(randomizedIfNotExist));
-        if ( !perceptronFile.exists() ) {
-            //Si el archivo no existe, creamos un perceptron nuevo inicializado al azar
-            getNTupleConfiguration().getNTupleSystem().save(perceptronFile);
-        } else {
-            //si el archivo existe, lo cargamos como perceptron entrenado al juego
-            getNTupleConfiguration().getNTupleSystem().load(perceptronFile);
+        if ( createPerceptronFile ) {
+            if ( !perceptronFile.exists() ) {
+                //Si el archivo no existe, creamos un perceptron nuevo inicializado al azar
+                getNTupleConfiguration().getNTupleSystem().save(perceptronFile);
+            } else {
+                //si el archivo existe, lo cargamos como perceptron entrenado al juego
+                getNTupleConfiguration().getNTupleSystem().load(perceptronFile);
+            }
         }
     }
 

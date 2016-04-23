@@ -115,9 +115,11 @@ public abstract class INeuralNetworkInterfaceFor2048<NeuralNetworkClass> impleme
     /**
      * @param perceptronFile       <p>
      * @param randomizedIfNotExist <p>
+     * @param createFile
+     *
      * @throws Exception
      */
-    public abstract void loadOrCreatePerceptron(File perceptronFile, boolean randomizedIfNotExist) throws Exception;
+    public abstract void loadOrCreatePerceptron(File perceptronFile, boolean randomizedIfNotExist, boolean createFile) throws Exception;
 
     /**
      *

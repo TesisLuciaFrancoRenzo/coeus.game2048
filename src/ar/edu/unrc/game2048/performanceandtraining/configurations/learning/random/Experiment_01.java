@@ -55,7 +55,7 @@ public class Experiment_01 extends LearningExperiment<BasicNetwork> {
         experiment.setRunStatisticsForBackups(false);
         experiment.setSaveEvery(10_000);
         experiment.setSaveBackupEvery(100_000);
-        experiment.start(filePath, 0);
+        experiment.start(filePath, 0, false);
     }
 
     @Override

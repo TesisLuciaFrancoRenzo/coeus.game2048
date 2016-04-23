@@ -156,17 +156,17 @@ public class EncogExperimentInterfaceTest {
         perceptron.setWeight(1, 2, 0, weightsA[10]);
         perceptron.setWeight(1, 2, 1, weightsA[11]);
 
-        perceptronConfiguration.activationFunctionForEncog = new ActivationFunction[3];
-        perceptronConfiguration.activationFunctionForEncog[0] = new ActivationSigmoid();
-        perceptronConfiguration.activationFunctionForEncog[1] = new ActivationSigmoid();
-        perceptronConfiguration.activationFunctionForEncog[2] = new ActivationSigmoid();
+        perceptronConfiguration.setActivationFunctionForEncog(new ActivationFunction[3]);
+        perceptronConfiguration.getActivationFunctionForEncog()[0] = new ActivationSigmoid();
+        perceptronConfiguration.getActivationFunctionForEncog()[1] = new ActivationSigmoid();
+        perceptronConfiguration.getActivationFunctionForEncog()[2] = new ActivationSigmoid();
         perceptronConfiguration.activationFunctionMax = 1;
         perceptronConfiguration.activationFunctionMin = 0;
 
-        perceptronConfiguration.neuronQuantityInLayer = new int[3];
-        perceptronConfiguration.neuronQuantityInLayer[0] = PERCEPTRON_INPUTS_QUANTITY;
-        perceptronConfiguration.neuronQuantityInLayer[1] = PERCEPTRON_HIDDEN_QUANTITY;
-        perceptronConfiguration.neuronQuantityInLayer[2] = PERCEPTRON_OUTPUTS_QUANTITY;
+        perceptronConfiguration.setNeuronQuantityInLayer(new int[3]);
+        perceptronConfiguration.getNeuronQuantityInLayer()[0] = PERCEPTRON_INPUTS_QUANTITY;
+        perceptronConfiguration.getNeuronQuantityInLayer()[1] = PERCEPTRON_HIDDEN_QUANTITY;
+        perceptronConfiguration.getNeuronQuantityInLayer()[2] = PERCEPTRON_OUTPUTS_QUANTITY;
 
         EncogExperimentInterface experiment = new EncogExperimentInterface(perceptronConfiguration);
         experiment.setConfigForTesting(perceptron);

@@ -53,7 +53,7 @@ public class Experiment_02 extends LearningExperiment<BasicNetwork> {
 //        boolean statistics = true;
         boolean statistics = false;
 
-        boolean[] concurrentLayer = {true, true, false};
+        boolean[] concurrentLayer = {false, false, false};
         experiment.setConcurrencyInLayer(concurrentLayer);
         experiment.setLearningRateAdaptationToAnnealing(500_000);
         experiment.setLambda(0.7);
@@ -63,7 +63,7 @@ public class Experiment_02 extends LearningExperiment<BasicNetwork> {
         experiment.setGamesToPlay(100_000);
         experiment.setSaveEvery(500);
         experiment.setSaveBackupEvery(500);
-        experiment.setInitializePerceptronRandomized(true);
+        experiment.setInitializePerceptronRandomized(false);
 
         experiment.createLogs(false);
         //para calcualar estadisticas
@@ -81,7 +81,7 @@ public class Experiment_02 extends LearningExperiment<BasicNetwork> {
             experiment.setSimulationsForStatistics(0);
         }
 
-        experiment.start(filePath, 0);
+        experiment.start(filePath, 0, true);
     }
 
     @Override

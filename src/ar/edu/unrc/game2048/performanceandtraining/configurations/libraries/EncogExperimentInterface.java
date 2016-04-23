@@ -93,10 +93,10 @@ public class EncogExperimentInterface extends INeuralNetworkInterfaceFor2048<Bas
 
     @Override
     public IPerceptronInterface getPerceptronInterface() {
-        activationFunction = new ArrayList<>(getPerceptronConfiguration().activationFunctionForEncog.length);
-        derivatedActivationFunction = new ArrayList<>(getPerceptronConfiguration().activationFunctionForEncog.length);
+        activationFunction = new ArrayList<>(getPerceptronConfiguration().getActivationFunctionForEncog().length);
+        derivatedActivationFunction = new ArrayList<>(getPerceptronConfiguration().getActivationFunctionForEncog().length);
 
-        for ( ActivationFunction activationFunctionForEncog : getPerceptronConfiguration().activationFunctionForEncog ) {
+        for ( ActivationFunction activationFunctionForEncog : getPerceptronConfiguration().getActivationFunctionForEncog() ) {
             if ( activationFunctionForEncog instanceof ActivationTANH ) {
                 this.activationFunction.add(FunctionUtils.tanh);
                 this.derivatedActivationFunction.add(FunctionUtils.derivatedTanh);
@@ -170,19 +170,19 @@ public class EncogExperimentInterface extends INeuralNetworkInterfaceFor2048<Bas
      * @return
      */
     public BasicNetwork initializeEncogPerceptron(boolean randomized) {
-        if ( getPerceptronConfiguration().neuronQuantityInLayer == null || getPerceptronConfiguration().neuronQuantityInLayer.length < 2 ) {
+        if ( getPerceptronConfiguration().getNeuronQuantityInLayer() == null || getPerceptronConfiguration().getNeuronQuantityInLayer().length < 2 ) {
             throw new IllegalArgumentException("la cantidad de capas es de minimo 2 para un perceptrón (incluyendo entrada y salida)");
         }
         BasicNetwork perceptron = new BasicNetwork();
         ActivationFunction function;
-        perceptron.addLayer(new BasicLayer(null, true, getPerceptronConfiguration().neuronQuantityInLayer[0]));
-        for ( int i = 1; i < getPerceptronConfiguration().neuronQuantityInLayer.length - 1; i++ ) {
-            function = getPerceptronConfiguration().activationFunctionForEncog[i - 1].clone();
-            perceptron.addLayer(new BasicLayer(function, true, getPerceptronConfiguration().neuronQuantityInLayer[i]));
+        perceptron.addLayer(new BasicLayer(null, true, getPerceptronConfiguration().getNeuronQuantityInLayer()[0]));
+        for ( int i = 1; i < getPerceptronConfiguration().getNeuronQuantityInLayer().length - 1; i++ ) {
+            function = getPerceptronConfiguration().getActivationFunctionForEncog()[i - 1].clone();
+            perceptron.addLayer(new BasicLayer(function, true, getPerceptronConfiguration().getNeuronQuantityInLayer()[i]));
         }
-        function = getPerceptronConfiguration().activationFunctionForEncog[getPerceptronConfiguration().neuronQuantityInLayer.length - 2].clone();
+        function = getPerceptronConfiguration().getActivationFunctionForEncog()[getPerceptronConfiguration().getNeuronQuantityInLayer().length - 2].clone();
         perceptron.addLayer(new BasicLayer(function, false,
-                getPerceptronConfiguration().neuronQuantityInLayer[getPerceptronConfiguration().neuronQuantityInLayer.length - 1]));
+                getPerceptronConfiguration().getNeuronQuantityInLayer()[getPerceptronConfiguration().getNeuronQuantityInLayer().length - 1]));
         perceptron.getStructure().finalizeStructure();
         if ( randomized ) {
             perceptron.reset();
@@ -191,14 +191,18 @@ public class EncogExperimentInterface extends INeuralNetworkInterfaceFor2048<Bas
     }
 
     @Override
-    public void loadOrCreatePerceptron(File perceptronFile, boolean randomizedIfNotExist) throws Exception {
-        if ( !perceptronFile.exists() ) {
-            //Si el archivo no existe, creamos un perceptron nuevo inicializado al azar
-            getPerceptronConfiguration().setNeuralNetwork(initializeEncogPerceptron(randomizedIfNotExist));
-            SerializeObject.save(perceptronFile, getPerceptronConfiguration().getNeuralNetwork());
+    public void loadOrCreatePerceptron(File perceptronFile, boolean randomizedIfNotExist, boolean createFile) throws Exception {
+        if ( createFile ) {
+            if ( !perceptronFile.exists() ) {
+                //Si el archivo no existe, creamos un perceptron nuevo inicializado al azar
+                getPerceptronConfiguration().setNeuralNetwork(initializeEncogPerceptron(randomizedIfNotExist));
+                SerializeObject.save(perceptronFile, getPerceptronConfiguration().getNeuralNetwork());
+            } else {
+                //si el archivo existe, lo cargamos como perceptron entrenado al juego
+                getPerceptronConfiguration().setNeuralNetwork((BasicNetwork) SerializeObject.load(perceptronFile));
+            }
         } else {
-            //si el archivo existe, lo cargamos como perceptron entrenado al juego
-            getPerceptronConfiguration().setNeuralNetwork((BasicNetwork) SerializeObject.load(perceptronFile));
+            getPerceptronConfiguration().setNeuralNetwork(initializeEncogPerceptron(randomizedIfNotExist));
         }
     }
 

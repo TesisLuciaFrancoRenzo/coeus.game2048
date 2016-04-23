@@ -31,8 +31,6 @@ import java.io.PrintStream;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -58,6 +56,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
     private double[] alpha;
     private int annealingT;
     private int backupNumber;
+    private boolean[] concurrencyInLayer;
     private long elapsedTime = 0;
     private String experimentName;
     private EExplorationRateAlgorithms explorationRate;
@@ -125,10 +124,18 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
         this.alpha = alpha;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean[] getConcurrencyInLayer() {
         return concurrencyInLayer;
     }
 
+    /**
+     *
+     * @param concurrencyInLayer
+     */
     public void setConcurrencyInLayer(boolean[] concurrencyInLayer) {
         this.concurrencyInLayer = concurrencyInLayer;
     }
@@ -181,8 +188,6 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
     public double getGamma() {
         return gamma;
     }
-    
-    private boolean[] concurrencyInLayer;
 
     /**
      * @param gamma the gamma to set
@@ -236,6 +241,10 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
         this.annealingT = annealingT;
     }
 
+    /**
+     *
+     * @param parallel
+     */
     public void setParallelComputations(boolean parallel) {
         this.parallelComputationsEnabled = parallel;
     }
@@ -409,8 +418,11 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
      *
      * @param experimentPath
      * @param delayPerMove
+     * @param createPerceptronFile
+     *
+     * @throws java.lang.Exception
      */
-    public void start(String experimentPath, int delayPerMove) {
+    public void start(String experimentPath, int delayPerMove, boolean createPerceptronFile) throws Exception {
         File experimentPathFile = new File(experimentPath);
         if ( experimentPathFile.exists() && !experimentPathFile.isDirectory() ) {
             throw new IllegalArgumentException("experimentPath must be a directory");
@@ -418,12 +430,8 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
         if ( !experimentPathFile.exists() ) {
             experimentPathFile.mkdirs();
         }
-        try {
-            initialize();
-            runExperiment(experimentPath, delayPerMove);
-        } catch ( Exception ex ) {
-            Logger.getLogger(LearningExperiment.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        initialize();
+        runExperiment(experimentPath, delayPerMove, createPerceptronFile);
     }
 
     /**
@@ -593,10 +601,11 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
      *
      * @param experimentPath
      * @param delayPerMove   <p>
+     * @param createPerceptronFile
      * @throws Exception
      */
     @SuppressWarnings( "static-access" )
-    protected void runExperiment(String experimentPath, int delayPerMove) throws Exception {
+    protected void runExperiment(String experimentPath, int delayPerMove, boolean createPerceptronFile) throws Exception {
         if ( saveEvery == 0 ) {
             throw new IllegalArgumentException("se debe configurar cada cuanto guardar el perceptron mediante la variable saveEvery");
         }
@@ -645,22 +654,23 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
             zeroNumbers = Integer.toString(this.gamesToPlay / this.saveBackupEvery).length();
         }
 
-        File randomPerceptronFile = new File(filePath + _RANDOM + ".ser");
-
         boolean backupRandomPerceptron = false;
-        if ( !perceptronFile.exists() ) {
-            if ( randomPerceptronFile.exists() ) {
-                randomPerceptronFile.delete();
+        File randomPerceptronFile = null;
+        if ( createPerceptronFile ) {
+            randomPerceptronFile = new File(filePath + _RANDOM + ".ser");
+            if ( !perceptronFile.exists() ) {
+                if ( randomPerceptronFile.exists() ) {
+                    randomPerceptronFile.delete();
+                }
+                backupRandomPerceptron = true;
             }
-            backupRandomPerceptron = true;
         }
-
         //creamos el juego
         Game2048<NeuralNetworkClass> game = new Game2048<>(neuralNetworkInterfaceFor2048.getPerceptronConfiguration(), neuralNetworkInterfaceFor2048.getNTupleConfiguration(), tileToWin, delayPerMove);
 
         // Si hay un perceptron ya entrenado, lo buscamos en el archivo.
         // En caso contrario creamos un perceptron vacio, inicializado al azar
-        neuralNetworkInterfaceFor2048.loadOrCreatePerceptron(perceptronFile, this.initializePerceptronRandomized);
+        neuralNetworkInterfaceFor2048.loadOrCreatePerceptron(perceptronFile, this.initializePerceptronRandomized, createPerceptronFile);
 
         //creamos una interfaz de comunicacion entre la red neuronal de encog y el algoritmo de entrenamiento
         if ( backupRandomPerceptron ) {
@@ -697,8 +707,9 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
             }
 
             //guardamos los progresos en un archivo
-            neuralNetworkInterfaceFor2048.savePerceptron(perceptronFile);
-            //  neuralNetworkInterfaceFor2048.compareNeuralNetworks(randomPerceptronFile, perceptronFile);
+            if ( createPerceptronFile ) {
+                neuralNetworkInterfaceFor2048.savePerceptron(perceptronFile);
+            }
         }
         //cerramos el juego
         game.dispose();
@@ -719,7 +730,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
                 }
             };
             statisticExperiment.setFileName(this.getExperimentName());
-            statisticExperiment.start(experimentPath, delayPerMove);
+            statisticExperiment.start(experimentPath, delayPerMove, createPerceptronFile);
         }
     }
 }

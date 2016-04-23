@@ -81,7 +81,7 @@ public class Experiment_05 extends LearningExperiment<BasicNetwork> {
             experiment.setSimulationsForStatistics(0);
         }
 
-        experiment.start(filePath, 0);
+        experiment.start(filePath, 0, true);
     }
 
     @Override

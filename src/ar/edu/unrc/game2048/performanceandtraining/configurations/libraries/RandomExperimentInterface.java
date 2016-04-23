@@ -63,7 +63,7 @@ public class RandomExperimentInterface extends INeuralNetworkInterfaceFor2048 {
     }
 
     @Override
-    public void loadOrCreatePerceptron(File perceptronFile, boolean randomizedIfNotExist) throws Exception {
+    public void loadOrCreatePerceptron(File perceptronFile, boolean randomizedIfNotExist, boolean createPerceptronFile) throws Exception {
     }
 
     @Override

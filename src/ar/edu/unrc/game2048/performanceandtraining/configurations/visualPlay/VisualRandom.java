@@ -47,7 +47,7 @@ public class VisualRandom extends VisualExperiment {
         LearningExperiment experiment = new Experiment_01();
         VisualRandom game = new VisualRandom(experiment);
 
-        game.start(filePath, 250);
+        game.start(filePath, 250, false);
     }
 
     /**

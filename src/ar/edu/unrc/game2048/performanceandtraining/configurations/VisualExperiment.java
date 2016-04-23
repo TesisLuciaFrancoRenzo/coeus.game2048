@@ -66,8 +66,9 @@ public abstract class VisualExperiment<NeuralNetworkClass> {
      *
      * @param experimentPath
      * @param delayPerMove
+     * @param createPerceptronFile
      */
-    public void start(String experimentPath, int delayPerMove) {
+    public void start(String experimentPath, int delayPerMove, boolean createPerceptronFile) {
         forceStop = false;
         File experimentPathFile = new File(experimentPath);
         if ( experimentPathFile.exists() && !experimentPathFile.isDirectory() ) {
@@ -87,7 +88,7 @@ public abstract class VisualExperiment<NeuralNetworkClass> {
                 this.perceptronConfiguration = null;
             }
             initializeVisual();
-            run(experimentPath, delayPerMove);
+            run(experimentPath, delayPerMove, createPerceptronFile);
         } catch ( Exception ex ) {
             Logger.getLogger(VisualExperiment.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -208,9 +209,10 @@ public abstract class VisualExperiment<NeuralNetworkClass> {
      *
      * @param experimentPath
      * @param delayPerMove   <p>
+     * @param createPerceptronFile
      * @throws Exception
      */
-    protected void run(String experimentPath, int delayPerMove) throws Exception {
+    protected void run(String experimentPath, int delayPerMove, boolean createPerceptronFile) throws Exception {
         System.out.println("Starting " + this.getPerceptronName() + " Visual");
         Game2048<NeuralNetworkClass> game = new Game2048<>(perceptronConfiguration, nTupleConfiuguration, tileToWin, delayPerMove);
         if ( perceptronConfiguration != null || nTupleConfiuguration != null ) {
@@ -227,7 +229,7 @@ public abstract class VisualExperiment<NeuralNetworkClass> {
             if ( !perceptronFile.exists() ) {
                 throw new IllegalArgumentException("perceptron file must exists");
             }
-            this.learningExperiment.getNeuralNetworkInterfaceFor2048().loadOrCreatePerceptron(perceptronFile, true);
+            this.learningExperiment.getNeuralNetworkInterfaceFor2048().loadOrCreatePerceptron(perceptronFile, true, createPerceptronFile);
         }
         while ( !game.iLoose() && !game.iWin() && !forceStop ) {
             this.learningExperiment.getNeuralNetworkInterfaceFor2048().playATurn(game, learningExperiment.getLearningAlgorithm());

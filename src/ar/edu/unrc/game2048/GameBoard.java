@@ -98,8 +98,8 @@ public class GameBoard<NeuralNetworkClass> implements IStatePerceptron, IStateNT
         maxTileNumberValue = 0;
         //inicializamos el tablero para su traduccion a las entradas de la red neuronal
         if ( game.getPerceptronConfiguration() != null ) {
-            normalizedPerceptronInput = new ArrayList<>(game.getPerceptronConfiguration().neuronQuantityInLayer[0]);
-            for ( int i = 0; i < game.getPerceptronConfiguration().neuronQuantityInLayer[0]; i++ ) {
+            normalizedPerceptronInput = new ArrayList<>(game.getPerceptronConfiguration().getNeuronQuantityInLayer()[0]);
+            for ( int i = 0; i < game.getPerceptronConfiguration().getNeuronQuantityInLayer()[0]; i++ ) {
                 normalizedPerceptronInput.add(null);
             }
         } else {
@@ -384,8 +384,8 @@ public class GameBoard<NeuralNetworkClass> implements IStatePerceptron, IStateNT
 
     @Override
     public Double translateToPerceptronInput(int neuronIndex) {
-        if ( neuronIndex < 0 || neuronIndex >= getGame().getPerceptronConfiguration().neuronQuantityInLayer[0] ) {
-            throw new IllegalArgumentException("neuronIndex range for output layer must be [0," + getGame().getPerceptronConfiguration().neuronQuantityInLayer[0] + "] but was " + neuronIndex);
+        if ( neuronIndex < 0 || neuronIndex >= getGame().getPerceptronConfiguration().getNeuronQuantityInLayer()[0] ) {
+            throw new IllegalArgumentException("neuronIndex range for output layer must be [0," + getGame().getPerceptronConfiguration().getNeuronQuantityInLayer()[0] + "] but was " + neuronIndex);
         }
         return normalizedPerceptronInput.get(neuronIndex);
     }

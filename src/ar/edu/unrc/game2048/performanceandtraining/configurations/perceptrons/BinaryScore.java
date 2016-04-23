@@ -59,7 +59,6 @@ public class BinaryScore<NeuralNetworkClass> extends PerceptronConfiguration2048
         neuronQuantityInLayer[2] = 1;
 
         this.activationFunctionForEncog = new ActivationFunction[2];
-
         activationFunctionForEncog[0] = new ActivationTANH();
         activationFunctionForEncog[1] = new ActivationTANH();
 
@@ -74,7 +73,6 @@ public class BinaryScore<NeuralNetworkClass> extends PerceptronConfiguration2048
      *
      * @param board
      * @param normalizedPerceptronInput <p>
-     * @return
      */
     @Override
     public void calculateNormalizedPerceptronInput(GameBoard<NeuralNetworkClass> board, List<Double> normalizedPerceptronInput) {
@@ -95,7 +93,7 @@ public class BinaryScore<NeuralNetworkClass> extends PerceptronConfiguration2048
                 currentNeuron++;
             }
         }
-        assert currentNeuron == this.neuronQuantityInLayer[0];
+        assert currentNeuron == this.getNeuronQuantityInLayer()[0];
     }
 
     @Override

@@ -29,10 +29,6 @@ import org.encog.util.arrayutil.NormalizedField;
  */
 public abstract class PerceptronConfiguration2048<NeuralNetworkClass> implements Cloneable, IConfiguration2048 {
 
-    /**
-     *
-     */
-    public ActivationFunction[] activationFunctionForEncog;
 
     /**
      *
@@ -43,10 +39,6 @@ public abstract class PerceptronConfiguration2048<NeuralNetworkClass> implements
      *
      */
     public double activationFunctionMin;
-    /**
-     *
-     */
-    public int[] neuronQuantityInLayer;
 
     /**
      *
@@ -60,6 +52,14 @@ public abstract class PerceptronConfiguration2048<NeuralNetworkClass> implements
 
     //fin de la configuracion de la red neuronal
     private NeuralNetworkClass neuralNetwork;
+    /**
+     *
+     */
+    protected ActivationFunction[] activationFunctionForEncog;
+    /**
+     *
+     */
+    protected int[] neuronQuantityInLayer;
 
     /**
      *
@@ -82,6 +82,20 @@ public abstract class PerceptronConfiguration2048<NeuralNetworkClass> implements
     public abstract Double computeNumericRepresentationFor(Game2048 game, Object[] output);
 
     /**
+     * @return the activationFunctionForEncog
+     */
+    public ActivationFunction[] getActivationFunctionForEncog() {
+        return activationFunctionForEncog;
+    }
+
+    /**
+     * @param activationFunctionForEncog the activationFunctionForEncog to set
+     */
+    public void setActivationFunctionForEncog(ActivationFunction[] activationFunctionForEncog) {
+        this.activationFunctionForEncog = activationFunctionForEncog;
+    }
+
+    /**
      * @return the neuralNetwork
      */
     public NeuralNetworkClass getNeuralNetwork() {
@@ -93,6 +107,20 @@ public abstract class PerceptronConfiguration2048<NeuralNetworkClass> implements
      */
     public void setNeuralNetwork(NeuralNetworkClass neuralNetwork) {
         this.neuralNetwork = neuralNetwork;
+    }
+
+    /**
+     * @return the neuronQuantityInLayer
+     */
+    public int[] getNeuronQuantityInLayer() {
+        return neuronQuantityInLayer;
+    }
+
+    /**
+     * @param neuronQuantityInLayer the neuronQuantityInLayer to set
+     */
+    public void setNeuronQuantityInLayer(int[] neuronQuantityInLayer) {
+        this.neuronQuantityInLayer = neuronQuantityInLayer;
     }
 
 }

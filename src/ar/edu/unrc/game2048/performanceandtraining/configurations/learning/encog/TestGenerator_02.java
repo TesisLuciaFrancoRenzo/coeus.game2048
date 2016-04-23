@@ -22,6 +22,8 @@ import ar.edu.unrc.game2048.performanceandtraining.configurations.LearningExperi
 import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -43,8 +45,10 @@ public class TestGenerator_02 {
      * @param gamesToPlayPerThreadForStatistics
      * @param simulationsForStatistics
      * @param filePath
+     *
+     * @throws java.lang.Exception
      */
-    public static void configAndExcecute(LearningExperiment experiment, boolean statisticsOnly, boolean runStatisticForRandom, boolean runStatisticsForBackups, boolean createLogs, double lambda, double alpha, int gamesToPlay, int saveEvery, int gamesToPlayPerThreadForStatistics, int simulationsForStatistics, String filePath) {
+    public static void configAndExcecute(LearningExperiment experiment, boolean statisticsOnly, boolean runStatisticForRandom, boolean runStatisticsForBackups, boolean createLogs, double lambda, double alpha, int gamesToPlay, int saveEvery, int gamesToPlayPerThreadForStatistics, int simulationsForStatistics, String filePath) throws Exception {
         experiment.setStatisticsOnly(statisticsOnly);
         experiment.setRunStatisticForRandom(runStatisticForRandom);
         experiment.setRunStatisticsForBackups(runStatisticsForBackups);
@@ -59,7 +63,7 @@ public class TestGenerator_02 {
         experiment.setSaveBackupEvery(saveEvery);
         experiment.setGamesToPlayPerThreadForStatistics(gamesToPlayPerThreadForStatistics);
         experiment.setSimulationsForStatistics(simulationsForStatistics);
-        experiment.start(filePath, 0);
+        experiment.start(filePath, 0, true);
     }
 
     /**
@@ -167,8 +171,12 @@ public class TestGenerator_02 {
     public static void runAllConfigs(String experimentName, LearningExperiment experiment, List<Double> alphaList, List<Double> lambdaList, boolean statisticsOnly, boolean runStatisticForRandom, boolean runStatisticsForBackups, boolean createLogs, int gamesToPlay, int saveEvery, int gamesToPlayPerThreadForStatistics, int simulationsForStatistics, String filePath) {
         alphaList.stream().forEach((alpha) -> {
             lambdaList.stream().forEach((lambda) -> {
-                experiment.setExperimentName(experimentName + "-alpha_" + alpha + "-lambda_" + lambda);
-                configAndExcecute(experiment, statisticsOnly, runStatisticForRandom, runStatisticsForBackups, createLogs, lambda, alpha, gamesToPlay, saveEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, filePath);
+                try {
+                    experiment.setExperimentName(experimentName + "-alpha_" + alpha + "-lambda_" + lambda);
+                    configAndExcecute(experiment, statisticsOnly, runStatisticForRandom, runStatisticsForBackups, createLogs, lambda, alpha, gamesToPlay, saveEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, filePath);
+                } catch ( Exception ex ) {
+                    Logger.getLogger(TestGenerator_02.class.getName()).log(Level.SEVERE, null, ex);
+                }
             });
         });
     }
