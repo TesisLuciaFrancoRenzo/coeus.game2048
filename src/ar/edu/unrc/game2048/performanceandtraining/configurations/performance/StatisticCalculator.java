@@ -22,19 +22,18 @@ public class StatisticCalculator {
         experiment = new ArrayList<>(defaultCapacity);
     }
 
+    /**
+     *
+     * @param miliseconds
+     */
     public void addSample(double miliseconds) {
         experiment.add(miliseconds);
     }
 
-    @Override
-    public String toString() {
-        StringBuilder output = new StringBuilder();
-        experiment.stream().forEach((sample) -> {
-            output.append(sample).append("\t");
-        });
-        return output.toString();
-    }
-
+    /**
+     *
+     * @return
+     */
     public String computeBasicStatistics() {
         if ( experiment.isEmpty() ) {
             throw new IllegalStateException("la cantidad de experimentos no debe ser vacia");
@@ -54,4 +53,14 @@ public class StatisticCalculator {
         avg = avg / (experiment.size() * 1d);
         return "Promedio: " + avg + "ms. Minimo: " + min + "ms. Máximo: " + max + "ms.";
     }
+
+    @Override
+    public String toString() {
+        StringBuilder output = new StringBuilder();
+        experiment.stream().forEach((sample) -> {
+            output.append(sample).append("\t");
+        });
+        return output.toString();
+    }
+
 }

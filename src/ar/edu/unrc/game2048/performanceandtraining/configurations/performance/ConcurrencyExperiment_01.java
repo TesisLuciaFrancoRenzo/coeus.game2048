@@ -75,6 +75,9 @@ public class ConcurrencyExperiment_01 extends LearningExperiment<BasicNetwork> {
      */
     public static String filePath;
 
+    /**
+     *
+     */
     public static StringBuilder outputResults;
 
     /**
@@ -189,6 +192,7 @@ public class ConcurrencyExperiment_01 extends LearningExperiment<BasicNetwork> {
 
     /**
      *
+     * @param bestPossibleStats
      * @return tiempo demorado en entrenar en milisegundos
      *
      * @throws Exception

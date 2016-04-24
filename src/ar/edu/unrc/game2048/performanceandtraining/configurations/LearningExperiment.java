@@ -57,16 +57,11 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
     private double[] alpha;
     private int annealingT;
 
-    public double getAvgBestPissibleActionTimes() {
-        return avgBestPissibleActionTimes;
-    }
-
-    public double getAvgTrainingTimes() {
-        return avgTrainingTimes;
-    }
     private double avgBestPissibleActionTimes;
     private double avgTrainingTimes;
     private int backupNumber;
+    private LinkedList<Double> bestPissibleActionTimes;
+    private boolean computeBestPosibleActionConcurrently = false;
     private boolean[] concurrencyInLayer;
     private long elapsedTime = 0;
     private String experimentName;
@@ -85,7 +80,6 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
     private ELearningRateAdaptation learningRateAdaptation;
     private boolean logsActivated = false;
     private INeuralNetworkInterfaceFor2048<NeuralNetworkClass> neuralNetworkInterfaceFor2048;
-    private boolean computeBestPosibleActionConcurrently = false;
     private String perceptronName;
     private boolean resetEligibilitiTraces = false;
     private boolean runStatisticForRandom = false;
@@ -95,6 +89,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
     private int simulationsForStatistics;
     private boolean statisticsOnly = false;
     private int tileToWin;
+    private LinkedList<Double> trainingTimes;
 
     /**
      *
@@ -133,6 +128,29 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
      */
     public void setAlpha(double[] alpha) {
         this.alpha = alpha;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public double getAvgBestPissibleActionTimes() {
+        return avgBestPissibleActionTimes;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public double getAvgTrainingTimes() {
+        return avgTrainingTimes;
+    }
+    /**
+     *
+     * @param parallel
+     */
+    public void setComputeBestPosibleActionConcurrently(boolean parallel) {
+        this.computeBestPosibleActionConcurrently = parallel;
     }
 
     /**
@@ -252,13 +270,6 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
         this.annealingT = annealingT;
     }
 
-    /**
-     *
-     * @param parallel
-     */
-    public void setComputeBestPosibleActionConcurrently(boolean parallel) {
-        this.computeBestPosibleActionConcurrently = parallel;
-    }
 
     /**
      * @return the perceptronName
@@ -537,8 +548,6 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
         }
     }
 
-    private LinkedList<Double> trainingTimes;
-    private LinkedList<Double> bestPissibleActionTimes;
 
     /**
      * @return the annealingT
