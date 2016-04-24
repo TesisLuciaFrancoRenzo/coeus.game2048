@@ -96,9 +96,10 @@ public class ConcurrencyTimes extends LearningExperiment<BasicNetwork> {
                 currentConfig = new Config();
 
                 currentConfig.concurrencyInLayer = new boolean[innerLayerQuantity + 2];
-                for ( int i = 0; i < innerLayerQuantity + 2; i++ ) {
+                for ( int i = 0; i < innerLayerQuantity + 1; i++ ) {
                     currentConfig.concurrencyInLayer[i] = concurrency;
                 }
+                currentConfig.concurrencyInLayer[currentConfig.concurrencyInLayer.length - 1] = false;
 
                 currentConfig.alphas = new double[innerLayerQuantity + 1];
                 for ( int i = 0; i < innerLayerQuantity + 1; i++ ) {
