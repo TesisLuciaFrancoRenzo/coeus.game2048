@@ -74,7 +74,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
     private ELearningRateAdaptation learningRateAdaptation;
     private boolean logsActivated = false;
     private INeuralNetworkInterfaceFor2048<NeuralNetworkClass> neuralNetworkInterfaceFor2048;
-    private boolean parallelComputationsEnabled = false;
+    private boolean computeBestPosibleActionConcurrently = false;
     private String perceptronName;
     private boolean resetEligibilitiTraces = false;
     private boolean runStatisticForRandom = false;
@@ -245,8 +245,8 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
      *
      * @param parallel
      */
-    public void setParallelComputations(boolean parallel) {
-        this.parallelComputationsEnabled = parallel;
+    public void setComputeBestPosibleActionConcurrently(boolean parallel) {
+        this.computeBestPosibleActionConcurrently = parallel;
     }
 
     /**
@@ -600,8 +600,9 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
     /**
      *
      * @param experimentPath
-     * @param delayPerMove   <p>
+     * @param delayPerMove         <p>
      * @param createPerceptronFile
+     *
      * @throws Exception
      */
     @SuppressWarnings( "static-access" )
@@ -689,7 +690,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
             throw new IllegalArgumentException("learningAlgorithm no puede ser null");
         }
 
-        this.learningAlgorithm.setComputeParallelBestPossibleAction(parallelComputationsEnabled);
+        this.learningAlgorithm.setComputeParallelBestPossibleAction(computeBestPosibleActionConcurrently);
 
         System.out.println("Training...");
 

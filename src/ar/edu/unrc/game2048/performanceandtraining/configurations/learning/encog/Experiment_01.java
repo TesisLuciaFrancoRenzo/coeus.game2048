@@ -57,6 +57,7 @@ public class Experiment_01 extends LearningExperiment<BasicNetwork> {
         experiment.setAlpha(alphas);
         experiment.setConcurrencyInLayer(concurrentLayer);
         experiment.setLearningRateAdaptationToAnnealing(500_000);
+        experiment.setComputeBestPosibleActionConcurrently(true);
         experiment.setLambda(0.7);
         experiment.setGamma(1);
         experiment.setExplorationRateToFixed(0.1);

@@ -196,6 +196,7 @@ public class ConcurrencyTimes extends LearningExperiment<BasicNetwork> {
         experiment.setSaveEvery(10_000); //no se guarda nada
         experiment.setSaveBackupEvery(10_000); //no se hacen backup
         experiment.setInitializePerceptronRandomized(false);
+        experiment.setComputeBestPosibleActionConcurrently(false);
 
         experiment.createLogs(false);
         experiment.setStatisticsOnly(false);
