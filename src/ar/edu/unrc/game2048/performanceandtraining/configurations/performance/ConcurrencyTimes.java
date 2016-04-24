@@ -126,12 +126,10 @@ public class ConcurrencyTimes extends LearningExperiment<BasicNetwork> {
                 int samples = 0;
                 for ( int i = 1; i <= SAMPLES_PER_EXPERIMENT; i++ ) {
                     System.out.println("Calculo de muestra N" + i);
-                    double time = System.currentTimeMillis();
-                    startStatistics();
-                    time = System.currentTimeMillis() - time;
-                    System.out.println("Final de Calculo de muestra N" + i + " - demoró " + time + "ms");
+                    double trainingTime = startStatistics();
+                    System.out.println("Final de Calculo de muestra N" + i + " - demoró " + trainingTime + "ms");
                     samples++;
-                    avgTime += time;
+                    avgTime += trainingTime;
                 }
                 avgTime = avgTime / (samples * 1_000d);
 
@@ -161,10 +159,10 @@ public class ConcurrencyTimes extends LearningExperiment<BasicNetwork> {
             statisticResults = new HashMap<>();
 
             SAMPLES_PER_EXPERIMENT = 10;
-            GAMES_TO_PLAY = 50;
+            GAMES_TO_PLAY = 40;
             MAX_INNER_LAYERS = 2;
             MAX_NEURON_QUANTITY = 9;
-            MIN_NEURON_QUANTITY = 5;
+            MIN_NEURON_QUANTITY = 2;
 
             experimentSet(false);
             experimentSet(true);
@@ -181,9 +179,11 @@ public class ConcurrencyTimes extends LearningExperiment<BasicNetwork> {
 
     /**
      *
+     * @return tiempo demorado en entrenar
+     *
      * @throws Exception
      */
-    public static void startStatistics() throws Exception {
+    public static double startStatistics() throws Exception {
         LearningExperiment experiment = new ConcurrencyTimes();
         experiment.setAlpha(currentConfig.alphas);
         experiment.setConcurrencyInLayer(currentConfig.concurrencyInLayer);
@@ -204,8 +204,7 @@ public class ConcurrencyTimes extends LearningExperiment<BasicNetwork> {
         experiment.setRunStatisticsForBackups(false);
         experiment.setGamesToPlayPerThreadForStatistics(0);
         experiment.setSimulationsForStatistics(0);
-
-        experiment.start(filePath, 0, false);
+        return experiment.start(filePath, 0, false);
     }
 
     @Override

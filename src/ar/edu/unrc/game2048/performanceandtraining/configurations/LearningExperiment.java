@@ -420,9 +420,11 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
      * @param delayPerMove
      * @param createPerceptronFile
      *
+     * @return tiempo demorado en entrenar
+     *
      * @throws java.lang.Exception
      */
-    public void start(String experimentPath, int delayPerMove, boolean createPerceptronFile) throws Exception {
+    public double start(String experimentPath, int delayPerMove, boolean createPerceptronFile) throws Exception {
         File experimentPathFile = new File(experimentPath);
         if ( experimentPathFile.exists() && !experimentPathFile.isDirectory() ) {
             throw new IllegalArgumentException("experimentPath must be a directory");
@@ -431,7 +433,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
             experimentPathFile.mkdirs();
         }
         initialize();
-        runExperiment(experimentPath, delayPerMove, createPerceptronFile);
+        return runExperiment(experimentPath, delayPerMove, createPerceptronFile);
     }
 
     /**
@@ -603,16 +605,19 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
      * @param delayPerMove         <p>
      * @param createPerceptronFile
      *
+     * @return tiempo que demoro en entrenar
+     *
      * @throws Exception
      */
     @SuppressWarnings( "static-access" )
-    protected void runExperiment(String experimentPath, int delayPerMove, boolean createPerceptronFile) throws Exception {
+    protected double runExperiment(String experimentPath, int delayPerMove, boolean createPerceptronFile) throws Exception {
         if ( saveEvery == 0 ) {
             throw new IllegalArgumentException("se debe configurar cada cuanto guardar el perceptron mediante la variable saveEvery");
         }
         if ( saveBackupEvery == 0 ) {
             throw new IllegalArgumentException("se debe configurar cada cuanto guardar backups del perceptron mediante la variable saveBackupEvery");
         }
+        double time = 0; //para medir el timepo que demoro en entrenar
         SimpleDateFormat dateFormater = new SimpleDateFormat("dd-MM-yyyy_HH'h'mm'm'ss's'");
         Date now = new Date();
 
@@ -699,6 +704,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
 
         if ( !this.statisticsOnly ) {
             //comenzamos a entrenar y guardar estadisticas en el archivo de log
+            time = System.currentTimeMillis();
             if ( logsActivated ) {
                 try ( PrintStream printStream = new PrintStream(logFile, "UTF-8") ) {
                     training(game, printStream, randomPerceptronFile, perceptronFile, configFile, filePath, dateFormater, now, zeroNumbers);
@@ -706,7 +712,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
             } else {
                 training(game, null, randomPerceptronFile, perceptronFile, configFile, filePath, dateFormater, now, zeroNumbers);
             }
-
+            time = System.currentTimeMillis() - time;
             //guardamos los progresos en un archivo
             if ( createPerceptronFile ) {
                 neuralNetworkInterfaceFor2048.savePerceptron(perceptronFile);
@@ -733,5 +739,6 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
             statisticExperiment.setFileName(this.getExperimentName());
             statisticExperiment.start(experimentPath, delayPerMove, createPerceptronFile);
         }
+        return time;
     }
 }
