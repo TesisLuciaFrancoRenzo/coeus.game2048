@@ -161,7 +161,7 @@ public class ConcurrencyTimes extends LearningExperiment<BasicNetwork> {
             statisticResults = new HashMap<>();
 
             SAMPLES_PER_EXPERIMENT = 10;
-            GAMES_TO_PLAY = 100;
+            GAMES_TO_PLAY = 50;
             MAX_INNER_LAYERS = 2;
             MAX_NEURON_QUANTITY = 9;
             MIN_NEURON_QUANTITY = 5;
