@@ -624,9 +624,11 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
         System.out.println("Starting " + this.getPerceptronName() + " Trainer");
 
         String dirPath = createPathToDir(experimentPath);
-        File dirPathFile = new File(dirPath);
-        if ( !dirPathFile.exists() ) {
-            dirPathFile.mkdirs();
+        if ( createPerceptronFile ) {
+            File dirPathFile = new File(dirPath);
+            if ( !dirPathFile.exists() ) {
+                dirPathFile.mkdirs();
+            }
         }
         String filePath = dirPath + perceptronName;
         File perceptronFile = new File(filePath + _TRAINED + ".ser");
