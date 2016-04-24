@@ -174,10 +174,10 @@ public class ConcurrencyExperiment_01 extends LearningExperiment<BasicNetwork> {
                 output.mkdirs();
             }
 
-            SAMPLES_PER_EXPERIMENT = 5;
-            GAMES_TO_PLAY = 40;
-            MAX_INNER_LAYERS = 2;
-            MAX_NEURON_QUANTITY = 9;
+            SAMPLES_PER_EXPERIMENT = 10;
+            GAMES_TO_PLAY = 50;
+            MAX_INNER_LAYERS = 1;
+            MAX_NEURON_QUANTITY = 10;
             MIN_NEURON_QUANTITY = 2;
 
             outputResults = new StringBuilder();
@@ -193,7 +193,6 @@ public class ConcurrencyExperiment_01 extends LearningExperiment<BasicNetwork> {
     /**
      *
      * @param bestPossibleStats
-     * @return tiempo demorado en entrenar en milisegundos
      *
      * @throws Exception
      */
