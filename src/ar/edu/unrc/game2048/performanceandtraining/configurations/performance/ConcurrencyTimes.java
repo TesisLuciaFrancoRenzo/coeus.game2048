@@ -126,7 +126,7 @@ public class ConcurrencyTimes extends LearningExperiment<BasicNetwork> {
                 int samples = 0;
                 for ( int i = 1; i <= SAMPLES_PER_EXPERIMENT; i++ ) {
                     System.out.println("Calculo de muestra N" + i);
-                    double trainingTime = startStatistics();
+                    long trainingTime = startStatistics();
                     System.out.println("Final de Calculo de muestra N" + i + " - demoró " + trainingTime + "ms");
                     samples++;
                     avgTime += trainingTime;
@@ -179,11 +179,11 @@ public class ConcurrencyTimes extends LearningExperiment<BasicNetwork> {
 
     /**
      *
-     * @return tiempo demorado en entrenar
+     * @return tiempo demorado en entrenar en milisegundos
      *
      * @throws Exception
      */
-    public static double startStatistics() throws Exception {
+    public static long startStatistics() throws Exception {
         LearningExperiment experiment = new ConcurrencyTimes();
         experiment.setAlpha(currentConfig.alphas);
         experiment.setConcurrencyInLayer(currentConfig.concurrencyInLayer);

@@ -420,11 +420,11 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
      * @param delayPerMove
      * @param createPerceptronFile
      *
-     * @return tiempo demorado en entrenar
+     * @return tiempo demorado en entrenar, en milisegundos
      *
      * @throws java.lang.Exception
      */
-    public double start(String experimentPath, int delayPerMove, boolean createPerceptronFile) throws Exception {
+    public long start(String experimentPath, int delayPerMove, boolean createPerceptronFile) throws Exception {
         File experimentPathFile = new File(experimentPath);
         if ( experimentPathFile.exists() && !experimentPathFile.isDirectory() ) {
             throw new IllegalArgumentException("experimentPath must be a directory");
@@ -605,19 +605,19 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
      * @param delayPerMove         <p>
      * @param createPerceptronFile
      *
-     * @return tiempo que demoro en entrenar
+     * @return tiempo que demoro en entrenar, en milisegundos
      *
      * @throws Exception
      */
     @SuppressWarnings( "static-access" )
-    protected double runExperiment(String experimentPath, int delayPerMove, boolean createPerceptronFile) throws Exception {
+    protected long runExperiment(String experimentPath, int delayPerMove, boolean createPerceptronFile) throws Exception {
         if ( saveEvery == 0 ) {
             throw new IllegalArgumentException("se debe configurar cada cuanto guardar el perceptron mediante la variable saveEvery");
         }
         if ( saveBackupEvery == 0 ) {
             throw new IllegalArgumentException("se debe configurar cada cuanto guardar backups del perceptron mediante la variable saveBackupEvery");
         }
-        double time = 0; //para medir el timepo que demoro en entrenar
+        long time = 0; //para medir el timepo que demoro en entrenar
         SimpleDateFormat dateFormater = new SimpleDateFormat("dd-MM-yyyy_HH'h'mm'm'ss's'");
         Date now = new Date();
 
