@@ -120,26 +120,34 @@ public class ConcurrencyExperiment_01 extends LearningExperiment<BasicNetwork> {
                 System.out.println(currentConfig.toString());
                 System.out.println("========================================================");
 
-                StatisticCalculator stats = new StatisticCalculator(SAMPLES_PER_EXPERIMENT);
+                StatisticCalculator trainingStats = new StatisticCalculator(SAMPLES_PER_EXPERIMENT);
+                StatisticCalculator bestPossibleStats = new StatisticCalculator(SAMPLES_PER_EXPERIMENT);
+                long time;
                 for ( int i = 1; i <= SAMPLES_PER_EXPERIMENT; i++ ) {
                     System.out.println("Calculo de muestra N" + i);
-                    long trainingTime = startStatistics();
-                    stats.addSample(trainingTime);
-                    System.out.println("Final de Calculo de muestra N" + i + " - demoró " + trainingTime + "ms");
+                    time = System.currentTimeMillis();
+                    startStatistics(trainingStats, bestPossibleStats);
+                    time = System.currentTimeMillis() - time;
+                    System.out.println("Final de Calculo de muestra N" + i + " - demoró " + time + "ms");
                 }
-                String results = stats.computeBasicStatistics();
-                String forSave = stats.toString();
+                String resultsTraining = trainingStats.computeBasicStatistics();
+                String forSaveTraining = trainingStats.toString();
+                String resultsBestPossible = bestPossibleStats.computeBasicStatistics();
+                String forSaveBestPossible = bestPossibleStats.toString();
 
                 System.out.println("====================================");
                 System.out.println("Fin Experimento:");
                 System.out.println(currentConfig.toString());
-                System.out.println("** DEMORÓ => " + results);
+                System.out.println("** Training DEMORÓ => " + resultsTraining);
+                System.out.println("** Best Possible Action DEMORÓ => " + resultsBestPossible);
                 System.out.println("====================================");
 
                 outputResults.append("====================================\n");
                 outputResults.append(currentConfig.toString()).append("\n");
-                outputResults.append("muestras => ").append(forSave).append("\n");
-                outputResults.append("resultados => ").append(results).append("\n");
+                outputResults.append("muestras Training => ").append(forSaveTraining).append("\n");
+                outputResults.append("resultados Training => ").append(resultsTraining).append("\n");
+                outputResults.append("muestras Best Possible Action => ").append(forSaveBestPossible).append("\n");
+                outputResults.append("resultados Best Possible Action => ").append(resultsBestPossible).append("\n");
             }
         }
     }
@@ -163,8 +171,8 @@ public class ConcurrencyExperiment_01 extends LearningExperiment<BasicNetwork> {
                 output.mkdirs();
             }
 
-            SAMPLES_PER_EXPERIMENT = 10;
-            GAMES_TO_PLAY = 10;
+            SAMPLES_PER_EXPERIMENT = 5;
+            GAMES_TO_PLAY = 40;
             MAX_INNER_LAYERS = 2;
             MAX_NEURON_QUANTITY = 9;
             MIN_NEURON_QUANTITY = 2;
@@ -185,7 +193,7 @@ public class ConcurrencyExperiment_01 extends LearningExperiment<BasicNetwork> {
      *
      * @throws Exception
      */
-    public static long startStatistics() throws Exception {
+    public static void startStatistics(StatisticCalculator trainingStats, StatisticCalculator bestPossibleStats) throws Exception {
         LearningExperiment experiment = new ConcurrencyExperiment_01();
         experiment.setAlpha(currentConfig.alphas);
         experiment.setConcurrencyInLayer(currentConfig.concurrencyInLayer);
@@ -206,7 +214,10 @@ public class ConcurrencyExperiment_01 extends LearningExperiment<BasicNetwork> {
         experiment.setRunStatisticsForBackups(false);
         experiment.setGamesToPlayPerThreadForStatistics(0);
         experiment.setSimulationsForStatistics(0);
-        return experiment.start(filePath, 0, false);
+        experiment.start(filePath, 0, false);
+
+        bestPossibleStats.addSample(experiment.getAvgBestPissibleActionTimes());
+        trainingStats.addSample(experiment.getAvgTrainingTimes());
     }
 
     @Override
@@ -229,7 +240,7 @@ public class ConcurrencyExperiment_01 extends LearningExperiment<BasicNetwork> {
      */
     @Override
     public TDLambdaLearning instanceOfTdLearninrgImplementation(IPerceptronInterface perceptronInterface) {
-        return new TDLambdaLearningAfterstate(perceptronInterface, getAlpha(), getLambda(), getGamma(), getConcurrencyInLayer(), isResetEligibilitiTraces());
+        return new TDLambdaLearningAfterstate(perceptronInterface, getAlpha(), getLambda(), getGamma(), getConcurrencyInLayer(), isResetEligibilitiTraces(), true);
     }
 
     @Override

@@ -31,6 +31,7 @@ import java.io.PrintStream;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.LinkedList;
 
 /**
  *
@@ -55,6 +56,16 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
     public static final String _TRAINED = "_trained";
     private double[] alpha;
     private int annealingT;
+
+    public double getAvgBestPissibleActionTimes() {
+        return avgBestPissibleActionTimes;
+    }
+
+    public double getAvgTrainingTimes() {
+        return avgTrainingTimes;
+    }
+    private double avgBestPissibleActionTimes;
+    private double avgTrainingTimes;
     private int backupNumber;
     private boolean[] concurrencyInLayer;
     private long elapsedTime = 0;
@@ -420,11 +431,9 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
      * @param delayPerMove
      * @param createPerceptronFile
      *
-     * @return tiempo demorado en entrenar, en milisegundos
-     *
      * @throws java.lang.Exception
      */
-    public long start(String experimentPath, int delayPerMove, boolean createPerceptronFile) throws Exception {
+    public void start(String experimentPath, int delayPerMove, boolean createPerceptronFile) throws Exception {
         File experimentPathFile = new File(experimentPath);
         if ( experimentPathFile.exists() && !experimentPathFile.isDirectory() ) {
             throw new IllegalArgumentException("experimentPath must be a directory");
@@ -433,7 +442,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
             experimentPathFile.mkdirs();
         }
         initialize();
-        return runExperiment(experimentPath, delayPerMove, createPerceptronFile);
+        runExperiment(experimentPath, delayPerMove, createPerceptronFile);
     }
 
     /**
@@ -477,10 +486,31 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
             }
         }
 
+        if ( learningAlgorithm.canCollectStatistics() ) {
+            bestPissibleActionTimes = new LinkedList<>();
+            trainingTimes = new LinkedList<>();
+        }
+
         for ( int i = lastSavedGamePlayedNumber + 1; i <= gamesToPlay; i++ ) {
             long start = System.nanoTime();
             learningAlgorithm.solveAndTrainOnce(game, i);
             elapsedTime += System.nanoTime() - start;
+
+            if ( learningAlgorithm.canCollectStatistics() ) {
+                double avg = 0;
+                for ( Long sample : learningAlgorithm.getBestPissibleActionTimes() ) {
+                    avg += sample;
+                }
+                avg = avg / (learningAlgorithm.getBestPissibleActionTimes().size() * 1d);
+                bestPissibleActionTimes.add(avg);
+
+                avg = 0;
+                for ( Long sample : learningAlgorithm.getTrainingTimes() ) {
+                    avg += sample;
+                }
+                avg = avg / (learningAlgorithm.getTrainingTimes().size() * 1d);
+                trainingTimes.add(avg);
+            }
 
             int percent = (int) (((i * 1d) / (gamesToPlay * 1d)) * 100d);
             System.out.println("Juego número " + i + " (" + percent + "%)    puntaje = " + game.getScore() + "    ficha max = " + game.getMaxNumber() + "    turno alcanzado = " + game.getLastTurn() + "      current alpha = " + Arrays.toString(learningAlgorithm.getCurrentAlpha()));
@@ -506,6 +536,9 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
             }
         }
     }
+
+    private LinkedList<Double> trainingTimes;
+    private LinkedList<Double> bestPissibleActionTimes;
 
     /**
      * @return the annealingT
@@ -605,12 +638,10 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
      * @param delayPerMove         <p>
      * @param createPerceptronFile
      *
-     * @return tiempo que demoro en entrenar, en milisegundos
-     *
      * @throws Exception
      */
     @SuppressWarnings( "static-access" )
-    protected long runExperiment(String experimentPath, int delayPerMove, boolean createPerceptronFile) throws Exception {
+    protected void runExperiment(String experimentPath, int delayPerMove, boolean createPerceptronFile) throws Exception {
         if ( saveEvery == 0 ) {
             throw new IllegalArgumentException("se debe configurar cada cuanto guardar el perceptron mediante la variable saveEvery");
         }
@@ -706,7 +737,6 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
 
         if ( !this.statisticsOnly ) {
             //comenzamos a entrenar y guardar estadisticas en el archivo de log
-            time = System.currentTimeMillis();
             if ( logsActivated ) {
                 try ( PrintStream printStream = new PrintStream(logFile, "UTF-8") ) {
                     training(game, printStream, randomPerceptronFile, perceptronFile, configFile, filePath, dateFormater, now, zeroNumbers);
@@ -714,7 +744,19 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
             } else {
                 training(game, null, randomPerceptronFile, perceptronFile, configFile, filePath, dateFormater, now, zeroNumbers);
             }
-            time = System.currentTimeMillis() - time;
+            if ( learningAlgorithm.canCollectStatistics() ) {
+                avgBestPissibleActionTimes = 0d;
+                for ( Double sample : this.bestPissibleActionTimes ) {
+                    avgBestPissibleActionTimes += sample;
+                }
+                avgBestPissibleActionTimes = avgBestPissibleActionTimes / (this.bestPissibleActionTimes.size() * 1d);
+
+                avgTrainingTimes = 0d;
+                for ( Double sample : this.trainingTimes ) {
+                    avgTrainingTimes += sample;
+                }
+                avgTrainingTimes = avgTrainingTimes / (this.trainingTimes.size() * 1d);
+            }
             //guardamos los progresos en un archivo
             if ( createPerceptronFile ) {
                 neuralNetworkInterfaceFor2048.savePerceptron(perceptronFile);
@@ -741,6 +783,5 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
             statisticExperiment.setFileName(this.getExperimentName());
             statisticExperiment.start(experimentPath, delayPerMove, createPerceptronFile);
         }
-        return time;
     }
 }

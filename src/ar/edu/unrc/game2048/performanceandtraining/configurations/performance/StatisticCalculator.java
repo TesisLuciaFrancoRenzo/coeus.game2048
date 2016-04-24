@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 public class StatisticCalculator {
 
-    private ArrayList<Long> experiment;
+    private ArrayList<Double> experiment;
 
     /**
      * @param defaultCapacity solo para inicializar variables internas
@@ -22,7 +22,7 @@ public class StatisticCalculator {
         experiment = new ArrayList<>(defaultCapacity);
     }
 
-    public void addSample(long miliseconds) {
+    public void addSample(double miliseconds) {
         experiment.add(miliseconds);
     }
 
@@ -39,10 +39,10 @@ public class StatisticCalculator {
         if ( experiment.isEmpty() ) {
             throw new IllegalStateException("la cantidad de experimentos no debe ser vacia");
         }
-        long min = Long.MAX_VALUE;
-        long max = Long.MIN_VALUE;
+        Double min = Double.MAX_VALUE;
+        Double max = Double.MIN_VALUE;
         double avg = 0;
-        for ( Long sample : experiment ) {
+        for ( Double sample : experiment ) {
             avg += sample;
             if ( sample < min ) {
                 min = sample;
