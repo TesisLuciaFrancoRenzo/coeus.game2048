@@ -91,9 +91,6 @@ public class ConcurrencyTimes extends LearningExperiment<BasicNetwork> {
             System.out.println("===============================================================================");
             System.out.println("Capas intermedias: " + innerLayerQuantity);
             System.out.println("===============================================================================");
-            if ( innerLayerQuantity == 2 ) {
-                System.err.println("");
-            }
             for ( int innerLayersNeuronQuantity = MIN_NEURON_QUANTITY; innerLayersNeuronQuantity <= MAX_NEURON_QUANTITY; innerLayersNeuronQuantity++ ) {
                 // Primer experimento, con 1 capa, en serie
                 currentConfig = new Config();
@@ -131,7 +128,7 @@ public class ConcurrencyTimes extends LearningExperiment<BasicNetwork> {
                     double time = System.currentTimeMillis();
                     startStatistics();
                     time = System.currentTimeMillis() - time;
-                    System.out.println("Final de Calculo de muestra N" + i);
+                    System.out.println("Final de Calculo de muestra N" + i + " - demoró " + time + "ms");
                     samples++;
                     avgTime += time;
                 }
