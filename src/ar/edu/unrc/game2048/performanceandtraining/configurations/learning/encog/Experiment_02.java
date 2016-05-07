@@ -56,7 +56,7 @@ public class Experiment_02 extends LearningExperiment<BasicNetwork> {
         boolean[] concurrentLayer = {false, false, false};
         experiment.setConcurrencyInLayer(concurrentLayer);
         experiment.setLearningRateAdaptationToAnnealing(500_000);
-        experiment.setComputeBestPosibleActionConcurrently(true);
+        experiment.setConcurrencyInComputeBestPosibleAction(true);
         experiment.setLambda(0.7);
         experiment.setGamma(1);
         experiment.setExplorationRateToFixed(0.1);

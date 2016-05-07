@@ -32,12 +32,17 @@ public class ConcurrencyConfig {
      *
      */
     public int[] neuronQuantityInLayer;
+    boolean concurrencyInEvaluate;
 
     @Override
     public String toString() {
         StringBuilder output = new StringBuilder();
 
-        output.append("concurrency: ");
+        output.append("evaluate concurrency: ");
+        output.append(concurrencyInEvaluate);
+
+        output.append("\n");
+        output.append("training concurrency: ");
         for ( int i = 0; i < concurrencyInLayer.length; i++ ) {
             output.append(concurrencyInLayer[i]).append(", ");
         }

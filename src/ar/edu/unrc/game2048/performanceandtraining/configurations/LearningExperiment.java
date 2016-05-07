@@ -61,7 +61,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
     private double avgTrainingTimes;
     private int backupNumber;
     private LinkedList<Double> bestPissibleActionTimes;
-    private boolean computeBestPosibleActionConcurrently = false;
+    private boolean concurrencyInComputeBestPosibleAction = false;
     private boolean[] concurrencyInLayer;
     private long elapsedTime = 0;
     private String experimentName;
@@ -149,8 +149,8 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
      *
      * @param parallel
      */
-    public void setComputeBestPosibleActionConcurrently(boolean parallel) {
-        this.computeBestPosibleActionConcurrently = parallel;
+    public void setConcurrencyInComputeBestPosibleAction(boolean parallel) {
+        this.concurrencyInComputeBestPosibleAction = parallel;
     }
 
     /**
@@ -737,7 +737,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
             throw new IllegalArgumentException("learningAlgorithm no puede ser null");
         }
 
-        this.learningAlgorithm.setComputeParallelBestPossibleAction(computeBestPosibleActionConcurrently);
+        this.learningAlgorithm.setComputeParallelBestPossibleAction(concurrencyInComputeBestPosibleAction);
 
         System.out.println("Training...");
 

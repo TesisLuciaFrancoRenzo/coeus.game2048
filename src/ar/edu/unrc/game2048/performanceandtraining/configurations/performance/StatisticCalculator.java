@@ -34,7 +34,8 @@ public class StatisticCalculator {
      *
      * @return
      */
-    public String computeBasicStatistics() {
+    public String[] computeBasicStatistics() {
+        String[] output = new String[2];
         if ( experiment.isEmpty() ) {
             throw new IllegalStateException("la cantidad de experimentos no debe ser vacia");
         }
@@ -51,7 +52,9 @@ public class StatisticCalculator {
             }
         }
         avg = avg / (experiment.size() * 1d);
-        return "Promedio: " + avg + "ms. Minimo: " + min + "ms. Máximo: " + max + "ms.";
+        output[0] = "Promedio: " + avg + "ms. Minimo: " + min + "ms. Máximo: " + max + "ms.";
+        output[1] = avg + "\t" + min + "\t" + max;
+        return output;
     }
 
     @Override
