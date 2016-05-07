@@ -101,7 +101,7 @@ public class ConcurrencyExperiment_01 extends LearningExperiment<BasicNetwork> {
 
             StringBuilder trainingOutput = new StringBuilder();
             StringBuilder evaluateOutput = new StringBuilder();
-            for ( int innerLayersNeuronQuantity = MIN_NEURON_QUANTITY; innerLayersNeuronQuantity <= MAX_NEURON_QUANTITY; innerLayersNeuronQuantity++ ) {
+            for ( int innerLayersNeuronQuantity = MIN_NEURON_QUANTITY; innerLayersNeuronQuantity <= MAX_NEURON_QUANTITY; innerLayersNeuronQuantity += 2 ) {
                 // Primer experimento, con 1 capa, en serie
                 currentConfig = new ConcurrencyConfig();
                 currentConfig.concurrencyInEvaluate = evaluateConcurrency;
@@ -194,10 +194,10 @@ public class ConcurrencyExperiment_01 extends LearningExperiment<BasicNetwork> {
                 output.mkdirs();
             }
 
-            SAMPLES_PER_EXPERIMENT = 10;
-            GAMES_TO_PLAY = 50;
+            SAMPLES_PER_EXPERIMENT = 1;
+            GAMES_TO_PLAY = 1;
             MAX_INNER_LAYERS = 1;
-            MAX_NEURON_QUANTITY = 10;
+            MAX_NEURON_QUANTITY = 12;
             MIN_NEURON_QUANTITY = 2;
 
             outputResults = new StringBuilder();
