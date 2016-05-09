@@ -52,18 +52,20 @@ public class Experiment_05 extends LearningExperiment<BasicNetwork> {
 
 //        boolean statistics = true;
         boolean statistics = false;
-        double[] alphas = {0.0025};
+        double[] alphas = {0.0025}; //FIXME no hacer esto
         experiment.setAlpha(alphas);
         experiment.setLearningRateAdaptationToFixed();
         experiment.setLambda(0.7);
         experiment.setGamma(1);
         experiment.setExplorationRateToFixed(0.1);
         //experiment.setResetEligibilitiTraces(true);
-        experiment.setGamesToPlay(2_000_000);
+        experiment.setGamesToPlay(5000);
         experiment.setSaveEvery(500);
         experiment.setSaveBackupEvery(20_000);
         experiment.setInitializePerceptronRandomized(false);
         experiment.setConcurrencyInComputeBestPosibleAction(true);
+        boolean[] concurrentLayer = {false};
+        experiment.setConcurrencyInLayer(concurrentLayer);
 
         experiment.createLogs(false);
         //para calcualar estadisticas

@@ -64,7 +64,7 @@ public class NTupleExperimentInterface extends INeuralNetworkInterfaceFor2048<Ba
      * @return
      */
     public NTupleSystem initializeEncogPerceptron(boolean randomized) {
-        NTupleSystem perceptron = new NTupleSystem(this.getNTupleConfiguration().allSamplePointStates, this.getNTupleConfiguration().nTuplesLenght, this.getNTupleConfiguration().activationFunction, this.getNTupleConfiguration().derivatedActivationFunction);
+        NTupleSystem perceptron = new NTupleSystem(this.getNTupleConfiguration().allSamplePointStates, this.getNTupleConfiguration().nTuplesLenght, this.getNTupleConfiguration().activationFunction, this.getNTupleConfiguration().derivatedActivationFunction, this.getNTupleConfiguration().concurrency);
         if ( randomized ) {
             perceptron.reset();
         }

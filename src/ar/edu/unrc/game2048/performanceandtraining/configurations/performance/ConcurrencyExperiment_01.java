@@ -78,9 +78,13 @@ public class ConcurrencyExperiment_01 extends LearningExperiment<BasicNetwork> {
     /**
      *
      */
+    public static StringBuilder outputForGraphicsResults;
+
+    /**
+     *
+     */
     public static StringBuilder outputResults;
 
-    public static StringBuilder outputForGraphicsResults;
 
     /**
      *

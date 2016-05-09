@@ -43,6 +43,7 @@ public class BasicScoreNoPartialTanH extends NTupleConfiguration2048 {
         this.derivatedActivationFunction = FunctionUtils.derivatedTanh;
         double activationFunctionMax = 1;
         double activationFunctionMin = -1;
+        this.concurrency = false;
 
         normOutput = new NormalizedField(NormalizationAction.Normalize,
                 null, maxReward, minReward, activationFunctionMax, activationFunctionMin);

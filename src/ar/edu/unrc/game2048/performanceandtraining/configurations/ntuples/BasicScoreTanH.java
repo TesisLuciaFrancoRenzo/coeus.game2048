@@ -41,6 +41,7 @@ public class BasicScoreTanH extends NTupleConfiguration2048 {
     public BasicScoreTanH() {
         this.activationFunction = FunctionUtils.tanh;
         this.derivatedActivationFunction = FunctionUtils.derivatedTanh;
+        this.concurrency = false;
         double activationFunctionMax = 1;
         double activationFunctionMin = -1;
 

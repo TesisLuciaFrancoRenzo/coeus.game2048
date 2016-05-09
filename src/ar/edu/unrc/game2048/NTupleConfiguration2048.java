@@ -43,6 +43,11 @@ public abstract class NTupleConfiguration2048 implements Cloneable, IConfigurati
     /**
      *
      */
+    public boolean concurrency;
+
+    /**
+     *
+     */
     public Function<Double, Double> derivatedActivationFunction;
 
     /**

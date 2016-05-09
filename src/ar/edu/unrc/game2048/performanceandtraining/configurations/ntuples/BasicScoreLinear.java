@@ -36,6 +36,7 @@ public class BasicScoreLinear extends NTupleConfiguration2048 {
     public BasicScoreLinear() {
         this.activationFunction = FunctionUtils.linear;
         this.derivatedActivationFunction = FunctionUtils.derivatedLinear;
+        this.concurrency = false;
 
         nTuplesLenght = new int[17];
         for ( int i = 0; i < 17; i++ ) {

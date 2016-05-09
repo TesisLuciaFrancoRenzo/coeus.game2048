@@ -41,6 +41,7 @@ public class BasicScoreSigmoid extends NTupleConfiguration2048 {
     public BasicScoreSigmoid() {
         this.activationFunction = FunctionUtils.sigmoid;
         this.derivatedActivationFunction = FunctionUtils.derivatedSigmoid;
+        this.concurrency = false;
         double activationFunctionMax = 1;
         double activationFunctionMin = 0;
 
