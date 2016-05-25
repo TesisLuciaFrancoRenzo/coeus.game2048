@@ -34,7 +34,7 @@ import org.encog.util.arrayutil.NormalizedField;
  */
 public class BinaryScore<NeuralNetworkClass> extends PerceptronConfiguration2048<NeuralNetworkClass> {
 
-    static final int binaryLenght = 4; //alcanza para escribir el 2048
+    static final int BINARY_LENGHT = 4; //alcanza para escribir el 2048
 
     /**
      *
@@ -80,7 +80,7 @@ public class BinaryScore<NeuralNetworkClass> extends PerceptronConfiguration2048
         int currentNeuron = 0;
         for ( Tile tile : tiles ) {
             String bits = Integer.toBinaryString(tile.getCode());
-            for ( int k = 0; k < binaryLenght - bits.length(); k++ ) {
+            for ( int k = 0; k < BINARY_LENGHT - bits.length(); k++ ) {
                 normalizedPerceptronInput.set(currentNeuron, activationFunctionMin);
                 currentNeuron++;
             }

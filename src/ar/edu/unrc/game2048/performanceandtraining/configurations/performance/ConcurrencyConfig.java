@@ -41,25 +41,33 @@ public class ConcurrencyConfig {
         output.append("evaluate concurrency: ");
         output.append(concurrencyInEvaluate);
 
-        output.append("\n");
-        output.append("training concurrency: ");
-        for ( int i = 0; i < concurrencyInLayer.length; i++ ) {
-            output.append(concurrencyInLayer[i]).append(", ");
+        if ( concurrencyInLayer != null ) {
+            output.append("\n");
+            output.append("training concurrency: ");
+            for ( int i = 0; i < concurrencyInLayer.length; i++ ) {
+                output.append(concurrencyInLayer[i]).append(", ");
+            }
         }
-        output.append("\n");
-        output.append("alphas: ");
-        for ( int i = 0; i < alphas.length; i++ ) {
-            output.append(concurrencyInLayer[i]).append(", ");
+        if ( alphas != null ) {
+            output.append("\n");
+            output.append("alphas: ");
+            for ( int i = 0; i < alphas.length; i++ ) {
+                output.append(concurrencyInLayer[i]).append(", ");
+            }
         }
-        output.append("\n");
-        output.append("neuronQuantityInLayer: ");
-        for ( int i = 0; i < neuronQuantityInLayer.length; i++ ) {
-            output.append(neuronQuantityInLayer[i]).append(", ");
+        if ( neuronQuantityInLayer != null ) {
+            output.append("\n");
+            output.append("neuronQuantityInLayer: ");
+            for ( int i = 0; i < neuronQuantityInLayer.length; i++ ) {
+                output.append(neuronQuantityInLayer[i]).append(", ");
+            }
         }
-        output.append("\n");
-        output.append("activationFunctionForEncog: ");
-        for ( int i = 0; i < activationFunctionForEncog.length; i++ ) {
-            output.append(activationFunctionForEncog[i].getClass().getName()).append(", ");
+        if ( activationFunctionForEncog != null ) {
+            output.append("\n");
+            output.append("activationFunctionForEncog: ");
+            for ( ActivationFunction activationFunction : activationFunctionForEncog ) {
+                output.append(activationFunction.getClass().getName()).append(", ");
+            }
         }
         return output.toString();
     }

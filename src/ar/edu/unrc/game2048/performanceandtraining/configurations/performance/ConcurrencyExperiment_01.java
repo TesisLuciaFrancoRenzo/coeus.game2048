@@ -85,7 +85,6 @@ public class ConcurrencyExperiment_01 extends LearningExperiment<BasicNetwork> {
      */
     public static StringBuilder outputResults;
 
-
     /**
      *
      * @param trainConcurrency,   boolean concurrencyInEvaluate
@@ -198,8 +197,8 @@ public class ConcurrencyExperiment_01 extends LearningExperiment<BasicNetwork> {
                 output.mkdirs();
             }
 
-            SAMPLES_PER_EXPERIMENT = 1;
-            GAMES_TO_PLAY = 1;
+            SAMPLES_PER_EXPERIMENT = 10;
+            GAMES_TO_PLAY = 70; //TODO poner estas config en el archivo de salida
             MAX_INNER_LAYERS = 1;
             MAX_NEURON_QUANTITY = 12;
             MIN_NEURON_QUANTITY = 2;

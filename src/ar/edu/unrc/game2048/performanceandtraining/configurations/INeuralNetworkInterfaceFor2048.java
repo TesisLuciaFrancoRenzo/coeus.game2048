@@ -151,6 +151,9 @@ public abstract class INeuralNetworkInterfaceFor2048<NeuralNetworkClass> impleme
                 game.processInput(VK_UP);
                 break;
             }
+            default: {
+                throw new IllegalStateException("Mejor accion no reconocida");
+            }
         }
     }
 

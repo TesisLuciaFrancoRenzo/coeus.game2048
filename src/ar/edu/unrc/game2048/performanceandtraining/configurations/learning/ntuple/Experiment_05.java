@@ -59,7 +59,7 @@ public class Experiment_05 extends LearningExperiment<BasicNetwork> {
         experiment.setGamma(1);
         experiment.setExplorationRateToFixed(0.1);
         //experiment.setResetEligibilitiTraces(true);
-        experiment.setGamesToPlay(5000);
+        experiment.setGamesToPlay(5_000);
         experiment.setSaveEvery(500);
         experiment.setSaveBackupEvery(20_000);
         experiment.setInitializePerceptronRandomized(false);

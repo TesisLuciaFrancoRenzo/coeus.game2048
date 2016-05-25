@@ -85,6 +85,9 @@ public class RandomExperimentInterface extends INeuralNetworkInterfaceFor2048 {
                 game.processInput(VK_UP);
                 break;
             }
+            default: {
+                throw new IllegalStateException("El numero al azar elegido debe ir entre 1 y 4");
+            }
         }
     }
 

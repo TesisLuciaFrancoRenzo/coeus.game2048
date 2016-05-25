@@ -36,7 +36,6 @@ package ar.edu.unrc.game2048;
 import static ar.edu.unrc.game2048.Action.down;
 import static ar.edu.unrc.game2048.Action.right;
 import static ar.edu.unrc.game2048.Action.up;
-import static ar.edu.unrc.game2048.GameBoard.tileNumber;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IAction;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IActor;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IProblemState;
@@ -80,6 +79,21 @@ import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 import org.encog.ml.data.MLData;
 import org.encog.ml.data.basic.BasicMLData;
 import org.encog.neural.networks.BasicNetwork;
+import static java.lang.String.valueOf;
+import static java.lang.Thread.sleep;
+import static java.lang.String.valueOf;
+import static java.lang.Thread.sleep;
+import static java.lang.String.valueOf;
+import static java.lang.Thread.sleep;
+import static ar.edu.unrc.game2048.GameBoard.TILE_NUMBER;
+import static java.lang.String.valueOf;
+import static java.lang.Thread.sleep;
+import static java.lang.String.valueOf;
+import static java.lang.Thread.sleep;
+import static java.lang.String.valueOf;
+import static java.lang.Thread.sleep;
+import static java.lang.String.valueOf;
+import static java.lang.Thread.sleep;
 
 /**
  * @author Konstantin Bulenkov, lucia bressan, franco pellegrini, renzo
@@ -157,7 +171,7 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
      * @param numberToWin               puntaje que alcanzar para ganar el juego
      * @param delayPerMove
      */
-    @SuppressWarnings( "LeakingThisInConstructor" )
+    @SuppressWarnings( {"LeakingThisInConstructor", "OverridableMethodCallInConstructor"} )
     public Game2048(PerceptronConfiguration2048<NeuralNetworkClass> perceptronConfiguration, NTupleConfiguration2048 nTupleSystemConfiguration, int numberToWin, int delayPerMove) {
         this.perceptronConfiguration = perceptronConfiguration;
         this.delayPerMove = delayPerMove;
@@ -684,7 +698,7 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
             }
             list.add(tile);
         }
-        if ( list.size() == 0 ) {
+        if ( list.isEmpty() ) {
             return oldLine;
         } else {
             ensureSize(list, 4, tileContainer);
@@ -701,7 +715,7 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
             }
         }
 
-        if ( l.size() == 0 ) {
+        if ( l.isEmpty() ) {
             return oldLine;
         } else {
             Tile[] newLine = new Tile[4];
@@ -714,7 +728,7 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
     }
 
     private void rotate(int angle, GameBoard<NeuralNetworkClass> original) {
-        Tile[] rotatedTiles = new Tile[tileNumber];
+        Tile[] rotatedTiles = new Tile[TILE_NUMBER];
 
         int offsetX = 3, offsetY = 3;
         if ( angle == 90 ) {
@@ -733,7 +747,7 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
                 rotatedTiles[newX + newY * 4] = original.tileAt(x, y);
             }
         }
-        arraycopy(rotatedTiles, 0, original.getTiles(), 0, tileNumber);
+        arraycopy(rotatedTiles, 0, original.getTiles(), 0, TILE_NUMBER);
     }
 
     private void setLine(int index, Tile[] re, GameBoard<NeuralNetworkClass> board) {
@@ -743,7 +757,7 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
     /**
      * @return the nTupleSystemConfiguration
      */
-    protected NTupleConfiguration2048 getnTupleSystemConfiguration() {
+    NTupleConfiguration2048 getnTupleSystemConfiguration() {
         return nTupleSystemConfiguration;
     }
 

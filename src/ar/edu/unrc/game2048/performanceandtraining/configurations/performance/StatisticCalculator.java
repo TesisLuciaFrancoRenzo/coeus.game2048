@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 public class StatisticCalculator {
 
-    private ArrayList<Double> experiment;
+    private final ArrayList<Double> experiment;
 
     /**
      * @param defaultCapacity solo para inicializar variables internas
@@ -51,7 +51,7 @@ public class StatisticCalculator {
                 max = sample;
             }
         }
-        avg = avg / (experiment.size() * 1d);
+        avg /= (experiment.size() * 1d);
         output[0] = "Promedio: " + avg + "ms. Minimo: " + min + "ms. Máximo: " + max + "ms.";
         output[1] = avg + "\t" + min + "\t" + max;
         return output;

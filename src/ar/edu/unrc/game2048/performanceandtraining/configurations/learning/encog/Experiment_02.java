@@ -53,18 +53,18 @@ public class Experiment_02 extends LearningExperiment<BasicNetwork> {
 //        boolean statistics = true;
         boolean statistics = false;
 
-        boolean[] concurrentLayer = {false, false, false};
+        boolean[] concurrentLayer = {false, true, true, false};
         experiment.setConcurrencyInLayer(concurrentLayer);
         experiment.setLearningRateAdaptationToAnnealing(500_000);
         experiment.setConcurrencyInComputeBestPosibleAction(true);
         experiment.setLambda(0.7);
         experiment.setGamma(1);
-        experiment.setExplorationRateToFixed(0.1);
-        experiment.setResetEligibilitiTraces(true);
+        experiment.setExplorationRateToFixed(0);
+        experiment.setResetEligibilitiTraces(false);
         experiment.setGamesToPlay(100_000);
         experiment.setSaveEvery(500);
         experiment.setSaveBackupEvery(500);
-        experiment.setInitializePerceptronRandomized(false);
+        experiment.setInitializePerceptronRandomized(true);
 
         experiment.createLogs(false);
         //para calcualar estadisticas

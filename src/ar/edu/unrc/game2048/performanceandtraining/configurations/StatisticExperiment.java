@@ -1,21 +1,4 @@
-/*
- * Copyright (C) 2016  Lucia Bressan <lucyluz333@gmial.com>,
- *                     Franco Pellegrini <francogpellegrini@gmail.com>,
- *                     Renzo Bianchini <renzobianchini85@gmail.com
- *
- *   This program is free software: you can redistribute it and/or modify
- *   it under the terms of the GNU General Public License as published by
- *   the Free Software Foundation, either version 3 of the License, or
- *   (at your option) any later version.
- *
- *   This program is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *   GNU General Public License for more details.
- *
- *   You should have received a copy of the GNU General Public License
- *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+
 package ar.edu.unrc.game2048.performanceandtraining.configurations;
 
 import ar.edu.unrc.game2048.Game2048;
@@ -28,7 +11,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
-import static java.lang.Math.round;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -48,6 +30,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
+import static java.lang.Math.round;
 
 /**
  *
@@ -453,14 +436,14 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
         for ( int i = 0; i <= 17; i++ ) {
             tileStatistics.set(i, tileStatistics.get(i) / (simulations * 1d));
         }
-        winRate = winRate / (simulations * 1d);
+        winRate /= (simulations * 1d);
         assert winRate < 100;
-        maxScore = maxScore / (simulations * 1d);
-        minScore = minScore / (simulations * 1d);
-        meanScore = meanScore / (simulations * 1d);
-        maxTurn = maxTurn / (simulations * 1d);
-        minTurn = minTurn / (simulations * 1d);
-        meanTurn = meanTurn / (simulations * 1d);
+        maxScore /= (simulations * 1d);
+        minScore /= (simulations * 1d);
+        meanScore /= (simulations * 1d);
+        maxTurn /= (simulations * 1d);
+        minTurn /= (simulations * 1d);
+        meanTurn /= (simulations * 1d);
 
         if ( !results.isEmpty() ) {
             //creamos un archivo de logs para acumular estadisticas
@@ -655,12 +638,12 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
             dirPathFile.mkdirs();
         }
         String filePath = dirPath + fileName;
-        File randomPerceptronFile = new File(dirPath + this.getExperimentName() + LearningExperiment._RANDOM + ".ser");
+        File randomPerceptronFile = new File(dirPath + this.getExperimentName() + LearningExperiment.RANDOM + ".ser");
 
         //hacemos estadisticas del perceptron random, si es necesario
         Map<File, StatisticForCalc> resultsRandom = new HashMap<>();
-        System.out.print("Starting " + this.getExperimentName() + LearningExperiment._RANDOM + " Statistics... ");
-        processFile(dirPath + this.getExperimentName() + LearningExperiment._RANDOM, delayPerMove, createPerceptronFile);
+        System.out.print("Starting " + this.getExperimentName() + LearningExperiment.RANDOM + " Statistics... ");
+        processFile(dirPath + this.getExperimentName() + LearningExperiment.RANDOM, delayPerMove, createPerceptronFile);
         resultsRandom.put(randomPerceptronFile, getTileStatistics());
 
         //calculamos las estadisticas de los backup si es necesario

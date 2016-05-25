@@ -40,17 +40,17 @@ public class GameBoard<NeuralNetworkClass> implements IStatePerceptron, IStateNT
     /**
      *
      */
-    public static final int maxBoardTileCodedNumber = 17;
+    public static final int MAX_BOARDTILE_CODED_NUMBER = 17;
 
     /**
      *
      */
-    public final static int minBoardTileCodedNumber = 0;
+    public final static int MIN_BOARDTILE_CODED_NUMBER = 0;
 
     /**
      *
      */
-    public static final int tileNumber = 4 * 4;
+    public static final int TILE_NUMBER = 4 * 4;
 
     /**
      *
@@ -92,7 +92,7 @@ public class GameBoard<NeuralNetworkClass> implements IStatePerceptron, IStateNT
         canMove = true;
         this.game = game;
         this.tileContainer = tileContainer;
-        tiles = new Tile[tileNumber];
+        tiles = new Tile[TILE_NUMBER];
         partialScore = 0;
         maxTileNumberCode = 0;
         maxTileNumberValue = 0;
@@ -140,7 +140,7 @@ public class GameBoard<NeuralNetworkClass> implements IStatePerceptron, IStateNT
      * @param tileContainer
      */
     public void clearBoard(TileContainer tileContainer) {
-        for ( int i = 0; i < tileNumber; i++ ) {
+        for ( int i = 0; i < TILE_NUMBER; i++ ) {
             tiles[i] = tileContainer.getTile(0);
         }
     }
@@ -178,10 +178,7 @@ public class GameBoard<NeuralNetworkClass> implements IStatePerceptron, IStateNT
         if ( !Arrays.deepEquals(this.tiles, other.tiles) ) {
             return false;
         }
-        if ( !Objects.equals(this.availableSpaceList, other.availableSpaceList) ) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.availableSpaceList, other.availableSpaceList);
     }
 
 //    @Override
@@ -199,7 +196,7 @@ public class GameBoard<NeuralNetworkClass> implements IStatePerceptron, IStateNT
     @Override
     public IState getCopy() {
         GameBoard<NeuralNetworkClass> copy = new GameBoard<>(getGame(), tileContainer);
-        arraycopy(getTiles(), 0, copy.getTiles(), 0, GameBoard.tileNumber);
+        arraycopy(getTiles(), 0, copy.getTiles(), 0, GameBoard.TILE_NUMBER);
         copy.iWin = iWin;
         copy.canMove = canMove;
         copy.isFull = isFull;

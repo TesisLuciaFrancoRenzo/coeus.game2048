@@ -43,17 +43,17 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
     /**
      *
      */
-    public static final String _CONFIG = "_config";
+    public static final String CONFIG = "_config";
 
     /**
      *
      */
-    public static final String _RANDOM = "_random";
+    public static final String RANDOM = "_random";
 
     /**
      *
      */
-    public static final String _TRAINED = "_trained";
+    public static final String TRAINED = "_trained";
     private double[] alpha;
     private int annealingT;
 
@@ -145,6 +145,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
     public double getAvgTrainingTimes() {
         return avgTrainingTimes;
     }
+
     /**
      *
      * @param parallel
@@ -269,7 +270,6 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
         this.learningRateAdaptation = ELearningRateAdaptation.annealing;
         this.annealingT = annealingT;
     }
-
 
     /**
      * @return the perceptronName
@@ -512,14 +512,14 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
                 for ( Long sample : learningAlgorithm.getBestPissibleActionTimes() ) {
                     avg += sample;
                 }
-                avg = avg / (learningAlgorithm.getBestPissibleActionTimes().size() * 1d);
+                avg /= (learningAlgorithm.getBestPissibleActionTimes().size() * 1d);
                 bestPissibleActionTimes.add(avg);
 
                 avg = 0;
                 for ( Long sample : learningAlgorithm.getTrainingTimes() ) {
                     avg += sample;
                 }
-                avg = avg / (learningAlgorithm.getTrainingTimes().size() * 1d);
+                avg /= (learningAlgorithm.getTrainingTimes().size() * 1d);
                 trainingTimes.add(avg);
             }
 
@@ -536,7 +536,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
             }
             if ( i % saveBackupEvery == 0 ) {
                 backupNumber++;
-                perceptronFileBackup = new File(filePath + _TRAINED + "_" + dateFormater.format(now) + "_BackupN-" + String.format("%0" + zeroNumbers + "d", backupNumber)
+                perceptronFileBackup = new File(filePath + TRAINED + "_" + dateFormater.format(now) + "_BackupN-" + String.format("%0" + zeroNumbers + "d", backupNumber)
                         + ".ser");
                 neuralNetworkInterfaceFor2048.savePerceptron(perceptronFileBackup);
                 System.out.println("============ Perceptron Exportado Exitosamente (BACKUP " + backupNumber + ") ============");
@@ -547,7 +547,6 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
             }
         }
     }
-
 
     /**
      * @return the annealingT
@@ -671,8 +670,8 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
             }
         }
         String filePath = dirPath + perceptronName;
-        File perceptronFile = new File(filePath + _TRAINED + ".ser");
-        File configFile = new File(filePath + _CONFIG + ".txt");
+        File perceptronFile = new File(filePath + TRAINED + ".ser");
+        File configFile = new File(filePath + CONFIG + ".txt");
 
         backupNumber = 0;
         lastSavedGamePlayedNumber = 0;
@@ -705,7 +704,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
         boolean backupRandomPerceptron = false;
         File randomPerceptronFile = null;
         if ( createPerceptronFile ) {
-            randomPerceptronFile = new File(filePath + _RANDOM + ".ser");
+            randomPerceptronFile = new File(filePath + RANDOM + ".ser");
             if ( !perceptronFile.exists() ) {
                 if ( randomPerceptronFile.exists() ) {
                     randomPerceptronFile.delete();
@@ -728,16 +727,16 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
 
         if ( this.getNeuralNetworkInterfaceFor2048().getPerceptronInterface() != null ) {
             this.setLearningAlgorithm(instanceOfTdLearninrgImplementation(this.getNeuralNetworkInterfaceFor2048().getPerceptronInterface()));
+            this.learningAlgorithm.setComputeParallelBestPossibleAction(concurrencyInComputeBestPosibleAction);
         }
         if ( this.getNeuralNetworkInterfaceFor2048().getNTupleConfiguration() != null ) {
             this.setLearningAlgorithm(instanceOfTdLearninrgImplementation(this.getNeuralNetworkInterfaceFor2048().getNTupleConfiguration().getNTupleSystem()));
+            this.learningAlgorithm.setComputeParallelBestPossibleAction(concurrencyInComputeBestPosibleAction);
         }
 
         if ( learningAlgorithm == null && !this.statisticsOnly ) {
             throw new IllegalArgumentException("learningAlgorithm no puede ser null");
         }
-
-        this.learningAlgorithm.setComputeParallelBestPossibleAction(concurrencyInComputeBestPosibleAction);
 
         System.out.println("Training...");
 
@@ -758,13 +757,13 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
                 for ( Double sample : this.bestPissibleActionTimes ) {
                     avgBestPissibleActionTimes += sample;
                 }
-                avgBestPissibleActionTimes = avgBestPissibleActionTimes / (this.bestPissibleActionTimes.size() * 1d);
+                avgBestPissibleActionTimes /= (this.bestPissibleActionTimes.size() * 1d);
 
                 avgTrainingTimes = 0d;
                 for ( Double sample : this.trainingTimes ) {
                     avgTrainingTimes += sample;
                 }
-                avgTrainingTimes = avgTrainingTimes / (this.trainingTimes.size() * 1d);
+                avgTrainingTimes /= (this.trainingTimes.size() * 1d);
             }
             //guardamos los progresos en un archivo
             if ( createPerceptronFile ) {

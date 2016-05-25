@@ -64,15 +64,17 @@ public class BoardScore<NeuralNetworkClass> extends PerceptronConfiguration2048<
 
         minCodedBoardnumber = 0;
 
-        this.neuronQuantityInLayer = new int[3];
+        this.neuronQuantityInLayer = new int[4];
         neuronQuantityInLayer[0] = 16;
-        neuronQuantityInLayer[1] = 16;
-        neuronQuantityInLayer[2] = 1;
+        neuronQuantityInLayer[1] = 512;
+        neuronQuantityInLayer[2] = 512;
+        neuronQuantityInLayer[3] = 1;
 
-        this.activationFunctionForEncog = new ActivationFunction[2];
+        this.activationFunctionForEncog = new ActivationFunction[3];
 
         activationFunctionForEncog[0] = new ActivationTANH();
         activationFunctionForEncog[1] = new ActivationTANH();
+        activationFunctionForEncog[2] = new ActivationTANH();
 
         activationFunctionMax = 1;
         activationFunctionMin = -1;
