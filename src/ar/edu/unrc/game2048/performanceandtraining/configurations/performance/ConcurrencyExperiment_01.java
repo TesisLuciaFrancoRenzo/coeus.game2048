@@ -205,6 +205,13 @@ public class ConcurrencyExperiment_01 extends LearningExperiment<BasicNetwork> {
 
             outputResults = new StringBuilder();
             outputForGraphicsResults = new StringBuilder();
+            StringBuilder config = new StringBuilder();
+            printConfig(config);
+            System.out.println(config);
+
+            printConfig(outputResults);
+            printConfig(outputForGraphicsResults);
+
             experimentSet(false, false);
             experimentSet(false, true);
             experimentSet(true, false);
@@ -250,6 +257,16 @@ public class ConcurrencyExperiment_01 extends LearningExperiment<BasicNetwork> {
 
         bestPossibleStats.addSample(experiment.getAvgBestPissibleActionTimes());
         trainingStats.addSample(experiment.getAvgTrainingTimes());
+    }
+
+    private static void printConfig(StringBuilder outputResults) {
+        outputResults.append("====================================").append("\n");
+        outputResults.append("SAMPLES_PER_EXPERIMENT = ").append(SAMPLES_PER_EXPERIMENT).append("\n");
+        outputResults.append("GAMES_TO_PLAY = ").append(GAMES_TO_PLAY).append("\n");
+        outputResults.append("MAX_INNER_LAYERS = ").append(MAX_INNER_LAYERS).append("\n");
+        outputResults.append("MAX_NEURON_QUANTITY = ").append(MAX_NEURON_QUANTITY).append(" (").append(Math.pow(2, MAX_NEURON_QUANTITY)).append(")").append("\n");
+        outputResults.append("MIN_NEURON_QUANTITY = ").append(MIN_NEURON_QUANTITY).append(" (").append(Math.pow(2, MIN_NEURON_QUANTITY)).append(")").append("\n");
+        outputResults.append("====================================").append("\n");
     }
 
     @Override
