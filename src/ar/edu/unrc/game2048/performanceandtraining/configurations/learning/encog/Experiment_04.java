@@ -16,12 +16,12 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ar.edu.unrc.game2048.performanceandtraining.configurations.learning.ntuple;
+package ar.edu.unrc.game2048.performanceandtraining.configurations.learning.encog;
 
-import ar.edu.unrc.game2048.NTupleConfiguration2048;
+import ar.edu.unrc.game2048.PerceptronConfiguration2048;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.LearningExperiment;
-import ar.edu.unrc.game2048.performanceandtraining.configurations.libraries.NTupleExperimentInterface;
-import ar.edu.unrc.game2048.performanceandtraining.configurations.ntuples.NoSquaresScoreTanH;
+import ar.edu.unrc.game2048.performanceandtraining.configurations.libraries.EncogExperimentInterface;
+import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.NTupleSeriousScore;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IPerceptronInterface;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearning;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearningAfterstate;
@@ -32,7 +32,7 @@ import org.encog.neural.networks.BasicNetwork;
 /**
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
-public class Experiment_08 extends LearningExperiment<BasicNetwork> {
+public class Experiment_04 extends LearningExperiment<BasicNetwork> {
 
     /**
      *
@@ -48,25 +48,25 @@ public class Experiment_08 extends LearningExperiment<BasicNetwork> {
         } else {
             filePath = args[0];
         }
-        LearningExperiment experiment = new Experiment_08();
+        LearningExperiment experiment = new Experiment_04();
 
 //        boolean statistics = true;
         boolean statistics = false;
-        double[] alphas = {0.0025};
+
+        boolean[] concurrentLayer = {true, true, false};
+        experiment.setConcurrencyInLayer(concurrentLayer);
+        double[] alphas = {0.0025, 0.0025};
         experiment.setAlpha(alphas);
         experiment.setLearningRateAdaptationToFixed();
-
+        experiment.setConcurrencyInComputeBestPosibleAction(true);
         experiment.setLambda(0.7);
         experiment.setGamma(1);
         experiment.setExplorationRateToFixed(0);
         experiment.setResetEligibilitiTraces(false);
-        experiment.setGamesToPlay(2_000_000);
-        experiment.setSaveEvery(200);
-        experiment.setSaveBackupEvery(20_000);
+        experiment.setGamesToPlay(100_000);
+        experiment.setSaveEvery(500);
+        experiment.setSaveBackupEvery(500);
         experiment.setInitializePerceptronRandomized(false);
-        experiment.setConcurrencyInComputeBestPosibleAction(true);
-        boolean[] concurrentLayer = {false, false};
-        experiment.setConcurrencyInLayer(concurrentLayer);
 
         experiment.createLogs(false);
         //para calcualar estadisticas
@@ -89,23 +89,24 @@ public class Experiment_08 extends LearningExperiment<BasicNetwork> {
 
     @Override
     public void initialize() throws Exception {
-        this.setTileToWin(32_768);
+        this.setTileToWin(512);
         if ( this.getExperimentName() == null ) {
-            this.setExperimentName("Experiment_08");
+            this.setExperimentName("Experiment_04");
         }
         this.setPerceptronName(this.getExperimentName());
-        NTupleConfiguration2048 config = new NoSquaresScoreTanH();
-        this.setNeuralNetworkInterfaceFor2048(new NTupleExperimentInterface(config));
+        PerceptronConfiguration2048<BasicNetwork> config = new NTupleSeriousScore<>();
+        // config.randomMoveProbability = 0.01;
+        //config.perceptron_hidden_quantity = config.perceptron_input_quantity;
+        this.setNeuralNetworkInterfaceFor2048(new EncogExperimentInterface(config));
     }
 
     @Override
     public TDLambdaLearning instanceOfTdLearninrgImplementation(IPerceptronInterface perceptronInterface) {
-        return null;
+        return new TDLambdaLearningAfterstate(perceptronInterface, getAlpha(), getLambda(), getGamma(), getConcurrencyInLayer(), isResetEligibilitiTraces(), false);
     }
 
     @Override
     public TDLambdaLearning instanceOfTdLearninrgImplementation(NTupleSystem nTupleSystem) {
-        return new TDLambdaLearningAfterstate(nTupleSystem, (getAlpha() != null) ? getAlpha()[0] : null, getLambda(), getGamma(), getConcurrencyInLayer(), isResetEligibilitiTraces(), false);
+        return null;
     }
-
 }

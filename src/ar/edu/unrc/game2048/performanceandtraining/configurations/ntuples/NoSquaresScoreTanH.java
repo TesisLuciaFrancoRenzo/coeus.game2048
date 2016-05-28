@@ -53,7 +53,7 @@ public class NoSquaresScoreTanH extends NTupleConfiguration2048 {
             nTuplesLenght[i] = 4;
         }
 
-        int maxTile = 9;
+        int maxTile = 15; //256
         this.allSamplePointStates = new ArrayList<>();
         for ( int i = 0; i <= maxTile; i++ ) {
             allSamplePointStates.add(new Tile(i));

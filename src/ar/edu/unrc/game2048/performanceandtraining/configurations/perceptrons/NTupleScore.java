@@ -284,4 +284,9 @@ public class NTupleScore<NeuralNetworkClass> extends PerceptronConfiguration2048
         return tileCode1 * 1_000_000 + tileCode2 * 10_000 + tileCode3 * 100 + tileCode4;
     }
 
+    @Override
+    public boolean useNTupleList() {
+        return false;
+    }
+
 }

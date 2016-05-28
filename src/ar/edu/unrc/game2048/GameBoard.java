@@ -18,6 +18,7 @@
  */
 package ar.edu.unrc.game2048;
 
+import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.inputs.InputNtupleList;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IState;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IStateNTuple;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IStatePerceptron;
@@ -98,9 +99,13 @@ public class GameBoard<NeuralNetworkClass> implements IStatePerceptron, IStateNT
         maxTileNumberValue = 0;
         //inicializamos el tablero para su traduccion a las entradas de la red neuronal
         if ( game.getPerceptronConfiguration() != null ) {
-            normalizedPerceptronInput = new ArrayList<>(game.getPerceptronConfiguration().getNeuronQuantityInLayer()[0]);
-            for ( int i = 0; i < game.getPerceptronConfiguration().getNeuronQuantityInLayer()[0]; i++ ) {
-                normalizedPerceptronInput.add(null);
+            if ( game.getPerceptronConfiguration().useNTupleList() ) {
+                normalizedPerceptronInput = new InputNtupleList();
+            } else {
+                normalizedPerceptronInput = new ArrayList<>(game.getPerceptronConfiguration().getNeuronQuantityInLayer()[0]);
+                for ( int i = 0; i < game.getPerceptronConfiguration().getNeuronQuantityInLayer()[0]; i++ ) {
+                    normalizedPerceptronInput.add(null);
+                }
             }
         } else {
             normalizedPerceptronInput = null;

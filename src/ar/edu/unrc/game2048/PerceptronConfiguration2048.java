@@ -29,7 +29,6 @@ import org.encog.util.arrayutil.NormalizedField;
  */
 public abstract class PerceptronConfiguration2048<NeuralNetworkClass> implements Cloneable, IConfiguration2048 {
 
-
     /**
      *
      */
@@ -122,5 +121,7 @@ public abstract class PerceptronConfiguration2048<NeuralNetworkClass> implements
     public void setNeuronQuantityInLayer(int[] neuronQuantityInLayer) {
         this.neuronQuantityInLayer = neuronQuantityInLayer;
     }
+
+    public abstract boolean useNTupleList();
 
 }
