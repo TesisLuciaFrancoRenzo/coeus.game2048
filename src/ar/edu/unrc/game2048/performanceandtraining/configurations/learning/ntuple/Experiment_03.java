@@ -64,6 +64,8 @@ public class Experiment_03 extends LearningExperiment<BasicNetwork> {
         experiment.setSaveBackupEvery(20_000);
         experiment.setInitializePerceptronRandomized(false);
         experiment.setConcurrencyInComputeBestPosibleAction(true);
+        boolean[] concurrentLayer = {false, false};
+        experiment.setConcurrencyInLayer(concurrentLayer);
 
         experiment.createLogs(false);
         //para calcualar estadisticas

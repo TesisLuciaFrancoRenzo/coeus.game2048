@@ -63,7 +63,7 @@ public class NTupleExperimentInterface extends INeuralNetworkInterfaceFor2048<Ba
      * @param randomized <p>
      * @return
      */
-    public NTupleSystem initializeEncogPerceptron(boolean randomized) {
+    public NTupleSystem initializeNTupleSystem(boolean randomized) {
         NTupleSystem perceptron = new NTupleSystem(this.getNTupleConfiguration().allSamplePointStates, this.getNTupleConfiguration().nTuplesLenght, this.getNTupleConfiguration().activationFunction, this.getNTupleConfiguration().derivatedActivationFunction, this.getNTupleConfiguration().concurrency);
         if ( randomized ) {
             perceptron.reset();
@@ -73,7 +73,7 @@ public class NTupleExperimentInterface extends INeuralNetworkInterfaceFor2048<Ba
 
     @Override
     public void loadOrCreatePerceptron(File perceptronFile, boolean randomizedIfNotExist, boolean createPerceptronFile) throws Exception {
-        this.getNTupleConfiguration().setNTupleSystem(initializeEncogPerceptron(randomizedIfNotExist));
+        this.getNTupleConfiguration().setNTupleSystem(initializeNTupleSystem(randomizedIfNotExist));
         if ( createPerceptronFile ) {
             if ( !perceptronFile.exists() ) {
                 //Si el archivo no existe, creamos un perceptron nuevo inicializado al azar
