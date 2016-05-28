@@ -212,10 +212,16 @@ public class ConcurrencyExperiment_01 extends LearningExperiment<BasicNetwork> {
             printConfig(outputResults);
             printConfig(outputForGraphicsResults);
 
-            experimentSet(false, false);
+            long time = System.currentTimeMillis();
+            //experimentSet(false, false);
             experimentSet(false, true);
-            experimentSet(true, false);
+            //experimentSet(true, false);
             experimentSet(true, true);
+
+            time = System.currentTimeMillis() - time;
+            System.out.println("Demoró = " + time + " ms.");
+            outputResults.append("\n\n==========\nDemoró").append(time).append(" ms.");
+            outputForGraphicsResults.append("\n\n==========\nDemoró").append(time).append(" ms.");
 
             StringAndFiles.stringToFile(new File(filePath + "Concurrencia_Experimento_01.txt"), outputResults.toString(), UTF_8);
             StringAndFiles.stringToFile(new File(filePath + "Concurrencia_Experimento_01_Calc.txt"), outputForGraphicsResults.toString(), UTF_8);
