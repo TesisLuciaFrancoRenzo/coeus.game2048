@@ -36,6 +36,7 @@ package ar.edu.unrc.game2048;
 import static ar.edu.unrc.game2048.Action.down;
 import static ar.edu.unrc.game2048.Action.right;
 import static ar.edu.unrc.game2048.Action.up;
+import static ar.edu.unrc.game2048.GameBoard.TILE_NUMBER;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IAction;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IActor;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IProblemState;
@@ -79,21 +80,6 @@ import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 import org.encog.ml.data.MLData;
 import org.encog.ml.data.basic.BasicMLData;
 import org.encog.neural.networks.BasicNetwork;
-import static java.lang.String.valueOf;
-import static java.lang.Thread.sleep;
-import static java.lang.String.valueOf;
-import static java.lang.Thread.sleep;
-import static java.lang.String.valueOf;
-import static java.lang.Thread.sleep;
-import static ar.edu.unrc.game2048.GameBoard.TILE_NUMBER;
-import static java.lang.String.valueOf;
-import static java.lang.Thread.sleep;
-import static java.lang.String.valueOf;
-import static java.lang.Thread.sleep;
-import static java.lang.String.valueOf;
-import static java.lang.Thread.sleep;
-import static java.lang.String.valueOf;
-import static java.lang.Thread.sleep;
 
 /**
  * @author Konstantin Bulenkov, lucia bressan, franco pellegrini, renzo

@@ -51,7 +51,7 @@ public class Experiment_01 extends LearningExperiment<BasicNetwork> {
         //para calcualr estadisticas
         experiment.setGamesToPlayPerThreadForStatistics(1_000);
         experiment.setSimulationsForStatistics(8);
-        experiment.setRunStatisticForRandom(false); //FIXME hacer que solo corra las estadisticas de uno de los archivos ficticios
+        experiment.setRunStatisticForRandom(true); //FIXME hacer que solo corra las estadisticas de uno de los archivos ficticios
         experiment.setRunStatisticsForBackups(false);
         experiment.setSaveEvery(10_000);
         experiment.setSaveBackupEvery(100_000);

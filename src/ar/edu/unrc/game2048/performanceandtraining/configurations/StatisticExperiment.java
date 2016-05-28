@@ -1,4 +1,3 @@
-
 package ar.edu.unrc.game2048.performanceandtraining.configurations;
 
 import ar.edu.unrc.game2048.Game2048;
@@ -11,6 +10,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
+import static java.lang.Math.round;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,7 +30,6 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
-import static java.lang.Math.round;
 
 /**
  *
@@ -625,8 +624,9 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
     /**
      *
      * @param experimentPath
-     * @param delayPerMove   <p>
+     * @param delayPerMove         <p>
      * @param createPerceptronFile
+     *
      * @throws Exception
      */
     protected void run(String experimentPath, int delayPerMove, boolean createPerceptronFile) throws Exception {
