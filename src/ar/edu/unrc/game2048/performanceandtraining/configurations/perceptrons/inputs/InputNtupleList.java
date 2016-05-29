@@ -24,6 +24,10 @@ public class InputNtupleList implements List<Double> {
         set = new HashSet<>();
     }
 
+    public int getInternalSetSize() {
+        return set.size();
+    }
+
     @Override
     public boolean add(Double e) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -51,7 +55,7 @@ public class InputNtupleList implements List<Double> {
 
     @Override
     public boolean contains(Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return set.contains(o);
     }
 
     @Override

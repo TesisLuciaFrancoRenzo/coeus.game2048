@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import org.encog.engine.network.activation.ActivationFunction;
-import org.encog.engine.network.activation.ActivationLinear;
 import org.encog.engine.network.activation.ActivationTANH;
 import org.encog.util.arrayutil.NormalizationAction;
 import org.encog.util.arrayutil.NormalizedField;
@@ -41,7 +40,8 @@ public class NTupleSeriousScore<NeuralNetworkClass> extends PerceptronConfigurat
 
     private final List<SamplePointState> allSamplePointStates;
     private final HashMap<SamplePointState, Integer> mapSamplePointStates;
-
+    private final int maxTile;
+    private final int[] nTuplesWeightQuantityIndex;
     private final int numSamples;
 
     int maxReward = 500_000;
@@ -50,24 +50,24 @@ public class NTupleSeriousScore<NeuralNetworkClass> extends PerceptronConfigurat
     /**
      *
      */
-    public int[] nTuplesLenght;
+    private int[] nTuplesLenght;
 
     /**
      *
      */
     public NTupleSeriousScore() {
-        this.neuronQuantityInLayer = new int[3];
+        this.neuronQuantityInLayer = new int[2];
         neuronQuantityInLayer[0] = 52_488;
         neuronQuantityInLayer[1] = 1;
-        neuronQuantityInLayer[2] = 1;
 
         numSamples = 8;
+        maxTile = 9;
+
         nTuplesLenght = new int[numSamples];
         for ( int i = 0; i < numSamples; i++ ) {
             nTuplesLenght[i] = 4;
         }
 
-        int maxTile = 9;
         this.allSamplePointStates = new ArrayList<>();
         this.mapSamplePointStates = new HashMap<>();
         for ( int i = 0; i <= maxTile; i++ ) {
@@ -75,10 +75,19 @@ public class NTupleSeriousScore<NeuralNetworkClass> extends PerceptronConfigurat
             mapSamplePointStates.put(allSamplePointStates.get(i), i);
         }
 
-        this.activationFunctionForEncog = new ActivationFunction[2];
+        nTuplesWeightQuantityIndex = new int[nTuplesLenght.length];
+        int lasNTuplesWeightQuantity = 0;
+        nTuplesWeightQuantityIndex[0] = lasNTuplesWeightQuantity;
+        for ( int i = 0; i < nTuplesLenght.length; i++ ) {
+            int nTuplesWeightQuantity = (int) Math.pow(mapSamplePointStates.size(), nTuplesLenght[i]);
+            if ( i > 0 ) {
+                nTuplesWeightQuantityIndex[i] = nTuplesWeightQuantityIndex[i - 1] + lasNTuplesWeightQuantity;
+            }
+            lasNTuplesWeightQuantity = nTuplesWeightQuantity;
+        }
 
+        this.activationFunctionForEncog = new ActivationFunction[1];
         activationFunctionForEncog[0] = new ActivationTANH();
-        activationFunctionForEncog[1] = new ActivationLinear();
 
         activationFunctionMax = 1;
         activationFunctionMin = -1;
@@ -87,17 +96,17 @@ public class NTupleSeriousScore<NeuralNetworkClass> extends PerceptronConfigurat
                 null, maxReward, minReward, activationFunctionMax, activationFunctionMin);
     }
 
-    private int calculateIndex(int nTupleSampleIndex, SamplePointState[] nTupleSample) {
-        int index = 0;
-        for ( int j = 0; j < nTuplesLenght[nTupleSampleIndex]; j++ ) {
+    public int calculateIndex(int nTupleSampleIndex, SamplePointState[] nTupleSample) {
+        int localIndex = 0;
+        for ( int j = 0; j < getnTuplesLenght()[nTupleSampleIndex]; j++ ) {
 //            SamplePointState object = ntuple[j];
 //            Integer sampleIndex = mapSamplePointStates.get(object);
 //            int size = mapSamplePointStates.size();
 //            int pow = (int) Math.pow(size, j);
-            index += mapSamplePointStates.get(nTupleSample[j])
-                    * (int) Math.pow(mapSamplePointStates.size(), j);
+            localIndex += getMapSamplePointStates().get(nTupleSample[j])
+                    * (int) Math.pow(getMapSamplePointStates().size(), j);
         }
-        return index;
+        return getnTuplesWeightQuantityIndex()[nTupleSampleIndex] + localIndex;
     }
 
     /**
@@ -107,9 +116,30 @@ public class NTupleSeriousScore<NeuralNetworkClass> extends PerceptronConfigurat
      */
     @Override
     public void calculateNormalizedPerceptronInput(GameBoard<NeuralNetworkClass> board, List<Double> normalizedPerceptronInput) {
-        for ( int i = 0; i < numSamples; i++ ) {
+        for ( int i = 0; i < getNumSamples(); i++ ) {
             normalizedPerceptronInput.add(calculateIndex(i, getNTuple(board, i)), 1d);
         }
+    }
+
+    /**
+     * @return the allSamplePointStates
+     */
+    public List<SamplePointState> getAllSamplePointStates() {
+        return allSamplePointStates;
+    }
+
+    /**
+     * @return the mapSamplePointStates
+     */
+    public HashMap<SamplePointState, Integer> getMapSamplePointStates() {
+        return mapSamplePointStates;
+    }
+
+    /**
+     * @return the maxTile
+     */
+    public int getMaxTile() {
+        return maxTile;
     }
 
     public SamplePointState[] getNTuple(GameBoard board, int nTupleIndex) {
@@ -207,23 +237,30 @@ public class NTupleSeriousScore<NeuralNetworkClass> extends PerceptronConfigurat
         return board.getGame().getScore();
     }
 
-    @Override
-    public double normalizeValueToPerceptronOutput(Object value) {
-        return normOutput.normalize((Double) value);
+    /**
+     * @return the numSamples
+     */
+    public int getNumSamples() {
+        return numSamples;
     }
 
     /**
-     * Encriptamos el tablero para relacionar patrones y relaciones entre
-     * posiciones del tablero de a 4 baldosas
-     * <p>
-     * @param tileCode1
-     * @param tileCode2
-     * @param tileCode3
-     * @param tileCode4 <p>
-     * @return
+     * @return the nTuplesLenght
      */
-    private int encryptTiles(int tileCode1, int tileCode2, int tileCode3, int tileCode4) {
-        return tileCode1 * 1_000_000 + tileCode2 * 10_000 + tileCode3 * 100 + tileCode4;
+    public int[] getnTuplesLenght() {
+        return nTuplesLenght;
+    }
+
+    /**
+     * @return the nTuplesWeightQuantityIndex
+     */
+    public int[] getnTuplesWeightQuantityIndex() {
+        return nTuplesWeightQuantityIndex;
+    }
+
+    @Override
+    public double normalizeValueToPerceptronOutput(Object value) {
+        return normOutput.normalize((Double) value);
     }
 
     @Override
