@@ -53,9 +53,9 @@ public class Experiment_04 extends LearningExperiment<BasicNetwork> {
 //        boolean statistics = true;
         boolean statistics = false;
 
-        boolean[] concurrentLayer = {true, true, false};
+        boolean[] concurrentLayer = {true, false, false};
         experiment.setConcurrencyInLayer(concurrentLayer);
-        double[] alphas = {0.0025, 0.0025};
+        double[] alphas = {0.0025, 0.0025, 0.0025};
         experiment.setAlpha(alphas);
         experiment.setLearningRateAdaptationToFixed();
         experiment.setConcurrencyInComputeBestPosibleAction(true);

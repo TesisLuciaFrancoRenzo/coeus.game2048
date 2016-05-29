@@ -52,7 +52,7 @@ public class Experiment_05 extends LearningExperiment<BasicNetwork> {
 
 //        boolean statistics = true;
         boolean statistics = false;
-        double[] alphas = {0.0025}; //FIXME no hacer esto
+        double[] alphas = {0.0025,0.0025}; //FIXME no hacer esto
         experiment.setAlpha(alphas);
         experiment.setLearningRateAdaptationToFixed();
         experiment.setLambda(0.7);
