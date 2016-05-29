@@ -122,6 +122,10 @@ public abstract class PerceptronConfiguration2048<NeuralNetworkClass> implements
         this.neuronQuantityInLayer = neuronQuantityInLayer;
     }
 
+    /**
+     *
+     * @return
+     */
     public abstract boolean useNTupleList();
 
 }

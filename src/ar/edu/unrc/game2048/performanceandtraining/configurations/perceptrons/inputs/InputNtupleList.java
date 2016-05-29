@@ -20,13 +20,13 @@ public class InputNtupleList implements List<Double> {
 
     private final Set<Integer> set;
 
+    /**
+     *
+     */
     public InputNtupleList() {
         set = new HashSet<>();
     }
 
-    public int getInternalSetSize() {
-        return set.size();
-    }
 
     @Override
     public boolean add(Double e) {
@@ -66,6 +66,14 @@ public class InputNtupleList implements List<Double> {
     @Override
     public Double get(int index) {
         return (set.contains(index)) ? 1d : 0d;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public int getInternalSetSize() {
+        return set.size();
     }
 
     @Override

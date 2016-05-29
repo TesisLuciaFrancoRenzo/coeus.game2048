@@ -271,6 +271,15 @@ public class NTupleScore<NeuralNetworkClass> extends PerceptronConfiguration2048
     }
 
     /**
+     *
+     * @return
+     */
+    @Override
+    public boolean useNTupleList() {
+        return false;
+    }
+
+    /**
      * Encriptamos el tablero para relacionar patrones y relaciones entre
      * posiciones del tablero de a 4 baldosas
      * <p>
@@ -284,9 +293,5 @@ public class NTupleScore<NeuralNetworkClass> extends PerceptronConfiguration2048
         return tileCode1 * 1_000_000 + tileCode2 * 10_000 + tileCode3 * 100 + tileCode4;
     }
 
-    @Override
-    public boolean useNTupleList() {
-        return false;
-    }
 
 }

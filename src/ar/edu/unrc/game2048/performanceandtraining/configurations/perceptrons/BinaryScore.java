@@ -122,6 +122,10 @@ public class BinaryScore<NeuralNetworkClass> extends PerceptronConfiguration2048
         return normOutput.normalize((Double) value);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public boolean useNTupleList() {
         return false;

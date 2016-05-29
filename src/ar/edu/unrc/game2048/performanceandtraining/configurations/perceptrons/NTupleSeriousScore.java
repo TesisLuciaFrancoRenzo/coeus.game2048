@@ -41,16 +41,16 @@ public class NTupleSeriousScore<NeuralNetworkClass> extends PerceptronConfigurat
     private final List<SamplePointState> allSamplePointStates;
     private final HashMap<SamplePointState, Integer> mapSamplePointStates;
     private final int maxTile;
+    /**
+     *
+     */
+    private int[] nTuplesLenght;
     private final int[] nTuplesWeightQuantityIndex;
     private final int numSamples;
 
     int maxReward = 500_000;
     int minReward = -500_000;
 
-    /**
-     *
-     */
-    private int[] nTuplesLenght;
 
     /**
      *
@@ -96,6 +96,12 @@ public class NTupleSeriousScore<NeuralNetworkClass> extends PerceptronConfigurat
                 null, maxReward, minReward, activationFunctionMax, activationFunctionMin);
     }
 
+    /**
+     *
+     * @param nTupleSampleIndex
+     * @param nTupleSample
+     * @return
+     */
     public int calculateIndex(int nTupleSampleIndex, SamplePointState[] nTupleSample) {
         int localIndex = 0;
         for ( int j = 0; j < getnTuplesLenght()[nTupleSampleIndex]; j++ ) {
@@ -121,6 +127,17 @@ public class NTupleSeriousScore<NeuralNetworkClass> extends PerceptronConfigurat
         }
     }
 
+
+    @Override
+    public Double computeNumericRepresentationFor(Game2048 game, Object[] output) {
+        assert output.length == 1;
+        return (Double) output[0];
+    }
+
+    @Override
+    public double denormalizeValueFromPerceptronOutput(Object value) {
+        return normOutput.deNormalize((Double) value);
+    }
     /**
      * @return the allSamplePointStates
      */
@@ -128,13 +145,21 @@ public class NTupleSeriousScore<NeuralNetworkClass> extends PerceptronConfigurat
         return allSamplePointStates;
     }
 
+    @Override
+    public double getBoardReward(GameBoard board, int outputNeuron) {
+        return board.getPartialScore();
+    }
+
+    @Override
+    public double getFinalReward(GameBoard board, int outputNeuron) {
+        return board.getGame().getScore();
+    }
     /**
      * @return the mapSamplePointStates
      */
     public HashMap<SamplePointState, Integer> getMapSamplePointStates() {
         return mapSamplePointStates;
     }
-
     /**
      * @return the maxTile
      */
@@ -142,6 +167,12 @@ public class NTupleSeriousScore<NeuralNetworkClass> extends PerceptronConfigurat
         return maxTile;
     }
 
+    /**
+     *
+     * @param board
+     * @param nTupleIndex
+     * @return
+     */
     public SamplePointState[] getNTuple(GameBoard board, int nTupleIndex) {
         switch ( nTupleIndex ) {
             // verticales
@@ -216,27 +247,6 @@ public class NTupleSeriousScore<NeuralNetworkClass> extends PerceptronConfigurat
         }
     }
 
-    @Override
-    public Double computeNumericRepresentationFor(Game2048 game, Object[] output) {
-        assert output.length == 1;
-        return (Double) output[0];
-    }
-
-    @Override
-    public double denormalizeValueFromPerceptronOutput(Object value) {
-        return normOutput.deNormalize((Double) value);
-    }
-
-    @Override
-    public double getBoardReward(GameBoard board, int outputNeuron) {
-        return board.getPartialScore();
-    }
-
-    @Override
-    public double getFinalReward(GameBoard board, int outputNeuron) {
-        return board.getGame().getScore();
-    }
-
     /**
      * @return the numSamples
      */
@@ -263,6 +273,10 @@ public class NTupleSeriousScore<NeuralNetworkClass> extends PerceptronConfigurat
         return normOutput.normalize((Double) value);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public boolean useNTupleList() {
         return true;
