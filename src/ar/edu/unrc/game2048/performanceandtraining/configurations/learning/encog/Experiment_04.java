@@ -50,8 +50,8 @@ public class Experiment_04 extends LearningExperiment<BasicNetwork> {
         }
         LearningExperiment experiment = new Experiment_04();
 
-        boolean statistics = true;
-//        boolean statistics = false;
+//        boolean statistics = true;
+        boolean statistics = false;
 
         boolean[] concurrentLayer = {true, false};
         experiment.setConcurrencyInLayer(concurrentLayer);
