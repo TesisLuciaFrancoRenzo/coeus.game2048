@@ -16,9 +16,8 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ar.edu.unrc.game2048;
+package ar.edu.unrc.game2048.performanceandtraining.configurations.librariesinterfaces;
 
-import ar.edu.unrc.game2048.performanceandtraining.configurations.librariesinterfaces.EncogExperimentInterfaceTest;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -31,8 +30,8 @@ import org.junit.runners.Suite;
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
 @RunWith( Suite.class )
-@Suite.SuiteClasses( {GameBoardTest.class, EncogExperimentInterfaceTest.class, Game2048Test.class} )
-public class TestSuite {
+@Suite.SuiteClasses( {EncogExperimentInterfaceTest.class} )
+public class LibrariesSuite {
 
     /**
      *

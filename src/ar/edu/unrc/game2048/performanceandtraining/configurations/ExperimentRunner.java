@@ -16,54 +16,22 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ar.edu.unrc.game2048;
+package ar.edu.unrc.game2048.performanceandtraining.configurations;
 
-import ar.edu.unrc.game2048.performanceandtraining.configurations.librariesinterfaces.EncogExperimentInterfaceTest;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
+import ar.edu.unrc.game2048.PerceptronConfiguration2048;
 
 /**
  *
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
-@RunWith( Suite.class )
-@Suite.SuiteClasses( {GameBoardTest.class, EncogExperimentInterfaceTest.class, Game2048Test.class} )
-public class TestSuite {
+public class ExperimentRunner {
 
     /**
      *
-     * @throws Exception
+     * @param gamesToPlay
+     * @param perceptronConfig
      */
-    @BeforeClass
-    public static void setUpClass() throws Exception {
-    }
+    public ExperimentRunner(int gamesToPlay, PerceptronConfiguration2048 perceptronConfig) {
 
-    /**
-     *
-     * @throws Exception
-     */
-    @AfterClass
-    public static void tearDownClass() throws Exception {
     }
-
-    /**
-     *
-     * @throws Exception
-     */
-    @Before
-    public void setUp() throws Exception {
-    }
-
-    /**
-     *
-     * @throws Exception
-     */
-    @After
-    public void tearDown() throws Exception {
-    }
-
 }

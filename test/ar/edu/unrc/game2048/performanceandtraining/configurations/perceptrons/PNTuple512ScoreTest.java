@@ -4,7 +4,7 @@ import ar.edu.unrc.game2048.Game2048;
 import ar.edu.unrc.game2048.GameBoard;
 import ar.edu.unrc.game2048.Tile;
 import ar.edu.unrc.game2048.TileContainer;
-import ar.edu.unrc.game2048.performanceandtraining.configurations.ntuples.NBasicScoreTanH512;
+import ar.edu.unrc.game2048.performanceandtraining.configurations.ntuples.NBasicScoreTanH_512;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.inputs.InputNtupleList;
 import ar.edu.unrc.tdlearning.perceptron.ntuple.NTupleSystem;
 import org.encog.neural.networks.BasicNetwork;
@@ -14,6 +14,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import static org.junit.Assert.assertTrue;
 
 /**
  *
@@ -81,7 +82,7 @@ public class PNTuple512ScoreTest {
         nTupleConfiguration.calculateNormalizedPerceptronInput(board, normalizedPerceptronInput);
 
         //----------------------
-        NBasicScoreTanH512 nTupleConfiguration2 = new NBasicScoreTanH512();
+        NBasicScoreTanH_512 nTupleConfiguration2 = new NBasicScoreTanH_512();
         Game2048<BasicNetwork> game2 = new Game2048(null, nTupleConfiguration2, (int) Math.pow(2, nTupleConfiguration2.getMaxTile()), 0);
         GameBoard<BasicNetwork> board2 = new GameBoard(game2, tileContainer);
         board2.setTiles(randomBoard);

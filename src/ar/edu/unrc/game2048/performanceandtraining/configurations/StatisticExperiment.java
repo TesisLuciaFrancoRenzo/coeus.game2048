@@ -84,7 +84,7 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
      * @throws InvalidFormatException
      */
     public void exportToExcel(String filePath, List<File> backupFiles, Map<File, StatisticForCalc> resultsPerFile, Map<File, StatisticForCalc> resultsRandom, File randomPerceptronFile) throws IOException, InvalidFormatException {
-        InputStream inputXLSX = this.getClass().getResourceAsStream("/ar/edu/unrc/game2048/resources/Estadisticas.xlsx");
+        InputStream inputXLSX = this.getClass().getResourceAsStream("/ar/edu/unrc/game2048/performanceandtraining/resources/Estadisticas.xlsx");
         Workbook wb = WorkbookFactory.create(inputXLSX);
 
         try ( FileOutputStream outputXLSX = new FileOutputStream(filePath + "_" + dateFormater.format(dateForFileName) + "_STATISTICS" + ".xlsx") ) {
@@ -398,7 +398,7 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
                         results.get(i).addStatisticForTile(games.get(i).getMaxNumberCode());
                         results.get(i).addScore(games.get(i).getScore());
 
-                        if ( games.get(i).getMaxNumber() >= 2_048 ) {
+                        if ( games.get(i).getMaxNumber() >= tileToWin ) {
                             results.get(i).addWin();
                             results.get(i).addLastTurn(games.get(i).getLastTurn());
                         }
@@ -678,7 +678,6 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
         });
 
         exportToExcel(filePath, backupFiles, resultsPerFile, resultsRandom, randomPerceptronFile);
-
     }
 
     /**

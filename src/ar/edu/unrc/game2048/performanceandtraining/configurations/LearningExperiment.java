@@ -82,7 +82,6 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
     private INeuralNetworkInterfaceFor2048<NeuralNetworkClass> neuralNetworkInterfaceFor2048;
     private String perceptronName;
     private boolean resetEligibilitiTraces = false;
-    private boolean runStatisticForRandom = false;
     private boolean runStatisticsForBackups = false;
     private int saveBackupEvery = 0;
     private int saveEvery = 0;
@@ -182,6 +181,18 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
      */
     public void setExperimentName(String experimentName) {
         this.experimentName = experimentName;
+    }
+
+    /**
+     * @param experimentClass
+     */
+    public void setExperimentName(Class experimentClass) {
+        String className = experimentClass.getName();
+        int lastDot = className.lastIndexOf('.');
+        if ( lastDot != -1 ) {
+            className = className.substring(lastDot + 1);
+        }
+        this.experimentName = className;
     }
 
     /**
@@ -364,20 +375,6 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
      */
     public void setResetEligibilitiTraces(boolean resetEligibilitiTraces) {
         this.resetEligibilitiTraces = resetEligibilitiTraces;
-    }
-
-    /**
-     * @return the runStatisticForRandom
-     */
-    public boolean isRunStatisticForRandom() {
-        return runStatisticForRandom;
-    }
-
-    /**
-     * @param runStatisticForRandom the runStatisticForRandom to set
-     */
-    public void setRunStatisticForRandom(boolean runStatisticForRandom) {
-        this.runStatisticForRandom = runStatisticForRandom;
     }
 
     /**

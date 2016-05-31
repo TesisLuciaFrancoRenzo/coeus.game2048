@@ -18,7 +18,7 @@
  */
 package ar.edu.unrc.game2048.performanceandtraining.configurations;
 
-import ar.edu.unrc.game2048.performanceandtraining.configurations.libraries.LibrariesSuite;
+import ar.edu.unrc.game2048.performanceandtraining.configurations.librariesinterfaces.LibrariesSuite;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
