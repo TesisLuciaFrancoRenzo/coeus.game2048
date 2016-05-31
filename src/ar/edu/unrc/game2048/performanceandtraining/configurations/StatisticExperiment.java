@@ -38,6 +38,41 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
  */
 public abstract class StatisticExperiment<NeuralNetworkClass> {
 
+    /**
+     *
+     */
+    public static final String MAX_SCORE = "Maximo puntaje: ";
+
+    /**
+     *
+     */
+    public static final String MAX_TURN = "Maximo turno: ";
+
+    /**
+     *
+     */
+    public static final String MEAN_SCORE = "Media puntaje: ";
+
+    /**
+     *
+     */
+    public static final String MEAN_TURN = "Media turno: ";
+
+    /**
+     *
+     */
+    public static final String MIN_SCORE = "Minimo puntaje: ";
+
+    /**
+     *
+     */
+    public static final String MIN_TURN = "Minimo turno: ";
+
+    /**
+     *
+     */
+    public static final String WIN_RATE = "Win rate: ";
+
     private String experimentName;
     private String fileName;
 
@@ -497,13 +532,6 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
             System.out.println("Finished.");
         }
     }
-    public static final String WIN_RATE = "Win rate: ";
-    public static final String MIN_TURN = "Minimo turno: ";
-    public static final String MEAN_TURN = "Media turno: ";
-    public static final String MAX_TURN = "Maximo turno: ";
-    public static final String MIN_SCORE = "Minimo puntaje: ";
-    public static final String MEAN_SCORE = "Media puntaje: ";
-    public static final String MAX_SCORE = "Maximo puntaje: ";
 
     /**
      *

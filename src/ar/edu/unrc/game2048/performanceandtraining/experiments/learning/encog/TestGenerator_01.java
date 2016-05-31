@@ -154,7 +154,6 @@ public class TestGenerator_01 {
      * @param alphaList
      * @param lambdaList
      * @param statisticsOnly
-     * @param runStatisticForRandom
      * @param runStatisticsForBackups
      * @param createLogs
      * @param gamesToPlay
