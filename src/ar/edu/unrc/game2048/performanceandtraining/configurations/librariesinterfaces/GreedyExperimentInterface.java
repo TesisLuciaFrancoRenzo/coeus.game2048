@@ -82,7 +82,7 @@ public class GreedyExperimentInterface extends INeuralNetworkInterfaceFor2048 {
             List<StateProbability> allPosibleNextStates = game.listAllPossibleNextTurnStateFromAfterstate(afterState);
             Double reward = allPosibleNextStates.stream().mapToDouble((nextStateProb) -> {
                 if ( ((GameBoard) nextStateProb.getNextTurnState()).isAWin() || ((GameBoard) nextStateProb.getNextTurnState()).isFull() ) {
-                    return ((GameBoard) nextStateProb.getNextTurnState()).getPartialScore() * 4 * nextStateProb.getProbability(); //TODO revisar que no cause problemas
+                    return ((GameBoard) nextStateProb.getNextTurnState()).getPartialScore() * 4 * nextStateProb.getProbability();
                 } else {
                     ArrayList<Action> possibleNextActions = game.listAllPossibleActions(actualBoard);
                     return possibleNextActions.stream().mapToDouble((nextAction) -> {

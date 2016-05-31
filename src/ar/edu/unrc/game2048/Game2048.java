@@ -623,7 +623,7 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
         }
 
         for ( int i = 0; i < line1.length; i++ ) {
-            if ( line1[i].getCode() != line2[i].getCode() ) { //TODO optimizar con equal??
+            if ( line1[i].getCode() != line2[i].getCode() ) {
                 return false;
             }
         }
@@ -704,7 +704,7 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
     }
 
     private Tile[] moveLine(Tile[] oldLine) {
-        LinkedList<Tile> l = new LinkedList<>(); //TODO optimizar?
+        LinkedList<Tile> l = new LinkedList<>();
 
         for ( int i = 0; i < 4; i++ ) {
             if ( !oldLine[i].isEmpty() ) {

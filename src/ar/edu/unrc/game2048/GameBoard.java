@@ -117,7 +117,7 @@ public class GameBoard<NeuralNetworkClass> implements IStatePerceptron, IStateNT
      */
     public void addTile() {
         if ( !availableSpaceList.isEmpty() ) {
-            int index = (int) (random() * availableSpaceList.size()) % availableSpaceList.size(); //FIXME mejorar randomBetween con esto?? investigar
+            int index = (int) (random() * availableSpaceList.size()) % availableSpaceList.size();
             Integer tilePos = availableSpaceList.get(index);
             int value = random() < 0.9 ? 1 : 2;
             tiles[tilePos] = this.tileContainer.getTile(value);
@@ -428,7 +428,7 @@ public class GameBoard<NeuralNetworkClass> implements IStatePerceptron, IStateNT
         for ( int x = 0; x < 4; x++ ) {
             for ( int y = 0; y < 4; y++ ) {
                 Tile t = this.tileAt(x, y);
-                if ( (x < 3 && t.getCode() == this.tileAt(x + 1, y).getCode()) //TODO optimizar con equal??
+                if ( (x < 3 && t.getCode() == this.tileAt(x + 1, y).getCode())
                         || ((y < 3) && t.getCode() == this.tileAt(x, y + 1).getCode()) ) {
                     return true;
                 }

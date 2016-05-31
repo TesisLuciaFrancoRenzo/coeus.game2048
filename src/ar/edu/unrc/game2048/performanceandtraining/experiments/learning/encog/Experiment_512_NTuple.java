@@ -87,7 +87,7 @@ public class Experiment_512_NTuple extends LearningExperiment<BasicNetwork> {
 
     @Override
     public void initialize() throws Exception {
-        this.setTileToWin(512); //FIXME porque no muestra ganar al 512 en el archivo excel?
+        this.setTileToWin(512);
         if ( this.getExperimentName() == null ) {
             this.setExperimentName(this.getClass());
         }

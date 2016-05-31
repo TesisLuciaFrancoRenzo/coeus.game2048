@@ -24,9 +24,13 @@ import ar.edu.unrc.tdlearning.perceptron.learning.EExplorationRateAlgorithms;
 import ar.edu.unrc.tdlearning.perceptron.learning.ELearningRateAdaptation;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearning;
 import ar.edu.unrc.tdlearning.perceptron.ntuple.NTupleSystem;
-import ar.edu.unrc.utils.StringAndFiles;
-import ar.edu.unrc.utils.StringIterator;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.PrintStream;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -540,7 +544,9 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
                 writeConfig = true;
             }
             if ( writeConfig ) {
-                StringAndFiles.stringToFile(configFile, Integer.toString(i) + "\n" + Integer.toString(backupNumber) + "\n" + Long.toString(elapsedTime), StringAndFiles.UTF_8);
+                try ( BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(configFile), "UTF-8")) ) {
+                    out.write(Integer.toString(i) + "\n" + Integer.toString(backupNumber) + "\n" + Long.toString(elapsedTime));
+                }
             }
         }
     }
@@ -674,23 +680,23 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
         lastSavedGamePlayedNumber = 0;
         elapsedTime = 0;
         if ( configFile.exists() ) {
-            String configs = StringAndFiles.fileToString(configFile, StringAndFiles.UTF_8);
-            StringIterator iterator = new StringIterator(configs, null, "\n");
-            String line = iterator.readLine();
-            if ( line == null ) {
-                throw new IllegalArgumentException("el archivo de configuracion no tiene un formato válido");
+            try ( BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(configFile), "UTF-8")) ) {
+                String line = reader.readLine();
+                if ( line == null ) {
+                    throw new IllegalArgumentException("el archivo de configuracion no tiene un formato válido");
+                }
+                this.lastSavedGamePlayedNumber = Integer.parseInt(line);
+                line = reader.readLine();
+                if ( line == null ) {
+                    throw new IllegalArgumentException("el archivo de configuracion no tiene un formato válido");
+                }
+                this.backupNumber = Integer.parseInt(line);
+                line = reader.readLine();
+                if ( line == null ) {
+                    throw new IllegalArgumentException("el archivo de configuracion no tiene un formato válido");
+                }
+                this.elapsedTime = Long.parseLong(line);
             }
-            this.lastSavedGamePlayedNumber = Integer.parseInt(line);
-            line = iterator.readLine();
-            if ( line == null ) {
-                throw new IllegalArgumentException("el archivo de configuracion no tiene un formato válido");
-            }
-            this.backupNumber = Integer.parseInt(line);
-            line = iterator.readLine();
-            if ( line == null ) {
-                throw new IllegalArgumentException("el archivo de configuracion no tiene un formato válido");
-            }
-            this.elapsedTime = Long.parseLong(line);
         }
 
         int zeroNumbers = 1;
@@ -781,7 +787,6 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
                     this.saveBackupEvery(saveBackupEvery);
                     this.setSimulations(simulationsForStatistics);
                     this.setLearningMethod(learningAlgorithm);
-                    this.setSimpleDateFormat(dateFormater);
                 }
             };
             statisticExperiment.setFileName(this.getExperimentName());

@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
 import static java.lang.Math.round;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -39,7 +38,6 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
  */
 public abstract class StatisticExperiment<NeuralNetworkClass> {
 
-    private SimpleDateFormat dateFormater;
     private String experimentName;
     private String fileName;
 
@@ -351,7 +349,7 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
                 if ( learningExperiment.getNeuralNetworkInterfaceFor2048().getPerceptronConfiguration() != null ) {
                     tempPerceptronConfiguration = (PerceptronConfiguration2048<NeuralNetworkClass>) learningExperiment.getNeuralNetworkInterfaceFor2048().getPerceptronConfiguration().clone();
                     neuralNetworkInterfaceClone.setPerceptronConfiguration(tempPerceptronConfiguration);
-                    tempPerceptronInterface = neuralNetworkInterfaceClone.getPerceptronInterface(); //TODO revisar esto
+                    tempPerceptronInterface = neuralNetworkInterfaceClone.getPerceptronInterface();
                 }
                 if ( learningExperiment.getNeuralNetworkInterfaceFor2048().getNTupleConfiguration() != null ) {
                     tempNTupleConfiguration = (NTupleConfiguration2048) learningExperiment.getNeuralNetworkInterfaceFor2048().getNTupleConfiguration().clone();
@@ -371,10 +369,10 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
 
                 neuralNetworkInterfaces.add(neuralNetworkInterfaceClone);
                 if ( tempPerceptronConfiguration != null ) {
-                    tdLambdaLearning.add(learningExperiment.instanceOfTdLearninrgImplementation(tempPerceptronInterface)); //TODO revisar esto
+                    tdLambdaLearning.add(learningExperiment.instanceOfTdLearninrgImplementation(tempPerceptronInterface));
                 }
                 if ( tempNTupleConfiguration != null ) {
-                    tdLambdaLearning.add(learningExperiment.instanceOfTdLearninrgImplementation(tempNTupleConfiguration.getNTupleSystem())); //TODO revisar esto
+                    tdLambdaLearning.add(learningExperiment.instanceOfTdLearninrgImplementation(tempNTupleConfiguration.getNTupleSystem()));
                 }
                 games.add(game);
                 results.add(new ThreadResult());
@@ -587,14 +585,6 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
      */
     protected void setLearningMethod(TDLambdaLearning learningMethod) {
         this.learningMethod = learningMethod;
-    }
-
-    /**
-     *
-     * @param dateFormater
-     */
-    protected void setSimpleDateFormat(SimpleDateFormat dateFormater) {
-        this.dateFormater = dateFormater;
     }
 
     /**

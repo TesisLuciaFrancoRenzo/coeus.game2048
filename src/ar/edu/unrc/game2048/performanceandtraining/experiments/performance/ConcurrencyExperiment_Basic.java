@@ -26,9 +26,10 @@ import ar.edu.unrc.tdlearning.perceptron.interfaces.IPerceptronInterface;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearning;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearningAfterstate;
 import ar.edu.unrc.tdlearning.perceptron.ntuple.NTupleSystem;
-import ar.edu.unrc.utils.StringAndFiles;
-import static ar.edu.unrc.utils.StringAndFiles.UTF_8;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.encog.engine.network.activation.ActivationFunction;
@@ -223,8 +224,12 @@ public class ConcurrencyExperiment_Basic extends LearningExperiment<BasicNetwork
             outputResults.append("\n\n==========\nDemoró").append(time).append(" ms.");
             outputForGraphicsResults.append("\n\n==========\nDemoró").append(time).append(" ms.");
 
-            StringAndFiles.stringToFile(new File(filePath + "Concurrencia_Experimento_01.txt"), outputResults.toString(), UTF_8);
-            StringAndFiles.stringToFile(new File(filePath + "Concurrencia_Experimento_01_Calc.txt"), outputForGraphicsResults.toString(), UTF_8);
+            try ( BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(filePath + "Concurrencia_Experimento_01.txt")), "UTF-8")) ) {
+                out.write(outputResults.toString());
+            }
+            try ( BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(filePath + "Concurrencia_Experimento_01_Calc.txt")), "UTF-8")) ) {
+                out.write(outputForGraphicsResults.toString());
+            }
         } catch ( Exception ex ) {
             Logger.getLogger(ConcurrencyExperiment_Basic.class.getName()).log(Level.SEVERE, null, ex);
         }
