@@ -36,7 +36,12 @@ import org.encog.util.arrayutil.NormalizedField;
  * @author lucia bressan, franco pellegrini, renzo bianchini
  * @param <NeuralNetworkClass>
  */
-public class NTupleSeriousScore<NeuralNetworkClass> extends PerceptronConfiguration2048<NeuralNetworkClass> {
+public class PNTuple512Score<NeuralNetworkClass> extends PerceptronConfiguration2048<NeuralNetworkClass> {
+
+    /**
+     *
+     */
+    public final boolean concurrenInput;
 
     private final List<SamplePointState> allSamplePointStates;
     private final HashMap<SamplePointState, Integer> mapSamplePointStates;
@@ -47,21 +52,19 @@ public class NTupleSeriousScore<NeuralNetworkClass> extends PerceptronConfigurat
     private int[] nTuplesLenght;
     private final int[] nTuplesWeightQuantityIndex;
     private final int numSamples;
+    private final boolean useNTupleList;
 
     int maxReward = 500_000;
     int minReward = -500_000;
 
-
     /**
      *
      */
-    public NTupleSeriousScore() {
-        this.neuronQuantityInLayer = new int[2];
-        neuronQuantityInLayer[0] = 52_488;
-        neuronQuantityInLayer[1] = 1;
-
+    public PNTuple512Score() {
         numSamples = 8;
         maxTile = 9;
+        concurrenInput = true;
+        useNTupleList = true;
 
         nTuplesLenght = new int[numSamples];
         for ( int i = 0; i < numSamples; i++ ) {
@@ -78,13 +81,18 @@ public class NTupleSeriousScore<NeuralNetworkClass> extends PerceptronConfigurat
         nTuplesWeightQuantityIndex = new int[nTuplesLenght.length];
         int lasNTuplesWeightQuantity = 0;
         nTuplesWeightQuantityIndex[0] = lasNTuplesWeightQuantity;
+        int lutSize = 0;
         for ( int i = 0; i < nTuplesLenght.length; i++ ) {
             int nTuplesWeightQuantity = (int) Math.pow(mapSamplePointStates.size(), nTuplesLenght[i]);
+            lutSize += nTuplesWeightQuantity;
             if ( i > 0 ) {
                 nTuplesWeightQuantityIndex[i] = nTuplesWeightQuantityIndex[i - 1] + lasNTuplesWeightQuantity;
             }
             lasNTuplesWeightQuantity = nTuplesWeightQuantity;
         }
+        this.neuronQuantityInLayer = new int[2];
+        neuronQuantityInLayer[1] = 1;
+        neuronQuantityInLayer[0] = lutSize;
 
         this.activationFunctionForEncog = new ActivationFunction[1];
         activationFunctionForEncog[0] = new ActivationTANH();
@@ -100,6 +108,7 @@ public class NTupleSeriousScore<NeuralNetworkClass> extends PerceptronConfigurat
      *
      * @param nTupleSampleIndex
      * @param nTupleSample
+     *
      * @return
      */
     public int calculateIndex(int nTupleSampleIndex, SamplePointState[] nTupleSample) {
@@ -127,7 +136,6 @@ public class NTupleSeriousScore<NeuralNetworkClass> extends PerceptronConfigurat
         }
     }
 
-
     @Override
     public Double computeNumericRepresentationFor(Game2048 game, Object[] output) {
         assert output.length == 1;
@@ -138,6 +146,7 @@ public class NTupleSeriousScore<NeuralNetworkClass> extends PerceptronConfigurat
     public double denormalizeValueFromPerceptronOutput(Object value) {
         return normOutput.deNormalize((Double) value);
     }
+
     /**
      * @return the allSamplePointStates
      */
@@ -154,12 +163,14 @@ public class NTupleSeriousScore<NeuralNetworkClass> extends PerceptronConfigurat
     public double getFinalReward(GameBoard board, int outputNeuron) {
         return board.getGame().getScore();
     }
+
     /**
      * @return the mapSamplePointStates
      */
     public HashMap<SamplePointState, Integer> getMapSamplePointStates() {
         return mapSamplePointStates;
     }
+
     /**
      * @return the maxTile
      */
@@ -171,6 +182,7 @@ public class NTupleSeriousScore<NeuralNetworkClass> extends PerceptronConfigurat
      *
      * @param board
      * @param nTupleIndex
+     *
      * @return
      */
     public SamplePointState[] getNTuple(GameBoard board, int nTupleIndex) {
@@ -268,6 +280,15 @@ public class NTupleSeriousScore<NeuralNetworkClass> extends PerceptronConfigurat
         return nTuplesWeightQuantityIndex;
     }
 
+    /**
+     *
+     * @return
+     */
+    @Override
+    public boolean isConcurrentInputEnabled() {
+        return concurrenInput;
+    }
+
     @Override
     public double normalizeValueToPerceptronOutput(Object value) {
         return normOutput.normalize((Double) value);
@@ -279,6 +300,6 @@ public class NTupleSeriousScore<NeuralNetworkClass> extends PerceptronConfigurat
      */
     @Override
     public boolean useNTupleList() {
-        return true;
+        return useNTupleList;
     }
 }

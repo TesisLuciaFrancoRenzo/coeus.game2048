@@ -21,7 +21,7 @@ package ar.edu.unrc.game2048.performanceandtraining.configurations.learning.ntup
 import ar.edu.unrc.game2048.NTupleConfiguration2048;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.LearningExperiment;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.libraries.NTupleExperimentInterface;
-import ar.edu.unrc.game2048.performanceandtraining.configurations.ntuples.BasicScoreSigmoid;
+import ar.edu.unrc.game2048.performanceandtraining.configurations.ntuples.NBasicScoreSigmoid;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IPerceptronInterface;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearning;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearningAfterstate;
@@ -94,7 +94,7 @@ public class Experiment_02 extends LearningExperiment<BasicNetwork> {
             this.setExperimentName("Experiment_02");
         }
         this.setPerceptronName(this.getExperimentName());
-        NTupleConfiguration2048 config = new BasicScoreSigmoid();
+        NTupleConfiguration2048 config = new NBasicScoreSigmoid();
         this.setNeuralNetworkInterfaceFor2048(new NTupleExperimentInterface(config));
     }
 

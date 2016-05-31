@@ -21,7 +21,7 @@ package ar.edu.unrc.game2048.performanceandtraining.configurations.learning.enco
 import ar.edu.unrc.game2048.PerceptronConfiguration2048;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.LearningExperiment;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.libraries.EncogExperimentInterface;
-import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.NTupleSeriousScore;
+import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.PNTuple512Score;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IPerceptronInterface;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearning;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearningAfterstate;
@@ -50,8 +50,8 @@ public class Experiment_04 extends LearningExperiment<BasicNetwork> {
         }
         LearningExperiment experiment = new Experiment_04();
 
-//        boolean statistics = true;
-        boolean statistics = false;
+        boolean statistics = true;
+//        boolean statistics = false;
 
         boolean[] concurrentLayer = {true, false};
         experiment.setConcurrencyInLayer(concurrentLayer);
@@ -63,7 +63,7 @@ public class Experiment_04 extends LearningExperiment<BasicNetwork> {
         experiment.setGamma(1);
         experiment.setExplorationRateToFixed(0);
         experiment.setResetEligibilitiTraces(false);
-        experiment.setGamesToPlay(100_000);
+        experiment.setGamesToPlay(10_000);
         experiment.setSaveEvery(200);
         experiment.setSaveBackupEvery(500);
         experiment.setInitializePerceptronRandomized(false);
@@ -89,14 +89,12 @@ public class Experiment_04 extends LearningExperiment<BasicNetwork> {
 
     @Override
     public void initialize() throws Exception {
-        this.setTileToWin(512);
+        this.setTileToWin(512); //FIXME porque no muestra ganar al 512 en el archivo excel?
         if ( this.getExperimentName() == null ) {
             this.setExperimentName("Experiment_04");
         }
         this.setPerceptronName(this.getExperimentName());
-        PerceptronConfiguration2048<BasicNetwork> config = new NTupleSeriousScore<>();
-        // config.randomMoveProbability = 0.01;
-        //config.perceptron_hidden_quantity = config.perceptron_input_quantity;
+        PerceptronConfiguration2048<BasicNetwork> config = new PNTuple512Score<>();
         this.setNeuralNetworkInterfaceFor2048(new EncogExperimentInterface(config));
     }
 

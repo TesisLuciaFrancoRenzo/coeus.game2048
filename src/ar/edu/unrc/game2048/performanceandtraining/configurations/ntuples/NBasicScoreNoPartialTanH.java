@@ -30,7 +30,7 @@ import org.encog.util.arrayutil.NormalizedField;
 /**
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
-public class BasicScoreNoPartialTanH extends NTupleConfiguration2048 {
+public class NBasicScoreNoPartialTanH extends NTupleConfiguration2048 {
 
     int maxReward = 500_000;
     int minReward = -500_000;
@@ -38,7 +38,7 @@ public class BasicScoreNoPartialTanH extends NTupleConfiguration2048 {
     /**
      *
      */
-    public BasicScoreNoPartialTanH() {
+    public NBasicScoreNoPartialTanH() {
         this.activationFunction = FunctionUtils.tanh;
         this.derivatedActivationFunction = FunctionUtils.derivatedTanh;
         double activationFunctionMax = 1;

@@ -32,7 +32,7 @@ import org.encog.util.arrayutil.NormalizedField;
  * @author lucia bressan, franco pellegrini, renzo bianchini
  * @param <NeuralNetworkClass>
  */
-public class NTupleScore<NeuralNetworkClass> extends PerceptronConfiguration2048<NeuralNetworkClass> {
+public class PNTupleScore<NeuralNetworkClass> extends PerceptronConfiguration2048<NeuralNetworkClass> {
 
     /**
      *
@@ -53,16 +53,18 @@ public class NTupleScore<NeuralNetworkClass> extends PerceptronConfiguration2048
      *
      */
     public int minScore = 0;
+    private final boolean concurrenInput;
 
     /**
      *
      */
-    public NTupleScore() {
+    public PNTupleScore() {
         this.neuronQuantityInLayer = new int[3];
         neuronQuantityInLayer[0] = 17;
         neuronQuantityInLayer[1] = 17;
         neuronQuantityInLayer[2] = 1;
 
+        concurrenInput = false;
         this.activationFunctionForEncog = new ActivationFunction[2];
 
         activationFunctionForEncog[0] = new ActivationSigmoid();
@@ -76,6 +78,7 @@ public class NTupleScore<NeuralNetworkClass> extends PerceptronConfiguration2048
         normOutput = new NormalizedField(NormalizationAction.Normalize,
                 null, maxScore, minScore, activationFunctionMax, activationFunctionMin);
     }
+
 
     /**
      *
@@ -265,6 +268,15 @@ public class NTupleScore<NeuralNetworkClass> extends PerceptronConfiguration2048
         return board.getGame().getScore();
     }
 
+    /**
+     *
+     * @return
+     */
+    @Override
+    public boolean isConcurrentInputEnabled() {
+        return concurrenInput;
+    }
+
     @Override
     public double normalizeValueToPerceptronOutput(Object value) {
         return normOutput.normalize((Double) value);
@@ -292,6 +304,5 @@ public class NTupleScore<NeuralNetworkClass> extends PerceptronConfiguration2048
     private int encryptTiles(int tileCode1, int tileCode2, int tileCode3, int tileCode4) {
         return tileCode1 * 1_000_000 + tileCode2 * 10_000 + tileCode3 * 100 + tileCode4;
     }
-
 
 }

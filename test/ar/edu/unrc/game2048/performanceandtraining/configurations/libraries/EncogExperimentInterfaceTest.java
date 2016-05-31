@@ -111,6 +111,11 @@ public class EncogExperimentInterfaceTest {
             }
 
             @Override
+            public boolean isConcurrentInputEnabled() {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
             public double normalizeValueToPerceptronOutput(Object value) {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }

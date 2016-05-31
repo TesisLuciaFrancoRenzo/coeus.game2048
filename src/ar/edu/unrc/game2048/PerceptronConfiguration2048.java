@@ -126,6 +126,13 @@ public abstract class PerceptronConfiguration2048<NeuralNetworkClass> implements
      *
      * @return
      */
+    public abstract boolean isConcurrentInputEnabled();
+
+    /**
+     *
+     * @return
+     */
     public abstract boolean useNTupleList();
+
 
 }

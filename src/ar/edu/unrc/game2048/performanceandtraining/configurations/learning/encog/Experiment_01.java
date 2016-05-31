@@ -21,7 +21,7 @@ package ar.edu.unrc.game2048.performanceandtraining.configurations.learning.enco
 import ar.edu.unrc.game2048.PerceptronConfiguration2048;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.LearningExperiment;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.libraries.EncogExperimentInterface;
-import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.BinaryScore;
+import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.PBinaryScore;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IPerceptronInterface;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearning;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearningAfterstate;
@@ -93,7 +93,7 @@ public class Experiment_01 extends LearningExperiment<BasicNetwork> {
             this.setExperimentName("Experiment_01");
         }
         this.setPerceptronName(this.getExperimentName());
-        PerceptronConfiguration2048<BasicNetwork> config = new BinaryScore<>();
+        PerceptronConfiguration2048<BasicNetwork> config = new PBinaryScore<>();
 //           config.perceptron_hidden_quantity = config.perceptron_input_quantity * 2;
         //  config.randomMoveProbability = 0.01;
         this.setNeuralNetworkInterfaceFor2048(new EncogExperimentInterface(config));

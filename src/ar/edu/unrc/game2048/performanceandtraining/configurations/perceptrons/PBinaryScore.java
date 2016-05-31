@@ -32,7 +32,7 @@ import org.encog.util.arrayutil.NormalizedField;
  * @author lucia bressan, franco pellegrini, renzo bianchini
  * @param <NeuralNetworkClass>
  */
-public class BinaryScore<NeuralNetworkClass> extends PerceptronConfiguration2048<NeuralNetworkClass> {
+public class PBinaryScore<NeuralNetworkClass> extends PerceptronConfiguration2048<NeuralNetworkClass> {
 
     static final int BINARY_LENGHT = 4; //alcanza para escribir el 2048
 
@@ -45,11 +45,13 @@ public class BinaryScore<NeuralNetworkClass> extends PerceptronConfiguration2048
      *
      */
     public int minScore;
+    private boolean concurrenInput;
+
 
     /**
      *
      */
-    public BinaryScore() {
+    public PBinaryScore() {
         maxScore = 500_000;
         minScore = -500_000;
 
@@ -57,6 +59,8 @@ public class BinaryScore<NeuralNetworkClass> extends PerceptronConfiguration2048
         neuronQuantityInLayer[0] = 64;
         neuronQuantityInLayer[1] = 128;
         neuronQuantityInLayer[2] = 1;
+
+        concurrenInput = false;
 
         this.activationFunctionForEncog = new ActivationFunction[2];
         activationFunctionForEncog[0] = new ActivationTANH();
@@ -115,6 +119,15 @@ public class BinaryScore<NeuralNetworkClass> extends PerceptronConfiguration2048
     @Override
     public double getFinalReward(GameBoard board, int outputNeuron) {
         return board.getGame().getScore();
+    }
+
+    /**
+     *
+     * @return
+     */
+    @Override
+    public boolean isConcurrentInputEnabled() {
+        return concurrenInput;
     }
 
     @Override

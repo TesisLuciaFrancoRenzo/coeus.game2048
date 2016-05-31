@@ -66,20 +66,21 @@ import static java.lang.Math.cos;
 import static java.lang.Math.pow;
 import static java.lang.Math.sin;
 import static java.lang.Math.toRadians;
+import static java.lang.String.valueOf;
 import static java.lang.System.arraycopy;
+import static java.lang.Thread.sleep;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.IntStream;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 import org.encog.ml.data.MLData;
 import org.encog.ml.data.basic.BasicMLData;
 import org.encog.neural.networks.BasicNetwork;
-import static java.lang.String.valueOf;
-import static java.lang.Thread.sleep;
 
 /**
  * @author Konstantin Bulenkov, lucia bressan, franco pellegrini, renzo
@@ -291,10 +292,20 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
         //dependiendo de que tipo de red neuronal utilizamos, evaluamos las entradas y calculamos una salida
         if ( perceptronConfiguration != null && perceptronConfiguration.getNeuralNetwork() != null ) {
             if ( perceptronConfiguration.getNeuralNetwork() instanceof BasicNetwork ) { //es sobre la libreria encog
+                //creamos las entradas de la red neuronal
                 double[] inputs = new double[getPerceptronConfiguration().getNeuronQuantityInLayer()[0]];
-                for ( int i = 0; i < getPerceptronConfiguration().getNeuronQuantityInLayer()[0]; i++ ) {
-                    inputs[i] = ((IStatePerceptron) state).translateToPerceptronInput(i);
-                } //todo reeemplazar esot po algo ams elegante
+                IntStream inputLayer = IntStream
+                        .range(0, getPerceptronConfiguration().getNeuronQuantityInLayer()[0]);
+                if ( getPerceptronConfiguration().isConcurrentInputEnabled() ) {
+                    inputLayer = inputLayer.parallel();
+                } else {
+                    inputLayer = inputLayer.sequential();
+                }
+                inputLayer.forEach(index -> {
+                    inputs[index] = ((IStatePerceptron) state).translateToPerceptronInput(index);
+                });
+
+                //cargamos la entrada a la red
                 MLData inputData = new BasicMLData(inputs);
                 MLData output = ((BasicNetwork) perceptronConfiguration.getNeuralNetwork()).compute(inputData);
                 Double[] out = new Double[output.getData().length];

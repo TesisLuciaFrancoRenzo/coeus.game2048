@@ -18,7 +18,7 @@
  */
 package ar.edu.unrc.game2048;
 
-import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.NTupleScore;
+import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.PNTupleScore;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -48,7 +48,7 @@ public class GameBoardTest {
     private final Tile[] emptyBoard;
 
     private Game2048 game;
-    private final NTupleScore nTupleConfiguration;
+    private final PNTupleScore nTupleConfiguration;
 
     private final Tile[] randomBoard;
     private final TileContainer tileContainer;
@@ -73,7 +73,7 @@ public class GameBoardTest {
             tileContainer.getTile(4), tileContainer.getTile(0), tileContainer.getTile(1), tileContainer.getTile(4)
         };
         this.randomBoard = randomB;
-        nTupleConfiguration = new NTupleScore();
+        nTupleConfiguration = new PNTupleScore();
     }
 
     /**

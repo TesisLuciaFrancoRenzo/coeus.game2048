@@ -21,7 +21,7 @@ package ar.edu.unrc.game2048.performanceandtraining.configurations.learning.ntup
 import ar.edu.unrc.game2048.NTupleConfiguration2048;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.LearningExperiment;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.libraries.NTupleExperimentInterface;
-import ar.edu.unrc.game2048.performanceandtraining.configurations.ntuples.NBasicScoreLinear;
+import ar.edu.unrc.game2048.performanceandtraining.configurations.ntuples.NBasicScoreTanH512;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IPerceptronInterface;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearning;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearningAfterstate;
@@ -32,7 +32,7 @@ import org.encog.neural.networks.BasicNetwork;
 /**
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
-public class Experiment_01 extends LearningExperiment<BasicNetwork> {
+public class Experiment_10 extends LearningExperiment<BasicNetwork> {
 
     /**
      *
@@ -48,20 +48,21 @@ public class Experiment_01 extends LearningExperiment<BasicNetwork> {
         } else {
             filePath = args[0];
         }
-        LearningExperiment experiment = new Experiment_01();
+        LearningExperiment experiment = new Experiment_10();
 
-        boolean statistics = true;
-//        boolean statistics = false;
+//        boolean statistics = true;
+        boolean statistics = false;
         double[] alphas = {0.0025, 0.0025};
         experiment.setAlpha(alphas);
         experiment.setLearningRateAdaptationToFixed();
-        experiment.setLambda(0);
+
+        experiment.setLambda(0.7);
         experiment.setGamma(1);
         experiment.setExplorationRateToFixed(0);
-        //  experiment.setResetEligibilitiTraces(true);
-        experiment.setGamesToPlay(100);
-        experiment.setSaveEvery(100);
-        experiment.setSaveBackupEvery(10);
+        experiment.setResetEligibilitiTraces(false);
+        experiment.setGamesToPlay(10_000);
+        experiment.setSaveEvery(500);
+        experiment.setSaveBackupEvery(500);
         experiment.setInitializePerceptronRandomized(false);
         experiment.setConcurrencyInComputeBestPosibleAction(true);
         boolean[] concurrentLayer = {false, false};
@@ -73,7 +74,7 @@ public class Experiment_01 extends LearningExperiment<BasicNetwork> {
             experiment.setStatisticsOnly(true);
             experiment.setRunStatisticForRandom(true);
             experiment.setRunStatisticsForBackups(true);
-            experiment.setGamesToPlayPerThreadForStatistics(10);
+            experiment.setGamesToPlayPerThreadForStatistics(1_000);
             experiment.setSimulationsForStatistics(8);
         } else {
             experiment.setStatisticsOnly(false);
@@ -88,12 +89,12 @@ public class Experiment_01 extends LearningExperiment<BasicNetwork> {
 
     @Override
     public void initialize() throws Exception {
-        this.setTileToWin(32_768);
+        this.setTileToWin(512);
         if ( this.getExperimentName() == null ) {
-            this.setExperimentName("Experiment_01");
+            this.setExperimentName("Experiment_10");
         }
         this.setPerceptronName(this.getExperimentName());
-        NTupleConfiguration2048 config = new NBasicScoreLinear();
+        NTupleConfiguration2048 config = new NBasicScoreTanH512();
         this.setNeuralNetworkInterfaceFor2048(new NTupleExperimentInterface(config));
     }
 

@@ -1,27 +1,25 @@
-
 package ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons;
 
 import ar.edu.unrc.game2048.Game2048;
 import ar.edu.unrc.game2048.GameBoard;
 import ar.edu.unrc.game2048.Tile;
 import ar.edu.unrc.game2048.TileContainer;
-import ar.edu.unrc.game2048.performanceandtraining.configurations.ntuples.BasicScoreTanH;
+import ar.edu.unrc.game2048.performanceandtraining.configurations.ntuples.NBasicScoreTanH512;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.inputs.InputNtupleList;
-import ar.edu.unrc.tdlearning.perceptron.learning.FunctionUtils;
 import ar.edu.unrc.tdlearning.perceptron.ntuple.NTupleSystem;
 import org.encog.neural.networks.BasicNetwork;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.assertTrue;
 
 /**
  *
  * @author franc
  */
-public class NTupleSeriousScoreTest {
+public class PNTuple512ScoreTest {
 
     /**
      *
@@ -40,7 +38,7 @@ public class NTupleSeriousScoreTest {
     /**
      *
      */
-    public NTupleSeriousScoreTest() {
+    public PNTuple512ScoreTest() {
     }
 
     /**
@@ -59,13 +57,13 @@ public class NTupleSeriousScoreTest {
 
     /**
      * Test of calculateNormalizedPerceptronInput method, of class
-     * NTupleSeriousScore.
+     * PNTuple512Score.
      */
     @Test
     public void testCalculateNormalizedPerceptronInput() {
         System.out.println("calculateNormalizedPerceptronInput");
 
-        NTupleSeriousScore<BasicNetwork> nTupleConfiguration = new NTupleSeriousScore<>();
+        PNTuple512Score<BasicNetwork> nTupleConfiguration = new PNTuple512Score<>();
         TileContainer tileContainer = new TileContainer(nTupleConfiguration.getMaxTile());
         Tile[] randomB = {
             tileContainer.getTile(0), tileContainer.getTile(4), tileContainer.getTile(0), tileContainer.getTile(9),
@@ -83,19 +81,18 @@ public class NTupleSeriousScoreTest {
         nTupleConfiguration.calculateNormalizedPerceptronInput(board, normalizedPerceptronInput);
 
         //----------------------
-        BasicScoreTanH nTupleConfiguration2 = new BasicScoreTanH();
-        Game2048<BasicNetwork> game2 = new Game2048(null, nTupleConfiguration2, (int) Math.pow(2, nTupleConfiguration.getMaxTile()), 0);
+        NBasicScoreTanH512 nTupleConfiguration2 = new NBasicScoreTanH512();
+        Game2048<BasicNetwork> game2 = new Game2048(null, nTupleConfiguration2, (int) Math.pow(2, nTupleConfiguration2.getMaxTile()), 0);
         GameBoard<BasicNetwork> board2 = new GameBoard(game2, tileContainer);
         board2.setTiles(randomBoard);
 
         NTupleSystem nTupleSystem = new NTupleSystem(
-                nTupleConfiguration.getAllSamplePointStates(),
-                nTupleConfiguration.getnTuplesLenght(),
-                FunctionUtils.tanh,
-                FunctionUtils.derivatedTanh,
+                nTupleConfiguration2.allSamplePointStates,
+                nTupleConfiguration2.nTuplesLenght,
+                nTupleConfiguration2.activationFunction,
+                nTupleConfiguration2.derivatedActivationFunction,
                 false
         );
-
         int[] indexes = nTupleSystem.getComplexComputation(board2).getIndexes();
         assertTrue(normalizedPerceptronInput.getInternalSetSize() == indexes.length);
 
