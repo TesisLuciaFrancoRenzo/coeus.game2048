@@ -5,8 +5,10 @@ import ar.edu.unrc.game2048.NTupleConfiguration2048;
 import ar.edu.unrc.game2048.PerceptronConfiguration2048;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IPerceptronInterface;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearning;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
@@ -14,7 +16,6 @@ import static java.lang.Math.round;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,9 +39,7 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
  */
 public abstract class StatisticExperiment<NeuralNetworkClass> {
 
-    private Date dateForFileName;
     private SimpleDateFormat dateFormater;
-
     private String experimentName;
     private String fileName;
 
@@ -87,7 +86,7 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
         InputStream inputXLSX = this.getClass().getResourceAsStream("/ar/edu/unrc/game2048/performanceandtraining/resources/Estadisticas.xlsx");
         Workbook wb = WorkbookFactory.create(inputXLSX);
 
-        try ( FileOutputStream outputXLSX = new FileOutputStream(filePath + "_" + dateFormater.format(dateForFileName) + "_STATISTICS" + ".xlsx") ) {
+        try ( FileOutputStream outputXLSX = new FileOutputStream(filePath + "_STATISTICS" + ".xlsx") ) {
             //============= imptimimos en la hoja de tiles ===================
 
             Sheet sheet = wb.getSheetAt(0);
@@ -115,14 +114,13 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
             //Estilo de celdas con los valores de las estadisticas
             CellStyle cellStyle = wb.createCellStyle();
             cellStyle.setWrapText(true);
-            /* We are now ready to set borders for this style */
- /* Draw a thin left border */
+            // We are now ready to set borders for this style. Draw a thin left border
             cellStyle.setBorderLeft(CellStyle.BORDER_THIN);
-            /* Add medium right border */
+            // Add medium right border
             cellStyle.setBorderRight(CellStyle.BORDER_THIN);
-            /* Add dashed top border */
+            // Add dashed top border
             cellStyle.setBorderTop(CellStyle.BORDER_THIN);
-            /* Add dotted bottom border */
+            // Add dotted bottom border
             cellStyle.setBorderBottom(CellStyle.BORDER_THIN);
             //estilo celdas finalizado
 
@@ -334,145 +332,180 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
     public void processFile(String fileToProcess, int delayPerMove, boolean createPerceptronFile) throws Exception {
 
         //preparamos los destinos de las siimulaciones para posterior sumatoria final
-        List<ThreadResult> results = new ArrayList(simulations);
-        List<Game2048<NeuralNetworkClass>> games = new ArrayList(simulations);
-        List<INeuralNetworkInterfaceFor2048<NeuralNetworkClass>> neuralNetworkInterfaces = new ArrayList(simulations);
-        List<TDLambdaLearning> tdLambdaLearning = new ArrayList(simulations);
+        File logFile = new File(fileToProcess + "_STATISTICS" + ".txt");
 
-        for ( int i = 0; i < simulations; i++ ) {
-            INeuralNetworkInterfaceFor2048<NeuralNetworkClass> neuralNetworkInterfaceClone;
-            PerceptronConfiguration2048<NeuralNetworkClass> tempPerceptronConfiguration = null;
-            neuralNetworkInterfaceClone = (INeuralNetworkInterfaceFor2048<NeuralNetworkClass>) learningExperiment.getNeuralNetworkInterfaceFor2048().clone();
+        if ( !logFile.exists() ) {
+            List<ThreadResult> results = new ArrayList(simulations);
+            List<Game2048<NeuralNetworkClass>> games = new ArrayList(simulations);
+            List<INeuralNetworkInterfaceFor2048<NeuralNetworkClass>> neuralNetworkInterfaces = new ArrayList(simulations);
+            List<TDLambdaLearning> tdLambdaLearning = new ArrayList(simulations);
 
-            NTupleConfiguration2048 tempNTupleConfiguration = null;
-            IPerceptronInterface tempPerceptronInterface = null;
+            for ( int i = 0; i < simulations; i++ ) {
+                INeuralNetworkInterfaceFor2048<NeuralNetworkClass> neuralNetworkInterfaceClone;
+                PerceptronConfiguration2048<NeuralNetworkClass> tempPerceptronConfiguration = null;
+                neuralNetworkInterfaceClone = (INeuralNetworkInterfaceFor2048<NeuralNetworkClass>) learningExperiment.getNeuralNetworkInterfaceFor2048().clone();
 
-            if ( learningExperiment.getNeuralNetworkInterfaceFor2048().getPerceptronConfiguration() != null ) {
-                tempPerceptronConfiguration = (PerceptronConfiguration2048<NeuralNetworkClass>) learningExperiment.getNeuralNetworkInterfaceFor2048().getPerceptronConfiguration().clone();
-                neuralNetworkInterfaceClone.setPerceptronConfiguration(tempPerceptronConfiguration);
-                tempPerceptronInterface = neuralNetworkInterfaceClone.getPerceptronInterface(); //TODO revisar esto
-            }
-            if ( learningExperiment.getNeuralNetworkInterfaceFor2048().getNTupleConfiguration() != null ) {
-                tempNTupleConfiguration = (NTupleConfiguration2048) learningExperiment.getNeuralNetworkInterfaceFor2048().getNTupleConfiguration().clone();
-                neuralNetworkInterfaceClone.setNTupleConfiguration(tempNTupleConfiguration);
-            }
+                NTupleConfiguration2048 tempNTupleConfiguration = null;
+                IPerceptronInterface tempPerceptronInterface = null;
 
-            if ( tempPerceptronConfiguration != null || tempNTupleConfiguration != null ) {
-                //cargamos la red neuronal entrenada
-                File perceptronFile = new File(fileToProcess + ".ser");
-                if ( !perceptronFile.exists() ) {
-                    throw new IllegalArgumentException("perceptron file must exists: " + perceptronFile.getCanonicalPath());
+                if ( learningExperiment.getNeuralNetworkInterfaceFor2048().getPerceptronConfiguration() != null ) {
+                    tempPerceptronConfiguration = (PerceptronConfiguration2048<NeuralNetworkClass>) learningExperiment.getNeuralNetworkInterfaceFor2048().getPerceptronConfiguration().clone();
+                    neuralNetworkInterfaceClone.setPerceptronConfiguration(tempPerceptronConfiguration);
+                    tempPerceptronInterface = neuralNetworkInterfaceClone.getPerceptronInterface(); //TODO revisar esto
                 }
-                neuralNetworkInterfaceClone.loadOrCreatePerceptron(perceptronFile, true, createPerceptronFile);
-            }
+                if ( learningExperiment.getNeuralNetworkInterfaceFor2048().getNTupleConfiguration() != null ) {
+                    tempNTupleConfiguration = (NTupleConfiguration2048) learningExperiment.getNeuralNetworkInterfaceFor2048().getNTupleConfiguration().clone();
+                    neuralNetworkInterfaceClone.setNTupleConfiguration(tempNTupleConfiguration);
+                }
 
-            Game2048<NeuralNetworkClass> game = new Game2048<>(tempPerceptronConfiguration, tempNTupleConfiguration, tileToWin, delayPerMove);
-
-            neuralNetworkInterfaces.add(neuralNetworkInterfaceClone);
-            if ( tempPerceptronConfiguration != null ) {
-                tdLambdaLearning.add(learningExperiment.instanceOfTdLearninrgImplementation(tempPerceptronInterface)); //TODO revisar esto
-            }
-            if ( tempNTupleConfiguration != null ) {
-                tdLambdaLearning.add(learningExperiment.instanceOfTdLearninrgImplementation(tempNTupleConfiguration.getNTupleSystem())); //TODO revisar esto
-            }
-            games.add(game);
-            results.add(new ThreadResult());
-        }
-
-        IntStream
-                .range(0, simulations)
-                .parallel()
-                .forEach(i -> {
-                    // Si hay un perceptron ya entrenado, lo buscamos en el archivo.
-                    // En caso contrario creamos un perceptron vacio, inicializado al azar
-                    for ( results.get(i).setProcesedGames(1); results.get(i).getProcesedGames() < gamesToPlay; results.get(i).addProcesedGames() ) {
-                        games.get(i).resetGame(); //reset
-                        while ( !games.get(i).iLoose() && !games.get(i).iWin() ) {
-                            if ( tdLambdaLearning.isEmpty() ) {
-                                neuralNetworkInterfaces.get(i).playATurn(games.get(i), null);
-                            } else {
-                                neuralNetworkInterfaces.get(i).playATurn(games.get(i), tdLambdaLearning.get(i));
-                            }
-                        }
-                        //calculamos estadisticas
-                        results.get(i).addStatisticForTile(games.get(i).getMaxNumberCode());
-                        results.get(i).addScore(games.get(i).getScore());
-
-                        if ( games.get(i).getMaxNumber() >= tileToWin ) {
-                            results.get(i).addWin();
-                            results.get(i).addLastTurn(games.get(i).getLastTurn());
-                        }
-
+                if ( tempPerceptronConfiguration != null || tempNTupleConfiguration != null ) {
+                    //cargamos la red neuronal entrenada
+                    File perceptronFile = new File(fileToProcess + ".ser");
+                    if ( !perceptronFile.exists() ) {
+                        throw new IllegalArgumentException("perceptron file must exists: " + perceptronFile.getCanonicalPath());
                     }
-                    games.get(i).dispose();
-                });
-
-        winRate = 0;
-        maxScore = 0;
-        minScore = 0;
-        meanScore = 0;
-        maxTurn = 0;
-        minTurn = 0;
-        meanTurn = 0;
-
-        tileStatistics = new ArrayList<>(18);
-        for ( int i = 0; i <= 17; i++ ) {
-            tileStatistics.add(0d);
-        }
-        results.stream().forEach((result) -> {
-            winRate += result.getWinRate();
-            maxScore += result.getMaxScore();
-            minScore += result.getMinScore();
-            meanScore += result.getMeanScore();
-            maxTurn += result.getMaxTurn();
-            minTurn += result.getMinTurn();
-            meanTurn += result.getMeanTurn();
-            for ( int i = 0; i <= 17; i++ ) {
-                tileStatistics.set(i, tileStatistics.get(i) + result.getStatisticForTile(i));
-            }
-        });
-
-        for ( int i = 0; i <= 17; i++ ) {
-            tileStatistics.set(i, tileStatistics.get(i) / (simulations * 1d));
-        }
-        winRate /= (simulations * 1d);
-        assert winRate < 100;
-        maxScore /= (simulations * 1d);
-        minScore /= (simulations * 1d);
-        meanScore /= (simulations * 1d);
-        maxTurn /= (simulations * 1d);
-        minTurn /= (simulations * 1d);
-        meanTurn /= (simulations * 1d);
-
-        if ( !results.isEmpty() ) {
-            //creamos un archivo de logs para acumular estadisticas
-            Date now;
-            if ( dateForFileName != null ) {
-                now = dateForFileName;
-            } else {
-                now = new Date();
-            }
-            File logFile = new File(fileToProcess + "_" + dateFormater.format(now) + "_STATISTICS" + ".txt");
-
-            try ( PrintStream printStream = new PrintStream(logFile, "UTF-8") ) {
-                printStream.print("Gano: " + round(winRate) + "% - Total de partidas: " + gamesToPlay + " (promedios obtenidos con " + simulations + " simulaciones)");
-                printStream.println("\nValores alcanzados:");
-                for ( int i = 0; i <= 17; i++ ) {
-                    printStream.println(tileStatistics.get(i).toString().replaceAll("\\.", ","));
+                    neuralNetworkInterfaceClone.loadOrCreatePerceptron(perceptronFile, true, createPerceptronFile);
                 }
-                printStream.println("\nPuntajes alcanzados (valor/veces):");
 
-                printStream.println("Maximo puntaje:" + maxScore);
-                printStream.println("Media  puntaje:" + meanScore);
-                printStream.println("Minimo puntaje:" + minScore);
+                Game2048<NeuralNetworkClass> game = new Game2048<>(tempPerceptronConfiguration, tempNTupleConfiguration, tileToWin, delayPerMove);
 
-                printStream.println("Maximo turno:" + maxTurn);
-                printStream.println("Media  turno:" + meanTurn);
-                printStream.println("Minimo turno:" + minTurn);
+                neuralNetworkInterfaces.add(neuralNetworkInterfaceClone);
+                if ( tempPerceptronConfiguration != null ) {
+                    tdLambdaLearning.add(learningExperiment.instanceOfTdLearninrgImplementation(tempPerceptronInterface)); //TODO revisar esto
+                }
+                if ( tempNTupleConfiguration != null ) {
+                    tdLambdaLearning.add(learningExperiment.instanceOfTdLearninrgImplementation(tempNTupleConfiguration.getNTupleSystem())); //TODO revisar esto
+                }
+                games.add(game);
+                results.add(new ThreadResult());
             }
+
+            IntStream
+                    .range(0, simulations)
+                    .parallel()
+                    .forEach(i -> {
+                        // Si hay un perceptron ya entrenado, lo buscamos en el archivo.
+                        // En caso contrario creamos un perceptron vacio, inicializado al azar
+                        for ( results.get(i).setProcesedGames(1); results.get(i).getProcesedGames() < gamesToPlay; results.get(i).addProcesedGames() ) {
+                            games.get(i).resetGame(); //reset
+                            while ( !games.get(i).iLoose() && !games.get(i).iWin() ) {
+                                if ( tdLambdaLearning.isEmpty() ) {
+                                    neuralNetworkInterfaces.get(i).playATurn(games.get(i), null);
+                                } else {
+                                    neuralNetworkInterfaces.get(i).playATurn(games.get(i), tdLambdaLearning.get(i));
+                                }
+                            }
+                            //calculamos estadisticas
+                            results.get(i).addStatisticForTile(games.get(i).getMaxNumberCode());
+                            results.get(i).addScore(games.get(i).getScore());
+
+                            if ( games.get(i).getMaxNumber() >= tileToWin ) {
+                                results.get(i).addWin();
+                                results.get(i).addLastTurn(games.get(i).getLastTurn());
+                            }
+
+                        }
+                        games.get(i).dispose();
+                    });
+
+            winRate = 0;
+            maxScore = 0;
+            minScore = 0;
+            meanScore = 0;
+            maxTurn = 0;
+            minTurn = 0;
+            meanTurn = 0;
+
+            tileStatistics = new ArrayList<>(18);
+            for ( int i = 0; i <= 17; i++ ) {
+                tileStatistics.add(0d);
+            }
+            results.stream().forEach((result) -> {
+                winRate += result.getWinRate();
+                maxScore += result.getMaxScore();
+                minScore += result.getMinScore();
+                meanScore += result.getMeanScore();
+                maxTurn += result.getMaxTurn();
+                minTurn += result.getMinTurn();
+                meanTurn += result.getMeanTurn();
+                for ( int i = 0; i <= 17; i++ ) {
+                    tileStatistics.set(i, tileStatistics.get(i) + result.getStatisticForTile(i));
+                }
+            });
+
+            for ( int i = 0; i <= 17; i++ ) {
+                tileStatistics.set(i, tileStatistics.get(i) / (simulations * 1d));
+            }
+            winRate /= (simulations * 1d);
+            assert winRate < 100;
+            maxScore /= (simulations * 1d);
+            minScore /= (simulations * 1d);
+            meanScore /= (simulations * 1d);
+            maxTurn /= (simulations * 1d);
+            minTurn /= (simulations * 1d);
+            meanTurn /= (simulations * 1d);
+
+            if ( !results.isEmpty() ) {
+                try ( PrintStream printStream = new PrintStream(logFile, "UTF-8") ) {
+                    printStream.println("Gano: " + round(winRate) + "% - Total de partidas: " + gamesToPlay + " (promedios obtenidos con " + simulations + " simulaciones)");
+                    printStream.println("Valores alcanzados:");
+                    for ( int i = 0; i <= 17; i++ ) {
+                        printStream.println(tileStatistics.get(i).toString().replaceAll("\\.", ","));
+                    }
+
+                    printStream.println(MAX_SCORE + maxScore);
+                    printStream.println(MEAN_SCORE + meanScore);
+                    printStream.println(MIN_SCORE + minScore);
+
+                    printStream.println(MAX_TURN + maxTurn);
+                    printStream.println(MEAN_TURN + meanTurn);
+                    printStream.println(MIN_TURN + minTurn);
+
+                    printStream.println(WIN_RATE + winRate);
+                }
+                System.out.println("Finished.");
+            }
+        } else {
+            //cargamos el archivo ya guardado
+            BufferedReader br = new BufferedReader(new FileReader(logFile));
+            int lastTileStatistic = -1;
+            tileStatistics = new ArrayList<>(18);
+            for ( String line = br.readLine(); line != null; line = br.readLine() ) {
+                if ( line.contains(WIN_RATE) ) {
+                    winRate = extractNumber(line);
+                } else if ( line.contains(MIN_TURN) ) {
+                    minTurn = extractNumber(line);
+                } else if ( line.contains(MEAN_TURN) ) {
+                    meanTurn = extractNumber(line);
+                } else if ( line.contains(MAX_TURN) ) {
+                    maxTurn = extractNumber(line);
+                } else if ( line.contains(MIN_SCORE) ) {
+                    minScore = extractNumber(line);
+                } else if ( line.contains(MEAN_SCORE) ) {
+                    meanScore = extractNumber(line);
+                } else if ( line.contains(MAX_SCORE) ) {
+                    maxScore = extractNumber(line);
+                } else {
+                    try {
+                        double value = Double.parseDouble(line.trim().replaceFirst(",", "."));
+                        lastTileStatistic++;
+                        tileStatistics.add(value);
+                    } catch ( NumberFormatException numberFormatException ) {
+                    }
+                }
+
+            }
+            assert lastTileStatistic == 17;
             System.out.println("Finished.");
         }
     }
+    public static final String WIN_RATE = "Win rate: ";
+    public static final String MIN_TURN = "Minimo turno: ";
+    public static final String MEAN_TURN = "Media turno: ";
+    public static final String MAX_TURN = "Maximo turno: ";
+    public static final String MIN_SCORE = "Minimo puntaje: ";
+    public static final String MEAN_SCORE = "Media puntaje: ";
+    public static final String MAX_SCORE = "Maximo puntaje: ";
 
     /**
      *
@@ -501,18 +534,10 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
         }
     }
 
-    /**
-     * @return the dateForFileName
-     */
-    protected Date getDateForFileName() {
-        return dateForFileName;
-    }
-
-    /**
-     * @param dateForFileName the dateForFileName to set
-     */
-    protected void setDateForFileName(Date dateForFileName) {
-        this.dateForFileName = dateForFileName;
+    private double extractNumber(String line) {
+        int index = line.indexOf(':');
+        assert index != -1;
+        return Double.parseDouble(line.substring(index + 1).trim().replaceFirst(",", "."));
     }
 
     /**

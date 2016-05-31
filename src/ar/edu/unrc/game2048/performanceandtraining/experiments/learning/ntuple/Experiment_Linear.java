@@ -72,7 +72,7 @@ public class Experiment_Linear extends LearningExperiment<BasicNetwork> {
         if ( statistics ) {
             experiment.setStatisticsOnly(true);
             experiment.setRunStatisticsForBackups(true);
-            experiment.setGamesToPlayPerThreadForStatistics(10);
+            experiment.setGamesToPlayPerThreadForStatistics(5);
             experiment.setSimulationsForStatistics(8);
         } else {
             experiment.setStatisticsOnly(false);

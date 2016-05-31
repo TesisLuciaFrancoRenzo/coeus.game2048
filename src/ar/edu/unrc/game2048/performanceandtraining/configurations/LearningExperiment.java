@@ -781,7 +781,6 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
                     this.saveBackupEvery(saveBackupEvery);
                     this.setSimulations(simulationsForStatistics);
                     this.setLearningMethod(learningAlgorithm);
-                    this.setDateForFileName(now);
                     this.setSimpleDateFormat(dateFormater);
                 }
             };
