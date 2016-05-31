@@ -30,7 +30,7 @@ import org.encog.util.arrayutil.NormalizedField;
 /**
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
-public class NBasicScoreSigmoid extends NTupleConfiguration2048 {
+public class NBasicSigmoid extends NTupleConfiguration2048 {
 
     int maxReward = 500_000;
     int minReward = 0;
@@ -38,12 +38,13 @@ public class NBasicScoreSigmoid extends NTupleConfiguration2048 {
     /**
      *
      */
-    public NBasicScoreSigmoid() {
+    public NBasicSigmoid() {
         this.activationFunction = FunctionUtils.sigmoid;
         this.derivatedActivationFunction = FunctionUtils.derivatedSigmoid;
         this.concurrency = false;
         double activationFunctionMax = 1;
         double activationFunctionMin = 0;
+        int maxTile = 15;
 
         normOutput = new NormalizedField(NormalizationAction.Normalize,
                 null, maxReward, minReward, activationFunctionMax, activationFunctionMin);
@@ -53,7 +54,6 @@ public class NBasicScoreSigmoid extends NTupleConfiguration2048 {
             nTuplesLenght[i] = 4;
         }
 
-        int maxTile = 15;
         this.allSamplePointStates = new ArrayList<>();
         for ( int i = 0; i <= maxTile; i++ ) {
             allSamplePointStates.add(new Tile(i));

@@ -21,7 +21,7 @@ package ar.edu.unrc.game2048.performanceandtraining.experiments.performance;
 import ar.edu.unrc.game2048.PerceptronConfiguration2048;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.LearningExperiment;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.librariesinterfaces.EncogExperimentInterface;
-import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.PBinaryScore;
+import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.PBinary;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IPerceptronInterface;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearning;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearningAfterstate;
@@ -281,7 +281,7 @@ public class ConcurrencyExperiment_Basic extends LearningExperiment<BasicNetwork
             this.setExperimentName("ConcurrencyTimes");
         }
         this.setPerceptronName(this.getExperimentName());
-        PerceptronConfiguration2048<BasicNetwork> config = new PBinaryScore<>();
+        PerceptronConfiguration2048<BasicNetwork> config = new PBinary<>();
         config.setNeuronQuantityInLayer(currentConfig.neuronQuantityInLayer);
         config.setActivationFunctionForEncog(currentConfig.activationFunctionForEncog);
         this.setNeuralNetworkInterfaceFor2048(new EncogExperimentInterface(config));

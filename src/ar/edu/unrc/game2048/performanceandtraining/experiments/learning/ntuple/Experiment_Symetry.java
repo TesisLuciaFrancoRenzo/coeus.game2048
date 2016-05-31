@@ -21,7 +21,7 @@ package ar.edu.unrc.game2048.performanceandtraining.experiments.learning.ntuple;
 import ar.edu.unrc.game2048.NTupleConfiguration2048;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.LearningExperiment;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.librariesinterfaces.NTupleExperimentInterface;
-import ar.edu.unrc.game2048.performanceandtraining.configurations.ntuples.NSymetryScoreTanH;
+import ar.edu.unrc.game2048.performanceandtraining.configurations.ntuples.NSymetryTanH;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IPerceptronInterface;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearning;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearningAfterstate;
@@ -32,7 +32,7 @@ import org.encog.neural.networks.BasicNetwork;
 /**
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
-public class Experiment_SymetryScore extends LearningExperiment<BasicNetwork> {
+public class Experiment_Symetry extends LearningExperiment<BasicNetwork> {
 
     /**
      *
@@ -48,7 +48,7 @@ public class Experiment_SymetryScore extends LearningExperiment<BasicNetwork> {
         } else {
             filePath = args[0];
         }
-        LearningExperiment experiment = new Experiment_SymetryScore();
+        LearningExperiment experiment = new Experiment_Symetry();
 
 //        boolean statistics = true;
         boolean statistics = false;
@@ -92,7 +92,7 @@ public class Experiment_SymetryScore extends LearningExperiment<BasicNetwork> {
             this.setExperimentName(this.getClass());
         }
         this.setPerceptronName(this.getExperimentName());
-        NTupleConfiguration2048 config = new NSymetryScoreTanH();
+        NTupleConfiguration2048 config = new NSymetryTanH();
         this.setNeuralNetworkInterfaceFor2048(new NTupleExperimentInterface(config));
     }
 

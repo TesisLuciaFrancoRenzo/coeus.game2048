@@ -21,7 +21,6 @@ package ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons;
 import ar.edu.unrc.game2048.Game2048;
 import ar.edu.unrc.game2048.GameBoard;
 import ar.edu.unrc.game2048.PerceptronConfiguration2048;
-import ar.edu.unrc.game2048.Tile;
 import java.util.List;
 import org.encog.engine.network.activation.ActivationFunction;
 import org.encog.engine.network.activation.ActivationTANH;
@@ -29,17 +28,26 @@ import org.encog.util.arrayutil.NormalizationAction;
 import org.encog.util.arrayutil.NormalizedField;
 
 /**
+ *
  * @author lucia bressan, franco pellegrini, renzo bianchini
  * @param <NeuralNetworkClass>
  */
-public class PBinaryScore<NeuralNetworkClass> extends PerceptronConfiguration2048<NeuralNetworkClass> {
+public class PBoard<NeuralNetworkClass> extends PerceptronConfiguration2048<NeuralNetworkClass> {
 
-    static final int BINARY_LENGHT = 4; //alcanza para escribir el 2048
+    /**
+     *
+     */
+    public int maxCodedBoardnumber;
 
     /**
      *
      */
     public int maxScore;
+
+    /**
+     *
+     */
+    public int minCodedBoardnumber;
 
     /**
      *
@@ -51,24 +59,32 @@ public class PBinaryScore<NeuralNetworkClass> extends PerceptronConfiguration204
     /**
      *
      */
-    public PBinaryScore() {
+    public PBoard() {
+        maxCodedBoardnumber = 11; //2048 como maximo
         maxScore = 500_000;
         minScore = -500_000;
 
-        this.neuronQuantityInLayer = new int[3];
-        neuronQuantityInLayer[0] = 64;
-        neuronQuantityInLayer[1] = 128;
-        neuronQuantityInLayer[2] = 1;
+        minCodedBoardnumber = 0;
+
+        this.neuronQuantityInLayer = new int[4];
+        neuronQuantityInLayer[0] = 16;
+        neuronQuantityInLayer[1] = 512;
+        neuronQuantityInLayer[2] = 512;
+        neuronQuantityInLayer[3] = 1;
 
         concurrenInput = false;
 
-        this.activationFunctionForEncog = new ActivationFunction[2];
+        this.activationFunctionForEncog = new ActivationFunction[3];
+
         activationFunctionForEncog[0] = new ActivationTANH();
         activationFunctionForEncog[1] = new ActivationTANH();
+        activationFunctionForEncog[2] = new ActivationTANH();
 
         activationFunctionMax = 1;
         activationFunctionMin = -1;
 
+        normInput = new NormalizedField(NormalizationAction.Normalize,
+                null, maxCodedBoardnumber, minCodedBoardnumber, activationFunctionMax, activationFunctionMin);
         normOutput = new NormalizedField(NormalizationAction.Normalize,
                 null, maxScore, minScore, activationFunctionMax, activationFunctionMin);
     }
@@ -80,24 +96,58 @@ public class PBinaryScore<NeuralNetworkClass> extends PerceptronConfiguration204
      */
     @Override
     public void calculateNormalizedPerceptronInput(GameBoard<NeuralNetworkClass> board, List<Double> normalizedPerceptronInput) {
-        Tile[] tiles = board.getTiles();
-        int currentNeuron = 0;
-        for ( Tile tile : tiles ) {
-            String bits = Integer.toBinaryString(tile.getCode());
-            for ( int k = 0; k < BINARY_LENGHT - bits.length(); k++ ) {
-                normalizedPerceptronInput.set(currentNeuron, activationFunctionMin);
-                currentNeuron++;
-            }
-            for ( int j = 0; j < bits.length(); j++ ) {
-                if ( bits.charAt(j) == '0' ) {
-                    normalizedPerceptronInput.set(currentNeuron, activationFunctionMin);
-                } else {
-                    normalizedPerceptronInput.set(currentNeuron, activationFunctionMax);
-                }
-                currentNeuron++;
-            }
-        }
-        assert currentNeuron == this.getNeuronQuantityInLayer()[0];
+        // primera fila
+        normalizedPerceptronInput.set(0,
+                normInput.normalize(board.tileAt(0, 0).getCode())
+        );
+        normalizedPerceptronInput.set(1,
+                normInput.normalize(board.tileAt(0, 1).getCode())
+        );
+        normalizedPerceptronInput.set(2,
+                normInput.normalize(board.tileAt(0, 2).getCode())
+        );
+        normalizedPerceptronInput.set(3,
+                normInput.normalize(board.tileAt(0, 3).getCode())
+        );
+        // segunda fila
+        normalizedPerceptronInput.set(4,
+                normInput.normalize(board.tileAt(1, 0).getCode())
+        );
+        normalizedPerceptronInput.set(5,
+                normInput.normalize(board.tileAt(1, 1).getCode())
+        );
+        normalizedPerceptronInput.set(6,
+                normInput.normalize(board.tileAt(1, 2).getCode())
+        );
+        normalizedPerceptronInput.set(7,
+                normInput.normalize(board.tileAt(1, 3).getCode())
+        );
+        // tercera fila
+        normalizedPerceptronInput.set(8,
+                normInput.normalize(board.tileAt(2, 0).getCode())
+        );
+        normalizedPerceptronInput.set(9,
+                normInput.normalize(board.tileAt(2, 1).getCode())
+        );
+        normalizedPerceptronInput.set(10,
+                normInput.normalize(board.tileAt(2, 2).getCode())
+        );
+        normalizedPerceptronInput.set(11,
+                normInput.normalize(board.tileAt(2, 3).getCode())
+        );
+        // cuarta fila
+        normalizedPerceptronInput.set(12,
+                normInput.normalize(board.tileAt(3, 0).getCode())
+        );
+        normalizedPerceptronInput.set(13,
+                normInput.normalize(board.tileAt(3, 1).getCode())
+        );
+        normalizedPerceptronInput.set(14,
+                normInput.normalize(board.tileAt(3, 2).getCode())
+        );
+        normalizedPerceptronInput.set(15,
+                normInput.normalize(board.tileAt(3, 3).getCode())
+        );
     }
 
     @Override
@@ -143,5 +193,4 @@ public class PBinaryScore<NeuralNetworkClass> extends PerceptronConfiguration204
     public boolean useNTupleList() {
         return false;
     }
-
 }

@@ -30,19 +30,19 @@ import org.encog.util.arrayutil.NormalizedField;
 /**
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
-public class NBasicScoreTanH_512 extends NTupleConfiguration2048 {
+public class NBasicTanH_512 extends NTupleConfiguration2048 {
 
     private final int maxTile;
 
     private final int numSamples;
 
-    int maxReward = 500_000;
-    int minReward = -500_000;
+    int maxReward = 20_000;
+    int minReward = -20_000;
 
     /**
      *
      */
-    public NBasicScoreTanH_512() {
+    public NBasicTanH_512() {
         this.activationFunction = FunctionUtils.tanh;
         this.derivatedActivationFunction = FunctionUtils.derivatedTanh;
         this.concurrency = false;

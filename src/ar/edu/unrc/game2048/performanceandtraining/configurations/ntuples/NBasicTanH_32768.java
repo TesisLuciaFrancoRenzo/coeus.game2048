@@ -30,7 +30,7 @@ import org.encog.util.arrayutil.NormalizedField;
 /**
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
-public class NBasicScoreNoPartialTanH extends NTupleConfiguration2048 {
+public class NBasicTanH_32768 extends NTupleConfiguration2048 {
 
     int maxReward = 500_000;
     int minReward = -500_000;
@@ -38,12 +38,13 @@ public class NBasicScoreNoPartialTanH extends NTupleConfiguration2048 {
     /**
      *
      */
-    public NBasicScoreNoPartialTanH() {
+    public NBasicTanH_32768() {
         this.activationFunction = FunctionUtils.tanh;
         this.derivatedActivationFunction = FunctionUtils.derivatedTanh;
+        this.concurrency = false;
         double activationFunctionMax = 1;
         double activationFunctionMin = -1;
-        this.concurrency = false;
+        int maxTile = 15;
 
         normOutput = new NormalizedField(NormalizationAction.Normalize,
                 null, maxReward, minReward, activationFunctionMax, activationFunctionMin);
@@ -53,7 +54,6 @@ public class NBasicScoreNoPartialTanH extends NTupleConfiguration2048 {
             nTuplesLenght[i] = 4;
         }
 
-        int maxTile = 15;
         this.allSamplePointStates = new ArrayList<>();
         for ( int i = 0; i <= maxTile; i++ ) {
             allSamplePointStates.add(new Tile(i));
@@ -78,7 +78,7 @@ public class NBasicScoreNoPartialTanH extends NTupleConfiguration2048 {
      */
     @Override
     public double getBoardReward(GameBoard board, int outputNeuron) {
-        return 0;
+        return board.getPartialScore();
     }
 
     @Override

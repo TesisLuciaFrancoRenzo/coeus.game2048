@@ -30,7 +30,7 @@ import org.junit.runners.Suite;
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
 @RunWith( Suite.class )
-@Suite.SuiteClasses( {PNTuple512ScoreTest.class} )
+@Suite.SuiteClasses( {PNTuple512Test.class} )
 public class PerceptronsSuite {
 
     /**

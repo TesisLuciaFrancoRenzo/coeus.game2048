@@ -30,7 +30,7 @@ import org.encog.util.arrayutil.NormalizedField;
 /**
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
-public class NSymetryScoreTanH extends NTupleConfiguration2048 {
+public class NSymetryTanH extends NTupleConfiguration2048 {
 
     int maxReward = 500_000;
     int minReward = -500_000;
@@ -38,7 +38,7 @@ public class NSymetryScoreTanH extends NTupleConfiguration2048 {
     /**
      *
      */
-    public NSymetryScoreTanH() {
+    public NSymetryTanH() {
         this.activationFunction = FunctionUtils.tanh;
         this.derivatedActivationFunction = FunctionUtils.derivatedTanh;
         this.concurrency = false;

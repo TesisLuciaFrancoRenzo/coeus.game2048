@@ -30,7 +30,7 @@ import org.encog.util.arrayutil.NormalizedField;
 /**
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
-public class NNoSquaresScoreTanH extends NTupleConfiguration2048 {
+public class NIndividualTanH extends NTupleConfiguration2048 {
 
     int maxReward = 500_000;
     int minReward = -500_000;
@@ -38,7 +38,7 @@ public class NNoSquaresScoreTanH extends NTupleConfiguration2048 {
     /**
      *
      */
-    public NNoSquaresScoreTanH() {
+    public NIndividualTanH() {
         this.activationFunction = FunctionUtils.tanh;
         this.derivatedActivationFunction = FunctionUtils.derivatedTanh;
         this.concurrency = false;
@@ -48,12 +48,12 @@ public class NNoSquaresScoreTanH extends NTupleConfiguration2048 {
         normOutput = new NormalizedField(NormalizationAction.Normalize,
                 null, maxReward, minReward, activationFunctionMax, activationFunctionMin);
 
-        nTuplesLenght = new int[8];
-        for ( int i = 0; i < 8; i++ ) {
-            nTuplesLenght[i] = 4;
+        nTuplesLenght = new int[16];
+        for ( int i = 0; i < 16; i++ ) {
+            nTuplesLenght[i] = 1;
         }
 
-        int maxTile = 15; //256
+        int maxTile = 8;
         this.allSamplePointStates = new ArrayList<>();
         for ( int i = 0; i <= maxTile; i++ ) {
             allSamplePointStates.add(new Tile(i));
@@ -95,73 +95,87 @@ public class NNoSquaresScoreTanH extends NTupleConfiguration2048 {
     @Override
     public SamplePointState[] getNTuple(GameBoard board, int nTupleIndex) {
         switch ( nTupleIndex ) {
-            // verticales
+            // individuales
             case 0: {
                 SamplePointState[] sample
-                        = {board.tileAt(0, 0),
-                            board.tileAt(0, 1),
-                            board.tileAt(0, 2),
-                            board.tileAt(0, 3)};
+                        = {board.tileAt(0, 0)};
                 return sample;
             }
             case 1: {
                 SamplePointState[] sample
-                        = {board.tileAt(1, 0),
-                            board.tileAt(1, 1),
-                            board.tileAt(1, 2),
-                            board.tileAt(1, 3)};
+                        = {board.tileAt(0, 1)};
                 return sample;
             }
             case 2: {
                 SamplePointState[] sample
-                        = {board.tileAt(2, 0),
-                            board.tileAt(2, 1),
-                            board.tileAt(2, 2),
-                            board.tileAt(2, 3)};
+                        = {board.tileAt(0, 2)};
                 return sample;
             }
             case 3: {
                 SamplePointState[] sample
-                        = {board.tileAt(3, 0),
-                            board.tileAt(3, 1),
-                            board.tileAt(3, 2),
-                            board.tileAt(3, 3)};
+                        = {board.tileAt(0, 3)};
                 return sample;
             }
-            // horizontales
             case 4: {
                 SamplePointState[] sample
-                        = {board.tileAt(0, 0),
-                            board.tileAt(1, 0),
-                            board.tileAt(2, 0),
-                            board.tileAt(3, 0)};
+                        = {board.tileAt(1, 0)};
                 return sample;
             }
             case 5: {
                 SamplePointState[] sample
-                        = {board.tileAt(0, 1),
-                            board.tileAt(1, 1),
-                            board.tileAt(2, 1),
-                            board.tileAt(3, 1)};
+                        = {board.tileAt(1, 1)};
                 return sample;
             }
             case 6: {
                 SamplePointState[] sample
-                        = {board.tileAt(0, 2),
-                            board.tileAt(1, 2),
-                            board.tileAt(2, 2),
-                            board.tileAt(3, 2)};
+                        = {board.tileAt(1, 2),};
                 return sample;
             }
             case 7: {
                 SamplePointState[] sample
-                        = {board.tileAt(0, 3),
-                            board.tileAt(1, 3),
-                            board.tileAt(2, 3),
-                            board.tileAt(3, 3)};
+                        = {board.tileAt(1, 3)};
                 return sample;
             }
-
+            case 8: {
+                SamplePointState[] sample
+                        = {board.tileAt(2, 0)};
+                return sample;
+            }
+            case 9: {
+                SamplePointState[] sample
+                        = {board.tileAt(2, 1)};
+                return sample;
+            }
+            case 10: {
+                SamplePointState[] sample
+                        = {board.tileAt(2, 2)};
+                return sample;
+            }
+            case 11: {
+                SamplePointState[] sample
+                        = {board.tileAt(2, 3)};
+                return sample;
+            }
+            case 12: {
+                SamplePointState[] sample
+                        = {board.tileAt(3, 0)};
+                return sample;
+            }
+            case 13: {
+                SamplePointState[] sample
+                        = {board.tileAt(3, 1)};
+                return sample;
+            }
+            case 14: {
+                SamplePointState[] sample
+                        = {board.tileAt(3, 2),};
+                return sample;
+            }
+            case 15: {
+                SamplePointState[] sample
+                        = {board.tileAt(3, 3)};
+                return sample;
+            }
             default: {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }

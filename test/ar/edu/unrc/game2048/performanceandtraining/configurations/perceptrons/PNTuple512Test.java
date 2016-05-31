@@ -4,7 +4,7 @@ import ar.edu.unrc.game2048.Game2048;
 import ar.edu.unrc.game2048.GameBoard;
 import ar.edu.unrc.game2048.Tile;
 import ar.edu.unrc.game2048.TileContainer;
-import ar.edu.unrc.game2048.performanceandtraining.configurations.ntuples.NBasicScoreTanH_512;
+import ar.edu.unrc.game2048.performanceandtraining.configurations.ntuples.NBasicTanH_512;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.inputs.InputNtupleList;
 import ar.edu.unrc.tdlearning.perceptron.ntuple.NTupleSystem;
 import org.encog.neural.networks.BasicNetwork;
@@ -15,12 +15,26 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertTrue;
 
 /**
  *
  * @author franc
  */
-public class PNTuple512ScoreTest {
+public class PNTuple512Test {
 
     /**
      *
@@ -39,7 +53,7 @@ public class PNTuple512ScoreTest {
     /**
      *
      */
-    public PNTuple512ScoreTest() {
+    public PNTuple512Test() {
     }
 
     /**
@@ -58,13 +72,13 @@ public class PNTuple512ScoreTest {
 
     /**
      * Test of calculateNormalizedPerceptronInput method, of class
-     * PNTuple512Score.
+ PNTuple512.
      */
     @Test
     public void testCalculateNormalizedPerceptronInput() {
         System.out.println("calculateNormalizedPerceptronInput");
 
-        PNTuple512Score<BasicNetwork> nTupleConfiguration = new PNTuple512Score<>();
+        PNTuple512<BasicNetwork> nTupleConfiguration = new PNTuple512<>();
         TileContainer tileContainer = new TileContainer(nTupleConfiguration.getMaxTile());
         Tile[] randomB = {
             tileContainer.getTile(0), tileContainer.getTile(4), tileContainer.getTile(0), tileContainer.getTile(9),
@@ -82,7 +96,7 @@ public class PNTuple512ScoreTest {
         nTupleConfiguration.calculateNormalizedPerceptronInput(board, normalizedPerceptronInput);
 
         //----------------------
-        NBasicScoreTanH_512 nTupleConfiguration2 = new NBasicScoreTanH_512();
+        NBasicTanH_512 nTupleConfiguration2 = new NBasicTanH_512();
         Game2048<BasicNetwork> game2 = new Game2048(null, nTupleConfiguration2, (int) Math.pow(2, nTupleConfiguration2.getMaxTile()), 0);
         GameBoard<BasicNetwork> board2 = new GameBoard(game2, tileContainer);
         board2.setTiles(randomBoard);

@@ -36,7 +36,7 @@ import org.encog.util.arrayutil.NormalizedField;
  * @author lucia bressan, franco pellegrini, renzo bianchini
  * @param <NeuralNetworkClass>
  */
-public class PNTuple512Score<NeuralNetworkClass> extends PerceptronConfiguration2048<NeuralNetworkClass> {
+public class PNTuple512<NeuralNetworkClass> extends PerceptronConfiguration2048<NeuralNetworkClass> {
 
     /**
      *
@@ -54,13 +54,13 @@ public class PNTuple512Score<NeuralNetworkClass> extends PerceptronConfiguration
     private final int numSamples;
     private final boolean useNTupleList;
 
-    int maxReward = 500_000;
-    int minReward = -500_000;
+    int maxReward = 20_000;
+    int minReward = -20_000;
 
     /**
      *
      */
-    public PNTuple512Score() {
+    public PNTuple512() {
         numSamples = 8;
         maxTile = 9;
         concurrenInput = true;
