@@ -186,14 +186,6 @@ public class GameBoard<NeuralNetworkClass> implements IStatePerceptron, IStateNT
         return Objects.equals(this.availableSpaceList, other.availableSpaceList);
     }
 
-//    @Override
-//    public double getBoardRewardToNormalizedPerceptronOutput() {
-//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-//    }
-//    @Override
-//    public double getBoardRewardToNormalizedPerceptronOutput() {
-//        return game.getnTupleSystemConfiguration().getBoardRewardToNormalizedPerceptronOutput(this);
-//    }
     /**
      *
      * @return una copia del tablero
@@ -381,7 +373,7 @@ public class GameBoard<NeuralNetworkClass> implements IStatePerceptron, IStateNT
      * @return
      */
     public Tile tileAt(int x, int y) {
-        return getTiles()[x + y * 4];
+        return tiles[x + y * 4];
     }
 
     @Override

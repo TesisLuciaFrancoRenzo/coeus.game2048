@@ -605,16 +605,6 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
         board.addTile();
     }
 
-//    private void addTile(GameBoard<NeuralNetworkClass> board) {
-//        List<Integer> list = board.availableSpace();
-//        if ( !list.isEmpty() ) {
-//            int index = (int) (random() * list.size()) % list.size();
-//            Integer tilePos = list.get(index);
-//            int value = random() < 0.9 ? 1 : 2;
-//            board.getTiles()[tilePos] = this.tileContainer.getTile(value);
-//        }
-//        board.updateInternalState(true);
-//    }
     private boolean compare(Tile[] line1, Tile[] line2) {
         if ( line1 == line2 ) {
             return true;
