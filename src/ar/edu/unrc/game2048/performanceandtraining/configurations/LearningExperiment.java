@@ -182,12 +182,6 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
 
 
     /**
-     * @param experimentName the experimentName to set
-     */
-    public void setExperimentName(String experimentName) {
-        this.experimentName = experimentName;
-    }
-    /**
      * @param experimentClass
      */
     public void setExperimentName(Class experimentClass) {
@@ -197,6 +191,12 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
             className = className.substring(lastDot + 1);
         }
         this.experimentName = className;
+    }
+    /**
+     * @param experimentName the experimentName to set
+     */
+    public void setExperimentName(String experimentName) {
+        this.experimentName = experimentName;
     }
 
     /**
@@ -510,10 +510,10 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
 
             if ( learningAlgorithm.canCollectStatistics() ) {
                 double avg = 0;
-                for ( Long sample : learningAlgorithm.getBestPissibleActionTimes() ) {
+                for ( Long sample : learningAlgorithm.getBestPossibleActionTimes() ) {
                     avg += sample;
                 }
-                avg /= (learningAlgorithm.getBestPissibleActionTimes().size() * 1d);
+                avg /= (learningAlgorithm.getBestPossibleActionTimes().size() * 1d);
                 bestPissibleActionTimes.add(avg);
 
                 avg = 0;

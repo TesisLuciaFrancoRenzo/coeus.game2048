@@ -23,8 +23,8 @@ import ar.edu.unrc.game2048.performanceandtraining.configurations.LearningExperi
 import ar.edu.unrc.game2048.performanceandtraining.configurations.librariesinterfaces.NTupleExperimentInterface;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.ntuples.NBasicTanH_32768;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IPerceptronInterface;
+import static ar.edu.unrc.tdlearning.perceptron.learning.ELearningStyle.afterState;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearning;
-import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearningAfterstate;
 import ar.edu.unrc.tdlearning.perceptron.ntuple.NTupleSystem;
 import java.io.File;
 import org.encog.neural.networks.BasicNetwork;
@@ -103,7 +103,7 @@ public class Experiment_TanH extends LearningExperiment<BasicNetwork> {
 
     @Override
     public TDLambdaLearning instanceOfTdLearninrgImplementation(NTupleSystem nTupleSystem) {
-        return new TDLambdaLearningAfterstate(nTupleSystem, (getAlpha() != null) ? getAlpha()[0] : null, getLambda(), getGamma(), getConcurrencyInLayer(), isResetEligibilitiTraces(), false);
+        return new TDLambdaLearning(nTupleSystem, afterState, (getAlpha() != null) ? getAlpha()[0] : null, getLambda(), getGamma(), getConcurrencyInLayer(), isResetEligibilitiTraces(), false);
     }
 
 }

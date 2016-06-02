@@ -23,8 +23,8 @@ import ar.edu.unrc.game2048.performanceandtraining.configurations.LearningExperi
 import ar.edu.unrc.game2048.performanceandtraining.configurations.librariesinterfaces.EncogExperimentInterface;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.PBinary;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IPerceptronInterface;
+import static ar.edu.unrc.tdlearning.perceptron.learning.ELearningStyle.afterState;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearning;
-import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearningAfterstate;
 import ar.edu.unrc.tdlearning.perceptron.ntuple.NTupleSystem;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -299,7 +299,7 @@ public class ConcurrencyExperiment_Basic extends LearningExperiment<BasicNetwork
      */
     @Override
     public TDLambdaLearning instanceOfTdLearninrgImplementation(IPerceptronInterface perceptronInterface) {
-        return new TDLambdaLearningAfterstate(perceptronInterface, getAlpha(), getLambda(), getGamma(), getConcurrencyInLayer(), isResetEligibilitiTraces(), true);
+        return new TDLambdaLearning(perceptronInterface, afterState, getAlpha(), getLambda(), getGamma(), getConcurrencyInLayer(), isResetEligibilitiTraces(), true);
     }
 
     @Override

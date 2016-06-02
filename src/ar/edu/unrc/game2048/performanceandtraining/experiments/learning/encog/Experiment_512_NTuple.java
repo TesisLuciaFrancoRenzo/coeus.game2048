@@ -23,8 +23,8 @@ import ar.edu.unrc.game2048.performanceandtraining.configurations.LearningExperi
 import ar.edu.unrc.game2048.performanceandtraining.configurations.librariesinterfaces.EncogExperimentInterface;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.PNTuple512;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IPerceptronInterface;
+import static ar.edu.unrc.tdlearning.perceptron.learning.ELearningStyle.afterState;
 import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearning;
-import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearningAfterstate;
 import ar.edu.unrc.tdlearning.perceptron.ntuple.NTupleSystem;
 import java.io.File;
 import org.encog.neural.networks.BasicNetwork;
@@ -98,7 +98,15 @@ public class Experiment_512_NTuple extends LearningExperiment<BasicNetwork> {
 
     @Override
     public TDLambdaLearning instanceOfTdLearninrgImplementation(IPerceptronInterface perceptronInterface) {
-        return new TDLambdaLearningAfterstate(perceptronInterface, getAlpha(), getLambda(), getGamma(), getConcurrencyInLayer(), isResetEligibilitiTraces(), false);
+        return new TDLambdaLearning(
+                perceptronInterface,
+                afterState,
+                getAlpha(),
+                getLambda(),
+                getGamma(),
+                getConcurrencyInLayer(),
+                isResetEligibilitiTraces(),
+                false);
     }
 
     @Override
