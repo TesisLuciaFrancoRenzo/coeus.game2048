@@ -6,7 +6,7 @@ import ar.edu.unrc.game2048.Tile;
 import ar.edu.unrc.game2048.TileContainer;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.ntuples.NBasicTanH_512;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.inputs.InputNtupleList;
-import ar.edu.unrc.tdlearning.perceptron.ntuple.NTupleSystem;
+import ar.edu.unrc.tdlearning.training.ntuple.NTupleSystem;
 import org.encog.neural.networks.BasicNetwork;
 import org.junit.After;
 import org.junit.AfterClass;

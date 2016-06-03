@@ -21,7 +21,7 @@ package ar.edu.unrc.game2048.performanceandtraining.configurations.librariesinte
 import ar.edu.unrc.game2048.Game2048;
 import ar.edu.unrc.game2048.GameBoard;
 import ar.edu.unrc.game2048.PerceptronConfiguration2048;
-import ar.edu.unrc.tdlearning.perceptron.interfaces.IPerceptronInterface;
+import ar.edu.unrc.tdlearning.interfaces.IPerceptronInterface;
 import java.util.List;
 import static junit.framework.Assert.assertEquals;
 import org.encog.engine.network.activation.ActivationFunction;

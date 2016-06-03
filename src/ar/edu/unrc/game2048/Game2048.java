@@ -37,13 +37,13 @@ import static ar.edu.unrc.game2048.Action.down;
 import static ar.edu.unrc.game2048.Action.right;
 import static ar.edu.unrc.game2048.Action.up;
 import static ar.edu.unrc.game2048.GameBoard.TILE_NUMBER;
-import ar.edu.unrc.tdlearning.perceptron.interfaces.IAction;
-import ar.edu.unrc.tdlearning.perceptron.interfaces.IActor;
-import ar.edu.unrc.tdlearning.perceptron.interfaces.IProblemToTrain;
-import ar.edu.unrc.tdlearning.perceptron.interfaces.IState;
-import ar.edu.unrc.tdlearning.perceptron.interfaces.IStateNTuple;
-import ar.edu.unrc.tdlearning.perceptron.interfaces.IStatePerceptron;
-import ar.edu.unrc.tdlearning.perceptron.learning.StateProbability;
+import ar.edu.unrc.tdlearning.interfaces.IAction;
+import ar.edu.unrc.tdlearning.interfaces.IActor;
+import ar.edu.unrc.tdlearning.interfaces.IProblemToTrain;
+import ar.edu.unrc.tdlearning.interfaces.IState;
+import ar.edu.unrc.tdlearning.interfaces.IStateNTuple;
+import ar.edu.unrc.tdlearning.interfaces.IStatePerceptron;
+import ar.edu.unrc.tdlearning.learning.StateProbability;
 import java.awt.Color;
 import java.awt.Font;
 import static java.awt.Font.BOLD;
@@ -502,6 +502,11 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
         return actions;
     }
 
+    /**
+     *
+     * @param afterState
+     * @return
+     */
     public List<StateProbability> listAllPossibleNextTurnStateFromAfterstate(IState afterState) {
         return ((GameBoard<NeuralNetworkClass>) afterState).listAllPossibleNextTurnStateFromAfterstate();
     }

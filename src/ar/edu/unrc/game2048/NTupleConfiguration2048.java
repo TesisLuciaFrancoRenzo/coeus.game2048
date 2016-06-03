@@ -18,8 +18,8 @@
  */
 package ar.edu.unrc.game2048;
 
-import ar.edu.unrc.tdlearning.perceptron.ntuple.NTupleSystem;
-import ar.edu.unrc.tdlearning.perceptron.ntuple.SamplePointState;
+import ar.edu.unrc.tdlearning.training.ntuple.NTupleSystem;
+import ar.edu.unrc.tdlearning.training.ntuple.SamplePointState;
 import java.util.List;
 import java.util.function.Function;
 import org.encog.util.arrayutil.NormalizedField;

@@ -19,11 +19,11 @@
 package ar.edu.unrc.game2048.performanceandtraining.configurations;
 
 import ar.edu.unrc.game2048.Game2048;
-import ar.edu.unrc.tdlearning.perceptron.interfaces.IPerceptronInterface;
-import ar.edu.unrc.tdlearning.perceptron.learning.EExplorationRateAlgorithms;
-import ar.edu.unrc.tdlearning.perceptron.learning.ELearningRateAdaptation;
-import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearning;
-import ar.edu.unrc.tdlearning.perceptron.ntuple.NTupleSystem;
+import ar.edu.unrc.tdlearning.interfaces.IPerceptronInterface;
+import ar.edu.unrc.tdlearning.learning.EExplorationRateAlgorithms;
+import ar.edu.unrc.tdlearning.learning.ELearningRateAdaptation;
+import ar.edu.unrc.tdlearning.learning.TDLambdaLearning;
+import ar.edu.unrc.tdlearning.training.ntuple.NTupleSystem;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -182,6 +182,12 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
 
 
     /**
+     * @param experimentName the experimentName to set
+     */
+    public void setExperimentName(String experimentName) {
+        this.experimentName = experimentName;
+    }
+    /**
      * @param experimentClass
      */
     public void setExperimentName(Class experimentClass) {
@@ -191,12 +197,6 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
             className = className.substring(lastDot + 1);
         }
         this.experimentName = className;
-    }
-    /**
-     * @param experimentName the experimentName to set
-     */
-    public void setExperimentName(String experimentName) {
-        this.experimentName = experimentName;
     }
 
     /**

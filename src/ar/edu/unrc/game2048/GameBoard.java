@@ -19,11 +19,11 @@
 package ar.edu.unrc.game2048;
 
 import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.inputs.InputNtupleList;
-import ar.edu.unrc.tdlearning.perceptron.interfaces.IState;
-import ar.edu.unrc.tdlearning.perceptron.interfaces.IStateNTuple;
-import ar.edu.unrc.tdlearning.perceptron.interfaces.IStatePerceptron;
-import ar.edu.unrc.tdlearning.perceptron.learning.StateProbability;
-import ar.edu.unrc.tdlearning.perceptron.ntuple.SamplePointState;
+import ar.edu.unrc.tdlearning.interfaces.IState;
+import ar.edu.unrc.tdlearning.interfaces.IStateNTuple;
+import ar.edu.unrc.tdlearning.interfaces.IStatePerceptron;
+import ar.edu.unrc.tdlearning.learning.StateProbability;
+import ar.edu.unrc.tdlearning.training.ntuple.SamplePointState;
 import static java.lang.Math.random;
 import static java.lang.System.arraycopy;
 import java.util.ArrayList;

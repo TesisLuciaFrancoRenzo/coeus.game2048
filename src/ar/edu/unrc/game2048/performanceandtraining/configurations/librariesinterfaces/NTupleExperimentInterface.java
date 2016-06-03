@@ -20,8 +20,8 @@ package ar.edu.unrc.game2048.performanceandtraining.configurations.librariesinte
 
 import ar.edu.unrc.game2048.NTupleConfiguration2048;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.INeuralNetworkInterfaceFor2048;
-import ar.edu.unrc.tdlearning.perceptron.interfaces.IPerceptronInterface;
-import ar.edu.unrc.tdlearning.perceptron.ntuple.NTupleSystem;
+import ar.edu.unrc.tdlearning.interfaces.IPerceptronInterface;
+import ar.edu.unrc.tdlearning.training.ntuple.NTupleSystem;
 import java.io.File;
 import org.encog.neural.networks.BasicNetwork;
 

@@ -18,9 +18,9 @@
  */
 package ar.edu.unrc.game2048;
 
-import ar.edu.unrc.tdlearning.perceptron.interfaces.IAction;
-import ar.edu.unrc.tdlearning.perceptron.interfaces.IState;
-import ar.edu.unrc.tdlearning.perceptron.interfaces.IStatePerceptron;
+import ar.edu.unrc.tdlearning.interfaces.IAction;
+import ar.edu.unrc.tdlearning.interfaces.IState;
+import ar.edu.unrc.tdlearning.interfaces.IStatePerceptron;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;

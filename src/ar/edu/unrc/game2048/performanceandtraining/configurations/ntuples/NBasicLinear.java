@@ -21,8 +21,8 @@ package ar.edu.unrc.game2048.performanceandtraining.configurations.ntuples;
 import ar.edu.unrc.game2048.GameBoard;
 import ar.edu.unrc.game2048.NTupleConfiguration2048;
 import ar.edu.unrc.game2048.Tile;
-import ar.edu.unrc.tdlearning.perceptron.learning.FunctionUtils;
-import ar.edu.unrc.tdlearning.perceptron.ntuple.SamplePointState;
+import ar.edu.unrc.tdlearning.learning.FunctionUtils;
+import ar.edu.unrc.tdlearning.training.ntuple.SamplePointState;
 import java.util.ArrayList;
 
 /**

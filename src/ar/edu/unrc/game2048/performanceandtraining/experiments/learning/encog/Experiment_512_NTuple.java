@@ -22,10 +22,10 @@ import ar.edu.unrc.game2048.PerceptronConfiguration2048;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.LearningExperiment;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.librariesinterfaces.EncogExperimentInterface;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.PNTuple512;
-import ar.edu.unrc.tdlearning.perceptron.interfaces.IPerceptronInterface;
-import static ar.edu.unrc.tdlearning.perceptron.learning.ELearningStyle.afterState;
-import ar.edu.unrc.tdlearning.perceptron.learning.TDLambdaLearning;
-import ar.edu.unrc.tdlearning.perceptron.ntuple.NTupleSystem;
+import ar.edu.unrc.tdlearning.interfaces.IPerceptronInterface;
+import static ar.edu.unrc.tdlearning.learning.ELearningStyle.afterState;
+import ar.edu.unrc.tdlearning.learning.TDLambdaLearning;
+import ar.edu.unrc.tdlearning.training.ntuple.NTupleSystem;
 import java.io.File;
 import org.encog.neural.networks.BasicNetwork;
 
