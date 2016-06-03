@@ -43,8 +43,8 @@ public class NBasicTanH_512 extends NTupleConfiguration2048 {
      *
      */
     public NBasicTanH_512() {
-        this.activationFunction = FunctionUtils.tanh;
-        this.derivatedActivationFunction = FunctionUtils.derivatedTanh;
+        this.activationFunction = FunctionUtils.TANH;
+        this.derivatedActivationFunction = FunctionUtils.TANH_DERIVATED;
         this.concurrency = false;
         double activationFunctionMax = 1;
         double activationFunctionMin = -1;

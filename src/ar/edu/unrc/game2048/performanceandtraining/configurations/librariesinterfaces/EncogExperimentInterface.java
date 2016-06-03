@@ -98,14 +98,14 @@ public class EncogExperimentInterface extends INeuralNetworkInterfaceFor2048<Bas
 
         for ( ActivationFunction activationFunctionForEncog : getPerceptronConfiguration().getActivationFunctionForEncog() ) {
             if ( activationFunctionForEncog instanceof ActivationTANH ) {
-                this.activationFunction.add(FunctionUtils.tanh);
-                this.derivatedActivationFunction.add(FunctionUtils.derivatedTanh);
+                this.activationFunction.add(FunctionUtils.TANH);
+                this.derivatedActivationFunction.add(FunctionUtils.TANH_DERIVATED);
             } else if ( activationFunctionForEncog instanceof ActivationSigmoid ) {
-                this.activationFunction.add(FunctionUtils.sigmoid);
-                this.derivatedActivationFunction.add(FunctionUtils.derivatedSigmoid);
+                this.activationFunction.add(FunctionUtils.SIGMOID);
+                this.derivatedActivationFunction.add(FunctionUtils.SIGMOID_DERIVATED);
             } else if ( activationFunctionForEncog instanceof ActivationLinear ) {
-                this.activationFunction.add(FunctionUtils.linear);
-                this.derivatedActivationFunction.add(FunctionUtils.derivatedLinear);
+                this.activationFunction.add(FunctionUtils.LINEAR);
+                this.derivatedActivationFunction.add(FunctionUtils.LINEAR_DERIVATED);
             } else {
                 throw new IllegalArgumentException("El test esta pensado para utilizar TANH, Simoid o Linear como funcion de activacion");
             }

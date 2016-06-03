@@ -39,8 +39,8 @@ public class NBasicSigmoid extends NTupleConfiguration2048 {
      *
      */
     public NBasicSigmoid() {
-        this.activationFunction = FunctionUtils.sigmoid;
-        this.derivatedActivationFunction = FunctionUtils.derivatedSigmoid;
+        this.activationFunction = FunctionUtils.SIGMOID;
+        this.derivatedActivationFunction = FunctionUtils.SIGMOID_DERIVATED;
         this.concurrency = false;
         double activationFunctionMax = 1;
         double activationFunctionMin = 0;

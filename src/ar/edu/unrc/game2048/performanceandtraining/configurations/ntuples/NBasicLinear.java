@@ -34,8 +34,8 @@ public class NBasicLinear extends NTupleConfiguration2048 {
      *
      */
     public NBasicLinear() {
-        this.activationFunction = FunctionUtils.linear;
-        this.derivatedActivationFunction = FunctionUtils.derivatedLinear;
+        this.activationFunction = FunctionUtils.LINEAR;
+        this.derivatedActivationFunction = FunctionUtils.LINEAR_DERIVATED;
         this.concurrency = false;
         int maxTile = 15;
 

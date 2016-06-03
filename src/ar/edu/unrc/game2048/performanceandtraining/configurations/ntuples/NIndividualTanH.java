@@ -39,8 +39,8 @@ public class NIndividualTanH extends NTupleConfiguration2048 {
      *
      */
     public NIndividualTanH() {
-        this.activationFunction = FunctionUtils.tanh;
-        this.derivatedActivationFunction = FunctionUtils.derivatedTanh;
+        this.activationFunction = FunctionUtils.TANH;
+        this.derivatedActivationFunction = FunctionUtils.TANH_DERIVATED;
         this.concurrency = false;
         double activationFunctionMax = 1;
         double activationFunctionMin = -1;

@@ -39,7 +39,7 @@ import static ar.edu.unrc.game2048.Action.up;
 import static ar.edu.unrc.game2048.GameBoard.TILE_NUMBER;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IAction;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IActor;
-import ar.edu.unrc.tdlearning.perceptron.interfaces.IProblemState;
+import ar.edu.unrc.tdlearning.perceptron.interfaces.IProblemToTrain;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IState;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IStateNTuple;
 import ar.edu.unrc.tdlearning.perceptron.interfaces.IStatePerceptron;
@@ -87,7 +87,7 @@ import org.encog.neural.networks.BasicNetwork;
  * bianchini
  * @param <NeuralNetworkClass>
  */
-public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame, IProblemState {
+public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame, IProblemToTrain {
 
     private static final Color BG_COLOR = new Color(0xbb_ada0);
     private static final String FONT_NAME = "Arial";
@@ -502,7 +502,6 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
         return actions;
     }
 
-    @Override
     public List<StateProbability> listAllPossibleNextTurnStateFromAfterstate(IState afterState) {
         return ((GameBoard<NeuralNetworkClass>) afterState).listAllPossibleNextTurnStateFromAfterstate();
     }
