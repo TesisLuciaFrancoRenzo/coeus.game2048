@@ -21,7 +21,7 @@ package ar.edu.unrc.game2048.performanceandtraining.experiments.learning.ntuple;
 import ar.edu.unrc.game2048.NTupleConfiguration2048;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.LearningExperiment;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.librariesinterfaces.NTupleExperimentInterface;
-import ar.edu.unrc.game2048.performanceandtraining.configurations.ntuples.NBasicTanH_32768;
+import ar.edu.unrc.game2048.performanceandtraining.configurations.ntuples.NSymetryTanH;
 import ar.edu.unrc.tdlearning.interfaces.IPerceptronInterface;
 import static ar.edu.unrc.tdlearning.learning.ELearningStyle.afterState;
 import ar.edu.unrc.tdlearning.learning.TDLambdaLearning;
@@ -32,7 +32,7 @@ import org.encog.neural.networks.BasicNetwork;
 /**
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
-public class Experiment_NoElegibilityTrace extends LearningExperiment<BasicNetwork> {
+public class Experiment_SymetryTanH extends LearningExperiment<BasicNetwork> {
 
     /**
      *
@@ -48,27 +48,29 @@ public class Experiment_NoElegibilityTrace extends LearningExperiment<BasicNetwo
         } else {
             filePath = args[0];
         }
-        LearningExperiment experiment = new Experiment_NoElegibilityTrace();
+        LearningExperiment experiment = new Experiment_SymetryTanH();
 
 //        boolean statistics = true;
         boolean statistics = false;
         double[] alphas = {0.0025, 0.0025};
         experiment.setAlpha(alphas);
         experiment.setLearningRateAdaptationToFixed();
-        experiment.setLambda(0);
+        experiment.setLambda(0.7);
         experiment.setGamma(1);
         experiment.setExplorationRateToFixed(0);
         experiment.setResetEligibilitiTraces(false);
         experiment.setGamesToPlay(2_000_000);
-        experiment.setSaveEvery(500);
-        experiment.setSaveBackupEvery(20_000);
+        experiment.setSaveEvery(5_000);
+        experiment.setSaveBackupEvery(25_000);
         experiment.setInitializePerceptronRandomized(false);
         experiment.setConcurrencyInComputeBestPosibleAction(true);
         boolean[] concurrentLayer = {false, false};
         experiment.setConcurrencyInLayer(concurrentLayer);
+        experiment.setTileToWinForStatistics(2_048);
 
         experiment.createLogs(false);
         //para calcualar estadisticas
+        experiment.setTileToWinForStatistics(2_048);
         if ( statistics ) {
             experiment.setStatisticsOnly(true);
             experiment.setRunStatisticsForBackups(true);
@@ -91,7 +93,7 @@ public class Experiment_NoElegibilityTrace extends LearningExperiment<BasicNetwo
             this.setExperimentName(this.getClass());
         }
         this.setPerceptronName(this.getExperimentName());
-        NTupleConfiguration2048 config = new NBasicTanH_32768();
+        NTupleConfiguration2048 config = new NSymetryTanH();
         this.setNeuralNetworkInterfaceFor2048(new NTupleExperimentInterface(config));
     }
 

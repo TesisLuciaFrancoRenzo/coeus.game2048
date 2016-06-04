@@ -93,7 +93,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
     private boolean statisticsOnly = false;
     private int tileToWinForTraining;
     private LinkedList<Double> trainingTimes;
-    private int winValueForWinRate = 2_048;
+    private int tileToWinForStatistics = 2_048;
 
     /**
      *
@@ -552,8 +552,8 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
         }
     }
 
-    public void setWinValueForWinRate(int winValue) {
-        winValueForWinRate = winValue;
+    public void setTileToWinForStatistics(int winValue) {
+        tileToWinForStatistics = winValue;
     }
 
     /**
@@ -792,7 +792,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
                     this.saveBackupEvery(saveBackupEvery);
                     this.setSimulations(simulationsForStatistics);
                     this.setLearningMethod(learningAlgorithm);
-                    this.setWinValueForStatistics(winValueForWinRate);
+                    this.setTileToWinForStatistics(tileToWinForStatistics);
                 }
             };
             statisticExperiment.setFileName(this.getExperimentName());

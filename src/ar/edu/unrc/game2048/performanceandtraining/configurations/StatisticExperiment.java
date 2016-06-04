@@ -30,8 +30,6 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
-import static java.lang.Math.round;
-import static java.lang.Math.round;
 
 /**
  *
@@ -92,7 +90,7 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
 
     private int tileToWin;
     private double winRate;
-    private int winValueForStatistics = 2_048;
+    private int tileToWinForStatistics = 2_048;
 
     /**
      *
@@ -107,8 +105,8 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
         this.learningExperiment = learningExperiment;
     }
 
-    public void setWinValueForStatistics(int winValueForwinRate) {
-        this.winValueForStatistics = winValueForwinRate;
+    public void setTileToWinForStatistics(int tileToWinForStatistics) {
+        this.tileToWinForStatistics = tileToWinForStatistics;
     }
 
     /**
@@ -407,7 +405,7 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
                     neuralNetworkInterfaceClone.loadOrCreatePerceptron(perceptronFile, true, createPerceptronFile);
                 }
 
-                Game2048<NeuralNetworkClass> game = new Game2048<>(tempPerceptronConfiguration, tempNTupleConfiguration, winValueForStatistics, delayPerMove);
+                Game2048<NeuralNetworkClass> game = new Game2048<>(tempPerceptronConfiguration, tempNTupleConfiguration, tileToWinForStatistics, delayPerMove);
 
                 neuralNetworkInterfaces.add(neuralNetworkInterfaceClone);
                 if ( tempPerceptronConfiguration != null ) {
@@ -439,7 +437,7 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
                             results.get(i).addStatisticForTile(games.get(i).getMaxNumberCode());
                             results.get(i).addScore(games.get(i).getScore());
 
-                            if ( games.get(i).getMaxNumber() >= winValueForStatistics ) {
+                            if ( games.get(i).getMaxNumber() >= tileToWinForStatistics ) {
                                 results.get(i).addWin();
                                 results.get(i).addLastTurn(games.get(i).getLastTurn());
                             }

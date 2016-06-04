@@ -32,7 +32,7 @@ import org.encog.neural.networks.BasicNetwork;
 /**
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
-public class Experiment_TanH extends LearningExperiment<BasicNetwork> {
+public class Experiment_BasicTanH extends LearningExperiment<BasicNetwork> {
 
     /**
      *
@@ -48,25 +48,25 @@ public class Experiment_TanH extends LearningExperiment<BasicNetwork> {
         } else {
             filePath = args[0];
         }
-        LearningExperiment experiment = new Experiment_TanH();
+        LearningExperiment experiment = new Experiment_BasicTanH();
 
 //        boolean statistics = true;
         boolean statistics = false;
         double[] alphas = {0.0025, 0.0025};
         experiment.setAlpha(alphas);
         experiment.setLearningRateAdaptationToFixed();
-
         experiment.setLambda(0.7);
         experiment.setGamma(1);
         experiment.setExplorationRateToFixed(0);
         experiment.setResetEligibilitiTraces(false);
         experiment.setGamesToPlay(2_000_000);
-        experiment.setSaveEvery(500);
-        experiment.setSaveBackupEvery(20_000);
+        experiment.setSaveEvery(5_000);
+        experiment.setSaveBackupEvery(25_000);
         experiment.setInitializePerceptronRandomized(false);
         experiment.setConcurrencyInComputeBestPosibleAction(true);
         boolean[] concurrentLayer = {false, false};
         experiment.setConcurrencyInLayer(concurrentLayer);
+        experiment.setTileToWinForStatistics(2_048);
 
         experiment.createLogs(false);
         //para calcualar estadisticas
