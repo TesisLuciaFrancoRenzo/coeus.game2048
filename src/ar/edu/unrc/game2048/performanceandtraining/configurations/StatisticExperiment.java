@@ -30,6 +30,8 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
+import static java.lang.Math.round;
+import static java.lang.Math.round;
 
 /**
  *
@@ -90,7 +92,7 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
 
     private int tileToWin;
     private double winRate;
-    private int winValueForWinRate = 2_048;
+    private int winValueForStatistics = 2_048;
 
     /**
      *
@@ -105,8 +107,8 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
         this.learningExperiment = learningExperiment;
     }
 
-    public void setWinValueForWinRate(int winValueForwinRate) {
-        this.winValueForWinRate = winValueForwinRate;
+    public void setWinValueForStatistics(int winValueForwinRate) {
+        this.winValueForStatistics = winValueForwinRate;
     }
 
     /**
@@ -405,7 +407,7 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
                     neuralNetworkInterfaceClone.loadOrCreatePerceptron(perceptronFile, true, createPerceptronFile);
                 }
 
-                Game2048<NeuralNetworkClass> game = new Game2048<>(tempPerceptronConfiguration, tempNTupleConfiguration, tileToWin, delayPerMove);
+                Game2048<NeuralNetworkClass> game = new Game2048<>(tempPerceptronConfiguration, tempNTupleConfiguration, winValueForStatistics, delayPerMove);
 
                 neuralNetworkInterfaces.add(neuralNetworkInterfaceClone);
                 if ( tempPerceptronConfiguration != null ) {
@@ -437,7 +439,7 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
                             results.get(i).addStatisticForTile(games.get(i).getMaxNumberCode());
                             results.get(i).addScore(games.get(i).getScore());
 
-                            if ( games.get(i).getMaxNumber() >= winValueForWinRate ) {
+                            if ( games.get(i).getMaxNumber() >= winValueForStatistics ) {
                                 results.get(i).addWin();
                                 results.get(i).addLastTurn(games.get(i).getLastTurn());
                             }
@@ -555,7 +557,7 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
         try {
             learningMethod = null;
             if ( learningExperiment != null ) {
-                this.tileToWin = learningExperiment.getTileToWin();
+                this.tileToWin = learningExperiment.getTileToWinForTraining();
                 this.experimentName = learningExperiment.getExperimentName();
             }
             initializeStatistics();

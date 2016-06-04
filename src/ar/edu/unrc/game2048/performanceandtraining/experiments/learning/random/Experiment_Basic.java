@@ -63,7 +63,7 @@ public class Experiment_Basic extends LearningExperiment<BasicNetwork> {
             this.setExperimentName(this.getClass());
         }
         this.setPerceptronName(this.getExperimentName());
-        this.setTileToWin(2_048);
+        this.setTileToWinForTraining(2_048);
         this.setNeuralNetworkInterfaceFor2048(new RandomExperimentInterface(null));
     }
 

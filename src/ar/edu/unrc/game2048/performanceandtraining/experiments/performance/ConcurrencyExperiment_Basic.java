@@ -281,7 +281,7 @@ public class ConcurrencyExperiment_Basic extends LearningExperiment<BasicNetwork
 
     @Override
     public void initialize() throws Exception {
-        this.setTileToWin(2_048);
+        this.setTileToWinForTraining(2_048);
         if ( this.getExperimentName() == null ) {
             this.setExperimentName("ConcurrencyTimes");
         }

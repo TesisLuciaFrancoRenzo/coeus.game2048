@@ -48,7 +48,7 @@ public class Experiment_Basic extends LearningExperiment<BasicNetwork> {
         LearningExperiment experiment = new Experiment_Basic();
         experiment.setStatisticsOnly(true);
         experiment.createLogs(false);
-        experiment.setTileToWin(2_048);
+        experiment.setTileToWinForTraining(2_048);
         experiment.setSaveEvery(100_000_000);
         experiment.setSaveBackupEvery(100_000_000);
         //para calcualr estadisticas

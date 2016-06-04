@@ -26,6 +26,10 @@ import static java.lang.Thread.sleep;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import static java.lang.Thread.sleep;
+import static java.lang.Thread.sleep;
+import static java.lang.Thread.sleep;
+import static java.lang.Thread.sleep;
+import static java.lang.Thread.sleep;
 
 /**
  *
@@ -81,7 +85,7 @@ public abstract class VisualExperiment<NeuralNetworkClass> {
         try {
             if ( learningExperiment != null ) {
                 learningExperiment.initialize();
-                this.tileToWin = learningExperiment.getTileToWin();
+                this.tileToWin = learningExperiment.getTileToWinForTraining();
                 this.experimentName = learningExperiment.getExperimentName();
                 this.perceptronConfiguration = learningExperiment.getNeuralNetworkInterfaceFor2048().getPerceptronConfiguration();
                 this.setnTupleConfiuguration(learningExperiment.getNeuralNetworkInterfaceFor2048().getNTupleConfiguration());

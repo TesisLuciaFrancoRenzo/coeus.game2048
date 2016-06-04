@@ -91,9 +91,9 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
     private int saveEvery = 0;
     private int simulationsForStatistics;
     private boolean statisticsOnly = false;
-    private int tileToWin;
+    private int tileToWinForTraining;
     private LinkedList<Double> trainingTimes;
-    private int winValueForWinRate;
+    private int winValueForWinRate = 2_048;
 
     /**
      *
@@ -336,7 +336,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
      * <li>private double lambda;</li>
      * <li>private int gamesToPlay;</li>
      * <li>private int saveBackupEvery;</li>
-     * <li>private int tileToWin;</li>
+     * <li>private int tileToWinForTraining;</li>
      * <li>private String experimentName;</li>
      * <li>private String perceptronName;</li>
      * <li>private PerceptronConfiguration2048 perceptronConfiguration; </li>
@@ -635,17 +635,17 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
     }
 
     /**
-     * @return the tileToWin
+     * @return the tileToWinForTraining
      */
-    protected int getTileToWin() {
-        return tileToWin;
+    protected int getTileToWinForTraining() {
+        return tileToWinForTraining;
     }
 
     /**
-     * @param tileToWin the tileToWin to set
+     * @param tileToWinForTraining the tileToWinForTraining to set
      */
-    public void setTileToWin(int tileToWin) {
-        this.tileToWin = tileToWin;
+    public void setTileToWinForTraining(int tileToWinForTraining) {
+        this.tileToWinForTraining = tileToWinForTraining;
     }
 
     /**
@@ -721,7 +721,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
             }
         }
         //creamos el juego
-        Game2048<NeuralNetworkClass> game = new Game2048<>(neuralNetworkInterfaceFor2048.getPerceptronConfiguration(), neuralNetworkInterfaceFor2048.getNTupleConfiguration(), tileToWin, delayPerMove);
+        Game2048<NeuralNetworkClass> game = new Game2048<>(neuralNetworkInterfaceFor2048.getPerceptronConfiguration(), neuralNetworkInterfaceFor2048.getNTupleConfiguration(), tileToWinForTraining, delayPerMove);
 
         // Si hay un perceptron ya entrenado, lo buscamos en el archivo.
         // En caso contrario creamos un perceptron vacio, inicializado al azar
@@ -792,7 +792,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
                     this.saveBackupEvery(saveBackupEvery);
                     this.setSimulations(simulationsForStatistics);
                     this.setLearningMethod(learningAlgorithm);
-                    this.setWinValueForWinRate(winValueForWinRate);
+                    this.setWinValueForStatistics(winValueForWinRate);
                 }
             };
             statisticExperiment.setFileName(this.getExperimentName());

@@ -86,7 +86,7 @@ public class Experiment_NoElegibilityTrace extends LearningExperiment<BasicNetwo
 
     @Override
     public void initialize() throws Exception {
-        this.setTileToWin(32_768);
+        this.setTileToWinForTraining(32_768);
         if ( this.getExperimentName() == null ) {
             this.setExperimentName(this.getClass());
         }
