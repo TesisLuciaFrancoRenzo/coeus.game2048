@@ -56,13 +56,13 @@ public class Experiment_Symetry extends LearningExperiment<BasicNetwork> {
         experiment.setAlpha(alphas);
         experiment.setLearningRateAdaptationToFixed();
 
-        experiment.setLambda(0.7);
+        experiment.setLambda(0);
         experiment.setGamma(1);
         experiment.setExplorationRateToFixed(0);
         experiment.setResetEligibilitiTraces(false);
-        experiment.setGamesToPlay(2_000_000);
-        experiment.setSaveEvery(500);
-        experiment.setSaveBackupEvery(20_000);
+        experiment.setGamesToPlay(125_000);
+        experiment.setSaveEvery(5_000);
+        experiment.setSaveBackupEvery(10_000);
         experiment.setInitializePerceptronRandomized(false);
         experiment.setConcurrencyInComputeBestPosibleAction(true);
         boolean[] concurrentLayer = {false, false};
@@ -70,6 +70,7 @@ public class Experiment_Symetry extends LearningExperiment<BasicNetwork> {
 
         experiment.createLogs(false);
         //para calcualar estadisticas
+        experiment.setWinValueForWinRate(2_048);
         if ( statistics ) {
             experiment.setStatisticsOnly(true);
             experiment.setRunStatisticsForBackups(true);

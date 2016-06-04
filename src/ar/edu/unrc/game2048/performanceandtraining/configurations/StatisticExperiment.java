@@ -90,6 +90,7 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
 
     private int tileToWin;
     private double winRate;
+    private int winValueForWinRate = 2_048;
 
     /**
      *
@@ -102,6 +103,10 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
      */
     public StatisticExperiment(LearningExperiment<NeuralNetworkClass> learningExperiment) {
         this.learningExperiment = learningExperiment;
+    }
+
+    public void setWinValueForWinRate(int winValueForwinRate) {
+        this.winValueForWinRate = winValueForwinRate;
     }
 
     /**
@@ -432,7 +437,7 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
                             results.get(i).addStatisticForTile(games.get(i).getMaxNumberCode());
                             results.get(i).addScore(games.get(i).getScore());
 
-                            if ( games.get(i).getMaxNumber() >= tileToWin ) {
+                            if ( games.get(i).getMaxNumber() >= winValueForWinRate ) {
                                 results.get(i).addWin();
                                 results.get(i).addLastTurn(games.get(i).getLastTurn());
                             }
