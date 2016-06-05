@@ -76,6 +76,8 @@ public class TestGeneratorALL {
         experiment.setExplorationRateToFixed(explorationRate);
         experiment.setInitializePerceptronRandomized(false);
         experiment.setConcurrencyInComputeBestPosibleAction(true);
+        boolean[] concurrentLayer = {false, false};
+        experiment.setConcurrencyInLayer(concurrentLayer);
         experiment.setTileToWinForStatistics(2_048);
         experiment.setResetEligibilitiTraces(resetEligibilitiTraces);
         experiment.setLearningRateAdaptationToFixed();
