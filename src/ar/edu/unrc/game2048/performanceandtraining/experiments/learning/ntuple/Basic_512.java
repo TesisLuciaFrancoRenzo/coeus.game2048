@@ -16,12 +16,12 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ar.edu.unrc.game2048.performanceandtraining.experiments.learning.encog;
+package ar.edu.unrc.game2048.performanceandtraining.experiments.learning.ntuple;
 
-import ar.edu.unrc.game2048.PerceptronConfiguration2048;
+import ar.edu.unrc.game2048.NTupleConfiguration2048;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.LearningExperiment;
-import ar.edu.unrc.game2048.performanceandtraining.configurations.librariesinterfaces.EncogExperimentInterface;
-import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.PNTuple512;
+import ar.edu.unrc.game2048.performanceandtraining.configurations.librariesinterfaces.NTupleExperimentInterface;
+import ar.edu.unrc.game2048.performanceandtraining.configurations.ntuples.NBasicTanH_512;
 import ar.edu.unrc.tdlearning.interfaces.IPerceptronInterface;
 import static ar.edu.unrc.tdlearning.learning.ELearningStyle.afterState;
 import ar.edu.unrc.tdlearning.learning.TDLambdaLearning;
@@ -32,7 +32,7 @@ import org.encog.neural.networks.BasicNetwork;
 /**
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
-public class Experiment_512_NTuple extends LearningExperiment<BasicNetwork> {
+public class Basic_512 extends LearningExperiment<BasicNetwork> {
 
     /**
      *
@@ -48,25 +48,25 @@ public class Experiment_512_NTuple extends LearningExperiment<BasicNetwork> {
         } else {
             filePath = args[0];
         }
-        LearningExperiment experiment = new Experiment_512_NTuple();
+        LearningExperiment experiment = new Basic_512();
 
-//        boolean statistics = true;
-        boolean statistics = false;
-
-        boolean[] concurrentLayer = {true, false};
-        experiment.setConcurrencyInLayer(concurrentLayer);
+        boolean statistics = true;
+//        boolean statistics = false;
         double[] alphas = {0.0025, 0.0025};
         experiment.setAlpha(alphas);
         experiment.setLearningRateAdaptationToFixed();
-        experiment.setConcurrencyInComputeBestPosibleAction(true);
+
         experiment.setLambda(0.7);
         experiment.setGamma(1);
         experiment.setExplorationRateToFixed(0);
         experiment.setResetEligibilitiTraces(false);
         experiment.setGamesToPlay(10_000);
-        experiment.setSaveEvery(200);
+        experiment.setSaveEvery(500);
         experiment.setSaveBackupEvery(500);
         experiment.setInitializePerceptronRandomized(false);
+        experiment.setConcurrencyInComputeBestPosibleAction(true);
+        boolean[] concurrentLayer = {false, false};
+        experiment.setConcurrencyInLayer(concurrentLayer);
 
         experiment.createLogs(false);
         //para calcualar estadisticas
@@ -92,25 +92,18 @@ public class Experiment_512_NTuple extends LearningExperiment<BasicNetwork> {
             this.setExperimentName(this.getClass());
         }
         this.setPerceptronName(this.getExperimentName());
-        PerceptronConfiguration2048<BasicNetwork> config = new PNTuple512<>();
-        this.setNeuralNetworkInterfaceFor2048(new EncogExperimentInterface(config));
+        NTupleConfiguration2048 config = new NBasicTanH_512();
+        this.setNeuralNetworkInterfaceFor2048(new NTupleExperimentInterface(config));
     }
 
     @Override
     public TDLambdaLearning instanceOfTdLearninrgImplementation(IPerceptronInterface perceptronInterface) {
-        return new TDLambdaLearning(
-                perceptronInterface,
-                afterState,
-                getAlpha(),
-                getLambda(),
-                getGamma(),
-                getConcurrencyInLayer(),
-                isResetEligibilitiTraces(),
-                false);
+        return null;
     }
 
     @Override
     public TDLambdaLearning instanceOfTdLearninrgImplementation(NTupleSystem nTupleSystem) {
-        return null;
+        return new TDLambdaLearning(nTupleSystem, afterState, (getAlpha() != null) ? getAlpha()[0] : null, getLambda(), getGamma(), getConcurrencyInLayer(), isResetEligibilitiTraces(), false);
     }
+
 }

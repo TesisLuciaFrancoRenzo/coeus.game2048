@@ -29,7 +29,7 @@ import org.encog.neural.networks.BasicNetwork;
 /**
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
-public class Experiment_Basic extends LearningExperiment<BasicNetwork> {
+public class Basic extends LearningExperiment<BasicNetwork> {
 
     /**
      *
@@ -45,7 +45,7 @@ public class Experiment_Basic extends LearningExperiment<BasicNetwork> {
         } else {
             filePath = args[0];
         }
-        LearningExperiment experiment = new Experiment_Basic();
+        LearningExperiment experiment = new Basic();
         experiment.setStatisticsOnly(true);
         experiment.createLogs(false);
         //para calcualr estadisticas

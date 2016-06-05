@@ -20,7 +20,7 @@ package ar.edu.unrc.game2048.performanceandtraining.experiments.visualPlay;
 
 import ar.edu.unrc.game2048.performanceandtraining.configurations.LearningExperiment;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.VisualExperiment;
-import ar.edu.unrc.game2048.performanceandtraining.experiments.learning.random.Experiment_Basic;
+import ar.edu.unrc.game2048.performanceandtraining.experiments.learning.random.Basic;
 import java.io.File;
 
 /**
@@ -44,7 +44,7 @@ public class VisualRandom extends VisualExperiment {
         } else {
             filePath = args[0];
         }
-        LearningExperiment experiment = new Experiment_Basic();
+        LearningExperiment experiment = new Basic();
         VisualRandom game = new VisualRandom(experiment);
 
         game.start(filePath, 250, false);

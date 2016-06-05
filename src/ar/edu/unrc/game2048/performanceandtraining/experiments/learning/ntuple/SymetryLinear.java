@@ -21,7 +21,7 @@ package ar.edu.unrc.game2048.performanceandtraining.experiments.learning.ntuple;
 import ar.edu.unrc.game2048.NTupleConfiguration2048;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.LearningExperiment;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.librariesinterfaces.NTupleExperimentInterface;
-import ar.edu.unrc.game2048.performanceandtraining.configurations.ntuples.NBasicLinear;
+import ar.edu.unrc.game2048.performanceandtraining.configurations.ntuples.NSymetryLinear;
 import ar.edu.unrc.tdlearning.interfaces.IPerceptronInterface;
 import static ar.edu.unrc.tdlearning.learning.ELearningStyle.afterState;
 import ar.edu.unrc.tdlearning.learning.TDLambdaLearning;
@@ -32,7 +32,7 @@ import org.encog.neural.networks.BasicNetwork;
 /**
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
-public class Experiment_BasicLinear extends LearningExperiment<BasicNetwork> {
+public class SymetryLinear extends LearningExperiment<BasicNetwork> {
 
     /**
      *
@@ -48,7 +48,7 @@ public class Experiment_BasicLinear extends LearningExperiment<BasicNetwork> {
         } else {
             filePath = args[0];
         }
-        LearningExperiment experiment = new Experiment_BasicLinear();
+        LearningExperiment experiment = new SymetryLinear();
 
 //        boolean statistics = true;
         boolean statistics = false;
@@ -70,10 +70,11 @@ public class Experiment_BasicLinear extends LearningExperiment<BasicNetwork> {
 
         experiment.createLogs(false);
         //para calcualar estadisticas
+        experiment.setTileToWinForStatistics(2_048);
         if ( statistics ) {
             experiment.setStatisticsOnly(true);
             experiment.setRunStatisticsForBackups(true);
-            experiment.setGamesToPlayPerThreadForStatistics(5);
+            experiment.setGamesToPlayPerThreadForStatistics(1_000);
             experiment.setSimulationsForStatistics(8);
         } else {
             experiment.setStatisticsOnly(false);
@@ -92,7 +93,7 @@ public class Experiment_BasicLinear extends LearningExperiment<BasicNetwork> {
             this.setExperimentName(this.getClass());
         }
         this.setPerceptronName(this.getExperimentName());
-        NTupleConfiguration2048 config = new NBasicLinear();
+        NTupleConfiguration2048 config = new NSymetryLinear();
         this.setNeuralNetworkInterfaceFor2048(new NTupleExperimentInterface(config));
     }
 
