@@ -467,11 +467,18 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
      * @param configFile
      * @param filePath
      * @param dateFormater
-     * @param now
      * @param zeroNumbers          <p>
      * @throws Exception
      */
-    public void training(Game2048<NeuralNetworkClass> game, final PrintStream printStream, File randomPerceptronFile, File perceptronFile, File configFile, String filePath, SimpleDateFormat dateFormater, Date now, int zeroNumbers) throws Exception {
+    public void training(
+            Game2048<NeuralNetworkClass> game,
+            final PrintStream printStream,
+            File randomPerceptronFile,
+            File perceptronFile,
+            File configFile,
+            String filePath,
+            SimpleDateFormat dateFormater,
+            int zeroNumbers) throws Exception {
         File perceptronFileBackup;
         switch ( this.learningRateAdaptation ) {
             case fixed: {
@@ -538,7 +545,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
             }
             if ( i % saveBackupEvery == 0 ) {
                 backupNumber++;
-                perceptronFileBackup = new File(filePath + TRAINED + "_" + dateFormater.format(now) + "_BackupN-" + String.format("%0" + zeroNumbers + "d", backupNumber)
+                perceptronFileBackup = new File(filePath + TRAINED + "_BackupN-" + String.format("%0" + zeroNumbers + "d", backupNumber)
                         + ".ser");
                 neuralNetworkInterfaceFor2048.savePerceptron(perceptronFileBackup);
                 System.out.println("============ Perceptron Exportado Exitosamente (BACKUP " + backupNumber + ") ============");
@@ -664,7 +671,6 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
         if ( saveBackupEvery == 0 ) {
             throw new IllegalArgumentException("se debe configurar cada cuanto guardar backups del perceptron mediante la variable saveBackupEvery");
         }
-        long time = 0; //para medir el timepo que demoro en entrenar
         SimpleDateFormat dateFormater = new SimpleDateFormat("dd-MM-yyyy_HH'h'mm'm'ss's'");
         Date now = new Date();
 
@@ -755,10 +761,10 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
             //comenzamos a entrenar y guardar estadisticas en el archivo de log
             if ( logsActivated ) {
                 try ( PrintStream printStream = new PrintStream(logFile, "UTF-8") ) {
-                    training(game, printStream, randomPerceptronFile, perceptronFile, configFile, filePath, dateFormater, now, zeroNumbers);
+                    training(game, printStream, randomPerceptronFile, perceptronFile, configFile, filePath, dateFormater, zeroNumbers);
                 }
             } else {
-                training(game, null, randomPerceptronFile, perceptronFile, configFile, filePath, dateFormater, now, zeroNumbers);
+                training(game, null, randomPerceptronFile, perceptronFile, configFile, filePath, dateFormater, zeroNumbers);
             }
             if ( learningAlgorithm.canCollectStatistics() ) {
                 avgBestPissibleActionTimes = 0d;

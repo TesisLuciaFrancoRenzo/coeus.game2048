@@ -73,6 +73,9 @@ public class TestGeneratorALL {
         experiment.createLogs(createLogs);
         experiment.setLambda(lambda);
         experiment.setGamma(gamma);
+        double[] alphas = {alpha, alpha};
+        experiment.setAlpha(alphas);
+        experiment.setLearningRateAdaptationToFixed();
         experiment.setExplorationRateToFixed(explorationRate);
         experiment.setInitializePerceptronRandomized(false);
         experiment.setConcurrencyInComputeBestPosibleAction(true);
@@ -86,6 +89,7 @@ public class TestGeneratorALL {
         experiment.setSaveBackupEvery(saveBacupEvery);
         experiment.setGamesToPlayPerThreadForStatistics(gamesToPlayPerThreadForStatistics);
         experiment.setSimulationsForStatistics(simulationsForStatistics);
+        System.out.println("***************************************** Ejecutando " + filePath + " *****************************************");
         experiment.start(filePath, 0, true);
     }
 
@@ -177,12 +181,17 @@ public class TestGeneratorALL {
             lambdaList.stream().forEach((lambda) -> {
                 gammaList.stream().forEach((gamma) -> {
                     explorationRateList.stream().forEach((explorationRate) -> {
+                        String newFilePath = filePath + "AutomaticTests" + File.separator + experimentName + File.separator;
+                        File newPath = new File(newFilePath);
+                        if ( !newPath.exists() ) {
+                            newPath.mkdirs();
+                        }
                         try {
-                            experiment.setExperimentName(experimentName + "-alpha_" + alpha + "-lambda_" + lambda + "-gamma_" + gamma + "-explorationRate_" + explorationRate + "-resetTraces_" + false);
-                            configAndExcecute(experiment, statisticsOnly, runStatisticsForBackups, createLogs, lambda, alpha, gamma, gamesToPlay, saveEvery, saveBacupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, false, filePath);
+                            experiment.setExperimentName("alpha_" + alpha + "-lambda_" + lambda + "-gamma_" + gamma + "-explorationRate_" + explorationRate + "-resetTraces_" + false);
+                            configAndExcecute(experiment, statisticsOnly, runStatisticsForBackups, createLogs, lambda, alpha, gamma, gamesToPlay, saveEvery, saveBacupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, false, newFilePath);
                             if ( explorationRate > 0 ) {
-                                experiment.setExperimentName(experimentName + "-alpha_" + alpha + "-lambda_" + lambda + "-gamma_" + gamma + "-explorationRate_" + explorationRate + "-resetTraces_" + true);
-                                configAndExcecute(experiment, statisticsOnly, runStatisticsForBackups, createLogs, lambda, alpha, gamma, gamesToPlay, saveEvery, saveBacupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, true, filePath);
+                                experiment.setExperimentName("alpha_" + alpha + "-lambda_" + lambda + "-gamma_" + gamma + "-explorationRate_" + explorationRate + "-resetTraces_" + true);
+                                configAndExcecute(experiment, statisticsOnly, runStatisticsForBackups, createLogs, lambda, alpha, gamma, gamesToPlay, saveEvery, saveBacupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, true, newFilePath);
                             }
                         } catch ( Exception ex ) {
                             Logger.getLogger(TestGeneratorALL.class.getName()).log(Level.SEVERE, null, ex);

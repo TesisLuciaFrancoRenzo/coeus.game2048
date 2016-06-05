@@ -475,7 +475,7 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
                 tileStatistics.set(i, tileStatistics.get(i) / (simulations * 1d));
             }
             winRate /= (simulations * 1d);
-            assert winRate < 100;
+            assert winRate <= 100;
             maxScore /= (simulations * 1d);
             minScore /= (simulations * 1d);
             meanScore /= (simulations * 1d);
