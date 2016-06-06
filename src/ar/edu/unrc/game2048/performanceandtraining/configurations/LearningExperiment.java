@@ -732,6 +732,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
         // Si hay un perceptron ya entrenado, lo buscamos en el archivo.
         // En caso contrario creamos un perceptron vacio, inicializado al azar
         neuralNetworkInterfaceFor2048.loadOrCreatePerceptron(perceptronFile, this.initializePerceptronRandomized, createPerceptronFile);
+        //FIXME que hacer si esta ROTO? solucionar esto
 
         //creamos una interfaz de comunicacion entre la red neuronal de encog y el algoritmo de entrenamiento
         if ( backupRandomPerceptron ) {

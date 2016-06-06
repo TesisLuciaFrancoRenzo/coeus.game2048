@@ -20,6 +20,16 @@ package ar.edu.unrc.game2048.performanceandtraining.experiments.learning.ntuple;
 
 import ar.edu.unrc.game2048.performanceandtraining.configurations.LearningExperiment;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
@@ -194,11 +204,48 @@ public class TestGeneratorALL {
                                 configAndExcecute(experiment, statisticsOnly, runStatisticsForBackups, createLogs, lambda, alpha, gamma, gamesToPlay, saveEvery, saveBacupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, true, newFilePath);
                             }
                         } catch ( Exception ex ) {
-                            Logger.getLogger(TestGeneratorALL.class.getName()).log(Level.SEVERE, null, ex);
+                            printErrorInFile(ex, new File(newFilePath + "ERROR_DUMP.txt"));
                         }
                     });
                 });
             });
         });
+    }
+
+    public final static DateFormat DATE_FILE_FORMATTER = new SimpleDateFormat("dd-MM-yyyy'_'HH'h'-mm'm'-ss's'");
+    public final static DateFormat DATE_FORMATTER = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+
+    private static void printErrorInFile(Throwable ex, File dumpFile) {
+        PrintStream printStream = null;
+        try {
+            if ( !dumpFile.exists() ) {
+                dumpFile.createNewFile();
+            }
+            printStream = new PrintStream(new FileOutputStream(dumpFile, true), true, "UTF-8");
+            String msj = "* " + DATE_FORMATTER.format(new Date()) + "----------------------------------------------------------------------------\n"
+                    + getMsj(ex);
+            printStream.println(msj);
+            System.err.println(msj);
+        } catch ( UnsupportedEncodingException | FileNotFoundException ex1 ) {
+            Logger.getLogger(TestGeneratorALL.class.getName()).log(Level.SEVERE, null, ex1);
+        } catch ( IOException ex1 ) {
+            Logger.getLogger(TestGeneratorALL.class.getName()).log(Level.SEVERE, null, ex1);
+        } finally {
+            if ( printStream != null ) {
+                printStream.close();
+            }
+        }
+    }
+
+    /**
+     *
+     * @param ex <p>
+     * @return
+     */
+    public static String getMsj(Throwable ex) {
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        ex.printStackTrace(pw);
+        return sw.toString();
     }
 }

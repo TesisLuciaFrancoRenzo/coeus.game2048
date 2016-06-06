@@ -7,10 +7,11 @@ import ar.edu.unrc.tdlearning.interfaces.IPerceptronInterface;
 import ar.edu.unrc.tdlearning.learning.TDLambdaLearning;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintStream;
 import static java.lang.Math.round;
 import java.util.ArrayList;
@@ -505,35 +506,36 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
             }
         } else {
             //cargamos el archivo ya guardado
-            BufferedReader br = new BufferedReader(new FileReader(logFile));
-            int lastTileStatistic = -1;
-            tileStatistics = new ArrayList<>(18);
-            for ( String line = br.readLine(); line != null; line = br.readLine() ) {
-                if ( line.contains(WIN_RATE) ) {
-                    winRate = extractNumber(line);
-                } else if ( line.contains(MIN_TURN) ) {
-                    minTurn = extractNumber(line);
-                } else if ( line.contains(MEAN_TURN) ) {
-                    meanTurn = extractNumber(line);
-                } else if ( line.contains(MAX_TURN) ) {
-                    maxTurn = extractNumber(line);
-                } else if ( line.contains(MIN_SCORE) ) {
-                    minScore = extractNumber(line);
-                } else if ( line.contains(MEAN_SCORE) ) {
-                    meanScore = extractNumber(line);
-                } else if ( line.contains(MAX_SCORE) ) {
-                    maxScore = extractNumber(line);
-                } else {
-                    try {
-                        double value = Double.parseDouble(line.trim().replaceFirst(",", "."));
-                        lastTileStatistic++;
-                        tileStatistics.add(value);
-                    } catch ( NumberFormatException numberFormatException ) {
+            try ( BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(logFile), "UTF-8")) ) {
+                int lastTileStatistic = -1;
+                tileStatistics = new ArrayList<>(18);
+                for ( String line = br.readLine(); line != null; line = br.readLine() ) {
+                    if ( line.contains(WIN_RATE) ) {
+                        winRate = extractNumber(line);
+                    } else if ( line.contains(MIN_TURN) ) {
+                        minTurn = extractNumber(line);
+                    } else if ( line.contains(MEAN_TURN) ) {
+                        meanTurn = extractNumber(line);
+                    } else if ( line.contains(MAX_TURN) ) {
+                        maxTurn = extractNumber(line);
+                    } else if ( line.contains(MIN_SCORE) ) {
+                        minScore = extractNumber(line);
+                    } else if ( line.contains(MEAN_SCORE) ) {
+                        meanScore = extractNumber(line);
+                    } else if ( line.contains(MAX_SCORE) ) {
+                        maxScore = extractNumber(line);
+                    } else {
+                        try {
+                            double value = Double.parseDouble(line.trim().replaceFirst(",", "."));
+                            lastTileStatistic++;
+                            tileStatistics.add(value);
+                        } catch ( NumberFormatException numberFormatException ) {
+                        }
                     }
-                }
 
+                }
+                assert lastTileStatistic == 17;
             }
-            assert lastTileStatistic == 17;
             System.out.println("Finished.");
         }
     }
