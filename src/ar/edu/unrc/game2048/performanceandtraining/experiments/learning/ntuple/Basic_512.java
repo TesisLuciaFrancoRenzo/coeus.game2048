@@ -50,8 +50,9 @@ public class Basic_512 extends LearningExperiment<BasicNetwork> {
         }
         LearningExperiment experiment = new Basic_512();
 
-        boolean statistics = true;
-//        boolean statistics = false;
+//        boolean statistics = true;
+        boolean statistics = false;
+
         double[] alphas = {0.0025, 0.0025};
         experiment.setAlpha(alphas);
         experiment.setLearningRateAdaptationToFixed();
@@ -70,7 +71,7 @@ public class Basic_512 extends LearningExperiment<BasicNetwork> {
 
         experiment.createLogs(false);
         //para calcualar estadisticas
-        experiment.setTileToWinForStatistics(2_048);
+        experiment.setTileToWinForStatistics(512);
         if ( statistics ) {
             experiment.setStatisticsOnly(true);
             experiment.setRunStatisticsForBackups(true);

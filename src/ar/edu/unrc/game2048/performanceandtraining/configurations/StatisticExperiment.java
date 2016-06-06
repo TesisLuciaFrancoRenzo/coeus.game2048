@@ -427,12 +427,14 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
                         // En caso contrario creamos un perceptron vacio, inicializado al azar
                         for ( results.get(i).setProcesedGames(1); results.get(i).getProcesedGames() < gamesToPlay; results.get(i).addProcesedGames() ) {
                             games.get(i).resetGame(); //reset
+                            int turnNumber = 0;
                             while ( !games.get(i).iLoose() && !games.get(i).iWin() ) {
                                 if ( tdLambdaLearning.isEmpty() ) {
                                     neuralNetworkInterfaces.get(i).playATurn(games.get(i), null);
                                 } else {
                                     neuralNetworkInterfaces.get(i).playATurn(games.get(i), tdLambdaLearning.get(i));
                                 }
+                                turnNumber++;
                             }
                             //calculamos estadisticas
                             results.get(i).addStatisticForTile(games.get(i).getMaxNumberCode());
@@ -440,7 +442,7 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
 
                             if ( games.get(i).getMaxNumber() >= tileToWinForStatistics ) {
                                 results.get(i).addWin();
-                                results.get(i).addLastTurn(games.get(i).getLastTurn());
+                                results.get(i).addLastTurn(turnNumber);
                             }
 
                         }
