@@ -66,10 +66,10 @@ public class BasicTanH extends LearningExperiment<BasicNetwork> {
         experiment.setConcurrencyInComputeBestPosibleAction(true);
         boolean[] concurrentLayer = {false, false};
         experiment.setConcurrencyInLayer(concurrentLayer);
-        experiment.setTileToWinForStatistics(2_048);
 
         experiment.createLogs(false);
         //para calcualar estadisticas
+        experiment.setTileToWinForStatistics(2_048);
         if ( statistics ) {
             experiment.setStatisticsOnly(true);
             experiment.setRunStatisticsForBackups(true);

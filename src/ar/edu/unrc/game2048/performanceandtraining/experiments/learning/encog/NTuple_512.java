@@ -70,6 +70,7 @@ public class NTuple_512 extends LearningExperiment<BasicNetwork> {
 
         experiment.createLogs(false);
         //para calcualar estadisticas
+        experiment.setTileToWinForStatistics(512);
         if ( statistics ) {
             experiment.setStatisticsOnly(true);
             experiment.setRunStatisticsForBackups(true);
