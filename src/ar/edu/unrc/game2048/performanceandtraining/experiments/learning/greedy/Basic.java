@@ -48,22 +48,23 @@ public class Basic extends LearningExperiment<BasicNetwork> {
         LearningExperiment experiment = new Basic();
         experiment.setStatisticsOnly(true);
         experiment.createLogs(false);
-        experiment.setTileToWinForTraining(2_048);
         experiment.setSaveEvery(100_000_000);
         experiment.setSaveBackupEvery(100_000_000);
         //para calcualr estadisticas
         experiment.setGamesToPlayPerThreadForStatistics(1_000);
         experiment.setSimulationsForStatistics(8);
         experiment.setRunStatisticsForBackups(false);
+        experiment.setExportToExcel(false);
         experiment.start(filePath, 0, true);
     }
 
     @Override
-    public void initialize()  {
+    public void initialize() {
         if ( this.getExperimentName() == null ) {
             this.setExperimentName(this.getClass());
         }
         this.setPerceptronName(this.getExperimentName());
+        this.setTileToWinForTraining(2_048);
         this.setNeuralNetworkInterfaceFor2048(new GreedyExperimentInterface(null));
     }
 

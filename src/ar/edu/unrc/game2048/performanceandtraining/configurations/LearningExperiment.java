@@ -52,6 +52,9 @@ import java.util.logging.Logger;
  */
 public abstract class LearningExperiment<NeuralNetworkClass> implements Cloneable {
 
+    /**
+     *
+     */
     public static final String CONFIG = "_config";
     /**
      *
@@ -118,6 +121,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> implements Cloneabl
     private int explorationRateFinishDecrementing;
     private double explorationRateInitialValue;
     private int explorationRateStartDecrementing;
+    private boolean exportToExcel = true;
     private int gamesToPlay;
     private int gamesToPlayPerThreadForStatistics;
     private double gamma;
@@ -231,6 +235,12 @@ public abstract class LearningExperiment<NeuralNetworkClass> implements Cloneabl
 
 
     /**
+     * @param experimentName the experimentName to set
+     */
+    public void setExperimentName(String experimentName) {
+        this.experimentName = experimentName;
+    }
+    /**
      * @param experimentClass
      */
     public void setExperimentName(Class experimentClass) {
@@ -240,12 +250,6 @@ public abstract class LearningExperiment<NeuralNetworkClass> implements Cloneabl
             className = className.substring(lastDot + 1);
         }
         this.experimentName = className;
-    }
-    /**
-     * @param experimentName the experimentName to set
-     */
-    public void setExperimentName(String experimentName) {
-        this.experimentName = experimentName;
     }
 
     /**
@@ -258,6 +262,13 @@ public abstract class LearningExperiment<NeuralNetworkClass> implements Cloneabl
         }
         this.explorationRate = EExplorationRateAlgorithms.fixed;
         this.explorationRateInitialValue = value;
+    }
+
+    /**
+     * @param exportToExcel the exportToExcel to set
+     */
+    public void setExportToExcel(boolean exportToExcel) {
+        this.exportToExcel = exportToExcel;
     }
 
     /**
@@ -870,7 +881,6 @@ public abstract class LearningExperiment<NeuralNetworkClass> implements Cloneabl
 
             if ( this.simulationsForStatistics > 0 && this.gamesToPlayPerThreadForStatistics > 0 ) {
                 statisticExperiment = new StatisticExperiment(this) {
-
                     @Override
                     protected void initializeStatistics() throws Exception {
                         this.setGamesToPlayPerThread(gamesToPlayPerThreadForStatistics);
@@ -878,6 +888,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> implements Cloneabl
                         this.setSimulations(simulationsForStatistics);
                         this.setLearningMethod(learningAlgorithm);
                         this.setTileToWinForStatistics(tileToWinForStatistics);
+                        this.setExportToExcel(exportToExcel);
                     }
                 };
                 statisticExperiment.setFileName(this.getExperimentName());

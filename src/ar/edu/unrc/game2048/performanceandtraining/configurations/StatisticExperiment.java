@@ -75,6 +75,7 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
     public static final String WIN_RATE = "Win rate: ";
 
     private String experimentName;
+    private boolean exportToExcel = true;
     private String fileName;
 
     private int gamesToPlay;
@@ -105,7 +106,6 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
     public StatisticExperiment(LearningExperiment<NeuralNetworkClass> learningExperiment) {
         this.learningExperiment = learningExperiment;
     }
-
 
     /**
      *
@@ -308,6 +308,14 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
 
             wb.write(outputXLSX);
         }
+    }
+
+    /**
+     *
+     * @param exportToExcel
+     */
+    public void setExportToExcel(boolean exportToExcel) {
+        this.exportToExcel = exportToExcel;
     }
 
     /**
@@ -547,6 +555,7 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
         }
     }
 
+
     /**
      *
      * @param experimentPath
@@ -734,7 +743,9 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
             }
         });
 
-        exportToExcel(filePath, backupFiles, resultsPerFile, resultsRandom, randomPerceptronFile);
+        if ( exportToExcel ) {
+            exportToExcel(filePath, backupFiles, resultsPerFile, resultsRandom, randomPerceptronFile);
+        }
     }
 
     /**
