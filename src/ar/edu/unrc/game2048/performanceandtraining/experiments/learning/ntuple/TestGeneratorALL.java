@@ -232,7 +232,7 @@ public class TestGeneratorALL {
         }
 
         stream.forEach(exp -> {
-            String newFilePath = filePath + "AutomaticTests" + File.separator + experimentName + File.separator + "alpha_" + exp.getAlpha() + "-lambda_" + exp.getLambda() + "-gamma_" + exp.getGamma() + "-explorationRate_" + exp.getExplorationRate() + "-resetTraces_" + exp.isResetTraces() + File.separator;
+            String newFilePath = filePath + "AutomaticTests" + File.separator + "alpha_" + exp.getAlpha() + "-lambda_" + exp.getLambda() + "-gamma_" + exp.getGamma() + "-explorationRate_" + exp.getExplorationRate() + "-resetTraces_" + exp.isResetTraces() + File.separator;
             File newPath = new File(newFilePath);
             if ( !newPath.exists() ) {
                 newPath.mkdirs();
