@@ -91,19 +91,19 @@ public abstract class LearningExperiment<NeuralNetworkClass> implements Cloneabl
     private int saveEvery = 0;
     private int simulationsForStatistics;
     private boolean statisticsOnly = false;
+    private int tileToWinForStatistics = 2_048;
     private int tileToWinForTraining;
     private LinkedList<Double> trainingTimes;
-    private int tileToWinForStatistics = 2_048;
+    /**
+     *
+     */
+    protected StatisticExperiment statisticExperiment;
 
     @Override
     public Object clone() throws CloneNotSupportedException {
         return super.clone(); //To change body of generated methods, choose Tools | Templates.
     }
 
-    /**
-     *
-     */
-    protected StatisticExperiment statisticExperiment;
 
     /**
      *
@@ -186,12 +186,6 @@ public abstract class LearningExperiment<NeuralNetworkClass> implements Cloneabl
         return experimentName;
     }
 
-    /**
-     * @param experimentName the experimentName to set
-     */
-    public void setExperimentName(String experimentName) {
-        this.experimentName = experimentName;
-    }
 
     /**
      * @param experimentClass
@@ -203,6 +197,12 @@ public abstract class LearningExperiment<NeuralNetworkClass> implements Cloneabl
             className = className.substring(lastDot + 1);
         }
         this.experimentName = className;
+    }
+    /**
+     * @param experimentName the experimentName to set
+     */
+    public void setExperimentName(String experimentName) {
+        this.experimentName = experimentName;
     }
 
     /**
@@ -332,6 +332,14 @@ public abstract class LearningExperiment<NeuralNetworkClass> implements Cloneabl
      */
     public void setSaveEvery(int saveEvery) {
         this.saveEvery = saveEvery;
+    }
+
+    /**
+     *
+     * @param winValue
+     */
+    public void setTileToWinForStatistics(int winValue) {
+        tileToWinForStatistics = winValue;
     }
 
     /**
@@ -564,9 +572,6 @@ public abstract class LearningExperiment<NeuralNetworkClass> implements Cloneabl
         }
     }
 
-    public void setTileToWinForStatistics(int winValue) {
-        tileToWinForStatistics = winValue;
-    }
 
     /**
      * @return the annealingT

@@ -45,6 +45,16 @@ public class TestGeneratorALL {
 
     /**
      *
+     */
+    public static final DateFormat DATE_FILE_FORMATTER = new SimpleDateFormat("dd-MM-yyyy'_'HH'h'-mm'm'-ss's'");
+
+    /**
+     *
+     */
+    public static final DateFormat DATE_FORMATTER = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+
+    /**
+     *
      * @param experiment
      * @param statisticsOnly
      * @param runStatisticsForBackups
@@ -102,6 +112,18 @@ public class TestGeneratorALL {
         experiment.setSimulationsForStatistics(simulationsForStatistics);
         System.out.println("***************************************** Ejecutando " + filePath + " *****************************************");
         experiment.start(filePath, 0, true);
+    }
+
+    /**
+     *
+     * @param ex <p>
+     * @return
+     */
+    public static String getMsj(Throwable ex) {
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        ex.printStackTrace(pw);
+        return sw.toString();
     }
 
     /**
@@ -225,9 +247,6 @@ public class TestGeneratorALL {
         });
     }
 
-    public final static DateFormat DATE_FILE_FORMATTER = new SimpleDateFormat("dd-MM-yyyy'_'HH'h'-mm'm'-ss's'");
-    public final static DateFormat DATE_FORMATTER = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-
     private static void printErrorInFile(Throwable ex, File dumpFile) {
         PrintStream printStream = null;
         try {
@@ -248,18 +267,6 @@ public class TestGeneratorALL {
                 printStream.close();
             }
         }
-    }
-
-    /**
-     *
-     * @param ex <p>
-     * @return
-     */
-    public static String getMsj(Throwable ex) {
-        StringWriter sw = new StringWriter();
-        PrintWriter pw = new PrintWriter(sw);
-        ex.printStackTrace(pw);
-        return sw.toString();
     }
 
     private static class GeneratorConfig {

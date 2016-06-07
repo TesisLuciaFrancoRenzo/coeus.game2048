@@ -90,8 +90,8 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
     private List<Double> tileStatistics;
 
     private int tileToWin;
-    private double winRate;
     private int tileToWinForStatistics = 2_048;
+    private double winRate;
 
     /**
      *
@@ -106,9 +106,6 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
         this.learningExperiment = learningExperiment;
     }
 
-    public void setTileToWinForStatistics(int tileToWinForStatistics) {
-        this.tileToWinForStatistics = tileToWinForStatistics;
-    }
 
     /**
      *
@@ -334,6 +331,14 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
         statistic.setMinTurn(minTurn);
         statistic.setTileStatistics(tileStatistics);
         return statistic;
+    }
+
+    /**
+     *
+     * @param tileToWinForStatistics
+     */
+    public void setTileToWinForStatistics(int tileToWinForStatistics) {
+        this.tileToWinForStatistics = tileToWinForStatistics;
     }
 
     /**
