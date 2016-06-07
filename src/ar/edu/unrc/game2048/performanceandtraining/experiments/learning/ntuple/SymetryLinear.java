@@ -82,12 +82,12 @@ public class SymetryLinear extends LearningExperiment<BasicNetwork> {
             experiment.setGamesToPlayPerThreadForStatistics(0);
             experiment.setSimulationsForStatistics(0);
         }
-
+        experiment.setExportToExcel(true);
         experiment.start(filePath, 0, true);
     }
 
     @Override
-    public void initialize()  {
+    public void initialize() {
         this.setTileToWinForTraining(32_768);
         if ( this.getExperimentName() == null ) {
             this.setExperimentName(this.getClass());

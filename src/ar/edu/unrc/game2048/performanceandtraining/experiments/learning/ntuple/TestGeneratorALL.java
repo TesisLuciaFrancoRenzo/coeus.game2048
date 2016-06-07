@@ -90,6 +90,7 @@ public class TestGeneratorALL {
         experiment.setSaveBackupEvery(saveBacupEvery);
         experiment.setGamesToPlayPerThreadForStatistics(gamesToPlayPerThreadForStatistics);
         experiment.setSimulationsForStatistics(simulationsForStatistics);
+        experiment.setExportToExcel(true);
         System.out.println("***************************************** Ejecutando " + filePath + " *****************************************");
         experiment.start(filePath, 0, true);
     }
