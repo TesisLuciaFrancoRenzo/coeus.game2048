@@ -19,6 +19,8 @@
 package ar.edu.unrc.game2048.performanceandtraining.configurations;
 
 import ar.edu.unrc.game2048.Game2048;
+import ar.edu.unrc.game2048.performanceandtraining.experiments.learning.ntuple.TestGeneratorALL;
+import static ar.edu.unrc.game2048.performanceandtraining.experiments.learning.ntuple.TestGeneratorALL.getMsj;
 import ar.edu.unrc.tdlearning.interfaces.IPerceptronInterface;
 import ar.edu.unrc.tdlearning.learning.EExplorationRateAlgorithms;
 import ar.edu.unrc.tdlearning.learning.ELearningRateAdaptation;
@@ -28,14 +30,20 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintStream;
+import java.io.UnsupportedEncodingException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -48,6 +56,14 @@ public abstract class LearningExperiment<NeuralNetworkClass> implements Cloneabl
      *
      */
     public static final String CONFIG = "_config";
+    /**
+     *
+     */
+    public static final DateFormat DATE_FILE_FORMATTER = new SimpleDateFormat("dd-MM-yyyy'_'HH'h'-mm'm'-ss's'");
+    /**
+     *
+     */
+    public static final DateFormat DATE_FORMATTER = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
     /**
      *
@@ -58,6 +74,27 @@ public abstract class LearningExperiment<NeuralNetworkClass> implements Cloneabl
      *
      */
     public static final String TRAINED = "_trained";
+    private static void printErrorInFile(Throwable ex, File dumpFile) {
+        PrintStream printStream = null;
+        try {
+            if ( !dumpFile.exists() ) {
+                dumpFile.createNewFile();
+            }
+            printStream = new PrintStream(new FileOutputStream(dumpFile, true), true, "UTF-8");
+            String msj = "* " + DATE_FORMATTER.format(new Date()) + "----------------------------------------------------------------------------\n"
+                    + getMsj(ex);
+            printStream.println(msj);
+            System.err.println(msj);
+        } catch ( UnsupportedEncodingException | FileNotFoundException ex1 ) {
+            Logger.getLogger(TestGeneratorALL.class.getName()).log(Level.SEVERE, null, ex1);
+        } catch ( IOException ex1 ) {
+            Logger.getLogger(TestGeneratorALL.class.getName()).log(Level.SEVERE, null, ex1);
+        } finally {
+            if ( printStream != null ) {
+                printStream.close();
+            }
+        }
+    }
     private double[] alpha;
     private int annealingT;
 
@@ -103,7 +140,6 @@ public abstract class LearningExperiment<NeuralNetworkClass> implements Cloneabl
     public Object clone() throws CloneNotSupportedException {
         return super.clone(); //To change body of generated methods, choose Tools | Templates.
     }
-
 
     /**
      *
@@ -188,6 +224,12 @@ public abstract class LearningExperiment<NeuralNetworkClass> implements Cloneabl
 
 
     /**
+     * @param experimentName the experimentName to set
+     */
+    public void setExperimentName(String experimentName) {
+        this.experimentName = experimentName;
+    }
+    /**
      * @param experimentClass
      */
     public void setExperimentName(Class experimentClass) {
@@ -197,12 +239,6 @@ public abstract class LearningExperiment<NeuralNetworkClass> implements Cloneabl
             className = className.substring(lastDot + 1);
         }
         this.experimentName = className;
-    }
-    /**
-     * @param experimentName the experimentName to set
-     */
-    public void setExperimentName(String experimentName) {
-        this.experimentName = experimentName;
     }
 
     /**
@@ -363,9 +399,8 @@ public abstract class LearningExperiment<NeuralNetworkClass> implements Cloneabl
      * <p>
      * </ul>
      * <p>
-     * @throws Exception
      */
-    public abstract void initialize() throws Exception;
+    public abstract void initialize();
 
     /**
      *
@@ -456,10 +491,8 @@ public abstract class LearningExperiment<NeuralNetworkClass> implements Cloneabl
      * @param experimentPath
      * @param delayPerMove
      * @param createPerceptronFile
-     *
-     * @throws java.lang.Exception
      */
-    public void start(String experimentPath, int delayPerMove, boolean createPerceptronFile) throws Exception {
+    public void start(String experimentPath, int delayPerMove, boolean createPerceptronFile) {
         File experimentPathFile = new File(experimentPath);
         if ( experimentPathFile.exists() && !experimentPathFile.isDirectory() ) {
             throw new IllegalArgumentException("experimentPath must be a directory");
@@ -528,7 +561,6 @@ public abstract class LearningExperiment<NeuralNetworkClass> implements Cloneabl
             long start = System.nanoTime();
             learningAlgorithm.solveAndTrainOnce(game, i);
             elapsedTime += System.nanoTime() - start;
-
             if ( learningAlgorithm.canCollectStatistics() ) {
                 double avg = 0;
                 for ( Long sample : learningAlgorithm.getBestPossibleActionTimes() ) {
@@ -571,7 +603,6 @@ public abstract class LearningExperiment<NeuralNetworkClass> implements Cloneabl
             }
         }
     }
-
 
     /**
      * @return the annealingT
@@ -670,150 +701,152 @@ public abstract class LearningExperiment<NeuralNetworkClass> implements Cloneabl
      * @param experimentPath
      * @param delayPerMove         <p>
      * @param createPerceptronFile
-     *
-     * @throws Exception
      */
     @SuppressWarnings( "static-access" )
-    protected void runExperiment(String experimentPath, int delayPerMove, boolean createPerceptronFile) throws Exception {
+    protected void runExperiment(String experimentPath, int delayPerMove, boolean createPerceptronFile) {
         if ( saveEvery == 0 ) {
             throw new IllegalArgumentException("se debe configurar cada cuanto guardar el perceptron mediante la variable saveEvery");
         }
         if ( saveBackupEvery == 0 ) {
             throw new IllegalArgumentException("se debe configurar cada cuanto guardar backups del perceptron mediante la variable saveBackupEvery");
         }
-        SimpleDateFormat dateFormater = new SimpleDateFormat("dd-MM-yyyy_HH'h'mm'm'ss's'");
-        Date now = new Date();
-
         System.out.println("Starting " + this.getPerceptronName() + " Trainer");
-
         String dirPath = createPathToDir(experimentPath);
-        if ( createPerceptronFile ) {
-            File dirPathFile = new File(dirPath);
-            if ( !dirPathFile.exists() ) {
-                dirPathFile.mkdirs();
-            }
-        }
-        String filePath = dirPath + perceptronName;
-        File perceptronFile = new File(filePath + TRAINED + ".ser");
-        File configFile = new File(filePath + CONFIG + ".txt");
-
-        backupNumber = 0;
-        lastSavedGamePlayedNumber = 0;
-        elapsedTime = 0;
-        if ( configFile.exists() ) {
-            try ( BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(configFile), "UTF-8")) ) {
-                String line = reader.readLine();
-                if ( line == null ) {
-                    throw new IllegalArgumentException("el archivo de configuracion no tiene un formato válido");
-                }
-                this.lastSavedGamePlayedNumber = Integer.parseInt(line);
-                line = reader.readLine();
-                if ( line == null ) {
-                    throw new IllegalArgumentException("el archivo de configuracion no tiene un formato válido");
-                }
-                this.backupNumber = Integer.parseInt(line);
-                line = reader.readLine();
-                if ( line == null ) {
-                    throw new IllegalArgumentException("el archivo de configuracion no tiene un formato válido");
-                }
-                this.elapsedTime = Long.parseLong(line);
-            }
-        }
-
-        int zeroNumbers = 1;
-        if ( !this.statisticsOnly ) {
-            zeroNumbers = Integer.toString(this.gamesToPlay / this.saveBackupEvery).length();
-        }
-
-        boolean backupRandomPerceptron = false;
-        File randomPerceptronFile = null;
-        if ( createPerceptronFile ) {
-            randomPerceptronFile = new File(filePath + RANDOM + ".ser");
-            if ( !perceptronFile.exists() ) {
-                if ( randomPerceptronFile.exists() ) {
-                    randomPerceptronFile.delete();
-                }
-                backupRandomPerceptron = true;
-            }
-        }
-        //creamos el juego
-        Game2048<NeuralNetworkClass> game = new Game2048<>(neuralNetworkInterfaceFor2048.getPerceptronConfiguration(), neuralNetworkInterfaceFor2048.getNTupleConfiguration(), tileToWinForTraining, delayPerMove);
-
-        // Si hay un perceptron ya entrenado, lo buscamos en el archivo.
-        // En caso contrario creamos un perceptron vacio, inicializado al azar
-        neuralNetworkInterfaceFor2048.loadOrCreatePerceptron(perceptronFile, this.initializePerceptronRandomized, createPerceptronFile);
-        //FIXME que hacer si esta ROTO? solucionar esto
-
-        //creamos una interfaz de comunicacion entre la red neuronal de encog y el algoritmo de entrenamiento
-        if ( backupRandomPerceptron ) {
-            //guardamos el perceptron inicial para ahcer estadisticas
-            neuralNetworkInterfaceFor2048.savePerceptron(randomPerceptronFile);
-        }
-
-        if ( this.getNeuralNetworkInterfaceFor2048().getPerceptronInterface() != null ) {
-            this.setLearningAlgorithm(instanceOfTdLearninrgImplementation(this.getNeuralNetworkInterfaceFor2048().getPerceptronInterface()));
-            this.learningAlgorithm.setComputeParallelBestPossibleAction(concurrencyInComputeBestPosibleAction);
-        }
-        if ( this.getNeuralNetworkInterfaceFor2048().getNTupleConfiguration() != null ) {
-            this.setLearningAlgorithm(instanceOfTdLearninrgImplementation(this.getNeuralNetworkInterfaceFor2048().getNTupleConfiguration().getNTupleSystem()));
-            this.learningAlgorithm.setComputeParallelBestPossibleAction(concurrencyInComputeBestPosibleAction);
-        }
-
-        if ( learningAlgorithm == null && !this.statisticsOnly ) {
-            throw new IllegalArgumentException("learningAlgorithm no puede ser null");
-        }
-
-        System.out.println("Training...");
-
-        //creamos un archivo de logs para acumular estadisticas
-        File logFile = new File(filePath + "_" + dateFormater.format(now) + "_LOG" + ".txt");
-
-        if ( !this.statisticsOnly ) {
-            //comenzamos a entrenar y guardar estadisticas en el archivo de log
-            if ( logsActivated ) {
-                try ( PrintStream printStream = new PrintStream(logFile, "UTF-8") ) {
-                    training(game, printStream, randomPerceptronFile, perceptronFile, configFile, filePath, dateFormater, zeroNumbers);
-                }
-            } else {
-                training(game, null, randomPerceptronFile, perceptronFile, configFile, filePath, dateFormater, zeroNumbers);
-            }
-            if ( learningAlgorithm.canCollectStatistics() ) {
-                avgBestPissibleActionTimes = 0d;
-                for ( Double sample : this.bestPissibleActionTimes ) {
-                    avgBestPissibleActionTimes += sample;
-                }
-                avgBestPissibleActionTimes /= (this.bestPissibleActionTimes.size() * 1d);
-
-                avgTrainingTimes = 0d;
-                for ( Double sample : this.trainingTimes ) {
-                    avgTrainingTimes += sample;
-                }
-                avgTrainingTimes /= (this.trainingTimes.size() * 1d);
-            }
-            //guardamos los progresos en un archivo
+        String bugFilePath = dirPath + "ERROR_DUMP.txt";
+        try {
+            SimpleDateFormat dateFormater = new SimpleDateFormat("dd-MM-yyyy_HH'h'mm'm'ss's'");
+            Date now = new Date();
             if ( createPerceptronFile ) {
-                neuralNetworkInterfaceFor2048.savePerceptron(perceptronFile);
-            }
-        }
-        //cerramos el juego
-        game.dispose();
-
-        System.out.println("Training Finished.");
-
-        if ( this.simulationsForStatistics > 0 && this.gamesToPlayPerThreadForStatistics > 0 ) {
-            statisticExperiment = new StatisticExperiment(this) {
-
-                @Override
-                protected void initializeStatistics() throws Exception {
-                    this.setGamesToPlayPerThread(gamesToPlayPerThreadForStatistics);
-                    this.saveBackupEvery(saveBackupEvery);
-                    this.setSimulations(simulationsForStatistics);
-                    this.setLearningMethod(learningAlgorithm);
-                    this.setTileToWinForStatistics(tileToWinForStatistics);
+                File dirPathFile = new File(dirPath);
+                if ( !dirPathFile.exists() ) {
+                    dirPathFile.mkdirs();
                 }
-            };
-            statisticExperiment.setFileName(this.getExperimentName());
-            statisticExperiment.start(experimentPath, delayPerMove, createPerceptronFile);
+            }
+            String filePath = dirPath + perceptronName;
+            File perceptronFile = new File(filePath + TRAINED + ".ser");
+            File configFile = new File(filePath + CONFIG + ".txt");
+
+            backupNumber = 0;
+            lastSavedGamePlayedNumber = 0;
+            elapsedTime = 0;
+            if ( configFile.exists() ) {
+                try ( BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(configFile), "UTF-8")) ) {
+                    String line = reader.readLine();
+                    if ( line == null ) {
+                        throw new IllegalArgumentException("el archivo de configuracion no tiene un formato válido");
+                    }
+                    this.lastSavedGamePlayedNumber = Integer.parseInt(line);
+                    line = reader.readLine();
+                    if ( line == null ) {
+                        throw new IllegalArgumentException("el archivo de configuracion no tiene un formato válido");
+                    }
+                    this.backupNumber = Integer.parseInt(line);
+                    line = reader.readLine();
+                    if ( line == null ) {
+                        throw new IllegalArgumentException("el archivo de configuracion no tiene un formato válido");
+                    }
+                    this.elapsedTime = Long.parseLong(line);
+                }
+            }
+
+            int zeroNumbers = 1;
+            if ( !this.statisticsOnly ) {
+                zeroNumbers = Integer.toString(this.gamesToPlay / this.saveBackupEvery).length();
+            }
+
+            boolean backupRandomPerceptron = false;
+            File randomPerceptronFile = null;
+            if ( createPerceptronFile ) {
+                randomPerceptronFile = new File(filePath + RANDOM + ".ser");
+                if ( !perceptronFile.exists() ) {
+                    if ( randomPerceptronFile.exists() ) {
+                        randomPerceptronFile.delete();
+                    }
+                    backupRandomPerceptron = true;
+                }
+            }
+            //creamos el juego
+            Game2048<NeuralNetworkClass> game = new Game2048<>(neuralNetworkInterfaceFor2048.getPerceptronConfiguration(), neuralNetworkInterfaceFor2048.getNTupleConfiguration(), tileToWinForTraining, delayPerMove);
+
+            // Si hay un perceptron ya entrenado, lo buscamos en el archivo.
+            // En caso contrario creamos un perceptron vacio, inicializado al azar
+            neuralNetworkInterfaceFor2048.loadOrCreatePerceptron(perceptronFile, this.initializePerceptronRandomized, createPerceptronFile);
+            //FIXME que hacer si esta ROTO? solucionar esto
+
+            //creamos una interfaz de comunicacion entre la red neuronal de encog y el algoritmo de entrenamiento
+            if ( backupRandomPerceptron ) {
+                //guardamos el perceptron inicial para ahcer estadisticas
+                neuralNetworkInterfaceFor2048.savePerceptron(randomPerceptronFile);
+            }
+
+            if ( this.getNeuralNetworkInterfaceFor2048().getPerceptronInterface() != null ) {
+                this.setLearningAlgorithm(instanceOfTdLearninrgImplementation(this.getNeuralNetworkInterfaceFor2048().getPerceptronInterface()));
+                this.learningAlgorithm.setComputeParallelBestPossibleAction(concurrencyInComputeBestPosibleAction);
+            }
+            if ( this.getNeuralNetworkInterfaceFor2048().getNTupleConfiguration() != null ) {
+                this.setLearningAlgorithm(instanceOfTdLearninrgImplementation(this.getNeuralNetworkInterfaceFor2048().getNTupleConfiguration().getNTupleSystem()));
+                this.learningAlgorithm.setComputeParallelBestPossibleAction(concurrencyInComputeBestPosibleAction);
+            }
+
+            if ( learningAlgorithm == null && !this.statisticsOnly ) {
+                throw new IllegalArgumentException("learningAlgorithm no puede ser null");
+            }
+
+            System.out.println("Training...");
+
+            //creamos un archivo de logs para acumular estadisticas
+            File logFile = new File(filePath + "_" + dateFormater.format(now) + "_LOG" + ".txt");
+
+            if ( !this.statisticsOnly ) {
+                //comenzamos a entrenar y guardar estadisticas en el archivo de log
+                if ( logsActivated ) {
+                    try ( PrintStream printStream = new PrintStream(logFile, "UTF-8") ) {
+                        training(game, printStream, randomPerceptronFile, perceptronFile, configFile, filePath, dateFormater, zeroNumbers);
+                    }
+                } else {
+                    training(game, null, randomPerceptronFile, perceptronFile, configFile, filePath, dateFormater, zeroNumbers);
+                }
+                if ( learningAlgorithm.canCollectStatistics() ) {
+                    avgBestPissibleActionTimes = 0d;
+                    for ( Double sample : this.bestPissibleActionTimes ) {
+                        avgBestPissibleActionTimes += sample;
+                    }
+                    avgBestPissibleActionTimes /= (this.bestPissibleActionTimes.size() * 1d);
+
+                    avgTrainingTimes = 0d;
+                    for ( Double sample : this.trainingTimes ) {
+                        avgTrainingTimes += sample;
+                    }
+                    avgTrainingTimes /= (this.trainingTimes.size() * 1d);
+                }
+                //guardamos los progresos en un archivo
+                if ( createPerceptronFile ) {
+                    neuralNetworkInterfaceFor2048.savePerceptron(perceptronFile);
+                }
+            }
+            //cerramos el juego
+            game.dispose();
+
+            System.out.println("Training Finished.");
+
+            if ( this.simulationsForStatistics > 0 && this.gamesToPlayPerThreadForStatistics > 0 ) {
+                statisticExperiment = new StatisticExperiment(this) {
+
+                    @Override
+                    protected void initializeStatistics() throws Exception {
+                        this.setGamesToPlayPerThread(gamesToPlayPerThreadForStatistics);
+                        this.saveBackupEvery(saveBackupEvery);
+                        this.setSimulations(simulationsForStatistics);
+                        this.setLearningMethod(learningAlgorithm);
+                        this.setTileToWinForStatistics(tileToWinForStatistics);
+                    }
+                };
+                statisticExperiment.setFileName(this.getExperimentName());
+                statisticExperiment.start(experimentPath, delayPerMove, createPerceptronFile);
+            }
+        } catch ( Exception ex ) {
+            printErrorInFile(ex, new File(bugFilePath));
         }
     }
+
 }

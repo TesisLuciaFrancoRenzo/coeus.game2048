@@ -20,17 +20,9 @@ package ar.edu.unrc.game2048.performanceandtraining.experiments.learning.ntuple;
 
 import ar.edu.unrc.game2048.performanceandtraining.configurations.LearningExperiment;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.io.UnsupportedEncodingException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
@@ -42,16 +34,6 @@ import java.util.stream.Stream;
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
 public class TestGeneratorALL {
-
-    /**
-     *
-     */
-    public static final DateFormat DATE_FILE_FORMATTER = new SimpleDateFormat("dd-MM-yyyy'_'HH'h'-mm'm'-ss's'");
-
-    /**
-     *
-     */
-    public static final DateFormat DATE_FORMATTER = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
     /**
      *
@@ -70,8 +52,6 @@ public class TestGeneratorALL {
      * @param explorationRate
      * @param resetEligibilitiTraces
      * @param filePath
-     *
-     * @throws java.lang.Exception
      */
     public static void configAndExcecute(
             LearningExperiment experiment,
@@ -89,7 +69,7 @@ public class TestGeneratorALL {
             double explorationRate,
             boolean resetEligibilitiTraces,
             String filePath
-    ) throws Exception {
+    ) {
         experiment.setStatisticsOnly(statisticsOnly);
         experiment.setRunStatisticsForBackups(runStatisticsForBackups);
         experiment.createLogs(createLogs);
@@ -232,41 +212,19 @@ public class TestGeneratorALL {
         }
 
         stream.forEach(exp -> {
-            String newFilePath = filePath + "AutomaticTests" + File.separator + "alpha_" + exp.getAlpha() + "-lambda_" + exp.getLambda() + "-gamma_" + exp.getGamma() + "-explorationRate_" + exp.getExplorationRate() + "-resetTraces_" + exp.isResetTraces() + File.separator;
-            File newPath = new File(newFilePath);
-            if ( !newPath.exists() ) {
-                newPath.mkdirs();
-            }
             try {
+                String newFilePath = filePath + "AutomaticTests" + File.separator + "alpha_" + exp.getAlpha() + "-lambda_" + exp.getLambda() + "-gamma_" + exp.getGamma() + "-explorationRate_" + exp.getExplorationRate() + "-resetTraces_" + exp.isResetTraces() + File.separator;
+                File newPath = new File(newFilePath);
+                if ( !newPath.exists() ) {
+                    newPath.mkdirs();
+                }
                 LearningExperiment cloneExperiment = (LearningExperiment) experiment.clone();
                 cloneExperiment.setExperimentName(experimentName);
                 configAndExcecute(cloneExperiment, statisticsOnly, runStatisticsForBackups, createLogs, exp.getLambda(), exp.getAlpha(), exp.getGamma(), gamesToPlay, saveEvery, saveBacupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, exp.getExplorationRate(), exp.isResetTraces(), newFilePath);
-            } catch ( Exception ex ) {
-                printErrorInFile(ex, new File(newFilePath + "ERROR_DUMP.txt"));
+            } catch ( CloneNotSupportedException ex ) {
+                Logger.getLogger(TestGeneratorALL.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
-    }
-
-    private static void printErrorInFile(Throwable ex, File dumpFile) {
-        PrintStream printStream = null;
-        try {
-            if ( !dumpFile.exists() ) {
-                dumpFile.createNewFile();
-            }
-            printStream = new PrintStream(new FileOutputStream(dumpFile, true), true, "UTF-8");
-            String msj = "* " + DATE_FORMATTER.format(new Date()) + "----------------------------------------------------------------------------\n"
-                    + getMsj(ex);
-            printStream.println(msj);
-            System.err.println(msj);
-        } catch ( UnsupportedEncodingException | FileNotFoundException ex1 ) {
-            Logger.getLogger(TestGeneratorALL.class.getName()).log(Level.SEVERE, null, ex1);
-        } catch ( IOException ex1 ) {
-            Logger.getLogger(TestGeneratorALL.class.getName()).log(Level.SEVERE, null, ex1);
-        } finally {
-            if ( printStream != null ) {
-                printStream.close();
-            }
-        }
     }
 
     private static class GeneratorConfig {
