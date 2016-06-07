@@ -59,7 +59,7 @@ public class Basic extends LearningExperiment<BasicNetwork> {
     }
 
     @Override
-    public void initialize() throws Exception {
+    public void initialize()  {
         if ( this.getExperimentName() == null ) {
             this.setExperimentName(this.getClass());
         }

@@ -87,7 +87,7 @@ public class SymetryTanH extends LearningExperiment<BasicNetwork> {
     }
 
     @Override
-    public void initialize() throws Exception {
+    public void initialize()  {
         this.setTileToWinForTraining(32_768);
         if ( this.getExperimentName() == null ) {
             this.setExperimentName(this.getClass());

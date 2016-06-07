@@ -52,9 +52,6 @@ import java.util.logging.Logger;
  */
 public abstract class LearningExperiment<NeuralNetworkClass> implements Cloneable {
 
-    /**
-     *
-     */
     public static final String CONFIG = "_config";
     /**
      *
@@ -68,12 +65,22 @@ public abstract class LearningExperiment<NeuralNetworkClass> implements Cloneabl
     /**
      *
      */
+    public static final String ERROR_DUMP = "ERROR_DUMP";
+    /**
+     *
+     */
+    public static final String LAST_SAVE_DATA = "_last_save_data";
+
+    /**
+     *
+     */
     public static final String RANDOM = "_random";
 
     /**
      *
      */
     public static final String TRAINED = "_trained";
+
     private static void printErrorInFile(Throwable ex, File dumpFile) {
         PrintStream printStream = null;
         try {
@@ -98,10 +105,10 @@ public abstract class LearningExperiment<NeuralNetworkClass> implements Cloneabl
     private double[] alpha;
     private int annealingT;
 
-    private double avgBestPissibleActionTimes;
+    private double avgBestPossibleActionTimes;
     private double avgTrainingTimes;
     private int backupNumber;
-    private LinkedList<Double> bestPissibleActionTimes;
+    private LinkedList<Double> bestPossibleActionTimes;
     private boolean concurrencyInComputeBestPosibleAction = false;
     private boolean[] concurrencyInLayer;
     private long elapsedTime = 0;
@@ -179,8 +186,8 @@ public abstract class LearningExperiment<NeuralNetworkClass> implements Cloneabl
      *
      * @return
      */
-    public double getAvgBestPissibleActionTimes() {
-        return avgBestPissibleActionTimes;
+    public double getAvgBestPossibleActionTimes() {
+        return avgBestPossibleActionTimes;
     }
 
     /**
@@ -224,12 +231,6 @@ public abstract class LearningExperiment<NeuralNetworkClass> implements Cloneabl
 
 
     /**
-     * @param experimentName the experimentName to set
-     */
-    public void setExperimentName(String experimentName) {
-        this.experimentName = experimentName;
-    }
-    /**
      * @param experimentClass
      */
     public void setExperimentName(Class experimentClass) {
@@ -239,6 +240,12 @@ public abstract class LearningExperiment<NeuralNetworkClass> implements Cloneabl
             className = className.substring(lastDot + 1);
         }
         this.experimentName = className;
+    }
+    /**
+     * @param experimentName the experimentName to set
+     */
+    public void setExperimentName(String experimentName) {
+        this.experimentName = experimentName;
     }
 
     /**
@@ -510,7 +517,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> implements Cloneabl
      * @param printStream
      * @param randomPerceptronFile
      * @param perceptronFile
-     * @param configFile
+     * @param lastSaveDataFile
      * @param filePath
      * @param dateFormater
      * @param zeroNumbers          <p>
@@ -521,7 +528,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> implements Cloneabl
             final PrintStream printStream,
             File randomPerceptronFile,
             File perceptronFile,
-            File configFile,
+            File lastSaveDataFile,
             String filePath,
             SimpleDateFormat dateFormater,
             int zeroNumbers) throws Exception {
@@ -553,7 +560,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> implements Cloneabl
         }
 
         if ( learningAlgorithm.canCollectStatistics() ) {
-            bestPissibleActionTimes = new LinkedList<>();
+            bestPossibleActionTimes = new LinkedList<>();
             trainingTimes = new LinkedList<>();
         }
 
@@ -567,7 +574,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> implements Cloneabl
                     avg += sample;
                 }
                 avg /= (learningAlgorithm.getBestPossibleActionTimes().size() * 1d);
-                bestPissibleActionTimes.add(avg);
+                bestPossibleActionTimes.add(avg);
 
                 avg = 0;
                 for ( Long sample : learningAlgorithm.getTrainingTimes() ) {
@@ -597,10 +604,39 @@ public abstract class LearningExperiment<NeuralNetworkClass> implements Cloneabl
                 writeConfig = true;
             }
             if ( writeConfig ) {
-                try ( BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(configFile), "UTF-8")) ) {
+                try ( BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(lastSaveDataFile), "UTF-8")) ) {
                     out.write(Integer.toString(i) + "\n" + Integer.toString(backupNumber) + "\n" + Long.toString(elapsedTime));
                 }
             }
+        }
+    }
+
+    private void saveConfigFile(File configFile) throws Exception {
+        try ( BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(configFile), "UTF-8")) ) {
+            out.write("experimentName: " + experimentName + "\n");
+            out.write("perceptronName: " + perceptronName + "\n");
+            out.write("tileToWinForTraining: " + tileToWinForTraining + "\n");
+            out.write("tileToWinForStatistics: " + tileToWinForStatistics + "\n");
+            out.write("gamesToPlay: " + gamesToPlay + "\n");
+            out.write("gamesToPlayPerThreadForStatistics: " + gamesToPlayPerThreadForStatistics + "\n");
+            out.write("statisticsOnly: " + statisticsOnly + "\n");
+            out.write("simulationsForStatistics: " + simulationsForStatistics + "\n");
+            out.write("saveEvery: " + saveEvery + "\n");
+            out.write("saveBackupEvery: " + saveBackupEvery + "\n");
+            out.write("alpha: " + Arrays.toString(alpha) + "\n");
+            out.write("gamma: " + gamma + "\n");
+            out.write("lambda: " + lambda + "\n");
+            out.write("annealingT: " + annealingT + "\n");
+            out.write("learningRateAdaptation: " + learningRateAdaptation + "\n");
+            out.write("initializePerceptronRandomized: " + initializePerceptronRandomized + "\n");
+            out.write("resetEligibilitiTraces: " + resetEligibilitiTraces + "\n");
+            out.write("concurrencyInComputeBestPosibleAction: " + concurrencyInComputeBestPosibleAction + "\n");
+            out.write("concurrencyInLayer: " + Arrays.toString(concurrencyInLayer) + "\n");
+            out.write("explorationRate: " + explorationRate + "\n");
+            out.write("explorationRateFinalValue: " + explorationRateFinalValue + "\n");
+            out.write("explorationRateInitialValue: " + explorationRateInitialValue + "\n");
+            out.write("explorationRateStartDecrementing: " + explorationRateStartDecrementing + "\n");
+            out.write("explorationRateFinishDecrementing: " + explorationRateFinishDecrementing + "\n");
         }
     }
 
@@ -712,7 +748,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> implements Cloneabl
         }
         System.out.println("Starting " + this.getPerceptronName() + " Trainer");
         String dirPath = createPathToDir(experimentPath);
-        String bugFilePath = dirPath + "ERROR_DUMP.txt";
+        String bugFilePath = dirPath + ERROR_DUMP + ".txt";
         try {
             SimpleDateFormat dateFormater = new SimpleDateFormat("dd-MM-yyyy_HH'h'mm'm'ss's'");
             Date now = new Date();
@@ -724,13 +760,14 @@ public abstract class LearningExperiment<NeuralNetworkClass> implements Cloneabl
             }
             String filePath = dirPath + perceptronName;
             File perceptronFile = new File(filePath + TRAINED + ".ser");
+            File lastSaveDataFile = new File(filePath + LAST_SAVE_DATA + ".txt");
             File configFile = new File(filePath + CONFIG + ".txt");
 
             backupNumber = 0;
             lastSavedGamePlayedNumber = 0;
             elapsedTime = 0;
-            if ( configFile.exists() ) {
-                try ( BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(configFile), "UTF-8")) ) {
+            if ( lastSaveDataFile.exists() ) {
+                try ( BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(lastSaveDataFile), "UTF-8")) ) {
                     String line = reader.readLine();
                     if ( line == null ) {
                         throw new IllegalArgumentException("el archivo de configuracion no tiene un formato válido");
@@ -792,6 +829,8 @@ public abstract class LearningExperiment<NeuralNetworkClass> implements Cloneabl
                 throw new IllegalArgumentException("learningAlgorithm no puede ser null");
             }
 
+            saveConfigFile(configFile);
+
             System.out.println("Training...");
 
             //creamos un archivo de logs para acumular estadisticas
@@ -801,17 +840,17 @@ public abstract class LearningExperiment<NeuralNetworkClass> implements Cloneabl
                 //comenzamos a entrenar y guardar estadisticas en el archivo de log
                 if ( logsActivated ) {
                     try ( PrintStream printStream = new PrintStream(logFile, "UTF-8") ) {
-                        training(game, printStream, randomPerceptronFile, perceptronFile, configFile, filePath, dateFormater, zeroNumbers);
+                        training(game, printStream, randomPerceptronFile, perceptronFile, lastSaveDataFile, filePath, dateFormater, zeroNumbers);
                     }
                 } else {
-                    training(game, null, randomPerceptronFile, perceptronFile, configFile, filePath, dateFormater, zeroNumbers);
+                    training(game, null, randomPerceptronFile, perceptronFile, lastSaveDataFile, filePath, dateFormater, zeroNumbers);
                 }
                 if ( learningAlgorithm.canCollectStatistics() ) {
-                    avgBestPissibleActionTimes = 0d;
-                    for ( Double sample : this.bestPissibleActionTimes ) {
-                        avgBestPissibleActionTimes += sample;
+                    avgBestPossibleActionTimes = 0d;
+                    for ( Double sample : this.bestPossibleActionTimes ) {
+                        avgBestPossibleActionTimes += sample;
                     }
-                    avgBestPissibleActionTimes /= (this.bestPissibleActionTimes.size() * 1d);
+                    avgBestPossibleActionTimes /= (this.bestPossibleActionTimes.size() * 1d);
 
                     avgTrainingTimes = 0d;
                     for ( Double sample : this.trainingTimes ) {

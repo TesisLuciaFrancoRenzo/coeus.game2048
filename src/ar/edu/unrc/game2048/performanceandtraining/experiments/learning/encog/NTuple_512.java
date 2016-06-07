@@ -87,7 +87,7 @@ public class NTuple_512 extends LearningExperiment<BasicNetwork> {
     }
 
     @Override
-    public void initialize() throws Exception {
+    public void initialize()  {
         this.setTileToWinForTraining(512);
         if ( this.getExperimentName() == null ) {
             this.setExperimentName(this.getClass());
