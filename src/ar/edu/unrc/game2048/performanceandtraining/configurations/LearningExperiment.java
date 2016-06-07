@@ -42,7 +42,7 @@ import java.util.LinkedList;
  * @author lucia bressan, franco pellegrini, renzo bianchini
  * @param <NeuralNetworkClass>
  */
-public abstract class LearningExperiment<NeuralNetworkClass> {
+public abstract class LearningExperiment<NeuralNetworkClass> implements Cloneable {
 
     /**
      *
@@ -94,6 +94,11 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
     private int tileToWinForTraining;
     private LinkedList<Double> trainingTimes;
     private int tileToWinForStatistics = 2_048;
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone(); //To change body of generated methods, choose Tools | Templates.
+    }
 
     /**
      *

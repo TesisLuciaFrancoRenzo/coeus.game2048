@@ -29,11 +29,13 @@ import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Stream;
 
 /**
  *
@@ -85,7 +87,6 @@ public class TestGeneratorALL {
         experiment.setGamma(gamma);
         double[] alphas = {alpha, alpha};
         experiment.setAlpha(alphas);
-        experiment.setLearningRateAdaptationToFixed();
         experiment.setExplorationRateToFixed(explorationRate);
         experiment.setInitializePerceptronRandomized(false);
         experiment.setConcurrencyInComputeBestPosibleAction(true);
@@ -187,28 +188,40 @@ public class TestGeneratorALL {
      * @param filePath
      */
     public static void runAllConfigs(String experimentName, LearningExperiment experiment, List<Double> alphaList, List<Double> lambdaList, List<Double> gammaList, boolean statisticsOnly, boolean runStatisticsForBackups, boolean createLogs, int gamesToPlay, int saveEvery, int saveBacupEvery, int gamesToPlayPerThreadForStatistics, int simulationsForStatistics, List<Double> explorationRateList, String filePath) {
+        List<GeneratorConfig> experiments = new ArrayList<>();
         alphaList.stream().forEach((alpha) -> {
             lambdaList.stream().forEach((lambda) -> {
                 gammaList.stream().forEach((gamma) -> {
                     explorationRateList.stream().forEach((explorationRate) -> {
-                        String newFilePath = filePath + "AutomaticTests" + File.separator + experimentName + File.separator;
-                        File newPath = new File(newFilePath);
-                        if ( !newPath.exists() ) {
-                            newPath.mkdirs();
-                        }
-                        try {
-                            experiment.setExperimentName("alpha_" + alpha + "-lambda_" + lambda + "-gamma_" + gamma + "-explorationRate_" + explorationRate + "-resetTraces_" + false);
-                            configAndExcecute(experiment, statisticsOnly, runStatisticsForBackups, createLogs, lambda, alpha, gamma, gamesToPlay, saveEvery, saveBacupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, false, newFilePath);
-                            if ( explorationRate > 0 ) {
-                                experiment.setExperimentName("alpha_" + alpha + "-lambda_" + lambda + "-gamma_" + gamma + "-explorationRate_" + explorationRate + "-resetTraces_" + true);
-                                configAndExcecute(experiment, statisticsOnly, runStatisticsForBackups, createLogs, lambda, alpha, gamma, gamesToPlay, saveEvery, saveBacupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, true, newFilePath);
-                            }
-                        } catch ( Exception ex ) {
-                            printErrorInFile(ex, new File(newFilePath + "ERROR_DUMP.txt"));
+                        experiments.add(new GeneratorConfig(alpha, lambda, gamma, explorationRate, false));
+                        if ( explorationRate > 0 ) {
+                            experiments.add(new GeneratorConfig(alpha, lambda, gamma, explorationRate, true));
                         }
                     });
                 });
             });
+        });
+
+        Stream<GeneratorConfig> stream;
+        if ( statisticsOnly ) {
+            stream = experiments.stream();
+        } else {
+            stream = experiments.parallelStream();
+        }
+
+        stream.forEach(exp -> {
+            String newFilePath = filePath + "AutomaticTests" + File.separator + experimentName + File.separator + "alpha_" + exp.getAlpha() + "-lambda_" + exp.getLambda() + "-gamma_" + exp.getGamma() + "-explorationRate_" + exp.getExplorationRate() + "-resetTraces_" + exp.isResetTraces() + File.separator;
+            File newPath = new File(newFilePath);
+            if ( !newPath.exists() ) {
+                newPath.mkdirs();
+            }
+            try {
+                LearningExperiment cloneExperiment = (LearningExperiment) experiment.clone();
+                cloneExperiment.setExperimentName(experimentName);
+                configAndExcecute(cloneExperiment, statisticsOnly, runStatisticsForBackups, createLogs, exp.getLambda(), exp.getAlpha(), exp.getGamma(), gamesToPlay, saveEvery, saveBacupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, exp.getExplorationRate(), exp.isResetTraces(), newFilePath);
+            } catch ( Exception ex ) {
+                printErrorInFile(ex, new File(newFilePath + "ERROR_DUMP.txt"));
+            }
         });
     }
 
@@ -247,5 +260,92 @@ public class TestGeneratorALL {
         PrintWriter pw = new PrintWriter(sw);
         ex.printStackTrace(pw);
         return sw.toString();
+    }
+
+    private static class GeneratorConfig {
+
+        private Double alpha;
+        private Double explorationRate;
+        private Double gamma;
+        private Double lambda;
+        private boolean resetTraces;
+
+        private GeneratorConfig(Double alpha, Double lambda, Double gamma, Double explorationRate, boolean resetTraces) {
+            this.alpha = alpha;
+            this.lambda = lambda;
+            this.gamma = gamma;
+            this.explorationRate = explorationRate;
+            this.resetTraces = resetTraces;
+        }
+
+        /**
+         * @return the alpha
+         */
+        public Double getAlpha() {
+            return alpha;
+        }
+
+        /**
+         * @param alpha the alpha to set
+         */
+        public void setAlpha(Double alpha) {
+            this.alpha = alpha;
+        }
+
+        /**
+         * @return the explorationRate
+         */
+        public Double getExplorationRate() {
+            return explorationRate;
+        }
+
+        /**
+         * @param explorationRate the explorationRate to set
+         */
+        public void setExplorationRate(Double explorationRate) {
+            this.explorationRate = explorationRate;
+        }
+
+        /**
+         * @return the gamma
+         */
+        public Double getGamma() {
+            return gamma;
+        }
+
+        /**
+         * @param gamma the gamma to set
+         */
+        public void setGamma(Double gamma) {
+            this.gamma = gamma;
+        }
+
+        /**
+         * @return the lambda
+         */
+        public Double getLambda() {
+            return lambda;
+        }
+
+        /**
+         * @param lambda the lambda to set
+         */
+        public void setLambda(Double lambda) {
+            this.lambda = lambda;
+        }
+
+        /**
+         * @return the resetTraces
+         */
+        public boolean isResetTraces() {
+            return resetTraces;
+        }
+
+        /**
+         * @param resetTraces the resetTraces to set
+         */
+        public void setResetTraces(boolean resetTraces) {
+            this.resetTraces = resetTraces;
+        }
     }
 }
