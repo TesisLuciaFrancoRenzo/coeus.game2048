@@ -113,13 +113,14 @@ public class TestGeneratorALL {
      * @throws Exception
      */
     public static void main(String[] args) throws Exception {
-        String filePath;
-        if ( args.length == 0 ) {
-            filePath
-                    = ".." + File.separator
-                    + "Perceptrones ENTRENADOS" + File.separator;
-        } else {
-            filePath = args[0];
+        String filePath
+                = ".." + File.separator
+                + "Perceptrones ENTRENADOS" + File.separator;
+        int pcNumber = 0;
+        boolean statistics = false;
+        if ( args.length == 2 ) {
+            pcNumber = Integer.parseInt(args[0]);
+            statistics = Boolean.parseBoolean(args[1]);
         }
 
         List<Double> lambdaList = new LinkedList<>();
@@ -128,8 +129,10 @@ public class TestGeneratorALL {
         List<Double> explorationRate = new LinkedList<>();
 
         //============================== configuraciones manuales ==================================
-//        boolean statistics = true;
-        boolean statistics = false;
+        if ( args.length == 0 ) {
+//            statistics = true;
+            statistics = false;
+        }
 
         int gamesToPlay = 2_000_000;
         int saveEvery = 5_000;
@@ -166,10 +169,34 @@ public class TestGeneratorALL {
             simulationsForStatistics = 0;
         }
 
-        runAllConfigs("BasicLinear", new BasicLinear(), alphaList, lambdaList, gammaList, statisticsOnly, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, saveBackupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, filePath);
-        runAllConfigs("BasicTanH", new BasicTanH(), alphaList, lambdaList, gammaList, statisticsOnly, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, saveBackupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, filePath);
-        runAllConfigs("SymetryLinear", new SymetryLinear(), alphaList, lambdaList, gammaList, statisticsOnly, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, saveBackupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, filePath);
-        runAllConfigs("SymetryTanH", new SymetryTanH(), alphaList, lambdaList, gammaList, statisticsOnly, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, saveBackupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, filePath);
+        switch ( pcNumber ) {
+            case 0: {
+                runAllConfigs("BasicLinear", new BasicLinear(), alphaList, lambdaList, gammaList, statisticsOnly, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, saveBackupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, filePath);
+                runAllConfigs("BasicTanH", new BasicTanH(), alphaList, lambdaList, gammaList, statisticsOnly, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, saveBackupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, filePath);
+                runAllConfigs("SymetryLinear", new SymetryLinear(), alphaList, lambdaList, gammaList, statisticsOnly, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, saveBackupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, filePath);
+                runAllConfigs("SymetryTanH", new SymetryTanH(), alphaList, lambdaList, gammaList, statisticsOnly, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, saveBackupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, filePath);
+                break;
+            }
+            case 1: {
+                runAllConfigs("BasicLinear", new BasicLinear(), alphaList, lambdaList, gammaList, statisticsOnly, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, saveBackupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, filePath);
+                break;
+            }
+            case 2: {
+                runAllConfigs("BasicTanH", new BasicTanH(), alphaList, lambdaList, gammaList, statisticsOnly, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, saveBackupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, filePath);
+                break;
+            }
+            case 3: {
+                runAllConfigs("SymetryLinear", new SymetryLinear(), alphaList, lambdaList, gammaList, statisticsOnly, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, saveBackupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, filePath);
+                break;
+            }
+            case 4: {
+                runAllConfigs("SymetryTanH", new SymetryTanH(), alphaList, lambdaList, gammaList, statisticsOnly, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, saveBackupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, filePath);
+                break;
+            }
+            default: {
+                throw new IllegalArgumentException("wrong pcNumber = " + pcNumber);
+            }
+        }
     }
 
     /**
