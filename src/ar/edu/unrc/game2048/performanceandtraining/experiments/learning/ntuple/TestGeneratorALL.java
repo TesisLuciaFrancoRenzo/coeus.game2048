@@ -22,8 +22,9 @@ import ar.edu.unrc.game2048.performanceandtraining.configurations.LearningExperi
 import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ForkJoinPool;
@@ -39,6 +40,7 @@ public class TestGeneratorALL {
 
     /**
      *
+     * @param numberForShow
      * @param experiment
      * @param statisticsOnly
      * @param runStatisticsForBackups
@@ -56,6 +58,7 @@ public class TestGeneratorALL {
      * @param filePath
      */
     public static void configAndExcecute(
+            int numberForShow,
             LearningExperiment experiment,
             boolean statisticsOnly,
             boolean runStatisticsForBackups,
@@ -93,8 +96,8 @@ public class TestGeneratorALL {
         experiment.setGamesToPlayPerThreadForStatistics(gamesToPlayPerThreadForStatistics);
         experiment.setSimulationsForStatistics(simulationsForStatistics);
         experiment.setExportToExcel(true);
-        System.out.println("***************************************** Ejecutando " + filePath + " *****************************************");
-        experiment.start(filePath, 0, true);
+        System.out.println("***************************************** N" + numberForShow + " Ejecutando " + filePath + " *****************************************");
+        experiment.start(numberForShow, filePath, 0, true);
     }
 
     /**
@@ -120,16 +123,16 @@ public class TestGeneratorALL {
                 + "Perceptrones ENTRENADOS" + File.separator;
         int pcNumber = 0;
         boolean statistics = false;
-        int maxTrainingThreads = 8;
+        int maxTrainingThreads = 4;
         if ( args.length != 0 ) {
             pcNumber = Integer.parseInt(args[0]);
             statistics = Boolean.parseBoolean(args[1]);
             maxTrainingThreads = Integer.parseInt(args[2]);
         }
-        List<Double> lambdaList = new LinkedList<>();
-        List<Double> alphaList = new LinkedList<>();
-        List<Double> gammaList = new LinkedList<>();
-        List<Double> explorationRate = new LinkedList<>();
+        List<Double> lambdaList = new ArrayList<>();
+        List<Double> alphaList = new ArrayList<>();
+        List<Double> gammaList = new ArrayList<>();
+        List<Double> explorationRate = new ArrayList<>();
 
         //============================== configuraciones manuales ==================================
         if ( args.length == 0 ) {
@@ -174,26 +177,26 @@ public class TestGeneratorALL {
 
         switch ( pcNumber ) {
             case 0: {
-                runAllConfigs(maxTrainingThreads, "BasicLinear", new BasicLinear(), alphaList, lambdaList, gammaList, statisticsOnly, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, saveBackupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, filePath);
-                runAllConfigs(maxTrainingThreads, "BasicTanH", new BasicTanH(), alphaList, lambdaList, gammaList, statisticsOnly, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, saveBackupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, filePath);
-                runAllConfigs(maxTrainingThreads, "SymetryLinear", new SymetryLinear(), alphaList, lambdaList, gammaList, statisticsOnly, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, saveBackupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, filePath);
-                runAllConfigs(maxTrainingThreads, "SymetryTanH", new SymetryTanH(), alphaList, lambdaList, gammaList, statisticsOnly, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, saveBackupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, filePath);
+                runAllConfigs(maxTrainingThreads, "BasicLinear", BasicLinear.class.getConstructor(), alphaList, lambdaList, gammaList, statisticsOnly, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, saveBackupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, filePath);
+                runAllConfigs(maxTrainingThreads, "BasicTanH", BasicTanH.class.getConstructor(), alphaList, lambdaList, gammaList, statisticsOnly, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, saveBackupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, filePath);
+                runAllConfigs(maxTrainingThreads, "SymetryLinear", SymetryLinear.class.getConstructor(), alphaList, lambdaList, gammaList, statisticsOnly, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, saveBackupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, filePath);
+                runAllConfigs(maxTrainingThreads, "SymetryTanH", SymetryTanH.class.getConstructor(), alphaList, lambdaList, gammaList, statisticsOnly, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, saveBackupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, filePath);
                 break;
             }
             case 1: {
-                runAllConfigs(maxTrainingThreads, "BasicLinear", new BasicLinear(), alphaList, lambdaList, gammaList, statisticsOnly, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, saveBackupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, filePath);
+                runAllConfigs(maxTrainingThreads, "BasicLinear", BasicLinear.class.getConstructor(), alphaList, lambdaList, gammaList, statisticsOnly, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, saveBackupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, filePath);
                 break;
             }
             case 2: {
-                runAllConfigs(maxTrainingThreads, "BasicTanH", new BasicTanH(), alphaList, lambdaList, gammaList, statisticsOnly, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, saveBackupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, filePath);
+                runAllConfigs(maxTrainingThreads, "BasicTanH", BasicTanH.class.getConstructor(), alphaList, lambdaList, gammaList, statisticsOnly, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, saveBackupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, filePath);
                 break;
             }
             case 3: {
-                runAllConfigs(maxTrainingThreads, "SymetryLinear", new SymetryLinear(), alphaList, lambdaList, gammaList, statisticsOnly, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, saveBackupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, filePath);
+                runAllConfigs(maxTrainingThreads, "SymetryLinear", SymetryLinear.class.getConstructor(), alphaList, lambdaList, gammaList, statisticsOnly, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, saveBackupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, filePath);
                 break;
             }
             case 4: {
-                runAllConfigs(maxTrainingThreads, "SymetryTanH", new SymetryTanH(), alphaList, lambdaList, gammaList, statisticsOnly, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, saveBackupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, filePath);
+                runAllConfigs(maxTrainingThreads, "SymetryTanH", SymetryTanH.class.getConstructor(), alphaList, lambdaList, gammaList, statisticsOnly, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, saveBackupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, filePath);
                 break;
             }
             default: {
@@ -221,20 +224,23 @@ public class TestGeneratorALL {
      * @param explorationRateList
      * @param filePath
      */
-    public static void runAllConfigs(int maxTrainingThreads, String experimentName, LearningExperiment experiment, List<Double> alphaList, List<Double> lambdaList, List<Double> gammaList, boolean statisticsOnly, boolean runStatisticsForBackups, boolean createLogs, int gamesToPlay, int saveEvery, int saveBacupEvery, int gamesToPlayPerThreadForStatistics, int simulationsForStatistics, List<Double> explorationRateList, String filePath) {
+    public static void runAllConfigs(int maxTrainingThreads, String experimentName, Constructor<?> experiment, List<Double> alphaList, List<Double> lambdaList, List<Double> gammaList, boolean statisticsOnly, boolean runStatisticsForBackups, boolean createLogs, int gamesToPlay, int saveEvery, int saveBacupEvery, int gamesToPlayPerThreadForStatistics, int simulationsForStatistics, List<Double> explorationRateList, String filePath) {
         List<GeneratorConfig> experiments = new ArrayList<>();
-        alphaList.stream().forEach((alpha) -> {
-            lambdaList.stream().forEach((lambda) -> {
-                gammaList.stream().forEach((gamma) -> {
-                    explorationRateList.stream().forEach((explorationRate) -> {
-                        experiments.add(new GeneratorConfig(alpha, lambda, gamma, explorationRate, false));
-                        if ( explorationRate > 0 ) {
-                            experiments.add(new GeneratorConfig(alpha, lambda, gamma, explorationRate, true));
+        int number = 0;
+        for ( int i = 0; i < alphaList.size(); i++ ) {
+            for ( int j = 0; j < lambdaList.size(); j++ ) {
+                for ( int k = 0; k < gammaList.size(); k++ ) {
+                    for ( int l = 0; l < explorationRateList.size(); l++ ) {
+                        number++;
+                        experiments.add(new GeneratorConfig(alphaList.get(i), lambdaList.get(j), gammaList.get(k), explorationRateList.get(l), false, number));
+                        if ( explorationRateList.get(l) > 0 ) {
+                            number++;
+                            experiments.add(new GeneratorConfig(alphaList.get(i), lambdaList.get(j), gammaList.get(k), explorationRateList.get(l), true, number));
                         }
-                    });
-                });
-            });
-        });
+                    }
+                }
+            }
+        }
 
         Stream<GeneratorConfig> stream;
         if ( statisticsOnly ) {
@@ -247,17 +253,17 @@ public class TestGeneratorALL {
         try {
             forkJoinPool.submit(()
                     -> //parallel task here, for example
-                    stream.forEach(exp -> {
+                    stream.forEach(expConfig -> {
                         try {
-                            String newFilePath = filePath + "AutomaticTests" + File.separator + "alpha_" + exp.getAlpha() + "-lambda_" + exp.getLambda() + "-gamma_" + exp.getGamma() + "-explorationRate_" + exp.getExplorationRate() + "-resetTraces_" + exp.isResetTraces() + File.separator;
+                            String newFilePath = filePath + "AutomaticTests" + File.separator + "alpha_" + expConfig.getAlpha() + "-lambda_" + expConfig.getLambda() + "-gamma_" + expConfig.getGamma() + "-explorationRate_" + expConfig.getExplorationRate() + "-resetTraces_" + expConfig.isResetTraces() + File.separator;
                             File newPath = new File(newFilePath);
                             if ( !newPath.exists() ) {
                                 newPath.mkdirs();
                             }
-                            LearningExperiment cloneExperiment = (LearningExperiment) experiment.clone();
+                            LearningExperiment cloneExperiment = (LearningExperiment) experiment.newInstance();
                             cloneExperiment.setExperimentName(experimentName);
-                            configAndExcecute(cloneExperiment, statisticsOnly, runStatisticsForBackups, createLogs, exp.getLambda(), exp.getAlpha(), exp.getGamma(), gamesToPlay, saveEvery, saveBacupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, exp.getExplorationRate(), exp.isResetTraces(), newFilePath);
-                        } catch ( CloneNotSupportedException ex ) {
+                            configAndExcecute(expConfig.getNumber(), cloneExperiment, statisticsOnly, runStatisticsForBackups, createLogs, expConfig.getLambda(), expConfig.getAlpha(), expConfig.getGamma(), gamesToPlay, saveEvery, saveBacupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, expConfig.getExplorationRate(), expConfig.isResetTraces(), newFilePath);
+                        } catch ( InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex ) {
                             Logger.getLogger(TestGeneratorALL.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     })
@@ -273,14 +279,16 @@ public class TestGeneratorALL {
         private Double explorationRate;
         private Double gamma;
         private Double lambda;
+        private final int number;
         private boolean resetTraces;
 
-        private GeneratorConfig(Double alpha, Double lambda, Double gamma, Double explorationRate, boolean resetTraces) {
+        private GeneratorConfig(Double alpha, Double lambda, Double gamma, Double explorationRate, boolean resetTraces, int number) {
             this.alpha = alpha;
             this.lambda = lambda;
             this.gamma = gamma;
             this.explorationRate = explorationRate;
             this.resetTraces = resetTraces;
+            this.number = number;
         }
 
         /**
@@ -337,6 +345,13 @@ public class TestGeneratorALL {
          */
         public void setLambda(Double lambda) {
             this.lambda = lambda;
+        }
+
+        /**
+         * @return the number
+         */
+        public int getNumber() {
+            return number;
         }
 
         /**

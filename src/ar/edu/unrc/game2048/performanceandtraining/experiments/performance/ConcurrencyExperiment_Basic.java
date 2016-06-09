@@ -263,7 +263,7 @@ public class ConcurrencyExperiment_Basic extends LearningExperiment<BasicNetwork
         experiment.setRunStatisticsForBackups(false);
         experiment.setGamesToPlayPerThreadForStatistics(0);
         experiment.setSimulationsForStatistics(0);
-        experiment.start(filePath, 0, false);
+        experiment.start(0, filePath, 0, false);
 
         bestPossibleStats.addSample(experiment.getAvgBestPossibleActionTimes());
         trainingStats.addSample(experiment.getAvgTrainingTimes());
@@ -280,7 +280,7 @@ public class ConcurrencyExperiment_Basic extends LearningExperiment<BasicNetwork
     }
 
     @Override
-    public void initialize()  {
+    public void initialize() {
         this.setTileToWinForTraining(2_048);
         if ( this.getExperimentName() == null ) {
             this.setExperimentName("ConcurrencyTimes");

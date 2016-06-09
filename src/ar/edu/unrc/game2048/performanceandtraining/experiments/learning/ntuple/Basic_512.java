@@ -84,7 +84,7 @@ public class Basic_512 extends LearningExperiment<BasicNetwork> {
             experiment.setSimulationsForStatistics(0);
         }
         experiment.setExportToExcel(true);
-        experiment.start(filePath, 0, true);
+        experiment.start(-1,filePath, 0, true);
     }
 
     @Override

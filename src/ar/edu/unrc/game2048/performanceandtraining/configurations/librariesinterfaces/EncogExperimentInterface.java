@@ -180,7 +180,7 @@ public class EncogExperimentInterface extends INeuralNetworkInterfaceFor2048<Bas
             function = getPerceptronConfiguration().getActivationFunctionForEncog()[i - 1].clone();
             perceptron.addLayer(new BasicLayer(function, true, getPerceptronConfiguration().getNeuronQuantityInLayer()[i]));
         }
-        function = getPerceptronConfiguration().getActivationFunctionForEncog()[getPerceptronConfiguration().getNeuronQuantityInLayer().length - 2].clone();
+        function = getPerceptronConfiguration().getActivationFunctionForEncog()[getPerceptronConfiguration().getNeuronQuantityInLayer().length - 2].clone(); //FIXME BUG????
         perceptron.addLayer(new BasicLayer(function, false,
                 getPerceptronConfiguration().getNeuronQuantityInLayer()[getPerceptronConfiguration().getNeuronQuantityInLayer().length - 1]));
         perceptron.getStructure().finalizeStructure();

@@ -50,7 +50,7 @@ import java.util.logging.Logger;
  * @author lucia bressan, franco pellegrini, renzo bianchini
  * @param <NeuralNetworkClass>
  */
-public abstract class LearningExperiment<NeuralNetworkClass> implements Cloneable {
+public abstract class LearningExperiment<NeuralNetworkClass> {
 
     /**
      *
@@ -147,11 +147,6 @@ public abstract class LearningExperiment<NeuralNetworkClass> implements Cloneabl
      */
     protected StatisticExperiment statisticExperiment;
 
-    @Override
-    public Object clone() throws CloneNotSupportedException {
-        return super.clone(); //To change body of generated methods, choose Tools | Templates.
-    }
-
     /**
      *
      * @param logsActivated
@@ -233,13 +228,13 @@ public abstract class LearningExperiment<NeuralNetworkClass> implements Cloneabl
         return experimentName;
     }
 
-
     /**
      * @param experimentName the experimentName to set
      */
     public void setExperimentName(String experimentName) {
         this.experimentName = experimentName;
     }
+
     /**
      * @param experimentClass
      */
@@ -506,11 +501,12 @@ public abstract class LearningExperiment<NeuralNetworkClass> implements Cloneabl
 
     /**
      *
+     * @param numberForShow
      * @param experimentPath
      * @param delayPerMove
      * @param createPerceptronFile
      */
-    public void start(String experimentPath, int delayPerMove, boolean createPerceptronFile) {
+    public void start(int numberForShow, String experimentPath, int delayPerMove, boolean createPerceptronFile) {
         File experimentPathFile = new File(experimentPath);
         if ( experimentPathFile.exists() && !experimentPathFile.isDirectory() ) {
             throw new IllegalArgumentException("experimentPath must be a directory");
@@ -519,7 +515,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> implements Cloneabl
             experimentPathFile.mkdirs();
         }
         initialize();
-        runExperiment(experimentPath, delayPerMove, createPerceptronFile);
+        runExperiment(numberForShow, experimentPath, delayPerMove, createPerceptronFile);
     }
 
     /**
@@ -532,9 +528,12 @@ public abstract class LearningExperiment<NeuralNetworkClass> implements Cloneabl
      * @param filePath
      * @param dateFormater
      * @param zeroNumbers          <p>
+     * @param numberForShow
+     *
      * @throws Exception
      */
     public void training(
+            int numberForShow,
             Game2048<NeuralNetworkClass> game,
             final PrintStream printStream,
             File randomPerceptronFile,
@@ -542,7 +541,8 @@ public abstract class LearningExperiment<NeuralNetworkClass> implements Cloneabl
             File lastSaveDataFile,
             String filePath,
             SimpleDateFormat dateFormater,
-            int zeroNumbers) throws Exception {
+            int zeroNumbers
+    ) throws Exception {
         File perceptronFileBackup;
         switch ( this.learningRateAdaptation ) {
             case fixed: {
@@ -596,7 +596,11 @@ public abstract class LearningExperiment<NeuralNetworkClass> implements Cloneabl
             }
 
             int percent = (int) (((i * 1d) / (gamesToPlay * 1d)) * 100d);
-            System.out.println("Juego número " + i + " (" + percent + "%)    puntaje = " + game.getScore() + "    ficha max = " + game.getMaxNumber() + "    turno alcanzado = " + game.getLastTurn() + "      current alpha = " + Arrays.toString(learningAlgorithm.getCurrentAlpha()));
+            if ( numberForShow != -1 ) {
+                System.out.println(numberForShow + "- Juego número " + i + " (" + percent + "%)    puntaje = " + game.getScore() + "    ficha max = " + game.getMaxNumber() + "    turno alcanzado = " + game.getLastTurn() + "      current alpha = " + Arrays.toString(learningAlgorithm.getCurrentAlpha()));
+            } else {
+                System.out.println("Juego número " + i + " (" + percent + "%)    puntaje = " + game.getScore() + "    ficha max = " + game.getMaxNumber() + "    turno alcanzado = " + game.getLastTurn() + "      current alpha = " + Arrays.toString(learningAlgorithm.getCurrentAlpha()));
+            }
             if ( printStream != null ) {
                 printStream.println(game.getScore() + "\t" + game.getMaxNumber());
             }
@@ -745,19 +749,20 @@ public abstract class LearningExperiment<NeuralNetworkClass> implements Cloneabl
 
     /**
      *
+     * @param numberForShow
      * @param experimentPath
      * @param delayPerMove         <p>
      * @param createPerceptronFile
      */
     @SuppressWarnings( "static-access" )
-    protected void runExperiment(String experimentPath, int delayPerMove, boolean createPerceptronFile) {
+    protected void runExperiment(int numberForShow, String experimentPath, int delayPerMove, boolean createPerceptronFile) {
         if ( saveEvery == 0 ) {
             throw new IllegalArgumentException("se debe configurar cada cuanto guardar el perceptron mediante la variable saveEvery");
         }
         if ( saveBackupEvery == 0 ) {
             throw new IllegalArgumentException("se debe configurar cada cuanto guardar backups del perceptron mediante la variable saveBackupEvery");
         }
-        System.out.println("Starting " + this.getPerceptronName() + " Trainer");
+        System.out.println("Starting " + this.getPerceptronName() + " Trainer Nº " + numberForShow);
         String dirPath = createPathToDir(experimentPath);
         String bugFilePath = dirPath + ERROR_DUMP + ".txt";
         try {
@@ -827,12 +832,12 @@ public abstract class LearningExperiment<NeuralNetworkClass> implements Cloneabl
                 neuralNetworkInterfaceFor2048.savePerceptron(randomPerceptronFile);
             }
 
-            if ( this.getNeuralNetworkInterfaceFor2048().getPerceptronInterface() != null ) {
-                this.setLearningAlgorithm(instanceOfTdLearninrgImplementation(this.getNeuralNetworkInterfaceFor2048().getPerceptronInterface()));
+            if ( neuralNetworkInterfaceFor2048.getPerceptronInterface() != null ) {
+                this.setLearningAlgorithm(instanceOfTdLearninrgImplementation(neuralNetworkInterfaceFor2048.getPerceptronInterface()));
                 this.learningAlgorithm.setComputeParallelBestPossibleAction(concurrencyInComputeBestPosibleAction);
             }
-            if ( this.getNeuralNetworkInterfaceFor2048().getNTupleConfiguration() != null ) {
-                this.setLearningAlgorithm(instanceOfTdLearninrgImplementation(this.getNeuralNetworkInterfaceFor2048().getNTupleConfiguration().getNTupleSystem()));
+            if ( neuralNetworkInterfaceFor2048.getNTupleConfiguration() != null ) {
+                this.setLearningAlgorithm(instanceOfTdLearninrgImplementation(neuralNetworkInterfaceFor2048.getNTupleConfiguration().getNTupleSystem()));
                 this.learningAlgorithm.setComputeParallelBestPossibleAction(concurrencyInComputeBestPosibleAction);
             }
 
@@ -851,10 +856,10 @@ public abstract class LearningExperiment<NeuralNetworkClass> implements Cloneabl
                 //comenzamos a entrenar y guardar estadisticas en el archivo de log
                 if ( logsActivated ) {
                     try ( PrintStream printStream = new PrintStream(logFile, "UTF-8") ) {
-                        training(game, printStream, randomPerceptronFile, perceptronFile, lastSaveDataFile, filePath, dateFormater, zeroNumbers);
+                        training(numberForShow, game, printStream, randomPerceptronFile, perceptronFile, lastSaveDataFile, filePath, dateFormater, zeroNumbers);
                     }
                 } else {
-                    training(game, null, randomPerceptronFile, perceptronFile, lastSaveDataFile, filePath, dateFormater, zeroNumbers);
+                    training(numberForShow, game, null, randomPerceptronFile, perceptronFile, lastSaveDataFile, filePath, dateFormater, zeroNumbers);
                 }
                 if ( learningAlgorithm.canCollectStatistics() ) {
                     avgBestPossibleActionTimes = 0d;
