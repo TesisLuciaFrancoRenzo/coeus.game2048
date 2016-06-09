@@ -150,7 +150,7 @@ public class TestGeneratorALL {
 
         alphaList.add(0.0025d);
 
-        gammaList.add(0.9d);
+        // gammaList.add(0.9d); No da resultados buenos 
         gammaList.add(1d);
 
         explorationRate.add(0d);
