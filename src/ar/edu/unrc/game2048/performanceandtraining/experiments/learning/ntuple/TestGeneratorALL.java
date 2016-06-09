@@ -121,7 +121,7 @@ public class TestGeneratorALL {
         int pcNumber = 0;
         boolean statistics = false;
         int maxTrainingThreads = 8;
-        if ( args.length == 3 ) {
+        if ( args.length != 0 ) {
             pcNumber = Integer.parseInt(args[0]);
             statistics = Boolean.parseBoolean(args[1]);
             maxTrainingThreads = Integer.parseInt(args[2]);
