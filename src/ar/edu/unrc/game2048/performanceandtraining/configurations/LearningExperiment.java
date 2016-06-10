@@ -505,8 +505,9 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
      * @param experimentPath
      * @param delayPerMove
      * @param createPerceptronFile
+     * @param errorDumpDir
      */
-    public void start(int numberForShow, String experimentPath, int delayPerMove, boolean createPerceptronFile) {
+    public void start(int numberForShow, String experimentPath, int delayPerMove, boolean createPerceptronFile, String errorDumpDir) {
         File experimentPathFile = new File(experimentPath);
         if ( experimentPathFile.exists() && !experimentPathFile.isDirectory() ) {
             throw new IllegalArgumentException("experimentPath must be a directory");
@@ -515,7 +516,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
             experimentPathFile.mkdirs();
         }
         initialize();
-        runExperiment(numberForShow, experimentPath, delayPerMove, createPerceptronFile);
+        runExperiment(numberForShow, experimentPath, delayPerMove, createPerceptronFile, errorDumpDir);
     }
 
     /**
@@ -652,6 +653,19 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
             out.write("explorationRateInitialValue: " + explorationRateInitialValue + "\n");
             out.write("explorationRateStartDecrementing: " + explorationRateStartDecrementing + "\n");
             out.write("explorationRateFinishDecrementing: " + explorationRateFinishDecrementing + "\n");
+            out.write("\n");
+            out.write("Operating system Name: " + System.getProperty("os.name") + "\n");
+            out.write("Operating system type: " + System.getProperty("os.arch") + "\n");
+            out.write("Operating system version: " + System.getProperty("os.version") + "\n");
+            out.write("Available processors (cores): " + Runtime.getRuntime().availableProcessors() + "\n");
+            /* This will return Long.MAX_VALUE if there is no preset limit */
+            long maxMemory = Runtime.getRuntime().maxMemory();
+            /* Maximum amount of memory the JVM will attempt to use */
+            out.write("Maximum memory (bytes): " + (maxMemory == Long.MAX_VALUE ? "no limit" : maxMemory) + "\n");
+            /* Total memory currently available to the JVM */
+            out.write("Total memory available to JVM (bytes): " + Runtime.getRuntime().totalMemory() + "\n");
+            out.write("PROCESSOR_IDENTIFIER: " + System.getenv("PROCESSOR_IDENTIFIER") + "\n");
+            out.write("PROCESSOR_ARCHITECTURE: " + System.getenv("PROCESSOR_ARCHITECTURE") + "\n");
         }
     }
 
@@ -753,9 +767,10 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
      * @param experimentPath
      * @param delayPerMove         <p>
      * @param createPerceptronFile
+     * @param errorDumpDir
      */
     @SuppressWarnings( "static-access" )
-    protected void runExperiment(int numberForShow, String experimentPath, int delayPerMove, boolean createPerceptronFile) {
+    protected void runExperiment(int numberForShow, String experimentPath, int delayPerMove, boolean createPerceptronFile, String errorDumpDir) {
         if ( saveEvery == 0 ) {
             throw new IllegalArgumentException("se debe configurar cada cuanto guardar el perceptron mediante la variable saveEvery");
         }
@@ -764,7 +779,12 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
         }
         System.out.println("Starting " + this.getPerceptronName() + " Trainer Nº " + numberForShow);
         String dirPath = createPathToDir(experimentPath);
-        String bugFilePath = dirPath + ERROR_DUMP + ".txt";
+        String bugFilePath;
+        if ( errorDumpDir == null ) {
+            bugFilePath = dirPath + ERROR_DUMP + ".txt";
+        } else {
+            bugFilePath = errorDumpDir + ERROR_DUMP + ".txt";
+        }
         try {
             SimpleDateFormat dateFormater = new SimpleDateFormat("dd-MM-yyyy_HH'h'mm'm'ss's'");
             Date now = new Date();
@@ -777,8 +797,12 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
             String filePath = dirPath + perceptronName;
             File perceptronFile = new File(filePath + TRAINED + ".ser");
             File lastSaveDataFile = new File(filePath + LAST_SAVE_DATA + ".txt");
-            File configFile = new File(filePath + CONFIG + ".txt");
-
+            File configFile;
+            if ( errorDumpDir == null ) {
+                configFile = new File(filePath + CONFIG + ".txt");
+            } else {
+                configFile = new File(errorDumpDir + CONFIG + ".txt");
+            }
             backupNumber = 0;
             lastSavedGamePlayedNumber = 0;
             elapsedTime = 0;

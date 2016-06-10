@@ -116,8 +116,8 @@ public class ConcurrencyExperiment_Basic extends LearningExperiment<BasicNetwork
                 }
                 currentConfig.concurrencyInLayer[currentConfig.concurrencyInLayer.length - 1] = false;
 
-                currentConfig.alphas = new double[innerLayerQuantity + 1];
-                for ( int i = 0; i < innerLayerQuantity + 1; i++ ) {
+                currentConfig.alphas = new double[innerLayerQuantity + 2];
+                for ( int i = 0; i < innerLayerQuantity + 2; i++ ) {
                     currentConfig.alphas[i] = 0.0025;
                 }
 
@@ -199,7 +199,7 @@ public class ConcurrencyExperiment_Basic extends LearningExperiment<BasicNetwork
             }
 
             SAMPLES_PER_EXPERIMENT = 10;
-            GAMES_TO_PLAY = 70; //TODO poner estas config en el archivo de salida
+            GAMES_TO_PLAY = 20;
             MAX_INNER_LAYERS = 1;
             MAX_NEURON_QUANTITY = 12;
             MIN_NEURON_QUANTITY = 2;
@@ -214,9 +214,7 @@ public class ConcurrencyExperiment_Basic extends LearningExperiment<BasicNetwork
             printConfig(outputForGraphicsResults);
 
             long time = System.currentTimeMillis();
-            //experimentSet(false, false);
             experimentSet(false, true);
-            //experimentSet(true, false);
             experimentSet(true, true);
 
             time = System.currentTimeMillis() - time;
@@ -263,7 +261,7 @@ public class ConcurrencyExperiment_Basic extends LearningExperiment<BasicNetwork
         experiment.setRunStatisticsForBackups(false);
         experiment.setGamesToPlayPerThreadForStatistics(0);
         experiment.setSimulationsForStatistics(0);
-        experiment.start(0, filePath, 0, false);
+        experiment.start(-1, filePath, 0, false, filePath);
 
         bestPossibleStats.addSample(experiment.getAvgBestPossibleActionTimes());
         trainingStats.addSample(experiment.getAvgTrainingTimes());

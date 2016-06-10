@@ -97,7 +97,7 @@ public class TestGeneratorALL {
         experiment.setSimulationsForStatistics(simulationsForStatistics);
         experiment.setExportToExcel(true);
         System.out.println("***************************************** N" + numberForShow + " Ejecutando " + filePath + " *****************************************");
-        experiment.start(numberForShow, filePath, 0, true);
+        experiment.start(numberForShow, filePath, 0, true, null);
     }
 
     /**
@@ -150,7 +150,7 @@ public class TestGeneratorALL {
 
         alphaList.add(0.0025d);
 
-        // gammaList.add(0.9d); No da resultados buenos 
+        // gammaList.add(0.9d); No da resultados buenos
         gammaList.add(1d);
 
         explorationRate.add(0d);
