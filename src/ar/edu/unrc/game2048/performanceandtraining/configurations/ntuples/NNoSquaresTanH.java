@@ -18,11 +18,11 @@
  */
 package ar.edu.unrc.game2048.performanceandtraining.configurations.ntuples;
 
+import ar.edu.unrc.coeus.tdlearning.training.ntuple.SamplePointState;
+import ar.edu.unrc.coeus.tdlearning.utils.FunctionUtils;
 import ar.edu.unrc.game2048.GameBoard;
 import ar.edu.unrc.game2048.NTupleConfiguration2048;
 import ar.edu.unrc.game2048.Tile;
-import ar.edu.unrc.tdlearning.learning.FunctionUtils;
-import ar.edu.unrc.tdlearning.training.ntuple.SamplePointState;
 import java.util.ArrayList;
 import org.encog.util.arrayutil.NormalizationAction;
 import org.encog.util.arrayutil.NormalizedField;

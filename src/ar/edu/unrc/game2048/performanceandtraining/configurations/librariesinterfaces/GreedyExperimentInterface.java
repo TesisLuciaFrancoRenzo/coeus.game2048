@@ -18,14 +18,14 @@
  */
 package ar.edu.unrc.game2048.performanceandtraining.configurations.librariesinterfaces;
 
+import ar.edu.unrc.coeus.interfaces.IPerceptronInterface;
+import ar.edu.unrc.coeus.tdlearning.learning.StateProbability;
+import ar.edu.unrc.coeus.tdlearning.learning.TDLambdaLearning;
 import ar.edu.unrc.game2048.Action;
 import ar.edu.unrc.game2048.Game2048;
 import ar.edu.unrc.game2048.GameBoard;
 import ar.edu.unrc.game2048.PerceptronConfiguration2048;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.INeuralNetworkInterfaceFor2048;
-import ar.edu.unrc.tdlearning.interfaces.IPerceptronInterface;
-import ar.edu.unrc.tdlearning.learning.StateProbability;
-import ar.edu.unrc.tdlearning.learning.TDLambdaLearning;
 import static java.awt.event.KeyEvent.VK_DOWN;
 import static java.awt.event.KeyEvent.VK_LEFT;
 import static java.awt.event.KeyEvent.VK_RIGHT;

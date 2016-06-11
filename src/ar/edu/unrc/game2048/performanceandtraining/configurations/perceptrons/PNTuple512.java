@@ -18,11 +18,11 @@
  */
 package ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons;
 
+import ar.edu.unrc.coeus.tdlearning.training.ntuple.SamplePointState;
 import ar.edu.unrc.game2048.Game2048;
 import ar.edu.unrc.game2048.GameBoard;
 import ar.edu.unrc.game2048.PerceptronConfiguration2048;
 import ar.edu.unrc.game2048.Tile;
-import ar.edu.unrc.tdlearning.training.ntuple.SamplePointState;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

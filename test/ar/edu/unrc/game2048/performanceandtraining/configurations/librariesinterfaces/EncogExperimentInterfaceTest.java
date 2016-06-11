@@ -18,14 +18,17 @@
  */
 package ar.edu.unrc.game2048.performanceandtraining.configurations.librariesinterfaces;
 
+import ar.edu.unrc.coeus.interfaces.IPerceptronInterface;
+import ar.edu.unrc.coeus.tdlearning.utils.FunctionUtils;
 import ar.edu.unrc.game2048.Game2048;
 import ar.edu.unrc.game2048.GameBoard;
 import ar.edu.unrc.game2048.PerceptronConfiguration2048;
-import ar.edu.unrc.tdlearning.interfaces.IPerceptronInterface;
 import java.util.List;
 import static junit.framework.Assert.assertEquals;
 import org.encog.engine.network.activation.ActivationFunction;
+import org.encog.engine.network.activation.ActivationLinear;
 import org.encog.engine.network.activation.ActivationSigmoid;
+import org.encog.engine.network.activation.ActivationTANH;
 import org.encog.ml.data.MLData;
 import org.encog.ml.data.basic.BasicMLData;
 import org.encog.neural.networks.BasicNetwork;
@@ -406,4 +409,104 @@ public class EncogExperimentInterfaceTest {
         double[] resultArray2 = outut.getData();
         Assert.assertArrayEquals(expResultArray2, resultArray2, 0.0000000000000001);
     }
+
+    /**
+     * Test of initializeEncogPerceptron method, of class
+     * EncogExperimentInterface.
+     */
+    @Test
+    public void testInitializeEncogPerceptron() {
+        System.out.println("initializeEncogPerceptron");
+
+        PerceptronConfiguration2048<BasicNetwork> perceptronConfiguration = new PerceptronConfiguration2048<BasicNetwork>() {
+            @Override
+            public void calculateNormalizedPerceptronInput(GameBoard<BasicNetwork> board, List<Double> normalizedPerceptronInput) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public Double computeNumericRepresentationFor(Game2048 game, Object[] output) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public double denormalizeValueFromPerceptronOutput(Object value) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public double getBoardReward(GameBoard board, int outputNeuron) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public double getFinalReward(GameBoard board, int outputNeuron) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public boolean isConcurrentInputEnabled() {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public double normalizeValueToPerceptronOutput(Object value) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public boolean useNTupleList() {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+        };
+
+        BasicNetwork perceptron = new BasicNetwork();
+
+        perceptron.addLayer(new BasicLayer(new ActivationSigmoid(), true, 1));
+        perceptron.addLayer(new BasicLayer(new ActivationSigmoid(), true, 1));
+        perceptron.addLayer(new BasicLayer(new ActivationTANH(), true, 1));
+        perceptron.addLayer(new BasicLayer(new ActivationLinear(), true, 1));
+        perceptron.getStructure().finalizeStructure();
+
+        perceptronConfiguration.setActivationFunctionForEncog(new ActivationFunction[3]);
+        perceptronConfiguration.getActivationFunctionForEncog()[0] = new ActivationSigmoid();
+        perceptronConfiguration.getActivationFunctionForEncog()[1] = new ActivationTANH();
+        perceptronConfiguration.getActivationFunctionForEncog()[2] = new ActivationLinear();
+        perceptronConfiguration.activationFunctionMax = 1;
+        perceptronConfiguration.activationFunctionMin = 0;
+
+        perceptronConfiguration.setNeuronQuantityInLayer(new int[4]);
+        perceptronConfiguration.getNeuronQuantityInLayer()[0] = 1;
+        perceptronConfiguration.getNeuronQuantityInLayer()[1] = 1;
+        perceptronConfiguration.getNeuronQuantityInLayer()[2] = 1;
+        perceptronConfiguration.getNeuronQuantityInLayer()[3] = 1;
+
+        EncogExperimentInterface experiment = new EncogExperimentInterface(perceptronConfiguration);
+        experiment.setConfigForTesting(perceptron);
+        IPerceptronInterface encogInterface = experiment.getPerceptronInterface();
+
+        experiment.initializeEncogPerceptron(Boolean.FALSE);
+
+        Assert.assertTrue(FunctionUtils.SIGMOID.equals(encogInterface.getActivationFunction(1)));
+        Assert.assertTrue(FunctionUtils.TANH.equals(encogInterface.getActivationFunction(2)));
+        Assert.assertTrue(FunctionUtils.LINEAR.equals(encogInterface.getActivationFunction(3)));
+
+        for ( int layer = 1; layer < encogInterface.getLayerQuantity(); layer++ ) {
+            String activationEncog = perceptron.getActivation(layer).getClass().getName();
+            String activationInterface = encogInterface.getActivationFunction(layer).toString();
+
+            if ( perceptron.getActivation(layer) instanceof ActivationTANH ) {
+                Assert.assertTrue("capa=" + layer + " activationEncog=" + activationEncog + " vs activationInterface=" + activationInterface, encogInterface.getActivationFunction(layer).equals(FunctionUtils.TANH));
+            } else if ( perceptron.getActivation(layer) instanceof ActivationSigmoid ) {
+                Assert.assertTrue("capa=" + layer + " activati-onEncog=" + activationEncog + " vs activationInterface=" + activationInterface, encogInterface.getActivationFunction(layer).equals(FunctionUtils.SIGMOID));
+            } else if ( perceptron.getActivation(layer) instanceof ActivationLinear ) {
+                Assert.assertTrue("capa=" + layer + " activationEncog=" + activationEncog + " vs activationInterface=" + activationInterface, encogInterface.getActivationFunction(layer).equals(FunctionUtils.LINEAR));
+            } else {
+                throw new IllegalArgumentException("El test esta pensado para utilizar TANH, Simoid o Linear como funcion de activacion");
+            }
+        }
+
+    }
+
 }

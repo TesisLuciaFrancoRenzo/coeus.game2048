@@ -18,7 +18,7 @@
  */
 package ar.edu.unrc.game2048;
 
-import ar.edu.unrc.tdlearning.training.ntuple.SamplePointState;
+import ar.edu.unrc.coeus.tdlearning.training.ntuple.SamplePointState;
 import java.awt.Color;
 import static java.lang.Math.pow;
 

@@ -18,14 +18,14 @@
  */
 package ar.edu.unrc.game2048.performanceandtraining.configurations;
 
+import ar.edu.unrc.coeus.interfaces.IPerceptronInterface;
+import ar.edu.unrc.coeus.tdlearning.learning.EExplorationRateAlgorithms;
+import ar.edu.unrc.coeus.tdlearning.learning.ELearningRateAdaptation;
+import ar.edu.unrc.coeus.tdlearning.learning.TDLambdaLearning;
+import ar.edu.unrc.coeus.tdlearning.training.ntuple.NTupleSystem;
 import ar.edu.unrc.game2048.Game2048;
 import ar.edu.unrc.game2048.performanceandtraining.experiments.learning.ntuple.TestGeneratorALL;
 import static ar.edu.unrc.game2048.performanceandtraining.experiments.learning.ntuple.TestGeneratorALL.getMsj;
-import ar.edu.unrc.tdlearning.interfaces.IPerceptronInterface;
-import ar.edu.unrc.tdlearning.learning.EExplorationRateAlgorithms;
-import ar.edu.unrc.tdlearning.learning.ELearningRateAdaptation;
-import ar.edu.unrc.tdlearning.learning.TDLambdaLearning;
-import ar.edu.unrc.tdlearning.training.ntuple.NTupleSystem;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;

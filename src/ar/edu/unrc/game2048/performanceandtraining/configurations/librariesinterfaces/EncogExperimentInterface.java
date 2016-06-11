@@ -18,10 +18,10 @@
  */
 package ar.edu.unrc.game2048.performanceandtraining.configurations.librariesinterfaces;
 
+import ar.edu.unrc.coeus.interfaces.IPerceptronInterface;
+import ar.edu.unrc.coeus.tdlearning.utils.FunctionUtils;
 import ar.edu.unrc.game2048.PerceptronConfiguration2048;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.INeuralNetworkInterfaceFor2048;
-import ar.edu.unrc.tdlearning.interfaces.IPerceptronInterface;
-import ar.edu.unrc.tdlearning.learning.FunctionUtils;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -118,7 +118,7 @@ public class EncogExperimentInterface extends INeuralNetworkInterfaceFor2048<Bas
 //                if ( layerIndex <= 0 || layerIndex >= getLayerQuantity() ) {
 //                    throw new IllegalArgumentException("layerIndex out of valid range");
 //                }
-                return activationFunction.get(layerIndex);
+                return activationFunction.get(layerIndex - 1);
             }
 
             @Override
@@ -128,7 +128,7 @@ public class EncogExperimentInterface extends INeuralNetworkInterfaceFor2048<Bas
 
             @Override
             public Function<Double, Double> getDerivatedActivationFunction(int layerIndex) {
-                return derivatedActivationFunction.get(layerIndex);
+                return derivatedActivationFunction.get(layerIndex - 1);
             }
 
             @Override
@@ -180,7 +180,8 @@ public class EncogExperimentInterface extends INeuralNetworkInterfaceFor2048<Bas
             function = getPerceptronConfiguration().getActivationFunctionForEncog()[i - 1].clone();
             perceptron.addLayer(new BasicLayer(function, true, getPerceptronConfiguration().getNeuronQuantityInLayer()[i]));
         }
-        function = getPerceptronConfiguration().getActivationFunctionForEncog()[getPerceptronConfiguration().getNeuronQuantityInLayer().length - 2].clone(); //FIXME BUG????
+        //getPerceptronConfiguration().getNeuronQuantityInLayer().length - 2 porque el for finaliza en getPerceptronConfiguration().getNeuronQuantityInLayer().length - 1
+        function = getPerceptronConfiguration().getActivationFunctionForEncog()[getPerceptronConfiguration().getNeuronQuantityInLayer().length - 2].clone();
         perceptron.addLayer(new BasicLayer(function, false,
                 getPerceptronConfiguration().getNeuronQuantityInLayer()[getPerceptronConfiguration().getNeuronQuantityInLayer().length - 1]));
         perceptron.getStructure().finalizeStructure();

@@ -18,7 +18,7 @@
  */
 package ar.edu.unrc.game2048;
 
-import ar.edu.unrc.tdlearning.interfaces.IAction;
+import ar.edu.unrc.coeus.tdlearning.interfaces.IAction;
 
 /**
  *

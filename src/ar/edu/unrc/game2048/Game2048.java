@@ -33,17 +33,17 @@ package ar.edu.unrc.game2048;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import ar.edu.unrc.coeus.tdlearning.interfaces.IAction;
+import ar.edu.unrc.coeus.tdlearning.interfaces.IActor;
+import ar.edu.unrc.coeus.tdlearning.interfaces.IProblemToTrain;
+import ar.edu.unrc.coeus.tdlearning.interfaces.IState;
+import ar.edu.unrc.coeus.tdlearning.interfaces.IStateNTuple;
+import ar.edu.unrc.coeus.tdlearning.interfaces.IStatePerceptron;
+import ar.edu.unrc.coeus.tdlearning.learning.StateProbability;
 import static ar.edu.unrc.game2048.Action.down;
 import static ar.edu.unrc.game2048.Action.right;
 import static ar.edu.unrc.game2048.Action.up;
 import static ar.edu.unrc.game2048.GameBoard.TILE_NUMBER;
-import ar.edu.unrc.tdlearning.interfaces.IAction;
-import ar.edu.unrc.tdlearning.interfaces.IActor;
-import ar.edu.unrc.tdlearning.interfaces.IProblemToTrain;
-import ar.edu.unrc.tdlearning.interfaces.IState;
-import ar.edu.unrc.tdlearning.interfaces.IStateNTuple;
-import ar.edu.unrc.tdlearning.interfaces.IStatePerceptron;
-import ar.edu.unrc.tdlearning.learning.StateProbability;
 import java.awt.Color;
 import java.awt.Font;
 import static java.awt.Font.BOLD;

@@ -1,10 +1,10 @@
 package ar.edu.unrc.game2048.performanceandtraining.configurations;
 
+import ar.edu.unrc.coeus.interfaces.IPerceptronInterface;
+import ar.edu.unrc.coeus.tdlearning.learning.TDLambdaLearning;
 import ar.edu.unrc.game2048.Game2048;
 import ar.edu.unrc.game2048.NTupleConfiguration2048;
 import ar.edu.unrc.game2048.PerceptronConfiguration2048;
-import ar.edu.unrc.tdlearning.interfaces.IPerceptronInterface;
-import ar.edu.unrc.tdlearning.learning.TDLambdaLearning;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;

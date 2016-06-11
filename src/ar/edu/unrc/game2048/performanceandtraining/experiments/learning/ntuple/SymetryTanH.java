@@ -18,14 +18,14 @@
  */
 package ar.edu.unrc.game2048.performanceandtraining.experiments.learning.ntuple;
 
+import ar.edu.unrc.coeus.interfaces.IPerceptronInterface;
+import static ar.edu.unrc.coeus.tdlearning.learning.ELearningStyle.afterState;
+import ar.edu.unrc.coeus.tdlearning.learning.TDLambdaLearning;
+import ar.edu.unrc.coeus.tdlearning.training.ntuple.NTupleSystem;
 import ar.edu.unrc.game2048.NTupleConfiguration2048;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.LearningExperiment;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.librariesinterfaces.NTupleExperimentInterface;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.ntuples.NSymetryTanH;
-import ar.edu.unrc.tdlearning.interfaces.IPerceptronInterface;
-import static ar.edu.unrc.tdlearning.learning.ELearningStyle.afterState;
-import ar.edu.unrc.tdlearning.learning.TDLambdaLearning;
-import ar.edu.unrc.tdlearning.training.ntuple.NTupleSystem;
 import java.io.File;
 import org.encog.neural.networks.BasicNetwork;
 
