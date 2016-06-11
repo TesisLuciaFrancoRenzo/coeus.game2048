@@ -171,10 +171,10 @@ public class ConcurrencyExperiment_Basic extends LearningExperiment<BasicNetwork
                 evaluateOutput.append(innerLayersNeuronQuantity).append("\t").append(resultsBestPossible[1]).append("\n");
             }
 
-            outputForGraphicsResults.append("Training:").append("\n");
+            outputForGraphicsResults.append("Training: (neuron / avg time / min time / max time)").append("\n");
             outputForGraphicsResults.append(trainingOutput).append("\n");
 
-            outputForGraphicsResults.append("Evaluating:").append("\n");
+            outputForGraphicsResults.append("Evaluating: (neuron / avg time / min time / max time)").append("\n");
             outputForGraphicsResults.append(evaluateOutput).append("\n").append("\n");
         }
     }
@@ -219,8 +219,8 @@ public class ConcurrencyExperiment_Basic extends LearningExperiment<BasicNetwork
 
             time = System.currentTimeMillis() - time;
             System.out.println("Demoró = " + time + " ms.");
-            outputResults.append("\n\n==========\nDemoró").append(time).append(" ms.");
-            outputForGraphicsResults.append("\n\n==========\nDemoró").append(time).append(" ms.");
+            outputResults.append("\n\n==========\nDemoró ").append(time).append(" ms.");
+            outputForGraphicsResults.append("\n\n==========\nDemoró ").append(time).append(" ms.");
 
             try ( BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(filePath + "Concurrencia_Experimento_01.txt")), "UTF-8")) ) {
                 out.write(outputResults.toString());
