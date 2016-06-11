@@ -124,8 +124,8 @@ public class TestGeneratorALL {
 
         //============================== configuraciones manuales ==================================
         int pcNumber = 0;
-        boolean statistics = true;
-        //boolean statistics = false;
+//        boolean statistics = true;
+        boolean statistics = false;
         int maxTrainingThreads = 4;
         boolean backupStatistics = true;
 //        boolean backupStatistics = false;
@@ -140,7 +140,7 @@ public class TestGeneratorALL {
         List<Double> gammaList = new ArrayList<>();
         List<Double> explorationRate = new ArrayList<>();
 
-        int gamesToPlay = 10;
+        int gamesToPlay = 2_000_000;
         int saveEvery = 5_000;
         int saveBackupEvery = 2;
 
@@ -166,8 +166,8 @@ public class TestGeneratorALL {
         if ( statistics ) {
             statisticsOnly = true;
             runStatisticsForBackups = backupStatistics;
-            gamesToPlayPerThreadForStatistics = 2;
-            simulationsForStatistics = 2;
+            gamesToPlayPerThreadForStatistics = 1_000;
+            simulationsForStatistics = 8;
         } else {
             statisticsOnly = false;
             runStatisticsForBackups = false;
