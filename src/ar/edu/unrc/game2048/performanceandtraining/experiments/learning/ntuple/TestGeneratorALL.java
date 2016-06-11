@@ -142,7 +142,7 @@ public class TestGeneratorALL {
 
         int gamesToPlay = 2_000_000;
         int saveEvery = 5_000;
-        int saveBackupEvery = 2;
+        int saveBackupEvery = 25_000;
 
         lambdaList.add(0.6d);
         lambdaList.add(0.7d);

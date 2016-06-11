@@ -319,15 +319,20 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
         this.exportToExcel = exportToExcel;
     }
 
-    public void setRunStatisticsForBackups(boolean runStatisticsForBackups) {
-        this.runStatisticsForBackups = runStatisticsForBackups;
-    }
 
     /**
      * @param gamesToPlay the gamesToPlay to set
      */
     public void setGamesToPlayPerThread(int gamesToPlay) {
         this.gamesToPlay = gamesToPlay;
+    }
+
+    /**
+     *
+     * @param runStatisticsForBackups
+     */
+    public void setRunStatisticsForBackups(boolean runStatisticsForBackups) {
+        this.runStatisticsForBackups = runStatisticsForBackups;
     }
 
     /**
