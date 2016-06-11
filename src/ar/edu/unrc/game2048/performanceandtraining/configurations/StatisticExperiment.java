@@ -86,6 +86,7 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
     private double meanTurn;
     private double minScore;
     private double minTurn;
+    private boolean runStatisticsForBackups;
     private int saveBackupEvery;
     private int simulations;
     private List<Double> tileStatistics;
@@ -316,6 +317,10 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
      */
     public void setExportToExcel(boolean exportToExcel) {
         this.exportToExcel = exportToExcel;
+    }
+
+    public void setRunStatisticsForBackups(boolean runStatisticsForBackups) {
+        this.runStatisticsForBackups = runStatisticsForBackups;
     }
 
     /**
@@ -555,7 +560,6 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
         }
     }
 
-
     /**
      *
      * @param experimentPath
@@ -726,7 +730,14 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
         List<File> backupFiles = new ArrayList<>();
         Map<File, StatisticForCalc> resultsPerFile = new HashMap<>();
         for ( File f : allFiles ) {
-            if ( f.getName().matches(".*\\_BackupN\\-.*\\.ser") ) {
+            if ( runStatisticsForBackups ) {
+                if ( f.getName().matches(".*\\_BackupN\\-.*\\.ser") ) {
+                    System.out.print("Starting " + f.getName() + " Statistics... ");
+                    processFile(dirPath + f.getName().replaceAll("\\.ser$", ""), delayPerMove, createPerceptronFile);
+                    resultsPerFile.put(f, getTileStatistics());
+                    backupFiles.add(f);
+                }
+            } else if ( f.getName().matches(".*\\_trained\\.ser") ) {
                 System.out.print("Starting " + f.getName() + " Statistics... ");
                 processFile(dirPath + f.getName().replaceAll("\\.ser$", ""), delayPerMove, createPerceptronFile);
                 resultsPerFile.put(f, getTileStatistics());

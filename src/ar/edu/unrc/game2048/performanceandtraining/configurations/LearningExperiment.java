@@ -918,6 +918,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
                         this.setLearningMethod(learningAlgorithm);
                         this.setTileToWinForStatistics(tileToWinForStatistics);
                         this.setExportToExcel(exportToExcel);
+                        this.setRunStatisticsForBackups(runStatisticsForBackups);
                     }
                 };
                 statisticExperiment.setFileName(this.getExperimentName());

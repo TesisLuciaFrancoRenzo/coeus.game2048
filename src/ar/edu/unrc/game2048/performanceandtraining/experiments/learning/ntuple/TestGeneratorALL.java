@@ -121,28 +121,28 @@ public class TestGeneratorALL {
         String filePath
                 = ".." + File.separator
                 + "Perceptrones ENTRENADOS" + File.separator;
+
+        //============================== configuraciones manuales ==================================
         int pcNumber = 0;
-        boolean statistics = false;
+        boolean statistics = true;
+        //boolean statistics = false;
         int maxTrainingThreads = 4;
+        boolean backupStatistics = true;
+//        boolean backupStatistics = false;
         if ( args.length != 0 ) {
             pcNumber = Integer.parseInt(args[0]);
             statistics = Boolean.parseBoolean(args[1]);
             maxTrainingThreads = Integer.parseInt(args[2]);
+            backupStatistics = Boolean.parseBoolean(args[3]);
         }
         List<Double> lambdaList = new ArrayList<>();
         List<Double> alphaList = new ArrayList<>();
         List<Double> gammaList = new ArrayList<>();
         List<Double> explorationRate = new ArrayList<>();
 
-        //============================== configuraciones manuales ==================================
-        if ( args.length == 0 ) {
-//            statistics = true;
-            statistics = false;
-        }
-
-        int gamesToPlay = 2_000_000;
+        int gamesToPlay = 10;
         int saveEvery = 5_000;
-        int saveBackupEvery = 25_000;
+        int saveBackupEvery = 2;
 
         lambdaList.add(0.6d);
         lambdaList.add(0.7d);
@@ -165,9 +165,9 @@ public class TestGeneratorALL {
 
         if ( statistics ) {
             statisticsOnly = true;
-            runStatisticsForBackups = true;
-            gamesToPlayPerThreadForStatistics = 1_000;
-            simulationsForStatistics = 8;
+            runStatisticsForBackups = backupStatistics;
+            gamesToPlayPerThreadForStatistics = 2;
+            simulationsForStatistics = 2;
         } else {
             statisticsOnly = false;
             runStatisticsForBackups = false;
