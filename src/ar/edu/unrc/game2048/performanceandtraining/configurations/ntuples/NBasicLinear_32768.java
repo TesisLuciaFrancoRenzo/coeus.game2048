@@ -28,12 +28,12 @@ import java.util.ArrayList;
 /**
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
-public class NBasicLinear extends NTupleConfiguration2048 {
+public class NBasicLinear_32768 extends NTupleConfiguration2048 {
 
     /**
      *
      */
-    public NBasicLinear() {
+    public NBasicLinear_32768() {
         this.activationFunction = FunctionUtils.LINEAR;
         this.derivatedActivationFunction = FunctionUtils.LINEAR_DERIVATED;
         this.concurrency = false;

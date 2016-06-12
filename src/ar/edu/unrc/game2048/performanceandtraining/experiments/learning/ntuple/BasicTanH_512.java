@@ -32,7 +32,7 @@ import org.encog.neural.networks.BasicNetwork;
 /**
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
-public class Basic_512 extends LearningExperiment<BasicNetwork> {
+public class BasicTanH_512 extends LearningExperiment<BasicNetwork> {
 
     /**
      *
@@ -48,7 +48,7 @@ public class Basic_512 extends LearningExperiment<BasicNetwork> {
         } else {
             filePath = args[0];
         }
-        LearningExperiment experiment = new Basic_512();
+        LearningExperiment experiment = new BasicTanH_512();
 
 //        boolean statistics = true;
         boolean statistics = false;
@@ -57,7 +57,7 @@ public class Basic_512 extends LearningExperiment<BasicNetwork> {
         experiment.setAlpha(alphas);
         experiment.setLearningRateAdaptationToFixed();
 
-        experiment.setLambda(0.7);
+        experiment.setLambda(0);
         experiment.setGamma(1);
         experiment.setExplorationRateToFixed(0);
         experiment.setResetEligibilitiTraces(false);
@@ -84,7 +84,7 @@ public class Basic_512 extends LearningExperiment<BasicNetwork> {
             experiment.setSimulationsForStatistics(0);
         }
         experiment.setExportToExcel(true);
-        experiment.start(-1,filePath, 0, true, null);
+        experiment.start(-1, filePath, 0, true, null);
     }
 
     @Override

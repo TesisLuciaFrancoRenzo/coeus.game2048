@@ -144,9 +144,10 @@ public class TestGeneratorALL {
         int saveEvery = 5_000;
         int saveBackupEvery = 25_000;
 
-        lambdaList.add(0.6d);
-        lambdaList.add(0.7d);
-        lambdaList.add(0.8d);
+        lambdaList.add(0d);
+        lambdaList.add(0.1d);
+        lambdaList.add(0.2d);
+//        lambdaList.add(0.8d);
 
         alphaList.add(0.0025d);
 
@@ -233,7 +234,7 @@ public class TestGeneratorALL {
                     for ( int l = 0; l < explorationRateList.size(); l++ ) {
                         number++;
                         experiments.add(new GeneratorConfig(alphaList.get(i), lambdaList.get(j), gammaList.get(k), explorationRateList.get(l), false, number));
-                        if ( explorationRateList.get(l) > 0 ) {
+                        if ( explorationRateList.get(l) > 0 && lambdaList.get(j) > 0 ) {
                             number++;
                             experiments.add(new GeneratorConfig(alphaList.get(i), lambdaList.get(j), gammaList.get(k), explorationRateList.get(l), true, number));
                         }
