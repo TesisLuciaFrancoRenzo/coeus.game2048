@@ -96,11 +96,54 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
 
     /**
      *
+     * @param originalTiles
+     * @return
+     */
+    public static Tile[] horizontalFlipTiles(final Tile[] originalTiles) {
+        Tile[] flippedTiles = new Tile[TILE_NUMBER];
+        for ( int x = 0; x < 4; x++ ) {
+            for ( int y = 0; y < 4; y++ ) {
+                int newX = 3 - x;
+                flippedTiles[newX + y * 4] = originalTiles[x + y * 4];
+            }
+        }
+        return flippedTiles;
+    }
+
+    /**
+     *
      * @param args
      */
     @SuppressWarnings( "ResultOfObjectAllocationIgnored" )
     public static void main(String[] args) {
         new Game2048(null, null, 2_048, 1);
+    }
+
+    /**
+     *
+     * @param angle
+     * @param originalTiles
+     * @return
+     */
+    public static Tile[] rotateBoardTiles(final int angle, final Tile[] originalTiles) {
+        Tile[] rotatedTiles = new Tile[TILE_NUMBER];
+        int offsetX = 3, offsetY = 3;
+        if ( angle == 90 ) {
+            offsetY = 0;
+        } else if ( angle == 270 ) {
+            offsetX = 0;
+        }
+        double rad = toRadians(angle);
+        int cos = (int) cos(rad);
+        int sin = (int) sin(rad);
+        for ( int x = 0; x < 4; x++ ) {
+            for ( int y = 0; y < 4; y++ ) {
+                int newX = (x * cos) - (y * sin) + offsetX;
+                int newY = (x * sin) + (y * cos) + offsetY;
+                rotatedTiles[newX + newY * 4] = originalTiles[x + y * 4];
+            }
+        }
+        return rotatedTiles;
     }
 
     private static void ensureSize(java.util.List<Tile> l, int s, TileContainer tileContainer) {
@@ -253,7 +296,7 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
     public IStatePerceptron computeNextTurnStateFromAfterstate(IState s1) {
         GameBoard<NeuralNetworkClass> finalBoard = (GameBoard<NeuralNetworkClass>) s1.getCopy();
         if ( finalBoard.isNeedToAddTile() ) {
-            finalBoard.addTile();
+            finalBoard.addTile(true);
         }
         return finalBoard;
     }
@@ -505,6 +548,7 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
     /**
      *
      * @param afterState
+     *
      * @return
      */
     public List<StateProbability> listAllPossibleNextTurnStateFromAfterstate(IState afterState) {
@@ -605,8 +649,8 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
         board = new GameBoard<>(this, tileContainer);
         board.clearBoard(tileContainer);
         board.updateInternalState(false);
-        board.addTile();
-        board.addTile();
+        board.addTile(false);
+        board.addTile(true);
     }
 
     private boolean compare(Tile[] line1, Tile[] line2) {
@@ -718,27 +762,9 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
         }
     }
 
+
     private void rotate(int angle, GameBoard<NeuralNetworkClass> original) {
-        Tile[] rotatedTiles = new Tile[TILE_NUMBER];
-
-        int offsetX = 3, offsetY = 3;
-        if ( angle == 90 ) {
-            offsetY = 0;
-        } else if ( angle == 270 ) {
-            offsetX = 0;
-        }
-
-        double rad = toRadians(angle);
-        int cos = (int) cos(rad);
-        int sin = (int) sin(rad);
-        for ( int x = 0; x < 4; x++ ) {
-            for ( int y = 0; y < 4; y++ ) {
-                int newX = (x * cos) - (y * sin) + offsetX;
-                int newY = (x * sin) + (y * cos) + offsetY;
-                rotatedTiles[newX + newY * 4] = original.tileAt(x, y);
-            }
-        }
-        arraycopy(rotatedTiles, 0, original.getTiles(), 0, TILE_NUMBER);
+        arraycopy(rotateBoardTiles(angle, original.getTiles()), 0, original.getTiles(), 0, TILE_NUMBER);
     }
 
     private void setLine(int index, Tile[] re, GameBoard<NeuralNetworkClass> board) {

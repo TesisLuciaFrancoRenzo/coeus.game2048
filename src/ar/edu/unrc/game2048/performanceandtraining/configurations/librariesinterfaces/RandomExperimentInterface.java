@@ -92,7 +92,7 @@ public class RandomExperimentInterface extends INeuralNetworkInterfaceFor2048 {
     }
 
     @Override
-    public void savePerceptron(File perceptronFile) throws Exception {
+    public void saveNeuralNetwork(File perceptronFile) throws Exception {
     }
 
 }

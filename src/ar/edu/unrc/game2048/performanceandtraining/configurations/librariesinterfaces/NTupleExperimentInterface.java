@@ -64,11 +64,11 @@ public class NTupleExperimentInterface extends INeuralNetworkInterfaceFor2048<Ba
      * @return
      */
     public NTupleSystem initializeNTupleSystem(boolean randomized) {
-        NTupleSystem perceptron = new NTupleSystem(this.getNTupleConfiguration().allSamplePointStates, this.getNTupleConfiguration().nTuplesLenght, this.getNTupleConfiguration().activationFunction, this.getNTupleConfiguration().derivatedActivationFunction, this.getNTupleConfiguration().concurrency);
+        NTupleSystem nTupleSystem = new NTupleSystem(this.getNTupleConfiguration().allSamplePointStates, this.getNTupleConfiguration().nTuplesLenght, this.getNTupleConfiguration().activationFunction, this.getNTupleConfiguration().derivatedActivationFunction, this.getNTupleConfiguration().concurrency);
         if ( randomized ) {
-            perceptron.reset();
+            nTupleSystem.reset();
         }
-        return perceptron;
+        return nTupleSystem;
     }
 
     @Override
@@ -86,7 +86,7 @@ public class NTupleExperimentInterface extends INeuralNetworkInterfaceFor2048<Ba
     }
 
     @Override
-    public void savePerceptron(File perceptronFile) throws Exception {
+    public void saveNeuralNetwork(File perceptronFile) throws Exception {
         this.getNTupleConfiguration().getNTupleSystem().save(perceptronFile);
     }
 

@@ -70,6 +70,18 @@ public class GameBoard<NeuralNetworkClass> implements IStatePerceptron, IStateNT
         return result;
     }
 
+    /**
+     *
+     * @param tileArray
+     * @param x
+     * @param y
+     *
+     * @return
+     */
+    public static Tile tileAt(Tile[] tileArray, int x, int y) {
+        return tileArray[x + y * 4];
+    }
+
     private List<Integer> availableSpaceList;
     private boolean canMove;
     private final Game2048<NeuralNetworkClass> game;
@@ -114,15 +126,16 @@ public class GameBoard<NeuralNetworkClass> implements IStatePerceptron, IStateNT
 
     /**
      *
+     * @param updateInputs
      */
-    public void addTile() {
+    public void addTile(boolean updateInputs) {
         if ( !availableSpaceList.isEmpty() ) {
             int index = (int) (random() * availableSpaceList.size()) % availableSpaceList.size();
             Integer tilePos = availableSpaceList.get(index);
             int value = random() < 0.9 ? 1 : 2;
             tiles[tilePos] = this.tileContainer.getTile(value);
         }
-        this.updateInternalState(true);
+        this.updateInternalState(updateInputs);
     }
 
     /**
@@ -133,6 +146,39 @@ public class GameBoard<NeuralNetworkClass> implements IStatePerceptron, IStateNT
         return availableSpaceList;
     }
 
+//    /**
+//     *
+//     */
+//    public void calculateBestSymetricBoard() {
+//        if ( game.getnTupleSystemConfiguration() == null || game.getnTupleSystemConfiguration().getNTupleSystem() == null ) {
+//            throw new IllegalStateException("Falta un perceptron para ejecutar este método");
+//        }
+//        List<VerySimpleBoard<NeuralNetworkClass>> allPossibleSimetricBoards = new ArrayList<>(8);
+//
+//        allPossibleSimetricBoards.add(new VerySimpleBoard(tiles, game.getnTupleSystemConfiguration()));
+//        allPossibleSimetricBoards.add(new VerySimpleBoard(Game2048.rotateBoardTiles(90, tiles), game.getnTupleSystemConfiguration()));
+//        allPossibleSimetricBoards.add(new VerySimpleBoard(Game2048.rotateBoardTiles(90, allPossibleSimetricBoards.get(1).getSimpleTiles()), game.getnTupleSystemConfiguration()));
+//        allPossibleSimetricBoards.add(new VerySimpleBoard(Game2048.rotateBoardTiles(90, allPossibleSimetricBoards.get(2).getSimpleTiles()), game.getnTupleSystemConfiguration()));
+//        allPossibleSimetricBoards.add(new VerySimpleBoard(Game2048.horizontalFlipTiles(tiles), game.getnTupleSystemConfiguration()));
+//        allPossibleSimetricBoards.add(new VerySimpleBoard(Game2048.rotateBoardTiles(90, allPossibleSimetricBoards.get(4).getSimpleTiles()), game.getnTupleSystemConfiguration()));
+//        allPossibleSimetricBoards.add(new VerySimpleBoard(Game2048.rotateBoardTiles(90, allPossibleSimetricBoards.get(5).getSimpleTiles()), game.getnTupleSystemConfiguration()));
+//        allPossibleSimetricBoards.add(new VerySimpleBoard(Game2048.rotateBoardTiles(90, allPossibleSimetricBoards.get(6).getSimpleTiles()), game.getnTupleSystemConfiguration()));
+//
+//        assert allPossibleSimetricBoards.size() == 8;
+//
+//        Stream<VerySimpleBoard<NeuralNetworkClass>> stream;
+////        stream = allPossibleSimetricBoards.parallelStream();
+//        stream = allPossibleSimetricBoards.stream();
+//        List<VerySimpleBoard<NeuralNetworkClass>> bestBoardMatches
+//                = stream
+//                .map(verySimpleBoard -> {
+//                    verySimpleBoard.computePrediction();
+//                    return verySimpleBoard;
+//                })
+//                .collect(MaximalListConsumerSimpleBoard<NeuralNetworkClass>::new, MaximalListConsumerSimpleBoard<NeuralNetworkClass>::accept, MaximalListConsumerSimpleBoard<NeuralNetworkClass>::combine)
+//                .getList();
+//        VerySimpleBoard<NeuralNetworkClass> bestBoard = bestBoardMatches.get(randomBetween(0, bestBoardMatches.size() - 1));
+//    }
     /**
      * @return the canMove
      */
@@ -389,18 +435,17 @@ public class GameBoard<NeuralNetworkClass> implements IStatePerceptron, IStateNT
      * encriptado y normalizado. Tambien se actualiza el calculo de si este es
      * un tablero fianl o no.
      * <p>
-     * @param updateNormalizedInputs
+     * @param updateInputs
      */
-    public void updateInternalState(boolean updateNormalizedInputs) {
+    public void updateInternalState(boolean updateInputs) {
         availableSpaceList = calculateAvailableSpace();
         isFull = availableSpaceList.isEmpty();
         canMove = calculateCanMove();
         calulateMaxTile();
-        if ( getGame().getPerceptronConfiguration() != null && updateNormalizedInputs ) {
+        if ( getGame().getPerceptronConfiguration() != null && updateInputs ) {
             //   assert this.getMaxTileNumberCode() != 0;
             getGame().getPerceptronConfiguration().calculateNormalizedPerceptronInput(this, normalizedPerceptronInput);
         }
-
     }
 
     private List<Integer> calculateAvailableSpace() {

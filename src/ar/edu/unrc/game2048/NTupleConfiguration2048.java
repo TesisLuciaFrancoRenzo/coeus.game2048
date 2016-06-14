@@ -88,5 +88,4 @@ public abstract class NTupleConfiguration2048 implements Cloneable, IConfigurati
     public void setNTupleSystem(NTupleSystem nTupleSystem) {
         this.nTupleSystem = nTupleSystem;
     }
-
 }

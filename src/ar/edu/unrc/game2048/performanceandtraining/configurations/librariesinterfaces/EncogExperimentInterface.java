@@ -208,7 +208,7 @@ public class EncogExperimentInterface extends INeuralNetworkInterfaceFor2048<Bas
     }
 
     @Override
-    public void savePerceptron(File perceptronFile) throws Exception {
+    public void saveNeuralNetwork(File perceptronFile) throws Exception {
         SerializeObject.save(perceptronFile, getPerceptronConfiguration().getNeuralNetwork());
     }
 

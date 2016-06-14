@@ -147,7 +147,6 @@ public class TestGeneratorALL {
         lambdaList.add(0d);
         lambdaList.add(0.1d);
         lambdaList.add(0.2d);
-//        lambdaList.add(0.8d);
 
         alphaList.add(0.0025d);
 
@@ -180,8 +179,6 @@ public class TestGeneratorALL {
             case 0: {
                 runAllConfigs(maxTrainingThreads, "BasicLinear", BasicLinear.class.getConstructor(), alphaList, lambdaList, gammaList, statisticsOnly, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, saveBackupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, filePath);
                 runAllConfigs(maxTrainingThreads, "BasicTanH", BasicTanH.class.getConstructor(), alphaList, lambdaList, gammaList, statisticsOnly, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, saveBackupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, filePath);
-                runAllConfigs(maxTrainingThreads, "SymetryLinear", SymetryLinear.class.getConstructor(), alphaList, lambdaList, gammaList, statisticsOnly, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, saveBackupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, filePath);
-                runAllConfigs(maxTrainingThreads, "SymetryTanH", SymetryTanH.class.getConstructor(), alphaList, lambdaList, gammaList, statisticsOnly, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, saveBackupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, filePath);
                 break;
             }
             case 1: {
@@ -190,14 +187,6 @@ public class TestGeneratorALL {
             }
             case 2: {
                 runAllConfigs(maxTrainingThreads, "BasicTanH", BasicTanH.class.getConstructor(), alphaList, lambdaList, gammaList, statisticsOnly, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, saveBackupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, filePath);
-                break;
-            }
-            case 3: {
-                runAllConfigs(maxTrainingThreads, "SymetryLinear", SymetryLinear.class.getConstructor(), alphaList, lambdaList, gammaList, statisticsOnly, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, saveBackupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, filePath);
-                break;
-            }
-            case 4: {
-                runAllConfigs(maxTrainingThreads, "SymetryTanH", SymetryTanH.class.getConstructor(), alphaList, lambdaList, gammaList, statisticsOnly, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, saveBackupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, filePath);
                 break;
             }
             default: {

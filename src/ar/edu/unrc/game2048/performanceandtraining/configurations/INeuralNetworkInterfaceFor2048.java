@@ -170,6 +170,6 @@ public abstract class INeuralNetworkInterfaceFor2048<NeuralNetworkClass> impleme
      * @param perceptronFile <p>
      * @throws Exception
      */
-    public abstract void savePerceptron(File perceptronFile) throws Exception;
+    public abstract void saveNeuralNetwork(File perceptronFile) throws Exception;
 
 }

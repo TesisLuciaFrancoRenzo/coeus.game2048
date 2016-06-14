@@ -607,7 +607,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
             }
             boolean writeConfig = false;
             if ( i % saveEvery == 0 || i % saveBackupEvery == 0 ) {
-                neuralNetworkInterfaceFor2048.savePerceptron(perceptronFile);
+                neuralNetworkInterfaceFor2048.saveNeuralNetwork(perceptronFile);
                 System.out.println("============ Perceptron Exportado Exitosamente (SAVE) ============");
                 writeConfig = true;
             }
@@ -615,7 +615,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
                 backupNumber++;
                 perceptronFileBackup = new File(filePath + TRAINED + "_BackupN-" + String.format("%0" + zeroNumbers + "d", backupNumber)
                         + ".ser");
-                neuralNetworkInterfaceFor2048.savePerceptron(perceptronFileBackup);
+                neuralNetworkInterfaceFor2048.saveNeuralNetwork(perceptronFileBackup);
                 System.out.println("============ Perceptron Exportado Exitosamente (BACKUP " + backupNumber + ") ============");
                 writeConfig = true;
             }
@@ -777,7 +777,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
         if ( saveBackupEvery == 0 ) {
             throw new IllegalArgumentException("se debe configurar cada cuanto guardar backups del perceptron mediante la variable saveBackupEvery");
         }
-        System.out.println("Starting " + this.getPerceptronName() + " Trainer Nº " + numberForShow);
+        System.out.println("Starting " + this.getPerceptronName() + ((numberForShow == -1) ? "" : " Trainer Nº " + numberForShow));
         String dirPath = createPathToDir(experimentPath);
         String bugFilePath;
         if ( errorDumpDir == null ) {
@@ -842,8 +842,6 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
                     backupRandomPerceptron = true;
                 }
             }
-            //creamos el juego
-            Game2048<NeuralNetworkClass> game = new Game2048<>(neuralNetworkInterfaceFor2048.getPerceptronConfiguration(), neuralNetworkInterfaceFor2048.getNTupleConfiguration(), tileToWinForTraining, delayPerMove);
 
             // Si hay un perceptron ya entrenado, lo buscamos en el archivo.
             // En caso contrario creamos un perceptron vacio, inicializado al azar
@@ -853,7 +851,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
             //creamos una interfaz de comunicacion entre la red neuronal de encog y el algoritmo de entrenamiento
             if ( backupRandomPerceptron ) {
                 //guardamos el perceptron inicial para ahcer estadisticas
-                neuralNetworkInterfaceFor2048.savePerceptron(randomPerceptronFile);
+                neuralNetworkInterfaceFor2048.saveNeuralNetwork(randomPerceptronFile);
             }
 
             if ( neuralNetworkInterfaceFor2048.getPerceptronInterface() != null ) {
@@ -875,6 +873,9 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
 
             //creamos un archivo de logs para acumular estadisticas
             File logFile = new File(filePath + "_" + dateFormater.format(now) + "_LOG" + ".txt");
+
+            //creamos el juego
+            Game2048<NeuralNetworkClass> game = new Game2048<>(neuralNetworkInterfaceFor2048.getPerceptronConfiguration(), neuralNetworkInterfaceFor2048.getNTupleConfiguration(), tileToWinForTraining, delayPerMove);
 
             if ( !this.statisticsOnly ) {
                 //comenzamos a entrenar y guardar estadisticas en el archivo de log
@@ -900,7 +901,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
                 }
                 //guardamos los progresos en un archivo
                 if ( createPerceptronFile ) {
-                    neuralNetworkInterfaceFor2048.savePerceptron(perceptronFile);
+                    neuralNetworkInterfaceFor2048.saveNeuralNetwork(perceptronFile);
                 }
             }
             //cerramos el juego
