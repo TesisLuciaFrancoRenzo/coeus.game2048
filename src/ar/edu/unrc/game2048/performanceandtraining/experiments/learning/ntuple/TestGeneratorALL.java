@@ -19,6 +19,7 @@
 package ar.edu.unrc.game2048.performanceandtraining.experiments.learning.ntuple;
 
 import ar.edu.unrc.game2048.performanceandtraining.configurations.LearningExperiment;
+import ar.edu.unrc.game2048.performanceandtraining.experiments.ArgumentLoader;
 import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -96,7 +97,7 @@ public class TestGeneratorALL {
         experiment.setGamesToPlayPerThreadForStatistics(gamesToPlayPerThreadForStatistics);
         experiment.setSimulationsForStatistics(simulationsForStatistics);
         experiment.setExportToExcel(true);
-        System.out.println("***************************************** N" + numberForShow + " Ejecutando " + filePath + " *****************************************");
+        System.out.println("*=*=*=*=*=*=*=*=*=*=* N" + numberForShow + " Ejecutando " + filePath + " *=*=*=*=*=*=*=*=*=*=*");
         experiment.start(numberForShow, filePath, 0, true, null);
     }
 
@@ -121,25 +122,20 @@ public class TestGeneratorALL {
         String filePath
                 = ".." + File.separator
                 + "Perceptrones ENTRENADOS" + File.separator;
-
-        //============================== configuraciones manuales ==================================
-        int pcNumber = 0;
-//        boolean statistics = true;
-        boolean statistics = false;
-        int maxTrainingThreads = 4;
-        boolean backupStatistics = true;
-//        boolean backupStatistics = false;
-        if ( args.length != 0 ) {
-            pcNumber = Integer.parseInt(args[0]);
-            statistics = Boolean.parseBoolean(args[1]);
-            maxTrainingThreads = Integer.parseInt(args[2]);
-            backupStatistics = Boolean.parseBoolean(args[3]);
-        }
         List<Double> lambdaList = new ArrayList<>();
         List<Double> alphaList = new ArrayList<>();
         List<Double> gammaList = new ArrayList<>();
         List<Double> explorationRate = new ArrayList<>();
 
+        //============================== configuraciones manuales ==================================
+//        boolean statistics = true;
+        boolean statistics = false;
+        int maxTrainingThreads = 4;
+        boolean backupStatistics = true;
+//        boolean backupStatistics = false;
+
+        String experimentName = "BasicLinear";
+        String experimentClass = "BasicLinear";
         int gamesToPlay = 2_000_000;
         int saveEvery = 5_000;
         int saveBackupEvery = 25_000;
@@ -158,6 +154,24 @@ public class TestGeneratorALL {
 
         boolean createLogs = false;
         //============================== fin de configuraciones manuales ==================================
+
+        if ( args.length != 0 ) {
+            ArgumentLoader arguments = new ArgumentLoader(args);
+            statistics = Boolean.parseBoolean(arguments.getArg("statistics"));
+            maxTrainingThreads = Integer.parseInt(arguments.getArg("maxTrainingThreads"));
+            backupStatistics = Boolean.parseBoolean(arguments.getArg("backupStatistics"));
+            gamesToPlay = Integer.parseInt(arguments.getArg("gamesToPlay"));
+            saveEvery = Integer.parseInt(arguments.getArg("saveEvery"));
+            saveBackupEvery = Integer.parseInt(arguments.getArg("saveBackupEvery"));
+            experimentName = arguments.getArg("experimentName");
+            experimentClass = arguments.getArg("experimentClass");
+
+            lambdaList = ArgumentLoader.parseDoubleArray(arguments.getArg("lambdaList"));
+            alphaList = ArgumentLoader.parseDoubleArray(arguments.getArg("alphaList"));
+            gammaList = ArgumentLoader.parseDoubleArray(arguments.getArg("gammaList"));
+            explorationRate = ArgumentLoader.parseDoubleArray(arguments.getArg("explorationRate"));
+        }
+
         boolean statisticsOnly;
         boolean runStatisticsForBackups;
         int gamesToPlayPerThreadForStatistics;
@@ -175,24 +189,22 @@ public class TestGeneratorALL {
             simulationsForStatistics = 0;
         }
 
-        switch ( pcNumber ) {
-            case 0: {
-                runAllConfigs(maxTrainingThreads, "BasicLinear", BasicLinear.class.getConstructor(), alphaList, lambdaList, gammaList, statisticsOnly, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, saveBackupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, filePath);
-                runAllConfigs(maxTrainingThreads, "BasicTanH", BasicTanH.class.getConstructor(), alphaList, lambdaList, gammaList, statisticsOnly, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, saveBackupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, filePath);
+        Constructor<?> classConstructor;
+        switch ( experimentClass ) {
+            case "BasicLinear": {
+                classConstructor = BasicLinear.class.getConstructor();
                 break;
             }
-            case 1: {
-                runAllConfigs(maxTrainingThreads, "BasicLinear", BasicLinear.class.getConstructor(), alphaList, lambdaList, gammaList, statisticsOnly, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, saveBackupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, filePath);
-                break;
-            }
-            case 2: {
-                runAllConfigs(maxTrainingThreads, "BasicTanH", BasicTanH.class.getConstructor(), alphaList, lambdaList, gammaList, statisticsOnly, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, saveBackupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, filePath);
+            case "BasicTanH": {
+                classConstructor = BasicTanH.class.getConstructor();
                 break;
             }
             default: {
-                throw new IllegalArgumentException("wrong pcNumber = " + pcNumber);
+                throw new IllegalArgumentException("no se reconoce la clase: " + experimentClass);
             }
         }
+
+        runAllConfigs(maxTrainingThreads, experimentName, classConstructor, alphaList, lambdaList, gammaList, statisticsOnly, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, saveBackupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, filePath);
     }
 
     /**

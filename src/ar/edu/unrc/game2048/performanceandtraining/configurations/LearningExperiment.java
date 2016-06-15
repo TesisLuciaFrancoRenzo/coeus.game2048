@@ -228,7 +228,6 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
         return experimentName;
     }
 
-
     /**
      * @param experimentClass
      */
@@ -240,6 +239,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
         }
         this.experimentName = className;
     }
+
     /**
      * @param experimentName the experimentName to set
      */
@@ -657,6 +657,30 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
             out.write("Operating system Name: " + System.getProperty("os.name") + "\n");
             out.write("Operating system type: " + System.getProperty("os.arch") + "\n");
             out.write("Operating system version: " + System.getProperty("os.version") + "\n");
+            if ( System.getProperty("os.name").matches(".*[Ww]indows.*") ) {
+                Process command = Runtime.getRuntime().exec("wmic cpu get name");
+                try ( BufferedReader in = new BufferedReader(new InputStreamReader(command.getInputStream())) ) {
+                    String line;
+                    while ( (line = in.readLine()) != null ) {
+                        if ( !line.isEmpty() && !line.contains("Name") ) {
+                            out.write("CPU: " + line.trim() + "\n");
+                            break;
+                        }
+                    }
+                }
+            } else if ( System.getProperty("os.name").matches(".*[Ll]inux.*") ) {
+                Process command = Runtime.getRuntime().exec("cat /proc/cpuinfo");
+                try ( BufferedReader in = new BufferedReader(new InputStreamReader(command.getInputStream())) ) {
+                    String line;
+                    while ( (line = in.readLine()) != null ) {
+                        if ( !line.isEmpty() && line.matches(".*model name\\s*:.*") ) {
+                            int i = line.indexOf(':');
+                            out.write("CPU: " + line.substring(i + 1).trim() + "\n");
+                            break;
+                        }
+                    }
+                }
+            }
             out.write("Available processors (cores): " + Runtime.getRuntime().availableProcessors() + "\n");
             /* This will return Long.MAX_VALUE if there is no preset limit */
             long maxMemory = Runtime.getRuntime().maxMemory();
@@ -664,8 +688,6 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
             out.write("Maximum memory (bytes): " + (maxMemory == Long.MAX_VALUE ? "no limit" : maxMemory) + "\n");
             /* Total memory currently available to the JVM */
             out.write("Total memory available to JVM (bytes): " + Runtime.getRuntime().totalMemory() + "\n");
-            out.write("PROCESSOR_IDENTIFIER: " + System.getenv("PROCESSOR_IDENTIFIER") + "\n");
-            out.write("PROCESSOR_ARCHITECTURE: " + System.getenv("PROCESSOR_ARCHITECTURE") + "\n");
         }
     }
 
