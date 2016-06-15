@@ -165,7 +165,7 @@ public class TestGeneratorActivationFunctionVsTraces {
 
         statisticsOnly = true;
         runStatisticsForBackups = false;
-        gamesToPlayPerThreadForStatistics = 100;
+        gamesToPlayPerThreadForStatistics = 1_000;
         simulationsForStatistics = 8;
 
         runAllConfigs(maxTrainingThreads, "BasicLinear_ActFuncVsTrace", BasicLinear.class.getConstructor(), alphaList, lambdaList, gammaList, statisticsOnly, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, saveBackupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, filePath);

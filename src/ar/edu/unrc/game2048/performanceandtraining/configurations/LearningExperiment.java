@@ -24,8 +24,8 @@ import ar.edu.unrc.coeus.tdlearning.learning.ELearningRateAdaptation;
 import ar.edu.unrc.coeus.tdlearning.learning.TDLambdaLearning;
 import ar.edu.unrc.coeus.tdlearning.training.ntuple.NTupleSystem;
 import ar.edu.unrc.game2048.Game2048;
-import ar.edu.unrc.game2048.performanceandtraining.experiments.learning.ntuple.TestGeneratorALL;
-import static ar.edu.unrc.game2048.performanceandtraining.experiments.learning.ntuple.TestGeneratorALL.getMsj;
+import ar.edu.unrc.game2048.performanceandtraining.experiments.learning.ntuple.TestGenerator;
+import static ar.edu.unrc.game2048.performanceandtraining.experiments.learning.ntuple.TestGenerator.getMsj;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -96,9 +96,9 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
             printStream.println(msj);
             System.err.println(msj);
         } catch ( UnsupportedEncodingException | FileNotFoundException ex1 ) {
-            Logger.getLogger(TestGeneratorALL.class.getName()).log(Level.SEVERE, null, ex1);
+            Logger.getLogger(TestGenerator.class.getName()).log(Level.SEVERE, null, ex1);
         } catch ( IOException ex1 ) {
-            Logger.getLogger(TestGeneratorALL.class.getName()).log(Level.SEVERE, null, ex1);
+            Logger.getLogger(TestGenerator.class.getName()).log(Level.SEVERE, null, ex1);
         } finally {
             if ( printStream != null ) {
                 printStream.close();

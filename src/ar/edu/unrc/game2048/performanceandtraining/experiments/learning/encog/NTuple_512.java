@@ -59,7 +59,7 @@ public class NTuple_512 extends LearningExperiment<BasicNetwork> {
         experiment.setAlpha(alphas);
         experiment.setLearningRateAdaptationToFixed();
         experiment.setConcurrencyInComputeBestPosibleAction(true);
-        experiment.setLambda(0.7);
+        experiment.setLambda(0.8);
         experiment.setGamma(1);
         experiment.setExplorationRateToFixed(0);
         experiment.setResetEligibilitiTraces(false);
