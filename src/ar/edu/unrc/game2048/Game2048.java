@@ -731,9 +731,9 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
                 if ( tile.getGameValue() >= numberToWin ) {
                     afterstate.setToWin();
                 }
-                if ( tile.getGameValue() > numberToWin ) {
-                    afterstate.setToWin();
-                }
+//                if ( tile.getGameValue() > numberToWin ) {
+//                    afterstate.setToWin();
+//                }
                 i++;
             }
             list.add(tile);
