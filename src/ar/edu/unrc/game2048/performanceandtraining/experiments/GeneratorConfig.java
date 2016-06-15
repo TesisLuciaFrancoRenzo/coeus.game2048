@@ -30,6 +30,15 @@ public class GeneratorConfig {
     private final int number;
     private boolean resetTraces;
 
+    /**
+     *
+     * @param alpha
+     * @param lambda
+     * @param gamma
+     * @param explorationRate
+     * @param resetTraces
+     * @param number
+     */
     public GeneratorConfig(Double alpha, Double lambda, Double gamma, Double explorationRate, boolean resetTraces, int number) {
         this.alpha = alpha;
         this.lambda = lambda;

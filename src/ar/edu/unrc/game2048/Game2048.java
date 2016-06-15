@@ -97,6 +97,7 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
     /**
      *
      * @param originalTiles
+     *
      * @return
      */
     public static Tile[] horizontalFlipTiles(final Tile[] originalTiles) {
@@ -123,6 +124,7 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
      *
      * @param angle
      * @param originalTiles
+     *
      * @return
      */
     public static Tile[] rotateBoardTiles(final int angle, final Tile[] originalTiles) {
@@ -729,6 +731,9 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
                 if ( tile.getGameValue() >= numberToWin ) {
                     afterstate.setToWin();
                 }
+                if ( tile.getGameValue() > numberToWin ) {
+                    afterstate.setToWin();
+                }
                 i++;
             }
             list.add(tile);
@@ -761,7 +766,6 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
             return newLine;
         }
     }
-
 
     private void rotate(int angle, GameBoard<NeuralNetworkClass> original) {
         arraycopy(rotateBoardTiles(angle, original.getTiles()), 0, original.getTiles(), 0, TILE_NUMBER);

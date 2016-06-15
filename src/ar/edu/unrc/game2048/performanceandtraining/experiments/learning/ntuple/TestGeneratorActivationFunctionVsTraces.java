@@ -128,11 +128,7 @@ public class TestGeneratorActivationFunctionVsTraces {
         List<Double> explorationRate = new ArrayList<>();
 
         //============================== configuraciones manuales ==================================
-//        boolean statistics = true;
-        boolean statistics = false;
         int maxTrainingThreads = 8;
-        boolean backupStatistics = true;
-
         int gamesToPlay = 20_000;
         int saveEvery = 1_000;
         int saveBackupEvery = 500;
@@ -147,7 +143,6 @@ public class TestGeneratorActivationFunctionVsTraces {
 
         alphaList.add(0.0025d);
 
-        // gammaList.add(0.9d); No da resultados buenos
         gammaList.add(1d);
 
         explorationRate.add(0d);
@@ -160,17 +155,18 @@ public class TestGeneratorActivationFunctionVsTraces {
         int gamesToPlayPerThreadForStatistics;
         int simulationsForStatistics;
 
-        if ( statistics ) {
-            statisticsOnly = true;
-            runStatisticsForBackups = backupStatistics;
-            gamesToPlayPerThreadForStatistics = 1_000;
-            simulationsForStatistics = 8;
-        } else {
-            statisticsOnly = false;
-            runStatisticsForBackups = false;
-            gamesToPlayPerThreadForStatistics = 0;
-            simulationsForStatistics = 0;
-        }
+        statisticsOnly = false;
+        runStatisticsForBackups = false;
+        gamesToPlayPerThreadForStatistics = 0;
+        simulationsForStatistics = 0;
+
+        runAllConfigs(maxTrainingThreads, "BasicLinear_ActFuncVsTrace", BasicLinear.class.getConstructor(), alphaList, lambdaList, gammaList, statisticsOnly, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, saveBackupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, filePath);
+        runAllConfigs(maxTrainingThreads, "BasicTanH_ActFuncVsTrace", BasicTanH.class.getConstructor(), alphaList, lambdaList, gammaList, statisticsOnly, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, saveBackupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, filePath);
+
+        statisticsOnly = true;
+        runStatisticsForBackups = true;
+        gamesToPlayPerThreadForStatistics = 100;
+        simulationsForStatistics = 8;
 
         runAllConfigs(maxTrainingThreads, "BasicLinear_ActFuncVsTrace", BasicLinear.class.getConstructor(), alphaList, lambdaList, gammaList, statisticsOnly, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, saveBackupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, filePath);
         runAllConfigs(maxTrainingThreads, "BasicTanH_ActFuncVsTrace", BasicTanH.class.getConstructor(), alphaList, lambdaList, gammaList, statisticsOnly, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, saveBackupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, filePath);
