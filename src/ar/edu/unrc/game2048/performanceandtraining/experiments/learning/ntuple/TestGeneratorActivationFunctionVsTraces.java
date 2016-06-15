@@ -88,7 +88,7 @@ public class TestGeneratorActivationFunctionVsTraces {
         experiment.setConcurrencyInComputeBestPosibleAction(true);
         boolean[] concurrentLayer = {false, false};
         experiment.setConcurrencyInLayer(concurrentLayer);
-        experiment.setTileToWinForStatistics(2_048);
+        experiment.setTileToWinForStatistics(512);
         experiment.setResetEligibilitiTraces(resetEligibilitiTraces);
         experiment.setLearningRateAdaptationToFixed();
         experiment.setGamesToPlay(gamesToPlay);
@@ -164,7 +164,7 @@ public class TestGeneratorActivationFunctionVsTraces {
         runAllConfigs(maxTrainingThreads, "BasicTanH_ActFuncVsTrace", BasicTanH.class.getConstructor(), alphaList, lambdaList, gammaList, statisticsOnly, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, saveBackupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, filePath);
 
         statisticsOnly = true;
-        runStatisticsForBackups = true;
+        runStatisticsForBackups = false;
         gamesToPlayPerThreadForStatistics = 100;
         simulationsForStatistics = 8;
 
