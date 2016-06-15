@@ -19,7 +19,6 @@
 package ar.edu.unrc.game2048.performanceandtraining.experiments.learning.ntuple;
 
 import ar.edu.unrc.game2048.performanceandtraining.configurations.LearningExperiment;
-import ar.edu.unrc.game2048.performanceandtraining.experiments.ArgumentLoader;
 import ar.edu.unrc.game2048.performanceandtraining.experiments.GeneratorConfig;
 import java.io.File;
 import java.io.PrintWriter;
@@ -38,7 +37,7 @@ import java.util.stream.Stream;
  *
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
-public class TestGeneratorALL {
+public class TestGeneratorActivationFunctionVsTraces {
 
     /**
      *
@@ -131,19 +130,20 @@ public class TestGeneratorALL {
         //============================== configuraciones manuales ==================================
 //        boolean statistics = true;
         boolean statistics = false;
-        int maxTrainingThreads = 4;
+        int maxTrainingThreads = 8;
         boolean backupStatistics = true;
-//        boolean backupStatistics = false;
 
-        String experimentName = "BasicLinear";
-        String experimentClass = "BasicLinear";
-        int gamesToPlay = 2_000_000;
-        int saveEvery = 5_000;
-        int saveBackupEvery = 25_000;
+        int gamesToPlay = 20_000;
+        int saveEvery = 1_000;
+        int saveBackupEvery = 500;
 
         lambdaList.add(0d);
         lambdaList.add(0.1d);
         lambdaList.add(0.2d);
+        lambdaList.add(0.6d);
+        lambdaList.add(0.7d);
+        lambdaList.add(0.8d);
+        lambdaList.add(1d);
 
         alphaList.add(0.0025d);
 
@@ -151,27 +151,9 @@ public class TestGeneratorALL {
         gammaList.add(1d);
 
         explorationRate.add(0d);
-        explorationRate.add(0.1d);
 
         boolean createLogs = false;
         //============================== fin de configuraciones manuales ==================================
-
-        if ( args.length != 0 ) {
-            ArgumentLoader arguments = new ArgumentLoader(args);
-            statistics = Boolean.parseBoolean(arguments.getArg("statistics"));
-            maxTrainingThreads = Integer.parseInt(arguments.getArg("maxTrainingThreads"));
-            backupStatistics = Boolean.parseBoolean(arguments.getArg("backupStatistics"));
-            gamesToPlay = Integer.parseInt(arguments.getArg("gamesToPlay"));
-            saveEvery = Integer.parseInt(arguments.getArg("saveEvery"));
-            saveBackupEvery = Integer.parseInt(arguments.getArg("saveBackupEvery"));
-            experimentName = arguments.getArg("experimentName");
-            experimentClass = arguments.getArg("experimentClass");
-
-            lambdaList = ArgumentLoader.parseDoubleArray(arguments.getArg("lambdaList"));
-            alphaList = ArgumentLoader.parseDoubleArray(arguments.getArg("alphaList"));
-            gammaList = ArgumentLoader.parseDoubleArray(arguments.getArg("gammaList"));
-            explorationRate = ArgumentLoader.parseDoubleArray(arguments.getArg("explorationRate"));
-        }
 
         boolean statisticsOnly;
         boolean runStatisticsForBackups;
@@ -190,22 +172,8 @@ public class TestGeneratorALL {
             simulationsForStatistics = 0;
         }
 
-        Constructor<?> classConstructor;
-        switch ( experimentClass ) {
-            case "BasicLinear": {
-                classConstructor = BasicLinear.class.getConstructor();
-                break;
-            }
-            case "BasicTanH": {
-                classConstructor = BasicTanH.class.getConstructor();
-                break;
-            }
-            default: {
-                throw new IllegalArgumentException("no se reconoce la clase: " + experimentClass);
-            }
-        }
-
-        runAllConfigs(maxTrainingThreads, experimentName, classConstructor, alphaList, lambdaList, gammaList, statisticsOnly, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, saveBackupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, filePath);
+        runAllConfigs(maxTrainingThreads, "BasicLinear_ActFuncVsTrace", BasicLinear.class.getConstructor(), alphaList, lambdaList, gammaList, statisticsOnly, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, saveBackupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, filePath);
+        runAllConfigs(maxTrainingThreads, "BasicTanH_ActFuncVsTrace", BasicTanH.class.getConstructor(), alphaList, lambdaList, gammaList, statisticsOnly, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, saveBackupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, filePath);
     }
 
     /**
@@ -258,7 +226,7 @@ public class TestGeneratorALL {
                     -> //parallel task here, for example
                     stream.forEach(expConfig -> {
                         try {
-                            String newFilePath = filePath + "AutomaticTests" + File.separator + "alpha_" + expConfig.getAlpha() + "-lambda_" + expConfig.getLambda() + "-gamma_" + expConfig.getGamma() + "-explorationRate_" + expConfig.getExplorationRate() + "-resetTraces_" + expConfig.isResetTraces() + File.separator;
+                            String newFilePath = filePath + "ActivationFunctionVsTraces" + File.separator + "alpha_" + expConfig.getAlpha() + "-lambda_" + expConfig.getLambda() + "-gamma_" + expConfig.getGamma() + "-explorationRate_" + expConfig.getExplorationRate() + "-resetTraces_" + expConfig.isResetTraces() + File.separator;
                             File newPath = new File(newFilePath);
                             if ( !newPath.exists() ) {
                                 newPath.mkdirs();
@@ -267,12 +235,13 @@ public class TestGeneratorALL {
                             cloneExperiment.setExperimentName(experimentName);
                             configAndExcecute(expConfig.getNumber(), cloneExperiment, statisticsOnly, runStatisticsForBackups, createLogs, expConfig.getLambda(), expConfig.getAlpha(), expConfig.getGamma(), gamesToPlay, saveEvery, saveBacupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, expConfig.getExplorationRate(), expConfig.isResetTraces(), newFilePath);
                         } catch ( InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex ) {
-                            Logger.getLogger(TestGeneratorALL.class.getName()).log(Level.SEVERE, null, ex);
+                            Logger.getLogger(TestGeneratorActivationFunctionVsTraces.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     })
             ).get();
         } catch ( InterruptedException | ExecutionException ex ) {
-            Logger.getLogger(TestGeneratorALL.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TestGeneratorActivationFunctionVsTraces.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
 }

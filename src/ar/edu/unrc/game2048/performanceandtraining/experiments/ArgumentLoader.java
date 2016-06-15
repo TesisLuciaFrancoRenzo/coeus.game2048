@@ -25,8 +25,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- *
- * @author franc
+ * @author lucia bressan, franco pellegrini, renzo bianchini
  */
 public class ArgumentLoader {
 
