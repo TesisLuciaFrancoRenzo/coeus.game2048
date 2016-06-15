@@ -164,7 +164,7 @@ public class TestGeneratorActivationFunctionVsTraces {
         runAllConfigs(maxTrainingThreads, "BasicTanH_512_ActFuncVsTrace", BasicTanH_512.class.getConstructor(), alphaList, lambdaList, gammaList, statisticsOnly, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, saveBackupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, filePath);
 
         statisticsOnly = true;
-        runStatisticsForBackups = false;
+        runStatisticsForBackups = true;
         gamesToPlayPerThreadForStatistics = 1_000;
         simulationsForStatistics = 8;
 
