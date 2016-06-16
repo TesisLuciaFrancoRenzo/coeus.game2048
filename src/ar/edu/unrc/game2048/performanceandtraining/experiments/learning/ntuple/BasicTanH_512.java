@@ -57,7 +57,7 @@ public class BasicTanH_512 extends LearningExperiment<BasicNetwork> {
         experiment.setAlpha(alphas);
         experiment.setLearningRateAdaptationToFixed();
 
-        experiment.setLambda(0.2);
+        experiment.setLambda(0.5);
         experiment.setGamma(1);
         experiment.setExplorationRateToFixed(0);
         experiment.setResetEligibilitiTraces(false);
