@@ -136,9 +136,13 @@ public class TestGeneratorActivationFunctionVsTraces {
         lambdaList.add(0d);
         lambdaList.add(0.1d);
         lambdaList.add(0.2d);
+        lambdaList.add(0.3d);
+        lambdaList.add(0.4d);
+        lambdaList.add(0.5d);
         lambdaList.add(0.6d);
         lambdaList.add(0.7d);
         lambdaList.add(0.8d);
+        lambdaList.add(0.9d);
         lambdaList.add(1d);
 
         alphaList.add(0.0025d);

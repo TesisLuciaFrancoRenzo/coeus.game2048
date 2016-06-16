@@ -246,7 +246,7 @@ public class ConcurrencyExperiment_Basic extends LearningExperiment<BasicNetwork
         experiment.setConcurrencyInLayer(currentConfig.concurrencyInLayer);
         experiment.setConcurrencyInComputeBestPosibleAction(currentConfig.concurrencyInEvaluate);
         experiment.setLearningRateAdaptationToAnnealing(500_000);
-        experiment.setLambda(0.8);
+        experiment.setLambda(0.7);
         experiment.setGamma(1);
         experiment.setExplorationRateToFixed(0);
         experiment.setResetEligibilitiTraces(false);
