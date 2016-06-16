@@ -57,7 +57,7 @@ public class BasicLinear_512 extends LearningExperiment<BasicNetwork> {
         experiment.setAlpha(alphas);
         experiment.setLearningRateAdaptationToFixed();
 
-        experiment.setLambda(0.7);
+        experiment.setLambda(0.2);
         experiment.setGamma(1);
         experiment.setExplorationRateToFixed(0);
         experiment.setResetEligibilitiTraces(false);
