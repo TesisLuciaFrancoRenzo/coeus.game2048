@@ -53,8 +53,7 @@ public class PBoard<NeuralNetworkClass> extends PerceptronConfiguration2048<Neur
      *
      */
     public int minScore;
-    private boolean concurrenInput;
-
+    private final boolean concurrenInput;
 
     /**
      *
