@@ -21,7 +21,6 @@ package ar.edu.unrc.game2048;
 import ar.edu.unrc.coeus.tdlearning.interfaces.IState;
 import ar.edu.unrc.coeus.tdlearning.interfaces.IStateNTuple;
 import ar.edu.unrc.coeus.tdlearning.interfaces.IStatePerceptron;
-import ar.edu.unrc.coeus.tdlearning.learning.StateProbability;
 import ar.edu.unrc.coeus.tdlearning.training.ntuple.SamplePointState;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.inputs.InputNtupleList;
 import static java.lang.Math.random;
@@ -61,7 +60,10 @@ public class GameBoard<NeuralNetworkClass> implements IStatePerceptron, IStateNT
      * @param t4 <p>
      * @return
      */
-    public static int calculateCustomHash(Tile t1, Tile t2, Tile t3, Tile t4) {
+    public static int calculateCustomHash(Tile t1,
+            Tile t2,
+            Tile t3,
+            Tile t4) {
         int result = 1;
         result = 31 * result + t1.getGameValue();
         result = 31 * result + t2.getGameValue();
@@ -78,7 +80,9 @@ public class GameBoard<NeuralNetworkClass> implements IStatePerceptron, IStateNT
      *
      * @return
      */
-    public static Tile tileAt(Tile[] tileArray, int x, int y) {
+    public static Tile tileAt(Tile[] tileArray,
+            int x,
+            int y) {
         return tileArray[x + y * 4];
     }
 
@@ -100,7 +104,8 @@ public class GameBoard<NeuralNetworkClass> implements IStatePerceptron, IStateNT
      * @param game
      * @param tileContainer
      */
-    public GameBoard(Game2048<NeuralNetworkClass> game, TileContainer tileContainer) {
+    public GameBoard(Game2048<NeuralNetworkClass> game,
+            TileContainer tileContainer) {
         iWin = false;
         canMove = true;
         this.game = game;
@@ -114,8 +119,10 @@ public class GameBoard<NeuralNetworkClass> implements IStatePerceptron, IStateNT
             if ( game.getPerceptronConfiguration().useNTupleList() ) {
                 normalizedPerceptronInput = new InputNtupleList();
             } else {
-                normalizedPerceptronInput = new ArrayList<>(game.getPerceptronConfiguration().getNeuronQuantityInLayer()[0]);
-                for ( int i = 0; i < game.getPerceptronConfiguration().getNeuronQuantityInLayer()[0]; i++ ) {
+                normalizedPerceptronInput = new ArrayList<>(game.
+                        getPerceptronConfiguration().getNeuronQuantityInLayer()[0]);
+                for ( int i = 0; i < game.getPerceptronConfiguration().
+                        getNeuronQuantityInLayer()[0]; i++ ) {
                     normalizedPerceptronInput.add(null);
                 }
             }
@@ -130,7 +137,8 @@ public class GameBoard<NeuralNetworkClass> implements IStatePerceptron, IStateNT
      */
     public void addTile(boolean updateInputs) {
         if ( !availableSpaceList.isEmpty() ) {
-            int index = (int) (random() * availableSpaceList.size()) % availableSpaceList.size();
+            int index = (int) (random() * availableSpaceList.size()) % availableSpaceList.
+                    size();
             Integer tilePos = availableSpaceList.get(index);
             int value = random() < 0.9 ? 1 : 2;
             tiles[tilePos] = this.tileContainer.getTile(value);
@@ -238,16 +246,18 @@ public class GameBoard<NeuralNetworkClass> implements IStatePerceptron, IStateNT
      */
     @Override
     public IState getCopy() {
-        GameBoard<NeuralNetworkClass> copy = new GameBoard<>(getGame(), tileContainer);
+        GameBoard<NeuralNetworkClass> copy = new GameBoard<>(getGame(),
+                tileContainer);
         arraycopy(getTiles(), 0, copy.getTiles(), 0, GameBoard.TILE_NUMBER);
         copy.iWin = iWin;
         copy.canMove = canMove;
         copy.isFull = isFull;
         copy.maxTileNumberValue = maxTileNumberValue;
         copy.availableSpaceList = new ArrayList<>(16);
-        availableSpaceList.stream().forEach((space) -> {
-            copy.availableSpaceList.add(space);
-        });
+        availableSpaceList.stream().forEach((space) ->
+                {
+                    copy.availableSpaceList.add(space);
+                });
         copy.needToAddTile = needToAddTile;
         copy.partialScore = partialScore;
         return copy;
@@ -296,9 +306,11 @@ public class GameBoard<NeuralNetworkClass> implements IStatePerceptron, IStateNT
     @Override
     public double getStateReward(int outputNeuron) {
         if ( game.getnTupleSystemConfiguration() != null ) {
-            return game.getnTupleSystemConfiguration().getBoardReward(this, outputNeuron);
+            return game.getnTupleSystemConfiguration().getBoardReward(this,
+                    outputNeuron);
         } else {
-            return game.getPerceptronConfiguration().getBoardReward(this, outputNeuron);
+            return game.getPerceptronConfiguration().getBoardReward(this,
+                    outputNeuron);
         }
     }
 
@@ -396,8 +408,10 @@ public class GameBoard<NeuralNetworkClass> implements IStatePerceptron, IStateNT
                 probability = 0.1;
             }
             for ( int index = 0; index < availableSpaceList.size() - 1; index++ ) {
-                GameBoard<NeuralNetworkClass> copy = (GameBoard<NeuralNetworkClass>) this.getCopy();
-                copy.tiles[availableSpaceList.get(index)] = this.tileContainer.getTile(value);
+                GameBoard<NeuralNetworkClass> copy = (GameBoard<NeuralNetworkClass>) this.
+                        getCopy();
+                copy.tiles[availableSpaceList.get(index)] = this.tileContainer.
+                        getTile(value);
                 copy.updateInternalState(true);
                 output.add(new StateProbability(copy, probability));
             }
@@ -418,22 +432,25 @@ public class GameBoard<NeuralNetworkClass> implements IStatePerceptron, IStateNT
      * @param y <p>
      * @return
      */
-    public Tile tileAt(int x, int y) {
+    public Tile tileAt(int x,
+            int y) {
         return tiles[x + y * 4];
     }
 
     @Override
     public Double translateToPerceptronInput(int neuronIndex) {
-        if ( neuronIndex < 0 || neuronIndex >= getGame().getPerceptronConfiguration().getNeuronQuantityInLayer()[0] ) {
-            throw new IllegalArgumentException("neuronIndex range for output layer must be [0," + getGame().getPerceptronConfiguration().getNeuronQuantityInLayer()[0] + "] but was " + neuronIndex);
+        if ( neuronIndex < 0 || neuronIndex >= getGame().
+                getPerceptronConfiguration().getNeuronQuantityInLayer()[0] ) {
+            throw new IllegalArgumentException(
+                    "neuronIndex range for output layer must be [0," + getGame().
+                    getPerceptronConfiguration().getNeuronQuantityInLayer()[0] + "] but was " + neuronIndex);
         }
         return normalizedPerceptronInput.get(neuronIndex);
     }
 
     /**
-     * actualizamos la traduccion del tablero como entrada del perceptron,
-     * encriptado y normalizado. Tambien se actualiza el calculo de si este es
-     * un tablero fianl o no.
+     * actualizamos la traduccion del tablero como entrada del perceptron, encriptado y normalizado.
+     * Tambien se actualiza el calculo de si este es un tablero fianl o no.
      * <p>
      * @param updateInputs
      */
@@ -444,7 +461,9 @@ public class GameBoard<NeuralNetworkClass> implements IStatePerceptron, IStateNT
         calulateMaxTile();
         if ( getGame().getPerceptronConfiguration() != null && updateInputs ) {
             //   assert this.getMaxTileNumberCode() != 0;
-            getGame().getPerceptronConfiguration().calculateNormalizedPerceptronInput(this, normalizedPerceptronInput);
+            getGame().getPerceptronConfiguration().
+                    calculateNormalizedPerceptronInput(this,
+                            normalizedPerceptronInput);
         }
     }
 
@@ -466,7 +485,8 @@ public class GameBoard<NeuralNetworkClass> implements IStatePerceptron, IStateNT
             for ( int y = 0; y < 4; y++ ) {
                 Tile t = this.tileAt(x, y);
                 if ( (x < 3 && t.getCode() == this.tileAt(x + 1, y).getCode())
-                        || ((y < 3) && t.getCode() == this.tileAt(x, y + 1).getCode()) ) {
+                        || ((y < 3) && t.getCode() == this.tileAt(x, y + 1).
+                        getCode()) ) {
                     return true;
                 }
             }

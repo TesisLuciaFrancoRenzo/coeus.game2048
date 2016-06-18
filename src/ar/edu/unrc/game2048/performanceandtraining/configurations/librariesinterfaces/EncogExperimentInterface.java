@@ -56,7 +56,8 @@ public class EncogExperimentInterface extends INeuralNetworkInterfaceFor2048<Bas
      *
      * @param perceptronConfiguration
      */
-    public EncogExperimentInterface(PerceptronConfiguration2048<BasicNetwork> perceptronConfiguration) {
+    public EncogExperimentInterface(
+            PerceptronConfiguration2048<BasicNetwork> perceptronConfiguration) {
         super(perceptronConfiguration);
     }
 
@@ -66,15 +67,19 @@ public class EncogExperimentInterface extends INeuralNetworkInterfaceFor2048<Bas
      * @param trainedFile
      */
     @Override
-    public void compareNeuralNetworks(File randomFile, File trainedFile) {
+    public void compareNeuralNetworks(File randomFile,
+            File trainedFile) {
         try {
-            BasicNetwork randomNN = (BasicNetwork) SerializeObject.load(randomFile);
-            BasicNetwork trainedNN = (BasicNetwork) SerializeObject.load(trainedFile);
+            BasicNetwork randomNN = (BasicNetwork) SerializeObject.load(
+                    randomFile);
+            BasicNetwork trainedNN = (BasicNetwork) SerializeObject.load(
+                    trainedFile);
             if ( randomNN.equals(trainedNN) ) {
                 throw new Exception("No cambio el perceptron para nada!");
             }
         } catch ( Exception ex ) {
-            Logger.getLogger(EncogExperimentInterface.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EncogExperimentInterface.class.getName()).log(
+                    Level.SEVERE, null, ex);
         }
     }
 
@@ -93,21 +98,28 @@ public class EncogExperimentInterface extends INeuralNetworkInterfaceFor2048<Bas
 
     @Override
     public IPerceptronInterface getPerceptronInterface() {
-        activationFunction = new ArrayList<>(getPerceptronConfiguration().getActivationFunctionForEncog().length);
-        derivatedActivationFunction = new ArrayList<>(getPerceptronConfiguration().getActivationFunctionForEncog().length);
+        activationFunction = new ArrayList<>(getPerceptronConfiguration().
+                getActivationFunctionForEncog().length);
+        derivatedActivationFunction = new ArrayList<>(
+                getPerceptronConfiguration().getActivationFunctionForEncog().length);
 
-        for ( ActivationFunction activationFunctionForEncog : getPerceptronConfiguration().getActivationFunctionForEncog() ) {
+        for ( ActivationFunction activationFunctionForEncog
+                : getPerceptronConfiguration().getActivationFunctionForEncog() ) {
             if ( activationFunctionForEncog instanceof ActivationTANH ) {
                 this.activationFunction.add(FunctionUtils.TANH);
-                this.derivatedActivationFunction.add(FunctionUtils.TANH_DERIVATED);
+                this.derivatedActivationFunction.add(
+                        FunctionUtils.TANH_DERIVATED);
             } else if ( activationFunctionForEncog instanceof ActivationSigmoid ) {
                 this.activationFunction.add(FunctionUtils.SIGMOID);
-                this.derivatedActivationFunction.add(FunctionUtils.SIGMOID_DERIVATED);
+                this.derivatedActivationFunction.add(
+                        FunctionUtils.SIGMOID_DERIVATED);
             } else if ( activationFunctionForEncog instanceof ActivationLinear ) {
                 this.activationFunction.add(FunctionUtils.LINEAR);
-                this.derivatedActivationFunction.add(FunctionUtils.LINEAR_DERIVATED);
+                this.derivatedActivationFunction.add(
+                        FunctionUtils.LINEAR_DERIVATED);
             } else {
-                throw new IllegalArgumentException("El test esta pensado para utilizar TANH, Simoid o Linear como funcion de activacion");
+                throw new IllegalArgumentException(
+                        "El test esta pensado para utilizar TANH, Simoid o Linear como funcion de activacion");
             }
         }
 
@@ -122,28 +134,39 @@ public class EncogExperimentInterface extends INeuralNetworkInterfaceFor2048<Bas
             }
 
             @Override
-            public double getBias(int layerIndex, int neuronIndex) {
-                return getPerceptronConfiguration().getNeuralNetwork().getWeight(layerIndex - 1, getPerceptronConfiguration().getNeuralNetwork().getLayerNeuronCount(layerIndex - 1), neuronIndex);
+            public double getBias(int layerIndex,
+                    int neuronIndex) {
+                return getPerceptronConfiguration().getNeuralNetwork().
+                        getWeight(layerIndex - 1, getPerceptronConfiguration().
+                                getNeuralNetwork().getLayerNeuronCount(
+                                        layerIndex - 1), neuronIndex);
             }
 
             @Override
-            public Function<Double, Double> getDerivatedActivationFunction(int layerIndex) {
+            public Function<Double, Double> getDerivatedActivationFunction(
+                    int layerIndex) {
                 return derivatedActivationFunction.get(layerIndex - 1);
             }
 
             @Override
             public int getLayerQuantity() {
-                return getPerceptronConfiguration().getNeuralNetwork().getLayerCount();
+                return getPerceptronConfiguration().getNeuralNetwork().
+                        getLayerCount();
             }
 
             @Override
             public int getNeuronQuantityInLayer(int layerIndex) {
-                return getPerceptronConfiguration().getNeuralNetwork().getLayerNeuronCount(layerIndex);
+                return getPerceptronConfiguration().getNeuralNetwork().
+                        getLayerNeuronCount(layerIndex);
             }
 
             @Override
-            public double getWeight(int layerIndex, int neuronIndex, int neuronIndexPreviousLayer) {
-                return getPerceptronConfiguration().getNeuralNetwork().getWeight(layerIndex - 1, neuronIndexPreviousLayer, neuronIndex);
+            public double getWeight(int layerIndex,
+                    int neuronIndex,
+                    int neuronIndexPreviousLayer) {
+                return getPerceptronConfiguration().getNeuralNetwork().
+                        getWeight(layerIndex - 1, neuronIndexPreviousLayer,
+                                neuronIndex);
             }
 
             @Override
@@ -152,13 +175,23 @@ public class EncogExperimentInterface extends INeuralNetworkInterfaceFor2048<Bas
             }
 
             @Override
-            public void setBias(int layerIndex, int neuronIndex, double correctedBias) {
-                getPerceptronConfiguration().getNeuralNetwork().setWeight(layerIndex - 1, getPerceptronConfiguration().getNeuralNetwork().getLayerNeuronCount(layerIndex - 1), neuronIndex, correctedBias);
+            public void setBias(int layerIndex,
+                    int neuronIndex,
+                    double correctedBias) {
+                getPerceptronConfiguration().getNeuralNetwork().setWeight(
+                        layerIndex - 1, getPerceptronConfiguration().
+                        getNeuralNetwork().getLayerNeuronCount(layerIndex - 1),
+                        neuronIndex, correctedBias);
             }
 
             @Override
-            public void setWeight(int layerIndex, int neuronIndex, int neuronIndexPreviousLayer, double correctedWeight) {
-                getPerceptronConfiguration().getNeuralNetwork().setWeight(layerIndex - 1, neuronIndexPreviousLayer, neuronIndex, correctedWeight);
+            public void setWeight(int layerIndex,
+                    int neuronIndex,
+                    int neuronIndexPreviousLayer,
+                    double correctedWeight) {
+                getPerceptronConfiguration().getNeuralNetwork().setWeight(
+                        layerIndex - 1, neuronIndexPreviousLayer, neuronIndex,
+                        correctedWeight);
             }
         };
         return encogPerceptronInterface;
@@ -170,20 +203,28 @@ public class EncogExperimentInterface extends INeuralNetworkInterfaceFor2048<Bas
      * @return
      */
     public BasicNetwork initializeEncogPerceptron(boolean randomized) {
-        if ( getPerceptronConfiguration().getNeuronQuantityInLayer() == null || getPerceptronConfiguration().getNeuronQuantityInLayer().length < 2 ) {
-            throw new IllegalArgumentException("la cantidad de capas es de minimo 2 para un perceptrón (incluyendo entrada y salida)");
+        if ( getPerceptronConfiguration().getNeuronQuantityInLayer() == null || getPerceptronConfiguration().
+                getNeuronQuantityInLayer().length < 2 ) {
+            throw new IllegalArgumentException(
+                    "la cantidad de capas es de minimo 2 para un perceptrón (incluyendo entrada y salida)");
         }
         BasicNetwork perceptron = new BasicNetwork();
         ActivationFunction function;
-        perceptron.addLayer(new BasicLayer(null, true, getPerceptronConfiguration().getNeuronQuantityInLayer()[0]));
-        for ( int i = 1; i < getPerceptronConfiguration().getNeuronQuantityInLayer().length - 1; i++ ) {
-            function = getPerceptronConfiguration().getActivationFunctionForEncog()[i - 1].clone();
-            perceptron.addLayer(new BasicLayer(function, true, getPerceptronConfiguration().getNeuronQuantityInLayer()[i]));
+        perceptron.addLayer(new BasicLayer(null, true,
+                getPerceptronConfiguration().getNeuronQuantityInLayer()[0]));
+        for ( int i = 1; i < getPerceptronConfiguration().
+                getNeuronQuantityInLayer().length - 1; i++ ) {
+            function = getPerceptronConfiguration().
+                    getActivationFunctionForEncog()[i - 1].clone();
+            perceptron.addLayer(new BasicLayer(function, true,
+                    getPerceptronConfiguration().getNeuronQuantityInLayer()[i]));
         }
         //getPerceptronConfiguration().getNeuronQuantityInLayer().length - 2 porque el for finaliza en getPerceptronConfiguration().getNeuronQuantityInLayer().length - 1
-        function = getPerceptronConfiguration().getActivationFunctionForEncog()[getPerceptronConfiguration().getNeuronQuantityInLayer().length - 2].clone();
+        function = getPerceptronConfiguration().getActivationFunctionForEncog()[getPerceptronConfiguration().
+                getNeuronQuantityInLayer().length - 2].clone();
         perceptron.addLayer(new BasicLayer(function, false,
-                getPerceptronConfiguration().getNeuronQuantityInLayer()[getPerceptronConfiguration().getNeuronQuantityInLayer().length - 1]));
+                getPerceptronConfiguration().getNeuronQuantityInLayer()[getPerceptronConfiguration().
+                getNeuronQuantityInLayer().length - 1]));
         perceptron.getStructure().finalizeStructure();
         if ( randomized ) {
             perceptron.reset();
@@ -192,24 +233,31 @@ public class EncogExperimentInterface extends INeuralNetworkInterfaceFor2048<Bas
     }
 
     @Override
-    public void loadOrCreatePerceptron(File perceptronFile, boolean randomizedIfNotExist, boolean createFile) throws Exception {
+    public void loadOrCreatePerceptron(File perceptronFile,
+            boolean randomizedIfNotExist,
+            boolean createFile) throws Exception {
         if ( createFile ) {
             if ( !perceptronFile.exists() ) {
                 //Si el archivo no existe, creamos un perceptron nuevo inicializado al azar
-                getPerceptronConfiguration().setNeuralNetwork(initializeEncogPerceptron(randomizedIfNotExist));
-                SerializeObject.save(perceptronFile, getPerceptronConfiguration().getNeuralNetwork());
+                getPerceptronConfiguration().setNeuralNetwork(
+                        initializeEncogPerceptron(randomizedIfNotExist));
+                SerializeObject.save(perceptronFile,
+                        getPerceptronConfiguration().getNeuralNetwork());
             } else {
                 //si el archivo existe, lo cargamos como perceptron entrenado al juego
-                getPerceptronConfiguration().setNeuralNetwork((BasicNetwork) SerializeObject.load(perceptronFile));
+                getPerceptronConfiguration().setNeuralNetwork(
+                        (BasicNetwork) SerializeObject.load(perceptronFile));
             }
         } else {
-            getPerceptronConfiguration().setNeuralNetwork(initializeEncogPerceptron(randomizedIfNotExist));
+            getPerceptronConfiguration().setNeuralNetwork(
+                    initializeEncogPerceptron(randomizedIfNotExist));
         }
     }
 
     @Override
     public void saveNeuralNetwork(File perceptronFile) throws Exception {
-        SerializeObject.save(perceptronFile, getPerceptronConfiguration().getNeuralNetwork());
+        SerializeObject.save(perceptronFile, getPerceptronConfiguration().
+                getNeuralNetwork());
     }
 
 }

@@ -47,7 +47,6 @@ public class PBinary<NeuralNetworkClass> extends PerceptronConfiguration2048<Neu
     public int minScore;
     private boolean concurrenInput;
 
-
     /**
      *
      */
@@ -70,7 +69,8 @@ public class PBinary<NeuralNetworkClass> extends PerceptronConfiguration2048<Neu
         activationFunctionMin = -1;
 
         normOutput = new NormalizedField(NormalizationAction.Normalize,
-                null, maxScore, minScore, activationFunctionMax, activationFunctionMin);
+                null, maxScore, minScore, activationFunctionMax,
+                activationFunctionMin);
     }
 
     /**
@@ -79,20 +79,25 @@ public class PBinary<NeuralNetworkClass> extends PerceptronConfiguration2048<Neu
      * @param normalizedPerceptronInput <p>
      */
     @Override
-    public void calculateNormalizedPerceptronInput(GameBoard<NeuralNetworkClass> board, List<Double> normalizedPerceptronInput) {
+    public void calculateNormalizedPerceptronInput(
+            GameBoard<NeuralNetworkClass> board,
+            List<Double> normalizedPerceptronInput) {
         Tile[] tiles = board.getTiles();
         int currentNeuron = 0;
         for ( Tile tile : tiles ) {
             String bits = Integer.toBinaryString(tile.getCode());
             for ( int k = 0; k < BINARY_LENGHT - bits.length(); k++ ) {
-                normalizedPerceptronInput.set(currentNeuron, activationFunctionMin);
+                normalizedPerceptronInput.set(currentNeuron,
+                        activationFunctionMin);
                 currentNeuron++;
             }
             for ( int j = 0; j < bits.length(); j++ ) {
                 if ( bits.charAt(j) == '0' ) {
-                    normalizedPerceptronInput.set(currentNeuron, activationFunctionMin);
+                    normalizedPerceptronInput.set(currentNeuron,
+                            activationFunctionMin);
                 } else {
-                    normalizedPerceptronInput.set(currentNeuron, activationFunctionMax);
+                    normalizedPerceptronInput.set(currentNeuron,
+                            activationFunctionMax);
                 }
                 currentNeuron++;
             }
@@ -101,7 +106,8 @@ public class PBinary<NeuralNetworkClass> extends PerceptronConfiguration2048<Neu
     }
 
     @Override
-    public Double computeNumericRepresentationFor(Game2048 game, Object[] output) {
+    public Double computeNumericRepresentationFor(Game2048 game,
+            Object[] output) {
         assert output.length == 1;
         return (Double) output[0];
     }
@@ -112,12 +118,14 @@ public class PBinary<NeuralNetworkClass> extends PerceptronConfiguration2048<Neu
     }
 
     @Override
-    public double getBoardReward(GameBoard board, int outputNeuron) {
+    public double getBoardReward(GameBoard board,
+            int outputNeuron) {
         return board.getPartialScore();
     }
 
     @Override
-    public double getFinalReward(GameBoard board, int outputNeuron) {
+    public double getFinalReward(GameBoard board,
+            int outputNeuron) {
         return board.getGame().getScore();
     }
 

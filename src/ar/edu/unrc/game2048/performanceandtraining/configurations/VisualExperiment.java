@@ -22,9 +22,9 @@ import ar.edu.unrc.game2048.Game2048;
 import ar.edu.unrc.game2048.NTupleConfiguration2048;
 import ar.edu.unrc.game2048.PerceptronConfiguration2048;
 import java.io.File;
-import static java.lang.Thread.sleep;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static java.lang.Thread.sleep;
 
 /**
  *
@@ -50,7 +50,8 @@ public abstract class VisualExperiment<NeuralNetworkClass> {
      *
      * @param learningExperiment
      */
-    public VisualExperiment(LearningExperiment<NeuralNetworkClass> learningExperiment) {
+    public VisualExperiment(
+            LearningExperiment<NeuralNetworkClass> learningExperiment) {
         this.learningExperiment = learningExperiment;
     }
 
@@ -68,11 +69,14 @@ public abstract class VisualExperiment<NeuralNetworkClass> {
      * @param delayPerMove
      * @param createPerceptronFile
      */
-    public void start(String experimentPath, int delayPerMove, boolean createPerceptronFile) {
+    public void start(String experimentPath,
+            int delayPerMove,
+            boolean createPerceptronFile) {
         forceStop = false;
         File experimentPathFile = new File(experimentPath);
         if ( experimentPathFile.exists() && !experimentPathFile.isDirectory() ) {
-            throw new IllegalArgumentException("experimentPath must be a directory");
+            throw new IllegalArgumentException(
+                    "experimentPath must be a directory");
         }
         if ( !experimentPathFile.exists() ) {
             experimentPathFile.mkdirs();
@@ -82,15 +86,20 @@ public abstract class VisualExperiment<NeuralNetworkClass> {
                 learningExperiment.initialize();
                 this.tileToWin = learningExperiment.getTileToWinForTraining();
                 this.experimentName = learningExperiment.getExperimentName();
-                this.perceptronConfiguration = learningExperiment.getNeuralNetworkInterfaceFor2048().getPerceptronConfiguration();
-                this.setnTupleConfiuguration(learningExperiment.getNeuralNetworkInterfaceFor2048().getNTupleConfiguration());
+                this.perceptronConfiguration = learningExperiment.
+                        getNeuralNetworkInterfaceFor2048().
+                        getPerceptronConfiguration();
+                this.setnTupleConfiuguration(learningExperiment.
+                        getNeuralNetworkInterfaceFor2048().
+                        getNTupleConfiguration());
             } else {
                 this.perceptronConfiguration = null;
             }
             initializeVisual();
             run(experimentPath, delayPerMove, createPerceptronFile);
         } catch ( Exception ex ) {
-            Logger.getLogger(VisualExperiment.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(VisualExperiment.class.getName()).log(Level.SEVERE,
+                    null, ex);
         }
     }
 
@@ -139,7 +148,8 @@ public abstract class VisualExperiment<NeuralNetworkClass> {
     /**
      * @param perceptronConfiguration the perceptronConfiguration to set
      */
-    protected void setPerceptronConfiguration(PerceptronConfiguration2048<NeuralNetworkClass> perceptronConfiguration) {
+    protected void setPerceptronConfiguration(
+            PerceptronConfiguration2048<NeuralNetworkClass> perceptronConfiguration) {
         this.perceptronConfiguration = perceptronConfiguration;
     }
 
@@ -181,7 +191,8 @@ public abstract class VisualExperiment<NeuralNetworkClass> {
     /**
      * @param nTupleConfiuguration the nTupleConfiuguration to set
      */
-    protected void setnTupleConfiuguration(NTupleConfiguration2048 nTupleConfiuguration) {
+    protected void setnTupleConfiuguration(
+            NTupleConfiguration2048 nTupleConfiuguration) {
         this.nTupleConfiuguration = nTupleConfiuguration;
     }
 
@@ -193,8 +204,7 @@ public abstract class VisualExperiment<NeuralNetworkClass> {
      * <li>private String perceptronName;</li>
      * </ul>
      * <p>
-     * Las siguientes variables se inicializan automaticamente, pero pueden ser
-     * modificadas:
+     * Las siguientes variables se inicializan automaticamente, pero pueden ser modificadas:
      * <ul>
      * <li>private int tileToWin;</li>
      * <li>private String experimentName;</li>
@@ -208,17 +218,23 @@ public abstract class VisualExperiment<NeuralNetworkClass> {
     /**
      *
      * @param experimentPath
-     * @param delayPerMove   <p>
+     * @param delayPerMove         <p>
      * @param createPerceptronFile
+     *
      * @throws Exception
      */
-    protected void run(String experimentPath, int delayPerMove, boolean createPerceptronFile) throws Exception {
+    protected void run(String experimentPath,
+            int delayPerMove,
+            boolean createPerceptronFile) throws Exception {
         System.out.println("Starting " + this.getPerceptronName() + " Visual");
-        Game2048<NeuralNetworkClass> game = new Game2048<>(perceptronConfiguration, nTupleConfiuguration, tileToWin, delayPerMove);
+        Game2048<NeuralNetworkClass> game = new Game2048<>(
+                perceptronConfiguration, nTupleConfiuguration, tileToWin,
+                delayPerMove);
         if ( perceptronConfiguration != null || nTupleConfiuguration != null ) {
             //cargamos la red neuronal entrenada
             String dirPath = experimentPath
-                    + this.learningExperiment.getNeuralNetworkInterfaceFor2048().getLibName() + File.separator
+                    + this.learningExperiment.getNeuralNetworkInterfaceFor2048().
+                    getLibName() + File.separator
                     + experimentName + File.separator;
             File dirPathFile = new File(dirPath);
             if ( !dirPathFile.exists() ) {
@@ -229,10 +245,13 @@ public abstract class VisualExperiment<NeuralNetworkClass> {
             if ( !perceptronFile.exists() ) {
                 throw new IllegalArgumentException("perceptron file must exists");
             }
-            this.learningExperiment.getNeuralNetworkInterfaceFor2048().loadOrCreatePerceptron(perceptronFile, true, createPerceptronFile);
+            this.learningExperiment.getNeuralNetworkInterfaceFor2048().
+                    loadOrCreatePerceptron(perceptronFile, true,
+                            createPerceptronFile);
         }
         while ( !game.iLoose() && !game.iWin() && !forceStop ) {
-            this.learningExperiment.getNeuralNetworkInterfaceFor2048().playATurn(game, learningExperiment.getLearningAlgorithm());
+            this.learningExperiment.getNeuralNetworkInterfaceFor2048().
+                    playATurn(game, learningExperiment.getLearningAlgorithm());
         }
         if ( !forceStop ) {
             sleep(5_000);

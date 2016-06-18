@@ -46,7 +46,8 @@ public class NNoSquaresTanH extends NTupleConfiguration2048 {
         double activationFunctionMin = -1;
 
         normOutput = new NormalizedField(NormalizationAction.Normalize,
-                null, maxReward, minReward, activationFunctionMax, activationFunctionMin);
+                null, maxReward, minReward, activationFunctionMax,
+                activationFunctionMin);
 
         nTuplesLenght = new int[8];
         for ( int i = 0; i < 8; i++ ) {
@@ -77,12 +78,14 @@ public class NNoSquaresTanH extends NTupleConfiguration2048 {
      * @return
      */
     @Override
-    public double getBoardReward(GameBoard board, int outputNeuron) {
+    public double getBoardReward(GameBoard board,
+            int outputNeuron) {
         return board.getPartialScore();
     }
 
     @Override
-    public double getFinalReward(GameBoard board, int outputNeuron) {
+    public double getFinalReward(GameBoard board,
+            int outputNeuron) {
         return board.getGame().getScore();
     }
 
@@ -93,7 +96,8 @@ public class NNoSquaresTanH extends NTupleConfiguration2048 {
      * @return
      */
     @Override
-    public SamplePointState[] getNTuple(GameBoard board, int nTupleIndex) {
+    public SamplePointState[] getNTuple(GameBoard board,
+            int nTupleIndex) {
         switch ( nTupleIndex ) {
             // verticales
             case 0: {
@@ -176,7 +180,8 @@ public class NNoSquaresTanH extends NTupleConfiguration2048 {
     @Override
     public double normalizeValueToPerceptronOutput(Object value) {
         if ( (Double) value > maxReward ) {
-            throw new IllegalArgumentException("value no puede ser mayor a maxReward=" + maxReward);
+            throw new IllegalArgumentException(
+                    "value no puede ser mayor a maxReward=" + maxReward);
         }
         return normOutput.normalize((Double) value);
     }

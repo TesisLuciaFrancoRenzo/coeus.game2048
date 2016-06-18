@@ -55,7 +55,7 @@ public class TestGeneratorActivationFunctionVsTraces {
      * @param gamesToPlayPerThreadForStatistics
      * @param simulationsForStatistics
      * @param explorationRate
-     * @param resetEligibilitiTraces
+     * @param replaceEligibilityTraces
      * @param filePath
      */
     public static void configAndExcecute(
@@ -73,7 +73,7 @@ public class TestGeneratorActivationFunctionVsTraces {
             int gamesToPlayPerThreadForStatistics,
             int simulationsForStatistics,
             double explorationRate,
-            boolean resetEligibilitiTraces,
+            boolean replaceEligibilityTraces,
             String filePath
     ) {
         experiment.setStatisticsOnly(statisticsOnly);
@@ -89,15 +89,17 @@ public class TestGeneratorActivationFunctionVsTraces {
         boolean[] concurrentLayer = {false, false};
         experiment.setConcurrencyInLayer(concurrentLayer);
         experiment.setTileToWinForStatistics(512);
-        experiment.setResetEligibilitiTraces(resetEligibilitiTraces);
+        experiment.setReplaceEligibilityTraces(replaceEligibilityTraces);
         experiment.setLearningRateAdaptationToFixed();
         experiment.setGamesToPlay(gamesToPlay);
         experiment.setSaveEvery(saveEvery);
         experiment.setSaveBackupEvery(saveBacupEvery);
-        experiment.setGamesToPlayPerThreadForStatistics(gamesToPlayPerThreadForStatistics);
+        experiment.setGamesToPlayPerThreadForStatistics(
+                gamesToPlayPerThreadForStatistics);
         experiment.setSimulationsForStatistics(simulationsForStatistics);
         experiment.setExportToExcel(true);
-        System.out.println("*=*=*=*=*=*=*=*=*=*=* N" + numberForShow + " Ejecutando " + filePath + " *=*=*=*=*=*=*=*=*=*=*");
+        System.out.println(
+                "*=*=*=*=*=*=*=*=*=*=* N" + numberForShow + " Ejecutando " + filePath + " *=*=*=*=*=*=*=*=*=*=*");
         experiment.start(numberForShow, filePath, 0, true, null);
     }
 
@@ -164,16 +166,36 @@ public class TestGeneratorActivationFunctionVsTraces {
         gamesToPlayPerThreadForStatistics = 0;
         simulationsForStatistics = 0;
 
-        runAllConfigs(maxTrainingThreads, "BasicLinear_512_ActFuncVsTrace", BasicLinear_512.class.getConstructor(), alphaList, lambdaList, gammaList, statisticsOnly, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, saveBackupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, filePath);
-        runAllConfigs(maxTrainingThreads, "BasicTanH_512_ActFuncVsTrace", BasicTanH_512.class.getConstructor(), alphaList, lambdaList, gammaList, statisticsOnly, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, saveBackupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, filePath);
+        runAllConfigs(maxTrainingThreads, "BasicLinear_512_ActFuncVsTrace",
+                BasicLinear_512.class.getConstructor(), alphaList, lambdaList,
+                gammaList, statisticsOnly, runStatisticsForBackups, createLogs,
+                gamesToPlay, saveEvery, saveBackupEvery,
+                gamesToPlayPerThreadForStatistics, simulationsForStatistics,
+                explorationRate, filePath);
+        runAllConfigs(maxTrainingThreads, "BasicTanH_512_ActFuncVsTrace",
+                BasicTanH_512.class.getConstructor(), alphaList, lambdaList,
+                gammaList, statisticsOnly, runStatisticsForBackups, createLogs,
+                gamesToPlay, saveEvery, saveBackupEvery,
+                gamesToPlayPerThreadForStatistics, simulationsForStatistics,
+                explorationRate, filePath);
 
         statisticsOnly = true;
         runStatisticsForBackups = true;
         gamesToPlayPerThreadForStatistics = 1_000;
         simulationsForStatistics = 8;
 
-        runAllConfigs(maxTrainingThreads, "BasicLinear_512_ActFuncVsTrace", BasicLinear_512.class.getConstructor(), alphaList, lambdaList, gammaList, statisticsOnly, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, saveBackupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, filePath);
-        runAllConfigs(maxTrainingThreads, "BasicTanH_512_ActFuncVsTrace", BasicTanH_512.class.getConstructor(), alphaList, lambdaList, gammaList, statisticsOnly, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, saveBackupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, filePath);
+        runAllConfigs(maxTrainingThreads, "BasicLinear_512_ActFuncVsTrace",
+                BasicLinear_512.class.getConstructor(), alphaList, lambdaList,
+                gammaList, statisticsOnly, runStatisticsForBackups, createLogs,
+                gamesToPlay, saveEvery, saveBackupEvery,
+                gamesToPlayPerThreadForStatistics, simulationsForStatistics,
+                explorationRate, filePath);
+        runAllConfigs(maxTrainingThreads, "BasicTanH_512_ActFuncVsTrace",
+                BasicTanH_512.class.getConstructor(), alphaList, lambdaList,
+                gammaList, statisticsOnly, runStatisticsForBackups, createLogs,
+                gamesToPlay, saveEvery, saveBackupEvery,
+                gamesToPlayPerThreadForStatistics, simulationsForStatistics,
+                explorationRate, filePath);
     }
 
     /**
@@ -195,7 +217,22 @@ public class TestGeneratorActivationFunctionVsTraces {
      * @param explorationRateList
      * @param filePath
      */
-    public static void runAllConfigs(int maxTrainingThreads, String experimentName, Constructor<?> experiment, List<Double> alphaList, List<Double> lambdaList, List<Double> gammaList, boolean statisticsOnly, boolean runStatisticsForBackups, boolean createLogs, int gamesToPlay, int saveEvery, int saveBacupEvery, int gamesToPlayPerThreadForStatistics, int simulationsForStatistics, List<Double> explorationRateList, String filePath) {
+    public static void runAllConfigs(int maxTrainingThreads,
+            String experimentName,
+            Constructor<?> experiment,
+            List<Double> alphaList,
+            List<Double> lambdaList,
+            List<Double> gammaList,
+            boolean statisticsOnly,
+            boolean runStatisticsForBackups,
+            boolean createLogs,
+            int gamesToPlay,
+            int saveEvery,
+            int saveBacupEvery,
+            int gamesToPlayPerThreadForStatistics,
+            int simulationsForStatistics,
+            List<Double> explorationRateList,
+            String filePath) {
         List<GeneratorConfig> experiments = new ArrayList<>();
         int number = 0;
         for ( int i = 0; i < alphaList.size(); i++ ) {
@@ -203,10 +240,16 @@ public class TestGeneratorActivationFunctionVsTraces {
                 for ( int k = 0; k < gammaList.size(); k++ ) {
                     for ( int l = 0; l < explorationRateList.size(); l++ ) {
                         number++;
-                        experiments.add(new GeneratorConfig(alphaList.get(i), lambdaList.get(j), gammaList.get(k), explorationRateList.get(l), false, number));
+                        experiments.add(new GeneratorConfig(alphaList.get(i),
+                                lambdaList.get(j), gammaList.get(k),
+                                explorationRateList.get(l), false, number));
                         if ( explorationRateList.get(l) > 0 && lambdaList.get(j) > 0 ) {
                             number++;
-                            experiments.add(new GeneratorConfig(alphaList.get(i), lambdaList.get(j), gammaList.get(k), explorationRateList.get(l), true, number));
+                            experiments.add(
+                                    new GeneratorConfig(alphaList.get(i),
+                                            lambdaList.get(j), gammaList.get(k),
+                                            explorationRateList.get(l), true,
+                                            number));
                         }
                     }
                 }
@@ -222,25 +265,46 @@ public class TestGeneratorActivationFunctionVsTraces {
 
         ForkJoinPool forkJoinPool = new ForkJoinPool(maxTrainingThreads);
         try {
-            forkJoinPool.submit(()
-                    -> //parallel task here, for example
-                    stream.forEach(expConfig -> {
-                        try {
-                            String newFilePath = filePath + "ActivationFunctionVsTraces" + File.separator + "alpha_" + expConfig.getAlpha() + "-lambda_" + expConfig.getLambda() + "-gamma_" + expConfig.getGamma() + "-explorationRate_" + expConfig.getExplorationRate() + "-resetTraces_" + expConfig.isResetTraces() + File.separator;
-                            File newPath = new File(newFilePath);
-                            if ( !newPath.exists() ) {
-                                newPath.mkdirs();
-                            }
-                            LearningExperiment cloneExperiment = (LearningExperiment) experiment.newInstance();
-                            cloneExperiment.setExperimentName(experimentName);
-                            configAndExcecute(expConfig.getNumber(), cloneExperiment, statisticsOnly, runStatisticsForBackups, createLogs, expConfig.getLambda(), expConfig.getAlpha(), expConfig.getGamma(), gamesToPlay, saveEvery, saveBacupEvery, gamesToPlayPerThreadForStatistics, simulationsForStatistics, expConfig.getExplorationRate(), expConfig.isResetTraces(), newFilePath);
-                        } catch ( InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex ) {
-                            Logger.getLogger(TestGeneratorActivationFunctionVsTraces.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    })
+            forkJoinPool.submit(() -> //parallel task here, for example
+                    stream.forEach(expConfig ->
+                            {
+                                try {
+                                    String newFilePath = filePath + "ActivationFunctionVsTraces" + File.separator + "alpha_" + expConfig.
+                                            getAlpha() + "-lambda_" + expConfig.
+                                            getLambda() + "-gamma_" + expConfig.
+                                            getGamma() + "-explorationRate_" + expConfig.
+                                            getExplorationRate() + "-resetTraces_" + expConfig.
+                                            isResetTraces() + File.separator;
+                                    File newPath = new File(newFilePath);
+                                    if ( !newPath.exists() ) {
+                                        newPath.mkdirs();
+                                    }
+                                    LearningExperiment cloneExperiment = (LearningExperiment) experiment.
+                                            newInstance();
+                                    cloneExperiment.setExperimentName(
+                                            experimentName);
+                                    configAndExcecute(expConfig.getNumber(),
+                                            cloneExperiment, statisticsOnly,
+                                            runStatisticsForBackups, createLogs,
+                                            expConfig.getLambda(), expConfig.
+                                            getAlpha(), expConfig.getGamma(),
+                                            gamesToPlay, saveEvery,
+                                            saveBacupEvery,
+                                            gamesToPlayPerThreadForStatistics,
+                                            simulationsForStatistics, expConfig.
+                                            getExplorationRate(), expConfig.
+                                            isResetTraces(), newFilePath);
+                                } catch ( InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex ) {
+                                    Logger.getLogger(
+                                            TestGeneratorActivationFunctionVsTraces.class.
+                                            getName()).log(Level.SEVERE, null,
+                                                    ex);
+                                }
+                            })
             ).get();
         } catch ( InterruptedException | ExecutionException ex ) {
-            Logger.getLogger(TestGeneratorActivationFunctionVsTraces.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TestGeneratorActivationFunctionVsTraces.class.
+                    getName()).log(Level.SEVERE, null, ex);
         }
     }
 

@@ -35,7 +35,8 @@ public class NTupleExperimentInterface extends INeuralNetworkInterfaceFor2048<Ba
      *
      * @param perceptronConfiguration
      */
-    public NTupleExperimentInterface(NTupleConfiguration2048 perceptronConfiguration) {
+    public NTupleExperimentInterface(
+            NTupleConfiguration2048 perceptronConfiguration) {
         super(perceptronConfiguration);
     }
 
@@ -45,7 +46,8 @@ public class NTupleExperimentInterface extends INeuralNetworkInterfaceFor2048<Ba
      * @param trainedFile
      */
     @Override
-    public void compareNeuralNetworks(File randomFile, File trainedFile) {
+    public void compareNeuralNetworks(File randomFile,
+            File trainedFile) {
     }
 
     @Override
@@ -64,7 +66,12 @@ public class NTupleExperimentInterface extends INeuralNetworkInterfaceFor2048<Ba
      * @return
      */
     public NTupleSystem initializeNTupleSystem(boolean randomized) {
-        NTupleSystem nTupleSystem = new NTupleSystem(this.getNTupleConfiguration().allSamplePointStates, this.getNTupleConfiguration().nTuplesLenght, this.getNTupleConfiguration().activationFunction, this.getNTupleConfiguration().derivatedActivationFunction, this.getNTupleConfiguration().concurrency);
+        NTupleSystem nTupleSystem = new NTupleSystem(this.
+                getNTupleConfiguration().allSamplePointStates, this.
+                getNTupleConfiguration().nTuplesLenght, this.
+                getNTupleConfiguration().activationFunction, this.
+                getNTupleConfiguration().derivatedActivationFunction, this.
+                getNTupleConfiguration().concurrency);
         if ( randomized ) {
             nTupleSystem.reset();
         }
@@ -72,8 +79,11 @@ public class NTupleExperimentInterface extends INeuralNetworkInterfaceFor2048<Ba
     }
 
     @Override
-    public void loadOrCreatePerceptron(File perceptronFile, boolean randomizedIfNotExist, boolean createPerceptronFile) throws Exception {
-        this.getNTupleConfiguration().setNTupleSystem(initializeNTupleSystem(randomizedIfNotExist));
+    public void loadOrCreatePerceptron(File perceptronFile,
+            boolean randomizedIfNotExist,
+            boolean createPerceptronFile) throws Exception {
+        this.getNTupleConfiguration().setNTupleSystem(initializeNTupleSystem(
+                randomizedIfNotExist));
         if ( createPerceptronFile ) {
             if ( !perceptronFile.exists() ) {
                 //Si el archivo no existe, creamos un perceptron nuevo inicializado al azar

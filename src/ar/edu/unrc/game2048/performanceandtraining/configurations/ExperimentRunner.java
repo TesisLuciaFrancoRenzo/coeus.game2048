@@ -31,7 +31,8 @@ public class ExperimentRunner {
      * @param gamesToPlay
      * @param perceptronConfig
      */
-    public ExperimentRunner(int gamesToPlay, PerceptronConfiguration2048 perceptronConfig) {
+    public ExperimentRunner(int gamesToPlay,
+            PerceptronConfiguration2048 perceptronConfig) {
 
     }
 }

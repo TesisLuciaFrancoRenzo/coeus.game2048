@@ -48,7 +48,8 @@ public abstract class INeuralNetworkInterfaceFor2048<NeuralNetworkClass> impleme
      *
      * @param perceptronConfiguration
      */
-    public INeuralNetworkInterfaceFor2048(PerceptronConfiguration2048<NeuralNetworkClass> perceptronConfiguration) {
+    public INeuralNetworkInterfaceFor2048(
+            PerceptronConfiguration2048<NeuralNetworkClass> perceptronConfiguration) {
         this.perceptronConfiguration = perceptronConfiguration;
     }
 
@@ -56,7 +57,8 @@ public abstract class INeuralNetworkInterfaceFor2048<NeuralNetworkClass> impleme
      *
      * @param nTupleConfiguration
      */
-    public INeuralNetworkInterfaceFor2048(NTupleConfiguration2048 nTupleConfiguration) {
+    public INeuralNetworkInterfaceFor2048(
+            NTupleConfiguration2048 nTupleConfiguration) {
         this.nTupleConfiguration = nTupleConfiguration;
     }
 
@@ -70,7 +72,8 @@ public abstract class INeuralNetworkInterfaceFor2048<NeuralNetworkClass> impleme
      * @param randomFile
      * @param trainedFile
      */
-    public abstract void compareNeuralNetworks(File randomFile, File trainedFile);
+    public abstract void compareNeuralNetworks(File randomFile,
+            File trainedFile);
 
     /**
      *
@@ -89,7 +92,8 @@ public abstract class INeuralNetworkInterfaceFor2048<NeuralNetworkClass> impleme
      *
      * @param nTupleConfiguration
      */
-    public void setNTupleConfiguration(NTupleConfiguration2048 nTupleConfiguration) {
+    public void setNTupleConfiguration(
+            NTupleConfiguration2048 nTupleConfiguration) {
         this.nTupleConfiguration = nTupleConfiguration;
     }
 
@@ -103,7 +107,8 @@ public abstract class INeuralNetworkInterfaceFor2048<NeuralNetworkClass> impleme
     /**
      * @param perceptronConfiguration the perceptronConfiguration to set
      */
-    public void setPerceptronConfiguration(PerceptronConfiguration2048<NeuralNetworkClass> perceptronConfiguration) {
+    public void setPerceptronConfiguration(
+            PerceptronConfiguration2048<NeuralNetworkClass> perceptronConfiguration) {
         this.perceptronConfiguration = perceptronConfiguration;
     }
 
@@ -120,19 +125,23 @@ public abstract class INeuralNetworkInterfaceFor2048<NeuralNetworkClass> impleme
      *
      * @throws Exception
      */
-    public abstract void loadOrCreatePerceptron(File perceptronFile, boolean randomizedIfNotExist, boolean createFile) throws Exception;
+    public abstract void loadOrCreatePerceptron(File perceptronFile,
+            boolean randomizedIfNotExist,
+            boolean createFile) throws Exception;
 
     /**
      *
      * @param game
-     * @param learningMethod metodo usado para entrenar y evaluar, o null si se
-     *                       utiliza una IA al azar
+     * @param learningMethod metodo usado para entrenar y evaluar, o null si se utiliza una IA al
+     *                       azar
      * <p>
      */
-    public void playATurn(Game2048<NeuralNetworkClass> game, TDLambdaLearning learningMethod) {
+    public void playATurn(Game2048<NeuralNetworkClass> game,
+            TDLambdaLearning learningMethod) {
         // evaluamos cada accion aplicada al estado inicial y elegimos la mejor
         // accion basada en las predicciones del problema
-        List<IAction> possibleActions = game.listAllPossibleActions(game.getBoard());
+        List<IAction> possibleActions = game.listAllPossibleActions(game.
+                getBoard());
         Action bestAction = (Action) TDLambdaLearning.computeBestPossibleAction(
                 game,
                 ELearningStyle.afterState,
@@ -140,7 +149,7 @@ public abstract class INeuralNetworkInterfaceFor2048<NeuralNetworkClass> impleme
                 possibleActions,
                 null,
                 learningMethod.isComputeParallelBestPossibleAction(),
-                learningMethod.getBestPossibleActionTimes());
+                learningMethod.getStatisticsBestPossibleActionTimes());
 
         switch ( bestAction ) {
             case left: {

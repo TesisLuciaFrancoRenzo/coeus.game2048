@@ -56,33 +56,40 @@ public class PNTuple512Test {
     }
 
     /**
-     * Test of calculateNormalizedPerceptronInput method, of class
- PNTuple512.
+     * Test of calculateNormalizedPerceptronInput method, of class PNTuple512.
      */
     @Test
     public void testCalculateNormalizedPerceptronInput() {
         System.out.println("calculateNormalizedPerceptronInput");
 
         PNTuple512<BasicNetwork> nTupleConfiguration = new PNTuple512<>();
-        TileContainer tileContainer = new TileContainer(nTupleConfiguration.getMaxTile());
+        TileContainer tileContainer = new TileContainer(nTupleConfiguration.
+                getMaxTile());
         Tile[] randomB = {
-            tileContainer.getTile(0), tileContainer.getTile(4), tileContainer.getTile(0), tileContainer.getTile(9),
-            tileContainer.getTile(4), tileContainer.getTile(6), tileContainer.getTile(4), tileContainer.getTile(4),
-            tileContainer.getTile(2), tileContainer.getTile(4), tileContainer.getTile(5), tileContainer.getTile(7),
-            tileContainer.getTile(4), tileContainer.getTile(0), tileContainer.getTile(1), tileContainer.getTile(4)
+            tileContainer.getTile(0), tileContainer.getTile(4), tileContainer.
+            getTile(0), tileContainer.getTile(9),
+            tileContainer.getTile(4), tileContainer.getTile(6), tileContainer.
+            getTile(4), tileContainer.getTile(4),
+            tileContainer.getTile(2), tileContainer.getTile(4), tileContainer.
+            getTile(5), tileContainer.getTile(7),
+            tileContainer.getTile(4), tileContainer.getTile(0), tileContainer.
+            getTile(1), tileContainer.getTile(4)
         };
         Tile[] randomBoard = randomB;
 
-        Game2048<BasicNetwork> game = new Game2048(nTupleConfiguration, null, (int) Math.pow(2, nTupleConfiguration.getMaxTile()), 0);
+        Game2048<BasicNetwork> game = new Game2048(nTupleConfiguration, null,
+                (int) Math.pow(2, nTupleConfiguration.getMaxTile()), 0);
         GameBoard<BasicNetwork> board = new GameBoard(game, tileContainer);
         board.setTiles(randomBoard);
 
         InputNtupleList normalizedPerceptronInput = new InputNtupleList();
-        nTupleConfiguration.calculateNormalizedPerceptronInput(board, normalizedPerceptronInput);
+        nTupleConfiguration.calculateNormalizedPerceptronInput(board,
+                normalizedPerceptronInput);
 
         //----------------------
         NBasicTanH_512 nTupleConfiguration2 = new NBasicTanH_512();
-        Game2048<BasicNetwork> game2 = new Game2048(null, nTupleConfiguration2, (int) Math.pow(2, nTupleConfiguration2.getMaxTile()), 0);
+        Game2048<BasicNetwork> game2 = new Game2048(null, nTupleConfiguration2,
+                (int) Math.pow(2, nTupleConfiguration2.getMaxTile()), 0);
         GameBoard<BasicNetwork> board2 = new GameBoard(game2, tileContainer);
         board2.setTiles(randomBoard);
 
@@ -94,7 +101,8 @@ public class PNTuple512Test {
                 false
         );
         int[] indexes = nTupleSystem.getComplexComputation(board2).getIndexes();
-        assertTrue(normalizedPerceptronInput.getInternalSetSize() == indexes.length);
+        assertTrue(
+                normalizedPerceptronInput.getInternalSetSize() == indexes.length);
 
         for ( int i : indexes ) {
             assertTrue(normalizedPerceptronInput.get(i) == 1d);

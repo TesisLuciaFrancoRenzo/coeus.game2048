@@ -55,11 +55,14 @@ public class ArgumentLoader {
      */
     public static List<Double> parseDoubleArray(String arrayString) {
 
-        if ( arrayString == null || !arrayString.startsWith("[") || !arrayString.endsWith("]") ) {
-            throw new IllegalArgumentException("arrayString format unknown: " + arrayString);
+        if ( arrayString == null || !arrayString.startsWith("[") || !arrayString.
+                endsWith("]") ) {
+            throw new IllegalArgumentException(
+                    "arrayString format unknown: " + arrayString);
         }
 
-        String[] list = arrayString.substring(1, arrayString.length() - 1).split(",");
+        String[] list = arrayString.substring(1, arrayString.length() - 1).
+                split(",");
         List<Double> out = new ArrayList<>(list.length);
         for ( String number : list ) {
             out.add(Double.parseDouble(number.trim()));
@@ -78,7 +81,8 @@ public class ArgumentLoader {
         for ( String arg : args ) {
             int index = arg.indexOf('=');
             if ( index == -1 ) {
-                throw new IllegalArgumentException("No se reconoce el argumento: " + arg);
+                throw new IllegalArgumentException(
+                        "No se reconoce el argumento: " + arg);
             }
             String id = arg.substring(0, index).trim();
             String value = arg.substring(index + 1).trim();
@@ -95,7 +99,8 @@ public class ArgumentLoader {
     public String getArg(String id) {
         String value = map.get(id);
         if ( value == null ) {
-            throw new IllegalArgumentException("No se reconoce el argumento: " + id);
+            throw new IllegalArgumentException(
+                    "No se reconoce el argumento: " + id);
         }
         return map.get(id);
     }

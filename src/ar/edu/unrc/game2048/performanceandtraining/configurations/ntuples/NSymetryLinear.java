@@ -68,12 +68,14 @@ public class NSymetryLinear extends NTupleConfiguration2048 {
      * @return
      */
     @Override
-    public double getBoardReward(GameBoard board, int outputNeuron) {
+    public double getBoardReward(GameBoard board,
+            int outputNeuron) {
         return board.getPartialScore();
     }
 
     @Override
-    public double getFinalReward(GameBoard board, int outputNeuron) {
+    public double getFinalReward(GameBoard board,
+            int outputNeuron) {
         return board.getGame().getScore();
     }
 
@@ -84,7 +86,8 @@ public class NSymetryLinear extends NTupleConfiguration2048 {
      * @return
      */
     @Override
-    public SamplePointState[] getNTuple(GameBoard board, int nTupleIndex) {
+    public SamplePointState[] getNTuple(GameBoard board,
+            int nTupleIndex) {
         switch ( nTupleIndex ) {
             // rectangulos
             case 0: {

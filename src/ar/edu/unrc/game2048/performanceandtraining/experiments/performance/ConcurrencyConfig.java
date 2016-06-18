@@ -65,8 +65,10 @@ public class ConcurrencyConfig {
         if ( activationFunctionForEncog != null ) {
             output.append("\n");
             output.append("activationFunctionForEncog: ");
-            for ( ActivationFunction activationFunction : activationFunctionForEncog ) {
-                output.append(activationFunction.getClass().getName()).append(", ");
+            for ( ActivationFunction activationFunction
+                    : activationFunctionForEncog ) {
+                output.append(activationFunction.getClass().getName()).append(
+                        ", ");
             }
         }
         return output.toString();

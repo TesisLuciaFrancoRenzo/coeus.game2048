@@ -25,9 +25,9 @@ package ar.edu.unrc.game2048;
 public interface IGame {
 
     /**
-     * Procesa una tecla y el juego reacciona. La tecla "esc" reinicia el juego,
-     * y "up" " down" " left" "right" se usan para jugar. Los codigos de dichas
-     * teclas son los mismos que se pueden encontrar en la clase KeyEvent.
+     * Procesa una tecla y el juego reacciona. La tecla "esc" reinicia el juego, y "up" " down" "
+     * left" "right" se usan para jugar. Los codigos de dichas teclas son los mismos que se pueden
+     * encontrar en la clase KeyEvent.
      * <p>
      * @param keyCode
      */

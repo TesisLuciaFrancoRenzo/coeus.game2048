@@ -62,7 +62,7 @@ public class NTuple_512 extends LearningExperiment<BasicNetwork> {
         experiment.setLambda(0.7);
         experiment.setGamma(1);
         experiment.setExplorationRateToFixed(0);
-        experiment.setResetEligibilitiTraces(false);
+        experiment.setReplaceEligibilityTraces(false);
         experiment.setGamesToPlay(10_000);
         experiment.setSaveEvery(200);
         experiment.setSaveBackupEvery(500);
@@ -83,7 +83,7 @@ public class NTuple_512 extends LearningExperiment<BasicNetwork> {
             experiment.setSimulationsForStatistics(0);
         }
         experiment.setExportToExcel(true);
-        experiment.start(-1,filePath, 0, true, null);
+        experiment.start(-1, filePath, 0, true, null);
     }
 
     @Override
@@ -94,11 +94,13 @@ public class NTuple_512 extends LearningExperiment<BasicNetwork> {
         }
         this.setPerceptronName(this.getExperimentName());
         PerceptronConfiguration2048<BasicNetwork> config = new PNTuple512<>();
-        this.setNeuralNetworkInterfaceFor2048(new EncogExperimentInterface(config));
+        this.setNeuralNetworkInterfaceFor2048(new EncogExperimentInterface(
+                config));
     }
 
     @Override
-    public TDLambdaLearning instanceOfTdLearninrgImplementation(IPerceptronInterface perceptronInterface) {
+    public TDLambdaLearning instanceOfTdLearninrgImplementation(
+            IPerceptronInterface perceptronInterface) {
         return new TDLambdaLearning(
                 perceptronInterface,
                 afterState,
@@ -106,12 +108,13 @@ public class NTuple_512 extends LearningExperiment<BasicNetwork> {
                 getLambda(),
                 getGamma(),
                 getConcurrencyInLayer(),
-                isResetEligibilitiTraces(),
+                isReplaceEligibilityTraces(),
                 false);
     }
 
     @Override
-    public TDLambdaLearning instanceOfTdLearninrgImplementation(NTupleSystem nTupleSystem) {
+    public TDLambdaLearning instanceOfTdLearninrgImplementation(
+            NTupleSystem nTupleSystem) {
         return null;
     }
 }

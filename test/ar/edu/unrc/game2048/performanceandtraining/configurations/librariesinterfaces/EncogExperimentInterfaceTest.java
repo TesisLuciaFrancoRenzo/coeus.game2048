@@ -89,12 +89,15 @@ public class EncogExperimentInterfaceTest {
 
         PerceptronConfiguration2048<BasicNetwork> perceptronConfiguration = new PerceptronConfiguration2048<BasicNetwork>() {
             @Override
-            public void calculateNormalizedPerceptronInput(GameBoard<BasicNetwork> board, List<Double> normalizedPerceptronInput) {
+            public void calculateNormalizedPerceptronInput(
+                    GameBoard<BasicNetwork> board,
+                    List<Double> normalizedPerceptronInput) {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
 
             @Override
-            public Double computeNumericRepresentationFor(Game2048 game, Object[] output) {
+            public Double computeNumericRepresentationFor(Game2048 game,
+                    Object[] output) {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
 
@@ -104,12 +107,14 @@ public class EncogExperimentInterfaceTest {
             }
 
             @Override
-            public double getBoardReward(GameBoard board, int outputNeuron) {
+            public double getBoardReward(GameBoard board,
+                    int outputNeuron) {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
 
             @Override
-            public double getFinalReward(GameBoard board, int outputNeuron) {
+            public double getFinalReward(GameBoard board,
+                    int outputNeuron) {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
 
@@ -135,9 +140,12 @@ public class EncogExperimentInterfaceTest {
         int PERCEPTRON_HIDDEN_QUANTITY = 2;
         int PERCEPTRON_OUTPUTS_QUANTITY = 2;
 
-        perceptron.addLayer(new BasicLayer(null, true, PERCEPTRON_INPUTS_QUANTITY));
-        perceptron.addLayer(new BasicLayer(new ActivationSigmoid(), true, PERCEPTRON_HIDDEN_QUANTITY));
-        perceptron.addLayer(new BasicLayer(new ActivationSigmoid(), false, PERCEPTRON_OUTPUTS_QUANTITY));
+        perceptron.addLayer(new BasicLayer(null, true,
+                PERCEPTRON_INPUTS_QUANTITY));
+        perceptron.addLayer(new BasicLayer(new ActivationSigmoid(), true,
+                PERCEPTRON_HIDDEN_QUANTITY));
+        perceptron.addLayer(new BasicLayer(new ActivationSigmoid(), false,
+                PERCEPTRON_OUTPUTS_QUANTITY));
         perceptron.getStructure().finalizeStructure();
 
         double[] weightsA = {
@@ -169,7 +177,8 @@ public class EncogExperimentInterfaceTest {
         perceptron.setWeight(1, 2, 0, weightsA[10]);
         perceptron.setWeight(1, 2, 1, weightsA[11]);
 
-        perceptronConfiguration.setActivationFunctionForEncog(new ActivationFunction[3]);
+        perceptronConfiguration.setActivationFunctionForEncog(
+                new ActivationFunction[3]);
         perceptronConfiguration.getActivationFunctionForEncog()[0] = new ActivationSigmoid();
         perceptronConfiguration.getActivationFunctionForEncog()[1] = new ActivationSigmoid();
         perceptronConfiguration.getActivationFunctionForEncog()[2] = new ActivationSigmoid();
@@ -181,9 +190,11 @@ public class EncogExperimentInterfaceTest {
         perceptronConfiguration.getNeuronQuantityInLayer()[1] = PERCEPTRON_HIDDEN_QUANTITY;
         perceptronConfiguration.getNeuronQuantityInLayer()[2] = PERCEPTRON_OUTPUTS_QUANTITY;
 
-        EncogExperimentInterface experiment = new EncogExperimentInterface(perceptronConfiguration);
+        EncogExperimentInterface experiment = new EncogExperimentInterface(
+                perceptronConfiguration);
         experiment.setConfigForTesting(perceptron);
-        IPerceptronInterface encogInterface = experiment.getPerceptronInterface();
+        IPerceptronInterface encogInterface = experiment.
+                getPerceptronInterface();
 
         double expResult;
         double result;
@@ -197,7 +208,9 @@ public class EncogExperimentInterfaceTest {
 
         double[] expResultArray = {0.80281682071709, 0.8140600608095045};
         double[] resultArray = outut.getData();
-        Assert.assertArrayEquals(expResultArray, resultArray, 0.0000000000000001);
+        Assert.
+                assertArrayEquals(expResultArray, resultArray,
+                        0.0000000000000001);
         // demostracion teorica con wxMaxima de que el resultado es el esperado
         //"=== INPUT ===";
         //"f(netk1)";fnetk1 : 0.3;
@@ -407,12 +420,12 @@ public class EncogExperimentInterfaceTest {
 
         double[] expResultArray2 = {0.7164779076006158, 0.8218381521799242};
         double[] resultArray2 = outut.getData();
-        Assert.assertArrayEquals(expResultArray2, resultArray2, 0.0000000000000001);
+        Assert.assertArrayEquals(expResultArray2, resultArray2,
+                0.0000000000000001);
     }
 
     /**
-     * Test of initializeEncogPerceptron method, of class
-     * EncogExperimentInterface.
+     * Test of initializeEncogPerceptron method, of class EncogExperimentInterface.
      */
     @Test
     public void testInitializeEncogPerceptron() {
@@ -420,12 +433,15 @@ public class EncogExperimentInterfaceTest {
 
         PerceptronConfiguration2048<BasicNetwork> perceptronConfiguration = new PerceptronConfiguration2048<BasicNetwork>() {
             @Override
-            public void calculateNormalizedPerceptronInput(GameBoard<BasicNetwork> board, List<Double> normalizedPerceptronInput) {
+            public void calculateNormalizedPerceptronInput(
+                    GameBoard<BasicNetwork> board,
+                    List<Double> normalizedPerceptronInput) {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
 
             @Override
-            public Double computeNumericRepresentationFor(Game2048 game, Object[] output) {
+            public Double computeNumericRepresentationFor(Game2048 game,
+                    Object[] output) {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
 
@@ -435,12 +451,14 @@ public class EncogExperimentInterfaceTest {
             }
 
             @Override
-            public double getBoardReward(GameBoard board, int outputNeuron) {
+            public double getBoardReward(GameBoard board,
+                    int outputNeuron) {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
 
             @Override
-            public double getFinalReward(GameBoard board, int outputNeuron) {
+            public double getFinalReward(GameBoard board,
+                    int outputNeuron) {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
 
@@ -469,7 +487,8 @@ public class EncogExperimentInterfaceTest {
         perceptron.addLayer(new BasicLayer(new ActivationLinear(), true, 1));
         perceptron.getStructure().finalizeStructure();
 
-        perceptronConfiguration.setActivationFunctionForEncog(new ActivationFunction[3]);
+        perceptronConfiguration.setActivationFunctionForEncog(
+                new ActivationFunction[3]);
         perceptronConfiguration.getActivationFunctionForEncog()[0] = new ActivationSigmoid();
         perceptronConfiguration.getActivationFunctionForEncog()[1] = new ActivationTANH();
         perceptronConfiguration.getActivationFunctionForEncog()[2] = new ActivationLinear();
@@ -482,28 +501,45 @@ public class EncogExperimentInterfaceTest {
         perceptronConfiguration.getNeuronQuantityInLayer()[2] = 1;
         perceptronConfiguration.getNeuronQuantityInLayer()[3] = 1;
 
-        EncogExperimentInterface experiment = new EncogExperimentInterface(perceptronConfiguration);
+        EncogExperimentInterface experiment = new EncogExperimentInterface(
+                perceptronConfiguration);
         experiment.setConfigForTesting(perceptron);
-        IPerceptronInterface encogInterface = experiment.getPerceptronInterface();
+        IPerceptronInterface encogInterface = experiment.
+                getPerceptronInterface();
 
         experiment.initializeEncogPerceptron(Boolean.FALSE);
 
-        Assert.assertTrue(FunctionUtils.SIGMOID.equals(encogInterface.getActivationFunction(1)));
-        Assert.assertTrue(FunctionUtils.TANH.equals(encogInterface.getActivationFunction(2)));
-        Assert.assertTrue(FunctionUtils.LINEAR.equals(encogInterface.getActivationFunction(3)));
+        Assert.assertTrue(FunctionUtils.SIGMOID.equals(encogInterface.
+                getActivationFunction(1)));
+        Assert.assertTrue(FunctionUtils.TANH.equals(encogInterface.
+                getActivationFunction(2)));
+        Assert.assertTrue(FunctionUtils.LINEAR.equals(encogInterface.
+                getActivationFunction(3)));
 
         for ( int layer = 1; layer < encogInterface.getLayerQuantity(); layer++ ) {
-            String activationEncog = perceptron.getActivation(layer).getClass().getName();
-            String activationInterface = encogInterface.getActivationFunction(layer).toString();
+            String activationEncog = perceptron.getActivation(layer).getClass().
+                    getName();
+            String activationInterface = encogInterface.getActivationFunction(
+                    layer).toString();
 
             if ( perceptron.getActivation(layer) instanceof ActivationTANH ) {
-                Assert.assertTrue("capa=" + layer + " activationEncog=" + activationEncog + " vs activationInterface=" + activationInterface, encogInterface.getActivationFunction(layer).equals(FunctionUtils.TANH));
+                Assert.assertTrue(
+                        "capa=" + layer + " activationEncog=" + activationEncog + " vs activationInterface=" + activationInterface,
+                        encogInterface.getActivationFunction(layer).equals(
+                        FunctionUtils.TANH));
             } else if ( perceptron.getActivation(layer) instanceof ActivationSigmoid ) {
-                Assert.assertTrue("capa=" + layer + " activati-onEncog=" + activationEncog + " vs activationInterface=" + activationInterface, encogInterface.getActivationFunction(layer).equals(FunctionUtils.SIGMOID));
+                Assert.assertTrue(
+                        "capa=" + layer + " activati-onEncog=" + activationEncog + " vs activationInterface=" + activationInterface,
+                        encogInterface.getActivationFunction(layer).equals(
+                        FunctionUtils.SIGMOID));
             } else if ( perceptron.getActivation(layer) instanceof ActivationLinear ) {
-                Assert.assertTrue("capa=" + layer + " activationEncog=" + activationEncog + " vs activationInterface=" + activationInterface, encogInterface.getActivationFunction(layer).equals(FunctionUtils.LINEAR));
+                Assert.assertTrue(
+                        "capa=" + layer + " activationEncog=" + activationEncog + " vs activationInterface=" + activationInterface,
+                        encogInterface.getActivationFunction(layer).equals(
+                        FunctionUtils.LINEAR));
             } else {
-                throw new IllegalArgumentException("El test esta pensado para utilizar TANH, Simoid o Linear como funcion de activacion");
+                throw new IllegalArgumentException(
+                        "El test esta pensado para utilizar TANH, Simoid o Linear como funcion de activacion");
             }
         }
 

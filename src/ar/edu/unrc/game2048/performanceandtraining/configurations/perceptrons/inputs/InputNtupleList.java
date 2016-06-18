@@ -27,14 +27,14 @@ public class InputNtupleList implements List<Double> {
         set = new HashSet<>();
     }
 
-
     @Override
     public boolean add(Double e) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void add(int index, Double element) {
+    public void add(int index,
+            Double element) {
         set.add(index);
     }
 
@@ -44,7 +44,8 @@ public class InputNtupleList implements List<Double> {
     }
 
     @Override
-    public boolean addAll(int index, Collection<? extends Double> c) {
+    public boolean addAll(int index,
+            Collection<? extends Double> c) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -127,7 +128,8 @@ public class InputNtupleList implements List<Double> {
     }
 
     @Override
-    public Double set(int index, Double element) {
+    public Double set(int index,
+            Double element) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -137,7 +139,8 @@ public class InputNtupleList implements List<Double> {
     }
 
     @Override
-    public List<Double> subList(int fromIndex, int toIndex) {
+    public List<Double> subList(int fromIndex,
+            int toIndex) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

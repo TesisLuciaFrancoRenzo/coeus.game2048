@@ -92,10 +92,14 @@ public class Game2048Test {
         //inicializamos un tablero terminal
         GameBoard board = new GameBoard(game, tileContainer);
         Tile[] terminalBoard = {
-            tileContainer.getTile(7), tileContainer.getTile(1), tileContainer.getTile(3), tileContainer.getTile(2),
-            tileContainer.getTile(1), tileContainer.getTile(4), tileContainer.getTile(5), tileContainer.getTile(1),
-            tileContainer.getTile(3), tileContainer.getTile(5), tileContainer.getTile(1), tileContainer.getTile(6),
-            tileContainer.getTile(1), tileContainer.getTile(8), tileContainer.getTile(5), tileContainer.getTile(2)
+            tileContainer.getTile(7), tileContainer.getTile(1), tileContainer.
+            getTile(3), tileContainer.getTile(2),
+            tileContainer.getTile(1), tileContainer.getTile(4), tileContainer.
+            getTile(5), tileContainer.getTile(1),
+            tileContainer.getTile(3), tileContainer.getTile(5), tileContainer.
+            getTile(1), tileContainer.getTile(6),
+            tileContainer.getTile(1), tileContainer.getTile(8), tileContainer.
+            getTile(5), tileContainer.getTile(2)
         };
         board.setTiles(terminalBoard);
         board.updateInternalState(true);
@@ -107,10 +111,14 @@ public class Game2048Test {
         //inicializamos un tablero no terminal
         board = new GameBoard(game, tileContainer);
         Tile[] fullNotTerminalBoard = {
-            tileContainer.getTile(7), tileContainer.getTile(1), tileContainer.getTile(3), tileContainer.getTile(2),
-            tileContainer.getTile(1), tileContainer.getTile(4), tileContainer.getTile(5), tileContainer.getTile(1),
-            tileContainer.getTile(3), tileContainer.getTile(5), tileContainer.getTile(1), tileContainer.getTile(6),
-            tileContainer.getTile(1), tileContainer.getTile(8), tileContainer.getTile(1), tileContainer.getTile(2)
+            tileContainer.getTile(7), tileContainer.getTile(1), tileContainer.
+            getTile(3), tileContainer.getTile(2),
+            tileContainer.getTile(1), tileContainer.getTile(4), tileContainer.
+            getTile(5), tileContainer.getTile(1),
+            tileContainer.getTile(3), tileContainer.getTile(5), tileContainer.
+            getTile(1), tileContainer.getTile(6),
+            tileContainer.getTile(1), tileContainer.getTile(8), tileContainer.
+            getTile(1), tileContainer.getTile(2)
         };
         board.setTiles(fullNotTerminalBoard);
         board.updateInternalState(true);
@@ -125,7 +133,8 @@ public class Game2048Test {
         result = game.listAllPossibleActions(board);
         Assert.assertTrue(result.size() == 2);
 
-        Set<IAction> resultSet = new HashSet<>(game.listAllPossibleActions(board));
+        Set<IAction> resultSet = new HashSet<>(game.
+                listAllPossibleActions(board));
         for ( IAction action : resultSet ) {
             Assert.assertTrue(resultSet.contains(action));
         }
@@ -156,10 +165,14 @@ public class Game2048Test {
         //inicializamos un tablero con muchos movimientos terminal
         board = new GameBoard(game, tileContainer);
         Tile[] multipleMovesTerminalBoard = {
-            tileContainer.getTile(7), tileContainer.getTile(1), tileContainer.getTile(3), tileContainer.getTile(2),
-            tileContainer.getTile(1), tileContainer.getTile(0), tileContainer.getTile(5), tileContainer.getTile(1),
-            tileContainer.getTile(3), tileContainer.getTile(5), tileContainer.getTile(1), tileContainer.getTile(6),
-            tileContainer.getTile(1), tileContainer.getTile(8), tileContainer.getTile(1), tileContainer.getTile(2)
+            tileContainer.getTile(7), tileContainer.getTile(1), tileContainer.
+            getTile(3), tileContainer.getTile(2),
+            tileContainer.getTile(1), tileContainer.getTile(0), tileContainer.
+            getTile(5), tileContainer.getTile(1),
+            tileContainer.getTile(3), tileContainer.getTile(5), tileContainer.
+            getTile(1), tileContainer.getTile(6),
+            tileContainer.getTile(1), tileContainer.getTile(8), tileContainer.
+            getTile(1), tileContainer.getTile(2)
         };
         board.setTiles(multipleMovesTerminalBoard);
         board.updateInternalState(true);

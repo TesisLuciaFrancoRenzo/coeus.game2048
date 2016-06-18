@@ -19,12 +19,12 @@
 package ar.edu.unrc.game2048.performanceandtraining.configurations.librariesinterfaces;
 
 import ar.edu.unrc.coeus.interfaces.IPerceptronInterface;
-import ar.edu.unrc.coeus.tdlearning.learning.StateProbability;
 import ar.edu.unrc.coeus.tdlearning.learning.TDLambdaLearning;
 import ar.edu.unrc.game2048.Action;
 import ar.edu.unrc.game2048.Game2048;
 import ar.edu.unrc.game2048.GameBoard;
 import ar.edu.unrc.game2048.PerceptronConfiguration2048;
+import ar.edu.unrc.game2048.StateProbability;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.INeuralNetworkInterfaceFor2048;
 import static java.awt.event.KeyEvent.VK_DOWN;
 import static java.awt.event.KeyEvent.VK_LEFT;
@@ -44,7 +44,8 @@ public class GreedyExperimentInterface extends INeuralNetworkInterfaceFor2048 {
      *
      * @param perceptronConfiguration
      */
-    public GreedyExperimentInterface(PerceptronConfiguration2048 perceptronConfiguration) {
+    public GreedyExperimentInterface(
+            PerceptronConfiguration2048 perceptronConfiguration) {
         super(perceptronConfiguration);
     }
 
@@ -54,7 +55,8 @@ public class GreedyExperimentInterface extends INeuralNetworkInterfaceFor2048 {
      * @param trainedFile
      */
     @Override
-    public void compareNeuralNetworks(File randomFile, File trainedFile) {
+    public void compareNeuralNetworks(File randomFile,
+            File trainedFile) {
     }
 
     @Override
@@ -68,29 +70,47 @@ public class GreedyExperimentInterface extends INeuralNetworkInterfaceFor2048 {
     }
 
     @Override
-    public void loadOrCreatePerceptron(File perceptronFile, boolean randomizedIfNotExist, boolean createPerceptronFile) throws Exception {
+    public void loadOrCreatePerceptron(File perceptronFile,
+            boolean randomizedIfNotExist,
+            boolean createPerceptronFile) throws Exception {
     }
 
     @Override
-    public void playATurn(Game2048 game, TDLambdaLearning learningMethod) {
+    public void playATurn(Game2048 game,
+            TDLambdaLearning learningMethod) {
         GameBoard actualBoard = game.getBoard();
         List<Action> bestActions = new ArrayList<>(4);
         double bestReward = -100d;
-        ArrayList<Action> possibleActions = game.listAllPossibleActions(actualBoard);
+        ArrayList<Action> possibleActions = game.listAllPossibleActions(
+                actualBoard);
         for ( Action action : possibleActions ) {
-            GameBoard afterState = (GameBoard) game.computeAfterState(actualBoard, action);
-            List<StateProbability> allPosibleNextStates = game.listAllPossibleNextTurnStateFromAfterstate(afterState);
-            Double reward = allPosibleNextStates.stream().mapToDouble((nextStateProb) -> {
-                if ( ((GameBoard) nextStateProb.getNextTurnState()).isAWin() || ((GameBoard) nextStateProb.getNextTurnState()).isFull() ) {
-                    return ((GameBoard) nextStateProb.getNextTurnState()).getPartialScore() * 4 * nextStateProb.getProbability();
-                } else {
-                    ArrayList<Action> possibleNextActions = game.listAllPossibleActions(actualBoard);
-                    return possibleNextActions.stream().mapToDouble((nextAction) -> {
-                        GameBoard nextAfterState = (GameBoard) game.computeAfterState(nextStateProb.getNextTurnState(), nextAction);
-                        return nextAfterState.getPartialScore();
-                    }).sum() * nextStateProb.getProbability();
-                }
-            }).sum() + afterState.getPartialScore();
+            GameBoard afterState = (GameBoard) game.computeAfterState(
+                    actualBoard, action);
+            List<StateProbability> allPosibleNextStates = game.
+                    listAllPossibleNextTurnStateFromAfterstate(afterState);
+            Double reward = allPosibleNextStates.stream().mapToDouble(
+                    (nextStateProb) ->
+                    {
+                        if ( ((GameBoard) nextStateProb.getNextTurnState()).
+                                isAWin() || ((GameBoard) nextStateProb.
+                                getNextTurnState()).isFull() ) {
+                            return ((GameBoard) nextStateProb.getNextTurnState()).
+                                    getPartialScore() * 4 * nextStateProb.
+                                    getProbability();
+                        } else {
+                            ArrayList<Action> possibleNextActions = game.
+                                    listAllPossibleActions(actualBoard);
+                            return possibleNextActions.stream().mapToDouble(
+                                    (nextAction) ->
+                                    {
+                                        GameBoard nextAfterState = (GameBoard) game.
+                                                computeAfterState(nextStateProb.
+                                                        getNextTurnState(),
+                                                        nextAction);
+                                        return nextAfterState.getPartialScore();
+                                    }).sum() * nextStateProb.getProbability();
+                        }
+                    }).sum() + afterState.getPartialScore();
             if ( reward == bestReward ) {
                 bestActions.add(action);
             } else if ( reward > bestReward ) {
@@ -101,7 +121,8 @@ public class GreedyExperimentInterface extends INeuralNetworkInterfaceFor2048 {
         }
 
         if ( !bestActions.isEmpty() ) {
-            Action bestAction = bestActions.get(TDLambdaLearning.randomBetween(0, bestActions.size() - 1));
+            Action bestAction = bestActions.get(TDLambdaLearning.
+                    randomBetween(0, bestActions.size() - 1));
             switch ( bestAction ) {
                 case left: {
                     game.processInput(VK_LEFT);
@@ -120,7 +141,8 @@ public class GreedyExperimentInterface extends INeuralNetworkInterfaceFor2048 {
                     break;
                 }
                 default: {
-                    throw new IllegalArgumentException("no se encontro mejor accion.");
+                    throw new IllegalArgumentException(
+                            "no se encontro mejor accion.");
                 }
             }
         } else {

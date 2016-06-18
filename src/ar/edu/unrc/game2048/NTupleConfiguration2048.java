@@ -72,7 +72,8 @@ public abstract class NTupleConfiguration2048 implements Cloneable, IConfigurati
      * @param nTupleIndex <p>
      * @return
      */
-    public abstract SamplePointState[] getNTuple(GameBoard board, int nTupleIndex);
+    public abstract SamplePointState[] getNTuple(GameBoard board,
+            int nTupleIndex);
 
     /**
      * @return the nTupleSystem

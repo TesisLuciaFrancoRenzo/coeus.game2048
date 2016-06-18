@@ -60,7 +60,7 @@ public class BasicLinear_512 extends LearningExperiment<BasicNetwork> {
         experiment.setLambda(0.2);
         experiment.setGamma(1);
         experiment.setExplorationRateToFixed(0);
-        experiment.setResetEligibilitiTraces(false);
+        experiment.setReplaceEligibilityTraces(false);
         experiment.setGamesToPlay(30_000);
         experiment.setSaveEvery(500);
         experiment.setSaveBackupEvery(1_000);
@@ -95,17 +95,23 @@ public class BasicLinear_512 extends LearningExperiment<BasicNetwork> {
         }
         this.setPerceptronName(this.getExperimentName());
         NTupleConfiguration2048 config = new NBasicLinear_512();
-        this.setNeuralNetworkInterfaceFor2048(new NTupleExperimentInterface(config));
+        this.setNeuralNetworkInterfaceFor2048(new NTupleExperimentInterface(
+                config));
     }
 
     @Override
-    public TDLambdaLearning instanceOfTdLearninrgImplementation(IPerceptronInterface perceptronInterface) {
+    public TDLambdaLearning instanceOfTdLearninrgImplementation(
+            IPerceptronInterface perceptronInterface) {
         return null;
     }
 
     @Override
-    public TDLambdaLearning instanceOfTdLearninrgImplementation(NTupleSystem nTupleSystem) {
-        return new TDLambdaLearning(nTupleSystem, afterState, (getAlpha() != null) ? getAlpha()[0] : null, getLambda(), getGamma(), getConcurrencyInLayer(), isResetEligibilitiTraces(), false);
+    public TDLambdaLearning instanceOfTdLearninrgImplementation(
+            NTupleSystem nTupleSystem) {
+        return new TDLambdaLearning(nTupleSystem, afterState,
+                (getAlpha() != null) ? getAlpha()[0] : null, getLambda(),
+                getGamma(), getConcurrencyInLayer(), isReplaceEligibilityTraces(),
+                false);
     }
 
 }

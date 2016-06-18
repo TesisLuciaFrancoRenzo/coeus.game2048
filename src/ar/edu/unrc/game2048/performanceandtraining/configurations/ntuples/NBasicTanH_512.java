@@ -36,8 +36,8 @@ public class NBasicTanH_512 extends NTupleConfiguration2048 {
 
     private final int numSamples;
 
-    int maxReward = 40_000;
-    int minReward = -40_000;
+    int maxReward = 100_000;
+    int minReward = -100_000;
 
     /**
      *
@@ -53,7 +53,8 @@ public class NBasicTanH_512 extends NTupleConfiguration2048 {
         maxTile = 9;
 
         normOutput = new NormalizedField(NormalizationAction.Normalize,
-                null, maxReward, minReward, activationFunctionMax, activationFunctionMin);
+                null, maxReward, minReward, activationFunctionMax,
+                activationFunctionMin);
 
         nTuplesLenght = new int[numSamples];
         for ( int i = 0; i < numSamples; i++ ) {
@@ -83,12 +84,14 @@ public class NBasicTanH_512 extends NTupleConfiguration2048 {
      * @return
      */
     @Override
-    public double getBoardReward(GameBoard board, int outputNeuron) {
+    public double getBoardReward(GameBoard board,
+            int outputNeuron) {
         return board.getPartialScore();
     }
 
     @Override
-    public double getFinalReward(GameBoard board, int outputNeuron) {
+    public double getFinalReward(GameBoard board,
+            int outputNeuron) {
         return board.getGame().getScore();
     }
 
@@ -106,7 +109,8 @@ public class NBasicTanH_512 extends NTupleConfiguration2048 {
      * @return
      */
     @Override
-    public SamplePointState[] getNTuple(GameBoard board, int nTupleIndex) {
+    public SamplePointState[] getNTuple(GameBoard board,
+            int nTupleIndex) {
         switch ( nTupleIndex ) {
             // verticales
             case 0: {
@@ -196,7 +200,8 @@ public class NBasicTanH_512 extends NTupleConfiguration2048 {
     @Override
     public double normalizeValueToPerceptronOutput(Object value) {
         if ( (Double) value > maxReward ) {
-            throw new IllegalArgumentException("value no puede ser mayor a maxReward=" + maxReward);
+            throw new IllegalArgumentException(
+                    "value no puede ser mayor a maxReward=" + maxReward);
         }
         return normOutput.normalize((Double) value);
     }

@@ -37,7 +37,8 @@ public interface IConfiguration2048 {
      * @param outputNeuron <p>
      * @return
      */
-    public abstract double getBoardReward(GameBoard board, int outputNeuron);
+    public abstract double getBoardReward(GameBoard board,
+            int outputNeuron);
 
     /**
      *
@@ -45,7 +46,8 @@ public interface IConfiguration2048 {
      * @param outputNeuron <p>
      * @return
      */
-    public abstract double getFinalReward(GameBoard board, int outputNeuron);
+    public abstract double getFinalReward(GameBoard board,
+            int outputNeuron);
 
     /**
      *

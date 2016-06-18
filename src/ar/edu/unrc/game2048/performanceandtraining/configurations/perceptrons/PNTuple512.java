@@ -83,7 +83,8 @@ public class PNTuple512<NeuralNetworkClass> extends PerceptronConfiguration2048<
         nTuplesWeightQuantityIndex[0] = lasNTuplesWeightQuantity;
         int lutSize = 0;
         for ( int i = 0; i < nTuplesLenght.length; i++ ) {
-            int nTuplesWeightQuantity = (int) Math.pow(mapSamplePointStates.size(), nTuplesLenght[i]);
+            int nTuplesWeightQuantity = (int) Math.pow(mapSamplePointStates.
+                    size(), nTuplesLenght[i]);
             lutSize += nTuplesWeightQuantity;
             if ( i > 0 ) {
                 nTuplesWeightQuantityIndex[i] = nTuplesWeightQuantityIndex[i - 1] + lasNTuplesWeightQuantity;
@@ -101,7 +102,8 @@ public class PNTuple512<NeuralNetworkClass> extends PerceptronConfiguration2048<
         activationFunctionMin = -1;
 
         normOutput = new NormalizedField(NormalizationAction.Normalize,
-                null, maxReward, minReward, activationFunctionMax, activationFunctionMin);
+                null, maxReward, minReward, activationFunctionMax,
+                activationFunctionMin);
     }
 
     /**
@@ -111,7 +113,8 @@ public class PNTuple512<NeuralNetworkClass> extends PerceptronConfiguration2048<
      *
      * @return
      */
-    public int calculateIndex(int nTupleSampleIndex, SamplePointState[] nTupleSample) {
+    public int calculateIndex(int nTupleSampleIndex,
+            SamplePointState[] nTupleSample) {
         int localIndex = 0;
         for ( int j = 0; j < getnTuplesLenght()[nTupleSampleIndex]; j++ ) {
 //            SamplePointState object = ntuple[j];
@@ -130,14 +133,18 @@ public class PNTuple512<NeuralNetworkClass> extends PerceptronConfiguration2048<
      * @param normalizedPerceptronInput <p>
      */
     @Override
-    public void calculateNormalizedPerceptronInput(GameBoard<NeuralNetworkClass> board, List<Double> normalizedPerceptronInput) {
+    public void calculateNormalizedPerceptronInput(
+            GameBoard<NeuralNetworkClass> board,
+            List<Double> normalizedPerceptronInput) {
         for ( int i = 0; i < getNumSamples(); i++ ) {
-            normalizedPerceptronInput.add(calculateIndex(i, getNTuple(board, i)), 1d);
+            normalizedPerceptronInput.
+                    add(calculateIndex(i, getNTuple(board, i)), 1d);
         }
     }
 
     @Override
-    public Double computeNumericRepresentationFor(Game2048 game, Object[] output) {
+    public Double computeNumericRepresentationFor(Game2048 game,
+            Object[] output) {
         assert output.length == 1;
         return (Double) output[0];
     }
@@ -155,12 +162,14 @@ public class PNTuple512<NeuralNetworkClass> extends PerceptronConfiguration2048<
     }
 
     @Override
-    public double getBoardReward(GameBoard board, int outputNeuron) {
+    public double getBoardReward(GameBoard board,
+            int outputNeuron) {
         return board.getPartialScore();
     }
 
     @Override
-    public double getFinalReward(GameBoard board, int outputNeuron) {
+    public double getFinalReward(GameBoard board,
+            int outputNeuron) {
         return board.getGame().getScore();
     }
 
@@ -185,7 +194,8 @@ public class PNTuple512<NeuralNetworkClass> extends PerceptronConfiguration2048<
      *
      * @return
      */
-    public SamplePointState[] getNTuple(GameBoard board, int nTupleIndex) {
+    public SamplePointState[] getNTuple(GameBoard board,
+            int nTupleIndex) {
         switch ( nTupleIndex ) {
             // verticales
             case 0: {

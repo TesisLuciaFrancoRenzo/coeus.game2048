@@ -39,7 +39,12 @@ public class GeneratorConfig {
      * @param resetTraces
      * @param number
      */
-    public GeneratorConfig(Double alpha, Double lambda, Double gamma, Double explorationRate, boolean resetTraces, int number) {
+    public GeneratorConfig(Double alpha,
+            Double lambda,
+            Double gamma,
+            Double explorationRate,
+            boolean resetTraces,
+            int number) {
         this.alpha = alpha;
         this.lambda = lambda;
         this.gamma = gamma;

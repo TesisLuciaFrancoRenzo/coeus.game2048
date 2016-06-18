@@ -55,7 +55,7 @@ public class Basic extends LearningExperiment<BasicNetwork> {
         experiment.setSimulationsForStatistics(8);
         experiment.setRunStatisticsForBackups(false);
         experiment.setExportToExcel(false);
-        experiment.start(-1,filePath, 0, true, null);
+        experiment.start(-1, filePath, 0, true, null);
     }
 
     @Override
@@ -65,7 +65,8 @@ public class Basic extends LearningExperiment<BasicNetwork> {
         }
         this.setPerceptronName(this.getExperimentName());
         this.setTileToWinForTraining(2_048);
-        this.setNeuralNetworkInterfaceFor2048(new RandomExperimentInterface(null));
+        this.setNeuralNetworkInterfaceFor2048(
+                new RandomExperimentInterface(null));
     }
 
     /**
@@ -74,12 +75,14 @@ public class Basic extends LearningExperiment<BasicNetwork> {
      * @return
      */
     @Override
-    public TDLambdaLearning instanceOfTdLearninrgImplementation(IPerceptronInterface perceptronInterface) {
+    public TDLambdaLearning instanceOfTdLearninrgImplementation(
+            IPerceptronInterface perceptronInterface) {
         return null;
     }
 
     @Override
-    public TDLambdaLearning instanceOfTdLearninrgImplementation(NTupleSystem nTupleSystem) {
+    public TDLambdaLearning instanceOfTdLearninrgImplementation(
+            NTupleSystem nTupleSystem) {
         return null;
     }
 

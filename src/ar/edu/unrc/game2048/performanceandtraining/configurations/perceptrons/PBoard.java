@@ -83,9 +83,11 @@ public class PBoard<NeuralNetworkClass> extends PerceptronConfiguration2048<Neur
         activationFunctionMin = -1;
 
         normInput = new NormalizedField(NormalizationAction.Normalize,
-                null, maxCodedBoardnumber, minCodedBoardnumber, activationFunctionMax, activationFunctionMin);
+                null, maxCodedBoardnumber, minCodedBoardnumber,
+                activationFunctionMax, activationFunctionMin);
         normOutput = new NormalizedField(NormalizationAction.Normalize,
-                null, maxScore, minScore, activationFunctionMax, activationFunctionMin);
+                null, maxScore, minScore, activationFunctionMax,
+                activationFunctionMin);
     }
 
     /**
@@ -94,7 +96,9 @@ public class PBoard<NeuralNetworkClass> extends PerceptronConfiguration2048<Neur
      * @param normalizedPerceptronInput <p>
      */
     @Override
-    public void calculateNormalizedPerceptronInput(GameBoard<NeuralNetworkClass> board, List<Double> normalizedPerceptronInput) {
+    public void calculateNormalizedPerceptronInput(
+            GameBoard<NeuralNetworkClass> board,
+            List<Double> normalizedPerceptronInput) {
         // primera fila
         normalizedPerceptronInput.set(0,
                 normInput.normalize(board.tileAt(0, 0).getCode())
@@ -150,7 +154,8 @@ public class PBoard<NeuralNetworkClass> extends PerceptronConfiguration2048<Neur
     }
 
     @Override
-    public Double computeNumericRepresentationFor(Game2048 game, Object[] output) {
+    public Double computeNumericRepresentationFor(Game2048 game,
+            Object[] output) {
         assert output.length == 1;
         return (Double) output[0];
     }
@@ -161,12 +166,14 @@ public class PBoard<NeuralNetworkClass> extends PerceptronConfiguration2048<Neur
     }
 
     @Override
-    public double getBoardReward(GameBoard board, int outputNeuron) {
+    public double getBoardReward(GameBoard board,
+            int outputNeuron) {
         return board.getPartialScore();
     }
 
     @Override
-    public double getFinalReward(GameBoard board, int outputNeuron) {
+    public double getFinalReward(GameBoard board,
+            int outputNeuron) {
         return board.getGame().getScore();
     }
 

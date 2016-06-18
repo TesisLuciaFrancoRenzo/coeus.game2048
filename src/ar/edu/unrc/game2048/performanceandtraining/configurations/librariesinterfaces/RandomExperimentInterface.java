@@ -39,7 +39,8 @@ public class RandomExperimentInterface extends INeuralNetworkInterfaceFor2048 {
      *
      * @param perceptronConfiguration
      */
-    public RandomExperimentInterface(PerceptronConfiguration2048 perceptronConfiguration) {
+    public RandomExperimentInterface(
+            PerceptronConfiguration2048 perceptronConfiguration) {
         super(perceptronConfiguration);
     }
 
@@ -49,7 +50,8 @@ public class RandomExperimentInterface extends INeuralNetworkInterfaceFor2048 {
      * @param trainedFile
      */
     @Override
-    public void compareNeuralNetworks(File randomFile, File trainedFile) {
+    public void compareNeuralNetworks(File randomFile,
+            File trainedFile) {
     }
 
     @Override
@@ -63,11 +65,14 @@ public class RandomExperimentInterface extends INeuralNetworkInterfaceFor2048 {
     }
 
     @Override
-    public void loadOrCreatePerceptron(File perceptronFile, boolean randomizedIfNotExist, boolean createPerceptronFile) throws Exception {
+    public void loadOrCreatePerceptron(File perceptronFile,
+            boolean randomizedIfNotExist,
+            boolean createPerceptronFile) throws Exception {
     }
 
     @Override
-    public void playATurn(Game2048 game, TDLambdaLearning learningMethod) {
+    public void playATurn(Game2048 game,
+            TDLambdaLearning learningMethod) {
         switch ( TDLambdaLearning.randomBetween(1, 4) ) {
             case 1: {
                 game.processInput(VK_LEFT);
@@ -86,7 +91,8 @@ public class RandomExperimentInterface extends INeuralNetworkInterfaceFor2048 {
                 break;
             }
             default: {
-                throw new IllegalStateException("El numero al azar elegido debe ir entre 1 y 4");
+                throw new IllegalStateException(
+                        "El numero al azar elegido debe ir entre 1 y 4");
             }
         }
     }

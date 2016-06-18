@@ -93,19 +93,28 @@ public class ConcurrencyExperiment_Basic extends LearningExperiment<BasicNetwork
      *
      * @throws Exception
      */
-    public static void experimentSet(boolean trainConcurrency, boolean evaluateConcurrency) throws Exception {
-        for ( int innerLayerQuantity = 1; innerLayerQuantity <= MAX_INNER_LAYERS; innerLayerQuantity++ ) {
-            System.out.println("===============================================================================");
+    public static void experimentSet(boolean trainConcurrency,
+            boolean evaluateConcurrency) throws Exception {
+        for ( int innerLayerQuantity = 1; innerLayerQuantity <= MAX_INNER_LAYERS;
+                innerLayerQuantity++ ) {
+            System.out.println(
+                    "===============================================================================");
             System.out.println("Capas intermedias: " + innerLayerQuantity);
-            outputForGraphicsResults.append("============ Capas intermedias: ").append(innerLayerQuantity)
-                    .append(" - Training Concurrancy: ").append(trainConcurrency)
-                    .append(" - evaluating Concurrancy: ").append(evaluateConcurrency)
+            outputForGraphicsResults.append("============ Capas intermedias: ").
+                    append(innerLayerQuantity)
+                    .append(" - Training Concurrancy: ").
+                    append(trainConcurrency)
+                    .append(" - evaluating Concurrancy: ").append(
+                    evaluateConcurrency)
                     .append(" =============\n");
-            System.out.println("===============================================================================");
+            System.out.println(
+                    "===============================================================================");
 
             StringBuilder trainingOutput = new StringBuilder();
             StringBuilder evaluateOutput = new StringBuilder();
-            for ( int innerLayersNeuronQuantity = MIN_NEURON_QUANTITY; innerLayersNeuronQuantity <= MAX_NEURON_QUANTITY; innerLayersNeuronQuantity++ ) {
+            for ( int innerLayersNeuronQuantity = MIN_NEURON_QUANTITY;
+                    innerLayersNeuronQuantity <= MAX_NEURON_QUANTITY;
+                    innerLayersNeuronQuantity++ ) {
                 // Primer experimento, con 1 capa, en serie
                 currentConfig = new ConcurrencyConfig();
                 currentConfig.concurrencyInEvaluate = evaluateConcurrency;
@@ -124,7 +133,8 @@ public class ConcurrencyExperiment_Basic extends LearningExperiment<BasicNetwork
                 currentConfig.neuronQuantityInLayer = new int[innerLayerQuantity + 2];
                 currentConfig.neuronQuantityInLayer[0] = 64;
                 for ( int i = 1; i <= innerLayerQuantity; i++ ) {
-                    currentConfig.neuronQuantityInLayer[i] = (int) Math.pow(2, innerLayersNeuronQuantity);
+                    currentConfig.neuronQuantityInLayer[i] = (int) Math.pow(2,
+                            innerLayersNeuronQuantity);
                 }
                 currentConfig.neuronQuantityInLayer[currentConfig.neuronQuantityInLayer.length - 1] = 1;
 
@@ -133,49 +143,69 @@ public class ConcurrencyExperiment_Basic extends LearningExperiment<BasicNetwork
                     currentConfig.activationFunctionForEncog[i] = new ActivationTANH();
                 }
 
-                System.out.println("========================================================");
+                System.out.println(
+                        "========================================================");
                 System.out.println("Inicio Experimento:");
                 System.out.println(currentConfig.toString());
-                System.out.println("========================================================");
+                System.out.println(
+                        "========================================================");
 
-                StatisticCalculator trainingStats = new StatisticCalculator(SAMPLES_PER_EXPERIMENT);
-                StatisticCalculator bestPossibleStats = new StatisticCalculator(SAMPLES_PER_EXPERIMENT);
+                StatisticCalculator trainingStats = new StatisticCalculator(
+                        SAMPLES_PER_EXPERIMENT);
+                StatisticCalculator bestPossibleStats = new StatisticCalculator(
+                        SAMPLES_PER_EXPERIMENT);
                 long time;
                 for ( int i = 1; i <= SAMPLES_PER_EXPERIMENT; i++ ) {
                     System.out.println("Calculo de muestra N" + i);
                     time = System.currentTimeMillis();
                     startStatistics(trainingStats, bestPossibleStats);
                     time = System.currentTimeMillis() - time;
-                    System.out.println("Final de Calculo de muestra N" + i + " - demoró " + time + "ms");
+                    System.out.println(
+                            "Final de Calculo de muestra N" + i + " - demoró " + time + "ms");
                 }
-                String[] resultsTraining = trainingStats.computeBasicStatistics();
+                String[] resultsTraining = trainingStats.
+                        computeBasicStatistics();
                 String forSaveTraining = trainingStats.toString();
-                String[] resultsBestPossible = bestPossibleStats.computeBasicStatistics();
+                String[] resultsBestPossible = bestPossibleStats.
+                        computeBasicStatistics();
                 String forSaveBestPossible = bestPossibleStats.toString();
 
                 System.out.println("====================================");
                 System.out.println("Fin Experimento:");
                 System.out.println(currentConfig.toString());
-                System.out.println("** Training DEMORÓ => " + resultsTraining[0]);
-                System.out.println("** Best Possible Action DEMORÓ => " + resultsBestPossible[0]);
+                System.out.
+                        println("** Training DEMORÓ => " + resultsTraining[0]);
+                System.out.println(
+                        "** Best Possible Action DEMORÓ => " + resultsBestPossible[0]);
                 System.out.println("====================================");
 
                 outputResults.append("====================================\n");
                 outputResults.append(currentConfig.toString()).append("\n");
-                outputResults.append("muestras Training =>\t").append(forSaveTraining).append("\n");
-                outputResults.append("resultados Training =>\t").append(resultsTraining[0]).append("\n");
-                outputResults.append("muestras Best Possible Action =>\t").append(forSaveBestPossible).append("\n");
-                outputResults.append("resultados Best Possible Action =>\t").append(resultsBestPossible[0]).append("\n");
+                outputResults.append("muestras Training =>\t").append(
+                        forSaveTraining).append("\n");
+                outputResults.append("resultados Training =>\t").append(
+                        resultsTraining[0]).append("\n");
+                outputResults.append("muestras Best Possible Action =>\t").
+                        append(forSaveBestPossible).append("\n");
+                outputResults.append("resultados Best Possible Action =>\t").
+                        append(resultsBestPossible[0]).append("\n");
 
-                trainingOutput.append(innerLayersNeuronQuantity).append("\t").append(resultsTraining[1]).append("\n");
-                evaluateOutput.append(innerLayersNeuronQuantity).append("\t").append(resultsBestPossible[1]).append("\n");
+                trainingOutput.append(innerLayersNeuronQuantity).append("\t").
+                        append(resultsTraining[1]).append("\n");
+                evaluateOutput.append(innerLayersNeuronQuantity).append("\t").
+                        append(resultsBestPossible[1]).append("\n");
             }
 
-            outputForGraphicsResults.append("Training: (neuron / avg time / min time / max time)").append("\n");
+            outputForGraphicsResults.append(
+                    "Training: (neuron / avg time / min time / max time)").
+                    append("\n");
             outputForGraphicsResults.append(trainingOutput).append("\n");
 
-            outputForGraphicsResults.append("Evaluating: (neuron / avg time / min time / max time)").append("\n");
-            outputForGraphicsResults.append(evaluateOutput).append("\n").append("\n");
+            outputForGraphicsResults.append(
+                    "Evaluating: (neuron / avg time / min time / max time)").
+                    append("\n");
+            outputForGraphicsResults.append(evaluateOutput).append("\n").append(
+                    "\n");
         }
     }
 
@@ -219,17 +249,26 @@ public class ConcurrencyExperiment_Basic extends LearningExperiment<BasicNetwork
 
             time = System.currentTimeMillis() - time;
             System.out.println("Demoró = " + time + " ms.");
-            outputResults.append("\n\n==========\nDemoró ").append(time).append(" ms.");
-            outputForGraphicsResults.append("\n\n==========\nDemoró ").append(time).append(" ms.");
+            outputResults.append("\n\n==========\nDemoró ").append(time).append(
+                    " ms.");
+            outputForGraphicsResults.append("\n\n==========\nDemoró ").append(
+                    time).append(" ms.");
 
-            try ( BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(filePath + "Concurrencia_Experimento_01.txt")), "UTF-8")) ) {
+            try ( BufferedWriter out = new BufferedWriter(
+                    new OutputStreamWriter(new FileOutputStream(new File(
+                            filePath + "Concurrencia_Experimento_01.txt")),
+                            "UTF-8")) ) {
                 out.write(outputResults.toString());
             }
-            try ( BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(filePath + "Concurrencia_Experimento_01_Calc.txt")), "UTF-8")) ) {
+            try ( BufferedWriter out = new BufferedWriter(
+                    new OutputStreamWriter(new FileOutputStream(new File(
+                            filePath + "Concurrencia_Experimento_01_Calc.txt")),
+                            "UTF-8")) ) {
                 out.write(outputForGraphicsResults.toString());
             }
         } catch ( Exception ex ) {
-            Logger.getLogger(ConcurrencyExperiment_Basic.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ConcurrencyExperiment_Basic.class.getName()).log(
+                    Level.SEVERE, null, ex);
         }
     }
 
@@ -240,16 +279,18 @@ public class ConcurrencyExperiment_Basic extends LearningExperiment<BasicNetwork
      *
      * @throws Exception
      */
-    public static void startStatistics(StatisticCalculator trainingStats, StatisticCalculator bestPossibleStats) throws Exception {
+    public static void startStatistics(StatisticCalculator trainingStats,
+            StatisticCalculator bestPossibleStats) throws Exception {
         LearningExperiment experiment = new ConcurrencyExperiment_Basic();
         experiment.setAlpha(currentConfig.alphas);
         experiment.setConcurrencyInLayer(currentConfig.concurrencyInLayer);
-        experiment.setConcurrencyInComputeBestPosibleAction(currentConfig.concurrencyInEvaluate);
+        experiment.setConcurrencyInComputeBestPosibleAction(
+                currentConfig.concurrencyInEvaluate);
         experiment.setLearningRateAdaptationToAnnealing(500_000);
         experiment.setLambda(0.7);
         experiment.setGamma(1);
         experiment.setExplorationRateToFixed(0);
-        experiment.setResetEligibilitiTraces(false);
+        experiment.setReplaceEligibilityTraces(false);
         experiment.setGamesToPlay(GAMES_TO_PLAY);
         experiment.setSaveEvery(10_000); //no se guarda nada
         experiment.setSaveBackupEvery(10_000); //no se hacen backup
@@ -268,13 +309,22 @@ public class ConcurrencyExperiment_Basic extends LearningExperiment<BasicNetwork
     }
 
     private static void printConfig(StringBuilder outputResults) {
-        outputResults.append("====================================").append("\n");
-        outputResults.append("SAMPLES_PER_EXPERIMENT = ").append(SAMPLES_PER_EXPERIMENT).append("\n");
-        outputResults.append("GAMES_TO_PLAY = ").append(GAMES_TO_PLAY).append("\n");
-        outputResults.append("MAX_INNER_LAYERS = ").append(MAX_INNER_LAYERS).append("\n");
-        outputResults.append("MAX_NEURON_QUANTITY = ").append(MAX_NEURON_QUANTITY).append(" (").append(Math.pow(2, MAX_NEURON_QUANTITY)).append(")").append("\n");
-        outputResults.append("MIN_NEURON_QUANTITY = ").append(MIN_NEURON_QUANTITY).append(" (").append(Math.pow(2, MIN_NEURON_QUANTITY)).append(")").append("\n");
-        outputResults.append("====================================").append("\n");
+        outputResults.append("====================================").
+                append("\n");
+        outputResults.append("SAMPLES_PER_EXPERIMENT = ").append(
+                SAMPLES_PER_EXPERIMENT).append("\n");
+        outputResults.append("GAMES_TO_PLAY = ").append(GAMES_TO_PLAY).append(
+                "\n");
+        outputResults.append("MAX_INNER_LAYERS = ").append(MAX_INNER_LAYERS).
+                append("\n");
+        outputResults.append("MAX_NEURON_QUANTITY = ").append(
+                MAX_NEURON_QUANTITY).append(" (").append(Math.pow(2,
+                MAX_NEURON_QUANTITY)).append(")").append("\n");
+        outputResults.append("MIN_NEURON_QUANTITY = ").append(
+                MIN_NEURON_QUANTITY).append(" (").append(Math.pow(2,
+                MIN_NEURON_QUANTITY)).append(")").append("\n");
+        outputResults.append("====================================").
+                append("\n");
     }
 
     @Override
@@ -286,8 +336,10 @@ public class ConcurrencyExperiment_Basic extends LearningExperiment<BasicNetwork
         this.setPerceptronName(this.getExperimentName());
         PerceptronConfiguration2048<BasicNetwork> config = new PBinary<>();
         config.setNeuronQuantityInLayer(currentConfig.neuronQuantityInLayer);
-        config.setActivationFunctionForEncog(currentConfig.activationFunctionForEncog);
-        this.setNeuralNetworkInterfaceFor2048(new EncogExperimentInterface(config));
+        config.setActivationFunctionForEncog(
+                currentConfig.activationFunctionForEncog);
+        this.setNeuralNetworkInterfaceFor2048(new EncogExperimentInterface(
+                config));
     }
 
     /**
@@ -296,12 +348,16 @@ public class ConcurrencyExperiment_Basic extends LearningExperiment<BasicNetwork
      * @return
      */
     @Override
-    public TDLambdaLearning instanceOfTdLearninrgImplementation(IPerceptronInterface perceptronInterface) {
-        return new TDLambdaLearning(perceptronInterface, afterState, getAlpha(), getLambda(), getGamma(), getConcurrencyInLayer(), isResetEligibilitiTraces(), true);
+    public TDLambdaLearning instanceOfTdLearninrgImplementation(
+            IPerceptronInterface perceptronInterface) {
+        return new TDLambdaLearning(perceptronInterface, afterState, getAlpha(),
+                getLambda(), getGamma(), getConcurrencyInLayer(),
+                isReplaceEligibilityTraces(), true);
     }
 
     @Override
-    public TDLambdaLearning instanceOfTdLearninrgImplementation(NTupleSystem nTupleSystem) {
+    public TDLambdaLearning instanceOfTdLearninrgImplementation(
+            NTupleSystem nTupleSystem) {
         return null;
     }
 

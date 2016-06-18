@@ -65,7 +65,9 @@ public abstract class PerceptronConfiguration2048<NeuralNetworkClass> implements
      * @param board
      * @param normalizedPerceptronInput <p>
      */
-    public abstract void calculateNormalizedPerceptronInput(GameBoard<NeuralNetworkClass> board, List<Double> normalizedPerceptronInput);
+    public abstract void calculateNormalizedPerceptronInput(
+            GameBoard<NeuralNetworkClass> board,
+            List<Double> normalizedPerceptronInput);
 
     @Override
     public Object clone() throws CloneNotSupportedException {
@@ -78,7 +80,8 @@ public abstract class PerceptronConfiguration2048<NeuralNetworkClass> implements
      * @param output <p>
      * @return
      */
-    public abstract Double computeNumericRepresentationFor(Game2048 game, Object[] output);
+    public abstract Double computeNumericRepresentationFor(Game2048 game,
+            Object[] output);
 
     /**
      * @return the activationFunctionForEncog
@@ -90,7 +93,8 @@ public abstract class PerceptronConfiguration2048<NeuralNetworkClass> implements
     /**
      * @param activationFunctionForEncog the activationFunctionForEncog to set
      */
-    public void setActivationFunctionForEncog(ActivationFunction[] activationFunctionForEncog) {
+    public void setActivationFunctionForEncog(
+            ActivationFunction[] activationFunctionForEncog) {
         this.activationFunctionForEncog = activationFunctionForEncog;
     }
 
@@ -133,6 +137,5 @@ public abstract class PerceptronConfiguration2048<NeuralNetworkClass> implements
      * @return
      */
     public abstract boolean useNTupleList();
-
 
 }

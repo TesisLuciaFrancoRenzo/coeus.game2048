@@ -37,7 +37,8 @@ public class StatisticCalculator {
     public String[] computeBasicStatistics() {
         String[] output = new String[2];
         if ( experiment.isEmpty() ) {
-            throw new IllegalStateException("la cantidad de experimentos no debe ser vacia");
+            throw new IllegalStateException(
+                    "la cantidad de experimentos no debe ser vacia");
         }
         Double min = Double.MAX_VALUE;
         Double max = Double.MIN_VALUE;
@@ -60,9 +61,10 @@ public class StatisticCalculator {
     @Override
     public String toString() {
         StringBuilder output = new StringBuilder();
-        experiment.stream().forEach((sample) -> {
-            output.append(sample).append("\t");
-        });
+        experiment.stream().forEach((sample) ->
+                {
+                    output.append(sample).append("\t");
+                });
         return output.toString();
     }
 

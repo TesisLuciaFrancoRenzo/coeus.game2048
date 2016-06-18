@@ -59,18 +59,26 @@ public class GameBoardTest {
     public GameBoardTest() {
         tileContainer = new TileContainer(17);
         Tile[] emptyB = {
-            tileContainer.getTile(0), tileContainer.getTile(0), tileContainer.getTile(0), tileContainer.getTile(0),
-            tileContainer.getTile(0), tileContainer.getTile(0), tileContainer.getTile(0), tileContainer.getTile(0),
-            tileContainer.getTile(0), tileContainer.getTile(0), tileContainer.getTile(0), tileContainer.getTile(0),
-            tileContainer.getTile(0), tileContainer.getTile(0), tileContainer.getTile(0), tileContainer.getTile(0)
+            tileContainer.getTile(0), tileContainer.getTile(0), tileContainer.
+            getTile(0), tileContainer.getTile(0),
+            tileContainer.getTile(0), tileContainer.getTile(0), tileContainer.
+            getTile(0), tileContainer.getTile(0),
+            tileContainer.getTile(0), tileContainer.getTile(0), tileContainer.
+            getTile(0), tileContainer.getTile(0),
+            tileContainer.getTile(0), tileContainer.getTile(0), tileContainer.
+            getTile(0), tileContainer.getTile(0)
         };
         this.emptyBoard = emptyB;
 
         Tile[] randomB = {
-            tileContainer.getTile(0), tileContainer.getTile(4), tileContainer.getTile(0), tileContainer.getTile(17),
-            tileContainer.getTile(4), tileContainer.getTile(6), tileContainer.getTile(4), tileContainer.getTile(4),
-            tileContainer.getTile(2), tileContainer.getTile(4), tileContainer.getTile(5), tileContainer.getTile(7),
-            tileContainer.getTile(4), tileContainer.getTile(0), tileContainer.getTile(1), tileContainer.getTile(4)
+            tileContainer.getTile(0), tileContainer.getTile(4), tileContainer.
+            getTile(0), tileContainer.getTile(17),
+            tileContainer.getTile(4), tileContainer.getTile(6), tileContainer.
+            getTile(4), tileContainer.getTile(4),
+            tileContainer.getTile(2), tileContainer.getTile(4), tileContainer.
+            getTile(5), tileContainer.getTile(7),
+            tileContainer.getTile(4), tileContainer.getTile(0), tileContainer.
+            getTile(1), tileContainer.getTile(4)
         };
         this.randomBoard = randomB;
         nTupleConfiguration = new PBoard();
@@ -133,10 +141,14 @@ public class GameBoardTest {
         // =========================================== //
         board = new GameBoard(game, tileContainer);
         Tile[] fullBoard = {
-            tileContainer.getTile(4), tileContainer.getTile(4), tileContainer.getTile(4), tileContainer.getTile(4),
-            tileContainer.getTile(4), tileContainer.getTile(4), tileContainer.getTile(4), tileContainer.getTile(4),
-            tileContainer.getTile(4), tileContainer.getTile(4), tileContainer.getTile(4), tileContainer.getTile(4),
-            tileContainer.getTile(4), tileContainer.getTile(4), tileContainer.getTile(4), tileContainer.getTile(4)
+            tileContainer.getTile(4), tileContainer.getTile(4), tileContainer.
+            getTile(4), tileContainer.getTile(4),
+            tileContainer.getTile(4), tileContainer.getTile(4), tileContainer.
+            getTile(4), tileContainer.getTile(4),
+            tileContainer.getTile(4), tileContainer.getTile(4), tileContainer.
+            getTile(4), tileContainer.getTile(4),
+            tileContainer.getTile(4), tileContainer.getTile(4), tileContainer.
+            getTile(4), tileContainer.getTile(4)
         };
         board.setTiles(fullBoard);
         board.updateInternalState(true);
@@ -148,10 +160,14 @@ public class GameBoardTest {
         // =========================================== //
         board = new GameBoard(game, tileContainer);
         Tile[] almostFull = {
-            tileContainer.getTile(0), tileContainer.getTile(4), tileContainer.getTile(4), tileContainer.getTile(4),
-            tileContainer.getTile(4), tileContainer.getTile(4), tileContainer.getTile(4), tileContainer.getTile(4),
-            tileContainer.getTile(4), tileContainer.getTile(4), tileContainer.getTile(4), tileContainer.getTile(4),
-            tileContainer.getTile(4), tileContainer.getTile(4), tileContainer.getTile(4), tileContainer.getTile(4)
+            tileContainer.getTile(0), tileContainer.getTile(4), tileContainer.
+            getTile(4), tileContainer.getTile(4),
+            tileContainer.getTile(4), tileContainer.getTile(4), tileContainer.
+            getTile(4), tileContainer.getTile(4),
+            tileContainer.getTile(4), tileContainer.getTile(4), tileContainer.
+            getTile(4), tileContainer.getTile(4),
+            tileContainer.getTile(4), tileContainer.getTile(4), tileContainer.
+            getTile(4), tileContainer.getTile(4)
         };
         board.setTiles(almostFull);
         board.updateInternalState(true);
@@ -203,10 +219,14 @@ public class GameBoardTest {
         System.out.println("isTerminalState");
         GameBoard board = new GameBoard(game, tileContainer);
         Tile[] terminalBoard = {
-            tileContainer.getTile(7), tileContainer.getTile(1), tileContainer.getTile(3), tileContainer.getTile(2),
-            tileContainer.getTile(1), tileContainer.getTile(4), tileContainer.getTile(5), tileContainer.getTile(1),
-            tileContainer.getTile(3), tileContainer.getTile(5), tileContainer.getTile(1), tileContainer.getTile(6),
-            tileContainer.getTile(1), tileContainer.getTile(8), tileContainer.getTile(5), tileContainer.getTile(2)
+            tileContainer.getTile(7), tileContainer.getTile(1), tileContainer.
+            getTile(3), tileContainer.getTile(2),
+            tileContainer.getTile(1), tileContainer.getTile(4), tileContainer.
+            getTile(5), tileContainer.getTile(1),
+            tileContainer.getTile(3), tileContainer.getTile(5), tileContainer.
+            getTile(1), tileContainer.getTile(6),
+            tileContainer.getTile(1), tileContainer.getTile(8), tileContainer.
+            getTile(5), tileContainer.getTile(2)
         };
         board.setTiles(terminalBoard);
         board.updateInternalState(true);
@@ -218,10 +238,14 @@ public class GameBoardTest {
         // =========================================== //
         board = new GameBoard(game, tileContainer);
         Tile[] fullNotTerminalBoard = {
-            tileContainer.getTile(7), tileContainer.getTile(1), tileContainer.getTile(3), tileContainer.getTile(2),
-            tileContainer.getTile(1), tileContainer.getTile(4), tileContainer.getTile(5), tileContainer.getTile(1),
-            tileContainer.getTile(3), tileContainer.getTile(5), tileContainer.getTile(1), tileContainer.getTile(6),
-            tileContainer.getTile(1), tileContainer.getTile(8), tileContainer.getTile(1), tileContainer.getTile(2)
+            tileContainer.getTile(7), tileContainer.getTile(1), tileContainer.
+            getTile(3), tileContainer.getTile(2),
+            tileContainer.getTile(1), tileContainer.getTile(4), tileContainer.
+            getTile(5), tileContainer.getTile(1),
+            tileContainer.getTile(3), tileContainer.getTile(5), tileContainer.
+            getTile(1), tileContainer.getTile(6),
+            tileContainer.getTile(1), tileContainer.getTile(8), tileContainer.
+            getTile(1), tileContainer.getTile(2)
         };
         board.setTiles(fullNotTerminalBoard);
         board.updateInternalState(true);
@@ -242,10 +266,14 @@ public class GameBoardTest {
         // =========================================== //
         board = new GameBoard(game, tileContainer);
         Tile[] winBoard = {
-            tileContainer.getTile(7), tileContainer.getTile(1), tileContainer.getTile(3), tileContainer.getTile(2),
-            tileContainer.getTile(1), tileContainer.getTile(0), tileContainer.getTile(5), tileContainer.getTile(1),
-            tileContainer.getTile(3), tileContainer.getTile(5), tileContainer.getTile(1), tileContainer.getTile(6),
-            tileContainer.getTile(1), tileContainer.getTile(8), tileContainer.getTile(1), tileContainer.getTile(2)
+            tileContainer.getTile(7), tileContainer.getTile(1), tileContainer.
+            getTile(3), tileContainer.getTile(2),
+            tileContainer.getTile(1), tileContainer.getTile(0), tileContainer.
+            getTile(5), tileContainer.getTile(1),
+            tileContainer.getTile(3), tileContainer.getTile(5), tileContainer.
+            getTile(1), tileContainer.getTile(6),
+            tileContainer.getTile(1), tileContainer.getTile(8), tileContainer.
+            getTile(1), tileContainer.getTile(2)
         };
         board.setTiles(winBoard);
         board.updateInternalState(true);
