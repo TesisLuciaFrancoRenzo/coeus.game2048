@@ -18,7 +18,6 @@
  */
 package ar.edu.unrc.game2048.performanceandtraining.experiments.performance;
 
-import ar.edu.unrc.coeus.interfaces.IPerceptronInterface;
 import static ar.edu.unrc.coeus.tdlearning.learning.ELearningStyle.afterState;
 import ar.edu.unrc.coeus.tdlearning.learning.TDLambdaLearning;
 import ar.edu.unrc.coeus.tdlearning.training.ntuple.NTupleSystem;
@@ -35,6 +34,7 @@ import java.util.logging.Logger;
 import org.encog.engine.network.activation.ActivationFunction;
 import org.encog.engine.network.activation.ActivationTANH;
 import org.encog.neural.networks.BasicNetwork;
+import ar.edu.unrc.coeus.interfaces.INeuralNetworkInterface;
 
 /**
  * @author lucia bressan, franco pellegrini, renzo bianchini
@@ -349,7 +349,7 @@ public class ConcurrencyExperiment_Basic extends LearningExperiment<BasicNetwork
      */
     @Override
     public TDLambdaLearning instanceOfTdLearninrgImplementation(
-            IPerceptronInterface perceptronInterface) {
+            INeuralNetworkInterface perceptronInterface) {
         return new TDLambdaLearning(perceptronInterface, afterState, getAlpha(),
                 getLambda(), getGamma(), getConcurrencyInLayer(),
                 isReplaceEligibilityTraces(), true);

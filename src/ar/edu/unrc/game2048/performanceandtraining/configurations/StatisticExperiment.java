@@ -1,6 +1,5 @@
 package ar.edu.unrc.game2048.performanceandtraining.configurations;
 
-import ar.edu.unrc.coeus.interfaces.IPerceptronInterface;
 import ar.edu.unrc.coeus.tdlearning.learning.TDLambdaLearning;
 import ar.edu.unrc.game2048.Game2048;
 import ar.edu.unrc.game2048.NTupleConfiguration2048;
@@ -13,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
+import static java.lang.Math.round;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -30,6 +30,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
+import ar.edu.unrc.coeus.interfaces.INeuralNetworkInterface;
 import static java.lang.Math.round;
 
 /**
@@ -461,7 +462,7 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
                         getNeuralNetworkInterfaceFor2048().clone();
 
                 NTupleConfiguration2048 tempNTupleConfiguration = null;
-                IPerceptronInterface tempPerceptronInterface = null;
+                INeuralNetworkInterface tempPerceptronInterface = null;
 
                 if ( learningExperiment.getNeuralNetworkInterfaceFor2048().
                         getPerceptronConfiguration() != null ) {

@@ -18,7 +18,6 @@
  */
 package ar.edu.unrc.game2048.performanceandtraining.configurations.librariesinterfaces;
 
-import ar.edu.unrc.coeus.interfaces.IPerceptronInterface;
 import ar.edu.unrc.coeus.tdlearning.utils.FunctionUtils;
 import ar.edu.unrc.game2048.PerceptronConfiguration2048;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.INeuralNetworkInterfaceFor2048;
@@ -35,6 +34,7 @@ import org.encog.engine.network.activation.ActivationTANH;
 import org.encog.neural.networks.BasicNetwork;
 import org.encog.neural.networks.layers.BasicLayer;
 import org.encog.util.obj.SerializeObject;
+import ar.edu.unrc.coeus.interfaces.INeuralNetworkInterface;
 
 /**
  *
@@ -97,7 +97,7 @@ public class EncogExperimentInterface extends INeuralNetworkInterfaceFor2048<Bas
     }
 
     @Override
-    public IPerceptronInterface getPerceptronInterface() {
+    public INeuralNetworkInterface getPerceptronInterface() {
         activationFunction = new ArrayList<>(getPerceptronConfiguration().
                 getActivationFunctionForEncog().length);
         derivatedActivationFunction = new ArrayList<>(
@@ -123,7 +123,7 @@ public class EncogExperimentInterface extends INeuralNetworkInterfaceFor2048<Bas
             }
         }
 
-        IPerceptronInterface encogPerceptronInterface = new IPerceptronInterface() {
+        INeuralNetworkInterface encogPerceptronInterface = new INeuralNetworkInterface() {
 
             @Override
             public Function<Double, Double> getActivationFunction(int layerIndex) {

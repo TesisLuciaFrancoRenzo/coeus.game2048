@@ -18,12 +18,12 @@
  */
 package ar.edu.unrc.game2048.performanceandtraining.configurations.librariesinterfaces;
 
-import ar.edu.unrc.coeus.interfaces.IPerceptronInterface;
 import ar.edu.unrc.coeus.tdlearning.training.ntuple.NTupleSystem;
 import ar.edu.unrc.game2048.NTupleConfiguration2048;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.INeuralNetworkInterfaceFor2048;
 import java.io.File;
 import org.encog.neural.networks.BasicNetwork;
+import ar.edu.unrc.coeus.interfaces.INeuralNetworkInterface;
 
 /**
  *
@@ -56,7 +56,7 @@ public class NTupleExperimentInterface extends INeuralNetworkInterfaceFor2048<Ba
     }
 
     @Override
-    public IPerceptronInterface getPerceptronInterface() {
+    public INeuralNetworkInterface getPerceptronInterface() {
         return null;
     }
 
@@ -73,7 +73,7 @@ public class NTupleExperimentInterface extends INeuralNetworkInterfaceFor2048<Ba
                 getNTupleConfiguration().derivatedActivationFunction, this.
                 getNTupleConfiguration().concurrency);
         if ( randomized ) {
-            nTupleSystem.reset();
+            nTupleSystem.randomize();
         }
         return nTupleSystem;
     }

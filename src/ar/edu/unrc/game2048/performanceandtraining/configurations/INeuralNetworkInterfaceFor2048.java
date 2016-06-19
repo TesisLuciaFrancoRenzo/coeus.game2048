@@ -18,7 +18,6 @@
  */
 package ar.edu.unrc.game2048.performanceandtraining.configurations;
 
-import ar.edu.unrc.coeus.interfaces.IPerceptronInterface;
 import ar.edu.unrc.coeus.tdlearning.interfaces.IAction;
 import ar.edu.unrc.coeus.tdlearning.learning.ELearningStyle;
 import ar.edu.unrc.coeus.tdlearning.learning.TDLambdaLearning;
@@ -32,6 +31,7 @@ import static java.awt.event.KeyEvent.VK_RIGHT;
 import static java.awt.event.KeyEvent.VK_UP;
 import java.io.File;
 import java.util.List;
+import ar.edu.unrc.coeus.interfaces.INeuralNetworkInterface;
 
 /**
  *
@@ -116,7 +116,7 @@ public abstract class INeuralNetworkInterfaceFor2048<NeuralNetworkClass> impleme
      *
      * @return
      */
-    public abstract IPerceptronInterface getPerceptronInterface();
+    public abstract INeuralNetworkInterface getPerceptronInterface();
 
     /**
      * @param perceptronFile       <p>

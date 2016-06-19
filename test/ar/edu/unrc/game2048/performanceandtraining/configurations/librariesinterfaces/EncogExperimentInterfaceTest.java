@@ -18,13 +18,11 @@
  */
 package ar.edu.unrc.game2048.performanceandtraining.configurations.librariesinterfaces;
 
-import ar.edu.unrc.coeus.interfaces.IPerceptronInterface;
 import ar.edu.unrc.coeus.tdlearning.utils.FunctionUtils;
 import ar.edu.unrc.game2048.Game2048;
 import ar.edu.unrc.game2048.GameBoard;
 import ar.edu.unrc.game2048.PerceptronConfiguration2048;
 import java.util.List;
-import static junit.framework.Assert.assertEquals;
 import org.encog.engine.network.activation.ActivationFunction;
 import org.encog.engine.network.activation.ActivationLinear;
 import org.encog.engine.network.activation.ActivationSigmoid;
@@ -36,9 +34,12 @@ import org.encog.neural.networks.layers.BasicLayer;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import ar.edu.unrc.coeus.interfaces.INeuralNetworkInterface;
 
 /**
  *
@@ -193,7 +194,7 @@ public class EncogExperimentInterfaceTest {
         EncogExperimentInterface experiment = new EncogExperimentInterface(
                 perceptronConfiguration);
         experiment.setConfigForTesting(perceptron);
-        IPerceptronInterface encogInterface = experiment.
+        INeuralNetworkInterface encogInterface = experiment.
                 getPerceptronInterface();
 
         double expResult;
@@ -208,9 +209,8 @@ public class EncogExperimentInterfaceTest {
 
         double[] expResultArray = {0.80281682071709, 0.8140600608095045};
         double[] resultArray = outut.getData();
-        Assert.
-                assertArrayEquals(expResultArray, resultArray,
-                        0.0000000000000001);
+        assertArrayEquals(expResultArray, resultArray,
+                0.0000000000000001);
         // demostracion teorica con wxMaxima de que el resultado es el esperado
         //"=== INPUT ===";
         //"f(netk1)";fnetk1 : 0.3;
@@ -245,52 +245,52 @@ public class EncogExperimentInterfaceTest {
         //get pesos con interfaz
         expResult = weightsA[0];
         result = encogInterface.getWeight(1, 0, 0);
-        assertEquals(expResult, result);
+        assertEquals(expResult, result, 0.0000000000000001);
 
         expResult = weightsA[1];
         result = encogInterface.getWeight(1, 1, 0);
-        assertEquals(expResult, result);
+        assertEquals(expResult, result, 0.0000000000000001);
 
         expResult = weightsA[2];
         result = encogInterface.getWeight(1, 0, 1);
-        assertEquals(expResult, result);
+        assertEquals(expResult, result, 0.0000000000000001);
 
         expResult = weightsA[3];
         result = encogInterface.getWeight(1, 1, 1);
-        assertEquals(expResult, result);
+        assertEquals(expResult, result, 0.0000000000000001);
 
         expResult = weightsA[4];
         result = encogInterface.getWeight(2, 0, 0);
-        assertEquals(expResult, result);
+        assertEquals(expResult, result, 0.0000000000000001);
 
         expResult = weightsA[5];
         result = encogInterface.getWeight(2, 1, 0);
-        assertEquals(expResult, result);
+        assertEquals(expResult, result, 0.0000000000000001);
 
         expResult = weightsA[6];
         result = encogInterface.getWeight(2, 0, 1);
-        assertEquals(expResult, result);
+        assertEquals(expResult, result, 0.0000000000000001);
 
         expResult = weightsA[7];
         result = encogInterface.getWeight(2, 1, 1);
-        assertEquals(expResult, result);
+        assertEquals(expResult, result, 0.0000000000000001);
 
         // get bias con interfaz
         expResult = weightsA[8];
         result = encogInterface.getBias(1, 0);
-        assertEquals(expResult, result);
+        assertEquals(expResult, result, 0.0000000000000001);
 
         expResult = weightsA[9];
         result = encogInterface.getBias(1, 1);
-        assertEquals(expResult, result);
+        assertEquals(expResult, result, 0.0000000000000001);
 
         expResult = weightsA[10];
         result = encogInterface.getBias(2, 0);
-        assertEquals(expResult, result);
+        assertEquals(expResult, result, 0.0000000000000001);
 
         expResult = weightsA[11];
         result = encogInterface.getBias(2, 1);
-        assertEquals(expResult, result);
+        assertEquals(expResult, result, 0.0000000000000001);
 
         //cambiamos los pesos, y luego verificamos que se cambien correctamente
         //configuramos los pesos
@@ -313,103 +313,103 @@ public class EncogExperimentInterfaceTest {
         //get pesos con interfaz
         expResult = weightsB[0];
         result = encogInterface.getWeight(1, 0, 0);
-        assertEquals(expResult, result);
+        assertEquals(expResult, result, 0.0000000000000001);
 
         expResult = weightsB[1];
         result = encogInterface.getWeight(1, 1, 0);
-        assertEquals(expResult, result);
+        assertEquals(expResult, result, 0.0000000000000001);
 
         expResult = weightsB[2];
         result = encogInterface.getWeight(1, 0, 1);
-        assertEquals(expResult, result);
+        assertEquals(expResult, result, 0.0000000000000001);
 
         expResult = weightsB[3];
         result = encogInterface.getWeight(1, 1, 1);
-        assertEquals(expResult, result);
+        assertEquals(expResult, result, 0.0000000000000001);
 
         expResult = weightsB[4];
         result = encogInterface.getWeight(2, 0, 0);
-        assertEquals(expResult, result);
+        assertEquals(expResult, result, 0.0000000000000001);
 
         expResult = weightsB[5];
         result = encogInterface.getWeight(2, 1, 0);
-        assertEquals(expResult, result);
+        assertEquals(expResult, result, 0.0000000000000001);
 
         expResult = weightsB[6];
         result = encogInterface.getWeight(2, 0, 1);
-        assertEquals(expResult, result);
+        assertEquals(expResult, result, 0.0000000000000001);
 
         expResult = weightsB[7];
         result = encogInterface.getWeight(2, 1, 1);
-        assertEquals(expResult, result);
+        assertEquals(expResult, result, 0.0000000000000001);
 
         // get bias con interfaz
         expResult = weightsB[8];
         result = encogInterface.getBias(1, 0);
-        assertEquals(expResult, result);
+        assertEquals(expResult, result, 0.0000000000000001);
 
         expResult = weightsB[9];
         result = encogInterface.getBias(1, 1);
-        assertEquals(expResult, result);
+        assertEquals(expResult, result, 0.0000000000000001);
 
         expResult = weightsB[10];
         result = encogInterface.getBias(2, 0);
-        assertEquals(expResult, result);
+        assertEquals(expResult, result, 0.0000000000000001);
 
         expResult = weightsB[11];
         result = encogInterface.getBias(2, 1);
-        assertEquals(expResult, result);
+        assertEquals(expResult, result, 0.0000000000000001);
 
         //accedemos a los cambios pero con encog y verificamos las modificaciones
         //pesos
         expResult = weightsB[0];
         result = perceptron.getWeight(0, 0, 0);
-        assertEquals(expResult, result);
+        assertEquals(expResult, result, 0.0000000000000001);
 
         expResult = weightsB[1];
         result = perceptron.getWeight(0, 0, 1);
-        assertEquals(expResult, result);
+        assertEquals(expResult, result, 0.0000000000000001);
 
         expResult = weightsB[2];
         result = perceptron.getWeight(0, 1, 0);
-        assertEquals(expResult, result);
+        assertEquals(expResult, result, 0.0000000000000001);
 
         expResult = weightsB[3];
         result = perceptron.getWeight(0, 1, 1);
-        assertEquals(expResult, result);
+        assertEquals(expResult, result, 0.0000000000000001);
 
         expResult = weightsB[4];
         result = perceptron.getWeight(1, 0, 0);
-        assertEquals(expResult, result);
+        assertEquals(expResult, result, 0.0000000000000001);
 
         expResult = weightsB[5];
         result = perceptron.getWeight(1, 0, 1);
-        assertEquals(expResult, result);
+        assertEquals(expResult, result, 0.0000000000000001);
 
         expResult = weightsB[6];
         result = perceptron.getWeight(1, 1, 0);
-        assertEquals(expResult, result);
+        assertEquals(expResult, result, 0.0000000000000001);
 
         expResult = weightsB[7];
         result = perceptron.getWeight(1, 1, 1);
-        assertEquals(expResult, result);
+        assertEquals(expResult, result, 0.0000000000000001);
 
         //bias
         expResult = weightsB[8];
         result = perceptron.getWeight(0, 2, 0);
-        assertEquals(expResult, result);
+        assertEquals(expResult, result, 0.0000000000000001);
 
         expResult = weightsB[9];
         result = perceptron.getWeight(0, 2, 1);
-        assertEquals(expResult, result);
+        assertEquals(expResult, result, 0.0000000000000001);
 
         expResult = weightsB[10];
         result = perceptron.getWeight(1, 2, 0);
-        assertEquals(expResult, result);
+        assertEquals(expResult, result, 0.0000000000000001);
 
         expResult = weightsB[11];
         result = perceptron.getWeight(1, 2, 1);
-        assertEquals(expResult, result);
+        assertEquals(expResult, result, 0.0000000000000001);
 
         // testeamos que la salida es la esperada. Los calculos se han realizado
         // manualmente y corresponden al caso de pureba numero 2 del informe
@@ -504,7 +504,7 @@ public class EncogExperimentInterfaceTest {
         EncogExperimentInterface experiment = new EncogExperimentInterface(
                 perceptronConfiguration);
         experiment.setConfigForTesting(perceptron);
-        IPerceptronInterface encogInterface = experiment.
+        INeuralNetworkInterface encogInterface = experiment.
                 getPerceptronInterface();
 
         experiment.initializeEncogPerceptron(Boolean.FALSE);

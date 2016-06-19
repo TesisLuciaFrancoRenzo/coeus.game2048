@@ -18,7 +18,6 @@
  */
 package ar.edu.unrc.game2048.performanceandtraining.experiments.learning.ntuple;
 
-import ar.edu.unrc.coeus.interfaces.IPerceptronInterface;
 import static ar.edu.unrc.coeus.tdlearning.learning.ELearningStyle.afterState;
 import ar.edu.unrc.coeus.tdlearning.learning.TDLambdaLearning;
 import ar.edu.unrc.coeus.tdlearning.training.ntuple.NTupleSystem;
@@ -28,6 +27,7 @@ import ar.edu.unrc.game2048.performanceandtraining.configurations.librariesinter
 import ar.edu.unrc.game2048.performanceandtraining.configurations.ntuples.NBasicTanH_32768;
 import java.io.File;
 import org.encog.neural.networks.BasicNetwork;
+import ar.edu.unrc.coeus.interfaces.INeuralNetworkInterface;
 
 /**
  * @author lucia bressan, franco pellegrini, renzo bianchini
@@ -100,7 +100,7 @@ public class BasicTanH extends LearningExperiment<BasicNetwork> {
 
     @Override
     public TDLambdaLearning instanceOfTdLearninrgImplementation(
-            IPerceptronInterface perceptronInterface) {
+            INeuralNetworkInterface perceptronInterface) {
         return null;
     }
 

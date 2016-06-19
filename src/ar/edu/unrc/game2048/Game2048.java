@@ -65,9 +65,7 @@ import static java.lang.Math.cos;
 import static java.lang.Math.pow;
 import static java.lang.Math.sin;
 import static java.lang.Math.toRadians;
-import static java.lang.String.valueOf;
 import static java.lang.System.arraycopy;
-import static java.lang.Thread.sleep;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -80,6 +78,8 @@ import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 import org.encog.ml.data.MLData;
 import org.encog.ml.data.basic.BasicMLData;
 import org.encog.neural.networks.BasicNetwork;
+import static java.lang.String.valueOf;
+import static java.lang.Thread.sleep;
 
 /**
  * @author Konstantin Bulenkov, lucia bressan, franco pellegrini, renzo bianchini

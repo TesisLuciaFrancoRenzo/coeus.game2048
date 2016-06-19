@@ -18,7 +18,6 @@
  */
 package ar.edu.unrc.game2048.performanceandtraining.configurations;
 
-import ar.edu.unrc.coeus.interfaces.IPerceptronInterface;
 import ar.edu.unrc.coeus.tdlearning.learning.EExplorationRateAlgorithms;
 import ar.edu.unrc.coeus.tdlearning.learning.ELearningRateAdaptation;
 import ar.edu.unrc.coeus.tdlearning.learning.TDLambdaLearning;
@@ -44,6 +43,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import ar.edu.unrc.coeus.interfaces.INeuralNetworkInterface;
 
 /**
  *
@@ -234,6 +234,13 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
         return experimentName;
     }
 
+
+    /**
+     * @param experimentName the experimentName to set
+     */
+    public void setExperimentName(String experimentName) {
+        this.experimentName = experimentName;
+    }
     /**
      * @param experimentClass
      */
@@ -244,13 +251,6 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
             className = className.substring(lastDot + 1);
         }
         this.experimentName = className;
-    }
-
-    /**
-     * @param experimentName the experimentName to set
-     */
-    public void setExperimentName(String experimentName) {
-        this.experimentName = experimentName;
     }
 
     /**
@@ -427,7 +427,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
      * @return
      */
     public abstract TDLambdaLearning instanceOfTdLearninrgImplementation(
-            IPerceptronInterface perceptronInterface);
+            INeuralNetworkInterface perceptronInterface);
 
     /**
      *
@@ -566,23 +566,23 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
         File perceptronFileBackup;
         switch ( this.learningRateAdaptation ) {
             case fixed: {
-                learningAlgorithm.setLearningRateAdaptationToFixed();
+                learningAlgorithm.setFixedLearningRate();
                 break;
             }
             case annealing: {
-                learningAlgorithm.setLearningRateAdaptationToAnnealing(
+                learningAlgorithm.setAnnealingLearningRate(
                         annealingT);
                 break;
             }
         }
         switch ( this.explorationRate ) {
             case fixed: {
-                learningAlgorithm.setExplorationRateToFixed(
+                learningAlgorithm.setFixedExplorationRate(
                         this.explorationRateInitialValue);
                 break;
             }
             case linear: {
-                learningAlgorithm.setExplorationRate(
+                learningAlgorithm.setLinearExplorationRate(
                         this.explorationRateInitialValue,
                         this.explorationRateStartDecrementing,
                         this.explorationRateFinalValue,
