@@ -18,6 +18,7 @@
  */
 package ar.edu.unrc.game2048.performanceandtraining.experiments.learning.encog;
 
+import ar.edu.unrc.coeus.interfaces.INeuralNetworkInterface;
 import static ar.edu.unrc.coeus.tdlearning.learning.ELearningStyle.afterState;
 import ar.edu.unrc.coeus.tdlearning.learning.TDLambdaLearning;
 import ar.edu.unrc.coeus.tdlearning.training.ntuple.NTupleSystem;
@@ -27,7 +28,6 @@ import ar.edu.unrc.game2048.performanceandtraining.configurations.librariesinter
 import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.PNTuple512;
 import java.io.File;
 import org.encog.neural.networks.BasicNetwork;
-import ar.edu.unrc.coeus.interfaces.INeuralNetworkInterface;
 
 /**
  * @author lucia bressan, franco pellegrini, renzo bianchini

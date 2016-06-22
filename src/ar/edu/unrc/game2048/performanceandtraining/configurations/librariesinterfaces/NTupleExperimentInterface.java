@@ -18,12 +18,12 @@
  */
 package ar.edu.unrc.game2048.performanceandtraining.configurations.librariesinterfaces;
 
+import ar.edu.unrc.coeus.interfaces.INeuralNetworkInterface;
 import ar.edu.unrc.coeus.tdlearning.training.ntuple.NTupleSystem;
 import ar.edu.unrc.game2048.NTupleConfiguration2048;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.INeuralNetworkInterfaceFor2048;
 import java.io.File;
 import org.encog.neural.networks.BasicNetwork;
-import ar.edu.unrc.coeus.interfaces.INeuralNetworkInterface;
 
 /**
  *

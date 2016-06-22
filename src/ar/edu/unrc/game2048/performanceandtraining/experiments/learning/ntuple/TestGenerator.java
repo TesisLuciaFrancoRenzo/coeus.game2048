@@ -42,6 +42,11 @@ public class TestGenerator {
 
     /**
      *
+     */
+    public static final int NO_ANNEALING = -1;
+
+    /**
+     *
      * @param numberForShow
      * @param experiment
      * @param statisticsOnly
@@ -141,7 +146,7 @@ public class TestGenerator {
 //        boolean statistics = true;
         boolean statistics = false;
         int maxTrainingThreads = 4;
-        boolean backupStatistics = true;
+        boolean doBackupStatistics = true;
 //        boolean backupStatistics = false;
 
         String experimentName = "BasicLinear";
@@ -177,7 +182,7 @@ public class TestGenerator {
             ArgumentLoader arguments = new ArgumentLoader(args);
             statistics = Boolean.parseBoolean(arguments.getArg("statistics"));
             maxTrainingThreads = Integer.parseInt(arguments.getArg("maxTrainingThreads"));
-            backupStatistics = Boolean.parseBoolean(arguments.getArg("backupStatistics"));
+            doBackupStatistics = Boolean.parseBoolean(arguments.getArg("doBackupStatistics"));
             gamesToPlay = Integer.parseInt(arguments.getArg("gamesToPlay"));
             saveEvery = Integer.parseInt(arguments.getArg("saveEvery"));
             saveBackupEvery = Integer.parseInt(arguments.getArg("saveBackupEvery"));
@@ -198,7 +203,7 @@ public class TestGenerator {
 
         if ( statistics ) {
             statisticsOnly = true;
-            runStatisticsForBackups = backupStatistics;
+            runStatisticsForBackups = doBackupStatistics;
             gamesToPlayPerThreadForStatistics = 1_000;
             simulationsForStatistics = 8;
         } else {
@@ -230,7 +235,6 @@ public class TestGenerator {
                 saveBackupEvery, gamesToPlayPerThreadForStatistics,
                 simulationsForStatistics, explorationRate, filePath);
     }
-    public static final int NO_ANNEALING = -1;
 
     /**
      *

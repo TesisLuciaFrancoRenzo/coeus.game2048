@@ -18,13 +18,13 @@
  */
 package ar.edu.unrc.game2048.performanceandtraining.experiments.learning.random;
 
+import ar.edu.unrc.coeus.interfaces.INeuralNetworkInterface;
 import ar.edu.unrc.coeus.tdlearning.learning.TDLambdaLearning;
 import ar.edu.unrc.coeus.tdlearning.training.ntuple.NTupleSystem;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.LearningExperiment;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.librariesinterfaces.RandomExperimentInterface;
 import java.io.File;
 import org.encog.neural.networks.BasicNetwork;
-import ar.edu.unrc.coeus.interfaces.INeuralNetworkInterface;
 
 /**
  * @author lucia bressan, franco pellegrini, renzo bianchini

@@ -41,6 +41,11 @@ public class TestGeneratorActivationFunctionVsTraces {
 
     /**
      *
+     */
+    public static final int NO_ANNEALING = -1;
+
+    /**
+     *
      * @param numberForShow
      * @param experiment
      * @param statisticsOnly
@@ -198,6 +203,7 @@ public class TestGeneratorActivationFunctionVsTraces {
      * @param experimentName
      * @param experiment
      * @param alphaList
+     * @param annealingAlphaList
      * @param lambdaList
      * @param gammaList
      * @param statisticsOnly
@@ -301,5 +307,4 @@ public class TestGeneratorActivationFunctionVsTraces {
                     getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public static final int NO_ANNEALING = -1;
 }

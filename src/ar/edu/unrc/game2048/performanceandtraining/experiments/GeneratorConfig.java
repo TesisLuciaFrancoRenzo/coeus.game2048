@@ -24,9 +24,9 @@ package ar.edu.unrc.game2048.performanceandtraining.experiments;
 public class GeneratorConfig {
 
     private final double alpha;
+    private final int annealingAlpha;
     private final double explorationRate;
     private final double gamma;
-    private final int annealingAlpha;
     private final double lambda;
     private final int number;
     private final boolean resetTraces;
