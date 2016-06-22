@@ -49,6 +49,7 @@ public class TestGenerator {
      * @param createLogs
      * @param lambda
      * @param alpha
+     * @param annealingAlpha
      * @param gamma
      * @param gamesToPlay
      * @param saveEvery
@@ -67,6 +68,7 @@ public class TestGenerator {
             boolean createLogs,
             double lambda,
             double alpha,
+            int annealingAlpha,
             double gamma,
             int gamesToPlay,
             int saveEvery,
@@ -91,7 +93,11 @@ public class TestGenerator {
         experiment.setConcurrencyInLayer(concurrentLayer);
         experiment.setTileToWinForStatistics(2_048);
         experiment.setReplaceEligibilityTraces(replaceEligibilityTraces);
-        experiment.setLearningRateAdaptationToFixed();
+        if ( annealingAlpha == NO_ANNEALING ) {
+            experiment.setLearningRateAdaptationToFixed();
+        } else {
+            experiment.setLearningRateAdaptationToAnnealing(annealingAlpha);
+        }
         experiment.setGamesToPlay(gamesToPlay);
         experiment.setSaveEvery(saveEvery);
         experiment.setSaveBackupEvery(saveBacupEvery);
@@ -127,6 +133,7 @@ public class TestGenerator {
                 + "Perceptrones ENTRENADOS" + File.separator;
         List<Double> lambdaList = new ArrayList<>();
         List<Double> alphaList = new ArrayList<>();
+        List<Integer> annealingAlphaList = new ArrayList<>();
         List<Double> gammaList = new ArrayList<>();
         List<Double> explorationRate = new ArrayList<>();
 
@@ -144,16 +151,24 @@ public class TestGenerator {
         int saveBackupEvery = 25_000;
 
         lambdaList.add(0d);
-        lambdaList.add(0.1d);
-        lambdaList.add(0.2d);
+//        lambdaList.add(0.1d);
+//        lambdaList.add(0.2d);
 
         alphaList.add(0.0025d);
+        annealingAlphaList.add(NO_ANNEALING); //Sin annealing
+        annealingAlphaList.add(400_000);
+        annealingAlphaList.add(600_000);
+        annealingAlphaList.add(800_000);
+        annealingAlphaList.add(1_000_000);
+        annealingAlphaList.add(1_200_000);
+        annealingAlphaList.add(1_400_000);
+        annealingAlphaList.add(1_600_000);
 
         // gammaList.add(0.9d); No da resultados buenos
         gammaList.add(1d);
 
         explorationRate.add(0d);
-        explorationRate.add(0.1d);
+//        explorationRate.add(0.1d);
 
         boolean createLogs = false;
         //============================== fin de configuraciones manuales ==================================
@@ -161,25 +176,19 @@ public class TestGenerator {
         if ( args.length != 0 ) {
             ArgumentLoader arguments = new ArgumentLoader(args);
             statistics = Boolean.parseBoolean(arguments.getArg("statistics"));
-            maxTrainingThreads = Integer.parseInt(arguments.getArg(
-                    "maxTrainingThreads"));
-            backupStatistics = Boolean.parseBoolean(arguments.getArg(
-                    "backupStatistics"));
+            maxTrainingThreads = Integer.parseInt(arguments.getArg("maxTrainingThreads"));
+            backupStatistics = Boolean.parseBoolean(arguments.getArg("backupStatistics"));
             gamesToPlay = Integer.parseInt(arguments.getArg("gamesToPlay"));
             saveEvery = Integer.parseInt(arguments.getArg("saveEvery"));
-            saveBackupEvery = Integer.parseInt(arguments.getArg(
-                    "saveBackupEvery"));
+            saveBackupEvery = Integer.parseInt(arguments.getArg("saveBackupEvery"));
             experimentName = arguments.getArg("experimentName");
             experimentClass = arguments.getArg("experimentClass");
 
-            lambdaList = ArgumentLoader.parseDoubleArray(arguments.getArg(
-                    "lambdaList"));
-            alphaList = ArgumentLoader.parseDoubleArray(arguments.getArg(
-                    "alphaList"));
-            gammaList = ArgumentLoader.parseDoubleArray(arguments.getArg(
-                    "gammaList"));
-            explorationRate = ArgumentLoader.parseDoubleArray(arguments.getArg(
-                    "explorationRate"));
+            lambdaList = ArgumentLoader.parseDoubleArray(arguments.getArg("lambdaList"));
+            annealingAlphaList = ArgumentLoader.parseIntegerArray(arguments.getArg("annealingAlphaList"));
+            alphaList = ArgumentLoader.parseDoubleArray(arguments.getArg("alphaList"));
+            gammaList = ArgumentLoader.parseDoubleArray(arguments.getArg("gammaList"));
+            explorationRate = ArgumentLoader.parseDoubleArray(arguments.getArg("explorationRate"));
         }
 
         boolean statisticsOnly;
@@ -216,11 +225,12 @@ public class TestGenerator {
         }
 
         runAllConfigs(maxTrainingThreads, experimentName, classConstructor,
-                alphaList, lambdaList, gammaList, statisticsOnly,
+                alphaList, annealingAlphaList, lambdaList, gammaList, statisticsOnly,
                 runStatisticsForBackups, createLogs, gamesToPlay, saveEvery,
                 saveBackupEvery, gamesToPlayPerThreadForStatistics,
                 simulationsForStatistics, explorationRate, filePath);
     }
+    public static final int NO_ANNEALING = -1;
 
     /**
      *
@@ -228,6 +238,7 @@ public class TestGenerator {
      * @param experimentName
      * @param experiment
      * @param alphaList
+     * @param annealingAlphaList
      * @param lambdaList
      * @param gammaList
      * @param statisticsOnly
@@ -245,6 +256,7 @@ public class TestGenerator {
             String experimentName,
             Constructor<?> experiment,
             List<Double> alphaList,
+            List<Integer> annealingAlphaList,
             List<Double> lambdaList,
             List<Double> gammaList,
             boolean statisticsOnly,
@@ -263,17 +275,17 @@ public class TestGenerator {
             for ( int j = 0; j < lambdaList.size(); j++ ) {
                 for ( int k = 0; k < gammaList.size(); k++ ) {
                     for ( int l = 0; l < explorationRateList.size(); l++ ) {
-                        number++;
-                        experiments.add(new GeneratorConfig(alphaList.get(i),
-                                lambdaList.get(j), gammaList.get(k),
-                                explorationRateList.get(l), false, number));
-                        if ( explorationRateList.get(l) > 0 && lambdaList.get(j) > 0 ) {
+                        for ( int m = 0; m < annealingAlphaList.size(); m++ ) {
                             number++;
-                            experiments.add(
-                                    new GeneratorConfig(alphaList.get(i),
-                                            lambdaList.get(j), gammaList.get(k),
-                                            explorationRateList.get(l), true,
-                                            number));
+                            experiments.add(new GeneratorConfig(alphaList.get(i), annealingAlphaList.get(m), lambdaList.
+                                    get(j), gammaList.get(k), explorationRateList.get(l), false, number));
+                            if ( explorationRateList.get(l) > 0 && lambdaList.get(j) > 0 ) {
+                                number++;
+                                experiments.add(
+                                        new GeneratorConfig(alphaList.get(i), annealingAlphaList.get(m),
+                                                lambdaList.get(j), gammaList.get(k), explorationRateList.get(l), true,
+                                                number));
+                            }
                         }
                     }
                 }
@@ -294,34 +306,24 @@ public class TestGenerator {
                             {
                                 try {
                                     String newFilePath = filePath + "AutomaticTests" + File.separator + "alpha_" + expConfig.
-                                            getAlpha() + "-lambda_" + expConfig.
-                                            getLambda() + "-gamma_" + expConfig.
-                                            getGamma() + "-explorationRate_" + expConfig.
-                                            getExplorationRate() + "-resetTraces_" + expConfig.
-                                            isResetTraces() + File.separator;
+                                            getAlpha() + ((expConfig.getAnnealingAlpha() > 0) ? "-anneal_" + expConfig.
+                                                    getAnnealingAlpha() : "") + "-lambda_" + expConfig.
+                                            getLambda() + "-gamma_" + expConfig.getGamma() + "-explorationRate_" + expConfig.
+                                            getExplorationRate() + "-resetTraces_" + expConfig.isResetTraces() + File.separator;
                                     File newPath = new File(newFilePath);
                                     if ( !newPath.exists() ) {
                                         newPath.mkdirs();
                                     }
-                                    LearningExperiment cloneExperiment = (LearningExperiment) experiment.
-                                            newInstance();
-                                    cloneExperiment.setExperimentName(
-                                            experimentName);
-                                    configAndExcecute(expConfig.getNumber(),
-                                            cloneExperiment, statisticsOnly,
-                                            runStatisticsForBackups, createLogs,
-                                            expConfig.getLambda(), expConfig.
-                                            getAlpha(), expConfig.getGamma(),
-                                            gamesToPlay, saveEvery,
-                                            saveBacupEvery,
-                                            gamesToPlayPerThreadForStatistics,
-                                            simulationsForStatistics, expConfig.
-                                            getExplorationRate(), expConfig.
+                                    LearningExperiment cloneExperiment = (LearningExperiment) experiment.newInstance();
+                                    cloneExperiment.setExperimentName(experimentName);
+                                    configAndExcecute(expConfig.getNumber(), cloneExperiment, statisticsOnly,
+                                            runStatisticsForBackups, createLogs, expConfig.getLambda(), expConfig.
+                                            getAlpha(), expConfig.getAnnealingAlpha(), expConfig.getGamma(), gamesToPlay,
+                                            saveEvery, saveBacupEvery, gamesToPlayPerThreadForStatistics,
+                                            simulationsForStatistics, expConfig.getExplorationRate(), expConfig.
                                             isResetTraces(), newFilePath);
                                 } catch ( InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex ) {
-                                    Logger.getLogger(TestGenerator.class.
-                                            getName()).log(Level.SEVERE, null,
-                                                    ex);
+                                    Logger.getLogger(TestGenerator.class.getName()).log(Level.SEVERE, null, ex);
                                 }
                             })
             ).get();

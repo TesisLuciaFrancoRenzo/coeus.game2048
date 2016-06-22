@@ -55,17 +55,34 @@ public class ArgumentLoader {
      */
     public static List<Double> parseDoubleArray(String arrayString) {
 
-        if ( arrayString == null || !arrayString.startsWith("[") || !arrayString.
-                endsWith("]") ) {
-            throw new IllegalArgumentException(
-                    "arrayString format unknown: " + arrayString);
+        if ( arrayString == null || !arrayString.startsWith("[") || !arrayString.endsWith("]") ) {
+            throw new IllegalArgumentException("arrayString format unknown: " + arrayString);
         }
 
-        String[] list = arrayString.substring(1, arrayString.length() - 1).
-                split(",");
+        String[] list = arrayString.substring(1, arrayString.length() - 1).split(",");
         List<Double> out = new ArrayList<>(list.length);
         for ( String number : list ) {
             out.add(Double.parseDouble(number.trim()));
+        }
+        return out;
+    }
+
+    /**
+     *
+     * @param arrayString format like [0,1,2,5547]
+     *
+     * @return
+     */
+    public static List<Integer> parseIntegerArray(String arrayString) {
+
+        if ( arrayString == null || !arrayString.startsWith("[") || !arrayString.endsWith("]") ) {
+            throw new IllegalArgumentException("arrayString format unknown: " + arrayString);
+        }
+
+        String[] list = arrayString.substring(1, arrayString.length() - 1).split(",");
+        List<Integer> out = new ArrayList<>(list.length);
+        for ( String number : list ) {
+            out.add(Integer.parseInt(number.trim()));
         }
         return out;
     }

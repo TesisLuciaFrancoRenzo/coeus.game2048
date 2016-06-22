@@ -23,29 +23,33 @@ package ar.edu.unrc.game2048.performanceandtraining.experiments;
  */
 public class GeneratorConfig {
 
-    private Double alpha;
-    private Double explorationRate;
-    private Double gamma;
-    private Double lambda;
+    private final double alpha;
+    private final double explorationRate;
+    private final double gamma;
+    private final int annealingAlpha;
+    private final double lambda;
     private final int number;
-    private boolean resetTraces;
+    private final boolean resetTraces;
 
     /**
      *
      * @param alpha
+     * @param annealingAlpha
      * @param lambda
      * @param gamma
      * @param explorationRate
      * @param resetTraces
      * @param number
      */
-    public GeneratorConfig(Double alpha,
-            Double lambda,
-            Double gamma,
-            Double explorationRate,
+    public GeneratorConfig(double alpha,
+            int annealingAlpha,
+            double lambda,
+            double gamma,
+            double explorationRate,
             boolean resetTraces,
             int number) {
         this.alpha = alpha;
+        this.annealingAlpha = annealingAlpha;
         this.lambda = lambda;
         this.gamma = gamma;
         this.explorationRate = explorationRate;
@@ -56,57 +60,36 @@ public class GeneratorConfig {
     /**
      * @return the alpha
      */
-    public Double getAlpha() {
+    public double getAlpha() {
         return alpha;
     }
 
     /**
-     * @param alpha the alpha to set
+     * @return the annealingAlpha
      */
-    public void setAlpha(Double alpha) {
-        this.alpha = alpha;
+    public int getAnnealingAlpha() {
+        return annealingAlpha;
     }
 
     /**
      * @return the explorationRate
      */
-    public Double getExplorationRate() {
+    public double getExplorationRate() {
         return explorationRate;
-    }
-
-    /**
-     * @param explorationRate the explorationRate to set
-     */
-    public void setExplorationRate(Double explorationRate) {
-        this.explorationRate = explorationRate;
     }
 
     /**
      * @return the gamma
      */
-    public Double getGamma() {
+    public double getGamma() {
         return gamma;
-    }
-
-    /**
-     * @param gamma the gamma to set
-     */
-    public void setGamma(Double gamma) {
-        this.gamma = gamma;
     }
 
     /**
      * @return the lambda
      */
-    public Double getLambda() {
+    public double getLambda() {
         return lambda;
-    }
-
-    /**
-     * @param lambda the lambda to set
-     */
-    public void setLambda(Double lambda) {
-        this.lambda = lambda;
     }
 
     /**
@@ -123,10 +106,4 @@ public class GeneratorConfig {
         return resetTraces;
     }
 
-    /**
-     * @param resetTraces the resetTraces to set
-     */
-    public void setResetTraces(boolean resetTraces) {
-        this.resetTraces = resetTraces;
-    }
 }

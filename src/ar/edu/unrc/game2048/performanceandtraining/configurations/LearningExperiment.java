@@ -18,6 +18,7 @@
  */
 package ar.edu.unrc.game2048.performanceandtraining.configurations;
 
+import ar.edu.unrc.coeus.interfaces.INeuralNetworkInterface;
 import ar.edu.unrc.coeus.tdlearning.learning.EExplorationRateAlgorithms;
 import ar.edu.unrc.coeus.tdlearning.learning.ELearningRateAdaptation;
 import ar.edu.unrc.coeus.tdlearning.learning.TDLambdaLearning;
@@ -43,7 +44,6 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import ar.edu.unrc.coeus.interfaces.INeuralNetworkInterface;
 
 /**
  *
@@ -234,13 +234,13 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
         return experimentName;
     }
 
-
     /**
      * @param experimentName the experimentName to set
      */
     public void setExperimentName(String experimentName) {
         this.experimentName = experimentName;
     }
+
     /**
      * @param experimentClass
      */
@@ -570,8 +570,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
                 break;
             }
             case annealing: {
-                learningAlgorithm.setAnnealingLearningRate(
-                        annealingT);
+                learningAlgorithm.setAnnealingLearningRate(annealingT);
                 break;
             }
         }
