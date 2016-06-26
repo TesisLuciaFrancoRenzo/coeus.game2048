@@ -236,6 +236,12 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
 
 
     /**
+     * @param experimentName the experimentName to set
+     */
+    public void setExperimentName(String experimentName) {
+        this.experimentName = experimentName;
+    }
+    /**
      * @param experimentClass
      */
     public void setExperimentName(Class experimentClass) {
@@ -245,12 +251,6 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
             className = className.substring(lastDot + 1);
         }
         this.experimentName = className;
-    }
-    /**
-     * @param experimentName the experimentName to set
-     */
-    public void setExperimentName(String experimentName) {
-        this.experimentName = experimentName;
     }
 
     /**

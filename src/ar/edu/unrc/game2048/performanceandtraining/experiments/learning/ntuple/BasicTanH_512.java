@@ -50,8 +50,8 @@ public class BasicTanH_512 extends LearningExperiment<BasicNetwork> {
         }
         LearningExperiment experiment = new BasicTanH_512();
 
-//        boolean statistics = true;
-        boolean statistics = false;
+        boolean statistics = true;
+//        boolean statistics = false;
 
         double[] alphas = {0.0025, 0.0025};
         experiment.setAlpha(alphas);
@@ -61,7 +61,7 @@ public class BasicTanH_512 extends LearningExperiment<BasicNetwork> {
         experiment.setGamma(1);
         experiment.setExplorationRateToFixed(0);
         experiment.setReplaceEligibilityTraces(false);
-        experiment.setGamesToPlay(30_000);
+        experiment.setGamesToPlay(15_000);
         experiment.setSaveEvery(500);
         experiment.setSaveBackupEvery(1_000);
         experiment.setInitializePerceptronRandomized(false);
@@ -75,7 +75,7 @@ public class BasicTanH_512 extends LearningExperiment<BasicNetwork> {
         if ( statistics ) {
             experiment.setStatisticsOnly(true);
             experiment.setRunStatisticsForBackups(true);
-            experiment.setGamesToPlayPerThreadForStatistics(1_000);
+            experiment.setGamesToPlayPerThreadForStatistics(100);
             experiment.setSimulationsForStatistics(8);
         } else {
             experiment.setStatisticsOnly(false);

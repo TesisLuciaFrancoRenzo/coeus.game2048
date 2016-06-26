@@ -1,5 +1,6 @@
 package ar.edu.unrc.game2048.performanceandtraining.configurations;
 
+import ar.edu.unrc.coeus.interfaces.INeuralNetworkInterface;
 import ar.edu.unrc.coeus.tdlearning.learning.TDLambdaLearning;
 import ar.edu.unrc.game2048.Game2048;
 import ar.edu.unrc.game2048.NTupleConfiguration2048;
@@ -12,6 +13,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
+import static java.lang.Math.round;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -29,8 +31,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
-import ar.edu.unrc.coeus.interfaces.INeuralNetworkInterface;
-import static java.lang.Math.round;
+import org.apache.poi.ss.util.CellReference;
 
 /**
  *
@@ -172,122 +173,117 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
             //estilo celdas finalizado
 
             //configuraciones basadas en el spreadsheet
+            Cell cell;
+            Row row;
+            Double cellDoubleValue;
             int rowStart = 2;
             int colStart = 3;
             for ( int tile = 0; tile <= tiles; tile++ ) {
-                Row row = sheet.getRow(tile + rowStart - 1);
+                row = sheet.getRow(tile + rowStart - 1);
                 for ( int file = 0; file < backupFiles.size(); file++ ) {
-                    Cell cell = row.createCell(file + colStart,
-                            Cell.CELL_TYPE_NUMERIC);
+                    cell = row.createCell(file + colStart, Cell.CELL_TYPE_NUMERIC);
                     cell.setCellStyle(cellStyle);
-                    Double cellValue = resultsPerFile.get(backupFiles.get(file)).
-                            getTileStatistics().get(tile);
-                    cell.setCellValue(cellValue);
+                    cellDoubleValue = resultsPerFile.get(backupFiles.get(file)).getTileStatistics().get(tile);
+                    cell.setCellValue(cellDoubleValue);
                 }
             }
             if ( !resultsRandom.isEmpty() ) {
                 for ( int tile = 0; tile <= tiles; tile++ ) {
                     int file = 0;
-                    Row row = sheet.getRow(tile + rowStart - 1);
-                    Cell cell = row.createCell(file + colStart - 1,
-                            Cell.CELL_TYPE_NUMERIC);
-                    Double cellValue = resultsRandom.get(randomPerceptronFile).
-                            getTileStatistics().get(tile);
+                    row = sheet.getRow(tile + rowStart - 1);
+                    cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
+                    cellDoubleValue = resultsRandom.get(randomPerceptronFile).getTileStatistics().get(tile);
                     cell.setCellStyle(cellStyle);
-                    cell.setCellValue(cellValue);
+                    cell.setCellValue(cellDoubleValue);
                 }
             }
 
             //============= imptimimos en la hoja de Score ===================
             sheet = wb.getSheetAt(1);
             rowStart = 2;
-            loadTitle(rowStartTitle, colStartTitle, sheet, backupFiles.size(),
-                    CellStyleTitle);
-            Row row = sheet.getRow(rowStart - 1);
+            loadTitle(rowStartTitle, colStartTitle, sheet, backupFiles.size(), CellStyleTitle);
+            row = sheet.getRow(rowStart - 1);
             for ( int file = 0; file < backupFiles.size(); file++ ) {
-                Cell cell = row.createCell(file + colStart,
-                        Cell.CELL_TYPE_NUMERIC);
+                cell = row.createCell(file + colStart, Cell.CELL_TYPE_NUMERIC);
                 cell.setCellStyle(cellStyle);
-                Double cellValue = resultsPerFile.get(backupFiles.get(file)).
-                        getMinScore();
-                cell.setCellValue(cellValue);
+                cellDoubleValue = resultsPerFile.get(backupFiles.get(file)).getMinScore();
+                cell.setCellValue(cellDoubleValue);
             }
             if ( !resultsRandom.isEmpty() ) {
                 int file = 0;
-                Cell cell = row.createCell(file + colStart - 1,
-                        Cell.CELL_TYPE_NUMERIC);
-                Double cellValue = resultsPerFile.get(backupFiles.get(file)).
-                        getMinScore();
+                cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
+                cellDoubleValue = resultsPerFile.get(backupFiles.get(file)).getMinScore();
                 cell.setCellStyle(cellStyle);
-                cell.setCellValue(cellValue);
+                cell.setCellValue(cellDoubleValue);
             }
 
             rowStart = 3;
             row = sheet.getRow(rowStart - 1);
             for ( int file = 0; file < backupFiles.size(); file++ ) {
-                Cell cell = row.createCell(file + colStart,
-                        Cell.CELL_TYPE_NUMERIC);
-                Double cellValue = resultsPerFile.get(backupFiles.get(file)).
-                        getMeanScore();
+                cell = row.createCell(file + colStart, Cell.CELL_TYPE_NUMERIC);
+                cellDoubleValue = resultsPerFile.get(backupFiles.get(file)).getMeanScore();
                 cell.setCellStyle(cellStyle);
-                cell.setCellValue(cellValue);
+                cell.setCellValue(cellDoubleValue);
             }
             if ( !resultsRandom.isEmpty() ) {
                 int file = 0;
-                Cell cell = row.createCell(file + colStart - 1,
-                        Cell.CELL_TYPE_NUMERIC);
-                Double cellValue = resultsPerFile.get(backupFiles.get(file)).
-                        getMeanScore();
+                cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
+                cellDoubleValue = resultsPerFile.get(backupFiles.get(file)).getMeanScore();
                 cell.setCellStyle(cellStyle);
-                cell.setCellValue(cellValue);
+                cell.setCellValue(cellDoubleValue);
             }
 
             rowStart = 4;
             row = sheet.getRow(rowStart - 1);
             for ( int file = 0; file < backupFiles.size(); file++ ) {
-                Cell cell = row.createCell(file + colStart,
-                        Cell.CELL_TYPE_NUMERIC);
-                Double cellValue = resultsPerFile.get(backupFiles.get(file)).
-                        getMaxScore();
+                cell = row.createCell(file + colStart, Cell.CELL_TYPE_NUMERIC);
+                cellDoubleValue = resultsPerFile.get(backupFiles.get(file)).getMaxScore();
                 cell.setCellStyle(cellStyle);
-                cell.setCellValue(cellValue);
+                cell.setCellValue(cellDoubleValue);
             }
             if ( !resultsRandom.isEmpty() ) {
                 int file = 0;
-                Cell cell = row.createCell(file + colStart - 1,
-                        Cell.CELL_TYPE_NUMERIC);
-                Double cellValue = resultsPerFile.get(backupFiles.get(file)).
-                        getMaxScore();
+                cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
+                cellDoubleValue = resultsPerFile.get(backupFiles.get(file)).getMaxScore();
                 cell.setCellStyle(cellStyle);
-                cell.setCellValue(cellValue);
+                cell.setCellValue(cellDoubleValue);
             }
 
             //============= imptimimos en la hoja de Win ===================
             sheet = wb.getSheetAt(2);
+            sheet.setForceFormulaRecalculation(true);
             rowStart = 2;
-            loadTitle(rowStartTitle, colStartTitle, sheet, backupFiles.size(),
-                    CellStyleTitle);
+            loadTitle(rowStartTitle, colStartTitle, sheet, backupFiles.size(), CellStyleTitle);
+            loadTitle(rowStartTitle + 2, colStartTitle, sheet, backupFiles.size(), CellStyleTitle);
             row = sheet.getRow(rowStart - 1);
             for ( int file = 0; file < backupFiles.size(); file++ ) {
-                Cell cell = row.createCell(file + colStart,
-                        Cell.CELL_TYPE_NUMERIC);
+                cell = row.createCell(file + colStart, Cell.CELL_TYPE_NUMERIC);
                 cell.setCellStyle(cellStyle);
-                Double cellValue = resultsPerFile.get(backupFiles.get(file)).
-                        getWinRate();
-                assert cellValue <= 100 && cellValue >= 0;
-                cell.setCellValue(cellValue);
+                cellDoubleValue = resultsPerFile.get(backupFiles.get(file)).getWinRate();
+                assert cellDoubleValue <= 100 && cellDoubleValue >= 0;
+                cell.setCellValue(cellDoubleValue);
             }
             if ( !resultsRandom.isEmpty() ) {
                 int file = 0;
-                Cell cell = row.createCell(file + colStart - 1,
-                        Cell.CELL_TYPE_NUMERIC);
+                cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
                 cell.setCellStyle(cellStyle);
-                Double cellValue = resultsPerFile.get(backupFiles.get(file)).
-                        getWinRate();
-                assert cellValue <= 100 && cellValue >= 0;
-                cell.setCellValue(cellValue);
+                cellDoubleValue = resultsPerFile.get(backupFiles.get(file)).getWinRate();
+                assert cellDoubleValue <= 100 && cellDoubleValue >= 0;
+                cell.setCellValue(cellDoubleValue);
             }
+            // creamos la celda para calcular maxima/mejor red entrenada
+            row = sheet.getRow(3);
+            cell = row.createCell(2, Cell.CELL_TYPE_FORMULA);
+            cell.setCellStyle(cellStyle);
+            int maxCol = backupFiles.size() + colStart - 1;
+            String columnLetter = CellReference.convertNumToColString(maxCol);
+            String formula = "MAX(C2:" + columnLetter + "2)";
+            cell.setCellFormula(formula);
 
+            cell = row.createCell(3, Cell.CELL_TYPE_FORMULA);
+            cell.setCellStyle(cellStyle);
+            formula = "HLOOKUP(C4,C2:" + columnLetter + "3,2)";
+            cell.setCellFormula(formula);
             //============= imptimimos en la hoja de Turns ===================
             sheet = wb.getSheetAt(3);
             rowStart = 2;
@@ -295,61 +291,49 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
                     CellStyleTitle);
             row = sheet.getRow(rowStart - 1);
             for ( int file = 0; file < backupFiles.size(); file++ ) {
-                Cell cell = row.createCell(file + colStart,
-                        Cell.CELL_TYPE_NUMERIC);
+                cell = row.createCell(file + colStart, Cell.CELL_TYPE_NUMERIC);
                 cell.setCellStyle(cellStyle);
-                Double cellValue = resultsPerFile.get(backupFiles.get(file)).
-                        getMinTurn();
-                cell.setCellValue(cellValue);
+                cellDoubleValue = resultsPerFile.get(backupFiles.get(file)).getMinTurn();
+                cell.setCellValue(cellDoubleValue);
             }
             if ( !resultsRandom.isEmpty() ) {
                 int file = 0;
-                Cell cell = row.createCell(file + colStart - 1,
-                        Cell.CELL_TYPE_NUMERIC);
+                cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
                 cell.setCellStyle(cellStyle);
-                Double cellValue = resultsPerFile.get(backupFiles.get(file)).
-                        getMinTurn();
-                cell.setCellValue(cellValue);
+                cellDoubleValue = resultsPerFile.get(backupFiles.get(file)).getMinTurn();
+                cell.setCellValue(cellDoubleValue);
             }
 
             rowStart = 3;
             row = sheet.getRow(rowStart - 1);
             for ( int file = 0; file < backupFiles.size(); file++ ) {
-                Cell cell = row.createCell(file + colStart,
-                        Cell.CELL_TYPE_NUMERIC);
+                cell = row.createCell(file + colStart, Cell.CELL_TYPE_NUMERIC);
                 cell.setCellStyle(cellStyle);
-                Double cellValue = resultsPerFile.get(backupFiles.get(file)).
-                        getMeanTurn();
-                cell.setCellValue(cellValue);
+                cellDoubleValue = resultsPerFile.get(backupFiles.get(file)).getMeanTurn();
+                cell.setCellValue(cellDoubleValue);
             }
             if ( !resultsRandom.isEmpty() ) {
                 int file = 0;
-                Cell cell = row.createCell(file + colStart - 1,
-                        Cell.CELL_TYPE_NUMERIC);
+                cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
                 cell.setCellStyle(cellStyle);
-                Double cellValue = resultsPerFile.get(backupFiles.get(file)).
-                        getMeanTurn();
-                cell.setCellValue(cellValue);
+                cellDoubleValue = resultsPerFile.get(backupFiles.get(file)).getMeanTurn();
+                cell.setCellValue(cellDoubleValue);
             }
 
             rowStart = 4;
             row = sheet.getRow(rowStart - 1);
             for ( int file = 0; file < backupFiles.size(); file++ ) {
-                Cell cell = row.createCell(file + colStart,
-                        Cell.CELL_TYPE_NUMERIC);
+                cell = row.createCell(file + colStart, Cell.CELL_TYPE_NUMERIC);
                 cell.setCellStyle(cellStyle);
-                Double cellValue = resultsPerFile.get(backupFiles.get(file)).
-                        getMaxTurn();
-                cell.setCellValue(cellValue);
+                cellDoubleValue = resultsPerFile.get(backupFiles.get(file)).getMaxTurn();
+                cell.setCellValue(cellDoubleValue);
             }
             if ( !resultsRandom.isEmpty() ) {
                 int file = 0;
-                Cell cell = row.createCell(file + colStart - 1,
-                        Cell.CELL_TYPE_NUMERIC);
+                cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
                 cell.setCellStyle(cellStyle);
-                Double cellValue = resultsPerFile.get(backupFiles.get(file)).
-                        getMaxTurn();
-                cell.setCellValue(cellValue);
+                cellDoubleValue = resultsPerFile.get(backupFiles.get(file)).getMaxTurn();
+                cell.setCellValue(cellDoubleValue);
             }
 
             wb.write(outputXLSX);
