@@ -602,8 +602,7 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
             }
         } else {
             //cargamos el archivo ya guardado
-            try ( BufferedReader br = new BufferedReader(new InputStreamReader(
-                    new FileInputStream(logFile), "UTF-8")) ) {
+            try ( BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(logFile), "UTF-8")) ) {
                 int lastTileStatistic = -1;
                 tileStatistics = new ArrayList<>(18);
                 for ( String line = br.readLine(); line != null; line = br.

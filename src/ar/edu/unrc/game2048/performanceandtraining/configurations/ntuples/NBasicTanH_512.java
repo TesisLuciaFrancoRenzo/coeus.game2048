@@ -32,12 +32,10 @@ import org.encog.util.arrayutil.NormalizedField;
  */
 public class NBasicTanH_512 extends NTupleConfiguration2048 {
 
+    private final int maxReward = 100_000;
     private final int maxTile;
-
+    private final int minReward = -100_000;
     private final int numSamples;
-
-    int maxReward = 100_000;
-    int minReward = -100_000;
 
     /**
      *
@@ -65,6 +63,11 @@ public class NBasicTanH_512 extends NTupleConfiguration2048 {
         for ( int i = 0; i <= maxTile; i++ ) {
             allSamplePointStates.add(new Tile(i));
         }
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone(); //To change body of generated methods, choose Tools | Templates.
     }
 
     /**

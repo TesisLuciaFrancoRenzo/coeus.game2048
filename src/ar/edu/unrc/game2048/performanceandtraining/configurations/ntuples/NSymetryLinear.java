@@ -51,6 +51,12 @@ public class NSymetryLinear extends NTupleConfiguration2048 {
         }
     }
 
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone(); //To change body of generated methods, choose Tools | Templates.
+    }
+
+
     /**
      *
      * @param value <p>

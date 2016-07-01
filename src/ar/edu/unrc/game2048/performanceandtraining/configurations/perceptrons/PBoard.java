@@ -34,32 +34,17 @@ import org.encog.util.arrayutil.NormalizedField;
  */
 public class PBoard<NeuralNetworkClass> extends PerceptronConfiguration2048<NeuralNetworkClass> {
 
-    /**
-     *
-     */
-    public int maxCodedBoardnumber;
-
-    /**
-     *
-     */
-    public int maxScore;
-
-    /**
-     *
-     */
-    public int minCodedBoardnumber;
-
-    /**
-     *
-     */
-    public int minScore;
     private final boolean concurrenInput;
+    private final int maxCodedBoardnumber;
+    private final int maxScore;
+    private final int minCodedBoardnumber;
+    private final int minScore;
 
     /**
      *
      */
     public PBoard() {
-        maxCodedBoardnumber = 11; //2048 como maximo
+        maxCodedBoardnumber = 15; //32768 como maximo
         maxScore = 500_000;
         minScore = -500_000;
 
@@ -67,8 +52,8 @@ public class PBoard<NeuralNetworkClass> extends PerceptronConfiguration2048<Neur
 
         this.neuronQuantityInLayer = new int[4];
         neuronQuantityInLayer[0] = 16;
-        neuronQuantityInLayer[1] = 512;
-        neuronQuantityInLayer[2] = 512;
+        neuronQuantityInLayer[1] = 5_000;
+        neuronQuantityInLayer[2] = 5_000;
         neuronQuantityInLayer[3] = 1;
 
         concurrenInput = false;
@@ -151,6 +136,11 @@ public class PBoard<NeuralNetworkClass> extends PerceptronConfiguration2048<Neur
         normalizedPerceptronInput.set(15,
                 normInput.normalize(board.tileAt(3, 3).getCode())
         );
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone(); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override

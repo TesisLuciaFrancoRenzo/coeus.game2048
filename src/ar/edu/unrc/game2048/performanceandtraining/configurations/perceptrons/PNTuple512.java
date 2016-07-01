@@ -38,24 +38,16 @@ import org.encog.util.arrayutil.NormalizedField;
  */
 public class PNTuple512<NeuralNetworkClass> extends PerceptronConfiguration2048<NeuralNetworkClass> {
 
-    /**
-     *
-     */
-    public final boolean concurrenInput;
-
     private final List<SamplePointState> allSamplePointStates;
+    private final boolean concurrenInput;
     private final HashMap<SamplePointState, Integer> mapSamplePointStates;
+    private final int maxReward = 20_000;
     private final int maxTile;
-    /**
-     *
-     */
-    private int[] nTuplesLenght;
+    private final int minReward = -20_000;
+    private final int[] nTuplesLenght;
     private final int[] nTuplesWeightQuantityIndex;
     private final int numSamples;
     private final boolean useNTupleList;
-
-    int maxReward = 20_000;
-    int minReward = -20_000;
 
     /**
      *
@@ -140,6 +132,11 @@ public class PNTuple512<NeuralNetworkClass> extends PerceptronConfiguration2048<
             normalizedPerceptronInput.
                     add(calculateIndex(i, getNTuple(board, i)), 1d);
         }
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone(); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override

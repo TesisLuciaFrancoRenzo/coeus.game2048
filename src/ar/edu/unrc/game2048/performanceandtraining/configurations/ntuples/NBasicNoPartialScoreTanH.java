@@ -32,8 +32,8 @@ import org.encog.util.arrayutil.NormalizedField;
  */
 public class NBasicNoPartialScoreTanH extends NTupleConfiguration2048 {
 
-    int maxReward = 500_000;
-    int minReward = -500_000;
+    private int maxReward = 500_000;
+    private int minReward = -500_000;
 
     /**
      *
@@ -59,6 +59,11 @@ public class NBasicNoPartialScoreTanH extends NTupleConfiguration2048 {
         for ( int i = 0; i <= maxTile; i++ ) {
             allSamplePointStates.add(new Tile(i));
         }
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone(); //To change body of generated methods, choose Tools | Templates.
     }
 
     /**

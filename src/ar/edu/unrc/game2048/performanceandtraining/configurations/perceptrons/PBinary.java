@@ -34,18 +34,10 @@ import org.encog.util.arrayutil.NormalizedField;
  */
 public class PBinary<NeuralNetworkClass> extends PerceptronConfiguration2048<NeuralNetworkClass> {
 
-    static final int BINARY_LENGHT = 4; //alcanza para escribir el 2048
-
-    /**
-     *
-     */
-    public int maxScore;
-
-    /**
-     *
-     */
-    public int minScore;
-    private boolean concurrenInput;
+    private final static int BINARY_LENGHT = 4; //alcanza para escribir el 2048
+    private final boolean concurrenInput;
+    private final int maxScore;
+    private final int minScore;
 
     /**
      *
@@ -103,6 +95,11 @@ public class PBinary<NeuralNetworkClass> extends PerceptronConfiguration2048<Neu
             }
         }
         assert currentNeuron == this.getNeuronQuantityInLayer()[0];
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone(); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
