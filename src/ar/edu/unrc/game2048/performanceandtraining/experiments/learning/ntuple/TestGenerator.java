@@ -44,6 +44,7 @@ public class TestGenerator {
      *
      */
     public static final int NO_ANNEALING = -1;
+    private static int tileToWinForStatistics;
 
     /**
      *
@@ -96,7 +97,7 @@ public class TestGenerator {
         experiment.setConcurrencyInComputeBestPosibleAction(true);
         boolean[] concurrentLayer = {false, false};
         experiment.setConcurrencyInLayer(concurrentLayer);
-        experiment.setTileToWinForStatistics(2_048);
+        experiment.setTileToWinForStatistics(tileToWinForStatistics);
         experiment.setReplaceEligibilityTraces(replaceEligibilityTraces);
         if ( annealingAlpha == NO_ANNEALING ) {
             experiment.setLearningRateAdaptationToFixed();
@@ -143,37 +144,35 @@ public class TestGenerator {
         List<Double> explorationRate = new ArrayList<>();
 
         //============================== configuraciones manuales ==================================
-//        boolean statistics = true;
-        boolean statistics = false;
-        int maxTrainingThreads = 4;
+        boolean statistics = true;
+//        boolean statistics = false;
+        int maxTrainingThreads = 8;
         boolean doBackupStatistics = true;
-//        boolean backupStatistics = false;
+        tileToWinForStatistics = 512;
+        int gamesToPlayPerThreadForStats = 100;
+        String experimentName = "BasicLinear_512";
+        String experimentClass = "BasicLinear_512";
+        int gamesToPlay = 20_000;
+        int saveEvery = 1_000;
+        int saveBackupEvery = 500;
 
-        String experimentName = "BasicLinear";
-        String experimentClass = "BasicLinear";
-        int gamesToPlay = 2_000_000;
-        int saveEvery = 5_000;
-        int saveBackupEvery = 25_000;
-
-        lambdaList.add(0d);
+        lambdaList.add(0.3d);
 //        lambdaList.add(0.1d);
 //        lambdaList.add(0.2d);
 
         alphaList.add(0.0025d);
         annealingAlphaList.add(NO_ANNEALING); //Sin annealing
-        annealingAlphaList.add(400_000);
-        annealingAlphaList.add(600_000);
-        annealingAlphaList.add(800_000);
-        annealingAlphaList.add(1_000_000);
-        annealingAlphaList.add(1_200_000);
-        annealingAlphaList.add(1_400_000);
-        annealingAlphaList.add(1_600_000);
+//        annealingAlphaList.add(400_000);
+//        annealingAlphaList.add(600_000);
 
         // gammaList.add(0.9d); No da resultados buenos
         gammaList.add(1d);
 
         explorationRate.add(0d);
-//        explorationRate.add(0.1d);
+        explorationRate.add(0.001d);
+        explorationRate.add(0.005d);
+        explorationRate.add(0.01d);
+        explorationRate.add(0.1d);
 
         boolean createLogs = false;
         //============================== fin de configuraciones manuales ==================================
@@ -204,7 +203,7 @@ public class TestGenerator {
         if ( statistics ) {
             statisticsOnly = true;
             runStatisticsForBackups = doBackupStatistics;
-            gamesToPlayPerThreadForStatistics = 1_000;
+            gamesToPlayPerThreadForStatistics = gamesToPlayPerThreadForStats;
             simulationsForStatistics = 8;
         } else {
             statisticsOnly = false;
@@ -221,6 +220,14 @@ public class TestGenerator {
             }
             case "BasicTanH": {
                 classConstructor = BasicTanH.class.getConstructor();
+                break;
+            }
+            case "BasicLinear_512": {
+                classConstructor = BasicLinear_512.class.getConstructor();
+                break;
+            }
+            case "BasicTanH_512": {
+                classConstructor = BasicTanH_512.class.getConstructor();
                 break;
             }
             default: {
