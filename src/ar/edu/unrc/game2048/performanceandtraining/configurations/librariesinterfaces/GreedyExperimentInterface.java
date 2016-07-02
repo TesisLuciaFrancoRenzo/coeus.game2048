@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Interfaz de experimentos entre la IA greedy y Coeus
  *
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
@@ -42,21 +43,16 @@ public class GreedyExperimentInterface extends INeuralNetworkInterfaceFor2048 {
 
     /**
      *
-     * @param perceptronConfiguration
+     * @param perceptronConfiguration configuración
      */
     public GreedyExperimentInterface(
             PerceptronConfiguration2048 perceptronConfiguration) {
         super(perceptronConfiguration);
     }
 
-    /**
-     *
-     * @param randomFile
-     * @param trainedFile
-     */
     @Override
-    public void compareNeuralNetworks(File randomFile,
-            File trainedFile) {
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone(); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -81,32 +77,24 @@ public class GreedyExperimentInterface extends INeuralNetworkInterfaceFor2048 {
         GameBoard actualBoard = game.getBoard();
         List<Action> bestActions = new ArrayList<>(4);
         double bestReward = -100d;
-        ArrayList<Action> possibleActions = game.listAllPossibleActions(
-                actualBoard);
+        ArrayList<Action> possibleActions = game.listAllPossibleActions(actualBoard);
         for ( Action action : possibleActions ) {
-            GameBoard afterState = (GameBoard) game.computeAfterState(
-                    actualBoard, action);
-            List<StateProbability> allPosibleNextStates = game.
-                    listAllPossibleNextTurnStateFromAfterstate(afterState);
+            GameBoard afterState = (GameBoard) game.computeAfterState(actualBoard, action);
+            List<StateProbability> allPosibleNextStates = game.listAllPossibleNextTurnStateFromAfterstate(afterState);
             Double reward = allPosibleNextStates.stream().mapToDouble(
                     (nextStateProb) ->
                     {
-                        if ( ((GameBoard) nextStateProb.getNextTurnState()).
-                                isAWin() || ((GameBoard) nextStateProb.
+                        if ( ((GameBoard) nextStateProb.getNextTurnState()).isAWin() || ((GameBoard) nextStateProb.
                                 getNextTurnState()).isFull() ) {
-                            return ((GameBoard) nextStateProb.getNextTurnState()).
-                                    getPartialScore() * 4 * nextStateProb.
+                            return ((GameBoard) nextStateProb.getNextTurnState()).getPartialScore() * 4 * nextStateProb.
                                     getProbability();
                         } else {
-                            ArrayList<Action> possibleNextActions = game.
-                                    listAllPossibleActions(actualBoard);
+                            ArrayList<Action> possibleNextActions = game.listAllPossibleActions(actualBoard);
                             return possibleNextActions.stream().mapToDouble(
                                     (nextAction) ->
                                     {
-                                        GameBoard nextAfterState = (GameBoard) game.
-                                                computeAfterState(nextStateProb.
-                                                        getNextTurnState(),
-                                                        nextAction);
+                                        GameBoard nextAfterState = (GameBoard) game.computeAfterState(nextStateProb.
+                                                getNextTurnState(), nextAction);
                                         return nextAfterState.getPartialScore();
                                     }).sum() * nextStateProb.getProbability();
                         }
@@ -121,8 +109,7 @@ public class GreedyExperimentInterface extends INeuralNetworkInterfaceFor2048 {
         }
 
         if ( !bestActions.isEmpty() ) {
-            Action bestAction = bestActions.get(TDLambdaLearning.
-                    randomBetween(0, bestActions.size() - 1));
+            Action bestAction = bestActions.get(TDLambdaLearning.randomBetween(0, bestActions.size() - 1));
             switch ( bestAction ) {
                 case left: {
                     game.processInput(VK_LEFT);

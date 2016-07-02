@@ -32,22 +32,18 @@ import org.encog.neural.networks.BasicNetwork;
 public class NTupleExperimentInterface extends INeuralNetworkInterfaceFor2048<BasicNetwork> {
 
     /**
+     * Interfaz de experimentos entre la NTuplas y Coeus
      *
-     * @param perceptronConfiguration
+     * @param perceptronConfiguration configuración
      */
     public NTupleExperimentInterface(
             NTupleConfiguration2048 perceptronConfiguration) {
         super(perceptronConfiguration);
     }
 
-    /**
-     *
-     * @param randomFile
-     * @param trainedFile
-     */
     @Override
-    public void compareNeuralNetworks(File randomFile,
-            File trainedFile) {
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone(); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -61,9 +57,11 @@ public class NTupleExperimentInterface extends INeuralNetworkInterfaceFor2048<Ba
     }
 
     /**
+     * Inicializa NTupla, con valores de pesos al azar, o con 0.
      *
-     * @param randomized <p>
-     * @return
+     * @param randomized true si se inicializan pesos con valores al azar.
+     *
+     * @return una NTupla inicializada.
      */
     public NTupleSystem initializeNTupleSystem(boolean randomized) {
         NTupleSystem nTupleSystem = new NTupleSystem(this.

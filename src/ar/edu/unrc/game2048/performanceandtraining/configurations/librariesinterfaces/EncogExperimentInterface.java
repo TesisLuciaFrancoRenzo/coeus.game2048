@@ -26,8 +26,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.encog.engine.network.activation.ActivationFunction;
 import org.encog.engine.network.activation.ActivationLinear;
 import org.encog.engine.network.activation.ActivationSigmoid;
@@ -37,63 +35,48 @@ import org.encog.neural.networks.layers.BasicLayer;
 import org.encog.util.obj.SerializeObject;
 
 /**
+ * Interfaz de experimentos entre la librería Encog y Coeus
  *
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
 public class EncogExperimentInterface extends INeuralNetworkInterfaceFor2048<BasicNetwork> {
 
     /**
-     *
+     * función de activación
      */
     protected List<Function<Double, Double>> activationFunction;
 
     /**
-     *
+     * derivada de la función de activación
      */
     protected List<Function<Double, Double>> derivatedActivationFunction;
 
     /**
      *
-     * @param perceptronConfiguration
+     * @param perceptronConfiguration configuración
      */
     public EncogExperimentInterface(
             PerceptronConfiguration2048<BasicNetwork> perceptronConfiguration) {
         super(perceptronConfiguration);
     }
 
-    /**
-     *
-     * @param randomFile
-     * @param trainedFile
-     */
     @Override
-    public void compareNeuralNetworks(File randomFile,
-            File trainedFile) {
-        try {
-            BasicNetwork randomNN = (BasicNetwork) SerializeObject.load(
-                    randomFile);
-            BasicNetwork trainedNN = (BasicNetwork) SerializeObject.load(
-                    trainedFile);
-            if ( randomNN.equals(trainedNN) ) {
-                throw new Exception("No cambio el perceptron para nada!");
-            }
-        } catch ( Exception ex ) {
-            Logger.getLogger(EncogExperimentInterface.class.getName()).log(
-                    Level.SEVERE, null, ex);
-        }
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone(); //To change body of generated methods, choose Tools | Templates.
     }
 
-    /**
-     *
-     * @param neuralNetwork
-     */
-    public void setConfigForTesting(BasicNetwork neuralNetwork) {
-        getPerceptronConfiguration().setNeuralNetwork(neuralNetwork);
-    }
 
     @Override
     public String getLibName() {
         return "Encog";
+    }
+    /**
+     * Utilizado con propósitos de testing.
+     *
+     * @param neuralNetwork
+     */
+    public void setNeuralNetworkForTesting(BasicNetwork neuralNetwork) {
+        getPerceptronConfiguration().setNeuralNetwork(neuralNetwork);
     }
 
     @Override
@@ -124,9 +107,6 @@ public class EncogExperimentInterface extends INeuralNetworkInterfaceFor2048<Bas
 
             @Override
             public Function<Double, Double> getActivationFunction(int layerIndex) {
-//                if ( layerIndex <= 0 || layerIndex >= getLayerQuantity() ) {
-//                    throw new IllegalArgumentException("layerIndex out of valid range");
-//                }
                 return activationFunction.get(layerIndex - 1);
             }
 
@@ -188,9 +168,11 @@ public class EncogExperimentInterface extends INeuralNetworkInterfaceFor2048<Bas
     }
 
     /**
+     * Inicializa red neuronal con Encog.
      *
-     * @param randomized <p>
-     * @return
+     * @param randomized true si debe ser iniciado con pesos y bias con valores al azar.
+     *
+     * @return red neuronal inicializada.
      */
     public BasicNetwork initializeEncogPerceptron(boolean randomized) {
         if ( getPerceptronConfiguration().getNeuronQuantityInLayer() == null || getPerceptronConfiguration().

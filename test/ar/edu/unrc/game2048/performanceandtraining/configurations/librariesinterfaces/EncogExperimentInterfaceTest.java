@@ -193,7 +193,7 @@ public class EncogExperimentInterfaceTest {
 
         EncogExperimentInterface experiment = new EncogExperimentInterface(
                 perceptronConfiguration);
-        experiment.setConfigForTesting(perceptron);
+        experiment.setNeuralNetworkForTesting(perceptron);
         INeuralNetworkInterface encogInterface = experiment.
                 getPerceptronInterface();
 
@@ -503,7 +503,7 @@ public class EncogExperimentInterfaceTest {
 
         EncogExperimentInterface experiment = new EncogExperimentInterface(
                 perceptronConfiguration);
-        experiment.setConfigForTesting(perceptron);
+        experiment.setNeuralNetworkForTesting(perceptron);
         INeuralNetworkInterface encogInterface = experiment.
                 getPerceptronInterface();
 

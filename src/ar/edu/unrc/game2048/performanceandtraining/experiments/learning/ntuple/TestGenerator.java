@@ -150,13 +150,13 @@ public class TestGenerator {
         boolean doBackupStatistics = true;
         tileToWinForStatistics = 512;
         int gamesToPlayPerThreadForStats = 100;
-        String experimentName = "BasicLinear_512";
-        String experimentClass = "BasicLinear_512";
+        String experimentName = "BasicTanH_512";
+        String experimentClass = "BasicTanH_512";
         int gamesToPlay = 20_000;
         int saveEvery = 1_000;
         int saveBackupEvery = 500;
 
-        lambdaList.add(0.3d);
+        lambdaList.add(0.4d);
 //        lambdaList.add(0.1d);
 //        lambdaList.add(0.2d);
 

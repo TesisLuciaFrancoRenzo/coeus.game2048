@@ -71,7 +71,7 @@ public class InputNtupleList implements List<Double> {
 
     /**
      *
-     * @return
+     * @return tamaño interno usado.
      */
     public int getInternalSetSize() {
         return set.size();

@@ -67,22 +67,11 @@ public class NSymetryTanH extends NTupleConfiguration2048 {
         return super.clone(); //To change body of generated methods, choose Tools | Templates.
     }
 
-    /**
-     *
-     * @param value <p>
-     * @return
-     */
     @Override
     public double denormalizeValueFromPerceptronOutput(Object value) {
         return normOutput.deNormalize((double) value);
     }
 
-    /**
-     *
-     * @param board
-     * @param outputNeuron <p>
-     * @return
-     */
     @Override
     public double getBoardReward(GameBoard board,
             int outputNeuron) {
@@ -95,12 +84,6 @@ public class NSymetryTanH extends NTupleConfiguration2048 {
         return board.getGame().getScore();
     }
 
-    /**
-     *
-     * @param board
-     * @param nTupleIndex <p>
-     * @return
-     */
     @Override
     public SamplePointState[] getNTuple(GameBoard board,
             int nTupleIndex) {
@@ -149,11 +132,6 @@ public class NSymetryTanH extends NTupleConfiguration2048 {
         }
     }
 
-    /**
-     *
-     * @param value <p>
-     * @return
-     */
     @Override
     public double normalizeValueToPerceptronOutput(Object value) {
         if ( (Double) value > maxReward ) {

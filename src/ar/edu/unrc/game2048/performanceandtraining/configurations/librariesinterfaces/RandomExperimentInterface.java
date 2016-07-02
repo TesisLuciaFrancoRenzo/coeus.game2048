@@ -30,6 +30,7 @@ import static java.awt.event.KeyEvent.VK_UP;
 import java.io.File;
 
 /**
+ * Interfaz de experimentos entre IA random y Coeus
  *
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
@@ -37,21 +38,16 @@ public class RandomExperimentInterface extends INeuralNetworkInterfaceFor2048 {
 
     /**
      *
-     * @param perceptronConfiguration
+     * @param perceptronConfiguration configuración
      */
     public RandomExperimentInterface(
             PerceptronConfiguration2048 perceptronConfiguration) {
         super(perceptronConfiguration);
     }
 
-    /**
-     *
-     * @param randomFile
-     * @param trainedFile
-     */
     @Override
-    public void compareNeuralNetworks(File randomFile,
-            File trainedFile) {
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone(); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override

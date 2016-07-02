@@ -75,11 +75,6 @@ public class PBoard<NeuralNetworkClass> extends PerceptronConfiguration2048<Neur
                 activationFunctionMin);
     }
 
-    /**
-     *
-     * @param board
-     * @param normalizedPerceptronInput <p>
-     */
     @Override
     public void calculateNormalizedPerceptronInput(
             GameBoard<NeuralNetworkClass> board,
@@ -167,10 +162,6 @@ public class PBoard<NeuralNetworkClass> extends PerceptronConfiguration2048<Neur
         return board.getGame().getScore();
     }
 
-    /**
-     *
-     * @return
-     */
     @Override
     public boolean isConcurrentInputEnabled() {
         return concurrenInput;
@@ -181,10 +172,6 @@ public class PBoard<NeuralNetworkClass> extends PerceptronConfiguration2048<Neur
         return normOutput.normalize((Double) value);
     }
 
-    /**
-     *
-     * @return
-     */
     @Override
     public boolean useNTupleList() {
         return false;

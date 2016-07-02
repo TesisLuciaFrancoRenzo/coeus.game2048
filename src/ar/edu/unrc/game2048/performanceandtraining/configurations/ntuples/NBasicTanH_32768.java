@@ -32,8 +32,8 @@ import org.encog.util.arrayutil.NormalizedField;
  */
 public class NBasicTanH_32768 extends NTupleConfiguration2048 {
 
-    private int maxReward = 500_000;
-    private int minReward = -500_000;
+    private final int maxReward = 500_000;
+    private final int minReward = -500_000;
 
     /**
      *
@@ -66,22 +66,11 @@ public class NBasicTanH_32768 extends NTupleConfiguration2048 {
         return super.clone(); //To change body of generated methods, choose Tools | Templates.
     }
 
-    /**
-     *
-     * @param value <p>
-     * @return
-     */
     @Override
     public double denormalizeValueFromPerceptronOutput(Object value) {
         return normOutput.deNormalize((double) value);
     }
 
-    /**
-     *
-     * @param board
-     * @param outputNeuron <p>
-     * @return
-     */
     @Override
     public double getBoardReward(GameBoard board,
             int outputNeuron) {
@@ -94,12 +83,6 @@ public class NBasicTanH_32768 extends NTupleConfiguration2048 {
         return board.getGame().getScore();
     }
 
-    /**
-     *
-     * @param board
-     * @param nTupleIndex <p>
-     * @return
-     */
     @Override
     public SamplePointState[] getNTuple(GameBoard board,
             int nTupleIndex) {
@@ -253,11 +236,6 @@ public class NBasicTanH_32768 extends NTupleConfiguration2048 {
         }
     }
 
-    /**
-     *
-     * @param value <p>
-     * @return
-     */
     @Override
     public double normalizeValueToPerceptronOutput(Object value) {
         if ( (Double) value > maxReward ) {

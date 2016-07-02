@@ -70,22 +70,11 @@ public class NBasicTanH_512 extends NTupleConfiguration2048 {
         return super.clone(); //To change body of generated methods, choose Tools | Templates.
     }
 
-    /**
-     *
-     * @param value <p>
-     * @return
-     */
     @Override
     public double denormalizeValueFromPerceptronOutput(Object value) {
         return normOutput.deNormalize((double) value);
     }
 
-    /**
-     *
-     * @param board
-     * @param outputNeuron <p>
-     * @return
-     */
     @Override
     public double getBoardReward(GameBoard board,
             int outputNeuron) {
@@ -99,18 +88,12 @@ public class NBasicTanH_512 extends NTupleConfiguration2048 {
     }
 
     /**
-     * @return the maxTile
+     * @return máximo tile
      */
     public int getMaxTile() {
         return maxTile;
     }
 
-    /**
-     *
-     * @param board
-     * @param nTupleIndex <p>
-     * @return
-     */
     @Override
     public SamplePointState[] getNTuple(GameBoard board,
             int nTupleIndex) {
@@ -189,17 +172,12 @@ public class NBasicTanH_512 extends NTupleConfiguration2048 {
     }
 
     /**
-     * @return the numSamples
+     * @return número de muestras
      */
     public int getNumSamples() {
         return numSamples;
     }
 
-    /**
-     *
-     * @param value <p>
-     * @return
-     */
     @Override
     public double normalizeValueToPerceptronOutput(Object value) {
         if ( (Double) value > maxReward ) {

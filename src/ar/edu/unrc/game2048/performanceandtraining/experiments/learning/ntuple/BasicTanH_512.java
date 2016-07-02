@@ -57,11 +57,11 @@ public class BasicTanH_512 extends LearningExperiment<BasicNetwork> {
         experiment.setAlpha(alphas);
         experiment.setLearningRateAdaptationToFixed();
 
-        experiment.setLambda(0.5);
+        experiment.setLambda(0.4);
         experiment.setGamma(1);
         experiment.setExplorationRateToFixed(0);
         experiment.setReplaceEligibilityTraces(false);
-        experiment.setGamesToPlay(15_000);
+        experiment.setGamesToPlay(30_000);
         experiment.setSaveEvery(500);
         experiment.setSaveBackupEvery(1_000);
         experiment.setInitializePerceptronRandomized(false);

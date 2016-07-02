@@ -69,14 +69,6 @@ public abstract class INeuralNetworkInterfaceFor2048<NeuralNetworkClass> impleme
 
     /**
      *
-     * @param randomFile
-     * @param trainedFile
-     */
-    public abstract void compareNeuralNetworks(File randomFile,
-            File trainedFile);
-
-    /**
-     *
      * @return
      */
     public abstract String getLibName();
@@ -132,8 +124,7 @@ public abstract class INeuralNetworkInterfaceFor2048<NeuralNetworkClass> impleme
     /**
      *
      * @param game
-     * @param learningMethod metodo usado para entrenar y evaluar, o null si se utiliza una IA al
-     *                       azar
+     * @param learningMethod metodo usado para entrenar y evaluar, o null si se utiliza una IA al azar
      * <p>
      */
     public void playATurn(Game2048<NeuralNetworkClass> game,

@@ -119,11 +119,6 @@ public class PNTuple512<NeuralNetworkClass> extends PerceptronConfiguration2048<
         return getnTuplesWeightQuantityIndex()[nTupleSampleIndex] + localIndex;
     }
 
-    /**
-     *
-     * @param board
-     * @param normalizedPerceptronInput <p>
-     */
     @Override
     public void calculateNormalizedPerceptronInput(
             GameBoard<NeuralNetworkClass> board,
@@ -184,13 +179,6 @@ public class PNTuple512<NeuralNetworkClass> extends PerceptronConfiguration2048<
         return maxTile;
     }
 
-    /**
-     *
-     * @param board
-     * @param nTupleIndex
-     *
-     * @return
-     */
     public SamplePointState[] getNTuple(GameBoard board,
             int nTupleIndex) {
         switch ( nTupleIndex ) {
@@ -267,30 +255,26 @@ public class PNTuple512<NeuralNetworkClass> extends PerceptronConfiguration2048<
     }
 
     /**
-     * @return the numSamples
+     * @return numero de muestras.
      */
     public int getNumSamples() {
         return numSamples;
     }
 
     /**
-     * @return the nTuplesLenght
+     * @return longitud de las ntuplas.
      */
     public int[] getnTuplesLenght() {
         return nTuplesLenght;
     }
 
     /**
-     * @return the nTuplesWeightQuantityIndex
+     * @return nTuplesWeightQuantityIndex
      */
     public int[] getnTuplesWeightQuantityIndex() {
         return nTuplesWeightQuantityIndex;
     }
 
-    /**
-     *
-     * @return
-     */
     @Override
     public boolean isConcurrentInputEnabled() {
         return concurrenInput;
@@ -301,10 +285,6 @@ public class PNTuple512<NeuralNetworkClass> extends PerceptronConfiguration2048<
         return normOutput.normalize((Double) value);
     }
 
-    /**
-     *
-     * @return
-     */
     @Override
     public boolean useNTupleList() {
         return useNTupleList;
