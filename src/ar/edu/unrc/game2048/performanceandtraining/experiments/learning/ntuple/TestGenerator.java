@@ -150,17 +150,21 @@ public class TestGenerator {
         boolean doBackupStatistics = true;
         tileToWinForStatistics = 512;
         int gamesToPlayPerThreadForStats = 100;
-        String experimentName = "BasicTanH_512";
-        String experimentClass = "BasicTanH_512";
+        String experimentName = "BasicLinearNoPartialScore_512";
+        String experimentClass = "BasicLinearNoPartialScore_512";
         int gamesToPlay = 20_000;
         int saveEvery = 1_000;
         int saveBackupEvery = 500;
 
-        lambdaList.add(0.4d);
+        lambdaList.add(0.3d);
+        lambdaList.add(0.6d);
+        lambdaList.add(0.8d);
+        lambdaList.add(1d);
 //        lambdaList.add(0.1d);
 //        lambdaList.add(0.2d);
 
         alphaList.add(0.0025d);
+
         annealingAlphaList.add(NO_ANNEALING); //Sin annealing
 //        annealingAlphaList.add(400_000);
 //        annealingAlphaList.add(600_000);
@@ -169,9 +173,6 @@ public class TestGenerator {
         gammaList.add(1d);
 
         explorationRate.add(0d);
-        explorationRate.add(0.001d);
-        explorationRate.add(0.005d);
-        explorationRate.add(0.01d);
         explorationRate.add(0.1d);
 
         boolean createLogs = false;
@@ -224,6 +225,10 @@ public class TestGenerator {
             }
             case "BasicLinear_512": {
                 classConstructor = BasicLinear_512.class.getConstructor();
+                break;
+            }
+            case "BasicLinearNoPartialScore_512": {
+                classConstructor = BasicLinearNoPartialScore_512.class.getConstructor();
                 break;
             }
             case "BasicTanH_512": {
