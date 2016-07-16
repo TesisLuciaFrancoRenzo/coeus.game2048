@@ -149,7 +149,7 @@ public class PNTuple_512<NeuralNetworkClass> extends NeuralNetworkConfiguration2
     }
 
     /**
-     * @return the allSamplePointStates
+     * @return allSamplePointStates
      */
     public List<SamplePointState> getAllSamplePointStates() {
         return allSamplePointStates;
@@ -168,14 +168,14 @@ public class PNTuple_512<NeuralNetworkClass> extends NeuralNetworkConfiguration2
     }
 
     /**
-     * @return the mapSamplePointStates
+     * @return mapSamplePointStates
      */
     public HashMap<SamplePointState, Integer> getMapSamplePointStates() {
         return mapSamplePointStates;
     }
 
     /**
-     * @return the maxTile
+     * @return maxTile
      */
     public int getMaxTile() {
         return maxTile;
@@ -185,6 +185,7 @@ public class PNTuple_512<NeuralNetworkClass> extends NeuralNetworkConfiguration2
      *
      * @param board
      * @param nTupleIndex
+     *
      * @return
      */
     public SamplePointState[] getNTuple(GameBoard board,
