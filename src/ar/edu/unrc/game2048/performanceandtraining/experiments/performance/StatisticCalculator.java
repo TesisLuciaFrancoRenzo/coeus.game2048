@@ -8,21 +8,23 @@ package ar.edu.unrc.game2048.performanceandtraining.experiments.performance;
 import java.util.ArrayList;
 
 /**
+ * Calcula estadísticas sobre experimentos de concurrencia.
  *
- * @author franc
+ * @author lucia bressan, franco pellegrini, renzo bianchini
  */
 public class StatisticCalculator {
 
     private final ArrayList<Double> experiment;
 
     /**
-     * @param defaultCapacity solo para inicializar variables internas
+     * @param defaultCapacity solo para inicializar variables internas.
      */
     public StatisticCalculator(Integer defaultCapacity) {
         experiment = new ArrayList<>(defaultCapacity);
     }
 
     /**
+     * Agrega una muestra de tiempo al cálculo.
      *
      * @param miliseconds
      */
@@ -31,6 +33,7 @@ public class StatisticCalculator {
     }
 
     /**
+     * Calcula las estadísticas.
      *
      * @return
      */

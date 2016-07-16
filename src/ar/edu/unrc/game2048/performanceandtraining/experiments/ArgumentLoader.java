@@ -25,11 +25,16 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * Parsea argumentos de un programa (main) en una estructura amigable para su uso. Los argumentos deben tener el estilo:
+ * <p>
+ * arg1=2 arg44=[0.0,55.8]
+ *
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
 public class ArgumentLoader {
 
     /**
+     * Test.
      *
      * @param args
      *
@@ -48,10 +53,11 @@ public class ArgumentLoader {
     }
 
     /**
+     * Parsea arreglos de Double.
      *
-     * @param arrayString format like [0.0,0.1,0.2,5547]
+     * @param arrayString formato del estilo [0.0,0.1,0.2,5547]
      *
-     * @return
+     * @return lista de Double.
      */
     public static List<Double> parseDoubleArray(String arrayString) {
 
@@ -68,10 +74,11 @@ public class ArgumentLoader {
     }
 
     /**
+     * Parsea arreglos de Integer.
      *
-     * @param arrayString format like [0,1,2,5547]
+     * @param arrayString formato del estilo [0,1,2,5547]
      *
-     * @return
+     * @return lista de Integer.
      */
     public static List<Integer> parseIntegerArray(String arrayString) {
 
@@ -91,7 +98,7 @@ public class ArgumentLoader {
 
     /**
      *
-     * @param args
+     * @param args argumentos a parsear.
      */
     public ArgumentLoader(String[] args) {
         map = new HashMap<>(args.length);
@@ -109,9 +116,9 @@ public class ArgumentLoader {
 
     /**
      *
-     * @param id
+     * @param id identificador del argumento.
      *
-     * @return
+     * @return valor que contiene argumento.
      */
     public String getArg(String id) {
         String value = map.get(id);

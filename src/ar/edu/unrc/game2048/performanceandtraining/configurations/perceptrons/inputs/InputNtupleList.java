@@ -13,8 +13,10 @@ import java.util.ListIterator;
 import java.util.Set;
 
 /**
+ * Implementación de una Lista, útil para almacenar valores binarios, optimizada para no ocupar memoria con los valores
+ * 0. Utilizada para las entradas de una red neuronal grande.
  *
- * @author franco
+ * @author lucia bressan, franco pellegrini, renzo bianchini
  */
 public class InputNtupleList implements List<Double> {
 

@@ -21,7 +21,7 @@ package ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons;
 import ar.edu.unrc.coeus.tdlearning.training.ntuple.SamplePointState;
 import ar.edu.unrc.game2048.Game2048;
 import ar.edu.unrc.game2048.GameBoard;
-import ar.edu.unrc.game2048.PerceptronConfiguration2048;
+import ar.edu.unrc.game2048.NeuralNetworkConfiguration2048;
 import ar.edu.unrc.game2048.Tile;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,11 +32,13 @@ import org.encog.util.arrayutil.NormalizationAction;
 import org.encog.util.arrayutil.NormalizedField;
 
 /**
+ * Configuración para jugar hasta 512, tablero de tipo NTupla, con función de activación Tangente Hiperbólica, y puntaje
+ * parcial.
  *
  * @author lucia bressan, franco pellegrini, renzo bianchini
  * @param <NeuralNetworkClass>
  */
-public class PNTuple512<NeuralNetworkClass> extends PerceptronConfiguration2048<NeuralNetworkClass> {
+public class PNTuple_512<NeuralNetworkClass> extends NeuralNetworkConfiguration2048<NeuralNetworkClass> {
 
     private final List<SamplePointState> allSamplePointStates;
     private final boolean concurrenInput;
@@ -52,7 +54,7 @@ public class PNTuple512<NeuralNetworkClass> extends PerceptronConfiguration2048<
     /**
      *
      */
-    public PNTuple512() {
+    public PNTuple_512() {
         numSamples = 8;
         maxTile = 9;
         concurrenInput = true;
@@ -142,7 +144,7 @@ public class PNTuple512<NeuralNetworkClass> extends PerceptronConfiguration2048<
     }
 
     @Override
-    public double denormalizeValueFromPerceptronOutput(Object value) {
+    public double denormalizeValueFromNeuralNetworkOutput(Object value) {
         return normOutput.deNormalize((Double) value);
     }
 
@@ -179,6 +181,12 @@ public class PNTuple512<NeuralNetworkClass> extends PerceptronConfiguration2048<
         return maxTile;
     }
 
+    /**
+     *
+     * @param board
+     * @param nTupleIndex
+     * @return
+     */
     public SamplePointState[] getNTuple(GameBoard board,
             int nTupleIndex) {
         switch ( nTupleIndex ) {

@@ -27,38 +27,44 @@ import org.encog.util.arrayutil.NormalizedField;
  * @author lucia bressan, franco pellegrini, renzo bianchini
  * @param <NeuralNetworkClass>
  */
-public abstract class PerceptronConfiguration2048<NeuralNetworkClass> implements Cloneable, IConfiguration2048 {
-
-    /**
-     *
-     */
-    public double activationFunctionMax;
-
-    /**
-     *
-     */
-    public double activationFunctionMin;
-
-    /**
-     *
-     */
-    public NormalizedField normInput;
-
-    /**
-     *
-     */
-    public NormalizedField normOutput;
-
-    //fin de la configuracion de la red neuronal
-    private NeuralNetworkClass neuralNetwork;
+public abstract class NeuralNetworkConfiguration2048<NeuralNetworkClass> implements Cloneable, IConfiguration2048 {
     /**
      *
      */
     protected ActivationFunction[] activationFunctionForEncog;
+
+    /**
+     *
+     */
+    protected double activationFunctionMax;
+
+
+    /**
+     *
+     */
+    protected double activationFunctionMin;
+    //fin de la configuracion de la red neuronal
+
+    /**
+     *
+     */
+    protected NeuralNetworkClass neuralNetwork;
     /**
      *
      */
     protected int[] neuronQuantityInLayer;
+
+    /**
+     *
+     */
+    protected NormalizedField normInput;
+
+
+    /**
+     *
+     */
+    protected NormalizedField normOutput;
+
 
     /**
      *
@@ -99,6 +105,38 @@ public abstract class PerceptronConfiguration2048<NeuralNetworkClass> implements
     }
 
     /**
+     *
+     * @return
+     */
+    public double getActivationFunctionMax() {
+        return activationFunctionMax;
+    }
+
+    /**
+     *
+     * @param activationFunctionMax
+     */
+    public void setActivationFunctionMax(double activationFunctionMax) {
+        this.activationFunctionMax = activationFunctionMax;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public double getActivationFunctionMin() {
+        return activationFunctionMin;
+    }
+
+    /**
+     *
+     * @param activationFunctionMin
+     */
+    public void setActivationFunctionMin(double activationFunctionMin) {
+        this.activationFunctionMin = activationFunctionMin;
+    }
+
+    /**
      * @return the neuralNetwork
      */
     public NeuralNetworkClass getNeuralNetwork() {
@@ -124,6 +162,22 @@ public abstract class PerceptronConfiguration2048<NeuralNetworkClass> implements
      */
     public void setNeuronQuantityInLayer(int[] neuronQuantityInLayer) {
         this.neuronQuantityInLayer = neuronQuantityInLayer;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public NormalizedField getNormInput() {
+        return normInput;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public NormalizedField getNormOutput() {
+        return normOutput;
     }
 
     /**

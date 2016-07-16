@@ -22,10 +22,10 @@ import ar.edu.unrc.coeus.interfaces.INeuralNetworkInterface;
 import static ar.edu.unrc.coeus.tdlearning.learning.ELearningStyle.afterState;
 import ar.edu.unrc.coeus.tdlearning.learning.TDLambdaLearning;
 import ar.edu.unrc.coeus.tdlearning.training.ntuple.NTupleSystem;
-import ar.edu.unrc.game2048.PerceptronConfiguration2048;
+import ar.edu.unrc.game2048.NeuralNetworkConfiguration2048;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.LearningExperiment;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.librariesinterfaces.EncogExperimentInterface;
-import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.PBinary;
+import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.PBinary_2048;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -44,56 +44,66 @@ public class ConcurrencyExperiment_Basic extends LearningExperiment<BasicNetwork
     /**
      *
      */
+    @SuppressWarnings( "PublicField" )
     public static int GAMES_TO_PLAY;
 
     /**
      *
      */
+    @SuppressWarnings( "PublicField" )
     public static int MAX_INNER_LAYERS;
 
     /**
      *
      */
+    @SuppressWarnings( "PublicField" )
     public static int MAX_NEURON_QUANTITY;
 
     /**
      *
      */
+    @SuppressWarnings( "PublicField" )
     public static int MIN_NEURON_QUANTITY;
 
     /**
      *
      */
+    @SuppressWarnings( "PublicField" )
     public static int SAMPLES_PER_EXPERIMENT;
 
     /**
      *
      */
+    @SuppressWarnings( "PublicField" )
     public static ConcurrencyConfig currentConfig;
 
     /**
      *
      */
+    @SuppressWarnings( "PublicField" )
     public static String filePath;
 
     /**
      *
      */
+    @SuppressWarnings( "PublicField" )
     public static StringBuilder outputForGraphicsResults;
 
     /**
      *
      */
+    @SuppressWarnings( "PublicField" )
     public static StringBuilder outputResults;
 
     /**
+     * Ejecuta un experimento.
      *
-     * @param trainConcurrency,   boolean concurrencyInEvaluate
-     * @param evaluateConcurrency
+     * @param trainConcurrency    true si debe entrenar usando concurrencia.
+     * @param evaluateConcurrency true si debe evaluar decisiones usando concurrencia.
      *
      * @throws Exception
      */
-    public static void experimentSet(boolean trainConcurrency,
+    public static void experimentRun(boolean trainConcurrency,
             boolean evaluateConcurrency) throws Exception {
         for ( int innerLayerQuantity = 1; innerLayerQuantity <= MAX_INNER_LAYERS;
                 innerLayerQuantity++ ) {
@@ -117,30 +127,30 @@ public class ConcurrencyExperiment_Basic extends LearningExperiment<BasicNetwork
                     innerLayersNeuronQuantity++ ) {
                 // Primer experimento, con 1 capa, en serie
                 currentConfig = new ConcurrencyConfig();
-                currentConfig.concurrencyInEvaluate = evaluateConcurrency;
+                currentConfig.setConcurrencyInEvaluate(evaluateConcurrency);
 
-                currentConfig.concurrencyInLayer = new boolean[innerLayerQuantity + 2];
+                currentConfig.setConcurrencyInLayer(new boolean[innerLayerQuantity + 2]);
                 for ( int i = 0; i < innerLayerQuantity + 1; i++ ) {
-                    currentConfig.concurrencyInLayer[i] = trainConcurrency;
+                    currentConfig.getConcurrencyInLayer()[i] = trainConcurrency;
                 }
-                currentConfig.concurrencyInLayer[currentConfig.concurrencyInLayer.length - 1] = false;
+                currentConfig.getConcurrencyInLayer()[currentConfig.getConcurrencyInLayer().length - 1] = false;
 
-                currentConfig.alphas = new double[innerLayerQuantity + 2];
+                currentConfig.setAlphas(new double[innerLayerQuantity + 2]);
                 for ( int i = 0; i < innerLayerQuantity + 2; i++ ) {
-                    currentConfig.alphas[i] = 0.0025;
+                    currentConfig.getAlphas()[i] = 0.0025;
                 }
 
-                currentConfig.neuronQuantityInLayer = new int[innerLayerQuantity + 2];
-                currentConfig.neuronQuantityInLayer[0] = 64;
+                currentConfig.setNeuronQuantityInLayer(new int[innerLayerQuantity + 2]);
+                currentConfig.getNeuronQuantityInLayer()[0] = 64;
                 for ( int i = 1; i <= innerLayerQuantity; i++ ) {
-                    currentConfig.neuronQuantityInLayer[i] = (int) Math.pow(2,
+                    currentConfig.getNeuronQuantityInLayer()[i] = (int) Math.pow(2,
                             innerLayersNeuronQuantity);
                 }
-                currentConfig.neuronQuantityInLayer[currentConfig.neuronQuantityInLayer.length - 1] = 1;
+                currentConfig.getNeuronQuantityInLayer()[currentConfig.getNeuronQuantityInLayer().length - 1] = 1;
 
-                currentConfig.activationFunctionForEncog = new ActivationFunction[innerLayerQuantity + 1];
+                currentConfig.setActivationFunctionForEncog(new ActivationFunction[innerLayerQuantity + 1]);
                 for ( int i = 0; i < innerLayerQuantity + 1; i++ ) {
-                    currentConfig.activationFunctionForEncog[i] = new ActivationTANH();
+                    currentConfig.getActivationFunctionForEncog()[i] = new ActivationTANH();
                 }
 
                 System.out.println(
@@ -211,7 +221,7 @@ public class ConcurrencyExperiment_Basic extends LearningExperiment<BasicNetwork
 
     /**
      *
-     * @param args <p>
+     * @param args
      */
     public static void main(String[] args) {
         try {
@@ -244,8 +254,8 @@ public class ConcurrencyExperiment_Basic extends LearningExperiment<BasicNetwork
             printConfig(outputForGraphicsResults);
 
             long time = System.currentTimeMillis();
-            experimentSet(false, true);
-            experimentSet(true, true);
+            experimentRun(false, true);
+            experimentRun(true, true);
 
             time = System.currentTimeMillis() - time;
             System.out.println("Demoró = " + time + " ms.");
@@ -272,20 +282,31 @@ public class ConcurrencyExperiment_Basic extends LearningExperiment<BasicNetwork
         }
     }
 
-    /**
-     *
-     * @param trainingStats
-     * @param bestPossibleStats
-     *
-     * @throws Exception
-     */
-    public static void startStatistics(StatisticCalculator trainingStats,
+
+    private static void printConfig(StringBuilder outputResults) {
+        outputResults.append("====================================").
+                append("\n");
+        outputResults.append("SAMPLES_PER_EXPERIMENT = ").append(
+                SAMPLES_PER_EXPERIMENT).append("\n");
+        outputResults.append("GAMES_TO_PLAY = ").append(GAMES_TO_PLAY).append(
+                "\n");
+        outputResults.append("MAX_INNER_LAYERS = ").append(MAX_INNER_LAYERS).
+                append("\n");
+        outputResults.append("MAX_NEURON_QUANTITY = ").append(
+                MAX_NEURON_QUANTITY).append(" (").append(Math.pow(2,
+                MAX_NEURON_QUANTITY)).append(")").append("\n");
+        outputResults.append("MIN_NEURON_QUANTITY = ").append(
+                MIN_NEURON_QUANTITY).append(" (").append(Math.pow(2,
+                MIN_NEURON_QUANTITY)).append(")").append("\n");
+        outputResults.append("====================================").
+                append("\n");
+    }
+    private static void startStatistics(StatisticCalculator trainingStats,
             StatisticCalculator bestPossibleStats) throws Exception {
         LearningExperiment experiment = new ConcurrencyExperiment_Basic();
-        experiment.setAlpha(currentConfig.alphas);
-        experiment.setConcurrencyInLayer(currentConfig.concurrencyInLayer);
-        experiment.setConcurrencyInComputeBestPosibleAction(
-                currentConfig.concurrencyInEvaluate);
+        experiment.setAlpha(currentConfig.getAlphas());
+        experiment.setConcurrencyInLayer(currentConfig.getConcurrencyInLayer());
+        experiment.setConcurrencyInComputeBestPosibleAction(currentConfig.isConcurrencyInEvaluate());
         experiment.setLearningRateAdaptationToAnnealing(500_000);
         experiment.setLambda(0.7);
         experiment.setGamma(1);
@@ -308,45 +329,20 @@ public class ConcurrencyExperiment_Basic extends LearningExperiment<BasicNetwork
         trainingStats.addSample(experiment.getAvgTrainingTimes());
     }
 
-    private static void printConfig(StringBuilder outputResults) {
-        outputResults.append("====================================").
-                append("\n");
-        outputResults.append("SAMPLES_PER_EXPERIMENT = ").append(
-                SAMPLES_PER_EXPERIMENT).append("\n");
-        outputResults.append("GAMES_TO_PLAY = ").append(GAMES_TO_PLAY).append(
-                "\n");
-        outputResults.append("MAX_INNER_LAYERS = ").append(MAX_INNER_LAYERS).
-                append("\n");
-        outputResults.append("MAX_NEURON_QUANTITY = ").append(
-                MAX_NEURON_QUANTITY).append(" (").append(Math.pow(2,
-                MAX_NEURON_QUANTITY)).append(")").append("\n");
-        outputResults.append("MIN_NEURON_QUANTITY = ").append(
-                MIN_NEURON_QUANTITY).append(" (").append(Math.pow(2,
-                MIN_NEURON_QUANTITY)).append(")").append("\n");
-        outputResults.append("====================================").
-                append("\n");
-    }
-
     @Override
     public void initialize() {
         this.setTileToWinForTraining(2_048);
         if ( this.getExperimentName() == null ) {
             this.setExperimentName("ConcurrencyTimes");
         }
-        this.setPerceptronName(this.getExperimentName());
-        PerceptronConfiguration2048<BasicNetwork> config = new PBinary<>();
-        config.setNeuronQuantityInLayer(currentConfig.neuronQuantityInLayer);
-        config.setActivationFunctionForEncog(
-                currentConfig.activationFunctionForEncog);
+        this.setNeuralNetworkName(this.getExperimentName());
+        NeuralNetworkConfiguration2048<BasicNetwork> config = new PBinary_2048<>();
+        config.setNeuronQuantityInLayer(currentConfig.getNeuronQuantityInLayer());
+        config.setActivationFunctionForEncog(currentConfig.getActivationFunctionForEncog());
         this.setNeuralNetworkInterfaceFor2048(new EncogExperimentInterface(
                 config));
     }
 
-    /**
-     *
-     * @param perceptronInterface <p>
-     * @return
-     */
     @Override
     public TDLambdaLearning instanceOfTdLearninrgImplementation(
             INeuralNetworkInterface perceptronInterface) {

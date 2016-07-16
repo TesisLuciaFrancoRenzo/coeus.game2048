@@ -22,10 +22,10 @@ import ar.edu.unrc.coeus.interfaces.INeuralNetworkInterface;
 import static ar.edu.unrc.coeus.tdlearning.learning.ELearningStyle.afterState;
 import ar.edu.unrc.coeus.tdlearning.learning.TDLambdaLearning;
 import ar.edu.unrc.coeus.tdlearning.training.ntuple.NTupleSystem;
-import ar.edu.unrc.game2048.PerceptronConfiguration2048;
+import ar.edu.unrc.game2048.NeuralNetworkConfiguration2048;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.LearningExperiment;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.librariesinterfaces.EncogExperimentInterface;
-import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.PBoard;
+import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.PBoard_32768;
 import java.io.File;
 import org.encog.neural.networks.BasicNetwork;
 
@@ -92,8 +92,8 @@ public class SimpleBoard_32768 extends LearningExperiment<BasicNetwork> {
         if ( this.getExperimentName() == null ) {
             this.setExperimentName(this.getClass());
         }
-        this.setPerceptronName(this.getExperimentName());
-        PerceptronConfiguration2048<BasicNetwork> config = new PBoard<>();
+        this.setNeuralNetworkName(this.getExperimentName());
+        NeuralNetworkConfiguration2048<BasicNetwork> config = new PBoard_32768<>();
         this.setNeuralNetworkInterfaceFor2048(new EncogExperimentInterface(config));
     }
 

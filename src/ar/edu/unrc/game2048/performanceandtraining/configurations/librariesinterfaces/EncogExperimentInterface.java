@@ -20,7 +20,7 @@ package ar.edu.unrc.game2048.performanceandtraining.configurations.librariesinte
 
 import ar.edu.unrc.coeus.interfaces.INeuralNetworkInterface;
 import ar.edu.unrc.coeus.tdlearning.utils.FunctionUtils;
-import ar.edu.unrc.game2048.PerceptronConfiguration2048;
+import ar.edu.unrc.game2048.NeuralNetworkConfiguration2048;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.INeuralNetworkInterfaceFor2048;
 import java.io.File;
 import java.util.ArrayList;
@@ -56,7 +56,7 @@ public class EncogExperimentInterface extends INeuralNetworkInterfaceFor2048<Bas
      * @param perceptronConfiguration configuración
      */
     public EncogExperimentInterface(
-            PerceptronConfiguration2048<BasicNetwork> perceptronConfiguration) {
+            NeuralNetworkConfiguration2048<BasicNetwork> perceptronConfiguration) {
         super(perceptronConfiguration);
     }
 
@@ -80,7 +80,7 @@ public class EncogExperimentInterface extends INeuralNetworkInterfaceFor2048<Bas
     }
 
     @Override
-    public INeuralNetworkInterface getPerceptronInterface() {
+    public INeuralNetworkInterface getNeuralNetworkInterface() {
         activationFunction = new ArrayList<>(getPerceptronConfiguration().
                 getActivationFunctionForEncog().length);
         derivatedActivationFunction = new ArrayList<>(

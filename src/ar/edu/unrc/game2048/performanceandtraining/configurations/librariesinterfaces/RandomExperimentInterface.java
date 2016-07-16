@@ -21,7 +21,7 @@ package ar.edu.unrc.game2048.performanceandtraining.configurations.librariesinte
 import ar.edu.unrc.coeus.interfaces.INeuralNetworkInterface;
 import ar.edu.unrc.coeus.tdlearning.learning.TDLambdaLearning;
 import ar.edu.unrc.game2048.Game2048;
-import ar.edu.unrc.game2048.PerceptronConfiguration2048;
+import ar.edu.unrc.game2048.NeuralNetworkConfiguration2048;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.INeuralNetworkInterfaceFor2048;
 import static java.awt.event.KeyEvent.VK_DOWN;
 import static java.awt.event.KeyEvent.VK_LEFT;
@@ -41,7 +41,7 @@ public class RandomExperimentInterface extends INeuralNetworkInterfaceFor2048 {
      * @param perceptronConfiguration configuración
      */
     public RandomExperimentInterface(
-            PerceptronConfiguration2048 perceptronConfiguration) {
+            NeuralNetworkConfiguration2048 perceptronConfiguration) {
         super(perceptronConfiguration);
     }
 
@@ -56,7 +56,7 @@ public class RandomExperimentInterface extends INeuralNetworkInterfaceFor2048 {
     }
 
     @Override
-    public INeuralNetworkInterface getPerceptronInterface() {
+    public INeuralNetworkInterface getNeuralNetworkInterface() {
         return null;
     }
 

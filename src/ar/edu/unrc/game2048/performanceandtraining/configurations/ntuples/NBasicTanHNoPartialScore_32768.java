@@ -30,7 +30,7 @@ import org.encog.util.arrayutil.NormalizedField;
 /**
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
-public class NBasicNoPartialScoreTanH extends NTupleConfiguration2048 {
+public class NBasicTanHNoPartialScore_32768 extends NTupleConfiguration2048 {
 
     private final int maxReward = 500_000;
     private final int minReward = -500_000;
@@ -38,7 +38,7 @@ public class NBasicNoPartialScoreTanH extends NTupleConfiguration2048 {
     /**
      *
      */
-    public NBasicNoPartialScoreTanH() {
+    public NBasicTanHNoPartialScore_32768() {
         this.activationFunction = FunctionUtils.TANH;
         this.derivatedActivationFunction = FunctionUtils.TANH_DERIVATED;
         double activationFunctionMax = 1;
@@ -67,7 +67,7 @@ public class NBasicNoPartialScoreTanH extends NTupleConfiguration2048 {
     }
 
     @Override
-    public double denormalizeValueFromPerceptronOutput(Object value) {
+    public double denormalizeValueFromNeuralNetworkOutput(Object value) {
         return normOutput.deNormalize((double) value);
     }
 

@@ -13,26 +13,82 @@ import org.encog.engine.network.activation.ActivationFunction;
  */
 public class ConcurrencyConfig {
 
-    /**
-     *
-     */
-    public ActivationFunction[] activationFunctionForEncog;
+    private ActivationFunction[] activationFunctionForEncog;
+    private double[] alphas;
+    private boolean concurrencyInEvaluate;
+    private boolean[] concurrencyInLayer;
+    private int[] neuronQuantityInLayer;
 
     /**
-     *
+     * @return activationFunctionForEncog
      */
-    public double[] alphas;
+    public ActivationFunction[] getActivationFunctionForEncog() {
+        return activationFunctionForEncog;
+    }
 
     /**
-     *
+     * @param activationFunctionForEncog the activationFunctionForEncog to set
      */
-    public boolean[] concurrencyInLayer;
+    public void setActivationFunctionForEncog(
+            ActivationFunction[] activationFunctionForEncog) {
+        this.activationFunctionForEncog = activationFunctionForEncog;
+    }
 
     /**
-     *
+     * @return alphas
      */
-    public int[] neuronQuantityInLayer;
-    boolean concurrencyInEvaluate;
+    public double[] getAlphas() {
+        return alphas;
+    }
+
+    /**
+     * @param alphas
+     */
+    public void setAlphas(double[] alphas) {
+        this.alphas = alphas;
+    }
+
+    /**
+     * @return concurrencyInLayer
+     */
+    public boolean[] getConcurrencyInLayer() {
+        return concurrencyInLayer;
+    }
+
+    /**
+     * @param concurrencyInLayer
+     */
+    public void setConcurrencyInLayer(boolean[] concurrencyInLayer) {
+        this.concurrencyInLayer = concurrencyInLayer;
+    }
+
+    /**
+     * @return neuronQuantityInLayer
+     */
+    public int[] getNeuronQuantityInLayer() {
+        return neuronQuantityInLayer;
+    }
+
+    /**
+     * @param neuronQuantityInLayer
+     */
+    public void setNeuronQuantityInLayer(int[] neuronQuantityInLayer) {
+        this.neuronQuantityInLayer = neuronQuantityInLayer;
+    }
+
+    /**
+     * @return concurrencyInEvaluate
+     */
+    public boolean isConcurrencyInEvaluate() {
+        return concurrencyInEvaluate;
+    }
+
+    /**
+     * @param concurrencyInEvaluate
+     */
+    public void setConcurrencyInEvaluate(boolean concurrencyInEvaluate) {
+        this.concurrencyInEvaluate = concurrencyInEvaluate;
+    }
 
     @Override
     public String toString() {
@@ -65,10 +121,8 @@ public class ConcurrencyConfig {
         if ( activationFunctionForEncog != null ) {
             output.append("\n");
             output.append("activationFunctionForEncog: ");
-            for ( ActivationFunction activationFunction
-                    : activationFunctionForEncog ) {
-                output.append(activationFunction.getClass().getName()).append(
-                        ", ");
+            for ( ActivationFunction activationFunction : activationFunctionForEncog ) {
+                output.append(activationFunction.getClass().getName()).append(", ");
             }
         }
         return output.toString();

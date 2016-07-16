@@ -27,13 +27,16 @@ import java.io.File;
 import org.encog.neural.networks.BasicNetwork;
 
 /**
+ * Test útil para cálculo de estadísticas de una Inteligencia Artificial que toma decisiones al azar.
+ *
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
 public class Basic extends LearningExperiment<BasicNetwork> {
 
     /**
      *
-     * @param args <p>
+     * @param args
+     *
      * @throws Exception
      */
     public static void main(String[] args) throws Exception {
@@ -63,17 +66,12 @@ public class Basic extends LearningExperiment<BasicNetwork> {
         if ( this.getExperimentName() == null ) {
             this.setExperimentName(this.getClass());
         }
-        this.setPerceptronName(this.getExperimentName());
+        this.setNeuralNetworkName(this.getExperimentName());
         this.setTileToWinForTraining(2_048);
         this.setNeuralNetworkInterfaceFor2048(
                 new RandomExperimentInterface(null));
     }
 
-    /**
-     *
-     * @param perceptronInterface <p>
-     * @return
-     */
     @Override
     public TDLambdaLearning instanceOfTdLearninrgImplementation(
             INeuralNetworkInterface perceptronInterface) {

@@ -28,12 +28,12 @@ import java.util.ArrayList;
 /**
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
-public class NSymetryLinear extends NTupleConfiguration2048 {
+public class NSymetryLinear_32768 extends NTupleConfiguration2048 {
 
     /**
-     *
+     * Configuración para jugar hasta 32.768 con tablero simétrico, con función de activación Lineal, y puntaje parcial.
      */
-    public NSymetryLinear() {
+    public NSymetryLinear_32768() {
         this.activationFunction = FunctionUtils.LINEAR;
         this.derivatedActivationFunction = FunctionUtils.LINEAR_DERIVATED;
         this.concurrency = false;
@@ -57,7 +57,7 @@ public class NSymetryLinear extends NTupleConfiguration2048 {
     }
 
     @Override
-    public double denormalizeValueFromPerceptronOutput(Object value) {
+    public double denormalizeValueFromNeuralNetworkOutput(Object value) {
         return (double) value;
     }
 

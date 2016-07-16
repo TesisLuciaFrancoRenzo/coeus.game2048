@@ -35,6 +35,8 @@ import java.util.logging.Logger;
 import java.util.stream.Stream;
 
 /**
+ * Tests parametrizables mediante parámetros, útil para correr variedades de simulaciones sin recompilar todo el
+ * programa.
  *
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
@@ -117,9 +119,9 @@ public class TestGenerator {
     }
 
     /**
+     * @param ex error a tratar.
      *
-     * @param ex <p>
-     * @return
+     * @return traducción de la traza de errores a texto.
      */
     public static String getMsj(Throwable ex) {
         StringWriter sw = new StringWriter();
@@ -130,7 +132,8 @@ public class TestGenerator {
 
     /**
      *
-     * @param args <p>
+     * @param args
+     *
      * @throws Exception
      */
     public static void main(String[] args) throws Exception {
@@ -248,27 +251,7 @@ public class TestGenerator {
                 simulationsForStatistics, explorationRate, filePath);
     }
 
-    /**
-     *
-     * @param maxTrainingThreads
-     * @param experimentName
-     * @param experiment
-     * @param alphaList
-     * @param annealingAlphaList
-     * @param lambdaList
-     * @param gammaList
-     * @param statisticsOnly
-     * @param runStatisticsForBackups
-     * @param createLogs
-     * @param gamesToPlay
-     * @param saveEvery
-     * @param saveBacupEvery
-     * @param gamesToPlayPerThreadForStatistics
-     * @param simulationsForStatistics
-     * @param explorationRateList
-     * @param filePath
-     */
-    public static void runAllConfigs(int maxTrainingThreads,
+    private static void runAllConfigs(int maxTrainingThreads,
             String experimentName,
             Constructor<?> experiment,
             List<Double> alphaList,

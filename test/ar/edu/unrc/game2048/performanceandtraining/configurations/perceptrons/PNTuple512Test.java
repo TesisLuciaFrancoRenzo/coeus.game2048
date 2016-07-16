@@ -56,13 +56,13 @@ public class PNTuple512Test {
     }
 
     /**
-     * Test of calculateNormalizedPerceptronInput method, of class PNTuple512.
+     * Test of calculateNormalizedPerceptronInput method, of class PNTuple_512.
      */
     @Test
     public void testCalculateNormalizedPerceptronInput() {
         System.out.println("calculateNormalizedPerceptronInput");
 
-        PNTuple512<BasicNetwork> nTupleConfiguration = new PNTuple512<>();
+        PNTuple_512<BasicNetwork> nTupleConfiguration = new PNTuple_512<>();
         TileContainer tileContainer = new TileContainer(nTupleConfiguration.
                 getMaxTile());
         Tile[] randomB = {
@@ -94,10 +94,10 @@ public class PNTuple512Test {
         board2.setTiles(randomBoard);
 
         NTupleSystem nTupleSystem = new NTupleSystem(
-                nTupleConfiguration2.allSamplePointStates,
-                nTupleConfiguration2.nTuplesLenght,
-                nTupleConfiguration2.activationFunction,
-                nTupleConfiguration2.derivatedActivationFunction,
+                nTupleConfiguration2.getAllSamplePointStates(),
+                nTupleConfiguration2.getnTuplesLenght(),
+                nTupleConfiguration2.getActivationFunction(),
+                nTupleConfiguration2.getDerivatedActivationFunction(),
                 false
         );
         int[] indexes = nTupleSystem.getComplexComputation(board2).getIndexes();

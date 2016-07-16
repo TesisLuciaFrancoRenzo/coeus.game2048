@@ -21,6 +21,7 @@ package ar.edu.unrc.game2048;
 import ar.edu.unrc.coeus.tdlearning.interfaces.IAction;
 
 /**
+ * Posibles acciones a realizar sobre un tablero de 2048.
  *
  * @author lucia bressan, franco pellegrini, renzo bianchini pellegrini
  */

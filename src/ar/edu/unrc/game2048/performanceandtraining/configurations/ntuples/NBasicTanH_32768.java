@@ -36,7 +36,7 @@ public class NBasicTanH_32768 extends NTupleConfiguration2048 {
     private final int minReward = -500_000;
 
     /**
-     *
+     * Configuración para jugar hasta 32.768, con función de activación Tangente Hiperbólica, y puntaje parcial.
      */
     public NBasicTanH_32768() {
         this.activationFunction = FunctionUtils.TANH;
@@ -67,7 +67,7 @@ public class NBasicTanH_32768 extends NTupleConfiguration2048 {
     }
 
     @Override
-    public double denormalizeValueFromPerceptronOutput(Object value) {
+    public double denormalizeValueFromNeuralNetworkOutput(Object value) {
         return normOutput.deNormalize((double) value);
     }
 

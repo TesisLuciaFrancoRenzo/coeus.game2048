@@ -19,6 +19,8 @@
 package ar.edu.unrc.game2048.performanceandtraining.experiments;
 
 /**
+ * Configuración de un generador de Tests.
+ *
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
 public class GeneratorConfig {
@@ -58,49 +60,49 @@ public class GeneratorConfig {
     }
 
     /**
-     * @return the alpha
+     * @return alpha
      */
     public double getAlpha() {
         return alpha;
     }
 
     /**
-     * @return the annealingAlpha
+     * @return annealingAlpha
      */
     public int getAnnealingAlpha() {
         return annealingAlpha;
     }
 
     /**
-     * @return the explorationRate
+     * @return explorationRate
      */
     public double getExplorationRate() {
         return explorationRate;
     }
 
     /**
-     * @return the gamma
+     * @return gamma
      */
     public double getGamma() {
         return gamma;
     }
 
     /**
-     * @return the lambda
+     * @return lambda
      */
     public double getLambda() {
         return lambda;
     }
 
     /**
-     * @return the number
+     * @return number
      */
     public int getNumber() {
         return number;
     }
 
     /**
-     * @return the resetTraces
+     * @return resetTraces
      */
     public boolean isResetTraces() {
         return resetTraces;

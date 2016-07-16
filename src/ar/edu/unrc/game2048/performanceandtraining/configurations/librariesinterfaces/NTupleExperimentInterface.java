@@ -52,7 +52,7 @@ public class NTupleExperimentInterface extends INeuralNetworkInterfaceFor2048<Ba
     }
 
     @Override
-    public INeuralNetworkInterface getPerceptronInterface() {
+    public INeuralNetworkInterface getNeuralNetworkInterface() {
         return null;
     }
 
@@ -65,11 +65,11 @@ public class NTupleExperimentInterface extends INeuralNetworkInterfaceFor2048<Ba
      */
     public NTupleSystem initializeNTupleSystem(boolean randomized) {
         NTupleSystem nTupleSystem = new NTupleSystem(this.
-                getNTupleConfiguration().allSamplePointStates, this.
-                getNTupleConfiguration().nTuplesLenght, this.
-                getNTupleConfiguration().activationFunction, this.
-                getNTupleConfiguration().derivatedActivationFunction, this.
-                getNTupleConfiguration().concurrency);
+                getNTupleConfiguration().getAllSamplePointStates(), this.
+                getNTupleConfiguration().getnTuplesLenght(), this.
+                getNTupleConfiguration().getActivationFunction(), this.
+                getNTupleConfiguration().getDerivatedActivationFunction(), this.
+                getNTupleConfiguration().isConcurrency());
         if ( randomized ) {
             nTupleSystem.randomize();
         }

@@ -34,6 +34,7 @@ import java.util.logging.Logger;
 import java.util.stream.Stream;
 
 /**
+ * Test específicamente diseñado para comparar eficiencia de funciones de activación.
  *
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
@@ -44,74 +45,11 @@ public class TestGeneratorActivationFunctionVsTraces {
      */
     public static final int NO_ANNEALING = -1;
 
-    /**
-     *
-     * @param numberForShow
-     * @param experiment
-     * @param statisticsOnly
-     * @param runStatisticsForBackups
-     * @param createLogs
-     * @param lambda
-     * @param alpha
-     * @param gamma
-     * @param gamesToPlay
-     * @param saveEvery
-     * @param saveBacupEvery
-     * @param gamesToPlayPerThreadForStatistics
-     * @param simulationsForStatistics
-     * @param explorationRate
-     * @param replaceEligibilityTraces
-     * @param filePath
-     */
-    public static void configAndExcecute(
-            int numberForShow,
-            LearningExperiment experiment,
-            boolean statisticsOnly,
-            boolean runStatisticsForBackups,
-            boolean createLogs,
-            double lambda,
-            double alpha,
-            double gamma,
-            int gamesToPlay,
-            int saveEvery,
-            int saveBacupEvery,
-            int gamesToPlayPerThreadForStatistics,
-            int simulationsForStatistics,
-            double explorationRate,
-            boolean replaceEligibilityTraces,
-            String filePath
-    ) {
-        experiment.setStatisticsOnly(statisticsOnly);
-        experiment.setRunStatisticsForBackups(runStatisticsForBackups);
-        experiment.createLogs(createLogs);
-        experiment.setLambda(lambda);
-        experiment.setGamma(gamma);
-        double[] alphas = {alpha, alpha};
-        experiment.setAlpha(alphas);
-        experiment.setExplorationRateToFixed(explorationRate);
-        experiment.setInitializePerceptronRandomized(false);
-        experiment.setConcurrencyInComputeBestPosibleAction(true);
-        boolean[] concurrentLayer = {false, false};
-        experiment.setConcurrencyInLayer(concurrentLayer);
-        experiment.setTileToWinForStatistics(512);
-        experiment.setReplaceEligibilityTraces(replaceEligibilityTraces);
-        experiment.setLearningRateAdaptationToFixed();
-        experiment.setGamesToPlay(gamesToPlay);
-        experiment.setSaveEvery(saveEvery);
-        experiment.setSaveBackupEvery(saveBacupEvery);
-        experiment.setGamesToPlayPerThreadForStatistics(
-                gamesToPlayPerThreadForStatistics);
-        experiment.setSimulationsForStatistics(simulationsForStatistics);
-        experiment.setExportToExcel(true);
-        System.out.println(
-                "*=*=*=*=*=*=*=*=*=*=* N" + numberForShow + " Ejecutando " + filePath + " *=*=*=*=*=*=*=*=*=*=*");
-        experiment.start(numberForShow, filePath, 0, true, null);
-    }
 
     /**
+     * @param ex error a tratar.
      *
-     * @param ex <p>
-     * @return
+     * @return traducción de la traza de errores a texto.
      */
     public static String getMsj(Throwable ex) {
         StringWriter sw = new StringWriter();
@@ -122,7 +60,8 @@ public class TestGeneratorActivationFunctionVsTraces {
 
     /**
      *
-     * @param args <p>
+     * @param args
+     *
      * @throws Exception
      */
     public static void main(String[] args) throws Exception {
@@ -196,28 +135,52 @@ public class TestGeneratorActivationFunctionVsTraces {
                 statisticsOnly, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, saveBackupEvery,
                 gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, filePath);
     }
+    private static void configAndExcecute(
+            int numberForShow,
+            LearningExperiment experiment,
+            boolean statisticsOnly,
+            boolean runStatisticsForBackups,
+            boolean createLogs,
+            double lambda,
+            double alpha,
+            double gamma,
+            int gamesToPlay,
+            int saveEvery,
+            int saveBacupEvery,
+            int gamesToPlayPerThreadForStatistics,
+            int simulationsForStatistics,
+            double explorationRate,
+            boolean replaceEligibilityTraces,
+            String filePath
+    ) {
+        experiment.setStatisticsOnly(statisticsOnly);
+        experiment.setRunStatisticsForBackups(runStatisticsForBackups);
+        experiment.createLogs(createLogs);
+        experiment.setLambda(lambda);
+        experiment.setGamma(gamma);
+        double[] alphas = {alpha, alpha};
+        experiment.setAlpha(alphas);
+        experiment.setExplorationRateToFixed(explorationRate);
+        experiment.setInitializePerceptronRandomized(false);
+        experiment.setConcurrencyInComputeBestPosibleAction(true);
+        boolean[] concurrentLayer = {false, false};
+        experiment.setConcurrencyInLayer(concurrentLayer);
+        experiment.setTileToWinForStatistics(512);
+        experiment.setReplaceEligibilityTraces(replaceEligibilityTraces);
+        experiment.setLearningRateAdaptationToFixed();
+        experiment.setGamesToPlay(gamesToPlay);
+        experiment.setSaveEvery(saveEvery);
+        experiment.setSaveBackupEvery(saveBacupEvery);
+        experiment.setGamesToPlayPerThreadForStatistics(
+                gamesToPlayPerThreadForStatistics);
+        experiment.setSimulationsForStatistics(simulationsForStatistics);
+        experiment.setExportToExcel(true);
+        System.out.println(
+                "*=*=*=*=*=*=*=*=*=*=* N" + numberForShow + " Ejecutando " + filePath + " *=*=*=*=*=*=*=*=*=*=*");
+        experiment.start(numberForShow, filePath, 0, true, null);
+    }
 
-    /**
-     *
-     * @param maxTrainingThreads
-     * @param experimentName
-     * @param experiment
-     * @param alphaList
-     * @param annealingAlphaList
-     * @param lambdaList
-     * @param gammaList
-     * @param statisticsOnly
-     * @param runStatisticsForBackups
-     * @param createLogs
-     * @param gamesToPlay
-     * @param saveEvery
-     * @param saveBacupEvery
-     * @param gamesToPlayPerThreadForStatistics
-     * @param simulationsForStatistics
-     * @param explorationRateList
-     * @param filePath
-     */
-    public static void runAllConfigs(int maxTrainingThreads,
+    private static void runAllConfigs(int maxTrainingThreads,
             String experimentName,
             Constructor<?> experiment,
             List<Double> alphaList,

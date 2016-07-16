@@ -92,7 +92,7 @@ public class BasicLinear extends LearningExperiment<BasicNetwork> {
         if ( this.getExperimentName() == null ) {
             this.setExperimentName(this.getClass());
         }
-        this.setPerceptronName(this.getExperimentName());
+        this.setNeuralNetworkName(this.getExperimentName());
         NTupleConfiguration2048 config = new NBasicLinear_32768();
         this.setNeuralNetworkInterfaceFor2048(new NTupleExperimentInterface(
                 config));

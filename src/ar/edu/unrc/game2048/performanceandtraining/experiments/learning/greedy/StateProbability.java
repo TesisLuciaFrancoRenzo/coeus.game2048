@@ -16,11 +16,12 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ar.edu.unrc.game2048;
+package ar.edu.unrc.game2048.performanceandtraining.experiments.learning.greedy;
 
 import ar.edu.unrc.coeus.tdlearning.interfaces.IState;
 
 /**
+ * Probabilidad de elección, para IA greedy, de un tablero.
  *
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
@@ -31,9 +32,8 @@ public class StateProbability {
 
     /**
      *
-     * @param nextTurnState posible siguiente estado luego de calcular acciones no deterministicas
-     * @param probability   probabilidad de que ocurra {@code nextTurnState} como estado efectivo en
-     *                      el siguiente turno
+     * @param nextTurnState posible siguiente estado luego de calcular acciones no determinísticas.
+     * @param probability   probabilidad de que ocurra {@code nextTurnState} como estado efectivo en el siguiente turno
      */
     public StateProbability(final IState nextTurnState,
             final double probability) {
@@ -42,22 +42,21 @@ public class StateProbability {
     }
 
     /**
-     * @return the nextTurnState
+     * @return nextTurnState
      */
     public IState getNextTurnState() {
         return nextTurnState;
     }
 
     /**
-     * @param nextTurnState posible siguiente estado luego de calcular acciones no deterministicas
+     * @param nextTurnState posible siguiente estado luego de calcular acciones no determinísticas.
      */
     public void setNextTurnState(final IState nextTurnState) {
         this.nextTurnState = nextTurnState;
     }
 
     /**
-     * @return probabilidad de que ocurra {@code nextTurnState} como estado efectivo en el siguiente
-     *         turno
+     * @return probabilidad de que ocurra {@code nextTurnState} como estado efectivo en el siguiente turno
      */
     public double getProbability() {
         return probability;

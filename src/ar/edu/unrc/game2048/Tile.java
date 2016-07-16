@@ -23,8 +23,8 @@ import java.awt.Color;
 import static java.lang.Math.pow;
 
 /**
- * Representacion de una posicion en el tablero
- * <p>
+ * Representación de una posición en el tablero
+ *
  * @author lucia bressan, franco pellegrini, renzo bianchini pellegrini
  */
 public class Tile implements SamplePointState {
@@ -41,7 +41,7 @@ public class Tile implements SamplePointState {
 
     /**
      *
-     * @param num
+     * @param num numero del tablero en base 2.
      */
     public Tile(int num) {
         code = num;
@@ -66,7 +66,7 @@ public class Tile implements SamplePointState {
 
     /**
      *
-     * @return
+     * @return color del fondo del tile dependiendo del valor actual.
      */
     public Color getBackground() {
         switch ( code ) {
@@ -98,7 +98,7 @@ public class Tile implements SamplePointState {
 
     /**
      *
-     * @return
+     * @return código del valor del tile en base 2.
      */
     public int getCode() {
         return code;
@@ -106,7 +106,7 @@ public class Tile implements SamplePointState {
 
     /**
      *
-     * @return
+     * @return color del frente.
      */
     public Color getForeground() {
         return code < 4 ? new Color(0x77_6e65) : new Color(0xf9_f6f2);
@@ -114,7 +114,7 @@ public class Tile implements SamplePointState {
 
     /**
      *
-     * @return
+     * @return valor del tile.
      */
     public int getGameValue() {
         return gameValue;
@@ -129,7 +129,7 @@ public class Tile implements SamplePointState {
 
     /**
      *
-     * @return
+     * @return true si el tile esta vacío.
      */
     public boolean isEmpty() {
         return code == 0;

@@ -46,43 +46,47 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
+ * Experimento especializado para aprendizaje de redes neuronales.
  *
  * @author lucia bressan, franco pellegrini, renzo bianchini
- * @param <NeuralNetworkClass>
+ * @param <NeuralNetworkClass> tipo de red neuronal a entrenar
  */
 public abstract class LearningExperiment<NeuralNetworkClass> {
 
     /**
-     *
+     * Extensión de las configuraciones de entrenamiento del experimento.
      */
     public static final String CONFIG = "_config";
+
     /**
-     *
+     * Fromato para fechas en los nombres de archivos.
      */
     public static final DateFormat DATE_FILE_FORMATTER = new SimpleDateFormat(
-            "dd-MM-yyyy'_'HH'h'-mm'm'-ss's'");
+            "dd-MM-yyyy_HH'h'mm'm'ss's'");
     /**
-     *
+     * Fromato para fechas.
      */
     public static final DateFormat DATE_FORMATTER = new SimpleDateFormat(
             "dd/MM/yyyy HH:mm:ss");
 
     /**
-     *
+     * Nombre del archivo para las salidas de errores.
      */
     public static final String ERROR_DUMP = "ERROR_DUMP";
+
     /**
-     *
+     * Nombre del archivo con los datos de la ultima red neuronal guardada en disco.
      */
     public static final String LAST_SAVE_DATA = "_last_save_data";
 
     /**
-     *
+     * Nombre que se le agrega a los archivos de redes neuronales inicializados sin entrenamiento, para comparar al
+     * final del experimento con la versión entrenada.
      */
     public static final String RANDOM = "_random";
 
     /**
-     *
+     * Nombre que se le agrega a los archivos de redes neuronales con entrenamiento.
      */
     public static final String TRAINED = "_trained";
 
@@ -111,9 +115,9 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
             }
         }
     }
+
     private double[] alpha;
     private int annealingT;
-
     private double avgBestPossibleActionTimes;
     private double avgTrainingTimes;
     private int backupNumber;
@@ -138,7 +142,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
     private ELearningRateAdaptation learningRateAdaptation;
     private boolean logsActivated = false;
     private INeuralNetworkInterfaceFor2048<NeuralNetworkClass> neuralNetworkInterfaceFor2048;
-    private String perceptronName;
+    private String neuralNetworkName;
     private boolean replaceEligibilityTraces = false;
     private boolean runStatisticsForBackups = false;
     private int saveBackupEvery = 0;
@@ -148,23 +152,25 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
     private int tileToWinForStatistics = 2_048;
     private int tileToWinForTraining;
     private LinkedList<Double> trainingTimes;
+
     /**
-     *
+     * Experimento encargad de las estadísticas.
      */
     protected StatisticExperiment statisticExperiment;
 
     /**
-     *
-     * @param logsActivated
+     * @param logsActivated true si se deben crear logs detallados.
      */
     public void createLogs(boolean logsActivated) {
         this.logsActivated = logsActivated;
     }
 
     /**
+     * Crea ruta a los directorios adecuados para guardar los resultados de los experimentos.
      *
-     * @param experimentPath <p>
-     * @return
+     * @param experimentPath directorio base.
+     *
+     * @return ruta de los directorios para usar en los resultados de los experimentos.
      */
     public String createPathToDir(String experimentPath) {
         String dirPath = experimentPath
@@ -174,61 +180,57 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
     }
 
     /**
-     * @return the alpha
+     * @return constante alfa
      */
     public double[] getAlpha() {
         return alpha;
     }
 
     /**
-     * @param alpha the alpha to set
+     * @param alpha constante alfa
      */
     public void setAlpha(double[] alpha) {
         this.alpha = alpha;
     }
 
     /**
-     *
-     * @return
+     * @return Promedio de los tiempos demorados al calcular las mejores acciones.
      */
     public double getAvgBestPossibleActionTimes() {
         return avgBestPossibleActionTimes;
     }
 
     /**
-     *
-     * @return
+     * @return Promedio de los tiempos demorados en entrenamientos.
      */
     public double getAvgTrainingTimes() {
         return avgTrainingTimes;
     }
 
     /**
-     *
-     * @param parallel
+     * @param parallel true si se debe activar concurrencia en los cálculos de elegir la mejor acción posible.
      */
     public void setConcurrencyInComputeBestPosibleAction(boolean parallel) {
         this.concurrencyInComputeBestPosibleAction = parallel;
     }
 
     /**
-     *
-     * @return
+     * @return Arreglo con valores indicando true en el numero de capa que se permite cálculos concurrentes.
      */
     public boolean[] getConcurrencyInLayer() {
         return concurrencyInLayer;
     }
 
     /**
-     *
-     * @param concurrencyInLayer
+     * @param concurrencyInLayer Arreglo con valores indicando true en el numero de capa que se permite cálculos
+     *                           concurrentes.
      */
     public void setConcurrencyInLayer(boolean[] concurrencyInLayer) {
         this.concurrencyInLayer = concurrencyInLayer;
     }
 
     /**
-     * @return the experimentName
+     * @return Nombre del experimento.
      */
     public String getExperimentName() {
         return experimentName;
@@ -236,7 +238,9 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
 
 
     /**
-     * @param experimentClass
+     * Establece el nombre del experimento basado en el nombre de la clase {@code experimentClass}.
+     *
+     * @param experimentClass clase de la cual extraer el nombre del experimento.
      */
     public void setExperimentName(Class experimentClass) {
         String className = experimentClass.getName();
@@ -247,15 +251,14 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
         this.experimentName = className;
     }
     /**
-     * @param experimentName the experimentName to set
+     * @param experimentName nombre del experimento.
      */
     public void setExperimentName(String experimentName) {
         this.experimentName = experimentName;
     }
 
     /**
-     *
-     * @param value
+     * @param value valor de la tasa de exploración fija, entre 0 y 1 inclusive.
      */
     public void setExplorationRateToFixed(double value) {
         if ( value < 0 || value > 1 ) {
@@ -267,21 +270,21 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
     }
 
     /**
-     * @param exportToExcel the exportToExcel to set
+     * @param exportToExcel true si se debe exportar resultados a una hoja de cálculo.
      */
     public void setExportToExcel(boolean exportToExcel) {
         this.exportToExcel = exportToExcel;
     }
 
     /**
-     * @return the gamesToPlayPerThreadForStatistics
+     * @return cantidad de juegos a jugar por procesador en el cálculo de estadísticas.
      */
     public int getGamesToPlayPerThreadForStatistics() {
         return gamesToPlayPerThreadForStatistics;
     }
 
     /**
-     * @param gamesToPlayPerThreadForStatistics the gamesToPlayPerThreadForStatistics to set
+     * @param gamesToPlayPerThreadForStatistics cantidad de juegos a jugar por procesador en el cálculo de estadísticas.
      */
     public void setGamesToPlayPerThreadForStatistics(
             int gamesToPlayPerThreadForStatistics) {
@@ -289,14 +292,14 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
     }
 
     /**
-     * @return the gamma
+     * @return gamma.
      */
     public double getGamma() {
         return gamma;
     }
 
     /**
-     * @param gamma the gamma to set
+     * @param gamma nueva gamma.
      */
     public void setGamma(double gamma) {
         this.gamma = gamma;
@@ -304,35 +307,35 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
 
     /**
      *
-     * @param randomized
+     * @param randomized true si se debe inicializar las redes neuronales de forma al azar.
      */
     public void setInitializePerceptronRandomized(boolean randomized) {
         initializePerceptronRandomized = randomized;
     }
 
     /**
-     * @return the lambda
+     * @return lambda.
      */
     public double getLambda() {
         return lambda;
     }
 
     /**
-     * @param lambda the lambda to set
+     * @param lambda nueva lambda.
      */
     public void setLambda(double lambda) {
         this.lambda = lambda;
     }
 
     /**
-     * @return the learningRateAdaptation
+     * @return Tipo de adaptación de tasa de aprendizaje utilizado.
      */
     public ELearningRateAdaptation getLearningRateAdaptation() {
         return learningRateAdaptation;
     }
 
     /**
-     * @param learningRateAdaptation the learningRateAdaptation to set
+     * @param learningRateAdaptation Tipo de adaptación de tasa de aprendizaje utilizado.
      */
     public void setLearningRateAdaptation(
             ELearningRateAdaptation learningRateAdaptation) {
@@ -340,6 +343,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
     }
 
     /**
+     * Establece una tasa de aprendizaje con annealing de valor {@code annealingT}.
      *
      * @param annealingT
      */
@@ -349,42 +353,45 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
     }
 
     /**
-     * @return the perceptronName
+     * @return nombre de la red neuronal.
      */
-    public String getPerceptronName() {
-        return perceptronName;
+    public String getNeuralNetworkName() {
+        return neuralNetworkName;
     }
 
     /**
-     * @param perceptronName the perceptronName to set
+     * @param neuralNetworkName establece nombre de la red neuronal.
      */
-    public void setPerceptronName(String perceptronName) {
-        this.perceptronName = perceptronName;
+    public void setNeuralNetworkName(String neuralNetworkName) {
+        this.neuralNetworkName = neuralNetworkName;
     }
 
     /**
-     * @return the saveBackupEvery
+     * @return intervalo que establece cada cuántas partidas se debe realizar un una copia de la red neuronal actual.
      */
     public int getSaveBackupEvery() {
         return saveBackupEvery;
     }
 
     /**
-     * @param saveBackupEvery the saveBackupEvery to set
+     * @param saveBackupEvery intervalo que establece cada cuántas partidas se debe realizar un una copia de la red
+     *                        neuronal actual.
      */
     public void setSaveBackupEvery(int saveBackupEvery) {
         this.saveBackupEvery = saveBackupEvery;
     }
 
     /**
-     * @return the saveEvery
+     * @return intervalo que establece cada cuántas partidas se debe guardar en un archivo, el estado de la red neuronal
+     *         actual.
      */
     public int getSaveEvery() {
         return saveEvery;
     }
 
     /**
-     * @param saveEvery the saveEvery to set
+     * @param saveEvery intervalo que establece cada cuántas partidas se debe guardar en un archivo, el estado de la red
+     *                  neuronal actual.
      */
     public void setSaveEvery(int saveEvery) {
         this.saveEvery = saveEvery;
@@ -392,14 +399,15 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
 
     /**
      *
-     * @param winValue
+     * @param winValue valor utilizado para finalizar el juego como que se ganó, para el cálculo de estadísticas y el
+     *                 winrate.
      */
     public void setTileToWinForStatistics(int winValue) {
         tileToWinForStatistics = winValue;
     }
 
     /**
-     * you must initialize:
+     * Valores que se deben inicializar del experimento, por ejemplo:
      * <ul>
      * <li>private double alpha;</li>
      * <li>private double lambda;</li>
@@ -407,84 +415,91 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
      * <li>private int saveBackupEvery;</li>
      * <li>private int tileToWinForTraining;</li>
      * <li>private String experimentName;</li>
-     * <li>private String perceptronName;</li>
-     * <li>private PerceptronConfiguration2048 perceptronConfiguration; </li>
+     * <li>private String neuralNetworkName;</li>
+     * <li>private NeuralNetworkConfiguration2048 perceptronConfiguration; </li>
      * <li>private INeuralNetworkInterfaceFor2048 neuralNetworkInterfaceFor2048;</li>
      * <li>private TDTrainerMethod trainerMethod;</li>
      * <li>private int gamesToPlayPerThreadForStatistics;</li>
      * <li>private int simulationsForStatistics;</li>
      * <li>private boolean statisticsOnly;</li>
      * <li>private TDLambdaLearning learningAlgorithm</li>
-     * <p>
      * </ul>
-     * <p>
+     * etc.
      */
     public abstract void initialize();
 
     /**
      *
-     * @param perceptronInterface <p>
-     * @return
+     * @param neuralNetworkInterface interfaz que conecta la red neuronal con el algoritmo de TDLearning
+     *
+     * @return Instancia de el método {@code TDLambdaLearning} a utilizar basado en la interfaz
+     *         {@code neuralNetworkInterface}
      */
     public abstract TDLambdaLearning instanceOfTdLearninrgImplementation(
-            INeuralNetworkInterface perceptronInterface);
+            INeuralNetworkInterface neuralNetworkInterface);
 
     /**
      *
-     * @param nTupleSystem <p>
-     * @return
+     * @param nTupleSystem interfaz que conecta la NTupla con el algoritmo de TDLearning
+     *
+     * @return Instancia de el método {@code TDLambdaLearning} a utilizar basado en la interfaz {@code nTupleSystem}
      */
     public abstract TDLambdaLearning instanceOfTdLearninrgImplementation(
             NTupleSystem nTupleSystem);
 
     /**
-     * @return the replaceEligibilityTraces
+     * @return true si se están reemplazando las trazas de elegibilidad al jugar al azar mediante tasa de exploración.
      */
     public boolean isReplaceEligibilityTraces() {
         return replaceEligibilityTraces;
     }
 
     /**
-     * @param replaceEligibilityTraces the replaceEligibilityTraces to set
+     * @param replaceEligibilityTraces true si se están reemplazando las trazas de elegibilidad al jugar al azar
+     *                                 mediante tasa de exploración.
      */
     public void setReplaceEligibilityTraces(boolean replaceEligibilityTraces) {
         this.replaceEligibilityTraces = replaceEligibilityTraces;
     }
 
     /**
-     * @return the runStatisticsForBackups
+     * @return true si se debe realizar estadísticas sobre las copias de las redes neuronales, realizadas a través del
+     *         tiempo de entrenamiento total, para notar su progreso.
      */
     public boolean isRunStatisticsForBackups() {
         return runStatisticsForBackups;
     }
 
     /**
-     * @param runStatisticsForBackups the runStatisticsForBackups to set
+     * @param runStatisticsForBackups true si se debe realizar estadísticas sobre las copias de las redes neuronales,
+     *                                realizadas a través del tiempo de entrenamiento total, para notar su progreso.
      */
     public void setRunStatisticsForBackups(boolean runStatisticsForBackups) {
         this.runStatisticsForBackups = runStatisticsForBackups;
     }
 
     /**
-     * @return the statisticsOnly
+     * @return true si solo se están ejecutando experimentos de cálculos de estadísticas.
      */
     public boolean isStatisticsOnly() {
         return statisticsOnly;
     }
 
     /**
-     * @param statisticsOnly the statisticsOnly to set
+     * @param statisticsOnly true si solo se están ejecutando experimentos de cálculos de estadísticas.
      */
     public void setStatisticsOnly(boolean statisticsOnly) {
         this.statisticsOnly = statisticsOnly;
     }
 
     /**
+     * Establece tasa de exploración con una función de atenuación lineal.
      *
-     * @param initialValue
-     * @param startDecrementing
-     * @param finalValue
-     * @param finishDecrementing
+     * @param initialValue       valor inicial.
+     * @param startDecrementing  partido en el cual se va a empezar a atenuar {@code initialValue}.
+     * @param finalValue         valor final luego de la atenuación.
+     * @param finishDecrementing partido en el cual se deja de atenuar {@code initialValue} y alcanza el valor
+     *                           {@code finalValue}.
      */
     public void setExplorationRate(double initialValue,
             int startDecrementing,
@@ -506,19 +521,23 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
     }
 
     /**
-     *
+     * Establece una tasa de aprendizaje fija, sin atenuación.
      */
     public void setLearningRateAdaptationToFixed() {
         this.learningRateAdaptation = ELearningRateAdaptation.fixed;
     }
 
     /**
+     * Inicia el experimento.
      *
-     * @param numberForShow
-     * @param experimentPath
-     * @param delayPerMove
-     * @param createPerceptronFile
-     * @param errorDumpDir
+     * @param numberForShow        Numero para mostrar en la terminal al mostrar los valores alcanzado. Útil para
+     *                             ejecutar muchos experimentos en paralelo e identificar los resultados parciales en la
+     *                             terminal.
+     * @param experimentPath       Ruta del directorio donde se guardan los resultados.
+     * @param delayPerMove         Tiempo de espera entre movimientos. Útil para mostrar animaciones de como entrena,
+     *                             visualmente.
+     * @param createPerceptronFile true si se deben crear las redes neuronales si no existen.
+     * @param errorDumpDir         directorio donde se vuelcan los archivos de errores.
      */
     public void start(int numberForShow,
             String experimentPath,
@@ -538,140 +557,11 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
                 createPerceptronFile, errorDumpDir);
     }
 
-    /**
-     *
-     * @param game
-     * @param printStream
-     * @param randomPerceptronFile
-     * @param perceptronFile
-     * @param lastSaveDataFile
-     * @param filePath
-     * @param dateFormater
-     * @param zeroNumbers          <p>
-     * @param numberForShow
-     *
-     * @throws Exception
-     */
-    public void training(
-            int numberForShow,
-            Game2048<NeuralNetworkClass> game,
-            final PrintStream printStream,
-            File randomPerceptronFile,
-            File perceptronFile,
-            File lastSaveDataFile,
-            String filePath,
-            SimpleDateFormat dateFormater,
-            int zeroNumbers
-    ) throws Exception {
-        File perceptronFileBackup;
-        switch ( this.learningRateAdaptation ) {
-            case fixed: {
-                learningAlgorithm.setFixedLearningRate();
-                break;
-            }
-            case annealing: {
-                learningAlgorithm.setAnnealingLearningRate(annealingT);
-                break;
-            }
-        }
-        switch ( this.explorationRate ) {
-            case fixed: {
-                learningAlgorithm.setFixedExplorationRate(
-                        this.explorationRateInitialValue);
-                break;
-            }
-            case linear: {
-                learningAlgorithm.setLinearExplorationRate(
-                        this.explorationRateInitialValue,
-                        this.explorationRateStartDecrementing,
-                        this.explorationRateFinalValue,
-                        this.explorationRateFinishDecrementing
-                );
-                break;
-            }
-        }
-
-        if ( learningAlgorithm.canCollectStatistics() ) {
-            bestPossibleActionTimes = new LinkedList<>();
-            trainingTimes = new LinkedList<>();
-        }
-
-        for ( int i = lastSavedGamePlayedNumber + 1; i <= gamesToPlay; i++ ) {
-            long start = System.nanoTime();
-            learningAlgorithm.solveAndTrainOnce(game, i);
-            elapsedTime += System.nanoTime() - start;
-            if ( learningAlgorithm.canCollectStatistics() ) {
-                double avg = 0;
-                for ( Long sample : learningAlgorithm.
-                        getStatisticsBestPossibleActionTimes() ) {
-                    avg += sample;
-                }
-                avg /= (learningAlgorithm.getStatisticsBestPossibleActionTimes().
-                        size() * 1d);
-                bestPossibleActionTimes.add(avg);
-
-                avg = 0;
-                for ( Long sample : learningAlgorithm.
-                        getStatisticsTrainingTimes() ) {
-                    avg += sample;
-                }
-                avg /= (learningAlgorithm.getStatisticsTrainingTimes().size() * 1d);
-                trainingTimes.add(avg);
-            }
-
-            int percent = (int) (((i * 1d) / (gamesToPlay * 1d)) * 100d);
-            if ( numberForShow != -1 ) {
-                System.out.println(
-                        numberForShow + "- Juego número " + i + " (" + percent + "%)    puntaje = " + game.
-                        getScore() + "    ficha max = " + game.getMaxNumber() + "    turno alcanzado = " + game.
-                        getLastTurn() + "      current alpha = " + Arrays.
-                        toString(learningAlgorithm.getCurrentAlpha()));
-            } else {
-                System.out.println(
-                        "Juego número " + i + " (" + percent + "%)    puntaje = " + game.
-                        getScore() + "    ficha max = " + game.getMaxNumber() + "    turno alcanzado = " + game.
-                        getLastTurn() + "      current alpha = " + Arrays.
-                        toString(learningAlgorithm.getCurrentAlpha()));
-            }
-            if ( printStream != null ) {
-                printStream.
-                        println(game.getScore() + "\t" + game.getMaxNumber());
-            }
-            boolean writeConfig = false;
-            if ( i % saveEvery == 0 || i % saveBackupEvery == 0 ) {
-                neuralNetworkInterfaceFor2048.saveNeuralNetwork(perceptronFile);
-                System.out.println(
-                        "============ Perceptron Exportado Exitosamente (SAVE) ============");
-                writeConfig = true;
-            }
-            if ( i % saveBackupEvery == 0 ) {
-                backupNumber++;
-                perceptronFileBackup = new File(
-                        filePath + TRAINED + "_BackupN-" + String.format(
-                                "%0" + zeroNumbers + "d", backupNumber)
-                        + ".ser");
-                neuralNetworkInterfaceFor2048.saveNeuralNetwork(
-                        perceptronFileBackup);
-                System.out.println(
-                        "============ Perceptron Exportado Exitosamente (BACKUP " + backupNumber + ") ============");
-                writeConfig = true;
-            }
-            if ( writeConfig ) {
-                try ( BufferedWriter out = new BufferedWriter(
-                        new OutputStreamWriter(new FileOutputStream(
-                                lastSaveDataFile), "UTF-8")) ) {
-                    out.write(Integer.toString(i) + "\n" + Integer.toString(
-                            backupNumber) + "\n" + Long.toString(elapsedTime));
-                }
-            }
-        }
-    }
-
     private void saveConfigFile(File configFile) throws Exception {
         try ( BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
                 new FileOutputStream(configFile), "UTF-8")) ) {
             out.write("experimentName: " + experimentName + "\n");
-            out.write("perceptronName: " + perceptronName + "\n");
+            out.write("perceptronName: " + neuralNetworkName + "\n");
             out.write("tileToWinForTraining: " + tileToWinForTraining + "\n");
             out.
                     write("tileToWinForStatistics: " + tileToWinForStatistics + "\n");
@@ -755,56 +645,57 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
     }
 
     /**
-     * @return the annealingT
+     * @return partido en el que el annealing alcanza la mitad del valor inicial.
      */
     protected int getAnnealingT() {
         return annealingT;
     }
 
     /**
-     * @param annealingT the annealingT to set
+     * @param annealingT partido en el que el annealing alcanza la mitad del valor inicial.
      */
     protected void setAnnealingT(int annealingT) {
         this.annealingT = annealingT;
     }
 
     /**
-     * @return the gamesToPlay
+     * @return cantidad de partidos a jugar en el experimento.
      */
     protected int getGamesToPlay() {
         return gamesToPlay;
     }
 
     /**
-     * @param gamesToPlay the gamesToPlay to set
+     * @param gamesToPlay cantidad de partidos a jugar en el experimento.
      */
     public void setGamesToPlay(int gamesToPlay) {
         this.gamesToPlay = gamesToPlay;
     }
 
     /**
-     * @return the learningAlgorithm
+     * @return algoritmo de entrenamiento utilizado en el experimento.
      */
     protected TDLambdaLearning getLearningAlgorithm() {
         return learningAlgorithm;
     }
 
     /**
-     * @param learningAlgorithm the learningAlgorithm to set
+     * @param learningAlgorithm algoritmo de entrenamiento utilizado en el experimento.
      */
     protected void setLearningAlgorithm(TDLambdaLearning learningAlgorithm) {
         this.learningAlgorithm = learningAlgorithm;
     }
 
     /**
-     * @return the neuralNetworkInterfaceFor2048
+     * @return interfaz utilizada para comunicar la red neuronal con el algoritmo de entrenamiento.
      */
     protected INeuralNetworkInterfaceFor2048<NeuralNetworkClass> getNeuralNetworkInterfaceFor2048() {
         return neuralNetworkInterfaceFor2048;
     }
 
     /**
-     * @param neuralNetworkInterfaceFor2048 the neuralNetworkInterfaceFor2048 to set
+     * @param neuralNetworkInterfaceFor2048 interfaz utilizada para comunicar la red neuronal con el algoritmo de
+     *                                      entrenamiento.
      */
     protected void setNeuralNetworkInterfaceFor2048(
             INeuralNetworkInterfaceFor2048<NeuralNetworkClass> neuralNetworkInterfaceFor2048) {
@@ -812,47 +703,52 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
     }
 
     /**
-     * @return the simulationsForStatistics
+     * @return cantidad de simulaciones que se realizan para calcular estadísticas, por procesador.
      */
     protected int getSimulationsForStatistics() {
         return simulationsForStatistics;
     }
 
     /**
-     * @param simulationsForStatistics the simulationsForStatistics to set
+     * @param simulationsForStatistics cantidad de simulaciones que se realizan para calcular estadísticas, por
+     *                                 procesador.
      */
     public void setSimulationsForStatistics(int simulationsForStatistics) {
         this.simulationsForStatistics = simulationsForStatistics;
     }
 
     /**
-     * @return the statisticExperiment
+     * @return Experimento de estadísticas asociado.
      */
     protected StatisticExperiment getStatisticExperiment() {
         return statisticExperiment;
     }
 
     /**
-     * @return the tileToWinForTraining
+     * @return numero que se considera ganador del juego, para entrenamientos.
      */
     protected int getTileToWinForTraining() {
         return tileToWinForTraining;
     }
 
     /**
-     * @param tileToWinForTraining the tileToWinForTraining to set
+     * @param tileToWinForTraining numero que se considera ganador del juego, para entrenamientos.
      */
     public void setTileToWinForTraining(int tileToWinForTraining) {
         this.tileToWinForTraining = tileToWinForTraining;
     }
 
     /**
+     * Inicia el experimento.
      *
-     * @param numberForShow
-     * @param experimentPath
-     * @param delayPerMove         <p>
-     * @param createPerceptronFile
-     * @param errorDumpDir
+     * @param numberForShow        Numero para mostrar en la terminal al mostrar los valores alcanzado. Útil para
+     *                             ejecutar muchos experimentos en paralelo e identificar los resultados parciales en la
+     *                             terminal.
+     * @param experimentPath       Ruta del directorio donde se guardan los resultados.
+     * @param delayPerMove         Tiempo de espera entre movimientos. Útil para mostrar animaciones de como entrena,
+     *                             visualmente.
+     * @param createPerceptronFile true si se deben crear las redes neuronales si no existen.
+     * @param errorDumpDir         directorio donde se vuelcan los archivos de errores.
      */
     @SuppressWarnings( "static-access" )
     protected void runExperiment(int numberForShow,
@@ -869,7 +765,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
                     "se debe configurar cada cuanto guardar backups del perceptron mediante la variable saveBackupEvery");
         }
         System.out.println(
-                "Starting " + this.getPerceptronName() + ((numberForShow == -1) ? "" : " Trainer Nº " + numberForShow));
+                "Starting " + this.getNeuralNetworkName() + ((numberForShow == -1) ? "" : " Trainer Nº " + numberForShow));
         String dirPath = createPathToDir(experimentPath);
         String bugFilePath;
         if ( errorDumpDir == null ) {
@@ -878,8 +774,6 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
             bugFilePath = errorDumpDir + ERROR_DUMP + ".txt";
         }
         try {
-            SimpleDateFormat dateFormater = new SimpleDateFormat(
-                    "dd-MM-yyyy_HH'h'mm'm'ss's'");
             Date now = new Date();
             if ( createPerceptronFile ) {
                 File dirPathFile = new File(dirPath);
@@ -887,7 +781,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
                     dirPathFile.mkdirs();
                 }
             }
-            String filePath = dirPath + perceptronName;
+            String filePath = dirPath + neuralNetworkName;
             File perceptronFile = new File(filePath + TRAINED + ".ser");
             File lastSaveDataFile = new File(filePath + LAST_SAVE_DATA + ".txt");
             File configFile;
@@ -955,9 +849,9 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
                         randomPerceptronFile);
             }
 
-            if ( neuralNetworkInterfaceFor2048.getPerceptronInterface() != null ) {
+            if ( neuralNetworkInterfaceFor2048.getNeuralNetworkInterface() != null ) {
                 this.setLearningAlgorithm(instanceOfTdLearninrgImplementation(
-                        neuralNetworkInterfaceFor2048.getPerceptronInterface()));
+                        neuralNetworkInterfaceFor2048.getNeuralNetworkInterface()));
                 this.learningAlgorithm.setComputeParallelBestPossibleAction(
                         concurrencyInComputeBestPosibleAction);
             }
@@ -980,7 +874,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
 
             //creamos un archivo de logs para acumular estadisticas
             File logFile = new File(
-                    filePath + "_" + dateFormater.format(now) + "_LOG" + ".txt");
+                    filePath + "_" + DATE_FILE_FORMATTER.format(now) + "_LOG" + ".txt");
 
             //creamos el juego
             Game2048<NeuralNetworkClass> game = new Game2048<>(
@@ -995,13 +889,13 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
                             "UTF-8") ) {
                         training(numberForShow, game, printStream,
                                 randomPerceptronFile, perceptronFile,
-                                lastSaveDataFile, filePath, dateFormater,
+                                lastSaveDataFile, filePath,
                                 zeroNumbers);
                     }
                 } else {
                     training(numberForShow, game, null, randomPerceptronFile,
                             perceptronFile, lastSaveDataFile, filePath,
-                            dateFormater, zeroNumbers);
+                            zeroNumbers);
                 }
                 if ( learningAlgorithm.canCollectStatistics() ) {
                     avgBestPossibleActionTimes = 0d;
@@ -1048,6 +942,130 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
             }
         } catch ( Exception ex ) {
             printErrorInFile(ex, new File(bugFilePath));
+        }
+    }
+
+    /**
+     * @param numberForShow           Numero para mostrar en la terminal al mostrar los valores alcanzado. Útil para
+     *                                ejecutar muchos experimentos en paralelo e identificar los resultados parciales en
+     *                                la terminal.
+     * @param game                    juego a entrenar
+     * @param printStream             salida de textos de debug e información.
+     * @param randomNeuralNetworkFile archivo de la red neuronal sin entrenamiento.
+     * @param perceptronFile          archivo de la red neuronal con entrenamiento.
+     * @param lastSaveDataFile        archivo donde se guardan los datos del ultimo entrenamiento, para poder continuar
+     *                                en caso de interrupciones.
+     * @param filePath                ruta en donde se guardan los resultados.
+     * @param zeroNumbers             cantidad de ceros a la izquierda en los números de los archivos de backup.
+     *
+     * @throws Exception
+     */
+    protected void training(int numberForShow,
+            Game2048<NeuralNetworkClass> game,
+            final PrintStream printStream,
+            File randomNeuralNetworkFile,
+            File perceptronFile,
+            File lastSaveDataFile,
+            String filePath,
+            int zeroNumbers) throws Exception {
+        File perceptronFileBackup;
+        switch ( this.learningRateAdaptation ) {
+            case fixed: {
+                learningAlgorithm.setFixedLearningRate();
+                break;
+            }
+            case annealing: {
+                learningAlgorithm.setAnnealingLearningRate(annealingT);
+                break;
+            }
+        }
+        switch ( this.explorationRate ) {
+            case fixed: {
+                learningAlgorithm.setFixedExplorationRate(
+                        this.explorationRateInitialValue);
+                break;
+            }
+            case linear: {
+                learningAlgorithm.setLinearExplorationRate(
+                        this.explorationRateInitialValue,
+                        this.explorationRateStartDecrementing,
+                        this.explorationRateFinalValue,
+                        this.explorationRateFinishDecrementing
+                );
+                break;
+            }
+        }
+
+        if ( learningAlgorithm.canCollectStatistics() ) {
+            bestPossibleActionTimes = new LinkedList<>();
+            trainingTimes = new LinkedList<>();
+        }
+
+        for ( int i = lastSavedGamePlayedNumber + 1; i <= gamesToPlay; i++ ) {
+            long start = System.nanoTime();
+            learningAlgorithm.solveAndTrainOnce(game, i);
+            elapsedTime += System.nanoTime() - start;
+            if ( learningAlgorithm.canCollectStatistics() ) {
+                double avg = 0;
+                for ( Long sample : learningAlgorithm.getStatisticsBestPossibleActionTimes() ) {
+                    avg += sample;
+                }
+                avg /= (learningAlgorithm.getStatisticsBestPossibleActionTimes().size() * 1d);
+                bestPossibleActionTimes.add(avg);
+
+                avg = 0;
+                for ( Long sample : learningAlgorithm.getStatisticsTrainingTimes() ) {
+                    avg += sample;
+                }
+                avg /= (learningAlgorithm.getStatisticsTrainingTimes().size() * 1d);
+                trainingTimes.add(avg);
+            }
+
+            int percent = (int) (((i * 1d) / (gamesToPlay * 1d)) * 100d);
+            if ( numberForShow != -1 ) {
+                System.out.println(
+                        numberForShow + "- Juego número " + i + " (" + percent + "%)    puntaje = " + game.
+                        getScore() + "    ficha max = " + game.getMaxNumber() + "    turno alcanzado = " + game.
+                        getLastTurn() + "      current alpha = " + Arrays.
+                        toString(learningAlgorithm.getCurrentAlpha()));
+            } else {
+                System.out.println(
+                        "Juego número " + i + " (" + percent + "%)    puntaje = " + game.
+                        getScore() + "    ficha max = " + game.getMaxNumber() + "    turno alcanzado = " + game.
+                        getLastTurn() + "      current alpha = " + Arrays.
+                        toString(learningAlgorithm.getCurrentAlpha()));
+            }
+            if ( printStream != null ) {
+                printStream.
+                        println(game.getScore() + "\t" + game.getMaxNumber());
+            }
+            boolean writeConfig = false;
+            if ( i % saveEvery == 0 || i % saveBackupEvery == 0 ) {
+                neuralNetworkInterfaceFor2048.saveNeuralNetwork(perceptronFile);
+                System.out.println(
+                        "============ Perceptron Exportado Exitosamente (SAVE) ============");
+                writeConfig = true;
+            }
+            if ( i % saveBackupEvery == 0 ) {
+                backupNumber++;
+                perceptronFileBackup = new File(
+                        filePath + TRAINED + "_BackupN-" + String.format(
+                                "%0" + zeroNumbers + "d", backupNumber)
+                        + ".ser");
+                neuralNetworkInterfaceFor2048.saveNeuralNetwork(
+                        perceptronFileBackup);
+                System.out.println(
+                        "============ Perceptron Exportado Exitosamente (BACKUP " + backupNumber + ") ============");
+                writeConfig = true;
+            }
+            if ( writeConfig ) {
+                try ( BufferedWriter out = new BufferedWriter(
+                        new OutputStreamWriter(new FileOutputStream(
+                                lastSaveDataFile), "UTF-8")) ) {
+                    out.write(Integer.toString(i) + "\n" + Integer.toString(
+                            backupNumber) + "\n" + Long.toString(elapsedTime));
+                }
+            }
         }
     }
 

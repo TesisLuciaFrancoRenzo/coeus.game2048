@@ -31,7 +31,7 @@ import java.util.ArrayList;
 public class NBasicLinearNoPartialScore_512 extends NTupleConfiguration2048 {
 
     /**
-     *
+     * Configuración para jugar 512, con función de activación Lineal, sin puntaje parcial.
      */
     public NBasicLinearNoPartialScore_512() {
         this.activationFunction = FunctionUtils.LINEAR;
@@ -56,7 +56,7 @@ public class NBasicLinearNoPartialScore_512 extends NTupleConfiguration2048 {
     }
 
     @Override
-    public double denormalizeValueFromPerceptronOutput(Object value) {
+    public double denormalizeValueFromNeuralNetworkOutput(Object value) {
         return (double) value;
     }
 

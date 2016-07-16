@@ -19,6 +19,7 @@
 package ar.edu.unrc.game2048;
 
 /**
+ * Optimización para reutilizar tiles y no crear y borrar instancias.
  *
  * @author lucia bressan, franco pellegrini, renzo bianchini pellegrini
  */
@@ -28,7 +29,7 @@ public class TileContainer {
 
     /**
      *
-     * @param maxCodedValue
+     * @param maxCodedValue código de tile en base 2 del numero mas alto que se va a utilizar.
      */
     public TileContainer(int maxCodedValue) {
         tiles = new Tile[maxCodedValue + 1];
@@ -39,7 +40,8 @@ public class TileContainer {
 
     /**
      *
-     * @param code <p>
+     * @param code código en base 2 del tile que se necesita.
+     *
      * @return
      */
     public Tile getTile(int code) {

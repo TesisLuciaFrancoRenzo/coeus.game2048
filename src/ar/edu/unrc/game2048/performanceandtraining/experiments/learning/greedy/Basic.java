@@ -63,17 +63,12 @@ public class Basic extends LearningExperiment<BasicNetwork> {
         if ( this.getExperimentName() == null ) {
             this.setExperimentName(this.getClass());
         }
-        this.setPerceptronName(this.getExperimentName());
+        this.setNeuralNetworkName(this.getExperimentName());
         this.setTileToWinForTraining(2_048);
         this.setNeuralNetworkInterfaceFor2048(
                 new GreedyExperimentInterface(null));
     }
 
-    /**
-     *
-     * @param perceptronInterface <p>
-     * @return
-     */
     @Override
     public TDLambdaLearning instanceOfTdLearninrgImplementation(
             INeuralNetworkInterface perceptronInterface) {

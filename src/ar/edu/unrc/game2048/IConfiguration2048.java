@@ -19,6 +19,7 @@
 package ar.edu.unrc.game2048;
 
 /**
+ * Estructura que debe tener una configuración para un experimento.
  *
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
@@ -26,33 +27,37 @@ public interface IConfiguration2048 {
 
     /**
      *
-     * @param value <p>
-     * @return
+     * @param value salida de la red neuronal.
+     *
+     * @return {@code value} desnormalizado.
      */
-    public abstract double denormalizeValueFromPerceptronOutput(Object value);
+    public abstract double denormalizeValueFromNeuralNetworkOutput(Object value);
 
     /**
      *
-     * @param board        <p>
-     * @param outputNeuron <p>
-     * @return
+     * @param board        tablero.
+     * @param outputNeuron neurona de salida.
+     *
+     * @return recompensa que se obtiene en dicho tablero, luego de un movimiento.
      */
     public abstract double getBoardReward(GameBoard board,
             int outputNeuron);
 
     /**
      *
-     * @param board
-     * @param outputNeuron <p>
-     * @return
+     * @param board        tablero (siendo este un estado final).
+     * @param outputNeuron neurona de salida.
+     *
+     * @return recompensa final obtenida al terminar el partido.
      */
     public abstract double getFinalReward(GameBoard board,
             int outputNeuron);
 
     /**
      *
-     * @param value <p>
-     * @return
+     * @param value valor a normalizar.
+     *
+     * @return {@code value} normalizado con el estilo de las neuronas de salida.
      */
     public abstract double normalizeValueToPerceptronOutput(Object value);
 

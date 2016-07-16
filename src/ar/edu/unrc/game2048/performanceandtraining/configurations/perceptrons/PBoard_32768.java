@@ -20,7 +20,7 @@ package ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons;
 
 import ar.edu.unrc.game2048.Game2048;
 import ar.edu.unrc.game2048.GameBoard;
-import ar.edu.unrc.game2048.PerceptronConfiguration2048;
+import ar.edu.unrc.game2048.NeuralNetworkConfiguration2048;
 import java.util.List;
 import org.encog.engine.network.activation.ActivationFunction;
 import org.encog.engine.network.activation.ActivationTANH;
@@ -28,11 +28,13 @@ import org.encog.util.arrayutil.NormalizationAction;
 import org.encog.util.arrayutil.NormalizedField;
 
 /**
+ * Configuración para jugar hasta 32768, tablero de tipo directo (una neurona = un Tile), con función de activación
+ * Tangente Hiperbólica, y puntaje parcial.
  *
  * @author lucia bressan, franco pellegrini, renzo bianchini
  * @param <NeuralNetworkClass>
  */
-public class PBoard<NeuralNetworkClass> extends PerceptronConfiguration2048<NeuralNetworkClass> {
+public class PBoard_32768<NeuralNetworkClass> extends NeuralNetworkConfiguration2048<NeuralNetworkClass> {
 
     private final boolean concurrenInput;
     private final int maxCodedBoardnumber;
@@ -43,7 +45,7 @@ public class PBoard<NeuralNetworkClass> extends PerceptronConfiguration2048<Neur
     /**
      *
      */
-    public PBoard() {
+    public PBoard_32768() {
         maxCodedBoardnumber = 15; //32768 como maximo
         maxScore = 500_000;
         minScore = -500_000;
@@ -146,7 +148,7 @@ public class PBoard<NeuralNetworkClass> extends PerceptronConfiguration2048<Neur
     }
 
     @Override
-    public double denormalizeValueFromPerceptronOutput(Object value) {
+    public double denormalizeValueFromNeuralNetworkOutput(Object value) {
         return normOutput.deNormalize((Double) value);
     }
 

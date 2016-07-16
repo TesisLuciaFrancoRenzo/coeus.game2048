@@ -23,9 +23,9 @@ import ar.edu.unrc.coeus.tdlearning.learning.TDLambdaLearning;
 import ar.edu.unrc.game2048.Action;
 import ar.edu.unrc.game2048.Game2048;
 import ar.edu.unrc.game2048.GameBoard;
-import ar.edu.unrc.game2048.PerceptronConfiguration2048;
-import ar.edu.unrc.game2048.StateProbability;
+import ar.edu.unrc.game2048.NeuralNetworkConfiguration2048;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.INeuralNetworkInterfaceFor2048;
+import ar.edu.unrc.game2048.performanceandtraining.experiments.learning.greedy.StateProbability;
 import static java.awt.event.KeyEvent.VK_DOWN;
 import static java.awt.event.KeyEvent.VK_LEFT;
 import static java.awt.event.KeyEvent.VK_RIGHT;
@@ -46,7 +46,7 @@ public class GreedyExperimentInterface extends INeuralNetworkInterfaceFor2048 {
      * @param perceptronConfiguration configuración
      */
     public GreedyExperimentInterface(
-            PerceptronConfiguration2048 perceptronConfiguration) {
+            NeuralNetworkConfiguration2048 perceptronConfiguration) {
         super(perceptronConfiguration);
     }
 
@@ -61,7 +61,7 @@ public class GreedyExperimentInterface extends INeuralNetworkInterfaceFor2048 {
     }
 
     @Override
-    public INeuralNetworkInterface getPerceptronInterface() {
+    public INeuralNetworkInterface getNeuralNetworkInterface() {
         return null;
     }
 

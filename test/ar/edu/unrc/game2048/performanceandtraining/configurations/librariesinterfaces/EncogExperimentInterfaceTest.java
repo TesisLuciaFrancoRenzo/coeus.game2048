@@ -22,7 +22,7 @@ import ar.edu.unrc.coeus.interfaces.INeuralNetworkInterface;
 import ar.edu.unrc.coeus.tdlearning.utils.FunctionUtils;
 import ar.edu.unrc.game2048.Game2048;
 import ar.edu.unrc.game2048.GameBoard;
-import ar.edu.unrc.game2048.PerceptronConfiguration2048;
+import ar.edu.unrc.game2048.NeuralNetworkConfiguration2048;
 import java.util.List;
 import org.encog.engine.network.activation.ActivationFunction;
 import org.encog.engine.network.activation.ActivationLinear;
@@ -82,13 +82,13 @@ public class EncogExperimentInterfaceTest {
     }
 
     /**
-     * Test of getPerceptronInterface method, of class EncogExperimentInterface.
+     * Test of getNeuralNetworkInterface method, of class EncogExperimentInterface.
      */
     @Test
     public void testGetPerceptronInterface() {
         System.out.println("getPerceptronInterface");
 
-        PerceptronConfiguration2048<BasicNetwork> perceptronConfiguration = new PerceptronConfiguration2048<BasicNetwork>() {
+        NeuralNetworkConfiguration2048<BasicNetwork> perceptronConfiguration = new NeuralNetworkConfiguration2048<BasicNetwork>() {
             @Override
             public void calculateNormalizedPerceptronInput(
                     GameBoard<BasicNetwork> board,
@@ -103,7 +103,7 @@ public class EncogExperimentInterfaceTest {
             }
 
             @Override
-            public double denormalizeValueFromPerceptronOutput(Object value) {
+            public double denormalizeValueFromNeuralNetworkOutput(Object value) {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
 
@@ -183,8 +183,8 @@ public class EncogExperimentInterfaceTest {
         perceptronConfiguration.getActivationFunctionForEncog()[0] = new ActivationSigmoid();
         perceptronConfiguration.getActivationFunctionForEncog()[1] = new ActivationSigmoid();
         perceptronConfiguration.getActivationFunctionForEncog()[2] = new ActivationSigmoid();
-        perceptronConfiguration.activationFunctionMax = 1;
-        perceptronConfiguration.activationFunctionMin = 0;
+        perceptronConfiguration.setActivationFunctionMax(1);
+        perceptronConfiguration.setActivationFunctionMin(0);
 
         perceptronConfiguration.setNeuronQuantityInLayer(new int[3]);
         perceptronConfiguration.getNeuronQuantityInLayer()[0] = PERCEPTRON_INPUTS_QUANTITY;
@@ -194,8 +194,7 @@ public class EncogExperimentInterfaceTest {
         EncogExperimentInterface experiment = new EncogExperimentInterface(
                 perceptronConfiguration);
         experiment.setNeuralNetworkForTesting(perceptron);
-        INeuralNetworkInterface encogInterface = experiment.
-                getPerceptronInterface();
+        INeuralNetworkInterface encogInterface = experiment.getNeuralNetworkInterface();
 
         double expResult;
         double result;
@@ -431,7 +430,7 @@ public class EncogExperimentInterfaceTest {
     public void testInitializeEncogPerceptron() {
         System.out.println("initializeEncogPerceptron");
 
-        PerceptronConfiguration2048<BasicNetwork> perceptronConfiguration = new PerceptronConfiguration2048<BasicNetwork>() {
+        NeuralNetworkConfiguration2048<BasicNetwork> perceptronConfiguration = new NeuralNetworkConfiguration2048<BasicNetwork>() {
             @Override
             public void calculateNormalizedPerceptronInput(
                     GameBoard<BasicNetwork> board,
@@ -446,7 +445,7 @@ public class EncogExperimentInterfaceTest {
             }
 
             @Override
-            public double denormalizeValueFromPerceptronOutput(Object value) {
+            public double denormalizeValueFromNeuralNetworkOutput(Object value) {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
 
@@ -492,8 +491,8 @@ public class EncogExperimentInterfaceTest {
         perceptronConfiguration.getActivationFunctionForEncog()[0] = new ActivationSigmoid();
         perceptronConfiguration.getActivationFunctionForEncog()[1] = new ActivationTANH();
         perceptronConfiguration.getActivationFunctionForEncog()[2] = new ActivationLinear();
-        perceptronConfiguration.activationFunctionMax = 1;
-        perceptronConfiguration.activationFunctionMin = 0;
+        perceptronConfiguration.setActivationFunctionMax(1);
+        perceptronConfiguration.setActivationFunctionMin(0);
 
         perceptronConfiguration.setNeuronQuantityInLayer(new int[4]);
         perceptronConfiguration.getNeuronQuantityInLayer()[0] = 1;
@@ -504,8 +503,7 @@ public class EncogExperimentInterfaceTest {
         EncogExperimentInterface experiment = new EncogExperimentInterface(
                 perceptronConfiguration);
         experiment.setNeuralNetworkForTesting(perceptron);
-        INeuralNetworkInterface encogInterface = experiment.
-                getPerceptronInterface();
+        INeuralNetworkInterface encogInterface = experiment.getNeuralNetworkInterface();
 
         experiment.initializeEncogPerceptron(Boolean.FALSE);
 

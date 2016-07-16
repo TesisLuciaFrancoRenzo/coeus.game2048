@@ -4,7 +4,7 @@ import ar.edu.unrc.coeus.interfaces.INeuralNetworkInterface;
 import ar.edu.unrc.coeus.tdlearning.learning.TDLambdaLearning;
 import ar.edu.unrc.game2048.Game2048;
 import ar.edu.unrc.game2048.NTupleConfiguration2048;
-import ar.edu.unrc.game2048.PerceptronConfiguration2048;
+import ar.edu.unrc.game2048.NeuralNetworkConfiguration2048;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -78,7 +78,6 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
     private String experimentName;
     private boolean exportToExcel = true;
     private String fileName;
-
     private int gamesToPlay;
     private TDLambdaLearning learningMethod;
     private double maxScore;
@@ -91,19 +90,17 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
     private int saveBackupEvery;
     private int simulations;
     private List<Double> tileStatistics;
-
     private int tileToWin;
     private int tileToWinForStatistics = 2_048;
     private double winRate;
 
     /**
-     *
+     * Experimento de aprendizaje.
      */
     protected LearningExperiment<NeuralNetworkClass> learningExperiment;
 
     /**
-     *
-     * @param learningExperiment
+     * @param learningExperiment Experimento de aprendizaje.
      */
     public StatisticExperiment(
             LearningExperiment<NeuralNetworkClass> learningExperiment) {
@@ -111,12 +108,14 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
     }
 
     /**
+     * Exporta a una planilla de cálculo los resultados de las estadísticas ya calculadas en archivos de texto.
      *
-     * @param filePath
-     * @param backupFiles
-     * @param resultsPerFile
-     * @param resultsRandom
-     * @param randomPerceptronFile
+     * @param filePath                Ruta de donde se exporta la planilla de cálculo.
+     * @param backupFiles             Lista de los archivos con las redes neuronales que se le realizaron estadísticas.
+     * @param resultsPerFile          Mapeo de los archivos asociados a los resultados parseados.
+     * @param resultsRandom           Mapeo de los archivos asociados a los resultados parseados de la red sin
+     *                                entrenamiento.
+     * @param randomNeuralNetworkFile Archivo con la red neuronal sin entenar.
      *
      * @throws IOException
      * @throws InvalidFormatException
@@ -125,7 +124,7 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
             List<File> backupFiles,
             Map<File, StatisticForCalc> resultsPerFile,
             Map<File, StatisticForCalc> resultsRandom,
-            File randomPerceptronFile) throws IOException,
+            File randomNeuralNetworkFile) throws IOException,
             InvalidFormatException {
         InputStream inputXLSX = this.getClass().getResourceAsStream(
                 "/ar/edu/unrc/game2048/performanceandtraining/resources/Estadisticas.xlsx");
@@ -192,7 +191,7 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
                     int file = 0;
                     row = sheet.getRow(tile + rowStart - 1);
                     cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
-                    cellDoubleValue = resultsRandom.get(randomPerceptronFile).getTileStatistics().get(tile);
+                    cellDoubleValue = resultsRandom.get(randomNeuralNetworkFile).getTileStatistics().get(tile);
                     cell.setCellStyle(cellStyle);
                     cell.setCellValue(cellDoubleValue);
                 }
@@ -342,14 +341,14 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
 
     /**
      *
-     * @param exportToExcel
+     * @param exportToExcel true si se debe exportar los resultados a una hoja de cálculo.
      */
     public void setExportToExcel(boolean exportToExcel) {
         this.exportToExcel = exportToExcel;
     }
 
     /**
-     * @param gamesToPlay the gamesToPlay to set
+     * @param gamesToPlay cantidad de partidas a jugar por hilo, en el cálculo de estadísticas.
      */
     public void setGamesToPlayPerThread(int gamesToPlay) {
         this.gamesToPlay = gamesToPlay;
@@ -357,14 +356,14 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
 
     /**
      *
-     * @param runStatisticsForBackups
+     * @param runStatisticsForBackups true si debe computar estadísticas sobre los archivos de respaldo.
      */
     public void setRunStatisticsForBackups(boolean runStatisticsForBackups) {
         this.runStatisticsForBackups = runStatisticsForBackups;
     }
 
     /**
-     * @return the tileStatistics
+     * @return las estadísticas listas para ser exportadas en la hoja de cálculo.
      */
     public StatisticForCalc getTileStatistics() {
         StatisticForCalc statistic = new StatisticForCalc();
@@ -381,19 +380,20 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
 
     /**
      *
-     * @param tileToWinForStatistics
+     * @param tileToWinForStatistics valor que se considera como ganador, a la hora de ejecutar estadísticas.
      */
     public void setTileToWinForStatistics(int tileToWinForStatistics) {
         this.tileToWinForStatistics = tileToWinForStatistics;
     }
 
     /**
+     * Configura las cabeceras de las tablas en la hoja de cálculo.
      *
-     * @param rowStartTitle
-     * @param colStartTitle
-     * @param sheet
-     * @param backupFilesSize
-     * @param CellStyleTitle
+     * @param rowStartTitle   fila de inicio de la tabla.
+     * @param colStartTitle   columna de inicio de la tabla.
+     * @param sheet           hoja de cálculo.
+     * @param backupFilesSize cantidad de archivos de respaldo realizados.
+     * @param CellStyleTitle  estilo de la celda.
      */
     public void loadTitle(int rowStartTitle,
             int colStartTitle,
@@ -417,16 +417,18 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
     }
 
     /**
+     * Calcula las estadísticas de una red neuronal.
      *
-     * @param fileToProcess
-     * @param delayPerMove
-     * @param createPerceptronFile
+     * @param fileToProcess           archivo a procesar.
+     * @param delayPerMove            retraso entre movimientos, útil para observar visualmente como calcula
+     *                                estadísticas.
+     * @param createNeuralNetworkFile true si debe crear los perceptrones faltantes.
      *
      * @throws Exception
      */
     public void processFile(String fileToProcess,
             int delayPerMove,
-            boolean createPerceptronFile) throws Exception {
+            boolean createNeuralNetworkFile) throws Exception {
 
         //preparamos los destinos de las siimulaciones para posterior sumatoria final
         File logFile = new File(fileToProcess + "_STATISTICS" + ".txt");
@@ -440,7 +442,7 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
 
             for ( int i = 0; i < simulations; i++ ) {
                 INeuralNetworkInterfaceFor2048<NeuralNetworkClass> neuralNetworkInterfaceClone;
-                PerceptronConfiguration2048<NeuralNetworkClass> tempPerceptronConfiguration = null;
+                NeuralNetworkConfiguration2048<NeuralNetworkClass> tempPerceptronConfiguration = null;
                 neuralNetworkInterfaceClone = (INeuralNetworkInterfaceFor2048<NeuralNetworkClass>) learningExperiment.
                         getNeuralNetworkInterfaceFor2048().clone();
 
@@ -449,13 +451,12 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
 
                 if ( learningExperiment.getNeuralNetworkInterfaceFor2048().
                         getPerceptronConfiguration() != null ) {
-                    tempPerceptronConfiguration = (PerceptronConfiguration2048<NeuralNetworkClass>) learningExperiment.
+                    tempPerceptronConfiguration = (NeuralNetworkConfiguration2048<NeuralNetworkClass>) learningExperiment.
                             getNeuralNetworkInterfaceFor2048().
                             getPerceptronConfiguration().clone();
                     neuralNetworkInterfaceClone.setPerceptronConfiguration(
                             tempPerceptronConfiguration);
-                    tempPerceptronInterface = neuralNetworkInterfaceClone.
-                            getPerceptronInterface();
+                    tempPerceptronInterface = neuralNetworkInterfaceClone.getNeuralNetworkInterface();
                 }
                 if ( learningExperiment.getNeuralNetworkInterfaceFor2048().
                         getNTupleConfiguration() != null ) {
@@ -475,7 +476,7 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
                                 getCanonicalPath());
                     }
                     neuralNetworkInterfaceClone.loadOrCreatePerceptron(
-                            perceptronFile, true, createPerceptronFile);
+                            perceptronFile, true, createNeuralNetworkFile);
                 }
 
                 Game2048<NeuralNetworkClass> game = new Game2048<>(
@@ -639,10 +640,12 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
     }
 
     /**
+     * Inicia el cálculo de estadísticas.
      *
-     * @param experimentPath
-     * @param delayPerMove
-     * @param createPerceptronFile
+     * @param experimentPath       directorio donde están las redes neuronales sobre las que se calculan las
+     *                             estadísticas.
+     * @param delayPerMove         retraso entre visual entre movimientos.
+     * @param createPerceptronFile true si debe crear las redes neuronales faltantes.
      */
     public void start(String experimentPath,
             int delayPerMove,
@@ -677,77 +680,77 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
     }
 
     /**
-     * @return the experimentName
+     * @return nombre del experimento.
      */
     protected String getExperimentName() {
         return experimentName;
     }
 
     /**
-     * @param experimentName the experimentName to set
+     * @param experimentName nuevo nombre del experimento.
      */
     protected void setExperimentName(String experimentName) {
         this.experimentName = experimentName;
     }
 
     /**
-     * @return the fileName
+     * @return nombre del archivo sobre el cual trabajar.
      */
     protected String getFileName() {
         return fileName;
     }
 
     /**
-     * @param fileName the fileName to set
+     * @param fileName nuevo nombre del archivo sobre el cual trabajar.
      */
     protected void setFileName(String fileName) {
         this.fileName = fileName;
     }
 
     /**
-     * @return the gamesToPlay
+     * @return cantidad de partidas a jugar.
      */
     protected int getGamesToPlay() {
         return gamesToPlay;
     }
 
     /**
-     * @return the learningMethod
+     * @return método TDlearning elegido.
      */
     protected TDLambdaLearning getLearningMethod() {
         return learningMethod;
     }
 
     /**
-     * @param learningMethod the learningMethod to set
+     * @param learningMethod nuevo método TDlearning
      */
     protected void setLearningMethod(TDLambdaLearning learningMethod) {
         this.learningMethod = learningMethod;
     }
 
     /**
-     * @return the simulations
+     * @return cantidad de simulaciones a realizar (concurrentemente).
      */
     protected int getSimulations() {
         return simulations;
     }
 
     /**
-     * @param threads the simulations to set
+     * @param threads cantidad de simulaciones a realizar (concurrentemente).
      */
     public void setSimulations(int threads) {
         this.simulations = threads;
     }
 
     /**
-     * @return the tileToWin
+     * @return valor considerado como ganador en una partida.
      */
     protected int getTileToWin() {
         return tileToWin;
     }
 
     /**
-     * @param tileToWin the tileToWin to set
+     * @param tileToWin valor considerado como ganador en una partida.
      */
     protected void setTileToWin(int tileToWin) {
         this.tileToWin = tileToWin;
@@ -765,7 +768,7 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
      * <ul>
      * <li>private int tileToWin;</li>
      * <li>private String experimentName;</li>
-     * <li>private PerceptronConfiguration2048 perceptronConfiguration;</li>
+     * <li>private NeuralNetworkConfiguration2048 perceptronConfiguration;</li>
      * <li>private TDLambdaLearning learningMethod;</li>
      * </ul>
      * <p>
@@ -774,16 +777,17 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
     protected abstract void initializeStatistics() throws Exception;
 
     /**
+     * Inicia las estadísticas.
      *
-     * @param experimentPath
-     * @param delayPerMove         <p>
-     * @param createPerceptronFile
+     * @param experimentPath          directorio de la red neuronal.
+     * @param delayPerMove            retraso visual entre movimientos.
+     * @param createneuralNetworkFile crea redes neuronales en caso de no existir.
      *
      * @throws Exception
      */
     protected void run(String experimentPath,
             int delayPerMove,
-            boolean createPerceptronFile) throws Exception {
+            boolean createneuralNetworkFile) throws Exception {
         String dirPath = experimentPath
                 + this.learningExperiment.getNeuralNetworkInterfaceFor2048().
                 getLibName() + File.separator
@@ -802,7 +806,7 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
                 "Starting " + this.getExperimentName() + LearningExperiment.RANDOM + " Statistics... ");
         processFile(
                 dirPath + this.getExperimentName() + LearningExperiment.RANDOM,
-                delayPerMove, createPerceptronFile);
+                delayPerMove, createneuralNetworkFile);
         resultsRandom.put(randomPerceptronFile, getTileStatistics());
 
         //calculamos las estadisticas de los backup si es necesario
@@ -826,14 +830,14 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
                     System.out.print(
                             "Starting " + f.getName() + " Statistics... ");
                     processFile(dirPath + f.getName().replaceAll("\\.ser$", ""),
-                            delayPerMove, createPerceptronFile);
+                            delayPerMove, createneuralNetworkFile);
                     resultsPerFile.put(f, getTileStatistics());
                     backupFiles.add(f);
                 }
             } else if ( f.getName().matches(".*\\_trained\\.ser") ) {
                 System.out.print("Starting " + f.getName() + " Statistics... ");
                 processFile(dirPath + f.getName().replaceAll("\\.ser$", ""),
-                        delayPerMove, createPerceptronFile);
+                        delayPerMove, createneuralNetworkFile);
                 resultsPerFile.put(f, getTileStatistics());
                 backupFiles.add(f);
             }
@@ -858,7 +862,7 @@ public abstract class StatisticExperiment<NeuralNetworkClass> {
 
     /**
      *
-     * @param saveBackupEvery
+     * @param saveBackupEvery cantidad de partidas en que se debe guardar una copia de respaldo.
      */
     protected void saveBackupEvery(int saveBackupEvery) {
         this.saveBackupEvery = saveBackupEvery;

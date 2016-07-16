@@ -30,15 +30,16 @@ import org.encog.util.arrayutil.NormalizedField;
 /**
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
-public class NSymetryTanH extends NTupleConfiguration2048 {
+public class NSymetryTanH_32768 extends NTupleConfiguration2048 {
 
     private final int maxReward = 500_000;
     private final int minReward = -500_000;
 
     /**
-     *
+     * Configuración para jugar hasta 32.768 con tablero simétrico, con función de activación Tangente Hiperbólica, y
+     * puntaje parcial.
      */
-    public NSymetryTanH() {
+    public NSymetryTanH_32768() {
         this.activationFunction = FunctionUtils.TANH;
         this.derivatedActivationFunction = FunctionUtils.TANH_DERIVATED;
         this.concurrency = false;
@@ -68,7 +69,7 @@ public class NSymetryTanH extends NTupleConfiguration2048 {
     }
 
     @Override
-    public double denormalizeValueFromPerceptronOutput(Object value) {
+    public double denormalizeValueFromNeuralNetworkOutput(Object value) {
         return normOutput.deNormalize((double) value);
     }
 

@@ -30,40 +30,64 @@ import org.encog.util.arrayutil.NormalizedField;
  */
 public abstract class NTupleConfiguration2048 implements Cloneable, IConfiguration2048 {
 
-    /**
-     *
-     */
-    public Function<Double, Double> activationFunction;
-
-    /**
-     *
-     */
-    public List<SamplePointState> allSamplePointStates;
-
-    /**
-     *
-     */
-    public boolean concurrency;
-
-    /**
-     *
-     */
-    public Function<Double, Double> derivatedActivationFunction;
-
-    /**
-     *
-     */
-    public int[] nTuplesLenght;
-
-    /**
-     *
-     */
-    public NormalizedField normOutput;
     private NTupleSystem nTupleSystem;
+
+    /**
+     *
+     */
+    protected Function<Double, Double> activationFunction;
+
+    /**
+     *
+     */
+    protected List<SamplePointState> allSamplePointStates;
+
+    /**
+     *
+     */
+    protected boolean concurrency;
+
+    /**
+     *
+     */
+    protected Function<Double, Double> derivatedActivationFunction;
+
+    /**
+     *
+     */
+    protected int[] nTuplesLenght;
+    /**
+     *
+     */
+    protected NormalizedField normOutput;
 
     @Override
     public Object clone() throws CloneNotSupportedException {
         return super.clone(); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Function<Double, Double> getActivationFunction() {
+        return activationFunction;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public List<SamplePointState> getAllSamplePointStates() {
+        return allSamplePointStates;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Function<Double, Double> getDerivatedActivationFunction() {
+        return derivatedActivationFunction;
     }
 
     /**
@@ -88,5 +112,29 @@ public abstract class NTupleConfiguration2048 implements Cloneable, IConfigurati
      */
     public void setNTupleSystem(NTupleSystem nTupleSystem) {
         this.nTupleSystem = nTupleSystem;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public NormalizedField getNormOutput() {
+        return normOutput;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public int[] getnTuplesLenght() {
+        return nTuplesLenght;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean isConcurrency() {
+        return concurrency;
     }
 }

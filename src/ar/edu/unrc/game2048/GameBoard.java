@@ -23,6 +23,7 @@ import ar.edu.unrc.coeus.tdlearning.interfaces.IStateNTuple;
 import ar.edu.unrc.coeus.tdlearning.interfaces.IStatePerceptron;
 import ar.edu.unrc.coeus.tdlearning.training.ntuple.SamplePointState;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.inputs.InputNtupleList;
+import ar.edu.unrc.game2048.performanceandtraining.experiments.learning.greedy.StateProbability;
 import static java.lang.Math.random;
 import static java.lang.System.arraycopy;
 import java.util.ArrayList;
@@ -115,13 +116,12 @@ public class GameBoard<NeuralNetworkClass> implements IStatePerceptron, IStateNT
         maxTileNumberCode = 0;
         maxTileNumberValue = 0;
         //inicializamos el tablero para su traduccion a las entradas de la red neuronal
-        if ( game.getPerceptronConfiguration() != null ) {
-            if ( game.getPerceptronConfiguration().useNTupleList() ) {
+        if ( game.getNeuralNetworkConfiguration() != null ) {
+            if ( game.getNeuralNetworkConfiguration().useNTupleList() ) {
                 normalizedPerceptronInput = new InputNtupleList();
             } else {
-                normalizedPerceptronInput = new ArrayList<>(game.
-                        getPerceptronConfiguration().getNeuronQuantityInLayer()[0]);
-                for ( int i = 0; i < game.getPerceptronConfiguration().
+                normalizedPerceptronInput = new ArrayList<>(game.getNeuralNetworkConfiguration().getNeuronQuantityInLayer()[0]);
+                for ( int i = 0; i < game.getNeuralNetworkConfiguration().
                         getNeuronQuantityInLayer()[0]; i++ ) {
                     normalizedPerceptronInput.add(null);
                 }
@@ -309,7 +309,7 @@ public class GameBoard<NeuralNetworkClass> implements IStatePerceptron, IStateNT
             return game.getnTupleSystemConfiguration().getBoardReward(this,
                     outputNeuron);
         } else {
-            return game.getPerceptronConfiguration().getBoardReward(this,
+            return game.getNeuralNetworkConfiguration().getBoardReward(this,
                     outputNeuron);
         }
     }
@@ -439,11 +439,9 @@ public class GameBoard<NeuralNetworkClass> implements IStatePerceptron, IStateNT
 
     @Override
     public Double translateToPerceptronInput(int neuronIndex) {
-        if ( neuronIndex < 0 || neuronIndex >= getGame().
-                getPerceptronConfiguration().getNeuronQuantityInLayer()[0] ) {
+        if ( neuronIndex < 0 || neuronIndex >= getGame().getNeuralNetworkConfiguration().getNeuronQuantityInLayer()[0] ) {
             throw new IllegalArgumentException(
-                    "neuronIndex range for output layer must be [0," + getGame().
-                    getPerceptronConfiguration().getNeuronQuantityInLayer()[0] + "] but was " + neuronIndex);
+                    "neuronIndex range for output layer must be [0," + getGame().getNeuralNetworkConfiguration().getNeuronQuantityInLayer()[0] + "] but was " + neuronIndex);
         }
         return normalizedPerceptronInput.get(neuronIndex);
     }
@@ -459,9 +457,9 @@ public class GameBoard<NeuralNetworkClass> implements IStatePerceptron, IStateNT
         isFull = availableSpaceList.isEmpty();
         canMove = calculateCanMove();
         calulateMaxTile();
-        if ( getGame().getPerceptronConfiguration() != null && updateInputs ) {
+        if ( getGame().getNeuralNetworkConfiguration() != null && updateInputs ) {
             //   assert this.getMaxTileNumberCode() != 0;
-            getGame().getPerceptronConfiguration().
+            getGame().getNeuralNetworkConfiguration().
                     calculateNormalizedPerceptronInput(this,
                             normalizedPerceptronInput);
         }

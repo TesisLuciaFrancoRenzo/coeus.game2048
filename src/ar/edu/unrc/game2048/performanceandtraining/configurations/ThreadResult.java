@@ -22,17 +22,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Resultados obtenidos en una simulación estadística. Se necesitan varias simulaciones de éstas para crear un promedio.
  *
  * @author lucia bressan, franco pellegrini, renzo bianchini pellegrini
  */
 public class ThreadResult {
 
     private double maxScore;
-
     private double maxTurn;
     private double minScore;
     private double minTurn;
-
     private int procesedGames;
     private final List<Integer> tileStatistics;
     private double totalScore;
@@ -40,7 +39,7 @@ public class ThreadResult {
     double totalTurn;
 
     /**
-     *
+     * Nuevo resultado de simulación.
      */
     public ThreadResult() {
         winGames = 0;
@@ -57,8 +56,9 @@ public class ThreadResult {
     }
 
     /**
+     * Calcula el mayor y menor turno alcanzado en forma dinámica, mientras se ejecutan las estadísticas.
      *
-     * @param lastTurn
+     * @param lastTurn turno alcanzado en el último juego.
      */
     public void addLastTurn(int lastTurn) {
         assert lastTurn != 0;
@@ -72,15 +72,16 @@ public class ThreadResult {
     }
 
     /**
-     *
+     * Aumenta la cantidad de juegos procesados.
      */
     public void addProcesedGames() {
         procesedGames++;
     }
 
     /**
+     * Calcula el mayor y menor puntaje en forma dinámica, mientras se ejecutan las estadísticas.
      *
-     * @param score
+     * @param score puntaje actual alcanzado en el último juego.
      */
     public void addScore(double score) {
         totalScore += score;
@@ -94,27 +95,28 @@ public class ThreadResult {
 
     /**
      *
-     * @param tileCode
+     * @param tileCode aumenta en 1 el valor del tile alcanzado en el último partido.
      */
     public void addStatisticForTile(int tileCode) {
         tileStatistics.set(tileCode, tileStatistics.get(tileCode) + 1);
     }
 
     /**
+     * aumenta en 1 el valor de partidas ganadas.
      */
     public void addWin() {
         winGames++;
     }
 
     /**
-     * @return the maxScore
+     * @return máximo puntaje alcanzado hasta ahora.
      */
     public double getMaxScore() {
         return maxScore;
     }
 
     /**
-     * @return the maxTurn
+     * @return máximo turno alcanzado hasta ahora.
      */
     public double getMaxTurn() {
         if ( winGames > 0 ) {
@@ -125,14 +127,14 @@ public class ThreadResult {
     }
 
     /**
-     * @return the maxScore
+     * @return puntaje medio alcanzado hasta ahora.
      */
     public double getMeanScore() {
         return totalScore / (procesedGames * 1d);
     }
 
     /**
-     * @return the maxScore
+     * @return turno medio alcanzado hasta ahora.
      */
     public double getMeanTurn() {
         if ( winGames > 0 ) {
@@ -143,14 +145,14 @@ public class ThreadResult {
     }
 
     /**
-     * @return the minScore
+     * @return puntaje mínimo alcanzado hasta ahora.
      */
     public double getMinScore() {
         return minScore;
     }
 
     /**
-     * @return the minTurn
+     * @return turno mínimo alcanzado hasta ahora.
      */
     public double getMinTurn() {
         if ( winGames > 0 ) {
@@ -161,7 +163,7 @@ public class ThreadResult {
     }
 
     /**
-     * @return the procesedGames
+     * @return cantidad de partidas procesadas en la simulación hasta ahora.
      */
     public int getProcesedGames() {
         return procesedGames;
@@ -169,7 +171,7 @@ public class ThreadResult {
 
     /**
      *
-     * @param value
+     * @param value nueva cantidad de partidas procesadas en la simulación hasta ahora.
      */
     public void setProcesedGames(int value) {
         procesedGames = value;
@@ -177,7 +179,8 @@ public class ThreadResult {
 
     /**
      *
-     * @param tileCode <p>
+     * @param tileCode cantidad de veces que se alcanzo este valor de tile al terminar las partidas.
+     *
      * @return
      */
     public Integer getStatisticForTile(int tileCode) {
@@ -185,7 +188,7 @@ public class ThreadResult {
     }
 
     /**
-     * @return the winGames
+     * @return tasa de partidas ganadoras hasta ahora.
      */
     public double getWinRate() {
         return (winGames * 100d) / (procesedGames * 1d);

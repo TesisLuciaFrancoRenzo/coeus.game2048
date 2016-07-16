@@ -25,7 +25,7 @@ import ar.edu.unrc.coeus.tdlearning.learning.TDLambdaLearning;
 import ar.edu.unrc.game2048.Action;
 import ar.edu.unrc.game2048.Game2048;
 import ar.edu.unrc.game2048.NTupleConfiguration2048;
-import ar.edu.unrc.game2048.PerceptronConfiguration2048;
+import ar.edu.unrc.game2048.NeuralNetworkConfiguration2048;
 import static java.awt.event.KeyEvent.VK_DOWN;
 import static java.awt.event.KeyEvent.VK_LEFT;
 import static java.awt.event.KeyEvent.VK_RIGHT;
@@ -34,6 +34,7 @@ import java.io.File;
 import java.util.List;
 
 /**
+ * Representación de la configuración de las redes neuronales, ya sea NTupla o Perceptrón.
  *
  * @author lucia bressan, franco pellegrini, renzo bianchini
  * @param <NeuralNetworkClass>
@@ -42,20 +43,20 @@ public abstract class INeuralNetworkInterfaceFor2048<NeuralNetworkClass> impleme
 
     private NTupleConfiguration2048 nTupleConfiguration;
 
-    private PerceptronConfiguration2048<NeuralNetworkClass> perceptronConfiguration;
+    private NeuralNetworkConfiguration2048<NeuralNetworkClass> perceptronConfiguration;
 
     /**
      *
-     * @param perceptronConfiguration
+     * @param perceptronConfiguration configuración del Perceptrón.
      */
     public INeuralNetworkInterfaceFor2048(
-            PerceptronConfiguration2048<NeuralNetworkClass> perceptronConfiguration) {
+            NeuralNetworkConfiguration2048<NeuralNetworkClass> perceptronConfiguration) {
         this.perceptronConfiguration = perceptronConfiguration;
     }
 
     /**
      *
-     * @param nTupleConfiguration
+     * @param nTupleConfiguration configuración de la NTupla.
      */
     public INeuralNetworkInterfaceFor2048(
             NTupleConfiguration2048 nTupleConfiguration) {
@@ -69,12 +70,12 @@ public abstract class INeuralNetworkInterfaceFor2048<NeuralNetworkClass> impleme
 
     /**
      *
-     * @return
+     * @return nombre de la librería utilizada para la red neuronal.
      */
     public abstract String getLibName();
 
     /**
-     * @return the nTupleConfiguration
+     * @return configuración de la NTupla.
      */
     public NTupleConfiguration2048 getNTupleConfiguration() {
         return nTupleConfiguration;
@@ -82,50 +83,52 @@ public abstract class INeuralNetworkInterfaceFor2048<NeuralNetworkClass> impleme
 
     /**
      *
-     * @param nTupleConfiguration
+     * @param nTupleConfiguration configuración de la NTupla.
      */
     public void setNTupleConfiguration(
             NTupleConfiguration2048 nTupleConfiguration) {
         this.nTupleConfiguration = nTupleConfiguration;
     }
+    /**
+     *
+     * @return interfaz a la red neuronal.
+     */
+    public abstract INeuralNetworkInterface getNeuralNetworkInterface();
 
     /**
-     * @return the perceptronConfiguration
+     * @return configuración del Perceptrón.
      */
-    public PerceptronConfiguration2048<NeuralNetworkClass> getPerceptronConfiguration() {
+    public NeuralNetworkConfiguration2048<NeuralNetworkClass> getPerceptronConfiguration() {
         return perceptronConfiguration;
     }
 
     /**
-     * @param perceptronConfiguration the perceptronConfiguration to set
+     * @param perceptronConfiguration configuración del Perceptrón.
      */
     public void setPerceptronConfiguration(
-            PerceptronConfiguration2048<NeuralNetworkClass> perceptronConfiguration) {
+            NeuralNetworkConfiguration2048<NeuralNetworkClass> perceptronConfiguration) {
         this.perceptronConfiguration = perceptronConfiguration;
     }
 
-    /**
-     *
-     * @return
-     */
-    public abstract INeuralNetworkInterface getPerceptronInterface();
 
     /**
-     * @param perceptronFile       <p>
-     * @param randomizedIfNotExist <p>
-     * @param createFile
+     * Carga desde un archivo una red neuronal, o crea una nueva (con valores al azar o con valores por defecto).
+     *
+     * @param neuralNetworkFile    archivo con la red neuronal.
+     * @param randomizedIfNotExist true si debe inicializar al azar los pesos y bias al crear una nueva red neuronal.
+     * @param createFile           true si debe crear una nueva red neuronal.
      *
      * @throws Exception
      */
-    public abstract void loadOrCreatePerceptron(File perceptronFile,
+    public abstract void loadOrCreatePerceptron(File neuralNetworkFile,
             boolean randomizedIfNotExist,
             boolean createFile) throws Exception;
 
     /**
+     * Juega un turno de una partida, utilizando la red neuronal.
      *
-     * @param game
-     * @param learningMethod metodo usado para entrenar y evaluar, o null si se utiliza una IA al azar
-     * <p>
+     * @param game           juego a jugar
+     * @param learningMethod método usado para entrenar y evaluar, o null si se utiliza una IA al azar
      */
     public void playATurn(Game2048<NeuralNetworkClass> game,
             TDLambdaLearning learningMethod) {
@@ -166,10 +169,12 @@ public abstract class INeuralNetworkInterfaceFor2048<NeuralNetworkClass> impleme
     }
 
     /**
+     * Guarda la red neuronal en un archivo
      *
-     * @param perceptronFile <p>
+     * @param neuralNetworkFile red neuronal a salvar en archivo.
+     *
      * @throws Exception
      */
-    public abstract void saveNeuralNetwork(File perceptronFile) throws Exception;
+    public abstract void saveNeuralNetwork(File neuralNetworkFile) throws Exception;
 
 }
