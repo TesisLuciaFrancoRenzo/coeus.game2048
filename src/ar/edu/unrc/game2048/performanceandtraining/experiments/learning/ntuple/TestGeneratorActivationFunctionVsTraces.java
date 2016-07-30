@@ -45,7 +45,6 @@ public class TestGeneratorActivationFunctionVsTraces {
      */
     public static final int NO_ANNEALING = -1;
 
-
     /**
      * @param ex error a tratar.
      *
@@ -135,6 +134,7 @@ public class TestGeneratorActivationFunctionVsTraces {
                 statisticsOnly, runStatisticsForBackups, createLogs, gamesToPlay, saveEvery, saveBackupEvery,
                 gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, filePath);
     }
+
     private static void configAndExcecute(
             int numberForShow,
             LearningExperiment experiment,
@@ -171,8 +171,7 @@ public class TestGeneratorActivationFunctionVsTraces {
         experiment.setGamesToPlay(gamesToPlay);
         experiment.setSaveEvery(saveEvery);
         experiment.setSaveBackupEvery(saveBacupEvery);
-        experiment.setGamesToPlayPerThreadForStatistics(
-                gamesToPlayPerThreadForStatistics);
+        experiment.setGamesToPlayPerThreadForStatistics(gamesToPlayPerThreadForStatistics);
         experiment.setSimulationsForStatistics(simulationsForStatistics);
         experiment.setExportToExcel(true);
         System.out.println(
@@ -206,13 +205,14 @@ public class TestGeneratorActivationFunctionVsTraces {
                         for ( int m = 0; m < annealingAlphaList.size(); m++ ) {
                             number++;
                             experiments.add(new GeneratorConfig(alphaList.get(i), annealingAlphaList.get(m),
-                                    lambdaList.get(j), gammaList.get(k), explorationRateList.get(l), false, number));
+                                    lambdaList.get(j), gammaList.get(k), explorationRateList.get(l), null, null, null,
+                                    null, false, number));
                             if ( explorationRateList.get(l) > 0 && lambdaList.get(j) > 0 ) {
                                 number++;
                                 experiments.add(
-                                        new GeneratorConfig(alphaList.get(i), annealingAlphaList.get(m), lambdaList.get(
-                                                j),
-                                                gammaList.get(k), explorationRateList.get(l), true, number));
+                                        new GeneratorConfig(alphaList.get(i), annealingAlphaList.get(m),
+                                                lambdaList.get(j), gammaList.get(k), explorationRateList.get(l), null,
+                                                null, null, null, true, number));
                             }
                         }
                     }

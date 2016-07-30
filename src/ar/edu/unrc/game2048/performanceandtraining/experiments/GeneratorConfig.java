@@ -27,10 +27,14 @@ public class GeneratorConfig {
 
     private final double alpha;
     private final int annealingAlpha;
-    private final double explorationRate;
+    private final Double explorationRate;
+    private final Double explorationRateFinalValue;
+    private final Double explorationRateInitialValue;
+    private final Double explorationRateStartInterpolation;
     private final double gamma;
     private final double lambda;
     private final int number;
+    private final Double explorationRateFinishInterpolation;
     private final boolean resetTraces;
 
     /**
@@ -40,14 +44,22 @@ public class GeneratorConfig {
      * @param lambda
      * @param gamma
      * @param explorationRate
+     * @param explorationRateInitialValue
      * @param resetTraces
+     * @param explorationRateFinalValue
      * @param number
+     * @param explorationRateStartInterpolation
+     * @param explorationRateFinishInterpolation
      */
     public GeneratorConfig(double alpha,
             int annealingAlpha,
             double lambda,
-            double gamma,
-            double explorationRate,
+            Double gamma,
+            Double explorationRate,
+            Double explorationRateInitialValue,
+            Double explorationRateFinalValue,
+            Double explorationRateStartInterpolation,
+            Double explorationRateFinishInterpolation,
             boolean resetTraces,
             int number) {
         this.alpha = alpha;
@@ -55,8 +67,12 @@ public class GeneratorConfig {
         this.lambda = lambda;
         this.gamma = gamma;
         this.explorationRate = explorationRate;
+        this.explorationRateFinishInterpolation = explorationRateFinishInterpolation;
         this.resetTraces = resetTraces;
         this.number = number;
+        this.explorationRateInitialValue = explorationRateInitialValue;
+        this.explorationRateFinalValue = explorationRateFinalValue;
+        this.explorationRateStartInterpolation = explorationRateStartInterpolation;
     }
 
     /**
@@ -76,8 +92,36 @@ public class GeneratorConfig {
     /**
      * @return explorationRate
      */
-    public double getExplorationRate() {
+    public Double getExplorationRate() {
         return explorationRate;
+    }
+
+    /**
+     * @return the explorationRateFinalValue
+     */
+    public Double getExplorationRateFinalValue() {
+        return explorationRateFinalValue;
+    }
+
+    /**
+     * @return the explorationRateFinishInterpolation
+     */
+    public Double getExplorationRateFinishInterpolation() {
+        return explorationRateFinishInterpolation;
+    }
+
+    /**
+     * @return the explorationRateInitialValue
+     */
+    public Double getExplorationRateInitialValue() {
+        return explorationRateInitialValue;
+    }
+
+    /**
+     * @return the explorationRateStartInterpolation
+     */
+    public Double getExplorationRateStartInterpolation() {
+        return explorationRateStartInterpolation;
     }
 
     /**

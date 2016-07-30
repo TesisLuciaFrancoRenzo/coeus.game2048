@@ -59,12 +59,12 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
     public static final String CONFIG = "_config";
 
     /**
-     * Fromato para fechas en los nombres de archivos.
+     * Formato para fechas en los nombres de archivos.
      */
     public static final DateFormat DATE_FILE_FORMATTER = new SimpleDateFormat(
             "dd-MM-yyyy_HH'h'mm'm'ss's'");
     /**
-     * Fromato para fechas.
+     * Formato para fechas.
      */
     public static final DateFormat DATE_FORMATTER = new SimpleDateFormat(
             "dd/MM/yyyy HH:mm:ss");
@@ -236,7 +236,6 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
         return experimentName;
     }
 
-
     /**
      * Establece el nombre del experimento basado en el nombre de la clase {@code experimentClass}.
      *
@@ -250,6 +249,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
         }
         this.experimentName = className;
     }
+
     /**
      * @param experimentName nombre del experimento.
      */
