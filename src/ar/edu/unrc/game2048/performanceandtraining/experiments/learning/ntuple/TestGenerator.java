@@ -65,6 +65,10 @@ public class TestGenerator {
      * @param gamesToPlayPerThreadForStatistics
      * @param simulationsForStatistics
      * @param explorationRate
+     * @param explorationRateInitialValue
+     * @param explorationRateFinalValue
+     * @param explorationRateStartInterpolation
+     * @param explorationRateFinishInterpolation
      * @param replaceEligibilityTraces
      * @param filePath
      */
@@ -86,8 +90,8 @@ public class TestGenerator {
             Double explorationRate,
             Double explorationRateInitialValue,
             Double explorationRateFinalValue,
-            Double explorationRateStartInterpolation,
-            Double explorationRateFinishInterpolation,
+            Integer explorationRateStartInterpolation,
+            Integer explorationRateFinishInterpolation,
             boolean replaceEligibilityTraces,
             String filePath
     ) {
@@ -102,9 +106,9 @@ public class TestGenerator {
             experiment.setExplorationRateToFixed(explorationRate);
         } else {
             experiment.setExplorationRate(explorationRateInitialValue,
-                    (int) Math.floor(explorationRateStartInterpolation),
+                    explorationRateStartInterpolation,
                     explorationRateFinalValue,
-                    (int) Math.floor(explorationRateFinishInterpolation));
+                    explorationRateFinishInterpolation);
         }
         experiment.setInitializePerceptronRandomized(false);
         experiment.setConcurrencyInComputeBestPosibleAction(true);
@@ -157,9 +161,9 @@ public class TestGenerator {
         List<Double> gammaList = new ArrayList<>();
         List<Double> fixedExplorationRateFixed = new ArrayList<>();
         List<Double> interpolatedExplorationRateFinalValues = new ArrayList<>();
-        List<Double> interpolatedExplorationRateFinishInterpolation = new ArrayList<>();
+        List<Integer> interpolatedExplorationRateFinishInterpolation = new ArrayList<>();
         List<Double> interpolatedExplorationRateInitialValues = new ArrayList<>();
-        List<Double> interpolatedExplorationRateStartInterpolation = new ArrayList<>();
+        List<Integer> interpolatedExplorationRateStartInterpolation = new ArrayList<>();
 
         //============================== configuraciones manuales ==================================
 //        boolean statistics = true;
@@ -193,8 +197,8 @@ public class TestGenerator {
         interpolatedExplorationRateInitialValues.add(0.1d);
         interpolatedExplorationRateFinalValues.add(0.01d);
         interpolatedExplorationRateFinalValues.add(0.005d);
-        interpolatedExplorationRateStartInterpolation.add(0d);
-        interpolatedExplorationRateFinishInterpolation.add(500_000d);
+        interpolatedExplorationRateStartInterpolation.add(0);
+        interpolatedExplorationRateFinishInterpolation.add(500_000);
 
         boolean createLogs = false;
         //============================== fin de configuraciones manuales ==================================
@@ -219,9 +223,9 @@ public class TestGenerator {
                         "explorationRateInitialValue"));
                 interpolatedExplorationRateFinalValues = ArgumentLoader.parseDoubleArray(arguments.getArg(
                         "explorationRateFinalValues"));
-                interpolatedExplorationRateStartInterpolation = ArgumentLoader.parseDoubleArray(arguments.getArg(
+                interpolatedExplorationRateStartInterpolation = ArgumentLoader.parseIntegerArray(arguments.getArg(
                         "explorationRateStartInterpolation"));
-                interpolatedExplorationRateFinishInterpolation = ArgumentLoader.parseDoubleArray(arguments.getArg(
+                interpolatedExplorationRateFinishInterpolation = ArgumentLoader.parseIntegerArray(arguments.getArg(
                         "explorationRateFinishInterpolation"));
                 if ( interpolatedExplorationRateFinalValues.size() != interpolatedExplorationRateFinalValues.size() || interpolatedExplorationRateFinalValues.
                         size() != interpolatedExplorationRateStartInterpolation.size() || interpolatedExplorationRateInitialValues.
@@ -312,8 +316,8 @@ public class TestGenerator {
             List<Double> explorationRateList,
             List<Double> explorationRateInitialValues,
             List<Double> explorationRateFinalValues,
-            List<Double> explorationRateStartInterpolation,
-            List<Double> explorationRateFinishInterpolation,
+            List<Integer> explorationRateStartInterpolation,
+            List<Integer> explorationRateFinishInterpolation,
             String filePath) {
         List<GeneratorConfig> experiments = new ArrayList<>();
         int number = 0;
