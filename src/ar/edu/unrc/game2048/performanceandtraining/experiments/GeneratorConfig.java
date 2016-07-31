@@ -29,12 +29,12 @@ public class GeneratorConfig {
     private final int annealingAlpha;
     private final Double explorationRate;
     private final Double explorationRateFinalValue;
+    private final Integer explorationRateFinishInterpolation;
     private final Double explorationRateInitialValue;
     private final Integer explorationRateStartInterpolation;
     private final double gamma;
     private final double lambda;
     private final int number;
-    private final Integer explorationRateFinishInterpolation;
     private final boolean resetTraces;
 
     /**
