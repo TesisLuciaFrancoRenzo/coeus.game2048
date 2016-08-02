@@ -46,7 +46,7 @@ public class TestGenerator {
      *
      */
     public static final int NO_ANNEALING = -1;
-    private static int tileToWinForStatistics;
+    private static int tileToWinForStatistics = 2_048; //OJO que no se puede configurar por parametro
 
     /**
      *
@@ -165,13 +165,13 @@ public class TestGenerator {
         List<Double> interpolatedExplorationRateInitialValues = new ArrayList<>();
         List<Integer> interpolatedExplorationRateStartInterpolation = new ArrayList<>();
 
+        int gamesToPlayPerThreadForStats = 1_000; //OJO que no se puede configurar por parametro
+
         //============================== configuraciones manuales ==================================
 //        boolean statistics = true;
         boolean statistics = false;
         int maxTrainingThreads = 8;
         boolean doBackupStatistics = true;
-        tileToWinForStatistics = 512;
-        int gamesToPlayPerThreadForStats = 100;
         String experimentName = "BasicLinearNoPartialScore_512";
         String experimentClass = "BasicLinearNoPartialScore_512";
         int gamesToPlay = 1;
