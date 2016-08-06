@@ -53,6 +53,29 @@ public class ArgumentLoader {
     }
 
     /**
+     * Parsea arreglos de Boolean.
+     *
+     * @param arrayString formato del estilo [true,false,false]
+     *
+     * @return lista de Boolean.
+     */
+    public static boolean[] parseBooleanArray(String arrayString) {
+
+        if ( arrayString == null || !arrayString.startsWith("[") || !arrayString.endsWith("]") ) {
+            throw new IllegalArgumentException("arrayString format unknown: " + arrayString);
+        }
+
+        String[] list = arrayString.substring(1, arrayString.length() - 1).split(",");
+        boolean[] out = new boolean[list.length];
+        int i = 0;
+        for ( String bool : list ) {
+            out[i] = Boolean.parseBoolean(bool.trim());
+            i++;
+        }
+        return out;
+    }
+
+    /**
      * Parsea arreglos de Double.
      *
      * @param arrayString formato del estilo [0.0,0.1,0.2,5547]

@@ -27,9 +27,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import org.encog.engine.network.activation.ActivationFunction;
-import org.encog.engine.network.activation.ActivationTANH;
-import org.encog.util.arrayutil.NormalizationAction;
-import org.encog.util.arrayutil.NormalizedField;
+import org.encog.engine.network.activation.ActivationLinear;
 
 /**
  * Configuración para jugar hasta 512, tablero de tipo NTupla, con función de activación Tangente Hiperbólica, y puntaje
@@ -38,14 +36,12 @@ import org.encog.util.arrayutil.NormalizedField;
  * @author lucia bressan, franco pellegrini, renzo bianchini
  * @param <NeuralNetworkClass>
  */
-public class PNTuple_512<NeuralNetworkClass> extends NeuralNetworkConfiguration2048<NeuralNetworkClass> {
+public class PNTupleLinear_512<NeuralNetworkClass> extends NeuralNetworkConfiguration2048<NeuralNetworkClass> {
 
     private final List<SamplePointState> allSamplePointStates;
     private final boolean concurrenInput;
     private final HashMap<SamplePointState, Integer> mapSamplePointStates;
-    private final int maxReward = 20_000;
     private final int maxTile;
-    private final int minReward = -20_000;
     private final int[] nTuplesLenght;
     private final int[] nTuplesWeightQuantityIndex;
     private final int numSamples;
@@ -54,7 +50,7 @@ public class PNTuple_512<NeuralNetworkClass> extends NeuralNetworkConfiguration2
     /**
      *
      */
-    public PNTuple_512() {
+    public PNTupleLinear_512() {
         numSamples = 8;
         maxTile = 9;
         concurrenInput = true;
@@ -90,14 +86,10 @@ public class PNTuple_512<NeuralNetworkClass> extends NeuralNetworkConfiguration2
         neuronQuantityInLayer[0] = lutSize;
 
         this.activationFunctionForEncog = new ActivationFunction[1];
-        activationFunctionForEncog[0] = new ActivationTANH();
+        activationFunctionForEncog[0] = new ActivationLinear();
 
         activationFunctionMax = 1;
         activationFunctionMin = -1;
-
-        normOutput = new NormalizedField(NormalizationAction.Normalize,
-                null, maxReward, minReward, activationFunctionMax,
-                activationFunctionMin);
     }
 
     /**
@@ -145,7 +137,7 @@ public class PNTuple_512<NeuralNetworkClass> extends NeuralNetworkConfiguration2
 
     @Override
     public double denormalizeValueFromNeuralNetworkOutput(Object value) {
-        return normOutput.deNormalize((Double) value);
+        return (Double) value;
     }
 
     /**
@@ -181,13 +173,6 @@ public class PNTuple_512<NeuralNetworkClass> extends NeuralNetworkConfiguration2
         return maxTile;
     }
 
-    /**
-     *
-     * @param board
-     * @param nTupleIndex
-     *
-     * @return
-     */
     public SamplePointState[] getNTuple(GameBoard board,
             int nTupleIndex) {
         switch ( nTupleIndex ) {
@@ -291,7 +276,7 @@ public class PNTuple_512<NeuralNetworkClass> extends NeuralNetworkConfiguration2
 
     @Override
     public double normalizeValueToPerceptronOutput(Object value) {
-        return normOutput.normalize((Double) value);
+        return (Double) value;
     }
 
     @Override

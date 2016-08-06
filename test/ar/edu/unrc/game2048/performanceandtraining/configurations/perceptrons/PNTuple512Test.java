@@ -14,6 +14,9 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertTrue;
 
 /**
  *
@@ -56,13 +59,13 @@ public class PNTuple512Test {
     }
 
     /**
-     * Test of calculateNormalizedPerceptronInput method, of class PNTuple_512.
+     * Test of calculateNormalizedPerceptronInput method, of class PNTupleTanH_512.
      */
     @Test
     public void testCalculateNormalizedPerceptronInput() {
         System.out.println("calculateNormalizedPerceptronInput");
 
-        PNTuple_512<BasicNetwork> nTupleConfiguration = new PNTuple_512<>();
+        PNTupleTanH_512<BasicNetwork> nTupleConfiguration = new PNTupleTanH_512<>();
         TileContainer tileContainer = new TileContainer(nTupleConfiguration.
                 getMaxTile());
         Tile[] randomB = {

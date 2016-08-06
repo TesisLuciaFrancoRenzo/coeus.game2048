@@ -21,6 +21,7 @@ package ar.edu.unrc.game2048.performanceandtraining.experiments.learning.ntuple;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.LearningExperiment;
 import ar.edu.unrc.game2048.performanceandtraining.experiments.ArgumentLoader;
 import ar.edu.unrc.game2048.performanceandtraining.experiments.GeneratorConfig;
+import ar.edu.unrc.game2048.performanceandtraining.experiments.learning.encog.NTupleLinear_512;
 import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -46,7 +47,6 @@ public class TestGenerator {
      *
      */
     public static final int NO_ANNEALING = -1;
-    private static int tileToWinForStatistics = 2_048; //OJO que no se puede configurar por parametro
 
     /**
      *
@@ -63,6 +63,7 @@ public class TestGenerator {
      * @param saveEvery
      * @param saveBacupEvery
      * @param gamesToPlayPerThreadForStatistics
+     * @param tileToWinForStatistics
      * @param simulationsForStatistics
      * @param explorationRate
      * @param explorationRateInitialValue
@@ -71,6 +72,7 @@ public class TestGenerator {
      * @param explorationRateFinishInterpolation
      * @param replaceEligibilityTraces
      * @param filePath
+     * @param concurrentLayer
      */
     public static void configAndExcecute(
             int numberForShow,
@@ -86,6 +88,7 @@ public class TestGenerator {
             int saveEvery,
             int saveBacupEvery,
             int gamesToPlayPerThreadForStatistics,
+            int tileToWinForStatistics,
             int simulationsForStatistics,
             Double explorationRate,
             Double explorationRateInitialValue,
@@ -93,7 +96,8 @@ public class TestGenerator {
             Integer explorationRateStartInterpolation,
             Integer explorationRateFinishInterpolation,
             boolean replaceEligibilityTraces,
-            String filePath
+            String filePath,
+            boolean[] concurrentLayer
     ) {
         experiment.setStatisticsOnly(statisticsOnly);
         experiment.setRunStatisticsForBackups(runStatisticsForBackups);
@@ -112,7 +116,6 @@ public class TestGenerator {
         }
         experiment.setInitializePerceptronRandomized(false);
         experiment.setConcurrencyInComputeBestPosibleAction(true);
-        boolean[] concurrentLayer = {false, false};
         experiment.setConcurrencyInLayer(concurrentLayer);
         experiment.setTileToWinForStatistics(tileToWinForStatistics);
         experiment.setReplaceEligibilityTraces(replaceEligibilityTraces);
@@ -177,6 +180,8 @@ public class TestGenerator {
         int gamesToPlay = 1;
         int saveEvery = 1_000;
         int saveBackupEvery = 500;
+        int tileToWinForStatistics = 2_048;
+        boolean[] concurrentLayer = {false, false};
 
         lambdaList.add(0d);
 //        lambdaList.add(0.1d);
@@ -207,6 +212,7 @@ public class TestGenerator {
             ArgumentLoader arguments = new ArgumentLoader(args);
             statistics = Boolean.parseBoolean(arguments.getArg("statistics"));
             maxTrainingThreads = Integer.parseInt(arguments.getArg("maxTrainingThreads"));
+            tileToWinForStatistics = Integer.parseInt(arguments.getArg("tileToWinForStatistics"));
             doBackupStatistics = Boolean.parseBoolean(arguments.getArg("doBackupStatistics"));
             gamesToPlay = Integer.parseInt(arguments.getArg("gamesToPlay"));
             saveEvery = Integer.parseInt(arguments.getArg("saveEvery"));
@@ -218,6 +224,7 @@ public class TestGenerator {
             annealingAlphaList = ArgumentLoader.parseIntegerArray(arguments.getArg("annealingAlphaList"));
             alphaList = ArgumentLoader.parseDoubleArray(arguments.getArg("alphaList"));
             gammaList = ArgumentLoader.parseDoubleArray(arguments.getArg("gammaList"));
+            concurrentLayer = ArgumentLoader.parseBooleanArray(arguments.getArg("concurrentLayer"));
             try {
                 interpolatedExplorationRateInitialValues = ArgumentLoader.parseDoubleArray(arguments.getArg(
                         "explorationRateInitialValue"));
@@ -275,6 +282,14 @@ public class TestGenerator {
                 classConstructor = BasicLinear_512.class.getConstructor();
                 break;
             }
+            case "BasicLinearSimplified_512": {
+                classConstructor = BasicLinearSimplified_512.class.getConstructor();
+                break;
+            }
+            case "PNTupleLinear_512": {
+                classConstructor = NTupleLinear_512.class.getConstructor();
+                break;
+            }
             case "BasicLinearNoPartialScore_512": {
                 classConstructor = BasicLinearNoPartialScore_512.class.getConstructor();
                 break;
@@ -292,10 +307,11 @@ public class TestGenerator {
         runAllConfigs(maxTrainingThreads, experimentName, classConstructor,
                 alphaList, annealingAlphaList, lambdaList, gammaList, statisticsOnly,
                 runStatisticsForBackups, createLogs, gamesToPlay, saveEvery,
-                saveBackupEvery, gamesToPlayPerThreadForStatistics,
+                saveBackupEvery, gamesToPlayPerThreadForStatistics, tileToWinForStatistics,
                 simulationsForStatistics, fixedExplorationRateFixed, interpolatedExplorationRateInitialValues,
                 interpolatedExplorationRateFinalValues,
-                interpolatedExplorationRateStartInterpolation, interpolatedExplorationRateFinishInterpolation, filePath);
+                interpolatedExplorationRateStartInterpolation, interpolatedExplorationRateFinishInterpolation, filePath,
+                concurrentLayer);
     }
 
     private static void runAllConfigs(int maxTrainingThreads,
@@ -312,13 +328,15 @@ public class TestGenerator {
             int saveEvery,
             int saveBacupEvery,
             int gamesToPlayPerThreadForStatistics,
+            int tileToWinForStatistics,
             int simulationsForStatistics,
             List<Double> explorationRateList,
             List<Double> explorationRateInitialValues,
             List<Double> explorationRateFinalValues,
             List<Integer> explorationRateStartInterpolation,
             List<Integer> explorationRateFinishInterpolation,
-            String filePath) {
+            String filePath,
+            boolean[] concurrentLayer) {
         List<GeneratorConfig> experiments = new ArrayList<>();
         int number = 0;
         for ( int i = 0; i < alphaList.size(); i++ ) {
@@ -408,14 +426,15 @@ public class TestGenerator {
                                             runStatisticsForBackups, createLogs, expConfig.getLambda(), expConfig.
                                             getAlpha(), expConfig.getAnnealingAlpha(), expConfig.getGamma(), gamesToPlay,
                                             saveEvery, saveBacupEvery, gamesToPlayPerThreadForStatistics,
+                                            tileToWinForStatistics,
                                             simulationsForStatistics,
                                             expConfig.getExplorationRate(),
                                             expConfig.getExplorationRateInitialValue(),
                                             expConfig.getExplorationRateFinalValue(),
                                             expConfig.getExplorationRateStartInterpolation(),
                                             expConfig.getExplorationRateFinishInterpolation(),
-                                            expConfig.isResetTraces(), newFilePath);
-                                } catch ( InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex ) {
+                                            expConfig.isResetTraces(), newFilePath, concurrentLayer);
+                                } catch ( ClassCastException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex ) {
                                     Logger.getLogger(TestGenerator.class.getName()).log(Level.SEVERE, null, ex);
                                 }
                             })
