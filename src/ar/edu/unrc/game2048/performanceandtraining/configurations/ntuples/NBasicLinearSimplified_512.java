@@ -76,6 +76,7 @@ public class NBasicLinearSimplified_512 extends NTupleConfiguration2048 {
         return board.getGame().getScore();
     }
 
+    @Override
     public SamplePointState[] getNTuple(GameBoard board,
             int nTupleIndex) {
         switch ( nTupleIndex ) {

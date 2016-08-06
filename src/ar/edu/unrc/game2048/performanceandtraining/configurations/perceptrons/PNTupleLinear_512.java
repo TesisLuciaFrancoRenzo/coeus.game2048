@@ -173,6 +173,12 @@ public class PNTupleLinear_512<NeuralNetworkClass> extends NeuralNetworkConfigur
         return maxTile;
     }
 
+    /**
+     *
+     * @param board
+     * @param nTupleIndex
+     * @return
+     */
     public SamplePointState[] getNTuple(GameBoard board,
             int nTupleIndex) {
         switch ( nTupleIndex ) {
