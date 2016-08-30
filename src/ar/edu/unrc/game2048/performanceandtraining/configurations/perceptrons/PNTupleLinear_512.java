@@ -18,7 +18,7 @@
  */
 package ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons;
 
-import ar.edu.unrc.coeus.tdlearning.training.ntuple.SamplePointState;
+import ar.edu.unrc.coeus.tdlearning.training.ntuple.SamplePointValue;
 import ar.edu.unrc.game2048.Game2048;
 import ar.edu.unrc.game2048.GameBoard;
 import ar.edu.unrc.game2048.NeuralNetworkConfiguration2048;
@@ -38,9 +38,9 @@ import org.encog.engine.network.activation.ActivationLinear;
  */
 public class PNTupleLinear_512<NeuralNetworkClass> extends NeuralNetworkConfiguration2048<NeuralNetworkClass> {
 
-    private final List<SamplePointState> allSamplePointStates;
+    private final List<SamplePointValue> allSamplePointPossibleValues;
     private final boolean concurrenInput;
-    private final HashMap<SamplePointState, Integer> mapSamplePointStates;
+    private final HashMap<SamplePointValue, Integer> mapSamplePointValuesIndex;
     private final int maxTile;
     private final int[] nTuplesLenght;
     private final int[] nTuplesWeightQuantityIndex;
@@ -61,11 +61,11 @@ public class PNTupleLinear_512<NeuralNetworkClass> extends NeuralNetworkConfigur
             nTuplesLenght[i] = 4;
         }
 
-        this.allSamplePointStates = new ArrayList<>();
-        this.mapSamplePointStates = new HashMap<>();
+        this.allSamplePointPossibleValues = new ArrayList<>();
+        this.mapSamplePointValuesIndex = new HashMap<>();
         for ( int i = 0; i <= maxTile; i++ ) {
-            allSamplePointStates.add(new Tile(i));
-            mapSamplePointStates.put(allSamplePointStates.get(i), i);
+            allSamplePointPossibleValues.add(new Tile(i));
+            mapSamplePointValuesIndex.put(allSamplePointPossibleValues.get(i), i);
         }
 
         nTuplesWeightQuantityIndex = new int[nTuplesLenght.length];
@@ -73,7 +73,7 @@ public class PNTupleLinear_512<NeuralNetworkClass> extends NeuralNetworkConfigur
         nTuplesWeightQuantityIndex[0] = lasNTuplesWeightQuantity;
         int lutSize = 0;
         for ( int i = 0; i < nTuplesLenght.length; i++ ) {
-            int nTuplesWeightQuantity = (int) Math.pow(mapSamplePointStates.
+            int nTuplesWeightQuantity = (int) Math.pow(mapSamplePointValuesIndex.
                     size(), nTuplesLenght[i]);
             lutSize += nTuplesWeightQuantity;
             if ( i > 0 ) {
@@ -100,15 +100,15 @@ public class PNTupleLinear_512<NeuralNetworkClass> extends NeuralNetworkConfigur
      * @return
      */
     public int calculateIndex(int nTupleSampleIndex,
-            SamplePointState[] nTupleSample) {
+            SamplePointValue[] nTupleSample) {
         int localIndex = 0;
         for ( int j = 0; j < getnTuplesLenght()[nTupleSampleIndex]; j++ ) {
-//            SamplePointState object = ntuple[j];
-//            Integer sampleIndex = mapSamplePointStates.get(object);
-//            int size = mapSamplePointStates.size();
+//            SamplePointValue object = ntuple[j];
+//            Integer sampleIndex = mapSamplePointValuesIndex.get(object);
+//            int size = mapSamplePointValuesIndex.size();
 //            int pow = (int) Math.pow(size, j);
-            localIndex += getMapSamplePointStates().get(nTupleSample[j])
-                    * (int) Math.pow(getMapSamplePointStates().size(), j);
+            localIndex += getMapSamplePointValuesIndex().get(nTupleSample[j])
+                    * (int) Math.pow(getMapSamplePointValuesIndex().size(), j);
         }
         return getnTuplesWeightQuantityIndex()[nTupleSampleIndex] + localIndex;
     }
@@ -141,10 +141,10 @@ public class PNTupleLinear_512<NeuralNetworkClass> extends NeuralNetworkConfigur
     }
 
     /**
-     * @return allSamplePointStates
+     * @return allSamplePointPossibleValues
      */
-    public List<SamplePointState> getAllSamplePointStates() {
-        return allSamplePointStates;
+    public List<SamplePointValue> getAllSamplePointPossibleValues() {
+        return allSamplePointPossibleValues;
     }
 
     @Override
@@ -160,10 +160,10 @@ public class PNTupleLinear_512<NeuralNetworkClass> extends NeuralNetworkConfigur
     }
 
     /**
-     * @return mapSamplePointStates
+     * @return mapSamplePointValuesIndex
      */
-    public HashMap<SamplePointState, Integer> getMapSamplePointStates() {
-        return mapSamplePointStates;
+    public HashMap<SamplePointValue, Integer> getMapSamplePointValuesIndex() {
+        return mapSamplePointValuesIndex;
     }
 
     /**
@@ -179,12 +179,12 @@ public class PNTupleLinear_512<NeuralNetworkClass> extends NeuralNetworkConfigur
      * @param nTupleIndex
      * @return
      */
-    public SamplePointState[] getNTuple(GameBoard board,
+    public SamplePointValue[] getNTuple(GameBoard board,
             int nTupleIndex) {
         switch ( nTupleIndex ) {
             // verticales
             case 0: {
-                SamplePointState[] sample
+                SamplePointValue[] sample
                         = {board.tileAt(0, 0),
                             board.tileAt(0, 1),
                             board.tileAt(0, 2),
@@ -192,7 +192,7 @@ public class PNTupleLinear_512<NeuralNetworkClass> extends NeuralNetworkConfigur
                 return sample;
             }
             case 1: {
-                SamplePointState[] sample
+                SamplePointValue[] sample
                         = {board.tileAt(1, 0),
                             board.tileAt(1, 1),
                             board.tileAt(1, 2),
@@ -200,7 +200,7 @@ public class PNTupleLinear_512<NeuralNetworkClass> extends NeuralNetworkConfigur
                 return sample;
             }
             case 2: {
-                SamplePointState[] sample
+                SamplePointValue[] sample
                         = {board.tileAt(2, 0),
                             board.tileAt(2, 1),
                             board.tileAt(2, 2),
@@ -208,7 +208,7 @@ public class PNTupleLinear_512<NeuralNetworkClass> extends NeuralNetworkConfigur
                 return sample;
             }
             case 3: {
-                SamplePointState[] sample
+                SamplePointValue[] sample
                         = {board.tileAt(3, 0),
                             board.tileAt(3, 1),
                             board.tileAt(3, 2),
@@ -217,7 +217,7 @@ public class PNTupleLinear_512<NeuralNetworkClass> extends NeuralNetworkConfigur
             }
             // horizontales
             case 4: {
-                SamplePointState[] sample
+                SamplePointValue[] sample
                         = {board.tileAt(0, 0),
                             board.tileAt(1, 0),
                             board.tileAt(2, 0),
@@ -225,7 +225,7 @@ public class PNTupleLinear_512<NeuralNetworkClass> extends NeuralNetworkConfigur
                 return sample;
             }
             case 5: {
-                SamplePointState[] sample
+                SamplePointValue[] sample
                         = {board.tileAt(0, 1),
                             board.tileAt(1, 1),
                             board.tileAt(2, 1),
@@ -233,7 +233,7 @@ public class PNTupleLinear_512<NeuralNetworkClass> extends NeuralNetworkConfigur
                 return sample;
             }
             case 6: {
-                SamplePointState[] sample
+                SamplePointValue[] sample
                         = {board.tileAt(0, 2),
                             board.tileAt(1, 2),
                             board.tileAt(2, 2),
@@ -241,7 +241,7 @@ public class PNTupleLinear_512<NeuralNetworkClass> extends NeuralNetworkConfigur
                 return sample;
             }
             case 7: {
-                SamplePointState[] sample
+                SamplePointValue[] sample
                         = {board.tileAt(0, 3),
                             board.tileAt(1, 3),
                             board.tileAt(2, 3),

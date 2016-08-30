@@ -94,7 +94,7 @@ public class PNTuple512Test {
         board2.setTiles(randomBoard);
 
         NTupleSystem nTupleSystem = new NTupleSystem(
-                nTupleConfiguration2.getAllSamplePointStates(),
+                nTupleConfiguration2.getAllSamplePointPossibleValues(),
                 nTupleConfiguration2.getnTuplesLenght(),
                 nTupleConfiguration2.getActivationFunction(),
                 nTupleConfiguration2.getDerivatedActivationFunction(),

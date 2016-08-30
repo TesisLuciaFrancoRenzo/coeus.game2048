@@ -18,7 +18,7 @@
  */
 package ar.edu.unrc.game2048;
 
-import ar.edu.unrc.coeus.tdlearning.training.ntuple.SamplePointState;
+import ar.edu.unrc.coeus.tdlearning.training.ntuple.SamplePointValue;
 import java.awt.Color;
 import static java.lang.Math.pow;
 
@@ -27,7 +27,7 @@ import static java.lang.Math.pow;
  *
  * @author lucia bressan, franco pellegrini, renzo bianchini pellegrini
  */
-public class Tile implements SamplePointState {
+public class Tile implements SamplePointValue {
 
     private int code;
     private int gameValue;

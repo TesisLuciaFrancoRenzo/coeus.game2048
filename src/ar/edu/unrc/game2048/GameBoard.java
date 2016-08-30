@@ -21,7 +21,7 @@ package ar.edu.unrc.game2048;
 import ar.edu.unrc.coeus.tdlearning.interfaces.IState;
 import ar.edu.unrc.coeus.tdlearning.interfaces.IStateNTuple;
 import ar.edu.unrc.coeus.tdlearning.interfaces.IStatePerceptron;
-import ar.edu.unrc.coeus.tdlearning.training.ntuple.SamplePointState;
+import ar.edu.unrc.coeus.tdlearning.training.ntuple.SamplePointValue;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.inputs.InputNtupleList;
 import ar.edu.unrc.game2048.performanceandtraining.experiments.learning.greedy.StateProbability;
 import static java.lang.Math.random;
@@ -285,7 +285,7 @@ public class GameBoard<NeuralNetworkClass> implements IStatePerceptron, IStateNT
     }
 
     @Override
-    public SamplePointState[] getNTuple(int nTupleIndex) {
+    public SamplePointValue[] getNTuple(int nTupleIndex) {
         return game.getnTupleSystemConfiguration().getNTuple(this, nTupleIndex);
     }
 

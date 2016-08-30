@@ -18,7 +18,7 @@
  */
 package ar.edu.unrc.game2048.performanceandtraining.configurations.ntuples;
 
-import ar.edu.unrc.coeus.tdlearning.training.ntuple.SamplePointState;
+import ar.edu.unrc.coeus.tdlearning.training.ntuple.SamplePointValue;
 import ar.edu.unrc.coeus.tdlearning.utils.FunctionUtils;
 import ar.edu.unrc.game2048.GameBoard;
 import ar.edu.unrc.game2048.NTupleConfiguration2048;
@@ -45,9 +45,9 @@ public class NSymetryLinear_32768 extends NTupleConfiguration2048 {
         nTuplesLenght[2] = 4;
         nTuplesLenght[3] = 4;
 
-        this.allSamplePointStates = new ArrayList<>();
+        this.allSamplePointPossibleValues = new ArrayList<>();
         for ( int i = 0; i <= maxTile; i++ ) {
-            allSamplePointStates.add(new Tile(i));
+            allSamplePointPossibleValues.add(new Tile(i));
         }
     }
 
@@ -74,12 +74,12 @@ public class NSymetryLinear_32768 extends NTupleConfiguration2048 {
     }
 
     @Override
-    public SamplePointState[] getNTuple(GameBoard board,
+    public SamplePointValue[] getNTuple(GameBoard board,
             int nTupleIndex) {
         switch ( nTupleIndex ) {
             // rectangulos
             case 0: {
-                SamplePointState[] sample
+                SamplePointValue[] sample
                         = {board.tileAt(0, 0),
                             board.tileAt(0, 1),
                             board.tileAt(0, 2),
@@ -89,7 +89,7 @@ public class NSymetryLinear_32768 extends NTupleConfiguration2048 {
                 return sample;
             }
             case 1: {
-                SamplePointState[] sample
+                SamplePointValue[] sample
                         = {board.tileAt(1, 0),
                             board.tileAt(1, 1),
                             board.tileAt(1, 2),
@@ -100,7 +100,7 @@ public class NSymetryLinear_32768 extends NTupleConfiguration2048 {
             }
             // verticales
             case 2: {
-                SamplePointState[] sample
+                SamplePointValue[] sample
                         = {board.tileAt(2, 0),
                             board.tileAt(2, 1),
                             board.tileAt(2, 2),
@@ -108,7 +108,7 @@ public class NSymetryLinear_32768 extends NTupleConfiguration2048 {
                 return sample;
             }
             case 3: {
-                SamplePointState[] sample
+                SamplePointValue[] sample
                         = {board.tileAt(3, 0),
                             board.tileAt(3, 1),
                             board.tileAt(3, 2),

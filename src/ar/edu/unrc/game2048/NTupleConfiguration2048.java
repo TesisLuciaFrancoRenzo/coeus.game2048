@@ -19,7 +19,7 @@
 package ar.edu.unrc.game2048;
 
 import ar.edu.unrc.coeus.tdlearning.training.ntuple.NTupleSystem;
-import ar.edu.unrc.coeus.tdlearning.training.ntuple.SamplePointState;
+import ar.edu.unrc.coeus.tdlearning.training.ntuple.SamplePointValue;
 import java.util.List;
 import java.util.function.Function;
 import org.encog.util.arrayutil.NormalizedField;
@@ -40,7 +40,7 @@ public abstract class NTupleConfiguration2048 implements Cloneable, IConfigurati
     /**
      *
      */
-    protected List<SamplePointState> allSamplePointStates;
+    protected List<SamplePointValue> allSamplePointPossibleValues;
 
     /**
      *
@@ -78,8 +78,8 @@ public abstract class NTupleConfiguration2048 implements Cloneable, IConfigurati
      *
      * @return
      */
-    public List<SamplePointState> getAllSamplePointStates() {
-        return allSamplePointStates;
+    public List<SamplePointValue> getAllSamplePointPossibleValues() {
+        return allSamplePointPossibleValues;
     }
 
     /**
@@ -96,7 +96,7 @@ public abstract class NTupleConfiguration2048 implements Cloneable, IConfigurati
      * @param nTupleIndex <p>
      * @return
      */
-    public abstract SamplePointState[] getNTuple(GameBoard board,
+    public abstract SamplePointValue[] getNTuple(GameBoard board,
             int nTupleIndex);
 
     /**

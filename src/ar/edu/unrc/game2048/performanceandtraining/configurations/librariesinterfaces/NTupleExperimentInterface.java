@@ -65,7 +65,7 @@ public class NTupleExperimentInterface extends INeuralNetworkInterfaceFor2048<Ba
      */
     public NTupleSystem initializeNTupleSystem(boolean randomized) {
         NTupleSystem nTupleSystem = new NTupleSystem(this.
-                getNTupleConfiguration().getAllSamplePointStates(), this.
+                getNTupleConfiguration().getAllSamplePointPossibleValues(), this.
                 getNTupleConfiguration().getnTuplesLenght(), this.
                 getNTupleConfiguration().getActivationFunction(), this.
                 getNTupleConfiguration().getDerivatedActivationFunction(), this.

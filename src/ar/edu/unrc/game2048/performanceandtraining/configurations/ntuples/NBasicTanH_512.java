@@ -18,7 +18,7 @@
  */
 package ar.edu.unrc.game2048.performanceandtraining.configurations.ntuples;
 
-import ar.edu.unrc.coeus.tdlearning.training.ntuple.SamplePointState;
+import ar.edu.unrc.coeus.tdlearning.training.ntuple.SamplePointValue;
 import ar.edu.unrc.coeus.tdlearning.utils.FunctionUtils;
 import ar.edu.unrc.game2048.GameBoard;
 import ar.edu.unrc.game2048.NTupleConfiguration2048;
@@ -59,9 +59,9 @@ public class NBasicTanH_512 extends NTupleConfiguration2048 {
             nTuplesLenght[i] = 4;
         }
 
-        this.allSamplePointStates = new ArrayList<>();
+        this.allSamplePointPossibleValues = new ArrayList<>();
         for ( int i = 0; i <= maxTile; i++ ) {
-            allSamplePointStates.add(new Tile(i));
+            allSamplePointPossibleValues.add(new Tile(i));
         }
     }
 
@@ -95,12 +95,12 @@ public class NBasicTanH_512 extends NTupleConfiguration2048 {
     }
 
     @Override
-    public SamplePointState[] getNTuple(GameBoard board,
+    public SamplePointValue[] getNTuple(GameBoard board,
             int nTupleIndex) {
         switch ( nTupleIndex ) {
             // verticales
             case 0: {
-                SamplePointState[] sample
+                SamplePointValue[] sample
                         = {board.tileAt(0, 0),
                             board.tileAt(0, 1),
                             board.tileAt(0, 2),
@@ -108,7 +108,7 @@ public class NBasicTanH_512 extends NTupleConfiguration2048 {
                 return sample;
             }
             case 1: {
-                SamplePointState[] sample
+                SamplePointValue[] sample
                         = {board.tileAt(1, 0),
                             board.tileAt(1, 1),
                             board.tileAt(1, 2),
@@ -116,7 +116,7 @@ public class NBasicTanH_512 extends NTupleConfiguration2048 {
                 return sample;
             }
             case 2: {
-                SamplePointState[] sample
+                SamplePointValue[] sample
                         = {board.tileAt(2, 0),
                             board.tileAt(2, 1),
                             board.tileAt(2, 2),
@@ -124,7 +124,7 @@ public class NBasicTanH_512 extends NTupleConfiguration2048 {
                 return sample;
             }
             case 3: {
-                SamplePointState[] sample
+                SamplePointValue[] sample
                         = {board.tileAt(3, 0),
                             board.tileAt(3, 1),
                             board.tileAt(3, 2),
@@ -133,7 +133,7 @@ public class NBasicTanH_512 extends NTupleConfiguration2048 {
             }
             // horizontales
             case 4: {
-                SamplePointState[] sample
+                SamplePointValue[] sample
                         = {board.tileAt(0, 0),
                             board.tileAt(1, 0),
                             board.tileAt(2, 0),
@@ -141,7 +141,7 @@ public class NBasicTanH_512 extends NTupleConfiguration2048 {
                 return sample;
             }
             case 5: {
-                SamplePointState[] sample
+                SamplePointValue[] sample
                         = {board.tileAt(0, 1),
                             board.tileAt(1, 1),
                             board.tileAt(2, 1),
@@ -149,7 +149,7 @@ public class NBasicTanH_512 extends NTupleConfiguration2048 {
                 return sample;
             }
             case 6: {
-                SamplePointState[] sample
+                SamplePointValue[] sample
                         = {board.tileAt(0, 2),
                             board.tileAt(1, 2),
                             board.tileAt(2, 2),
@@ -157,7 +157,7 @@ public class NBasicTanH_512 extends NTupleConfiguration2048 {
                 return sample;
             }
             case 7: {
-                SamplePointState[] sample
+                SamplePointValue[] sample
                         = {board.tileAt(0, 3),
                             board.tileAt(1, 3),
                             board.tileAt(2, 3),
