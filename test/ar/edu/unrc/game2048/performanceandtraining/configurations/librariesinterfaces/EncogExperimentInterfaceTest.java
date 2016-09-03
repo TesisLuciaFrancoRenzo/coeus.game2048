@@ -40,6 +40,8 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
 
 /**
  *
@@ -191,8 +193,7 @@ public class EncogExperimentInterfaceTest {
         perceptronConfiguration.getNeuronQuantityInLayer()[1] = PERCEPTRON_HIDDEN_QUANTITY;
         perceptronConfiguration.getNeuronQuantityInLayer()[2] = PERCEPTRON_OUTPUTS_QUANTITY;
 
-        EncogExperimentInterface experiment = new EncogExperimentInterface(
-                perceptronConfiguration);
+        EncogExperimentInterface experiment = new EncogExperimentInterface(perceptronConfiguration);
         experiment.setNeuralNetworkForTesting(perceptron);
         INeuralNetworkInterface encogInterface = experiment.getNeuralNetworkInterface();
 

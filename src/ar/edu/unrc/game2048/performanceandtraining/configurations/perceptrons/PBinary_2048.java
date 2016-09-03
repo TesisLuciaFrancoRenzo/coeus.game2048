@@ -93,6 +93,11 @@ public class PBinary_2048<NeuralNetworkClass> extends NeuralNetworkConfiguration
         assert currentNeuron == this.getNeuronQuantityInLayer()[0];
     }
 
+    /**
+     *
+     * @return
+     * @throws CloneNotSupportedException
+     */
     @Override
     public Object clone() throws CloneNotSupportedException {
         return super.clone(); //To change body of generated methods, choose Tools | Templates.

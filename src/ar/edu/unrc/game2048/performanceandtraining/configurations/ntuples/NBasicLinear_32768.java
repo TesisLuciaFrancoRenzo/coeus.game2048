@@ -50,6 +50,11 @@ public class NBasicLinear_32768 extends NTupleConfiguration2048 {
         }
     }
 
+    /**
+     *
+     * @return
+     * @throws CloneNotSupportedException
+     */
     @Override
     public Object clone() throws CloneNotSupportedException {
         return super.clone(); //To change body of generated methods, choose Tools | Templates.

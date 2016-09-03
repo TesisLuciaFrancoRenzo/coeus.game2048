@@ -49,6 +49,8 @@ import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 import org.encog.ml.data.MLData;
 import org.encog.ml.data.basic.BasicMLData;
 import org.encog.neural.networks.BasicNetwork;
+import static java.lang.String.valueOf;
+import static java.lang.Thread.sleep;
 
 /**
  * @author Konstantin Bulenkov, lucia bressan, franco pellegrini, renzo bianchini
@@ -545,6 +547,10 @@ public final class Game2048<NeuralNetworkClass> extends JPanel implements IGame,
         }
     }
 
+    /**
+     *
+     * @param g
+     */
     @Override
     public void paint(Graphics g) {
         super.paint(g);

@@ -41,6 +41,10 @@ public class NTupleExperimentInterface extends INeuralNetworkInterfaceFor2048<Ba
         super(perceptronConfiguration);
     }
 
+    /**
+     *
+     * @return @throws CloneNotSupportedException
+     */
     @Override
     public Object clone() throws CloneNotSupportedException {
         return super.clone(); //To change body of generated methods, choose Tools | Templates.

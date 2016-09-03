@@ -43,7 +43,7 @@ public abstract class INeuralNetworkInterfaceFor2048<NeuralNetworkClass> impleme
 
     private NTupleConfiguration2048 nTupleConfiguration;
 
-    private NeuralNetworkConfiguration2048<NeuralNetworkClass> perceptronConfiguration;
+    protected NeuralNetworkConfiguration2048<NeuralNetworkClass> perceptronConfiguration;
 
     /**
      *
@@ -63,6 +63,10 @@ public abstract class INeuralNetworkInterfaceFor2048<NeuralNetworkClass> impleme
         this.nTupleConfiguration = nTupleConfiguration;
     }
 
+    /**
+     *
+     * @return @throws CloneNotSupportedException
+     */
     @Override
     public Object clone() throws CloneNotSupportedException {
         return super.clone(); //To change body of generated methods, choose Tools | Templates.
@@ -89,7 +93,10 @@ public abstract class INeuralNetworkInterfaceFor2048<NeuralNetworkClass> impleme
             NTupleConfiguration2048 nTupleConfiguration) {
         this.nTupleConfiguration = nTupleConfiguration;
     }
+
     /**
+     *
+     * @param hasBias
      *
      * @return interfaz a la red neuronal.
      */
@@ -109,7 +116,6 @@ public abstract class INeuralNetworkInterfaceFor2048<NeuralNetworkClass> impleme
             NeuralNetworkConfiguration2048<NeuralNetworkClass> perceptronConfiguration) {
         this.perceptronConfiguration = perceptronConfiguration;
     }
-
 
     /**
      * Carga desde un archivo una red neuronal, o crea una nueva (con valores al azar o con valores por defecto).

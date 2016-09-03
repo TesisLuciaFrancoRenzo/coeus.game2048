@@ -18,6 +18,7 @@
  */
 package ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons;
 
+import ar.edu.unrc.coeus.tdlearning.training.ntuple.NTupleSystem;
 import ar.edu.unrc.coeus.tdlearning.training.ntuple.SamplePointValue;
 import ar.edu.unrc.game2048.Game2048;
 import ar.edu.unrc.game2048.GameBoard;
@@ -51,6 +52,8 @@ public class PNTupleLinear_512<NeuralNetworkClass> extends NeuralNetworkConfigur
      *
      */
     public PNTupleLinear_512() {
+        hasBias = false;
+
         numSamples = 8;
         maxTile = 9;
         concurrenInput = true;
@@ -63,23 +66,22 @@ public class PNTupleLinear_512<NeuralNetworkClass> extends NeuralNetworkConfigur
 
         this.allSamplePointPossibleValues = new ArrayList<>();
         this.mapSamplePointValuesIndex = new HashMap<>();
-        for ( int i = 0; i <= maxTile; i++ ) {
-            allSamplePointPossibleValues.add(new Tile(i));
-            mapSamplePointValuesIndex.put(allSamplePointPossibleValues.get(i), i);
+        for ( int spvIndex = 0; spvIndex <= maxTile; spvIndex++ ) {
+            allSamplePointPossibleValues.add(new Tile(spvIndex));
+            mapSamplePointValuesIndex.put(allSamplePointPossibleValues.get(spvIndex), spvIndex);
         }
 
         nTuplesWeightQuantityIndex = new int[nTuplesLenght.length];
-        int lasNTuplesWeightQuantity = 0;
-        nTuplesWeightQuantityIndex[0] = lasNTuplesWeightQuantity;
+        int lastNTuplesWeightQuantity = 0;
+        nTuplesWeightQuantityIndex[0] = lastNTuplesWeightQuantity;
         int lutSize = 0;
-        for ( int i = 0; i < nTuplesLenght.length; i++ ) {
-            int nTuplesWeightQuantity = (int) Math.pow(mapSamplePointValuesIndex.
-                    size(), nTuplesLenght[i]);
+        for ( int nTupleIndex = 0; nTupleIndex < nTuplesLenght.length; nTupleIndex++ ) {
+            int nTuplesWeightQuantity = (int) Math.pow(mapSamplePointValuesIndex.size(), nTuplesLenght[nTupleIndex]);
             lutSize += nTuplesWeightQuantity;
-            if ( i > 0 ) {
-                nTuplesWeightQuantityIndex[i] = nTuplesWeightQuantityIndex[i - 1] + lasNTuplesWeightQuantity;
+            if ( nTupleIndex > 0 ) {
+                nTuplesWeightQuantityIndex[nTupleIndex] = nTuplesWeightQuantityIndex[nTupleIndex - 1] + lastNTuplesWeightQuantity;
             }
-            lasNTuplesWeightQuantity = nTuplesWeightQuantity;
+            lastNTuplesWeightQuantity = nTuplesWeightQuantity;
         }
         this.neuronQuantityInLayer = new int[2];
         neuronQuantityInLayer[1] = 1;
@@ -88,29 +90,32 @@ public class PNTupleLinear_512<NeuralNetworkClass> extends NeuralNetworkConfigur
         this.activationFunctionForEncog = new ActivationFunction[1];
         activationFunctionForEncog[0] = new ActivationLinear();
 
-        activationFunctionMax = 1;
-        activationFunctionMin = -1;
+//        activationFunctionMax = 1;
+//        activationFunctionMin = -1;
     }
 
     /**
      *
-     * @param nTupleSampleIndex
-     * @param nTupleSample
+     * @param nTupleIndex
+     * @param nTuple
      *
      * @return
      */
-    public int calculateIndex(int nTupleSampleIndex,
-            SamplePointValue[] nTupleSample) {
-        int localIndex = 0;
-        for ( int j = 0; j < getnTuplesLenght()[nTupleSampleIndex]; j++ ) {
-//            SamplePointValue object = ntuple[j];
-//            Integer sampleIndex = mapSamplePointValuesIndex.get(object);
-//            int size = mapSamplePointValuesIndex.size();
-//            int pow = (int) Math.pow(size, j);
-            localIndex += getMapSamplePointValuesIndex().get(nTupleSample[j])
-                    * (int) Math.pow(getMapSamplePointValuesIndex().size(), j);
-        }
-        return getnTuplesWeightQuantityIndex()[nTupleSampleIndex] + localIndex;
+    public int calculateIndex(int nTupleIndex,
+            SamplePointValue[] nTuple) {
+        return nTuplesWeightQuantityIndex[nTupleIndex] + NTupleSystem.calculateLocalIndex(nTupleIndex,
+                nTuplesLenght, nTuple, mapSamplePointValuesIndex);
+
+//        int localIndex = 0;
+//        for ( int j = 0; j < getnTuplesLenght()[nTupleIndex]; j++ ) {
+////            SamplePointValue object = ntuple[j];
+////            Integer sampleIndex = mapSamplePointValuesIndex.get(object);
+////            int size = mapSamplePointValuesIndex.size();
+////            int pow = (int) Math.pow(size, j);
+//            localIndex += getMapSamplePointValuesIndex().get(nTupleSample[j])
+//                    * (int) Math.pow(getMapSamplePointValuesIndex().size(), j);
+//        }
+//        return getnTuplesWeightQuantityIndex()[nTupleIndex] + localIndex;
     }
 
     @Override
@@ -123,6 +128,10 @@ public class PNTupleLinear_512<NeuralNetworkClass> extends NeuralNetworkConfigur
         }
     }
 
+    /**
+     *
+     * @return @throws CloneNotSupportedException
+     */
     @Override
     public Object clone() throws CloneNotSupportedException {
         return super.clone(); //To change body of generated methods, choose Tools | Templates.
@@ -177,6 +186,7 @@ public class PNTupleLinear_512<NeuralNetworkClass> extends NeuralNetworkConfigur
      *
      * @param board
      * @param nTupleIndex
+     *
      * @return
      */
     public SamplePointValue[] getNTuple(GameBoard board,

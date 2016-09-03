@@ -28,6 +28,7 @@ import org.encog.util.arrayutil.NormalizedField;
  * @param <NeuralNetworkClass>
  */
 public abstract class NeuralNetworkConfiguration2048<NeuralNetworkClass> implements Cloneable, IConfiguration2048 {
+
     /**
      *
      */
@@ -38,12 +39,10 @@ public abstract class NeuralNetworkConfiguration2048<NeuralNetworkClass> impleme
      */
     protected double activationFunctionMax;
 
-
     /**
      *
      */
     protected double activationFunctionMin;
-    //fin de la configuracion de la red neuronal
 
     /**
      *
@@ -59,22 +58,30 @@ public abstract class NeuralNetworkConfiguration2048<NeuralNetworkClass> impleme
      */
     protected NormalizedField normInput;
 
-
     /**
      *
      */
     protected NormalizedField normOutput;
 
+    protected boolean hasBias = true;
+
+    public boolean containBias() {
+        return hasBias;
+    }
 
     /**
      *
      * @param board
-     * @param normalizedPerceptronInput <p>
+     * @param normalizedPerceptronInput
      */
     public abstract void calculateNormalizedPerceptronInput(
             GameBoard<NeuralNetworkClass> board,
             List<Double> normalizedPerceptronInput);
 
+    /**
+     *
+     * @return @throws CloneNotSupportedException
+     */
     @Override
     public Object clone() throws CloneNotSupportedException {
         return super.clone(); //To change body of generated methods, choose Tools | Templates.
@@ -83,7 +90,8 @@ public abstract class NeuralNetworkConfiguration2048<NeuralNetworkClass> impleme
     /**
      *
      * @param game
-     * @param output <p>
+     * @param output
+     *
      * @return
      */
     public abstract Double computeNumericRepresentationFor(Game2048 game,

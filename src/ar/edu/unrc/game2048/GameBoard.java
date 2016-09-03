@@ -204,6 +204,11 @@ public class GameBoard<NeuralNetworkClass> implements IStatePerceptron, IStateNT
         }
     }
 
+    /**
+     *
+     * @param obj
+     * @return
+     */
     @Override
     public boolean equals(Object obj) {
         if ( obj == null ) {
@@ -328,6 +333,10 @@ public class GameBoard<NeuralNetworkClass> implements IStatePerceptron, IStateNT
         this.tiles = tiles;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int hashCode() {
         int hash = 5;

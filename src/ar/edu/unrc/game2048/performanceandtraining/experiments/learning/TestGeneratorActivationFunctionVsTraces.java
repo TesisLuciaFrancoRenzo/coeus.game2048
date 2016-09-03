@@ -16,10 +16,12 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ar.edu.unrc.game2048.performanceandtraining.experiments.learning.ntuple;
+package ar.edu.unrc.game2048.performanceandtraining.experiments.learning;
 
 import ar.edu.unrc.game2048.performanceandtraining.configurations.LearningExperiment;
 import ar.edu.unrc.game2048.performanceandtraining.experiments.GeneratorConfig;
+import ar.edu.unrc.game2048.performanceandtraining.experiments.learning.ntuple.BasicLinear_512;
+import ar.edu.unrc.game2048.performanceandtraining.experiments.learning.ntuple.BasicTanH_512;
 import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;

@@ -24,8 +24,8 @@ import ar.edu.unrc.coeus.tdlearning.learning.ELearningRateAdaptation;
 import ar.edu.unrc.coeus.tdlearning.learning.TDLambdaLearning;
 import ar.edu.unrc.coeus.tdlearning.training.ntuple.NTupleSystem;
 import ar.edu.unrc.game2048.Game2048;
-import ar.edu.unrc.game2048.performanceandtraining.experiments.learning.ntuple.TestGenerator;
-import static ar.edu.unrc.game2048.performanceandtraining.experiments.learning.ntuple.TestGenerator.getMsj;
+import ar.edu.unrc.game2048.performanceandtraining.experiments.learning.TestGenerator;
+import static ar.edu.unrc.game2048.performanceandtraining.experiments.learning.TestGenerator.getMsj;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -236,6 +236,12 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
         return experimentName;
     }
 
+    /**
+     * @param experimentName nombre del experimento.
+     */
+    public void setExperimentName(String experimentName) {
+        this.experimentName = experimentName;
+    }
 
     /**
      * Establece el nombre del experimento basado en el nombre de la clase {@code experimentClass}.
@@ -249,12 +255,6 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
             className = className.substring(lastDot + 1);
         }
         this.experimentName = className;
-    }
-    /**
-     * @param experimentName nombre del experimento.
-     */
-    public void setExperimentName(String experimentName) {
-        this.experimentName = experimentName;
     }
 
     /**
@@ -845,8 +845,7 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
             //creamos una interfaz de comunicacion entre la red neuronal de encog y el algoritmo de entrenamiento
             if ( backupRandomPerceptron ) {
                 //guardamos el perceptron inicial para ahcer estadisticas
-                neuralNetworkInterfaceFor2048.saveNeuralNetwork(
-                        randomPerceptronFile);
+                neuralNetworkInterfaceFor2048.saveNeuralNetwork(randomPerceptronFile);
             }
 
             if ( neuralNetworkInterfaceFor2048.getNeuralNetworkInterface() != null ) {

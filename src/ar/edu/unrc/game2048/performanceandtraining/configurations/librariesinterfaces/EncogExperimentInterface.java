@@ -60,16 +60,20 @@ public class EncogExperimentInterface extends INeuralNetworkInterfaceFor2048<Bas
         super(perceptronConfiguration);
     }
 
+    /**
+     *
+     * @return @throws CloneNotSupportedException
+     */
     @Override
     public Object clone() throws CloneNotSupportedException {
         return super.clone(); //To change body of generated methods, choose Tools | Templates.
     }
 
-
     @Override
     public String getLibName() {
         return "Encog";
     }
+
     /**
      * Utilizado con propósitos de testing.
      *
@@ -113,10 +117,14 @@ public class EncogExperimentInterface extends INeuralNetworkInterfaceFor2048<Bas
             @Override
             public double getBias(int layerIndex,
                     int neuronIndex) {
-                return getPerceptronConfiguration().getNeuralNetwork().
-                        getWeight(layerIndex - 1, getPerceptronConfiguration().
-                                getNeuralNetwork().getLayerNeuronCount(
-                                        layerIndex - 1), neuronIndex);
+                if ( perceptronConfiguration.containBias() ) {
+                    return getPerceptronConfiguration().getNeuralNetwork().
+                            getWeight(layerIndex - 1, getPerceptronConfiguration().
+                                    getNeuralNetwork().getLayerNeuronCount(
+                                            layerIndex - 1), neuronIndex);
+                } else {
+                    throw new IllegalStateException("No hay bias en esta red neuronal");
+                }
             }
 
             @Override
@@ -144,15 +152,20 @@ public class EncogExperimentInterface extends INeuralNetworkInterfaceFor2048<Bas
 
             @Override
             public boolean hasBias(int layerIndex) {
-                return true; //TODO hacer que consulte realmente si tiene bias la capa o no
+                return perceptronConfiguration.containBias();
             }
 
             @Override
             public void setBias(int layerIndex,
                     int neuronIndex,
                     double correctedBias) {
-                getPerceptronConfiguration().getNeuralNetwork().setWeight(layerIndex - 1, getPerceptronConfiguration().
-                        getNeuralNetwork().getLayerNeuronCount(layerIndex - 1), neuronIndex, correctedBias);
+                if ( perceptronConfiguration.containBias() ) {
+                    getPerceptronConfiguration().getNeuralNetwork().setWeight(layerIndex - 1,
+                            getPerceptronConfiguration().
+                            getNeuralNetwork().getLayerNeuronCount(layerIndex - 1), neuronIndex, correctedBias);
+                } else {
+                    throw new IllegalStateException("No hay bias en esta red neuronal");
+                }
             }
 
             @Override

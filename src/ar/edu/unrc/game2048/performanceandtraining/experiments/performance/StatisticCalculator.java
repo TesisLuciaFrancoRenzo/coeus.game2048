@@ -61,6 +61,10 @@ public class StatisticCalculator {
         return output;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String toString() {
         StringBuilder output = new StringBuilder();
