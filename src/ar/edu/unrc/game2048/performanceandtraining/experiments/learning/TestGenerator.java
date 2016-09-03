@@ -401,7 +401,7 @@ public class TestGenerator {
             stream = experiments.parallelStream();
         }
 
-        ForkJoinPool forkJoinPool = new ForkJoinPool(maxTrainingThreads);
+        ForkJoinPool forkJoinPool = new ForkJoinPool(maxTrainingThreads); //TODO arreglar problema de maxThreads internos
         try {
             forkJoinPool.submit(() ->
                     stream.forEach(expConfig ->
