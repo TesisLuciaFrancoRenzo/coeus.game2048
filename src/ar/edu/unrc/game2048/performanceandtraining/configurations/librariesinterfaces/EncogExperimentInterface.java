@@ -119,9 +119,8 @@ public class EncogExperimentInterface extends INeuralNetworkInterfaceFor2048<Bas
                     int neuronIndex) {
                 if ( perceptronConfiguration.containBias() ) {
                     return getPerceptronConfiguration().getNeuralNetwork().
-                            getWeight(layerIndex - 1, getPerceptronConfiguration().
-                                    getNeuralNetwork().getLayerNeuronCount(
-                                            layerIndex - 1), neuronIndex);
+                            getWeight(layerIndex - 1, getPerceptronConfiguration().getNeuralNetwork().
+                                    getLayerNeuronCount(layerIndex - 1), neuronIndex);
                 } else {
                     throw new IllegalStateException("No hay bias en esta red neuronal");
                 }

@@ -71,10 +71,11 @@ public class PNTupleLinear_512<NeuralNetworkClass> extends NeuralNetworkConfigur
             mapSamplePointValuesIndex.put(allSamplePointPossibleValues.get(spvIndex), spvIndex);
         }
 
-        nTuplesWeightQuantityIndex = new int[nTuplesLenght.length];
-        int lastNTuplesWeightQuantity = 0;
-        nTuplesWeightQuantityIndex[0] = lastNTuplesWeightQuantity;
         int lutSize = 0;
+        int lastNTuplesWeightQuantity = 0;
+        nTuplesWeightQuantityIndex = new int[nTuplesLenght.length];
+        nTuplesWeightQuantityIndex[0] = lastNTuplesWeightQuantity;
+
         for ( int nTupleIndex = 0; nTupleIndex < nTuplesLenght.length; nTupleIndex++ ) {
             int nTuplesWeightQuantity = (int) Math.pow(mapSamplePointValuesIndex.size(), nTuplesLenght[nTupleIndex]);
             lutSize += nTuplesWeightQuantity;

@@ -47,6 +47,11 @@ public abstract class NeuralNetworkConfiguration2048<NeuralNetworkClass> impleme
     /**
      *
      */
+    protected boolean hasBias = true;
+
+    /**
+     *
+     */
     protected NeuralNetworkClass neuralNetwork;
     /**
      *
@@ -63,11 +68,6 @@ public abstract class NeuralNetworkConfiguration2048<NeuralNetworkClass> impleme
      */
     protected NormalizedField normOutput;
 
-    protected boolean hasBias = true;
-
-    public boolean containBias() {
-        return hasBias;
-    }
 
     /**
      *
@@ -96,6 +96,14 @@ public abstract class NeuralNetworkConfiguration2048<NeuralNetworkClass> impleme
      */
     public abstract Double computeNumericRepresentationFor(Game2048 game,
             Object[] output);
+
+    /**
+     *
+     * @return
+     */
+    public boolean containBias() {
+        return hasBias;
+    }
 
     /**
      * @return the activationFunctionForEncog

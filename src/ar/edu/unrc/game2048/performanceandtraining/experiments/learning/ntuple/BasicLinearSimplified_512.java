@@ -61,7 +61,7 @@ public class BasicLinearSimplified_512 extends LearningExperiment<BasicNetwork> 
         experiment.setGamma(1);
         experiment.setExplorationRateToFixed(0);
         experiment.setReplaceEligibilityTraces(false);
-        experiment.setGamesToPlay(20_000);
+        experiment.setGamesToPlay(30_000);
         experiment.setSaveEvery(500);
         experiment.setSaveBackupEvery(500);
         experiment.setInitializePerceptronRandomized(false);
@@ -75,7 +75,7 @@ public class BasicLinearSimplified_512 extends LearningExperiment<BasicNetwork> 
         if ( statistics ) {
             experiment.setStatisticsOnly(true);
             experiment.setRunStatisticsForBackups(true);
-            experiment.setGamesToPlayPerThreadForStatistics(1_000);
+            experiment.setGamesToPlayPerThreadForStatistics(100);
             experiment.setSimulationsForStatistics(8);
         } else {
             experiment.setStatisticsOnly(false);
@@ -95,8 +95,7 @@ public class BasicLinearSimplified_512 extends LearningExperiment<BasicNetwork> 
         }
         this.setNeuralNetworkName(this.getExperimentName());
         NTupleConfiguration2048 config = new NBasicLinearSimplified_512();
-        this.setNeuralNetworkInterfaceFor2048(new NTupleExperimentInterface(
-                config));
+        this.setNeuralNetworkInterfaceFor2048(new NTupleExperimentInterface(config));
     }
 
     @Override

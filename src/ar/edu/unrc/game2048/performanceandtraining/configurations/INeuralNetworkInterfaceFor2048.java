@@ -43,6 +43,9 @@ public abstract class INeuralNetworkInterfaceFor2048<NeuralNetworkClass> impleme
 
     private NTupleConfiguration2048 nTupleConfiguration;
 
+    /**
+     *
+     */
     protected NeuralNetworkConfiguration2048<NeuralNetworkClass> perceptronConfiguration;
 
     /**
@@ -96,7 +99,6 @@ public abstract class INeuralNetworkInterfaceFor2048<NeuralNetworkClass> impleme
 
     /**
      *
-     * @param hasBias
      *
      * @return interfaz a la red neuronal.
      */

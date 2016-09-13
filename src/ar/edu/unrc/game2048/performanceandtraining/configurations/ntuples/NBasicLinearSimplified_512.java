@@ -49,15 +49,14 @@ public class NBasicLinearSimplified_512 extends NTupleConfiguration2048 {
         }
 
         this.allSamplePointPossibleValues = new ArrayList<>();
-        for ( int i = 0; i <= maxTile; i++ ) {
-            allSamplePointPossibleValues.add(new Tile(i));
+        for ( int spvIndex = 0; spvIndex <= maxTile; spvIndex++ ) {
+            allSamplePointPossibleValues.add(new Tile(spvIndex));
         }
     }
 
     /**
      *
-     * @return
-     * @throws CloneNotSupportedException
+     * @return @throws CloneNotSupportedException
      */
     @Override
     public Object clone() throws CloneNotSupportedException {
