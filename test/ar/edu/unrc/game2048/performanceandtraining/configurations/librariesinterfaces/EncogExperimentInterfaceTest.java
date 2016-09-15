@@ -32,14 +32,14 @@ import org.encog.ml.data.MLData;
 import org.encog.ml.data.basic.BasicMLData;
 import org.encog.neural.networks.BasicNetwork;
 import org.encog.neural.networks.layers.BasicLayer;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
 
 /**
  *
@@ -207,8 +207,7 @@ public class EncogExperimentInterfaceTest {
 
         double[] expResultArray = {0.80281682071709, 0.8140600608095045};
         double[] resultArray = outut.getData();
-        assertArrayEquals(expResultArray, resultArray,
-                0.0000000000000001);
+        assertThat(expResultArray, is(resultArray));
         // demostracion teorica con wxMaxima de que el resultado es el esperado
         //"=== INPUT ===";
         //"f(netk1)";fnetk1 : 0.3;
@@ -243,52 +242,52 @@ public class EncogExperimentInterfaceTest {
         //get pesos con interfaz
         expResult = weightsA[0];
         result = encogInterface.getWeight(1, 0, 0);
-        assertEquals(expResult, result, 0.0000000000000001);
+        assertThat(expResult, is(result));
 
         expResult = weightsA[1];
         result = encogInterface.getWeight(1, 1, 0);
-        assertEquals(expResult, result, 0.0000000000000001);
+        assertThat(expResult, is(result));
 
         expResult = weightsA[2];
         result = encogInterface.getWeight(1, 0, 1);
-        assertEquals(expResult, result, 0.0000000000000001);
+        assertThat(expResult, is(result));
 
         expResult = weightsA[3];
         result = encogInterface.getWeight(1, 1, 1);
-        assertEquals(expResult, result, 0.0000000000000001);
+        assertThat(expResult, is(result));
 
         expResult = weightsA[4];
         result = encogInterface.getWeight(2, 0, 0);
-        assertEquals(expResult, result, 0.0000000000000001);
+        assertThat(expResult, is(result));
 
         expResult = weightsA[5];
         result = encogInterface.getWeight(2, 1, 0);
-        assertEquals(expResult, result, 0.0000000000000001);
+        assertThat(expResult, is(result));
 
         expResult = weightsA[6];
         result = encogInterface.getWeight(2, 0, 1);
-        assertEquals(expResult, result, 0.0000000000000001);
+        assertThat(expResult, is(result));
 
         expResult = weightsA[7];
         result = encogInterface.getWeight(2, 1, 1);
-        assertEquals(expResult, result, 0.0000000000000001);
+        assertThat(expResult, is(result));
 
         // get bias con interfaz
         expResult = weightsA[8];
         result = encogInterface.getBias(1, 0);
-        assertEquals(expResult, result, 0.0000000000000001);
+        assertThat(expResult, is(result));
 
         expResult = weightsA[9];
         result = encogInterface.getBias(1, 1);
-        assertEquals(expResult, result, 0.0000000000000001);
+        assertThat(expResult, is(result));
 
         expResult = weightsA[10];
         result = encogInterface.getBias(2, 0);
-        assertEquals(expResult, result, 0.0000000000000001);
+        assertThat(expResult, is(result));
 
         expResult = weightsA[11];
         result = encogInterface.getBias(2, 1);
-        assertEquals(expResult, result, 0.0000000000000001);
+        assertThat(expResult, is(result));
 
         //cambiamos los pesos, y luego verificamos que se cambien correctamente
         //configuramos los pesos
@@ -311,103 +310,103 @@ public class EncogExperimentInterfaceTest {
         //get pesos con interfaz
         expResult = weightsB[0];
         result = encogInterface.getWeight(1, 0, 0);
-        assertEquals(expResult, result, 0.0000000000000001);
+        assertThat(expResult, is(result));
 
         expResult = weightsB[1];
         result = encogInterface.getWeight(1, 1, 0);
-        assertEquals(expResult, result, 0.0000000000000001);
+        assertThat(expResult, is(result));
 
         expResult = weightsB[2];
         result = encogInterface.getWeight(1, 0, 1);
-        assertEquals(expResult, result, 0.0000000000000001);
+        assertThat(expResult, is(result));
 
         expResult = weightsB[3];
         result = encogInterface.getWeight(1, 1, 1);
-        assertEquals(expResult, result, 0.0000000000000001);
+        assertThat(expResult, is(result));
 
         expResult = weightsB[4];
         result = encogInterface.getWeight(2, 0, 0);
-        assertEquals(expResult, result, 0.0000000000000001);
+        assertThat(expResult, is(result));
 
         expResult = weightsB[5];
         result = encogInterface.getWeight(2, 1, 0);
-        assertEquals(expResult, result, 0.0000000000000001);
+        assertThat(expResult, is(result));
 
         expResult = weightsB[6];
         result = encogInterface.getWeight(2, 0, 1);
-        assertEquals(expResult, result, 0.0000000000000001);
+        assertThat(expResult, is(result));
 
         expResult = weightsB[7];
         result = encogInterface.getWeight(2, 1, 1);
-        assertEquals(expResult, result, 0.0000000000000001);
+        assertThat(expResult, is(result));
 
         // get bias con interfaz
         expResult = weightsB[8];
         result = encogInterface.getBias(1, 0);
-        assertEquals(expResult, result, 0.0000000000000001);
+        assertThat(expResult, is(result));
 
         expResult = weightsB[9];
         result = encogInterface.getBias(1, 1);
-        assertEquals(expResult, result, 0.0000000000000001);
+        assertThat(expResult, is(result));
 
         expResult = weightsB[10];
         result = encogInterface.getBias(2, 0);
-        assertEquals(expResult, result, 0.0000000000000001);
+        assertThat(expResult, is(result));
 
         expResult = weightsB[11];
         result = encogInterface.getBias(2, 1);
-        assertEquals(expResult, result, 0.0000000000000001);
+        assertThat(expResult, is(result));
 
         //accedemos a los cambios pero con encog y verificamos las modificaciones
         //pesos
         expResult = weightsB[0];
         result = perceptron.getWeight(0, 0, 0);
-        assertEquals(expResult, result, 0.0000000000000001);
+        assertThat(expResult, is(result));
 
         expResult = weightsB[1];
         result = perceptron.getWeight(0, 0, 1);
-        assertEquals(expResult, result, 0.0000000000000001);
+        assertThat(expResult, is(result));
 
         expResult = weightsB[2];
         result = perceptron.getWeight(0, 1, 0);
-        assertEquals(expResult, result, 0.0000000000000001);
+        assertThat(expResult, is(result));
 
         expResult = weightsB[3];
         result = perceptron.getWeight(0, 1, 1);
-        assertEquals(expResult, result, 0.0000000000000001);
+        assertThat(expResult, is(result));
 
         expResult = weightsB[4];
         result = perceptron.getWeight(1, 0, 0);
-        assertEquals(expResult, result, 0.0000000000000001);
+        assertThat(expResult, is(result));
 
         expResult = weightsB[5];
         result = perceptron.getWeight(1, 0, 1);
-        assertEquals(expResult, result, 0.0000000000000001);
+        assertThat(expResult, is(result));
 
         expResult = weightsB[6];
         result = perceptron.getWeight(1, 1, 0);
-        assertEquals(expResult, result, 0.0000000000000001);
+        assertThat(expResult, is(result));
 
         expResult = weightsB[7];
         result = perceptron.getWeight(1, 1, 1);
-        assertEquals(expResult, result, 0.0000000000000001);
+        assertThat(expResult, is(result));
 
         //bias
         expResult = weightsB[8];
         result = perceptron.getWeight(0, 2, 0);
-        assertEquals(expResult, result, 0.0000000000000001);
+        assertThat(expResult, is(result));
 
         expResult = weightsB[9];
         result = perceptron.getWeight(0, 2, 1);
-        assertEquals(expResult, result, 0.0000000000000001);
+        assertThat(expResult, is(result));
 
         expResult = weightsB[10];
         result = perceptron.getWeight(1, 2, 0);
-        assertEquals(expResult, result, 0.0000000000000001);
+        assertThat(expResult, is(result));
 
         expResult = weightsB[11];
         result = perceptron.getWeight(1, 2, 1);
-        assertEquals(expResult, result, 0.0000000000000001);
+        assertThat(expResult, is(result));
 
         // testeamos que la salida es la esperada. Los calculos se han realizado
         // manualmente y corresponden al caso de pureba numero 2 del informe
@@ -418,8 +417,8 @@ public class EncogExperimentInterfaceTest {
 
         double[] expResultArray2 = {0.7164779076006158, 0.8218381521799242};
         double[] resultArray2 = outut.getData();
-        Assert.assertArrayEquals(expResultArray2, resultArray2,
-                0.0000000000000001);
+        assertThat(expResultArray2, is(resultArray2));
+
     }
 
     /**
