@@ -194,17 +194,17 @@ public class EncogExperimentInterface extends INeuralNetworkInterfaceFor2048<Bas
         }
         BasicNetwork perceptron = new BasicNetwork();
         ActivationFunction function;
-        perceptron.addLayer(new BasicLayer(null, true,
+        perceptron.addLayer(new BasicLayer(null, getPerceptronConfiguration().containBias(),
                 getPerceptronConfiguration().getNeuronQuantityInLayer()[0]));
         for ( int i = 1; i < getPerceptronConfiguration().getNeuronQuantityInLayer().length - 1; i++ ) {
             function = getPerceptronConfiguration().getActivationFunctionForEncog()[i - 1].clone();
-            perceptron.addLayer(new BasicLayer(function, true,
+            perceptron.addLayer(new BasicLayer(function, getPerceptronConfiguration().containBias(),
                     getPerceptronConfiguration().getNeuronQuantityInLayer()[i]));
         }
         //getPerceptronConfiguration().getNeuronQuantityInLayer().length - 2 porque el for finaliza en getPerceptronConfiguration().getNeuronQuantityInLayer().length - 1
         function = getPerceptronConfiguration().getActivationFunctionForEncog()[getPerceptronConfiguration().
                 getNeuronQuantityInLayer().length - 2].clone();
-        perceptron.addLayer(new BasicLayer(function, false,
+        perceptron.addLayer(new BasicLayer(function, getPerceptronConfiguration().containBias(),
                 getPerceptronConfiguration().getNeuronQuantityInLayer()[getPerceptronConfiguration().
                 getNeuronQuantityInLayer().length - 1]));
         perceptron.getStructure().finalizeStructure();
