@@ -36,7 +36,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import org.junit.After;
 import org.junit.AfterClass;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -141,12 +140,9 @@ public class EncogExperimentInterfaceTest {
         int PERCEPTRON_HIDDEN_QUANTITY = 2;
         int PERCEPTRON_OUTPUTS_QUANTITY = 2;
 
-        perceptron.addLayer(new BasicLayer(null, true,
-                PERCEPTRON_INPUTS_QUANTITY));
-        perceptron.addLayer(new BasicLayer(new ActivationSigmoid(), true,
-                PERCEPTRON_HIDDEN_QUANTITY));
-        perceptron.addLayer(new BasicLayer(new ActivationSigmoid(), false,
-                PERCEPTRON_OUTPUTS_QUANTITY));
+        perceptron.addLayer(new BasicLayer(null, true, PERCEPTRON_INPUTS_QUANTITY));
+        perceptron.addLayer(new BasicLayer(new ActivationSigmoid(), true, PERCEPTRON_HIDDEN_QUANTITY));
+        perceptron.addLayer(new BasicLayer(new ActivationSigmoid(), false, PERCEPTRON_OUTPUTS_QUANTITY));
         perceptron.getStructure().finalizeStructure();
 
         double[] weightsA = {
@@ -178,8 +174,7 @@ public class EncogExperimentInterfaceTest {
         perceptron.setWeight(1, 2, 0, weightsA[10]);
         perceptron.setWeight(1, 2, 1, weightsA[11]);
 
-        perceptronConfiguration.setActivationFunctionForEncog(
-                new ActivationFunction[3]);
+        perceptronConfiguration.setActivationFunctionForEncog(new ActivationFunction[3]);
         perceptronConfiguration.getActivationFunctionForEncog()[0] = new ActivationSigmoid();
         perceptronConfiguration.getActivationFunctionForEncog()[1] = new ActivationSigmoid();
         perceptronConfiguration.getActivationFunctionForEncog()[2] = new ActivationSigmoid();
@@ -478,14 +473,13 @@ public class EncogExperimentInterfaceTest {
 
         BasicNetwork perceptron = new BasicNetwork();
 
+        perceptron.addLayer(new BasicLayer(new ActivationSigmoid(), false, 1));
         perceptron.addLayer(new BasicLayer(new ActivationSigmoid(), true, 1));
-        perceptron.addLayer(new BasicLayer(new ActivationSigmoid(), true, 1));
-        perceptron.addLayer(new BasicLayer(new ActivationTANH(), true, 1));
-        perceptron.addLayer(new BasicLayer(new ActivationLinear(), true, 1));
+        perceptron.addLayer(new BasicLayer(new ActivationTANH(), false, 1));
+        perceptron.addLayer(new BasicLayer(new ActivationLinear(), false, 1));
         perceptron.getStructure().finalizeStructure();
 
-        perceptronConfiguration.setActivationFunctionForEncog(
-                new ActivationFunction[3]);
+        perceptronConfiguration.setActivationFunctionForEncog(new ActivationFunction[3]);
         perceptronConfiguration.getActivationFunctionForEncog()[0] = new ActivationSigmoid();
         perceptronConfiguration.getActivationFunctionForEncog()[1] = new ActivationTANH();
         perceptronConfiguration.getActivationFunctionForEncog()[2] = new ActivationLinear();
@@ -498,41 +492,76 @@ public class EncogExperimentInterfaceTest {
         perceptronConfiguration.getNeuronQuantityInLayer()[2] = 1;
         perceptronConfiguration.getNeuronQuantityInLayer()[3] = 1;
 
-        EncogExperimentInterface experiment = new EncogExperimentInterface(
-                perceptronConfiguration);
+        EncogExperimentInterface experiment = new EncogExperimentInterface(perceptronConfiguration);
         experiment.setNeuralNetworkForTesting(perceptron);
         INeuralNetworkInterface encogInterface = experiment.getNeuralNetworkInterface();
 
         experiment.initializeEncogPerceptron(Boolean.FALSE);
 
-        Assert.assertTrue(FunctionUtils.SIGMOID.equals(encogInterface.
-                getActivationFunction(1)));
-        Assert.assertTrue(FunctionUtils.TANH.equals(encogInterface.
-                getActivationFunction(2)));
-        Assert.assertTrue(FunctionUtils.LINEAR.equals(encogInterface.
-                getActivationFunction(3)));
+        assertThat(FunctionUtils.SIGMOID, is(encogInterface.getActivationFunction(1)));
+        assertThat(FunctionUtils.TANH, is(encogInterface.getActivationFunction(2)));
+        assertThat(FunctionUtils.LINEAR, is(encogInterface.getActivationFunction(3)));
+
+        boolean biasFound = false;
+        try {
+            encogInterface.getBias(0, 0);
+            biasFound = true;
+        } catch ( Exception e ) {
+            biasFound = false;
+        }
+        assertThat(biasFound, is(false));
+
+        try {
+            encogInterface.getBias(1, 0);
+            biasFound = true;
+        } catch ( Exception e ) {
+            biasFound = false;
+        }
+        assertThat(biasFound, is(false));
+        assertThat(encogInterface.hasBias(1), is(false));
+
+        try {
+            encogInterface.getBias(2, 0);
+            biasFound = true;
+        } catch ( Exception e ) {
+            biasFound = false;
+        }
+        assertThat(biasFound, is(true));
+        assertThat(encogInterface.hasBias(2), is(true));
+
+        try {
+            encogInterface.getBias(3, 0);
+            biasFound = true;
+        } catch ( Exception e ) {
+            biasFound = false;
+        }
+        assertThat(biasFound, is(false));
+        assertThat(encogInterface.hasBias(3), is(false));
+
+        assertThat(encogInterface.getNeuronQuantityInLayer(0), is(1));
+        assertThat(encogInterface.getNeuronQuantityInLayer(1), is(1));
+        assertThat(encogInterface.getNeuronQuantityInLayer(2), is(1));
+        assertThat(encogInterface.getNeuronQuantityInLayer(3), is(1));
 
         for ( int layer = 1; layer < encogInterface.getLayerQuantity(); layer++ ) {
-            String activationEncog = perceptron.getActivation(layer).getClass().
-                    getName();
-            String activationInterface = encogInterface.getActivationFunction(
-                    layer).toString();
+            String activationEncog = perceptron.getActivation(layer).getClass().getName();
+            String activationInterface = encogInterface.getActivationFunction(layer).toString();
 
             if ( perceptron.getActivation(layer) instanceof ActivationTANH ) {
-                Assert.assertTrue(
+                assertThat(
                         "capa=" + layer + " activationEncog=" + activationEncog + " vs activationInterface=" + activationInterface,
-                        encogInterface.getActivationFunction(layer).equals(
-                        FunctionUtils.TANH));
+                        encogInterface.getActivationFunction(layer),
+                        is(FunctionUtils.TANH));
             } else if ( perceptron.getActivation(layer) instanceof ActivationSigmoid ) {
-                Assert.assertTrue(
+                assertThat(
                         "capa=" + layer + " activati-onEncog=" + activationEncog + " vs activationInterface=" + activationInterface,
-                        encogInterface.getActivationFunction(layer).equals(
-                        FunctionUtils.SIGMOID));
+                        encogInterface.getActivationFunction(layer),
+                        is(FunctionUtils.SIGMOID));
             } else if ( perceptron.getActivation(layer) instanceof ActivationLinear ) {
-                Assert.assertTrue(
+                assertThat(
                         "capa=" + layer + " activationEncog=" + activationEncog + " vs activationInterface=" + activationInterface,
-                        encogInterface.getActivationFunction(layer).equals(
-                        FunctionUtils.LINEAR));
+                        encogInterface.getActivationFunction(layer),
+                        is(FunctionUtils.LINEAR));
             } else {
                 throw new IllegalArgumentException(
                         "El test esta pensado para utilizar TANH, Simoid o Linear como funcion de activacion");

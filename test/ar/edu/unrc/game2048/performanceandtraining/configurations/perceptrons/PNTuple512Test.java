@@ -8,9 +8,10 @@ import ar.edu.unrc.game2048.TileContainer;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.ntuples.NBasicTanH_512;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.inputs.InputNtupleList;
 import org.encog.neural.networks.BasicNetwork;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 import org.junit.After;
 import org.junit.AfterClass;
-import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -101,11 +102,9 @@ public class PNTuple512Test {
                 false
         );
         int[] indexes = nTupleSystem.getComplexComputation(board2).getIndexes();
-        assertTrue(
-                normalizedPerceptronInput.getInternalSetSize() == indexes.length);
-
+        assertThat(normalizedPerceptronInput.getInternalSetSize(), is(indexes.length));
         for ( int i : indexes ) {
-            assertTrue(normalizedPerceptronInput.get(i) == 1d);
+            assertThat(normalizedPerceptronInput.get(i), is(1d));
         }
     }
 }

@@ -24,6 +24,10 @@ import ar.edu.unrc.coeus.tdlearning.interfaces.IStatePerceptron;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+import static org.hamcrest.CoreMatchers.hasItem;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -105,7 +109,7 @@ public class Game2048Test {
         board.updateInternalState(true);
 
         ArrayList<IAction> result = game.listAllPossibleActions(board);
-        Assert.assertTrue(result.isEmpty());
+        assertThat(result.isEmpty(), is(true));
 
         // =========================================== //
         //inicializamos un tablero no terminal
@@ -128,29 +132,29 @@ public class Game2048Test {
         expResult.add(Action.up);
 
         state1 = game.computeAfterState(board, Action.down); //para comparar luego
-        Assert.assertNotNull(state1);
+        assertThat(state1, notNullValue());
 
         result = game.listAllPossibleActions(board);
-        Assert.assertTrue(result.size() == 2);
+        assertThat(result.size(), is(2));
 
         Set<IAction> resultSet = new HashSet<>(game.
                 listAllPossibleActions(board));
         for ( IAction action : resultSet ) {
-            Assert.assertTrue(resultSet.contains(action));
+            assertThat(resultSet, hasItem(action));
         }
 
         //verificamos que si se llama al afterstate antes de listAllPossibleActions
         // con los mismos tableros, devuelven instancias diferentes, pero con el mismo contenido logico
         state2 = game.computeAfterState(board, Action.down);
         Assert.assertNotSame(state1, state2);
-        Assert.assertTrue(((GameBoard) state1).isEqual((GameBoard) state2));
+        assertThat(((GameBoard) state1), is((GameBoard) state2));
 
         //verificamos que proximas llamadas a computeafterstate retorne valores ya calculados y no los calcule otra vez
         state1 = game.computeAfterState(board, Action.down);
-        Assert.assertNotNull(state1);
+        assertThat(state1, notNullValue());
         state2 = game.computeAfterState(board, Action.down);
-        Assert.assertNotNull(state2);
-        Assert.assertEquals(state1, state2);
+        assertThat(state2, notNullValue());
+        assertThat(state1, is(state2));
 
         state2 = game.computeAfterState(board, Action.up);
         Assert.assertNotSame(state1, state2);
@@ -183,18 +187,18 @@ public class Game2048Test {
         expResult.add(Action.right);
         expResult.add(Action.left);
         result = game.listAllPossibleActions(board);
-        Assert.assertTrue(result.size() == 4);
+        assertThat(result.size(), is(4));
         resultSet = new HashSet<>(game.listAllPossibleActions(board));
         for ( IAction action : resultSet ) {
-            Assert.assertTrue(resultSet.contains(action));
+            assertThat(result, hasItem(action));
         }
 
         //verificamos que proximas llamadas a computeafterstate retorne valores ya calculados y no los calcule otra vez
         state1 = game.computeAfterState(board, Action.right);
-        Assert.assertNotNull(state1);
+        assertThat(state1, notNullValue());
         state2 = game.computeAfterState(board, Action.right);
-        Assert.assertNotNull(state2);
-        Assert.assertEquals(state1, state2);
+        assertThat(state2, notNullValue());
+        assertThat(state1, is(state2));
 
         state2 = game.computeAfterState(board, Action.left);
         Assert.assertNotSame(state1, state2);

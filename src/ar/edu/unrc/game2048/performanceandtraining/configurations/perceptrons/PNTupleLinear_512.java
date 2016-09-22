@@ -106,17 +106,6 @@ public class PNTupleLinear_512<NeuralNetworkClass> extends NeuralNetworkConfigur
             SamplePointValue[] nTuple) {
         return nTuplesWeightQuantityIndex[nTupleIndex] + NTupleSystem.calculateLocalIndex(nTupleIndex,
                 nTuplesLenght, nTuple, mapSamplePointValuesIndex);
-
-//        int localIndex = 0;
-//        for ( int j = 0; j < getnTuplesLenght()[nTupleIndex]; j++ ) {
-////            SamplePointValue object = ntuple[j];
-////            Integer sampleIndex = mapSamplePointValuesIndex.get(object);
-////            int size = mapSamplePointValuesIndex.size();
-////            int pow = (int) Math.pow(size, j);
-//            localIndex += getMapSamplePointValuesIndex().get(nTupleSample[j])
-//                    * (int) Math.pow(getMapSamplePointValuesIndex().size(), j);
-//        }
-//        return getnTuplesWeightQuantityIndex()[nTupleIndex] + localIndex;
     }
 
     @Override
@@ -124,8 +113,7 @@ public class PNTupleLinear_512<NeuralNetworkClass> extends NeuralNetworkConfigur
             GameBoard<NeuralNetworkClass> board,
             List<Double> normalizedPerceptronInput) {
         for ( int i = 0; i < getNumSamples(); i++ ) {
-            normalizedPerceptronInput.
-                    add(calculateIndex(i, getNTuple(board, i)), 1d);
+            normalizedPerceptronInput.add(calculateIndex(i, getNTuple(board, i)), 1d);
         }
     }
 
@@ -141,7 +129,6 @@ public class PNTupleLinear_512<NeuralNetworkClass> extends NeuralNetworkConfigur
     @Override
     public Double computeNumericRepresentationFor(Game2048 game,
             Object[] output) {
-        assert output.length == 1;
         return (Double) output[0];
     }
 
