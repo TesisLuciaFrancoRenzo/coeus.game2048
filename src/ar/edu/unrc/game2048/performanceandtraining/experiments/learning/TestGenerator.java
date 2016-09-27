@@ -19,9 +19,9 @@
 package ar.edu.unrc.game2048.performanceandtraining.experiments.learning;
 
 import ar.edu.unrc.game2048.performanceandtraining.configurations.LearningExperiment;
-import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.PNTupleLinear_512;
 import ar.edu.unrc.game2048.performanceandtraining.experiments.ArgumentLoader;
 import ar.edu.unrc.game2048.performanceandtraining.experiments.GeneratorConfig;
+import ar.edu.unrc.game2048.performanceandtraining.experiments.learning.encog.NTupleLinearWithBias_512;
 import ar.edu.unrc.game2048.performanceandtraining.experiments.learning.encog.NTupleLinear_512;
 import ar.edu.unrc.game2048.performanceandtraining.experiments.learning.ntuple.BasicLinear;
 import ar.edu.unrc.game2048.performanceandtraining.experiments.learning.ntuple.BasicLinearNoPartialScore_512;
@@ -179,8 +179,8 @@ public class TestGenerator {
         boolean statistics = false;
         int maxTrainingThreads = 8;
         boolean doBackupStatistics = true;
-        String experimentName = "BasicLinearNoPartialScore_512";
-        String experimentClass = "BasicLinearNoPartialScore_512";
+        String experimentName = "NTupleLinearWithBias_512";
+        String experimentClass = "NTupleLinearWithBias_512";
         int gamesToPlay = 1;
         int saveEvery = 1_000;
         int saveBackupEvery = 500;
@@ -293,14 +293,15 @@ public class TestGenerator {
                 classConstructor = BasicLinearSimplified_512.class.getConstructor();
                 break;
             }
-            case "PNTupleLinear_512": {
-                classConstructor = NTupleLinear_512.class.getConstructor(PNTupleLinear_512.PARAMETER_TYPE);
+            case "NTupleLinear_512": {
+                classConstructor = NTupleLinear_512.class.getConstructor(NTupleLinear_512.PARAMETER_TYPE);
                 Object[] classParametersBooleans = {false};
                 classParameters = classParametersBooleans;
                 break;
             }
             case "NTupleLinearWithBias_512": {
-                classConstructor = NTupleLinear_512.class.getConstructor(PNTupleLinear_512.PARAMETER_TYPE);
+                classConstructor = NTupleLinearWithBias_512.class.
+                        getConstructor(NTupleLinearWithBias_512.PARAMETER_TYPE);
                 Object[] classParametersBooleans = {true};
                 classParameters = classParametersBooleans;
                 break;
@@ -440,12 +441,12 @@ public class TestGenerator {
                                     if ( !newPath.exists() ) {
                                         newPath.mkdirs();
                                     }
-                                    LearningExperiment cloneExperiment;
+                                    LearningExperiment<?> cloneExperiment;
                                     if ( expConfig.getClassParameters() != null ) {
-                                        cloneExperiment = (LearningExperiment) experiment.newInstance(expConfig.
+                                        cloneExperiment = (LearningExperiment<?>) experiment.newInstance(expConfig.
                                                 getClassParameters());
                                     } else {
-                                        cloneExperiment = (LearningExperiment) experiment.newInstance();
+                                        cloneExperiment = (LearningExperiment<?>) experiment.newInstance();
                                     }
                                     cloneExperiment.setExperimentName(experimentName);
                                     configAndExcecute(expConfig.getNumber(), cloneExperiment, statisticsOnly,

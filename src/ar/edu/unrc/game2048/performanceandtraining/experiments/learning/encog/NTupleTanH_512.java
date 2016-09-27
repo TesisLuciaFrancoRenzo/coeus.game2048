@@ -48,7 +48,7 @@ public class NTupleTanH_512 extends LearningExperiment<BasicNetwork> {
         } else {
             filePath = args[0];
         }
-        LearningExperiment experiment = new NTupleTanH_512();
+        LearningExperiment experiment = new NTupleTanH_512(false);
 
 //        boolean statistics = true;
         boolean statistics = false;
@@ -86,6 +86,18 @@ public class NTupleTanH_512 extends LearningExperiment<BasicNetwork> {
         experiment.start(-1, filePath, 0, true, null);
     }
 
+    private final Boolean hasBias;
+
+    public NTupleTanH_512(final Boolean hasBias) {
+        super();
+        this.hasBias = hasBias;
+    }
+
+    /**
+     *
+     */
+    public final static Class<?>[] PARAMETER_TYPE = {Boolean.class};
+
     @Override
     public void initialize() {
         this.setTileToWinForTraining(512);
@@ -93,7 +105,7 @@ public class NTupleTanH_512 extends LearningExperiment<BasicNetwork> {
             this.setExperimentName(this.getClass());
         }
         this.setNeuralNetworkName(this.getExperimentName());
-        NeuralNetworkConfiguration2048<BasicNetwork> config = new PNTupleTanH_512<>(false);
+        NeuralNetworkConfiguration2048<BasicNetwork> config = new PNTupleTanH_512<>(hasBias);
         this.setNeuralNetworkInterfaceFor2048(new EncogExperimentInterface(config));
     }
 

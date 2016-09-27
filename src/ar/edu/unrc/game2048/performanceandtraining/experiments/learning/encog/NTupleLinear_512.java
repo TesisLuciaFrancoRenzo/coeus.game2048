@@ -36,6 +36,18 @@ public class NTupleLinear_512 extends LearningExperiment<BasicNetwork> {
 
     /**
      *
+     */
+    public final static Class<?>[] PARAMETER_TYPE = {Boolean.class};
+
+    private final Boolean hasBias;
+
+    public NTupleLinear_512(final Boolean hasBias) {
+        super();
+        this.hasBias = hasBias;
+    }
+
+    /**
+     *
      * @param args <p>
      * @throws Exception
      */
@@ -48,7 +60,7 @@ public class NTupleLinear_512 extends LearningExperiment<BasicNetwork> {
         } else {
             filePath = args[0];
         }
-        LearningExperiment experiment = new NTupleLinear_512();
+        LearningExperiment experiment = new NTupleLinear_512(false);
 
 //        boolean statistics = true;
         boolean statistics = false;
@@ -94,7 +106,7 @@ public class NTupleLinear_512 extends LearningExperiment<BasicNetwork> {
             this.setExperimentName(this.getClass());
         }
         this.setNeuralNetworkName(this.getExperimentName());
-        NeuralNetworkConfiguration2048<BasicNetwork> config = new PNTupleLinear_512<>(false);
+        NeuralNetworkConfiguration2048<BasicNetwork> config = new PNTupleLinear_512<>(hasBias);
         this.setNeuralNetworkInterfaceFor2048(new EncogExperimentInterface(config));
     }
 

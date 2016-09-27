@@ -32,7 +32,18 @@ import org.encog.neural.networks.BasicNetwork;
 /**
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
-public class NTupleLinearWithBias_512 extends LearningExperiment<BasicNetwork> { //FIXME esta mal!
+public class NTupleLinearWithBias_512 extends LearningExperiment<BasicNetwork> {
+
+    private final Boolean hasBias;
+
+    public NTupleLinearWithBias_512(final Boolean hasBias) {
+        super();
+        this.hasBias = hasBias;
+    }
+    /**
+     *
+     */
+    public final static Class<?>[] PARAMETER_TYPE = {Boolean.class};
 
     /**
      *
@@ -48,7 +59,7 @@ public class NTupleLinearWithBias_512 extends LearningExperiment<BasicNetwork> {
         } else {
             filePath = args[0];
         }
-        LearningExperiment experiment = new NTupleLinearWithBias_512();
+        LearningExperiment experiment = new NTupleLinearWithBias_512(true);
 
 //        boolean statistics = true;
         boolean statistics = false;
@@ -94,7 +105,7 @@ public class NTupleLinearWithBias_512 extends LearningExperiment<BasicNetwork> {
             this.setExperimentName(this.getClass());
         }
         this.setNeuralNetworkName(this.getExperimentName());
-        NeuralNetworkConfiguration2048<BasicNetwork> config = new PNTupleLinear_512<>(true);
+        NeuralNetworkConfiguration2048<BasicNetwork> config = new PNTupleLinear_512<>(hasBias);
         this.setNeuralNetworkInterfaceFor2048(new EncogExperimentInterface(config));
     }
 

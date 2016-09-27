@@ -41,11 +41,6 @@ import org.encog.util.arrayutil.NormalizedField;
  */
 public class PNTupleTanH_512<NeuralNetworkClass> extends NeuralNetworkConfiguration2048<NeuralNetworkClass> {
 
-    /**
-     *
-     */
-    public final static Class<?>[] PARAMETER_TYPE = {Boolean.class};
-
     private final List<SamplePointValue> allSamplePointPossibleValues;
     private final boolean concurrenInput;
     private final HashMap<SamplePointValue, Integer> mapSamplePointValuesIndex;
@@ -61,7 +56,7 @@ public class PNTupleTanH_512<NeuralNetworkClass> extends NeuralNetworkConfigurat
      *
      * @param hasBias
      */
-    public PNTupleTanH_512(final boolean hasBias) {
+    public PNTupleTanH_512(final Boolean hasBias) {
         this.hasBias = hasBias;
 
         numSamples = 8;

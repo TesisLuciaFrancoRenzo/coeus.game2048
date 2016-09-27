@@ -48,7 +48,7 @@ public class SimpleBoard_32768 extends LearningExperiment<BasicNetwork> {
         } else {
             filePath = args[0];
         }
-        LearningExperiment experiment = new SimpleBoard_32768();
+        LearningExperiment experiment = new SimpleBoard_32768(false);
 
 //        boolean statistics = true;
         boolean statistics = false;
@@ -86,6 +86,18 @@ public class SimpleBoard_32768 extends LearningExperiment<BasicNetwork> {
         experiment.start(-1, filePath, 0, true, null);
     }
 
+    private final Boolean hasBias;
+
+    public SimpleBoard_32768(final Boolean hasBias) {
+        super();
+        this.hasBias = hasBias;
+    }
+
+    /**
+     *
+     */
+    public final static Class<?>[] PARAMETER_TYPE = {Boolean.class};
+
     @Override
     public void initialize() {
         this.setTileToWinForTraining(32_768);
@@ -93,7 +105,7 @@ public class SimpleBoard_32768 extends LearningExperiment<BasicNetwork> {
             this.setExperimentName(this.getClass());
         }
         this.setNeuralNetworkName(this.getExperimentName());
-        NeuralNetworkConfiguration2048<BasicNetwork> config = new PBoard_32768<>(false);
+        NeuralNetworkConfiguration2048<BasicNetwork> config = new PBoard_32768<>(hasBias);
         this.setNeuralNetworkInterfaceFor2048(new EncogExperimentInterface(config));
     }
 

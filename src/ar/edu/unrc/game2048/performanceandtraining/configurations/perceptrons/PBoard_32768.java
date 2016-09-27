@@ -36,11 +36,6 @@ import org.encog.util.arrayutil.NormalizedField;
  */
 public class PBoard_32768<NeuralNetworkClass> extends NeuralNetworkConfiguration2048<NeuralNetworkClass> {
 
-    /**
-     *
-     */
-    public final static Class<?>[] PARAMETER_TYPE = {Boolean.class};
-
     private final boolean concurrenInput;
     private final int maxCodedBoardnumber;
     private final int maxScore;
@@ -51,7 +46,7 @@ public class PBoard_32768<NeuralNetworkClass> extends NeuralNetworkConfiguration
      *
      * @param hasBias
      */
-    public PBoard_32768(final boolean hasBias) {
+    public PBoard_32768(final Boolean hasBias) {
         this.hasBias = hasBias;
 
         maxCodedBoardnumber = 15; //32768 como maximo
