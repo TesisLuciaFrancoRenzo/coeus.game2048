@@ -81,7 +81,7 @@ public class GameBoardTest {
             getTile(1), tileContainer.getTile(4)
         };
         this.randomBoard = randomB;
-        nTupleConfiguration = new PBoard_32768();
+        nTupleConfiguration = new PBoard_32768(true);
     }
 
     /**

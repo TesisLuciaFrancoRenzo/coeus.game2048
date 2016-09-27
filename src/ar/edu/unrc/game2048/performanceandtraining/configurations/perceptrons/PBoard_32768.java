@@ -36,6 +36,11 @@ import org.encog.util.arrayutil.NormalizedField;
  */
 public class PBoard_32768<NeuralNetworkClass> extends NeuralNetworkConfiguration2048<NeuralNetworkClass> {
 
+    /**
+     *
+     */
+    public final static Class<?>[] PARAMETER_TYPE = {Boolean.class};
+
     private final boolean concurrenInput;
     private final int maxCodedBoardnumber;
     private final int maxScore;
@@ -44,8 +49,11 @@ public class PBoard_32768<NeuralNetworkClass> extends NeuralNetworkConfiguration
 
     /**
      *
+     * @param hasBias
      */
-    public PBoard_32768() {
+    public PBoard_32768(final boolean hasBias) {
+        this.hasBias = hasBias;
+
         maxCodedBoardnumber = 15; //32768 como maximo
         maxScore = 500_000;
         minScore = -500_000;
@@ -137,8 +145,7 @@ public class PBoard_32768<NeuralNetworkClass> extends NeuralNetworkConfiguration
 
     /**
      *
-     * @return
-     * @throws CloneNotSupportedException
+     * @return @throws CloneNotSupportedException
      */
     @Override
     public Object clone() throws CloneNotSupportedException {

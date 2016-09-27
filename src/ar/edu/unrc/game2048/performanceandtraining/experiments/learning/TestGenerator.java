@@ -19,6 +19,7 @@
 package ar.edu.unrc.game2048.performanceandtraining.experiments.learning;
 
 import ar.edu.unrc.game2048.performanceandtraining.configurations.LearningExperiment;
+import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.PNTupleLinear_512;
 import ar.edu.unrc.game2048.performanceandtraining.experiments.ArgumentLoader;
 import ar.edu.unrc.game2048.performanceandtraining.experiments.GeneratorConfig;
 import ar.edu.unrc.game2048.performanceandtraining.experiments.learning.encog.NTupleLinear_512;
@@ -81,29 +82,29 @@ public class TestGenerator {
      * @param concurrentLayer
      */
     public static void configAndExcecute(
-            int numberForShow,
-            LearningExperiment experiment,
-            boolean statisticsOnly,
-            boolean runStatisticsForBackups,
-            boolean createLogs,
-            double lambda,
-            double alpha,
-            int annealingAlpha,
-            double gamma,
-            int gamesToPlay,
-            int saveEvery,
-            int saveBacupEvery,
-            int gamesToPlayPerThreadForStatistics,
-            int tileToWinForStatistics,
-            int simulationsForStatistics,
-            Double explorationRate,
-            Double explorationRateInitialValue,
-            Double explorationRateFinalValue,
-            Integer explorationRateStartInterpolation,
-            Integer explorationRateFinishInterpolation,
-            boolean replaceEligibilityTraces,
-            String filePath,
-            boolean[] concurrentLayer
+            final int numberForShow,
+            final LearningExperiment experiment,
+            final boolean statisticsOnly,
+            final boolean runStatisticsForBackups,
+            final boolean createLogs,
+            final double lambda,
+            final double alpha,
+            final int annealingAlpha,
+            final double gamma,
+            final int gamesToPlay,
+            final int saveEvery,
+            final int saveBacupEvery,
+            final int gamesToPlayPerThreadForStatistics,
+            final int tileToWinForStatistics,
+            final int simulationsForStatistics,
+            final Double explorationRate,
+            final Double explorationRateInitialValue,
+            final Double explorationRateFinalValue,
+            final Integer explorationRateStartInterpolation,
+            final Integer explorationRateFinishInterpolation,
+            final boolean replaceEligibilityTraces,
+            final String filePath,
+            final boolean[] concurrentLayer
     ) {
         experiment.setStatisticsOnly(statisticsOnly);
         experiment.setRunStatisticsForBackups(runStatisticsForBackups);
@@ -133,8 +134,7 @@ public class TestGenerator {
         experiment.setGamesToPlay(gamesToPlay);
         experiment.setSaveEvery(saveEvery);
         experiment.setSaveBackupEvery(saveBacupEvery);
-        experiment.setGamesToPlayPerThreadForStatistics(
-                gamesToPlayPerThreadForStatistics);
+        experiment.setGamesToPlayPerThreadForStatistics(gamesToPlayPerThreadForStatistics);
         experiment.setSimulationsForStatistics(simulationsForStatistics);
         experiment.setExportToExcel(true);
         System.out.println(
@@ -174,8 +174,6 @@ public class TestGenerator {
         List<Double> interpolatedExplorationRateInitialValues = new ArrayList<>();
         List<Integer> interpolatedExplorationRateStartInterpolation = new ArrayList<>();
 
-        int gamesToPlayPerThreadForStats = 1_000; //OJO que no se puede configurar por parametro
-
         //============================== configuraciones manuales ==================================
 //        boolean statistics = true;
         boolean statistics = false;
@@ -188,6 +186,7 @@ public class TestGenerator {
         int saveBackupEvery = 500;
         int tileToWinForStatistics = 2_048;
         boolean[] concurrentLayer = {false, false};
+        int gamesToPlayPerThreadForStats = 1_000;
 
         lambdaList.add(0d);
 //        lambdaList.add(0.1d);
@@ -221,6 +220,7 @@ public class TestGenerator {
             tileToWinForStatistics = Integer.parseInt(arguments.getArg("tileToWinForStatistics"));
             doBackupStatistics = Boolean.parseBoolean(arguments.getArg("doBackupStatistics"));
             gamesToPlay = Integer.parseInt(arguments.getArg("gamesToPlay"));
+            gamesToPlayPerThreadForStats = Integer.parseInt(arguments.getArg("gamesToPlayPerThreadForStats"));
             saveEvery = Integer.parseInt(arguments.getArg("saveEvery"));
             saveBackupEvery = Integer.parseInt(arguments.getArg("saveBackupEvery"));
             experimentName = arguments.getArg("experimentName");
@@ -275,6 +275,7 @@ public class TestGenerator {
         }
 
         Constructor<?> classConstructor;
+        Object[] classParameters = null;
         switch ( experimentClass ) {
             case "BasicLinear": {
                 classConstructor = BasicLinear.class.getConstructor();
@@ -293,7 +294,15 @@ public class TestGenerator {
                 break;
             }
             case "PNTupleLinear_512": {
-                classConstructor = NTupleLinear_512.class.getConstructor();
+                classConstructor = NTupleLinear_512.class.getConstructor(PNTupleLinear_512.PARAMETER_TYPE);
+                Object[] classParametersBooleans = {false};
+                classParameters = classParametersBooleans;
+                break;
+            }
+            case "NTupleLinearWithBias_512": {
+                classConstructor = NTupleLinear_512.class.getConstructor(PNTupleLinear_512.PARAMETER_TYPE);
+                Object[] classParametersBooleans = {true};
+                classParameters = classParametersBooleans;
                 break;
             }
             case "BasicLinearNoPartialScore_512": {
@@ -310,7 +319,7 @@ public class TestGenerator {
             }
         }
 
-        runAllConfigs(maxTrainingThreads, experimentName, classConstructor,
+        runAllConfigs(maxTrainingThreads, experimentName, classConstructor, classParameters,
                 alphaList, annealingAlphaList, lambdaList, gammaList, statisticsOnly,
                 runStatisticsForBackups, createLogs, gamesToPlay, saveEvery,
                 saveBackupEvery, gamesToPlayPerThreadForStatistics, tileToWinForStatistics,
@@ -320,29 +329,30 @@ public class TestGenerator {
                 concurrentLayer);
     }
 
-    private static void runAllConfigs(int maxTrainingThreads,
-            String experimentName,
-            Constructor<?> experiment,
-            List<Double> alphaList,
-            List<Integer> annealingAlphaList,
-            List<Double> lambdaList,
-            List<Double> gammaList,
-            boolean statisticsOnly,
-            boolean runStatisticsForBackups,
-            boolean createLogs,
-            int gamesToPlay,
-            int saveEvery,
-            int saveBacupEvery,
-            int gamesToPlayPerThreadForStatistics,
-            int tileToWinForStatistics,
-            int simulationsForStatistics,
-            List<Double> explorationRateList,
-            List<Double> explorationRateInitialValues,
-            List<Double> explorationRateFinalValues,
-            List<Integer> explorationRateStartInterpolation,
-            List<Integer> explorationRateFinishInterpolation,
-            String filePath,
-            boolean[] concurrentLayer) {
+    private static void runAllConfigs(final int maxTrainingThreads,
+            final String experimentName,
+            final Constructor<?> experiment,
+            final Object[] classParameters,
+            final List<Double> alphaList,
+            final List<Integer> annealingAlphaList,
+            final List<Double> lambdaList,
+            final List<Double> gammaList,
+            final boolean statisticsOnly,
+            final boolean runStatisticsForBackups,
+            final boolean createLogs,
+            final int gamesToPlay,
+            final int saveEvery,
+            final int saveBacupEvery,
+            final int gamesToPlayPerThreadForStatistics,
+            final int tileToWinForStatistics,
+            final int simulationsForStatistics,
+            final List<Double> explorationRateList,
+            final List<Double> explorationRateInitialValues,
+            final List<Double> explorationRateFinalValues,
+            final List<Integer> explorationRateStartInterpolation,
+            final List<Integer> explorationRateFinishInterpolation,
+            final String filePath,
+            final boolean[] concurrentLayer) {
         List<GeneratorConfig> experiments = new ArrayList<>();
         int number = 0;
         for ( int i = 0; i < alphaList.size(); i++ ) {
@@ -352,13 +362,15 @@ public class TestGenerator {
                         if ( explorationRateList != null ) {
                             for ( int l = 0; l < explorationRateList.size(); l++ ) {
                                 number++;
-                                experiments.add(new GeneratorConfig(alphaList.get(i), annealingAlphaList.get(m),
+                                experiments.add(new GeneratorConfig(classParameters, alphaList.get(i),
+                                        annealingAlphaList.get(m),
                                         lambdaList.get(j), gammaList.get(k), explorationRateList.get(l), null, null,
                                         null, null, false, number));
                                 if ( explorationRateList.get(l) > 0 && lambdaList.get(j) > 0 ) {
                                     number++;
                                     experiments.add(
-                                            new GeneratorConfig(alphaList.get(i), annealingAlphaList.get(m),
+                                            new GeneratorConfig(classParameters, alphaList.get(i), annealingAlphaList.
+                                                    get(m),
                                                     lambdaList.get(j), gammaList.get(k), explorationRateList.get(l),
                                                     null, null, null, null, true, number));
                                 }
@@ -370,7 +382,8 @@ public class TestGenerator {
                                         for ( int q = 0; q < explorationRateFinishInterpolation.size(); q++ ) {
                                             number++;
                                             experiments.add(
-                                                    new GeneratorConfig(alphaList.get(i), annealingAlphaList.get(m),
+                                                    new GeneratorConfig(classParameters, alphaList.get(i),
+                                                            annealingAlphaList.get(m),
                                                             lambdaList.get(j), gammaList.get(k), null,
                                                             explorationRateInitialValues.get(n),
                                                             explorationRateFinalValues.get(o),
@@ -378,7 +391,8 @@ public class TestGenerator {
                                                             explorationRateFinishInterpolation.get(q), false, number));
                                             number++;
                                             experiments.add(
-                                                    new GeneratorConfig(alphaList.get(i), annealingAlphaList.get(m),
+                                                    new GeneratorConfig(classParameters, alphaList.get(i),
+                                                            annealingAlphaList.get(m),
                                                             lambdaList.get(j), gammaList.get(k), null,
                                                             explorationRateInitialValues.get(n),
                                                             explorationRateFinalValues.get(o),
@@ -426,7 +440,13 @@ public class TestGenerator {
                                     if ( !newPath.exists() ) {
                                         newPath.mkdirs();
                                     }
-                                    LearningExperiment cloneExperiment = (LearningExperiment) experiment.newInstance();
+                                    LearningExperiment cloneExperiment;
+                                    if ( expConfig.getClassParameters() != null ) {
+                                        cloneExperiment = (LearningExperiment) experiment.newInstance(expConfig.
+                                                getClassParameters());
+                                    } else {
+                                        cloneExperiment = (LearningExperiment) experiment.newInstance();
+                                    }
                                     cloneExperiment.setExperimentName(experimentName);
                                     configAndExcecute(expConfig.getNumber(), cloneExperiment, statisticsOnly,
                                             runStatisticsForBackups, createLogs, expConfig.getLambda(), expConfig.

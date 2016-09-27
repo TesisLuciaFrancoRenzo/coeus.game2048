@@ -32,7 +32,7 @@ import org.encog.neural.networks.BasicNetwork;
 /**
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
-public class NTupleLinear_512 extends LearningExperiment<BasicNetwork> { //FIXME esta mal!
+public class NTupleLinear_512 extends LearningExperiment<BasicNetwork> {
 
     /**
      *
@@ -94,7 +94,7 @@ public class NTupleLinear_512 extends LearningExperiment<BasicNetwork> { //FIXME
             this.setExperimentName(this.getClass());
         }
         this.setNeuralNetworkName(this.getExperimentName());
-        NeuralNetworkConfiguration2048<BasicNetwork> config = new PNTupleLinear_512<>();
+        NeuralNetworkConfiguration2048<BasicNetwork> config = new PNTupleLinear_512<>(false);
         this.setNeuralNetworkInterfaceFor2048(new EncogExperimentInterface(config));
     }
 

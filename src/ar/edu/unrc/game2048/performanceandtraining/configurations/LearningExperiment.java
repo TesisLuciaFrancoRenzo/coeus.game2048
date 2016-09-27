@@ -563,46 +563,33 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
             out.write("experimentName: " + experimentName + "\n");
             out.write("perceptronName: " + neuralNetworkName + "\n");
             out.write("tileToWinForTraining: " + tileToWinForTraining + "\n");
-            out.
-                    write("tileToWinForStatistics: " + tileToWinForStatistics + "\n");
+            out.write("tileToWinForStatistics: " + tileToWinForStatistics + "\n");
+            out.write("hasBias: " + ((neuralNetworkInterfaceFor2048.getPerceptronConfiguration() != null)
+                    ? String.valueOf(neuralNetworkInterfaceFor2048.getPerceptronConfiguration().containBias()) : "false") + "\n");
             out.write("gamesToPlay: " + gamesToPlay + "\n");
-            out.write(
-                    "gamesToPlayPerThreadForStatistics: " + gamesToPlayPerThreadForStatistics + "\n");
+            out.write("gamesToPlayPerThreadForStatistics: " + gamesToPlayPerThreadForStatistics + "\n");
             out.write("statisticsOnly: " + statisticsOnly + "\n");
-            out.write(
-                    "simulationsForStatistics: " + simulationsForStatistics + "\n");
+            out.write("simulationsForStatistics: " + simulationsForStatistics + "\n");
             out.write("saveEvery: " + saveEvery + "\n");
             out.write("saveBackupEvery: " + saveBackupEvery + "\n");
             out.write("alpha: " + Arrays.toString(alpha) + "\n");
             out.write("gamma: " + gamma + "\n");
             out.write("lambda: " + lambda + "\n");
             out.write("annealingT: " + annealingT + "\n");
-            out.
-                    write("learningRateAdaptation: " + learningRateAdaptation + "\n");
-            out.write(
-                    "initializePerceptronRandomized: " + initializePerceptronRandomized + "\n");
-            out.
-                    write("replaceEligibilityTraces: " + replaceEligibilityTraces + "\n");
-            out.write(
-                    "concurrencyInComputeBestPosibleAction: " + concurrencyInComputeBestPosibleAction + "\n");
-            out.write("concurrencyInLayer: " + Arrays.toString(
-                    concurrencyInLayer) + "\n");
+            out.write("learningRateAdaptation: " + learningRateAdaptation + "\n");
+            out.write("initializePerceptronRandomized: " + initializePerceptronRandomized + "\n");
+            out.write("replaceEligibilityTraces: " + replaceEligibilityTraces + "\n");
+            out.write("concurrencyInComputeBestPosibleAction: " + concurrencyInComputeBestPosibleAction + "\n");
+            out.write("concurrencyInLayer: " + Arrays.toString(concurrencyInLayer) + "\n");
             out.write("explorationRate: " + explorationRate + "\n");
-            out.write(
-                    "explorationRateFinalValue: " + explorationRateFinalValue + "\n");
-            out.write(
-                    "explorationRateInitialValue: " + explorationRateInitialValue + "\n");
-            out.write(
-                    "explorationRateStartDecrementing: " + explorationRateStartDecrementing + "\n");
-            out.write(
-                    "explorationRateFinishDecrementing: " + explorationRateFinishDecrementing + "\n");
+            out.write("explorationRateFinalValue: " + explorationRateFinalValue + "\n");
+            out.write("explorationRateInitialValue: " + explorationRateInitialValue + "\n");
+            out.write("explorationRateStartDecrementing: " + explorationRateStartDecrementing + "\n");
+            out.write("explorationRateFinishDecrementing: " + explorationRateFinishDecrementing + "\n");
             out.write("\n");
-            out.write(
-                    "Operating system Name: " + System.getProperty("os.name") + "\n");
-            out.write(
-                    "Operating system type: " + System.getProperty("os.arch") + "\n");
-            out.write("Operating system version: " + System.getProperty(
-                    "os.version") + "\n");
+            out.write("Operating system Name: " + System.getProperty("os.name") + "\n");
+            out.write("Operating system type: " + System.getProperty("os.arch") + "\n");
+            out.write("Operating system version: " + System.getProperty("os.version") + "\n");
             if ( System.getProperty("os.name").matches(".*[Ww]indows.*") ) {
                 Process command = Runtime.getRuntime().exec("wmic cpu get name");
                 try ( BufferedReader in = new BufferedReader(
@@ -631,16 +618,13 @@ public abstract class LearningExperiment<NeuralNetworkClass> {
                     }
                 }
             }
-            out.write("Available processors (cores): " + Runtime.getRuntime().
-                    availableProcessors() + "\n");
+            out.write("Available processors (cores): " + Runtime.getRuntime().availableProcessors() + "\n");
             /* This will return Long.MAX_VALUE if there is no preset limit */
             long maxMemory = Runtime.getRuntime().maxMemory();
             /* Maximum amount of memory the JVM will attempt to use */
-            out.write(
-                    "Maximum memory (bytes): " + (maxMemory == Long.MAX_VALUE ? "no limit" : maxMemory) + "\n");
+            out.write("Maximum memory (bytes): " + (maxMemory == Long.MAX_VALUE ? "no limit" : maxMemory) + "\n");
             /* Total memory currently available to the JVM */
-            out.write("Total memory available to JVM (bytes): " + Runtime.
-                    getRuntime().totalMemory() + "\n");
+            out.write("Total memory available to JVM (bytes): " + Runtime.getRuntime().totalMemory() + "\n");
         }
     }
 

@@ -68,7 +68,6 @@ public abstract class NeuralNetworkConfiguration2048<NeuralNetworkClass> impleme
      */
     protected NormalizedField normOutput;
 
-
     /**
      *
      * @param board
@@ -201,6 +200,22 @@ public abstract class NeuralNetworkConfiguration2048<NeuralNetworkClass> impleme
      * @return
      */
     public abstract boolean isConcurrentInputEnabled();
+
+    /**
+     *
+     * @return
+     */
+    public boolean isHasBias() {
+        return hasBias;
+    }
+
+    /**
+     *
+     * @param hasBias
+     */
+    public void setHasBias(boolean hasBias) {
+        this.hasBias = hasBias;
+    }
 
     /**
      *

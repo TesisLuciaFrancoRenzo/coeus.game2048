@@ -93,7 +93,7 @@ public class SimpleBoard_32768 extends LearningExperiment<BasicNetwork> {
             this.setExperimentName(this.getClass());
         }
         this.setNeuralNetworkName(this.getExperimentName());
-        NeuralNetworkConfiguration2048<BasicNetwork> config = new PBoard_32768<>();
+        NeuralNetworkConfiguration2048<BasicNetwork> config = new PBoard_32768<>(false);
         this.setNeuralNetworkInterfaceFor2048(new EncogExperimentInterface(config));
     }
 

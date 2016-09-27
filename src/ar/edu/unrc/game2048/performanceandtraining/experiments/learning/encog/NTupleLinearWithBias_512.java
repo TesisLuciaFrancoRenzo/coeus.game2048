@@ -25,14 +25,14 @@ import ar.edu.unrc.coeus.tdlearning.training.ntuple.NTupleSystem;
 import ar.edu.unrc.game2048.NeuralNetworkConfiguration2048;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.LearningExperiment;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.librariesinterfaces.EncogExperimentInterface;
-import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.PNTupleTanH_512;
+import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.PNTupleLinear_512;
 import java.io.File;
 import org.encog.neural.networks.BasicNetwork;
 
 /**
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
-public class NTupleTanH_512 extends LearningExperiment<BasicNetwork> {
+public class NTupleLinearWithBias_512 extends LearningExperiment<BasicNetwork> { //FIXME esta mal!
 
     /**
      *
@@ -48,25 +48,26 @@ public class NTupleTanH_512 extends LearningExperiment<BasicNetwork> {
         } else {
             filePath = args[0];
         }
-        LearningExperiment experiment = new NTupleTanH_512();
+        LearningExperiment experiment = new NTupleLinearWithBias_512();
 
 //        boolean statistics = true;
         boolean statistics = false;
 
-        boolean[] concurrentLayer = {true, false};
-        experiment.setConcurrencyInLayer(concurrentLayer);
         double[] alphas = {0.0025, 0.0025};
         experiment.setAlpha(alphas);
         experiment.setLearningRateAdaptationToFixed();
-        experiment.setConcurrencyInComputeBestPosibleAction(true);
-        experiment.setLambda(0.7);
+
+        experiment.setLambda(0);
         experiment.setGamma(1);
         experiment.setExplorationRateToFixed(0);
         experiment.setReplaceEligibilityTraces(false);
-        experiment.setGamesToPlay(10_000);
-        experiment.setSaveEvery(200);
+        experiment.setGamesToPlay(20_000);
+        experiment.setSaveEvery(500);
         experiment.setSaveBackupEvery(500);
         experiment.setInitializePerceptronRandomized(false);
+        experiment.setConcurrencyInComputeBestPosibleAction(true);
+        boolean[] concurrentLayer = {true, false};
+        experiment.setConcurrencyInLayer(concurrentLayer);
 
         experiment.createLogs(false);
         //para calcualar estadisticas
@@ -93,7 +94,7 @@ public class NTupleTanH_512 extends LearningExperiment<BasicNetwork> {
             this.setExperimentName(this.getClass());
         }
         this.setNeuralNetworkName(this.getExperimentName());
-        NeuralNetworkConfiguration2048<BasicNetwork> config = new PNTupleTanH_512<>(false);
+        NeuralNetworkConfiguration2048<BasicNetwork> config = new PNTupleLinear_512<>(true);
         this.setNeuralNetworkInterfaceFor2048(new EncogExperimentInterface(config));
     }
 

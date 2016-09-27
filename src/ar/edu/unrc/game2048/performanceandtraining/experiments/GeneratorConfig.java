@@ -27,6 +27,7 @@ public class GeneratorConfig {
 
     private final double alpha;
     private final int annealingAlpha;
+    private final Object[] classParameters;
     private final Double explorationRate;
     private final Double explorationRateFinalValue;
     private final Integer explorationRateFinishInterpolation;
@@ -39,6 +40,7 @@ public class GeneratorConfig {
 
     /**
      *
+     * @param classParameters
      * @param alpha
      * @param annealingAlpha
      * @param lambda
@@ -51,17 +53,18 @@ public class GeneratorConfig {
      * @param explorationRateStartInterpolation
      * @param explorationRateFinishInterpolation
      */
-    public GeneratorConfig(double alpha,
-            int annealingAlpha,
-            double lambda,
-            Double gamma,
-            Double explorationRate,
-            Double explorationRateInitialValue,
-            Double explorationRateFinalValue,
-            Integer explorationRateStartInterpolation,
-            Integer explorationRateFinishInterpolation,
-            boolean resetTraces,
-            int number) {
+    public GeneratorConfig(final Object[] classParameters,
+            final double alpha,
+            final int annealingAlpha,
+            final double lambda,
+            final Double gamma,
+            final Double explorationRate,
+            final Double explorationRateInitialValue,
+            final Double explorationRateFinalValue,
+            final Integer explorationRateStartInterpolation,
+            final Integer explorationRateFinishInterpolation,
+            final boolean resetTraces,
+            final int number) {
         this.alpha = alpha;
         this.annealingAlpha = annealingAlpha;
         this.lambda = lambda;
@@ -73,6 +76,7 @@ public class GeneratorConfig {
         this.explorationRateInitialValue = explorationRateInitialValue;
         this.explorationRateFinalValue = explorationRateFinalValue;
         this.explorationRateStartInterpolation = explorationRateStartInterpolation;
+        this.classParameters = classParameters;
     }
 
     /**
@@ -87,6 +91,14 @@ public class GeneratorConfig {
      */
     public int getAnnealingAlpha() {
         return annealingAlpha;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Object[] getClassParameters() {
+        return classParameters;
     }
 
     /**
