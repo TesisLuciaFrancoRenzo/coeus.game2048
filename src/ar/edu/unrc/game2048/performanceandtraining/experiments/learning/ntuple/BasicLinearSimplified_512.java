@@ -50,8 +50,8 @@ public class BasicLinearSimplified_512 extends LearningExperiment<BasicNetwork> 
         }
         LearningExperiment experiment = new BasicLinearSimplified_512();
 
-//        boolean statistics = true;
-        boolean statistics = false;
+        boolean statistics = true;
+//        boolean statistics = false;
 
         double[] alphas = {0.0025, 0.0025};
         experiment.setAlpha(alphas);

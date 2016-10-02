@@ -34,12 +34,6 @@ import org.encog.neural.networks.BasicNetwork;
  */
 public class NTupleLinearWithBias_512 extends LearningExperiment<BasicNetwork> {
 
-    private final Boolean hasBias;
-
-    public NTupleLinearWithBias_512(final Boolean hasBias) {
-        super();
-        this.hasBias = hasBias;
-    }
     /**
      *
      */
@@ -96,6 +90,16 @@ public class NTupleLinearWithBias_512 extends LearningExperiment<BasicNetwork> {
         }
         experiment.setExportToExcel(true);
         experiment.start(-1, filePath, 0, true, null);
+    }
+    private final Boolean hasBias;
+
+    /**
+     *
+     * @param hasBias
+     */
+    public NTupleLinearWithBias_512(final Boolean hasBias) {
+        super();
+        this.hasBias = hasBias;
     }
 
     @Override

@@ -33,6 +33,10 @@ import org.encog.neural.networks.BasicNetwork;
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
 public class NTupleTanH_512 extends LearningExperiment<BasicNetwork> {
+    /**
+     *
+     */
+    public final static Class<?>[] PARAMETER_TYPE = {Boolean.class};
 
     /**
      *
@@ -88,15 +92,15 @@ public class NTupleTanH_512 extends LearningExperiment<BasicNetwork> {
 
     private final Boolean hasBias;
 
+    /**
+     *
+     * @param hasBias
+     */
     public NTupleTanH_512(final Boolean hasBias) {
         super();
         this.hasBias = hasBias;
     }
 
-    /**
-     *
-     */
-    public final static Class<?>[] PARAMETER_TYPE = {Boolean.class};
 
     @Override
     public void initialize() {

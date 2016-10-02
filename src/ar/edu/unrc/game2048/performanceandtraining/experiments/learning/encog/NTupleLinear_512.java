@@ -38,14 +38,6 @@ public class NTupleLinear_512 extends LearningExperiment<BasicNetwork> {
      *
      */
     public final static Class<?>[] PARAMETER_TYPE = {Boolean.class};
-
-    private final Boolean hasBias;
-
-    public NTupleLinear_512(final Boolean hasBias) {
-        super();
-        this.hasBias = hasBias;
-    }
-
     /**
      *
      * @param args <p>
@@ -63,41 +55,53 @@ public class NTupleLinear_512 extends LearningExperiment<BasicNetwork> {
         LearningExperiment experiment = new NTupleLinear_512(false);
 
 //        boolean statistics = true;
-        boolean statistics = false;
+boolean statistics = false;
 
-        double[] alphas = {0.0025, 0.0025};
-        experiment.setAlpha(alphas);
-        experiment.setLearningRateAdaptationToFixed();
+double[] alphas = {0.0025, 0.0025};
+experiment.setAlpha(alphas);
+experiment.setLearningRateAdaptationToFixed();
 
-        experiment.setLambda(0);
-        experiment.setGamma(1);
-        experiment.setExplorationRateToFixed(0);
-        experiment.setReplaceEligibilityTraces(false);
-        experiment.setGamesToPlay(20_000);
-        experiment.setSaveEvery(500);
-        experiment.setSaveBackupEvery(500);
-        experiment.setInitializePerceptronRandomized(false);
-        experiment.setConcurrencyInComputeBestPosibleAction(true);
-        boolean[] concurrentLayer = {true, false};
-        experiment.setConcurrencyInLayer(concurrentLayer);
+experiment.setLambda(0);
+experiment.setGamma(1);
+experiment.setExplorationRateToFixed(0);
+experiment.setReplaceEligibilityTraces(false);
+experiment.setGamesToPlay(20_000);
+experiment.setSaveEvery(500);
+experiment.setSaveBackupEvery(500);
+experiment.setInitializePerceptronRandomized(false);
+experiment.setConcurrencyInComputeBestPosibleAction(true);
+boolean[] concurrentLayer = {true, false};
+experiment.setConcurrencyInLayer(concurrentLayer);
 
-        experiment.createLogs(false);
-        //para calcualar estadisticas
-        experiment.setTileToWinForStatistics(512);
-        if ( statistics ) {
-            experiment.setStatisticsOnly(true);
-            experiment.setRunStatisticsForBackups(true);
-            experiment.setGamesToPlayPerThreadForStatistics(1_000);
-            experiment.setSimulationsForStatistics(8);
-        } else {
-            experiment.setStatisticsOnly(false);
-            experiment.setRunStatisticsForBackups(false);
-            experiment.setGamesToPlayPerThreadForStatistics(0);
-            experiment.setSimulationsForStatistics(0);
-        }
-        experiment.setExportToExcel(true);
-        experiment.start(-1, filePath, 0, true, null);
+experiment.createLogs(false);
+//para calcualar estadisticas
+experiment.setTileToWinForStatistics(512);
+if ( statistics ) {
+    experiment.setStatisticsOnly(true);
+    experiment.setRunStatisticsForBackups(true);
+    experiment.setGamesToPlayPerThreadForStatistics(1_000);
+    experiment.setSimulationsForStatistics(8);
+} else {
+    experiment.setStatisticsOnly(false);
+    experiment.setRunStatisticsForBackups(false);
+    experiment.setGamesToPlayPerThreadForStatistics(0);
+    experiment.setSimulationsForStatistics(0);
+}
+experiment.setExportToExcel(true);
+experiment.start(-1, filePath, 0, true, null);
     }
+
+    private final Boolean hasBias;
+
+    /**
+     *
+     * @param hasBias
+     */
+    public NTupleLinear_512(final Boolean hasBias) {
+        super();
+        this.hasBias = hasBias;
+    }
+
 
     @Override
     public void initialize() {
