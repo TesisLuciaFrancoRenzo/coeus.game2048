@@ -147,6 +147,7 @@ class Game2048<NeuralNetworkClass>
     @SuppressWarnings("ResultOfObjectAllocationIgnored")
     public static
     void main(String[] args) {
+        //noinspection unchecked
         new Game2048(null, null, 2_048, 1);
     }
 
@@ -575,6 +576,7 @@ class Game2048<NeuralNetworkClass>
     List<StateProbability> listAllPossibleNextTurnStateFromAfterState(
             IState afterState
     ) {
+        //noinspection unchecked
         return ((GameBoard<NeuralNetworkClass>) afterState).listAllPossibleNextTurnStateFromAfterState();
     }
 
@@ -655,6 +657,7 @@ class Game2048<NeuralNetworkClass>
         }
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public
     void processInput(int keyCode) {
@@ -665,7 +668,7 @@ class Game2048<NeuralNetworkClass>
             myLoose = true;
         }
         if (!myWin && !myLoose) {
-            IStatePerceptron afterState = null;
+            IStatePerceptron afterState;
             switch (keyCode) {
                 case VK_LEFT: {
                     afterState = computeAfterState(getBoard(), Action.left);
@@ -742,6 +745,7 @@ class Game2048<NeuralNetworkClass>
         arraycopy(rotateBoardTiles(angle, original.getTiles()), 0, original.getTiles(), 0, TILE_NUMBER);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public
     void setCurrentState(IState nextTurnState) {

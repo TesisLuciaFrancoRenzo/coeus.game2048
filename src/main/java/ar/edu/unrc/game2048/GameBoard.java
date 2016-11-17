@@ -41,17 +41,6 @@ import static java.lang.System.arraycopy;
 public
 class GameBoard<NeuralNetworkClass>
         implements IStatePerceptron, IStateNTuple {
-
-    /**
-     *
-     */
-    public static final int MAX_BOARDTILE_CODED_NUMBER = 17;
-
-    /**
-     *
-     */
-    public final static int MIN_BOARDTILE_CODED_NUMBER = 0;
-
     /**
      *
      */
@@ -257,10 +246,7 @@ class GameBoard<NeuralNetworkClass>
         if (this.getPartialScore() != other.getPartialScore()) {
             return false;
         }
-        if (!Arrays.deepEquals(this.tiles, other.tiles)) {
-            return false;
-        }
-        return Objects.equals(this.availableSpaceList, other.availableSpaceList);
+        return Arrays.deepEquals(this.tiles, other.tiles) && Objects.equals(this.availableSpaceList, other.availableSpaceList);
     }
 
     /**
@@ -441,7 +427,7 @@ class GameBoard<NeuralNetworkClass>
                 probability = 0.1;
             }
             for (int index = 0; index < availableSpaceList.size() - 1; index++) {
-                GameBoard<NeuralNetworkClass> copy = (GameBoard<NeuralNetworkClass>) this.getCopy();
+                @SuppressWarnings("unchecked") GameBoard<NeuralNetworkClass> copy = (GameBoard<NeuralNetworkClass>) this.getCopy();
                 copy.tiles[availableSpaceList.get(index)] = this.tileContainer.getTile(value);
                 copy.updateInternalState(true);
                 output.add(new StateProbability(copy, probability));

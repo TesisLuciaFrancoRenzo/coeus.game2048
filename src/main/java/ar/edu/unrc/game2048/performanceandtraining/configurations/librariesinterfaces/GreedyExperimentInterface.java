@@ -38,6 +38,7 @@ import static java.awt.event.KeyEvent.*;
  *
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
+@SuppressWarnings("unchecked")
 public
 class GreedyExperimentInterface
         extends INeuralNetworkInterfaceFor2048 {
@@ -93,7 +94,7 @@ class GreedyExperimentInterface
         GameBoard         actualBoard     = game.getBoard();
         List<Action>      bestActions     = new ArrayList<>(4);
         double            bestReward      = -100d;
-        ArrayList<Action> possibleActions = game.listAllPossibleActions(actualBoard);
+        ArrayList<Action> possibleActions = (ArrayList<Action>) game.listAllPossibleActions(actualBoard);
         for (Action action : possibleActions) {
             GameBoard              afterState            = (GameBoard) game.computeAfterState(actualBoard, action);
             List<StateProbability> allPossibleNextStates = game.listAllPossibleNextTurnStateFromAfterState(afterState);

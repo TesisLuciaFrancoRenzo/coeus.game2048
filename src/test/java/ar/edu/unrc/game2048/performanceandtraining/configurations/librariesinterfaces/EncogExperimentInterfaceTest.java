@@ -529,7 +529,7 @@ class EncogExperimentInterfaceTest {
         assertThat(FunctionUtils.TANH, is(encogInterface.getActivationFunction(2)));
         assertThat(FunctionUtils.LINEAR, is(encogInterface.getActivationFunction(3)));
 
-        boolean biasFound = false;
+        boolean biasFound;
         try {
             encogInterface.getBias(0, 0);
             biasFound = true;

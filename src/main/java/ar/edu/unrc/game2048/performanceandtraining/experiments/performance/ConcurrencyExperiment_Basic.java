@@ -111,8 +111,7 @@ class ConcurrencyExperiment_Basic
     void experimentRun(
             boolean trainConcurrency,
             boolean evaluateConcurrency
-    )
-            throws Exception {
+    ) {
         for (int innerLayerQuantity = 1; innerLayerQuantity <= MAX_INNER_LAYERS; innerLayerQuantity++) {
             System.out.println("===============================================================================");
             System.out.println("Capas intermedias: " + innerLayerQuantity);

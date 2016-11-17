@@ -24,7 +24,7 @@ import org.junit.*;
 /**
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
-@SuppressWarnings("unchecked")
+@SuppressWarnings({"unchecked", "UnusedAssignment"})
 public
 class GameBoardTest {
 

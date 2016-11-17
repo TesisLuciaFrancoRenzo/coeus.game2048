@@ -119,7 +119,7 @@ class Game2048Test {
         board.setTiles(fullNotTerminalBoard);
         board.updateInternalState(true);
 
-        Set<IAction> expResult = new HashSet<>();
+        @SuppressWarnings("MismatchedQueryAndUpdateOfCollection") Set<IAction> expResult = new HashSet<>();
         expResult.add(Action.down);
         expResult.add(Action.up);
 

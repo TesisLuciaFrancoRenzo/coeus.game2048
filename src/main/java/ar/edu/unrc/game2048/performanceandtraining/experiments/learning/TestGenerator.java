@@ -157,6 +157,7 @@ class TestGenerator {
      *
      * @throws Exception
      */
+    @SuppressWarnings("UnusedAssignment")
     public static
     void main(String[] args)
             throws Exception {
@@ -340,6 +341,7 @@ class TestGenerator {
         );
     }
 
+    @SuppressWarnings("ForLoopReplaceableByForEach")
     private static
     void runAllConfigs(
             final int maxTrainingThreads,

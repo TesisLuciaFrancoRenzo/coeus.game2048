@@ -40,6 +40,7 @@ class RandomExperimentInterface
     /**
      * @param perceptronConfiguration configuración
      */
+    @SuppressWarnings("unchecked")
     public
     RandomExperimentInterface(
             NeuralNetworkConfiguration2048 perceptronConfiguration

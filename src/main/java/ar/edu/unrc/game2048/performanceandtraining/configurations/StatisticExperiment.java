@@ -62,8 +62,8 @@ class StatisticExperiment<NeuralNetworkClass> {
     /**
      * Experimento de aprendizaje.
      */
-    protected LearningExperiment<NeuralNetworkClass> learningExperiment;
-    private   String                                 experimentName;
+    protected final LearningExperiment<NeuralNetworkClass> learningExperiment;
+    private         String                                 experimentName;
     private boolean exportToExcel = true;
     private String           fileName;
     private int              gamesToPlay;
@@ -496,6 +496,7 @@ class StatisticExperiment<NeuralNetworkClass> {
      *
      * @throws Exception
      */
+    @SuppressWarnings("unchecked")
     public
     void processFile(
             String fileToProcess,
@@ -740,13 +741,13 @@ class StatisticExperiment<NeuralNetworkClass> {
         Map<File, StatisticForCalc> resultsPerFile = new HashMap<>();
         for (File f : allFiles) {
             if (runStatisticsForBackups) {
-                if (f.getName().matches(".*\\_BackupN\\-.*\\.ser")) {
+                if (f.getName().matches(".*_BackupN-.*\\.ser")) {
                     System.out.print("Starting " + f.getName() + " Statistics... ");
                     processFile(dirPath + f.getName().replaceAll("\\.ser$", ""), delayPerMove, createNeuralNetworkFile);
                     resultsPerFile.put(f, getTileStatistics());
                     backupFiles.add(f);
                 }
-            } else if (f.getName().matches(".*\\_trained\\.ser")) {
+            } else if (f.getName().matches(".*_trained\\.ser")) {
                 System.out.print("Starting " + f.getName() + " Statistics... ");
                 processFile(dirPath + f.getName().replaceAll("\\.ser$", ""), delayPerMove, createNeuralNetworkFile);
                 resultsPerFile.put(f, getTileStatistics());

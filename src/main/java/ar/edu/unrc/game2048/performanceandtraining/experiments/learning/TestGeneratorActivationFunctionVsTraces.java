@@ -247,6 +247,7 @@ class TestGeneratorActivationFunctionVsTraces {
         );
     }
 
+    @SuppressWarnings("ForLoopReplaceableByForEach")
     private static
     void runAllConfigs(
             final int maxTrainingThreads,

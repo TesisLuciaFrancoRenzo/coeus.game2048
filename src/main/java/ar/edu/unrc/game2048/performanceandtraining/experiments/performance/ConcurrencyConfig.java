@@ -104,6 +104,7 @@ class ConcurrencyConfig {
     /**
      * @return
      */
+    @SuppressWarnings("ForLoopReplaceableByForEach")
     @Override
     public
     String toString() {
