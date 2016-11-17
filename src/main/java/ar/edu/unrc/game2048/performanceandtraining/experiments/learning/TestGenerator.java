@@ -236,11 +236,8 @@ class TestGenerator {
                 interpolatedExplorationRateFinishInterpolation = ArgumentLoader.parseIntegerArray(arguments.getArg(
                         "explorationRateFinishInterpolation"));
                 if (interpolatedExplorationRateFinalValues.size() != interpolatedExplorationRateFinalValues.size() ||
-                    interpolatedExplorationRateFinalValues.
-                                                                  size() != interpolatedExplorationRateStartInterpolation.size() ||
-                    interpolatedExplorationRateInitialValues.
-                                                                    size() != interpolatedExplorationRateFinishInterpolation.
-                                                                                                                                    size()) {
+                    interpolatedExplorationRateFinalValues.size() != interpolatedExplorationRateStartInterpolation.size() ||
+                    interpolatedExplorationRateInitialValues.size() != interpolatedExplorationRateFinishInterpolation.size()) {
                     System.err.println("La cantidad de parametros de exploration rate no coinciden");
                     System.exit(-1);
                 }
@@ -296,8 +293,7 @@ class TestGenerator {
                 break;
             }
             case "NTupleLinearWithBias_512": {
-                classConstructor = NTupleLinearWithBias_512.class.
-                                                                         getConstructor(NTupleLinearWithBias_512.PARAMETER_TYPE);
+                classConstructor = NTupleLinearWithBias_512.class.getConstructor(NTupleLinearWithBias_512.PARAMETER_TYPE);
                 classParameters = new Object[]{true};
                 break;
             }
