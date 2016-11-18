@@ -118,16 +118,6 @@ class PNTupleTanH_512<NeuralNetworkClass>
     ) {
         return nTuplesWeightQuantityIndex[nTupleIndex] +
                NTupleSystem.calculateLocalIndex(nTupleIndex, nTuplesLength, nTuple, mapSamplePointValuesIndex);
-        //        int localIndex = 0;
-        //        for ( int j = 0; j < getnTuplesLength()[nTupleIndex]; j++ ) {
-        ////            SamplePointValue object = ntuple[j];
-        ////            Integer sampleIndex = mapSamplePointValuesIndex.get(object);
-        ////            int size = mapSamplePointValuesIndex.size();
-        ////            int pow = (int) Math.pow(size, j);
-        //            localIndex += getMapSamplePointValuesIndex().get(nTupleSample[j])
-        //                    * (int) Math.pow(getMapSamplePointValuesIndex().size(), j);
-        //        }
-        //        return getnTuplesWeightQuantityIndex()[nTupleIndex] + localIndex;
     }
 
     @Override
@@ -255,18 +245,10 @@ class PNTupleTanH_512<NeuralNetworkClass>
     }
 
     /**
-     * @return numero de muestras.
+     * @return longitud de las nTuplas.
      */
     public
-    int getNumSamples() {
-        return numSamples;
-    }
-
-    /**
-     * @return longitud de las ntuplas.
-     */
-    public
-    int[] getnTuplesLength() {
+    int[] getNTuplesLength() {
         return nTuplesLength;
     }
 
@@ -274,8 +256,16 @@ class PNTupleTanH_512<NeuralNetworkClass>
      * @return nTuplesWeightQuantityIndex
      */
     public
-    int[] getnTuplesWeightQuantityIndex() {
+    int[] getNTuplesWeightQuantityIndex() {
         return nTuplesWeightQuantityIndex;
+    }
+
+    /**
+     * @return numero de muestras.
+     */
+    public
+    int getNumSamples() {
+        return numSamples;
     }
 
     @Override

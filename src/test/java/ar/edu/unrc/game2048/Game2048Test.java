@@ -136,12 +136,12 @@ class Game2048Test {
         }
 
         //verificamos que si se llama al afterState antes de listAllPossibleActions
-        // con los mismos tableros, devuelven instancias diferentes, pero con el mismo contenido logico
+        // con los mismos tableros, devuelven instancias diferentes, pero con el mismo contenido lógico
         state2 = game.computeAfterState(board, Action.down);
         Assert.assertNotSame(state1, state2);
         assertThat(state1, is((GameBoard) state2));
 
-        //verificamos que proximas llamadas a computeafterState retorne valores ya calculados y no los calcule otra vez
+        //verificamos que próximas llamadas a computeAfterState retorne valores ya calculados y no los calcule otra vez
         state1 = game.computeAfterState(board, Action.down);
         assertThat(state1, notNullValue());
         state2 = game.computeAfterState(board, Action.down);
@@ -180,7 +180,7 @@ class Game2048Test {
             assertThat(result, hasItem(action));
         }
 
-        //verificamos que proximas llamadas a computeafterState retorne valores ya calculados y no los calcule otra vez
+        //verificamos que próximas llamadas a computeAfterState retorne valores ya calculados y no los calcule otra vez
         state1 = game.computeAfterState(board, Action.right);
         assertThat(state1, notNullValue());
         state2 = game.computeAfterState(board, Action.right);

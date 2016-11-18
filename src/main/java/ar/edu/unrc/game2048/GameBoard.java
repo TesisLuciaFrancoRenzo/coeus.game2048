@@ -75,7 +75,7 @@ class GameBoard<NeuralNetworkClass>
         partialScore = 0;
         maxTileNumberCode = 0;
         maxTileNumberValue = 0;
-        //inicializamos el tablero para su traduccion a las entradas de la red neuronal
+        //inicializamos el tablero para su traducción a las entradas de la red neuronal
         if (game.getNeuralNetworkConfiguration() != null) {
             if (game.getNeuralNetworkConfiguration().useNTupleList()) {
                 normalizedPerceptronInput = new InputNTupleList();
@@ -295,7 +295,7 @@ class GameBoard<NeuralNetworkClass>
     @Override
     public
     SamplePointValue[] getNTuple(int nTupleIndex) {
-        return game.getnTupleSystemConfiguration().getNTuple(this, nTupleIndex);
+        return game.getNTupleSystemConfiguration().getNTuple(this, nTupleIndex);
     }
 
     /**
@@ -317,8 +317,8 @@ class GameBoard<NeuralNetworkClass>
     @Override
     public
     double getStateReward(int outputNeuron) {
-        if (game.getnTupleSystemConfiguration() != null) {
-            return game.getnTupleSystemConfiguration().getBoardReward(this, outputNeuron);
+        if (game.getNTupleSystemConfiguration() != null) {
+            return game.getNTupleSystemConfiguration().getBoardReward(this, outputNeuron);
         } else {
             return game.getNeuralNetworkConfiguration().getBoardReward(this, outputNeuron);
         }
@@ -371,7 +371,7 @@ class GameBoard<NeuralNetworkClass>
      * @param gameBoard para comparar
      *                  <p>
      *
-     * @return true si los 2 tableros son iguales topologicamente
+     * @return true si los 2 tableros son iguales topológicamente
      */
     public
     boolean isEqual(GameBoard<NeuralNetworkClass> gameBoard) {
@@ -471,8 +471,8 @@ class GameBoard<NeuralNetworkClass>
     }
 
     /**
-     * actualizamos la traduccion del tablero como entrada del perceptron, encriptado y normalizado.
-     * Tambien se actualiza el calculo de si este es un tablero fianl o no.
+     * actualizamos la traducción del tablero como entrada del perceptron, encriptado y normalizado.
+     * También se actualiza el calculo de si este es un tablero final o no.
      * <p>
      *
      * @param updateInputs

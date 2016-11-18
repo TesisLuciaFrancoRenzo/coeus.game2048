@@ -48,12 +48,12 @@ class StatisticExperiment<NeuralNetworkClass> {
     /**
      *
      */
-    public static final String MIN_SCORE = "Minimo puntaje: ";
+    public static final String MIN_SCORE = "Mínimo puntaje: ";
 
     /**
      *
      */
-    public static final String MIN_TURN = "Minimo turno: ";
+    public static final String MIN_TURN = "Mínimo turno: ";
 
     /**
      *
@@ -93,13 +93,13 @@ class StatisticExperiment<NeuralNetworkClass> {
     }
 
     /**
-     * Exporta a una planilla de cálculo los resultados de las estadísticas ya calculadas en archivos de texto.
+     * Exporta a una hoja de cálculo los resultados de las estadísticas ya calculadas en archivos de texto.
      *
-     * @param filePath                Ruta de donde se exporta la planilla de cálculo.
+     * @param filePath                Ruta de donde se exporta la hoja de cálculo.
      * @param backupFiles             Lista de los archivos con las redes neuronales que se le realizaron estadísticas.
      * @param resultsPerFile          Mapeo de los archivos asociados a los resultados parseados.
      * @param resultsRandom           Mapeo de los archivos asociados a los resultados parseados de la red sin entrenamiento.
-     * @param randomNeuralNetworkFile Archivo con la red neuronal sin entenar.
+     * @param randomNeuralNetworkFile Archivo con la red neuronal sin entrenar.
      *
      * @throws IOException
      * @throws InvalidFormatException
@@ -117,11 +117,11 @@ class StatisticExperiment<NeuralNetworkClass> {
         Workbook    wb        = WorkbookFactory.create(inputXLSX);
 
         try (FileOutputStream outputXLSX = new FileOutputStream(filePath + "_STATISTICS" + ".xlsx")) {
-            //============= imptimimos en la hoja de tiles ===================
+            //============= imprimimos en la hoja de tiles ===================
 
             Sheet sheet = wb.getSheetAt(0);
             int   tiles = 17;
-            //Estilo par los titulos de las tablas
+            //Estilo par los títulos de las tablas
             int rowStartTitle = 0;
             int colStartTitle = 2;
             // Luego creamos el objeto que se encargará de aplicar el estilo a la celda
@@ -180,7 +180,7 @@ class StatisticExperiment<NeuralNetworkClass> {
                 }
             }
 
-            //============= imptimimos en la hoja de Score ===================
+            //============= imprimimos en la hoja de Score ===================
             sheet = wb.getSheetAt(1);
             rowStart = 2;
             loadTitle(rowStartTitle, colStartTitle, sheet, backupFiles.size(), CellStyleTitle);
@@ -231,7 +231,7 @@ class StatisticExperiment<NeuralNetworkClass> {
                 cell.setCellValue(cellDoubleValue);
             }
 
-            //============= imptimimos en la hoja de Win ===================
+            //============= imprimimos en la hoja de Win ===================
             sheet = wb.getSheetAt(2);
             sheet.setForceFormulaRecalculation(true);
             rowStart = 2;
@@ -253,7 +253,7 @@ class StatisticExperiment<NeuralNetworkClass> {
                 assert cellDoubleValue <= 100 && cellDoubleValue >= 0;
                 cell.setCellValue(cellDoubleValue);
             }
-            // creamos la celda para calcular maxima/mejor red entrenada
+            // creamos la celda para calcular máxima/mejor red entrenada
             row = sheet.getRow(3);
             cell = row.createCell(2, Cell.CELL_TYPE_FORMULA);
             cell.setCellStyle(cellStyle);
@@ -266,7 +266,7 @@ class StatisticExperiment<NeuralNetworkClass> {
             cell.setCellStyle(cellStyle);
             formula = "HLOOKUP(C4,C2:" + columnLetter + "3,2)";
             cell.setCellFormula(formula);
-            //============= imptimimos en la hoja de Turns ===================
+            //============= imprimimos en la hoja de Turns ===================
             sheet = wb.getSheetAt(3);
             rowStart = 2;
             loadTitle(rowStartTitle, colStartTitle, sheet, backupFiles.size(), CellStyleTitle);
@@ -369,7 +369,7 @@ class StatisticExperiment<NeuralNetworkClass> {
     }
 
     /**
-     * @return método TDlearning elegido.
+     * @return método TDLearning elegido.
      */
     protected
     TDLambdaLearning getLearningMethod() {
@@ -377,7 +377,7 @@ class StatisticExperiment<NeuralNetworkClass> {
     }
 
     /**
-     * @param learningMethod nuevo método TDlearning
+     * @param learningMethod nuevo método TDLearning
      */
     protected
     void setLearningMethod(TDLambdaLearning learningMethod) {
@@ -441,7 +441,7 @@ class StatisticExperiment<NeuralNetworkClass> {
      * <li>private String fileName;</li>
      * </ul>
      * <p>
-     * Las siguientes variables se inicializan automaticamente, pero pueden ser modificadas:
+     * Las siguientes variables se inicializan automáticamente, pero pueden ser modificadas:
      * <ul>
      * <li>private int tileToWin;</li>
      * <li>private String experimentName;</li>
@@ -505,7 +505,7 @@ class StatisticExperiment<NeuralNetworkClass> {
     )
             throws Exception {
 
-        //preparamos los destinos de las siimulaciones para posterior sumatoria final
+        //preparamos los destinos de las simulaciones para posterior sumatoria final
         File logFile = new File(fileToProcess + "_STATISTICS" + ".txt");
 
         if (!logFile.exists()) {
@@ -565,8 +565,8 @@ class StatisticExperiment<NeuralNetworkClass> {
 
             IntStream.range(0, simulations).parallel().forEach(i -> {
                 // Si hay un perceptron ya entrenado, lo buscamos en el archivo.
-                // En caso contrario creamos un perceptron vacio, inicializado al azar
-                for (results.get(i).setProcessedGames(1); results.get(i).getProcessedGames() < gamesToPlay; results.get(i).addProcesedGames()) {
+                // En caso contrario creamos un perceptron vacío, inicializado al azar
+                for (results.get(i).setProcessedGames(1); results.get(i).getProcessedGames() < gamesToPlay; results.get(i).addProcessedGames()) {
                     games.get(i).resetGame(); //reset
                     int turnNumber = 0;
                     while (!games.get(i).iLoose() && !games.get(i).iWin()) {

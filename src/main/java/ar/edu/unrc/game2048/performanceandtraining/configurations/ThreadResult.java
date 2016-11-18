@@ -78,7 +78,7 @@ class ThreadResult {
      * Aumenta la cantidad de juegos procesados.
      */
     public
-    void addProcesedGames() {
+    void addProcessedGames() {
         processedGames++;
     }
 

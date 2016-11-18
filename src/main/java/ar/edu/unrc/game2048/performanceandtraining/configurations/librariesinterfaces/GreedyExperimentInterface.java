@@ -138,11 +138,11 @@ class GreedyExperimentInterface
                     break;
                 }
                 default: {
-                    throw new IllegalArgumentException("no se encontro mejor accion.");
+                    throw new IllegalArgumentException("no se encontró mejor acción.");
                 }
             }
         } else {
-            throw new IllegalArgumentException("no se encontro mejor accion.");
+            throw new IllegalArgumentException("no se encontró mejor acción.");
         }
 
     }

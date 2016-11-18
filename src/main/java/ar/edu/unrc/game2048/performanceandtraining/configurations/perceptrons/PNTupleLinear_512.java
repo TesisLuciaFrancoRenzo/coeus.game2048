@@ -238,18 +238,10 @@ class PNTupleLinear_512<NeuralNetworkClass>
     }
 
     /**
-     * @return numero de muestras.
+     * @return longitud de las nTuplas.
      */
     public
-    int getNumSamples() {
-        return numSamples;
-    }
-
-    /**
-     * @return longitud de las ntuplas.
-     */
-    public
-    int[] getnTuplesLength() {
+    int[] getNTuplesLength() {
         return nTuplesLength;
     }
 
@@ -257,8 +249,16 @@ class PNTupleLinear_512<NeuralNetworkClass>
      * @return nTuplesWeightQuantityIndex
      */
     public
-    int[] getnTuplesWeightQuantityIndex() {
+    int[] getNTuplesWeightQuantityIndex() {
         return nTuplesWeightQuantityIndex;
+    }
+
+    /**
+     * @return numero de muestras.
+     */
+    public
+    int getNumSamples() {
+        return numSamples;
     }
 
     @Override

@@ -117,11 +117,9 @@ class ConcurrencyExperiment_Basic
             System.out.println("Capas intermedias: " + innerLayerQuantity);
             outputForGraphicsResults.append("============ Capas intermedias: ")
                                     .
-                                            append(innerLayerQuantity)
-                                    .append(" - Training Concurrancy: ")
+                                            append(innerLayerQuantity).append(" - Training Concurrency: ")
                                     .
-                                            append(trainConcurrency)
-                                    .append(" - evaluating Concurrancy: ")
+                                            append(trainConcurrency).append(" - evaluating Concurrency: ")
                                     .append(evaluateConcurrency)
                                     .append(" =============\n");
             System.out.println("===============================================================================");

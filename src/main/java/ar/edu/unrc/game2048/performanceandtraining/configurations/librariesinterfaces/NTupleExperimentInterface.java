@@ -77,8 +77,7 @@ class NTupleExperimentInterface
     public
     NTupleSystem initializeNTupleSystem(boolean randomized) {
         NTupleSystem nTupleSystem = new NTupleSystem(
-                this.getNTupleConfiguration().getAllSamplePointPossibleValues(),
-                this.getNTupleConfiguration().getnTuplesLength(),
+                this.getNTupleConfiguration().getAllSamplePointPossibleValues(), this.getNTupleConfiguration().getNTuplesLength(),
                 this.getNTupleConfiguration().getActivationFunction(),
                 this.getNTupleConfiguration().getDerivedActivationFunction(),
                 this.getNTupleConfiguration().isConcurrency()

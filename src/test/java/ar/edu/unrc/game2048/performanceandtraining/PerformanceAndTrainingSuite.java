@@ -31,7 +31,7 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({ar.edu.unrc.game2048.performanceandtraining.configurations.ConfigurationsSuite.class})
 public
-class PerformanceandtrainingSuite {
+class PerformanceAndTrainingSuite {
 
     /**
      * @throws Exception

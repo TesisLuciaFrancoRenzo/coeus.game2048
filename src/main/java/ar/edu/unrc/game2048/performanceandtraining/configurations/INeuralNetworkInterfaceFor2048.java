@@ -155,10 +155,9 @@ class INeuralNetworkInterfaceFor2048<NeuralNetworkClass>
             Game2048<NeuralNetworkClass> game,
             TDLambdaLearning learningMethod
     ) {
-        // evaluamos cada accion aplicada al estado inicial y elegimos la mejor
-        // accion basada en las predicciones del problema
-        List<IAction> possibleActions = game.listAllPossibleActions(game.
-                                                                                getBoard());
+        // evaluamos cada acción aplicada al estado inicial y elegimos la mejor
+        // acción basada en las predicciones del problema
+        List<IAction> possibleActions = game.listAllPossibleActions(game.getBoard());
         Action bestAction = (Action) TDLambdaLearning.computeBestPossibleAction(
                 game,
                 ELearningStyle.afterState,
@@ -187,7 +186,7 @@ class INeuralNetworkInterfaceFor2048<NeuralNetworkClass>
                 break;
             }
             default: {
-                throw new IllegalStateException("Mejor accion no reconocida");
+                throw new IllegalStateException("Mejor acción no reconocida");
             }
         }
     }

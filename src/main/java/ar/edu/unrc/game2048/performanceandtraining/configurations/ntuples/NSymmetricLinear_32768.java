@@ -23,8 +23,6 @@ import ar.edu.unrc.coeus.tdlearning.utils.FunctionUtils;
 import ar.edu.unrc.game2048.GameBoard;
 import ar.edu.unrc.game2048.NTupleConfiguration2048;
 import ar.edu.unrc.game2048.Tile;
-import org.encog.util.arrayutil.NormalizationAction;
-import org.encog.util.arrayutil.NormalizedField;
 
 import java.util.ArrayList;
 
@@ -32,25 +30,18 @@ import java.util.ArrayList;
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
 public
-class NSymetryTanH_32768
+class NSymmetricLinear_32768
         extends NTupleConfiguration2048 {
 
-    private final int maxReward = 500_000;
-    private final int minReward = -500_000;
-
     /**
-     * Configuración para jugar hasta 32.768 con tablero simétrico, con función de activación Tangente Hiperbólica, y
-     * puntaje parcial.
+     * Configuración para jugar hasta 32.768 con tablero simétrico, con función de activación Lineal, y puntaje parcial.
      */
     public
-    NSymetryTanH_32768() {
-        this.activationFunction = FunctionUtils.TANH;
-        this.derivedActivationFunction = FunctionUtils.TANH_DERIVED;
+    NSymmetricLinear_32768() {
+        this.activationFunction = FunctionUtils.LINEAR;
+        this.derivedActivationFunction = FunctionUtils.LINEAR_DERIVED;
         this.concurrency = false;
-        double activationFunctionMax = 1;
-        double activationFunctionMin = -1;
-
-        normOutput = new NormalizedField(NormalizationAction.Normalize, null, maxReward, minReward, activationFunctionMax, activationFunctionMin);
+        int maxTile = 15;
 
         nTuplesLength = new int[4];
         nTuplesLength[0] = 6;
@@ -58,7 +49,6 @@ class NSymetryTanH_32768
         nTuplesLength[2] = 4;
         nTuplesLength[3] = 4;
 
-        int maxTile = 15;
         this.allSamplePointPossibleValues = new ArrayList<>();
         for (int i = 0; i <= maxTile; i++) {
             allSamplePointPossibleValues.add(new Tile(i));
@@ -80,7 +70,7 @@ class NSymetryTanH_32768
     @Override
     public
     double deNormalizeValueFromNeuralNetworkOutput(Object value) {
-        return normOutput.deNormalize((double) value);
+        return (double) value;
     }
 
     @Override
@@ -108,7 +98,7 @@ class NSymetryTanH_32768
             int nTupleIndex
     ) {
         switch (nTupleIndex) {
-            // rectangulos
+            // rectángulos
             case 0: {
                 return new SamplePointValue[]{board.tileAt(0, 0), board.tileAt(0, 1), board.tileAt(0, 2), board.tileAt(1, 0), board.tileAt(1,
                         1
@@ -135,9 +125,6 @@ class NSymetryTanH_32768
     @Override
     public
     double normalizeValueToPerceptronOutput(Object value) {
-        if ((Double) value > maxReward) {
-            throw new IllegalArgumentException("value no puede ser mayor a maxReward=" + maxReward);
-        }
-        return normOutput.normalize((Double) value);
+        return (double) value;
     }
 }

@@ -87,7 +87,7 @@ class NTupleTanH_512
         experiment.setInitializePerceptronRandomized(false);
 
         experiment.createLogs(false);
-        //para calcualar estadisticas
+        //para calcular estadisticas
         experiment.setTileToWinForStatistics(512);
         if (statistics) {
             experiment.setStatisticsOnly(true);

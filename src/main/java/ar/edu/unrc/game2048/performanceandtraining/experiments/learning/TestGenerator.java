@@ -238,7 +238,7 @@ class TestGenerator {
                 if (interpolatedExplorationRateFinalValues.size() != interpolatedExplorationRateFinalValues.size() ||
                     interpolatedExplorationRateFinalValues.size() != interpolatedExplorationRateStartInterpolation.size() ||
                     interpolatedExplorationRateInitialValues.size() != interpolatedExplorationRateFinishInterpolation.size()) {
-                    System.err.println("La cantidad de parametros de exploration rate no coinciden");
+                    System.err.println("La cantidad de parámetros de exploration rate no coinciden");
                     System.exit(-1);
                 }
                 fixedExplorationRateFixed = null;

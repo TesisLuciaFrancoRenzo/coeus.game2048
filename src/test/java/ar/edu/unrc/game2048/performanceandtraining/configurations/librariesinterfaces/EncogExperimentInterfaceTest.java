@@ -204,17 +204,17 @@ class EncogExperimentInterfaceTest {
         double expResult;
         double result;
 
-        // testeamos que la salida es la esperada. Los calculos se han realizado
-        // manualmente y corresponden al caso de pureba numero 2 del informe
+        // testeamos que la salida es la esperada. Los cálculos se han realizado
+        // manualmente y corresponden al caso de prueba numero 2 del informe
         double[] inputs = {0.3, 0.4};
 
         MLData inputData = new BasicMLData(inputs);
-        MLData outut     = perceptron.compute(inputData);
+        MLData output    = perceptron.compute(inputData);
 
         double[] expResultArray = {0.80281682071709, 0.8140600608095045};
-        double[] resultArray    = outut.getData();
+        double[] resultArray    = output.getData();
         assertThat(expResultArray, is(resultArray));
-        // demostracion teorica con wxMaxima de que el resultado es el esperado
+        // demostración teórica con wxMáxima de que el resultado es el esperado
         //"=== INPUT ===";
         //"f(netk1)";fnetk1 : 0.3;
         //"f(netk2)";fnetk2 : 0.4;
@@ -414,15 +414,15 @@ class EncogExperimentInterfaceTest {
         result = perceptron.getWeight(1, 2, 1);
         assertThat(expResult, is(result));
 
-        // testeamos que la salida es la esperada. Los calculos se han realizado
-        // manualmente y corresponden al caso de pureba numero 2 del informe
+        // testeamos que la salida es la esperada. Los cálculos se han realizado
+        // manualmente y corresponden al caso de prueba numero 2 del informe
         double[] inputs2 = {0.8, 1.5};
 
         inputData = new BasicMLData(inputs2);
-        outut = perceptron.compute(inputData);
+        output = perceptron.compute(inputData);
 
         double[] expResultArray2 = {0.7164779076006158, 0.8218381521799242};
-        double[] resultArray2    = outut.getData();
+        double[] resultArray2    = output.getData();
         assertThat(expResultArray2, is(resultArray2));
 
     }
@@ -582,7 +582,7 @@ class EncogExperimentInterfaceTest {
                 );
             } else if (perceptron.getActivation(layer) instanceof ActivationSigmoid) {
                 assertThat(
-                        "capa=" + layer + " activati-onEncog=" + activationEncog + " vs activationInterface=" + activationInterface,
+                        "capa=" + layer + " activationEncog=" + activationEncog + " vs activationInterface=" + activationInterface,
                         encogInterface.getActivationFunction(layer),
                         is(FunctionUtils.SIGMOID)
                 );
@@ -593,7 +593,7 @@ class EncogExperimentInterfaceTest {
                         is(FunctionUtils.LINEAR)
                 );
             } else {
-                throw new IllegalArgumentException("El test esta pensado para utilizar TANH, Simoid o Linear como funcion de activacion");
+                throw new IllegalArgumentException("El test esta pensado para utilizar TANH, Sigmoid o Linear como función de activación");
             }
         }
 

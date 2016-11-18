@@ -97,7 +97,7 @@ class EncogExperimentInterface
                 this.activationFunction.add(FunctionUtils.LINEAR);
                 this.derivedActivationFunction.add(FunctionUtils.LINEAR_DERIVED);
             } else {
-                throw new IllegalArgumentException("El test esta pensado para utilizar TANH, Simoid o Linear como funcion de activacion");
+                throw new IllegalArgumentException("El test esta pensado para utilizar TANH, Sigmoid o Linear como función de activación");
             }
         }
 
@@ -195,7 +195,7 @@ class EncogExperimentInterface
     public
     BasicNetwork initializeEncogPerceptron(boolean randomized) {
         if (perceptronConfiguration.getNeuronQuantityInLayer() == null || perceptronConfiguration.getNeuronQuantityInLayer().length < 2) {
-            throw new IllegalArgumentException("la cantidad de capas es de minimo 2 para un perceptrón (incluyendo entrada y salida)");
+            throw new IllegalArgumentException("la cantidad de capas es de mínimo 2 para un perceptrón (incluyendo entrada y salida)");
         }
         BasicNetwork perceptron = new BasicNetwork();
         ActivationFunction function;

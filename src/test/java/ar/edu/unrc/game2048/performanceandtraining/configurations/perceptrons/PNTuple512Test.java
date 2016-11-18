@@ -91,8 +91,7 @@ class PNTuple512Test {
                 getTile(5), tileContainer.getTile(7), tileContainer.getTile(4), tileContainer.getTile(0), tileContainer.
                 getTile(1), tileContainer.getTile(4)});
 
-        NTupleSystem nTupleSystem = new NTupleSystem(nTupleConfiguration2.getAllSamplePointPossibleValues(),
-                nTupleConfiguration2.getnTuplesLength(),
+        NTupleSystem nTupleSystem = new NTupleSystem(nTupleConfiguration2.getAllSamplePointPossibleValues(), nTupleConfiguration2.getNTuplesLength(),
                 nTupleConfiguration2.getActivationFunction(),
                 nTupleConfiguration2.getDerivedActivationFunction(),
                 false

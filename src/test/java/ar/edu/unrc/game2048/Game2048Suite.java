@@ -18,7 +18,7 @@
  */
 package ar.edu.unrc.game2048;
 
-import ar.edu.unrc.game2048.performanceandtraining.PerformanceandtrainingSuite;
+import ar.edu.unrc.game2048.performanceandtraining.PerformanceAndTrainingSuite;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -30,7 +30,7 @@ import org.junit.runners.Suite;
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({GameBoardTest.class, Game2048Test.class, PerformanceandtrainingSuite.class})
+@Suite.SuiteClasses({GameBoardTest.class, Game2048Test.class, PerformanceAndTrainingSuite.class})
 public
 class Game2048Suite {
 

@@ -87,7 +87,7 @@ class SimpleBoard_32768
         experiment.setInitializePerceptronRandomized(false);
 
         experiment.createLogs(false);
-        //para calcualar estadisticas
+        //para calcular estadisticas
         experiment.setTileToWinForStatistics(2_048);
         if (statistics) {
             experiment.setStatisticsOnly(true);

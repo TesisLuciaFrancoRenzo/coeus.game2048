@@ -124,7 +124,7 @@ class NBasicLinear_512
                 return new SamplePointValue[]{board.tileAt(0, 3), board.tileAt(1, 3), board.tileAt(2, 3), board.tileAt(3, 3)};
             }
             // cuadrados
-            // primera fila de rectangulos
+            // primera fila de rectángulos
             case 8: {
                 return new SamplePointValue[]{board.tileAt(0, 0), board.tileAt(0, 1), board.tileAt(1, 1), board.tileAt(1, 0)};
             }
@@ -134,7 +134,7 @@ class NBasicLinear_512
             case 10: {
                 return new SamplePointValue[]{board.tileAt(2, 0), board.tileAt(2, 1), board.tileAt(3, 1), board.tileAt(3, 0)};
             }
-            //segunda fila de rectangulos
+            //segunda fila de rectángulos
             case 11: {
                 return new SamplePointValue[]{board.tileAt(0, 1), board.tileAt(0, 2), board.tileAt(1, 2), board.tileAt(1, 1)};
             }
@@ -144,7 +144,7 @@ class NBasicLinear_512
             case 13: {
                 return new SamplePointValue[]{board.tileAt(2, 1), board.tileAt(2, 2), board.tileAt(3, 2), board.tileAt(3, 1)};
             }
-            //tercera fila de rectangulos
+            //tercera fila de rectángulos
             case 14: {
                 return new SamplePointValue[]{board.tileAt(0, 2), board.tileAt(0, 3), board.tileAt(1, 3), board.tileAt(1, 2)};
             }

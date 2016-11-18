@@ -261,7 +261,7 @@ class Game2048<NeuralNetworkClass>
                 break;
             }
             default: {
-                throw new IllegalArgumentException("la accion \"" + action.toString() + "\" no es valida");
+                throw new IllegalArgumentException("la acción \"" + action.toString() + "\" no es valida");
             }
         }
         return futureBoard;
@@ -298,7 +298,7 @@ class Game2048<NeuralNetworkClass>
         if (this.getNeuralNetworkConfiguration() != null) {
             return this.getNeuralNetworkConfiguration().deNormalizeValueFromNeuralNetworkOutput(value);
         } else {
-            return this.getnTupleSystemConfiguration().deNormalizeValueFromNeuralNetworkOutput(value);
+            return this.getNTupleSystemConfiguration().deNormalizeValueFromNeuralNetworkOutput(value);
         }
     }
 
@@ -362,7 +362,7 @@ class Game2048<NeuralNetworkClass>
         //dependiendo de que tipo de red neuronal utilizamos, evaluamos las entradas y calculamos una salida
         if (neuralNetworkConfiguration != null && neuralNetworkConfiguration.
                                                                                     getNeuralNetwork() != null) {
-            if (neuralNetworkConfiguration.getNeuralNetwork() instanceof BasicNetwork) { //es sobre la libreria encog
+            if (neuralNetworkConfiguration.getNeuralNetwork() instanceof BasicNetwork) { //es sobre la librería encog
                 //creamos las entradas de la red neuronal
                 double[]  inputs     = new double[getNeuralNetworkConfiguration().getNeuronQuantityInLayer()[0]];
                 IntStream inputLayer = IntStream.range(0, getNeuralNetworkConfiguration().getNeuronQuantityInLayer()[0]);
@@ -451,6 +451,14 @@ class Game2048<NeuralNetworkClass>
     }
 
     /**
+     * @return the nTupleSystemConfiguration
+     */
+    public
+    NTupleConfiguration2048 getNTupleSystemConfiguration() {
+        return nTupleSystemConfiguration;
+    }
+
+    /**
      * @return configuración de la red neuronal utilizada.
      */
     public
@@ -462,14 +470,6 @@ class Game2048<NeuralNetworkClass>
     public
     int getScore() {
         return myScore;
-    }
-
-    /**
-     * @return the nTupleSystemConfiguration
-     */
-    public
-    NTupleConfiguration2048 getnTupleSystemConfiguration() {
-        return nTupleSystemConfiguration;
     }
 
     @Override
@@ -634,8 +634,8 @@ class Game2048<NeuralNetworkClass>
     @Override
     public
     double normalizeValueToPerceptronOutput(Object value) {
-        if (this.getnTupleSystemConfiguration() != null) {
-            return this.getnTupleSystemConfiguration().normalizeValueToPerceptronOutput(value);
+        if (this.getNTupleSystemConfiguration() != null) {
+            return this.getNTupleSystemConfiguration().normalizeValueToPerceptronOutput(value);
         } else {
             return this.getNeuralNetworkConfiguration().normalizeValueToPerceptronOutput(value);
         }

@@ -89,7 +89,7 @@ class NTupleLinearWithBias_512
         experiment.setConcurrencyInLayer(concurrentLayer);
 
         experiment.createLogs(false);
-        //para calcualar estadisticas
+        //para calcular estadisticas
         experiment.setTileToWinForStatistics(512);
         if (statistics) {
             experiment.setStatisticsOnly(true);

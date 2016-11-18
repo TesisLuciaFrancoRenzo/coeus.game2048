@@ -53,7 +53,7 @@ class Basic
         experiment.createLogs(false);
         experiment.setSaveEvery(100_000_000);
         experiment.setSaveBackupEvery(100_000_000);
-        //para calcualr estadisticas
+        //para calcular estadisticas
         experiment.setGamesToPlayPerThreadForStatistics(1_000);
         experiment.setSimulationsForStatistics(8);
         experiment.setRunStatisticsForBackups(false);

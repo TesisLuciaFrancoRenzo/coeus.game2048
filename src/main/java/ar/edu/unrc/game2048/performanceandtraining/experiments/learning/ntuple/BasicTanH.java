@@ -73,7 +73,7 @@ class BasicTanH
         experiment.setConcurrencyInLayer(concurrentLayer);
 
         experiment.createLogs(false);
-        //para calcualar estadisticas
+        //para calcular estadisticas
         experiment.setTileToWinForStatistics(2_048);
         if (statistics) {
             experiment.setStatisticsOnly(true);

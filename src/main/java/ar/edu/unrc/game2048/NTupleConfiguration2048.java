@@ -107,16 +107,16 @@ class NTupleConfiguration2048
      * @return
      */
     public
-    NormalizedField getNormOutput() {
-        return normOutput;
+    int[] getNTuplesLength() {
+        return nTuplesLength;
     }
 
     /**
      * @return
      */
     public
-    int[] getnTuplesLength() {
-        return nTuplesLength;
+    NormalizedField getNormOutput() {
+        return normOutput;
     }
 
     /**

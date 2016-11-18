@@ -28,11 +28,11 @@ class StatisticCalculator {
     /**
      * Agrega una muestra de tiempo al cálculo.
      *
-     * @param miliseconds
+     * @param milliseconds
      */
     public
-    void addSample(double miliseconds) {
-        experiment.add(miliseconds);
+    void addSample(double milliseconds) {
+        experiment.add(milliseconds);
     }
 
     /**
@@ -44,7 +44,7 @@ class StatisticCalculator {
     String[] computeBasicStatistics() {
         String[] output = new String[2];
         if (experiment.isEmpty()) {
-            throw new IllegalStateException("la cantidad de experimentos no debe ser vacia");
+            throw new IllegalStateException("la cantidad de experimentos no debe ser vacía");
         }
         Double min = Double.MAX_VALUE;
         Double max = Double.MIN_VALUE;
@@ -59,7 +59,7 @@ class StatisticCalculator {
             }
         }
         avg /= (experiment.size() * 1d);
-        output[0] = "Promedio: " + avg + "ms. Minimo: " + min + "ms. Máximo: " + max + "ms.";
+        output[0] = "Promedio: " + avg + "ms. Mínimo: " + min + "ms. Máximo: " + max + "ms.";
         output[1] = avg + "\t" + min + "\t" + max;
         return output;
     }

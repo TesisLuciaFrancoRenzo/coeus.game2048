@@ -134,7 +134,7 @@ class StatisticForCalc {
     }
 
     /**
-     * @return lista con la cantidad de veces que se alcanzo cada Tile, siendo el valor del tile = 2^indice.
+     * @return lista con la cantidad de veces que se alcanzo cada Tile, siendo el valor del tile = 2^índice.
      */
     public
     List<Double> getTileStatistics() {
@@ -142,7 +142,7 @@ class StatisticForCalc {
     }
 
     /**
-     * @param tileStatistics nueva lista con la cantidad de veces que se alcanzo cada Tile, siendo el valor del tile = 2^indice.
+     * @param tileStatistics nueva lista con la cantidad de veces que se alcanzo cada Tile, siendo el valor del tile = 2^índice.
      */
     public
     void setTileStatistics(List<Double> tileStatistics) {

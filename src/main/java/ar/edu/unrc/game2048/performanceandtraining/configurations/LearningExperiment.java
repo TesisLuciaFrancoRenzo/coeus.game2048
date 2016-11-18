@@ -241,18 +241,11 @@ class LearningExperiment<NeuralNetworkClass> {
     }
 
     /**
-     * Establece el nombre del experimento basado en el nombre de la clase {@code experimentClass}.
-     *
-     * @param experimentClass clase de la cual extraer el nombre del experimento.
+     * @param experimentName nombre del experimento.
      */
     public
-    void setExperimentName(Class experimentClass) {
-        String className = experimentClass.getName();
-        int    lastDot   = className.lastIndexOf('.');
-        if (lastDot != -1) {
-            className = className.substring(lastDot + 1);
-        }
-        this.experimentName = className;
+    void setExperimentName(String experimentName) {
+        this.experimentName = experimentName;
     }
 
     /**
@@ -611,17 +604,17 @@ class LearningExperiment<NeuralNetworkClass> {
                 try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(lastSaveDataFile), "UTF-8"))) {
                     String line = reader.readLine();
                     if (line == null) {
-                        throw new IllegalArgumentException("el archivo de configuracion no tiene un formato válido");
+                        throw new IllegalArgumentException("el archivo de configuración no tiene un formato válido");
                     }
                     this.lastSavedGamePlayedNumber = Integer.parseInt(line);
                     line = reader.readLine();
                     if (line == null) {
-                        throw new IllegalArgumentException("el archivo de configuracion no tiene un formato válido");
+                        throw new IllegalArgumentException("el archivo de configuración no tiene un formato válido");
                     }
                     this.backupNumber = Integer.parseInt(line);
                     line = reader.readLine();
                     if (line == null) {
-                        throw new IllegalArgumentException("el archivo de configuracion no tiene un formato válido");
+                        throw new IllegalArgumentException("el archivo de configuración no tiene un formato válido");
                     }
                     this.elapsedTime = Long.parseLong(line);
                 }
@@ -645,13 +638,13 @@ class LearningExperiment<NeuralNetworkClass> {
             }
 
             // Si hay un perceptron ya entrenado, lo buscamos en el archivo.
-            // En caso contrario creamos un perceptron vacio, inicializado al azar
+            // En caso contrario creamos un perceptron vacío, inicializado al azar
             neuralNetworkInterfaceFor2048.loadOrCreatePerceptron(perceptronFile, this.initializePerceptronRandomized, createPerceptronFile);
             //FIXME que hacer si esta ROTO? solucionar esto
 
-            //creamos una interfaz de comunicacion entre la red neuronal de encog y el algoritmo de entrenamiento
+            //creamos una interfaz de comunicación entre la red neuronal de encog y el algoritmo de entrenamiento
             if (backupRandomPerceptron) {
-                //guardamos el perceptron inicial para ahcer estadisticas
+                //guardamos el perceptron inicial para hacer estadisticas
                 neuralNetworkInterfaceFor2048.saveNeuralNetwork(randomPerceptronFile);
             }
 
@@ -818,11 +811,18 @@ class LearningExperiment<NeuralNetworkClass> {
     }
 
     /**
-     * @param experimentName nombre del experimento.
+     * Establece el nombre del experimento basado en el nombre de la clase {@code experimentClass}.
+     *
+     * @param experimentClass clase de la cual extraer el nombre del experimento.
      */
     public
-    void setExperimentName(String experimentName) {
-        this.experimentName = experimentName;
+    void setExperimentName(Class experimentClass) {
+        String className = experimentClass.getName();
+        int    lastDot   = className.lastIndexOf('.');
+        if (lastDot != -1) {
+            className = className.substring(lastDot + 1);
+        }
+        this.experimentName = className;
     }
 
     /**
@@ -901,7 +901,7 @@ class LearningExperiment<NeuralNetworkClass> {
     }
 
     /**
-     * @param winValue valor utilizado para finalizar el juego como que se ganó, para el cálculo de estadísticas y el winrate.
+     * @param winValue valor utilizado para finalizar el juego como que se ganó, para el cálculo de estadísticas y el winRate.
      */
     public
     void setTileToWinForStatistics(int winValue) {
