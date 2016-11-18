@@ -39,7 +39,7 @@ class BasicTanH
         extends LearningExperiment<BasicNetwork> {
 
     /**
-     * @param args <p>
+     * @param args
      *
      * @throws Exception
      */

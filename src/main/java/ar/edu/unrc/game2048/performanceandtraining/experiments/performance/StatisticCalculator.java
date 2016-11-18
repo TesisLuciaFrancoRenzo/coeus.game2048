@@ -60,7 +60,7 @@ class StatisticCalculator {
         }
         avg /= (experiment.size() * 1d);
         output[0] = "Promedio: " + avg + "ms. Mínimo: " + min + "ms. Máximo: " + max + "ms.";
-        output[1] = avg + "\t" + min + "\t" + max;
+        output[1] = avg + "\t" + min + '\t' + max;
         return output;
     }
 
@@ -71,7 +71,7 @@ class StatisticCalculator {
     public
     String toString() {
         StringBuilder output = new StringBuilder();
-        experiment.forEach((sample) -> output.append(sample).append("\t"));
+        experiment.forEach((sample) -> output.append(sample).append('\t'));
         return output.toString();
     }
 

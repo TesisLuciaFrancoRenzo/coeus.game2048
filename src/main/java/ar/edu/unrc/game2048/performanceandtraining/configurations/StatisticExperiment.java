@@ -481,7 +481,7 @@ class StatisticExperiment<NeuralNetworkClass> {
             String  valueStr = value.toString();
             String  cellV    = valueStr;
             if (valueStr.length() > 3) {
-                cellV = valueStr.substring(0, valueStr.length() - 3) + "K";
+                cellV = valueStr.substring(0, valueStr.length() - 3) + 'K';
             }
             cell.setCellValue(cellV);
         }
@@ -640,8 +640,7 @@ class StatisticExperiment<NeuralNetworkClass> {
                                         " simulaciones)");
                     printStream.println("Valores alcanzados:");
                     for (int i = 0; i <= 17; i++) {
-                        printStream.println(tileStatistics.get(i).toString().
-                                replaceAll("\\.", ","));
+                        printStream.println(tileStatistics.get(i).toString().replaceAll("\\.", ","));
                     }
 
                     printStream.println(MAX_SCORE + maxScore);
@@ -718,12 +717,12 @@ class StatisticExperiment<NeuralNetworkClass> {
             dirPathFile.mkdirs();
         }
         String filePath             = dirPath + fileName;
-        File   randomPerceptronFile = new File(dirPath + this.getExperimentName() + LearningExperiment.RANDOM + ".ser");
+        File   randomPerceptronFile = new File(dirPath + experimentName + LearningExperiment.RANDOM + ".ser");
 
         //hacemos estadisticas del perceptron random, si es necesario
         Map<File, StatisticForCalc> resultsRandom = new HashMap<>();
-        System.out.print("Starting " + this.getExperimentName() + LearningExperiment.RANDOM + " Statistics... ");
-        processFile(dirPath + this.getExperimentName() + LearningExperiment.RANDOM, delayPerMove, createNeuralNetworkFile);
+        System.out.print("Starting " + experimentName + LearningExperiment.RANDOM + " Statistics... ");
+        processFile(dirPath + experimentName + LearningExperiment.RANDOM, delayPerMove, createNeuralNetworkFile);
         resultsRandom.put(randomPerceptronFile, getTileStatistics());
 
         //calculamos las estadisticas de los backup si es necesario

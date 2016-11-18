@@ -77,7 +77,7 @@ class NTupleConfiguration2048
 
     /**
      * @param board
-     * @param nTupleIndex <p>
+     * @param nTupleIndex
      *
      * @return
      */

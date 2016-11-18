@@ -114,28 +114,28 @@ class ConcurrencyConfig {
         output.append(concurrencyInEvaluate);
 
         if (concurrencyInLayer != null) {
-            output.append("\n");
+            output.append('\n');
             output.append("training concurrency: ");
             for (int i = 0; i < concurrencyInLayer.length; i++) {
                 output.append(concurrencyInLayer[i]).append(", ");
             }
         }
         if (alphas != null) {
-            output.append("\n");
+            output.append('\n');
             output.append("alphas: ");
             for (int i = 0; i < alphas.length; i++) {
                 output.append(concurrencyInLayer[i]).append(", ");
             }
         }
         if (neuronQuantityInLayer != null) {
-            output.append("\n");
+            output.append('\n');
             output.append("neuronQuantityInLayer: ");
             for (int i = 0; i < neuronQuantityInLayer.length; i++) {
                 output.append(neuronQuantityInLayer[i]).append(", ");
             }
         }
         if (activationFunctionForEncog != null) {
-            output.append("\n");
+            output.append('\n');
             output.append("activationFunctionForEncog: ");
             for (ActivationFunction activationFunction : activationFunctionForEncog) {
                 output.append(activationFunction.getClass().getName()).append(", ");

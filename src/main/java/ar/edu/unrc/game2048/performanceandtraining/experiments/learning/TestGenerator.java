@@ -465,11 +465,11 @@ class TestGenerator {
                     } else {
                         explorationRateString = "-explorationRate_" +
                                                 expConfig.getExplorationRateInitialValue() +
-                                                "_" +
+                                                '_' +
                                                 expConfig.getExplorationRateFinalValue() +
-                                                "_" +
+                                                '_' +
                                                 expConfig.getExplorationRateStartInterpolation() +
-                                                "_" +
+                                                '_' +
                                                 expConfig.getExplorationRateFinishInterpolation();
                     }
                     String newFilePath = filePath +

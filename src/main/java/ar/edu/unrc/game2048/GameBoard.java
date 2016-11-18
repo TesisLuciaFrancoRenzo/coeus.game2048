@@ -94,7 +94,7 @@ class GameBoard<NeuralNetworkClass>
      * @param t1
      * @param t2
      * @param t3
-     * @param t4 <p>
+     * @param t4
      *
      * @return
      */
@@ -168,7 +168,7 @@ class GameBoard<NeuralNetworkClass>
 
     private
     boolean calculateCanMove() {
-        if (!this.isFull()) {
+        if (!this.isFull) {
             return true;
         }
         for (int x = 0; x < 4; x++) {
@@ -243,7 +243,7 @@ class GameBoard<NeuralNetworkClass>
         if (this.needToAddTile != other.needToAddTile) {
             return false;
         }
-        if (this.getPartialScore() != other.getPartialScore()) {
+        if (partialScore != other.partialScore) {
             return false;
         }
         return Arrays.deepEquals(this.tiles, other.tiles) && Objects.equals(this.availableSpaceList, other.availableSpaceList);
@@ -255,8 +255,8 @@ class GameBoard<NeuralNetworkClass>
     @Override
     public
     IState getCopy() {
-        GameBoard<NeuralNetworkClass> copy = new GameBoard<>(getGame(), tileContainer);
-        arraycopy(getTiles(), 0, copy.getTiles(), 0, GameBoard.TILE_NUMBER);
+        GameBoard<NeuralNetworkClass> copy = new GameBoard<>(game, tileContainer);
+        arraycopy(tiles, 0, copy.tiles, 0, GameBoard.TILE_NUMBER);
         copy.iWin = iWin;
         copy.canMove = canMove;
         copy.isFull = isFull;
@@ -353,7 +353,7 @@ class GameBoard<NeuralNetworkClass>
         hash = 97 * hash + this.maxTileNumberValue;
         hash = 97 * hash + this.maxTileNumberCode;
         hash = 97 * hash + (this.needToAddTile ? 1 : 0);
-        hash = 97 * hash + this.getPartialScore();
+        hash = 97 * hash + partialScore;
         hash = 97 * hash + Arrays.deepHashCode(this.tiles);
         hash = 97 * hash + Objects.hashCode(this.availableSpaceList);
         return hash;
@@ -376,7 +376,7 @@ class GameBoard<NeuralNetworkClass>
     public
     boolean isEqual(GameBoard<NeuralNetworkClass> gameBoard) {
         for (int i = 0; i < tiles.length; i++) {
-            if (!this.getTiles()[i].equals(gameBoard.getTiles()[i])) {
+            if (!tiles[i].equals(gameBoard.tiles[i])) {
                 return false;
             }
         }
@@ -446,7 +446,7 @@ class GameBoard<NeuralNetworkClass>
 
     /**
      * @param x
-     * @param y <p>
+     * @param y
      *
      * @return
      */
@@ -461,9 +461,9 @@ class GameBoard<NeuralNetworkClass>
     @Override
     public
     Double translateToPerceptronInput(int neuronIndex) {
-        if (neuronIndex < 0 || neuronIndex >= getGame().getNeuralNetworkConfiguration().getNeuronQuantityInLayer()[0]) {
+        if (neuronIndex < 0 || neuronIndex >= game.getNeuralNetworkConfiguration().getNeuronQuantityInLayer()[0]) {
             throw new IllegalArgumentException("neuronIndex range for output layer must be [0," +
-                                               getGame().getNeuralNetworkConfiguration().getNeuronQuantityInLayer()[0] +
+                                               game.getNeuralNetworkConfiguration().getNeuronQuantityInLayer()[0] +
                                                "] but was " +
                                                neuronIndex);
         }
@@ -473,7 +473,6 @@ class GameBoard<NeuralNetworkClass>
     /**
      * actualizamos la traducción del tablero como entrada del perceptron, encriptado y normalizado.
      * También se actualiza el calculo de si este es un tablero final o no.
-     * <p>
      *
      * @param updateInputs
      */
@@ -483,9 +482,9 @@ class GameBoard<NeuralNetworkClass>
         isFull = availableSpaceList.isEmpty();
         canMove = calculateCanMove();
         calculateMaxTile();
-        if (getGame().getNeuralNetworkConfiguration() != null && updateInputs) {
+        if (game.getNeuralNetworkConfiguration() != null && updateInputs) {
             //   assert this.getMaxTileNumberCode() != 0;
-            getGame().getNeuralNetworkConfiguration().calculateNormalizedPerceptronInput(this, normalizedPerceptronInput);
+            game.getNeuralNetworkConfiguration().calculateNormalizedPerceptronInput(this, normalizedPerceptronInput);
         }
     }
 

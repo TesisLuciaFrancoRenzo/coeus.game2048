@@ -53,7 +53,7 @@ class SimpleBoard_32768
     }
 
     /**
-     * @param args <p>
+     * @param args
      *
      * @throws Exception
      */

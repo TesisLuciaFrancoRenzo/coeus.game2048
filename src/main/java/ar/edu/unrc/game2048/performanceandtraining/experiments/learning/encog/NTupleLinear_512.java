@@ -54,7 +54,7 @@ class NTupleLinear_512
     }
 
     /**
-     * @param args <p>
+     * @param args
      *
      * @throws Exception
      */

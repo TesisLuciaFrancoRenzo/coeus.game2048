@@ -39,7 +39,7 @@ class BasicLinearSimplified_512
         extends LearningExperiment<BasicNetwork> {
 
     /**
-     * @param args <p>
+     * @param args
      *
      * @throws Exception
      */

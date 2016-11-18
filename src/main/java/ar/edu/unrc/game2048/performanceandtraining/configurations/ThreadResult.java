@@ -90,10 +90,10 @@ class ThreadResult {
     public
     void addScore(double score) {
         totalScore += score;
-        if (score > getMaxScore()) {
+        if (score > maxScore) {
             maxScore = score;
         }
-        if (score < getMinScore()) {
+        if (score < minScore) {
             minScore = score;
         }
     }

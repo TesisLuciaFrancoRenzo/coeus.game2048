@@ -126,7 +126,7 @@ class PNTupleTanH_512<NeuralNetworkClass>
             GameBoard<NeuralNetworkClass> board,
             List<Double> normalizedPerceptronInput
     ) {
-        for (int i = 0; i < getNumSamples(); i++) {
+        for (int i = 0; i < numSamples; i++) {
             normalizedPerceptronInput.
                                              add(calculateIndex(i, getNTuple(board, i)), 1d);
         }

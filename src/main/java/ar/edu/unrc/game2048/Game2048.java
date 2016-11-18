@@ -284,8 +284,8 @@ class Game2048<NeuralNetworkClass>
             Object[] output,
             IActor actor
     ) {
-        if (this.getNeuralNetworkConfiguration() != null) {
-            return this.getNeuralNetworkConfiguration().computeNumericRepresentationFor(this, output);
+        if (neuralNetworkConfiguration != null) {
+            return neuralNetworkConfiguration.computeNumericRepresentationFor(this, output);
         } else {
             assert output.length == 1;
             return (Double) output[0];
@@ -295,10 +295,10 @@ class Game2048<NeuralNetworkClass>
     @Override
     public
     double deNormalizeValueFromPerceptronOutput(Object value) {
-        if (this.getNeuralNetworkConfiguration() != null) {
-            return this.getNeuralNetworkConfiguration().deNormalizeValueFromNeuralNetworkOutput(value);
+        if (neuralNetworkConfiguration != null) {
+            return neuralNetworkConfiguration.deNormalizeValueFromNeuralNetworkOutput(value);
         } else {
-            return this.getNTupleSystemConfiguration().deNormalizeValueFromNeuralNetworkOutput(value);
+            return nTupleSystemConfiguration.deNormalizeValueFromNeuralNetworkOutput(value);
         }
     }
 
@@ -364,9 +364,9 @@ class Game2048<NeuralNetworkClass>
                                                                                     getNeuralNetwork() != null) {
             if (neuralNetworkConfiguration.getNeuralNetwork() instanceof BasicNetwork) { //es sobre la librería encog
                 //creamos las entradas de la red neuronal
-                double[]  inputs     = new double[getNeuralNetworkConfiguration().getNeuronQuantityInLayer()[0]];
-                IntStream inputLayer = IntStream.range(0, getNeuralNetworkConfiguration().getNeuronQuantityInLayer()[0]);
-                if (getNeuralNetworkConfiguration().isConcurrentInputEnabled()) {
+                double[]  inputs     = new double[neuralNetworkConfiguration.getNeuronQuantityInLayer()[0]];
+                IntStream inputLayer = IntStream.range(0, neuralNetworkConfiguration.getNeuronQuantityInLayer()[0]);
+                if (neuralNetworkConfiguration.isConcurrentInputEnabled()) {
                     inputLayer = inputLayer.parallel();
                 } else {
                     inputLayer = inputLayer.sequential();
@@ -488,8 +488,8 @@ class Game2048<NeuralNetworkClass>
     public
     IState initialize(IActor actor) {
         this.resetGame();
-        assert this.getBoard().getMaxTileNumberCode() != 0;
-        return getBoard().getCopy();
+        assert board.getMaxTileNumberCode() != 0;
+        return board.getCopy();
     }
 
     /**
@@ -634,10 +634,10 @@ class Game2048<NeuralNetworkClass>
     @Override
     public
     double normalizeValueToPerceptronOutput(Object value) {
-        if (this.getNTupleSystemConfiguration() != null) {
-            return this.getNTupleSystemConfiguration().normalizeValueToPerceptronOutput(value);
+        if (nTupleSystemConfiguration != null) {
+            return nTupleSystemConfiguration.normalizeValueToPerceptronOutput(value);
         } else {
-            return this.getNeuralNetworkConfiguration().normalizeValueToPerceptronOutput(value);
+            return neuralNetworkConfiguration.normalizeValueToPerceptronOutput(value);
         }
     }
 
@@ -652,7 +652,7 @@ class Game2048<NeuralNetworkClass>
         g.fillRect(0, 0, this.getSize().width, this.getSize().height);
         for (int y = 0; y < 4; y++) {
             for (int x = 0; x < 4; x++) {
-                drawTile(g, getBoard().getTiles()[x + y * 4], x, y);
+                drawTile(g, board.getTiles()[x + y * 4], x, y);
             }
         }
     }
@@ -671,19 +671,19 @@ class Game2048<NeuralNetworkClass>
             IStatePerceptron afterState;
             switch (keyCode) {
                 case VK_LEFT: {
-                    afterState = computeAfterState(getBoard(), Action.left);
+                    afterState = computeAfterState(board, Action.left);
                     break;
                 }
                 case VK_RIGHT: {
-                    afterState = computeAfterState(getBoard(), Action.right);
+                    afterState = computeAfterState(board, Action.right);
                     break;
                 }
                 case VK_DOWN: {
-                    afterState = computeAfterState(getBoard(), Action.down);
+                    afterState = computeAfterState(board, Action.down);
                     break;
                 }
                 case VK_UP: {
-                    afterState = computeAfterState(getBoard(), Action.up);
+                    afterState = computeAfterState(board, Action.up);
                     break;
                 }
                 default: {
@@ -694,7 +694,7 @@ class Game2048<NeuralNetworkClass>
                 turnNumber++;
                 myScore += ((GameBoard<NeuralNetworkClass>) afterState).getPartialScore();
                 board = (GameBoard<NeuralNetworkClass>) computeNextTurnStateFromAfterState(afterState);
-                if (getBoard().isAWin()) {
+                if (board.isAWin()) {
                     this.myWin = true;
                 }
             }
@@ -703,8 +703,8 @@ class Game2048<NeuralNetworkClass>
             myLoose = true;
         }
         if (myWin || myLoose) {
-            maxNumber = getBoard().getMaxTileNumberValue();
-            maxNumberCode = getBoard().getMaxTileNumberCode();
+            maxNumber = board.getMaxTileNumberValue();
+            maxNumberCode = board.getMaxTileNumberCode();
         }
         if (repaint) {
             try {
@@ -756,15 +756,15 @@ class Game2048<NeuralNetworkClass>
         myScore += ((GameBoard<NeuralNetworkClass>) nextTurnState).getPartialScore();
         board = (GameBoard<NeuralNetworkClass>) nextTurnState;
 
-        if (getBoard().isAWin()) {
+        if (board.isAWin()) {
             this.myWin = true;
         }
         if (!myWin && !board.canMove()) {
             myLoose = true;
         }
         if (myWin || myLoose) {
-            maxNumber = getBoard().getMaxTileNumberValue();
-            maxNumberCode = getBoard().getMaxTileNumberCode();
+            maxNumber = board.getMaxTileNumberValue();
+            maxNumberCode = board.getMaxTileNumberCode();
         }
         if (repaint) {
             try {

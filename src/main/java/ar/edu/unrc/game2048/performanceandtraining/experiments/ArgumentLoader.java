@@ -63,6 +63,7 @@ class ArgumentLoader {
         lambdaList.add(0d);
         lambdaList.add(0.1d);
         lambdaList.add(0.2d);
+        //noinspection ZeroLengthArrayAllocation
         System.out.println(Arrays.toString(lambdaList.toArray(new Double[0])));
         //[0.0, 0.1, 0.2]
 
