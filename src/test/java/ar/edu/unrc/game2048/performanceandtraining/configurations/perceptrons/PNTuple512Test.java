@@ -67,8 +67,7 @@ class PNTuple512Test {
         System.out.println("calculateNormalizedPerceptronInput");
 
         PNTupleTanH_512<BasicNetwork> nTupleConfiguration = new PNTupleTanH_512<>(true);
-        TileContainer tileContainer = new TileContainer(nTupleConfiguration.
-                                                                                   getMaxTile());
+        TileContainer                 tileContainer       = new TileContainer(nTupleConfiguration.getMaxTile());
 
         Game2048<BasicNetwork>  game  = new Game2048<>(nTupleConfiguration, null, (int) Math.pow(2, nTupleConfiguration.getMaxTile()), 0);
         GameBoard<BasicNetwork> board = new GameBoard<>(game, tileContainer);

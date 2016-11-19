@@ -129,8 +129,7 @@ class Game2048Test {
         result = game.listAllPossibleActions(board);
         assertThat(result.size(), is(2));
 
-        Set<IAction> resultSet = new HashSet<>(game.
-                                                           listAllPossibleActions(board));
+        Set<IAction> resultSet = new HashSet<>(game.listAllPossibleActions(board));
         for (IAction action : resultSet) {
             assertThat(resultSet, hasItem(action));
         }
