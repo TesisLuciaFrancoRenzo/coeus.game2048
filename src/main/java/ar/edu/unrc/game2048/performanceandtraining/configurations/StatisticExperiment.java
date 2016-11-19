@@ -571,11 +571,9 @@ class StatisticExperiment<NeuralNetworkClass> {
                     int turnNumber = 0;
                     while (!games.get(i).iLoose() && !games.get(i).iWin()) {
                         if (tdLambdaLearning.isEmpty()) {
-                            neuralNetworkInterfaces.get(i).
-                                    playATurn(games.get(i), null);
+                            neuralNetworkInterfaces.get(i).playATurn(games.get(i), null);
                         } else {
-                            neuralNetworkInterfaces.get(i).
-                                    playATurn(games.get(i), tdLambdaLearning.get(i));
+                            neuralNetworkInterfaces.get(i).playATurn(games.get(i), tdLambdaLearning.get(i));
                         }
                         turnNumber++;
                     }
@@ -587,7 +585,6 @@ class StatisticExperiment<NeuralNetworkClass> {
                         results.get(i).addWin();
                         results.get(i).addLastTurn(turnNumber);
                     }
-
                 }
                 games.get(i).dispose();
             });
