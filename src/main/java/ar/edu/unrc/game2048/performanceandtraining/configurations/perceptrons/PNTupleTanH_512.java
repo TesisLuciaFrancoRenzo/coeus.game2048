@@ -73,8 +73,8 @@ class PNTupleTanH_512<NeuralNetworkClass>
             nTuplesLength[i] = 4;
         }
 
-        this.allSamplePointPossibleValues = new ArrayList<>();
-        this.mapSamplePointValuesIndex = new HashMap<>();
+        allSamplePointPossibleValues = new ArrayList<>();
+        mapSamplePointValuesIndex = new HashMap<>();
         for (int spvIndex = 0; spvIndex <= maxTile; spvIndex++) {
             allSamplePointPossibleValues.add(new Tile(spvIndex));
             mapSamplePointValuesIndex.put(allSamplePointPossibleValues.get(spvIndex), spvIndex);
@@ -92,11 +92,11 @@ class PNTupleTanH_512<NeuralNetworkClass>
             }
             lastNTuplesWeightQuantity = nTuplesWeightQuantity;
         }
-        this.neuronQuantityInLayer = new int[2];
+        neuronQuantityInLayer = new int[2];
         neuronQuantityInLayer[1] = 1;
         neuronQuantityInLayer[0] = lutSize;
 
-        this.activationFunctionForEncog = new ActivationFunction[1];
+        activationFunctionForEncog = new ActivationFunction[1];
         activationFunctionForEncog[0] = new ActivationTANH();
 
         activationFunctionMax = 1;

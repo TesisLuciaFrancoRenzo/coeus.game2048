@@ -67,12 +67,12 @@ class Basic
     @Override
     public
     void initialize() {
-        if (this.getExperimentName() == null) {
-            this.setExperimentName(this.getClass());
+        if (getExperimentName() == null) {
+            setExperimentName(getClass());
         }
-        this.setNeuralNetworkName(this.getExperimentName());
-        this.setTileToWinForTraining(2_048);
-        this.setNeuralNetworkInterfaceFor2048(new RandomExperimentInterface(null));
+        setNeuralNetworkName(getExperimentName());
+        setTileToWinForTraining(2_048);
+        setNeuralNetworkInterfaceFor2048(new RandomExperimentInterface(null));
     }
 
     @Override

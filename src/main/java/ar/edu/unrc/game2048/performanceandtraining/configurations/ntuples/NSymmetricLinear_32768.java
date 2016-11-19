@@ -38,9 +38,9 @@ class NSymmetricLinear_32768
      */
     public
     NSymmetricLinear_32768() {
-        this.activationFunction = FunctionUtils.LINEAR;
-        this.derivedActivationFunction = FunctionUtils.LINEAR_DERIVED;
-        this.concurrency = false;
+        activationFunction = FunctionUtils.LINEAR;
+        derivedActivationFunction = FunctionUtils.LINEAR_DERIVED;
+        concurrency = false;
         int maxTile = 15;
 
         nTuplesLength = new int[4];
@@ -49,7 +49,7 @@ class NSymmetricLinear_32768
         nTuplesLength[2] = 4;
         nTuplesLength[3] = 4;
 
-        this.allSamplePointPossibleValues = new ArrayList<>();
+        allSamplePointPossibleValues = new ArrayList<>();
         for (int i = 0; i <= maxTile; i++) {
             allSamplePointPossibleValues.add(new Tile(i));
         }

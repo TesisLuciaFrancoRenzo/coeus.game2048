@@ -88,14 +88,14 @@ class EncogExperimentInterface
 
         for (ActivationFunction activationFunctionForEncog : perceptronConfiguration.getActivationFunctionForEncog()) {
             if (activationFunctionForEncog instanceof ActivationTANH) {
-                this.activationFunction.add(FunctionUtils.TANH);
-                this.derivedActivationFunction.add(FunctionUtils.TANH_DERIVED);
+                activationFunction.add(FunctionUtils.TANH);
+                derivedActivationFunction.add(FunctionUtils.TANH_DERIVED);
             } else if (activationFunctionForEncog instanceof ActivationSigmoid) {
-                this.activationFunction.add(FunctionUtils.SIGMOID);
-                this.derivedActivationFunction.add(FunctionUtils.SIGMOID_DERIVED);
+                activationFunction.add(FunctionUtils.SIGMOID);
+                derivedActivationFunction.add(FunctionUtils.SIGMOID_DERIVED);
             } else if (activationFunctionForEncog instanceof ActivationLinear) {
-                this.activationFunction.add(FunctionUtils.LINEAR);
-                this.derivedActivationFunction.add(FunctionUtils.LINEAR_DERIVED);
+                activationFunction.add(FunctionUtils.LINEAR);
+                derivedActivationFunction.add(FunctionUtils.LINEAR_DERIVED);
             } else {
                 throw new IllegalArgumentException("El test esta pensado para utilizar TANH, Sigmoid o Linear como función de activación");
             }

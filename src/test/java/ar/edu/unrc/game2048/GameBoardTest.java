@@ -40,13 +40,13 @@ class GameBoardTest {
     public
     GameBoardTest() {
         tileContainer = new TileContainer(17);
-        this.emptyBoard = new Tile[]{tileContainer.getTile(0), tileContainer.getTile(0), tileContainer.
+        emptyBoard = new Tile[]{tileContainer.getTile(0), tileContainer.getTile(0), tileContainer.
                 getTile(0), tileContainer.getTile(0), tileContainer.getTile(0), tileContainer.getTile(0), tileContainer.
                 getTile(0), tileContainer.getTile(0), tileContainer.getTile(0), tileContainer.getTile(0), tileContainer.
                 getTile(0), tileContainer.getTile(0), tileContainer.getTile(0), tileContainer.getTile(0), tileContainer.
                 getTile(0), tileContainer.getTile(0)};
 
-        this.randomBoard = new Tile[]{tileContainer.getTile(0), tileContainer.getTile(4), tileContainer.
+        randomBoard = new Tile[]{tileContainer.getTile(0), tileContainer.getTile(4), tileContainer.
                 getTile(0), tileContainer.getTile(17), tileContainer.getTile(4), tileContainer.getTile(6), tileContainer.
                 getTile(4), tileContainer.getTile(4), tileContainer.getTile(2), tileContainer.getTile(4), tileContainer.
                 getTile(5), tileContainer.getTile(7), tileContainer.getTile(4), tileContainer.getTile(0), tileContainer.

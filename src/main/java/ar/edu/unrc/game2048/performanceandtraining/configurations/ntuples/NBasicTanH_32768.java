@@ -43,9 +43,9 @@ class NBasicTanH_32768
      */
     public
     NBasicTanH_32768() {
-        this.activationFunction = FunctionUtils.TANH;
-        this.derivedActivationFunction = FunctionUtils.TANH_DERIVED;
-        this.concurrency = false;
+        activationFunction = FunctionUtils.TANH;
+        derivedActivationFunction = FunctionUtils.TANH_DERIVED;
+        concurrency = false;
         double activationFunctionMax = 1;
         double activationFunctionMin = -1;
         int    maxTile               = 15;
@@ -57,7 +57,7 @@ class NBasicTanH_32768
             nTuplesLength[i] = 4;
         }
 
-        this.allSamplePointPossibleValues = new ArrayList<>();
+        allSamplePointPossibleValues = new ArrayList<>();
         for (int i = 0; i <= maxTile; i++) {
             allSamplePointPossibleValues.add(new Tile(i));
         }

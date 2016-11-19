@@ -93,7 +93,7 @@ class Game2048<NeuralNetworkClass>
             int numberToWin,
             int delayPerMove
     ) {
-        this.neuralNetworkConfiguration = perceptronConfiguration;
+        neuralNetworkConfiguration = perceptronConfiguration;
         this.delayPerMove = delayPerMove;
         gameFrame = new JFrame();
         gameFrame.setTitle("2048 Game");
@@ -118,11 +118,11 @@ class Game2048<NeuralNetworkClass>
         resetGame();
 
         if (delayPerMove > 0) {
-            this.repaint = true;
+            repaint = true;
             gameFrame.setLocationRelativeTo(null);
             gameFrame.setVisible(true);
         } else {
-            this.repaint = false;
+            repaint = false;
             gameFrame.setState(JFrame.ICONIFIED);
             gameFrame.setFocusableWindowState(false);
             gameFrame.setFocusable(false);
@@ -487,7 +487,7 @@ class Game2048<NeuralNetworkClass>
     @Override
     public
     IState initialize(IActor actor) {
-        this.resetGame();
+        resetGame();
         assert board.getMaxTileNumberCode() != 0;
         return board.getCopy();
     }
@@ -589,7 +589,7 @@ class Game2048<NeuralNetworkClass>
         for (int i = 0; i < 4 && !oldLine[i].isEmpty(); i++) {
             Tile tile = oldLine[i];
             if (i < 3 && tile.getCode() == oldLine[i + 1].getCode()) {
-                tile = this.tileContainer.getTile(tile.getCode() + 1);
+                tile = tileContainer.getTile(tile.getCode() + 1);
                 afterState.addPartialScore(tile.getGameValue());
                 if (tile.getGameValue() >= numberToWin) {
                     afterState.setToWin();
@@ -649,7 +649,7 @@ class Game2048<NeuralNetworkClass>
     void paint(Graphics g) {
         super.paint(g);
         g.setColor(BG_COLOR);
-        g.fillRect(0, 0, this.getSize().width, this.getSize().height);
+        g.fillRect(0, 0, getSize().width, getSize().height);
         for (int y = 0; y < 4; y++) {
             for (int x = 0; x < 4; x++) {
                 drawTile(g, board.getTiles()[x + y * 4], x, y);
@@ -695,7 +695,7 @@ class Game2048<NeuralNetworkClass>
                 myScore += ((GameBoard<NeuralNetworkClass>) afterState).getPartialScore();
                 board = (GameBoard<NeuralNetworkClass>) computeNextTurnStateFromAfterState(afterState);
                 if (board.isAWin()) {
-                    this.myWin = true;
+                    myWin = true;
                 }
             }
         }
@@ -709,8 +709,8 @@ class Game2048<NeuralNetworkClass>
         if (repaint) {
             try {
                 repaint();
-                if (this.delayPerMove > 0) {
-                    sleep(this.delayPerMove);
+                if (delayPerMove > 0) {
+                    sleep(delayPerMove);
                 }
             } catch (InterruptedException ex) {
                 Logger.getLogger(Game2048.class.getName()).log(Level.SEVERE, null, ex);
@@ -757,7 +757,7 @@ class Game2048<NeuralNetworkClass>
         board = (GameBoard<NeuralNetworkClass>) nextTurnState;
 
         if (board.isAWin()) {
-            this.myWin = true;
+            myWin = true;
         }
         if (!myWin && !board.canMove()) {
             myLoose = true;
@@ -769,8 +769,8 @@ class Game2048<NeuralNetworkClass>
         if (repaint) {
             try {
                 repaint();
-                if (this.delayPerMove > 0) {
-                    sleep(this.delayPerMove);
+                if (delayPerMove > 0) {
+                    sleep(delayPerMove);
                 }
             } catch (InterruptedException ex) {
                 Logger.getLogger(Game2048.class.getName()).log(Level.SEVERE, null, ex);

@@ -52,14 +52,14 @@ class PBinary_2048<NeuralNetworkClass>
         maxScore = 500_000;
         minScore = -500_000;
 
-        this.neuronQuantityInLayer = new int[3];
+        neuronQuantityInLayer = new int[3];
         neuronQuantityInLayer[0] = 64;
         neuronQuantityInLayer[1] = 128;
         neuronQuantityInLayer[2] = 1;
 
         concurrentInput = false;
 
-        this.activationFunctionForEncog = new ActivationFunction[2];
+        activationFunctionForEncog = new ActivationFunction[2];
         activationFunctionForEncog[0] = new ActivationTANH();
         activationFunctionForEncog[1] = new ActivationTANH();
 
@@ -92,7 +92,7 @@ class PBinary_2048<NeuralNetworkClass>
                 currentNeuron++;
             }
         }
-        assert currentNeuron == this.getNeuronQuantityInLayer()[0];
+        assert currentNeuron == getNeuronQuantityInLayer()[0];
     }
 
     /**

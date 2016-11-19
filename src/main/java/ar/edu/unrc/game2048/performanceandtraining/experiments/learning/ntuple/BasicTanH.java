@@ -93,13 +93,13 @@ class BasicTanH
     @Override
     public
     void initialize() {
-        this.setTileToWinForTraining(32_768);
-        if (this.getExperimentName() == null) {
-            this.setExperimentName(this.getClass());
+        setTileToWinForTraining(32_768);
+        if (getExperimentName() == null) {
+            setExperimentName(getClass());
         }
-        this.setNeuralNetworkName(this.getExperimentName());
+        setNeuralNetworkName(getExperimentName());
         NTupleConfiguration2048 config = new NBasicTanH_32768();
-        this.setNeuralNetworkInterfaceFor2048(new NTupleExperimentInterface(config));
+        setNeuralNetworkInterfaceFor2048(new NTupleExperimentInterface(config));
     }
 
     @Override

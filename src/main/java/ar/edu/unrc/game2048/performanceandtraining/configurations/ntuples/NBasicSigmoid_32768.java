@@ -43,9 +43,9 @@ class NBasicSigmoid_32768
      */
     public
     NBasicSigmoid_32768() {
-        this.activationFunction = FunctionUtils.SIGMOID;
-        this.derivedActivationFunction = FunctionUtils.SIGMOID_DERIVED;
-        this.concurrency = false;
+        activationFunction = FunctionUtils.SIGMOID;
+        derivedActivationFunction = FunctionUtils.SIGMOID_DERIVED;
+        concurrency = false;
         double activationFunctionMax = 1;
         double activationFunctionMin = 0;
         int    maxTile               = 15;
@@ -57,7 +57,7 @@ class NBasicSigmoid_32768
             nTuplesLength[i] = 4;
         }
 
-        this.allSamplePointPossibleValues = new ArrayList<>();
+        allSamplePointPossibleValues = new ArrayList<>();
         for (int i = 0; i <= maxTile; i++) {
             allSamplePointPossibleValues.add(new Tile(i));
         }

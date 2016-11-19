@@ -142,9 +142,9 @@ class GameBoard<NeuralNetworkClass>
             int     index   = (int) (random() * availableSpaceList.size()) % availableSpaceList.size();
             Integer tilePos = availableSpaceList.get(index);
             int     value   = random() < 0.9 ? 1 : 2;
-            tiles[tilePos] = this.tileContainer.getTile(value);
+            tiles[tilePos] = tileContainer.getTile(value);
         }
-        this.updateInternalState(updateInputs);
+        updateInternalState(updateInputs);
     }
 
     /**
@@ -168,13 +168,13 @@ class GameBoard<NeuralNetworkClass>
 
     private
     boolean calculateCanMove() {
-        if (!this.isFull) {
+        if (!isFull) {
             return true;
         }
         for (int x = 0; x < 4; x++) {
             for (int y = 0; y < 4; y++) {
-                Tile t = this.tileAt(x, y);
-                if ((x < 3 && t.getCode() == this.tileAt(x + 1, y).getCode()) || ((y < 3) && t.getCode() == this.tileAt(x, y + 1).getCode())) {
+                Tile t = tileAt(x, y);
+                if ((x < 3 && t.getCode() == tileAt(x + 1, y).getCode()) || ((y < 3) && t.getCode() == tileAt(x, y + 1).getCode())) {
                     return true;
                 }
             }
@@ -184,12 +184,12 @@ class GameBoard<NeuralNetworkClass>
 
     private
     void calculateMaxTile() {
-        this.maxTileNumberValue = 0;
-        this.maxTileNumberCode = 0;
+        maxTileNumberValue = 0;
+        maxTileNumberCode = 0;
         for (Tile t : tiles) {
-            if (t.getGameValue() > this.maxTileNumberValue) {
-                this.maxTileNumberValue = t.getGameValue();
-                this.maxTileNumberCode = t.getCode();
+            if (t.getGameValue() > maxTileNumberValue) {
+                maxTileNumberValue = t.getGameValue();
+                maxTileNumberCode = t.getCode();
             }
         }
     }
@@ -228,25 +228,14 @@ class GameBoard<NeuralNetworkClass>
             return false;
         }
         final GameBoard<NeuralNetworkClass> other = (GameBoard<NeuralNetworkClass>) obj;
-        if (this.iWin != other.iWin) {
-            return false;
-        }
-        if (this.canMove != other.canMove) {
-            return false;
-        }
-        if (this.isFull != other.isFull) {
-            return false;
-        }
-        if (this.maxTileNumberValue != other.maxTileNumberValue) {
-            return false;
-        }
-        if (this.needToAddTile != other.needToAddTile) {
-            return false;
-        }
-        if (partialScore != other.partialScore) {
-            return false;
-        }
-        return Arrays.deepEquals(this.tiles, other.tiles) && Objects.equals(this.availableSpaceList, other.availableSpaceList);
+        return iWin == other.iWin &&
+               canMove == other.canMove &&
+               isFull == other.isFull &&
+               maxTileNumberValue == other.maxTileNumberValue &&
+               needToAddTile == other.needToAddTile &&
+               partialScore == other.partialScore &&
+               Arrays.deepEquals(tiles, other.tiles) &&
+               Objects.equals(availableSpaceList, other.availableSpaceList);
     }
 
     /**
@@ -347,15 +336,15 @@ class GameBoard<NeuralNetworkClass>
     public
     int hashCode() {
         int hash = 5;
-        hash = 97 * hash + (this.iWin ? 1 : 0);
-        hash = 97 * hash + (this.canMove ? 1 : 0);
-        hash = 97 * hash + (this.isFull ? 1 : 0);
-        hash = 97 * hash + this.maxTileNumberValue;
-        hash = 97 * hash + this.maxTileNumberCode;
-        hash = 97 * hash + (this.needToAddTile ? 1 : 0);
+        hash = 97 * hash + (iWin ? 1 : 0);
+        hash = 97 * hash + (canMove ? 1 : 0);
+        hash = 97 * hash + (isFull ? 1 : 0);
+        hash = 97 * hash + maxTileNumberValue;
+        hash = 97 * hash + maxTileNumberCode;
+        hash = 97 * hash + (needToAddTile ? 1 : 0);
         hash = 97 * hash + partialScore;
-        hash = 97 * hash + Arrays.deepHashCode(this.tiles);
-        hash = 97 * hash + Objects.hashCode(this.availableSpaceList);
+        hash = 97 * hash + Arrays.deepHashCode(tiles);
+        hash = 97 * hash + Objects.hashCode(availableSpaceList);
         return hash;
     }
 
@@ -388,7 +377,7 @@ class GameBoard<NeuralNetworkClass>
      */
     public
     boolean isFull() {
-        return this.isFull;
+        return isFull;
     }
 
     /**
@@ -427,8 +416,8 @@ class GameBoard<NeuralNetworkClass>
                 probability = 0.1;
             }
             for (int index = 0; index < availableSpaceList.size() - 1; index++) {
-                @SuppressWarnings("unchecked") GameBoard<NeuralNetworkClass> copy = (GameBoard<NeuralNetworkClass>) this.getCopy();
-                copy.tiles[availableSpaceList.get(index)] = this.tileContainer.getTile(value);
+                @SuppressWarnings("unchecked") GameBoard<NeuralNetworkClass> copy = (GameBoard<NeuralNetworkClass>) getCopy();
+                copy.tiles[availableSpaceList.get(index)] = tileContainer.getTile(value);
                 copy.updateInternalState(true);
                 output.add(new StateProbability(copy, probability));
             }

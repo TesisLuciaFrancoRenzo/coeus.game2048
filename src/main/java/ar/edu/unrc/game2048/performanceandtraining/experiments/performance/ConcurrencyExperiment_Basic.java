@@ -311,15 +311,15 @@ class ConcurrencyExperiment_Basic
     @Override
     public
     void initialize() {
-        this.setTileToWinForTraining(2_048);
-        if (this.getExperimentName() == null) {
-            this.setExperimentName("ConcurrencyTimes");
+        setTileToWinForTraining(2_048);
+        if (getExperimentName() == null) {
+            setExperimentName("ConcurrencyTimes");
         }
-        this.setNeuralNetworkName(this.getExperimentName());
+        setNeuralNetworkName(getExperimentName());
         NeuralNetworkConfiguration2048<BasicNetwork> config = new PBinary_2048<>();
         config.setNeuronQuantityInLayer(currentConfig.getNeuronQuantityInLayer());
         config.setActivationFunctionForEncog(currentConfig.getActivationFunctionForEncog());
-        this.setNeuralNetworkInterfaceFor2048(new EncogExperimentInterface(config));
+        setNeuralNetworkInterfaceFor2048(new EncogExperimentInterface(config));
     }
 
     @Override

@@ -113,7 +113,7 @@ class StatisticExperiment<NeuralNetworkClass> {
             File randomNeuralNetworkFile
     )
             throws IOException, InvalidFormatException {
-        InputStream inputXLSX = this.getClass().getResourceAsStream("/ar/edu/unrc/game2048/performanceandtraining/Estadisticas.xlsx");
+        InputStream inputXLSX = getClass().getResourceAsStream("/ar/edu/unrc/game2048/performanceandtraining/Estadisticas.xlsx");
         Workbook    wb        = WorkbookFactory.create(inputXLSX);
 
         try (FileOutputStream outputXLSX = new FileOutputStream(filePath + "_STATISTICS" + ".xlsx")) {
@@ -397,7 +397,7 @@ class StatisticExperiment<NeuralNetworkClass> {
      */
     public
     void setSimulations(int threads) {
-        this.simulations = threads;
+        simulations = threads;
     }
 
     /**
@@ -707,8 +707,7 @@ class StatisticExperiment<NeuralNetworkClass> {
             boolean createNeuralNetworkFile
     )
             throws Exception {
-        String dirPath = experimentPath +
-                         this.learningExperiment.getNeuralNetworkInterfaceFor2048().getLibName() +
+        String dirPath = experimentPath + learningExperiment.getNeuralNetworkInterfaceFor2048().getLibName() +
                          File.separator +
                          experimentName +
                          File.separator;
@@ -831,8 +830,8 @@ class StatisticExperiment<NeuralNetworkClass> {
         try {
             learningMethod = null;
             if (learningExperiment != null) {
-                this.tileToWin = learningExperiment.getTileToWinForTraining();
-                this.experimentName = learningExperiment.getExperimentName();
+                tileToWin = learningExperiment.getTileToWinForTraining();
+                experimentName = learningExperiment.getExperimentName();
             }
             initializeStatistics();
             run(experimentPath, delayPerMove, createPerceptronFile);

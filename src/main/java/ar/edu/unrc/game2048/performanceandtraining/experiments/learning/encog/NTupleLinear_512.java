@@ -109,13 +109,13 @@ class NTupleLinear_512
     @Override
     public
     void initialize() {
-        this.setTileToWinForTraining(512);
-        if (this.getExperimentName() == null) {
-            this.setExperimentName(this.getClass());
+        setTileToWinForTraining(512);
+        if (getExperimentName() == null) {
+            setExperimentName(getClass());
         }
-        this.setNeuralNetworkName(this.getExperimentName());
+        setNeuralNetworkName(getExperimentName());
         NeuralNetworkConfiguration2048<BasicNetwork> config = new PNTupleLinear_512<>(hasBias);
-        this.setNeuralNetworkInterfaceFor2048(new EncogExperimentInterface(config));
+        setNeuralNetworkInterfaceFor2048(new EncogExperimentInterface(config));
     }
 
     @Override

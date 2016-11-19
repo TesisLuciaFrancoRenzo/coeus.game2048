@@ -107,13 +107,13 @@ class SimpleBoard_32768
     @Override
     public
     void initialize() {
-        this.setTileToWinForTraining(32_768);
-        if (this.getExperimentName() == null) {
-            this.setExperimentName(this.getClass());
+        setTileToWinForTraining(32_768);
+        if (getExperimentName() == null) {
+            setExperimentName(getClass());
         }
-        this.setNeuralNetworkName(this.getExperimentName());
+        setNeuralNetworkName(getExperimentName());
         NeuralNetworkConfiguration2048<BasicNetwork> config = new PBoard_32768<>(hasBias);
-        this.setNeuralNetworkInterfaceFor2048(new EncogExperimentInterface(config));
+        setNeuralNetworkInterfaceFor2048(new EncogExperimentInterface(config));
     }
 
     @Override

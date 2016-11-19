@@ -76,11 +76,11 @@ class NTupleExperimentInterface
      */
     public
     NTupleSystem initializeNTupleSystem(boolean randomized) {
-        NTupleSystem nTupleSystem = new NTupleSystem(
-                this.getNTupleConfiguration().getAllSamplePointPossibleValues(), this.getNTupleConfiguration().getNTuplesLength(),
-                this.getNTupleConfiguration().getActivationFunction(),
-                this.getNTupleConfiguration().getDerivedActivationFunction(),
-                this.getNTupleConfiguration().isConcurrency()
+        NTupleSystem nTupleSystem = new NTupleSystem(getNTupleConfiguration().getAllSamplePointPossibleValues(),
+                getNTupleConfiguration().getNTuplesLength(),
+                getNTupleConfiguration().getActivationFunction(),
+                getNTupleConfiguration().getDerivedActivationFunction(),
+                getNTupleConfiguration().isConcurrency()
         );
         if (randomized) {
             nTupleSystem.randomize();
@@ -96,7 +96,7 @@ class NTupleExperimentInterface
             boolean createPerceptronFile
     )
             throws Exception {
-        this.getNTupleConfiguration().setNTupleSystem(initializeNTupleSystem(randomizedIfNotExist));
+        getNTupleConfiguration().setNTupleSystem(initializeNTupleSystem(randomizedIfNotExist));
         if (createPerceptronFile) {
             if (!perceptronFile.exists()) {
                 //Si el archivo no existe, creamos un perceptron nuevo inicializado al azar
@@ -112,7 +112,7 @@ class NTupleExperimentInterface
     public
     void saveNeuralNetwork(File perceptronFile)
             throws Exception {
-        this.getNTupleConfiguration().getNTupleSystem().save(perceptronFile);
+        getNTupleConfiguration().getNTupleSystem().save(perceptronFile);
     }
 
 }

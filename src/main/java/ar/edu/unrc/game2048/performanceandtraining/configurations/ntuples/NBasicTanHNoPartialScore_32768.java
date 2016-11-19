@@ -43,11 +43,11 @@ class NBasicTanHNoPartialScore_32768
      */
     public
     NBasicTanHNoPartialScore_32768() {
-        this.activationFunction = FunctionUtils.TANH;
-        this.derivedActivationFunction = FunctionUtils.TANH_DERIVED;
+        activationFunction = FunctionUtils.TANH;
+        derivedActivationFunction = FunctionUtils.TANH_DERIVED;
         double activationFunctionMax = 1;
         double activationFunctionMin = -1;
-        this.concurrency = false;
+        concurrency = false;
 
         normOutput = new NormalizedField(NormalizationAction.Normalize, null, maxReward, minReward, activationFunctionMax, activationFunctionMin);
 
@@ -57,7 +57,7 @@ class NBasicTanHNoPartialScore_32768
         }
 
         int maxTile = 15;
-        this.allSamplePointPossibleValues = new ArrayList<>();
+        allSamplePointPossibleValues = new ArrayList<>();
         for (int i = 0; i <= maxTile; i++) {
             allSamplePointPossibleValues.add(new Tile(i));
         }

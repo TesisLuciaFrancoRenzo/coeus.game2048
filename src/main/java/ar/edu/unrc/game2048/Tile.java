@@ -67,7 +67,7 @@ class Tile
             return false;
         }
         final Tile other = (Tile) obj;
-        return this.code == other.code;
+        return code == other.code;
     }
 
     /**
@@ -130,7 +130,7 @@ class Tile
     public
     int hashCode() {
         int hash = 7;
-        hash = 37 * hash + this.code;
+        hash = 37 * hash + code;
         return hash;
     }
 

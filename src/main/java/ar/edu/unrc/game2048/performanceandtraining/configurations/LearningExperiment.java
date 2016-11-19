@@ -240,18 +240,11 @@ class LearningExperiment<NeuralNetworkClass> {
     }
 
     /**
-     * Establece el nombre del experimento basado en el nombre de la clase {@code experimentClass}.
-     *
-     * @param experimentClass clase de la cual extraer el nombre del experimento.
+     * @param experimentName nombre del experimento.
      */
     public
-    void setExperimentName(Class experimentClass) {
-        String className = experimentClass.getName();
-        int    lastDot   = className.lastIndexOf('.');
-        if (lastDot != -1) {
-            className = className.substring(lastDot + 1);
-        }
-        this.experimentName = className;
+    void setExperimentName(String experimentName) {
+        this.experimentName = experimentName;
     }
 
     /**
@@ -612,23 +605,23 @@ class LearningExperiment<NeuralNetworkClass> {
                     if (line == null) {
                         throw new IllegalArgumentException("el archivo de configuración no tiene un formato válido");
                     }
-                    this.lastSavedGamePlayedNumber = Integer.parseInt(line);
+                    lastSavedGamePlayedNumber = Integer.parseInt(line);
                     line = reader.readLine();
                     if (line == null) {
                         throw new IllegalArgumentException("el archivo de configuración no tiene un formato válido");
                     }
-                    this.backupNumber = Integer.parseInt(line);
+                    backupNumber = Integer.parseInt(line);
                     line = reader.readLine();
                     if (line == null) {
                         throw new IllegalArgumentException("el archivo de configuración no tiene un formato válido");
                     }
-                    this.elapsedTime = Long.parseLong(line);
+                    elapsedTime = Long.parseLong(line);
                 }
             }
 
             int zeroNumbers = 1;
-            if (!this.statisticsOnly) {
-                zeroNumbers = Integer.toString(this.gamesToPlay / this.saveBackupEvery).length();
+            if (!statisticsOnly) {
+                zeroNumbers = Integer.toString(gamesToPlay / saveBackupEvery).length();
             }
 
             boolean backupRandomPerceptron = false;
@@ -645,7 +638,7 @@ class LearningExperiment<NeuralNetworkClass> {
 
             // Si hay un perceptron ya entrenado, lo buscamos en el archivo.
             // En caso contrario creamos un perceptron vacío, inicializado al azar
-            neuralNetworkInterfaceFor2048.loadOrCreatePerceptron(perceptronFile, this.initializePerceptronRandomized, createPerceptronFile);
+            neuralNetworkInterfaceFor2048.loadOrCreatePerceptron(perceptronFile, initializePerceptronRandomized, createPerceptronFile);
             //FIXME que hacer si esta ROTO? solucionar esto
 
             //creamos una interfaz de comunicación entre la red neuronal de encog y el algoritmo de entrenamiento
@@ -655,15 +648,15 @@ class LearningExperiment<NeuralNetworkClass> {
             }
 
             if (neuralNetworkInterfaceFor2048.getNeuralNetworkInterface() != null) {
-                this.learningAlgorithm = instanceOfTdLearningImplementation(neuralNetworkInterfaceFor2048.getNeuralNetworkInterface());
-                this.learningAlgorithm.setComputeParallelBestPossibleAction(concurrencyInComputeBestPossibleAction);
+                learningAlgorithm = instanceOfTdLearningImplementation(neuralNetworkInterfaceFor2048.getNeuralNetworkInterface());
+                learningAlgorithm.setComputeParallelBestPossibleAction(concurrencyInComputeBestPossibleAction);
             }
             if (neuralNetworkInterfaceFor2048.getNTupleConfiguration() != null) {
-                this.learningAlgorithm = instanceOfTdLearningImplementation(neuralNetworkInterfaceFor2048.getNTupleConfiguration().getNTupleSystem());
-                this.learningAlgorithm.setComputeParallelBestPossibleAction(concurrencyInComputeBestPossibleAction);
+                learningAlgorithm = instanceOfTdLearningImplementation(neuralNetworkInterfaceFor2048.getNTupleConfiguration().getNTupleSystem());
+                learningAlgorithm.setComputeParallelBestPossibleAction(concurrencyInComputeBestPossibleAction);
             }
 
-            if (learningAlgorithm == null && !this.statisticsOnly) {
+            if (learningAlgorithm == null && !statisticsOnly) {
                 throw new IllegalArgumentException("learningAlgorithm no puede ser null");
             }
 
@@ -682,7 +675,7 @@ class LearningExperiment<NeuralNetworkClass> {
                     delayPerMove
             );
 
-            if (!this.statisticsOnly) {
+            if (!statisticsOnly) {
                 //comenzamos a entrenar y guardar estadisticas en el archivo de log
                 if (logsActivated) {
                     try (PrintStream printStream = new PrintStream(logFile, "UTF-8")) {
@@ -693,16 +686,16 @@ class LearningExperiment<NeuralNetworkClass> {
                 }
                 if (learningAlgorithm.canCollectStatistics()) {
                     avgBestPossibleActionTimes = 0d;
-                    for (Double sample : this.bestPossibleActionTimes) {
+                    for (Double sample : bestPossibleActionTimes) {
                         avgBestPossibleActionTimes += sample;
                     }
-                    avgBestPossibleActionTimes /= (this.bestPossibleActionTimes.size() * 1d);
+                    avgBestPossibleActionTimes /= (bestPossibleActionTimes.size() * 1d);
 
                     avgTrainingTimes = 0d;
-                    for (Double sample : this.trainingTimes) {
+                    for (Double sample : trainingTimes) {
                         avgTrainingTimes += sample;
                     }
-                    avgTrainingTimes /= (this.trainingTimes.size() * 1d);
+                    avgTrainingTimes /= (trainingTimes.size() * 1d);
                 }
                 //guardamos los progresos en un archivo
                 if (createPerceptronFile) {
@@ -714,18 +707,18 @@ class LearningExperiment<NeuralNetworkClass> {
 
             System.out.println("Training Finished.");
 
-            if (this.simulationsForStatistics > 0 && this.gamesToPlayPerThreadForStatistics > 0) {
+            if (simulationsForStatistics > 0 && gamesToPlayPerThreadForStatistics > 0) {
                 statisticExperiment = new StatisticExperiment<NeuralNetworkClass>(this) {
                     @Override
                     protected
                     void initializeStatistics() {
-                        this.setGamesToPlayPerThread(gamesToPlayPerThreadForStatistics);
-                        this.saveBackupEvery(saveBackupEvery);
-                        this.setSimulations(simulationsForStatistics);
-                        this.setLearningMethod(learningAlgorithm);
-                        this.setTileToWinForStatistics(tileToWinForStatistics);
-                        this.setExportToExcel(exportToExcel);
-                        this.setRunStatisticsForBackups(runStatisticsForBackups);
+                        setGamesToPlayPerThread(gamesToPlayPerThreadForStatistics);
+                        saveBackupEvery(saveBackupEvery);
+                        setSimulations(simulationsForStatistics);
+                        setLearningMethod(learningAlgorithm);
+                        setTileToWinForStatistics(tileToWinForStatistics);
+                        setExportToExcel(exportToExcel);
+                        setRunStatisticsForBackups(runStatisticsForBackups);
                     }
                 };
                 statisticExperiment.setFileName(experimentName);
@@ -813,15 +806,22 @@ class LearningExperiment<NeuralNetworkClass> {
      */
     public
     void setConcurrencyInComputeBestPossibleAction(boolean parallel) {
-        this.concurrencyInComputeBestPossibleAction = parallel;
+        concurrencyInComputeBestPossibleAction = parallel;
     }
 
     /**
-     * @param experimentName nombre del experimento.
+     * Establece el nombre del experimento basado en el nombre de la clase {@code experimentClass}.
+     *
+     * @param experimentClass clase de la cual extraer el nombre del experimento.
      */
     public
-    void setExperimentName(String experimentName) {
-        this.experimentName = experimentName;
+    void setExperimentName(Class experimentClass) {
+        String className = experimentClass.getName();
+        int    lastDot   = className.lastIndexOf('.');
+        if (lastDot != -1) {
+            className = className.substring(lastDot + 1);
+        }
+        experimentName = className;
     }
 
     /**
@@ -845,11 +845,11 @@ class LearningExperiment<NeuralNetworkClass> {
         if (finalValue < 0 || finalValue > 1) {
             throw new IllegalArgumentException("finalValue debe estar en el intervalo [0,1]");
         }
-        this.explorationRate = EExplorationRateAlgorithms.linear;
-        this.explorationRateInitialValue = initialValue;
-        this.explorationRateStartDecrementing = startDecrementing;
-        this.explorationRateFinalValue = finalValue;
-        this.explorationRateFinishDecrementing = finishDecrementing;
+        explorationRate = EExplorationRateAlgorithms.linear;
+        explorationRateInitialValue = initialValue;
+        explorationRateStartDecrementing = startDecrementing;
+        explorationRateFinalValue = finalValue;
+        explorationRateFinishDecrementing = finishDecrementing;
     }
 
     /**
@@ -860,8 +860,8 @@ class LearningExperiment<NeuralNetworkClass> {
         if (value < 0 || value > 1) {
             throw new IllegalArgumentException("value debe estar en el intervalo [0,1]");
         }
-        this.explorationRate = EExplorationRateAlgorithms.fixed;
-        this.explorationRateInitialValue = value;
+        explorationRate = EExplorationRateAlgorithms.fixed;
+        explorationRateInitialValue = value;
     }
 
     /**
@@ -887,7 +887,7 @@ class LearningExperiment<NeuralNetworkClass> {
      */
     public
     void setLearningRateAdaptationToAnnealing(int annealingT) {
-        this.learningRateAdaptation = ELearningRateAdaptation.annealing;
+        learningRateAdaptation = ELearningRateAdaptation.annealing;
         this.annealingT = annealingT;
     }
 
@@ -896,7 +896,7 @@ class LearningExperiment<NeuralNetworkClass> {
      */
     public
     void setLearningRateAdaptationToFixed() {
-        this.learningRateAdaptation = ELearningRateAdaptation.fixed;
+        learningRateAdaptation = ELearningRateAdaptation.fixed;
     }
 
     /**
@@ -962,7 +962,7 @@ class LearningExperiment<NeuralNetworkClass> {
     )
             throws Exception {
         File perceptronFileBackup;
-        switch (this.learningRateAdaptation) {
+        switch (learningRateAdaptation) {
             case fixed: {
                 learningAlgorithm.setFixedLearningRate();
                 break;
@@ -972,17 +972,16 @@ class LearningExperiment<NeuralNetworkClass> {
                 break;
             }
         }
-        switch (this.explorationRate) {
+        switch (explorationRate) {
             case fixed: {
-                learningAlgorithm.setFixedExplorationRate(this.explorationRateInitialValue);
+                learningAlgorithm.setFixedExplorationRate(explorationRateInitialValue);
                 break;
             }
             case linear: {
-                learningAlgorithm.setLinearExplorationRate(
-                        this.explorationRateInitialValue,
-                        this.explorationRateStartDecrementing,
-                        this.explorationRateFinalValue,
-                        this.explorationRateFinishDecrementing
+                learningAlgorithm.setLinearExplorationRate(explorationRateInitialValue,
+                        explorationRateStartDecrementing,
+                        explorationRateFinalValue,
+                        explorationRateFinishDecrementing
                 );
                 break;
             }

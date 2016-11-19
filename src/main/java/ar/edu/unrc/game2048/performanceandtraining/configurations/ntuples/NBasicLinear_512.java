@@ -38,9 +38,9 @@ class NBasicLinear_512
      */
     public
     NBasicLinear_512() {
-        this.activationFunction = FunctionUtils.LINEAR;
-        this.derivedActivationFunction = FunctionUtils.LINEAR_DERIVED;
-        this.concurrency = false;
+        activationFunction = FunctionUtils.LINEAR;
+        derivedActivationFunction = FunctionUtils.LINEAR_DERIVED;
+        concurrency = false;
         int maxTile = 9;
 
         nTuplesLength = new int[17];
@@ -48,7 +48,7 @@ class NBasicLinear_512
             nTuplesLength[i] = 4;
         }
 
-        this.allSamplePointPossibleValues = new ArrayList<>();
+        allSamplePointPossibleValues = new ArrayList<>();
         for (int i = 0; i <= maxTile; i++) {
             allSamplePointPossibleValues.add(new Tile(i));
         }

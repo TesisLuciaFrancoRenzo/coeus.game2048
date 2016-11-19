@@ -44,9 +44,9 @@ class NSymmetricTanH_32768
      */
     public
     NSymmetricTanH_32768() {
-        this.activationFunction = FunctionUtils.TANH;
-        this.derivedActivationFunction = FunctionUtils.TANH_DERIVED;
-        this.concurrency = false;
+        activationFunction = FunctionUtils.TANH;
+        derivedActivationFunction = FunctionUtils.TANH_DERIVED;
+        concurrency = false;
         double activationFunctionMax = 1;
         double activationFunctionMin = -1;
 
@@ -59,7 +59,7 @@ class NSymmetricTanH_32768
         nTuplesLength[3] = 4;
 
         int maxTile = 15;
-        this.allSamplePointPossibleValues = new ArrayList<>();
+        allSamplePointPossibleValues = new ArrayList<>();
         for (int i = 0; i <= maxTile; i++) {
             allSamplePointPossibleValues.add(new Tile(i));
         }

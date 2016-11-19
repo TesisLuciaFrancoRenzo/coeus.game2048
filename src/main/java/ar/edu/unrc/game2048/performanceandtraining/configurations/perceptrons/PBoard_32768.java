@@ -59,7 +59,7 @@ class PBoard_32768<NeuralNetworkClass>
 
         minCodedBoardNumber = 0;
 
-        this.neuronQuantityInLayer = new int[4];
+        neuronQuantityInLayer = new int[4];
         neuronQuantityInLayer[0] = 16;
         neuronQuantityInLayer[1] = 5_000;
         neuronQuantityInLayer[2] = 5_000;
@@ -67,7 +67,7 @@ class PBoard_32768<NeuralNetworkClass>
 
         concurrentInput = false;
 
-        this.activationFunctionForEncog = new ActivationFunction[3];
+        activationFunctionForEncog = new ActivationFunction[3];
 
         activationFunctionForEncog[0] = new ActivationTANH();
         activationFunctionForEncog[1] = new ActivationTANH();

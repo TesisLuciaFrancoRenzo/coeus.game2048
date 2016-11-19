@@ -43,16 +43,16 @@ class NBasicLinearSimplified_512
         numSamples = 8;
         int maxTile = 9;
 
-        this.activationFunction = FunctionUtils.LINEAR;
-        this.derivedActivationFunction = FunctionUtils.LINEAR_DERIVED;
-        this.concurrency = false;
+        activationFunction = FunctionUtils.LINEAR;
+        derivedActivationFunction = FunctionUtils.LINEAR_DERIVED;
+        concurrency = false;
 
         nTuplesLength = new int[numSamples];
         for (int i = 0; i < numSamples; i++) {
             nTuplesLength[i] = 4;
         }
 
-        this.allSamplePointPossibleValues = new ArrayList<>();
+        allSamplePointPossibleValues = new ArrayList<>();
         for (int spvIndex = 0; spvIndex <= maxTile; spvIndex++) {
             allSamplePointPossibleValues.add(new Tile(spvIndex));
         }
