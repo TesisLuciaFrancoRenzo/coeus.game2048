@@ -194,6 +194,7 @@ class Game2048<NeuralNetworkClass>
             Tile[] line1,
             Tile[] line2
     ) {
+        //noinspection ArrayEquality
         if (line1 == line2) {
             return true;
         } else if (line1.length != line2.length) {
@@ -770,7 +771,7 @@ class Game2048<NeuralNetworkClass>
             try {
                 repaint();
                 if (delayPerMove > 0) {
-                    sleep(delayPerMove);
+                    sleep((long) delayPerMove);
                 }
             } catch (InterruptedException ex) {
                 Logger.getLogger(Game2048.class.getName()).log(Level.SEVERE, null, ex);

@@ -440,7 +440,6 @@ class StatisticExperiment<NeuralNetworkClass> {
      * <li>private IPlayingExperiment playingExperiment;</li>
      * <li>private String fileName;</li>
      * </ul>
-     * <p>
      * Las siguientes variables se inicializan automáticamente, pero pueden ser modificadas:
      * <ul>
      * <li>private int tileToWin;</li>
@@ -448,7 +447,6 @@ class StatisticExperiment<NeuralNetworkClass> {
      * <li>private NeuralNetworkConfiguration2048 perceptronConfiguration;</li>
      * <li>private TDLambdaLearning learningMethod;</li>
      * </ul>
-     * <p>
      *
      * @throws Exception
      */

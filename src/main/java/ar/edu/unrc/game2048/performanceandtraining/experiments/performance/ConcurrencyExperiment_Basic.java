@@ -269,8 +269,7 @@ class ConcurrencyExperiment_Basic
         outputResults.append("MAX_INNER_LAYERS = ").append(MAX_INNER_LAYERS).append('\n');
         outputResults.append("MAX_NEURON_QUANTITY = ")
                      .append(MAX_NEURON_QUANTITY)
-                     .append(" (")
-                     .append(Math.pow(2, MAX_NEURON_QUANTITY)).append(')').append('\n');
+                     .append(" (").append(Math.pow(2, (double) MAX_NEURON_QUANTITY)).append(')').append('\n');
         outputResults.append("MIN_NEURON_QUANTITY = ")
                      .append(MIN_NEURON_QUANTITY)
                      .append(" (")
