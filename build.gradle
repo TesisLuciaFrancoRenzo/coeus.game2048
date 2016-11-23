@@ -9,7 +9,9 @@ task wrapper(type: Wrapper) {
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'java'
+apply plugin: 'findbugs'
 apply plugin: 'application' //https://docs.gradle.org/current/userguide/application_plugin.html
+apply plugin: 'distribution'
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
