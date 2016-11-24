@@ -35,8 +35,8 @@ public
 class NBasicTanHNoPartialScore_32768
         extends NTupleConfiguration2048 {
 
-    private final int maxReward = 500_000;
-    private final int minReward = -500_000;
+    private static final int maxReward = 500_000;
+    private static final int minReward = -500_000;
 
     /**
      *

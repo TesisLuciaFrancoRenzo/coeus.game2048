@@ -769,7 +769,7 @@ class LearningExperiment<NeuralNetworkClass> {
             out.write("Operating system version: " + System.getProperty("os.version") + '\n');
             if (System.getProperty("os.name").matches(".*[Ww]indows.*")) {
                 Process command = Runtime.getRuntime().exec("wmic cpu get name");
-                try (BufferedReader in = new BufferedReader(new InputStreamReader(command.getInputStream()))) {
+                try (BufferedReader in = new BufferedReader(new InputStreamReader(command.getInputStream(), "UTF-8"))) {
                     String line;
                     while ((line = in.readLine()) != null) {
                         if (!line.isEmpty() && !line.contains("Name")) {
@@ -780,7 +780,7 @@ class LearningExperiment<NeuralNetworkClass> {
                 }
             } else if (System.getProperty("os.name").matches(".*[Ll]inux.*")) {
                 Process command = Runtime.getRuntime().exec("cat /proc/cpuinfo");
-                try (BufferedReader in = new BufferedReader(new InputStreamReader(command.getInputStream()))) {
+                try (BufferedReader in = new BufferedReader(new InputStreamReader(command.getInputStream(), "UTF-8"))) {
                     String line;
                     while ((line = in.readLine()) != null) {
                         if (!line.isEmpty() && line.matches(".*model name\\s*:.*")) {

@@ -41,10 +41,6 @@ class PBoard_32768<NeuralNetworkClass>
         extends NeuralNetworkConfiguration2048<NeuralNetworkClass> {
 
     private final boolean concurrentInput;
-    private final int     maxCodedBoardNumber;
-    private final int     maxScore;
-    private final int     minCodedBoardNumber;
-    private final int     minScore;
 
     /**
      * @param hasBias
@@ -53,11 +49,10 @@ class PBoard_32768<NeuralNetworkClass>
     PBoard_32768(final Boolean hasBias) {
         this.hasBias = hasBias;
 
-        maxCodedBoardNumber = 15; //32768 como maximo
-        maxScore = 500_000;
-        minScore = -500_000;
-
-        minCodedBoardNumber = 0;
+        int maxCodedBoardNumber = 15;
+        int minCodedBoardNumber = 0;
+        int maxScore            = 500_000;
+        int minScore            = -500_000;
 
         neuronQuantityInLayer = new int[4];
         neuronQuantityInLayer[0] = 16;
@@ -76,7 +71,8 @@ class PBoard_32768<NeuralNetworkClass>
         activationFunctionMax = 1;
         activationFunctionMin = -1;
 
-        normInput = new NormalizedField(NormalizationAction.Normalize,
+        normInput = new NormalizedField(
+                NormalizationAction.Normalize,
                 null,
                 maxCodedBoardNumber,
                 minCodedBoardNumber,

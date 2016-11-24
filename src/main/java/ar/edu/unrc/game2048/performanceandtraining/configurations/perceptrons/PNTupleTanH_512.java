@@ -48,13 +48,11 @@ class PNTupleTanH_512<NeuralNetworkClass>
     private final List<SamplePointValue>             allSamplePointPossibleValues;
     private final boolean                            concurrentInput;
     private final HashMap<SamplePointValue, Integer> mapSamplePointValuesIndex;
-    private final int maxReward = 20_000;
-    private final int maxTile;
-    private final int minReward = -20_000;
-    private final int[]   nTuplesLength;
-    private final int[]   nTuplesWeightQuantityIndex;
-    private final int     numSamples;
-    private final boolean useNTupleList;
+    private final int                                maxTile;
+    private final int[]                              nTuplesLength;
+    private final int[]                              nTuplesWeightQuantityIndex;
+    private final int                                numSamples;
+    private final boolean                            useNTupleList;
 
     /**
      * @param hasBias
@@ -63,6 +61,8 @@ class PNTupleTanH_512<NeuralNetworkClass>
     PNTupleTanH_512(final Boolean hasBias) {
         this.hasBias = hasBias;
 
+        int minReward = -20_000;
+        int maxReward = 20_000;
         numSamples = 8;
         maxTile = 9;
         concurrentInput = true;

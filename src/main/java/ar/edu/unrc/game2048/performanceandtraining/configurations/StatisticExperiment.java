@@ -721,6 +721,7 @@ class StatisticExperiment<NeuralNetworkClass> {
 
         //calculamos las estadisticas de los backup si es necesario
         File[] allFiles = (new File(dirPath)).listFiles();
+        assert allFiles != null;
         Arrays.sort(allFiles, (Object o1, Object o2) -> {
             if (((File) o1).lastModified() > ((File) o2).lastModified()) {
                 return +1;

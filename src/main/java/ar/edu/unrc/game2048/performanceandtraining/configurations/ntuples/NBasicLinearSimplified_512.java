@@ -33,15 +33,13 @@ public
 class NBasicLinearSimplified_512
         extends NTupleConfiguration2048 {
 
-    private final int numSamples;
-
     /**
      * Configuración para jugar hasta 512, con función de activación Lineal, y puntaje parcial.
      */
     public
     NBasicLinearSimplified_512() {
-        numSamples = 8;
-        int maxTile = 9;
+        int numSamples = 8;
+        int maxTile    = 9;
 
         activationFunction = FunctionUtils.LINEAR;
         derivedActivationFunction = FunctionUtils.LINEAR_DERIVED;

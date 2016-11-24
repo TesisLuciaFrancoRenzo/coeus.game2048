@@ -35,8 +35,8 @@ public
 class NBasicSigmoid_32768
         extends NTupleConfiguration2048 {
 
-    private final int maxReward = 500_000;
-    private final int minReward = 0;
+    private static final int maxReward = 500_000;
+    private static final int minReward = 0;
 
     /**
      * Configuración para jugar hasta 32.768, con función de activación Sigmoideo, y puntaje parcial.

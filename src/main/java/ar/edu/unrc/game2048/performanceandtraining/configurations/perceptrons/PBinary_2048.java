@@ -40,8 +40,6 @@ class PBinary_2048<NeuralNetworkClass>
 
     private final static int BINARY_LENGTH = 4; //alcanza para escribir el 2048
     private final boolean concurrentInput;
-    private final int     maxScore;
-    private final int     minScore;
 
     /**
      * Configuración para jugar hasta 2048, tablero de tipo binario, con función de activación Tangente Hiperbólica, y
@@ -49,8 +47,8 @@ class PBinary_2048<NeuralNetworkClass>
      */
     public
     PBinary_2048() {
-        maxScore = 500_000;
-        minScore = -500_000;
+        int maxScore = 500_000;
+        int minScore = -500_000;
 
         neuronQuantityInLayer = new int[3];
         neuronQuantityInLayer[0] = 64;
