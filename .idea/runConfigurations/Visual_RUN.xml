@@ -1,20 +1,25 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Visual RUN" type="GradleRunConfiguration" factoryName="Gradle">
-    <ExternalSystemSettings>
-      <option name="executionName" />
-      <option name="externalProjectPath" value="$PROJECT_DIR$/../coeus.game2048.visual" />
-      <option name="externalSystemIdString" value="GRADLE" />
-      <option name="scriptParameters" value="" />
-      <option name="taskDescriptions">
-        <list />
-      </option>
-      <option name="taskNames">
-        <list>
-          <option value="run" />
-        </list>
-      </option>
-      <option name="vmOptions" value="" />
-    </ExternalSystemSettings>
+  <configuration default="false" name="Visual RUN" type="Application" factoryName="Application">
+    <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+      <pattern>
+        <option name="PATTERN" value="org.hol.game2048.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <option name="MAIN_CLASS_NAME" value="org.hol.game2048.Game2048" />
+    <option name="VM_PARAMETERS" value="" />
+    <option name="PROGRAM_PARAMETERS" value="" />
+    <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
+    <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+    <option name="ALTERNATIVE_JRE_PATH" />
+    <option name="ENABLE_SWING_INSPECTOR" value="false" />
+    <option name="ENV_VARIABLES" />
+    <option name="PASS_PARENT_ENVS" value="true" />
+    <module name="coeus.game2048.visual_main" />
+    <envs />
+    <RunnerSettings RunnerId="Debug with VisualVM">
+      <option name="visualVMId" value="5845352519299" />
+    </RunnerSettings>
     <method />
   </configuration>
 </component>
