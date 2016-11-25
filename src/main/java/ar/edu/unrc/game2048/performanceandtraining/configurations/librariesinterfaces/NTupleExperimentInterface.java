@@ -76,7 +76,8 @@ class NTupleExperimentInterface
      */
     public
     NTupleSystem initializeNTupleSystem(boolean randomized) {
-        NTupleSystem nTupleSystem = new NTupleSystem(getNTupleConfiguration().getAllSamplePointPossibleValues(),
+        NTupleSystem nTupleSystem = new NTupleSystem(
+                getNTupleConfiguration().getAllSamplePointPossibleValues(),
                 getNTupleConfiguration().getNTuplesLength(),
                 getNTupleConfiguration().getActivationFunction(),
                 getNTupleConfiguration().getDerivedActivationFunction(),
