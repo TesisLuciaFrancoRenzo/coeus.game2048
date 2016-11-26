@@ -122,10 +122,12 @@ class TestGeneratorActivationFunctionVsTraces {
         List<Double>  explorationRate    = new ArrayList<>();
 
         //============================== configuraciones manuales ==================================
-        int maxTrainingThreads = 8;
-        int gamesToPlay        = 20_000;
-        int saveEvery          = 1_000;
-        int saveBackupEvery    = 500;
+        int     repetitions = 1;
+        int     maxTrainingThreads = 8;
+        int     gamesToPlay = 20_000;
+        int     saveEvery = 1_000;
+        int     saveBackupEvery = 500;
+        boolean resetTracesTest = false;
 
         lambdaList.add(0d);
         lambdaList.add(0.1d);
@@ -159,7 +161,7 @@ class TestGeneratorActivationFunctionVsTraces {
         gamesToPlayPerThreadForStatistics = 0;
         simulationsForStatistics = 0;
 
-        runAllConfigs(
+        runAllConfigs(repetitions,
                 maxTrainingThreads,
                 "BasicLinear_512_ActFuncVsTrace",
                 BasicLinear_512.class.getConstructor(),
@@ -176,10 +178,10 @@ class TestGeneratorActivationFunctionVsTraces {
                 saveBackupEvery,
                 gamesToPlayPerThreadForStatistics,
                 simulationsForStatistics,
-                explorationRate,
+                explorationRate, resetTracesTest,
                 filePath
         );
-        runAllConfigs(
+        runAllConfigs(repetitions,
                 maxTrainingThreads,
                 "BasicTanH_512_ActFuncVsTrace",
                 BasicTanH_512.class.getConstructor(),
@@ -196,7 +198,7 @@ class TestGeneratorActivationFunctionVsTraces {
                 saveBackupEvery,
                 gamesToPlayPerThreadForStatistics,
                 simulationsForStatistics,
-                explorationRate,
+                explorationRate, resetTracesTest,
                 filePath
         );
 
@@ -205,7 +207,7 @@ class TestGeneratorActivationFunctionVsTraces {
         gamesToPlayPerThreadForStatistics = 1_000;
         simulationsForStatistics = 8;
 
-        runAllConfigs(
+        runAllConfigs(repetitions,
                 maxTrainingThreads,
                 "BasicLinear_512_ActFuncVsTrace",
                 BasicLinear_512.class.getConstructor(),
@@ -222,10 +224,10 @@ class TestGeneratorActivationFunctionVsTraces {
                 saveBackupEvery,
                 gamesToPlayPerThreadForStatistics,
                 simulationsForStatistics,
-                explorationRate,
+                explorationRate, resetTracesTest,
                 filePath
         );
-        runAllConfigs(
+        runAllConfigs(repetitions,
                 maxTrainingThreads,
                 "BasicTanH_512_ActFuncVsTrace",
                 BasicTanH_512.class.getConstructor(),
@@ -242,7 +244,7 @@ class TestGeneratorActivationFunctionVsTraces {
                 saveBackupEvery,
                 gamesToPlayPerThreadForStatistics,
                 simulationsForStatistics,
-                explorationRate,
+                explorationRate, resetTracesTest,
                 filePath
         );
     }
@@ -250,6 +252,7 @@ class TestGeneratorActivationFunctionVsTraces {
     @SuppressWarnings("ForLoopReplaceableByForEach")
     private static
     void runAllConfigs(
+            final int repetitions,
             final int maxTrainingThreads,
             final String experimentName,
             final Constructor<?> experiment,
@@ -267,33 +270,19 @@ class TestGeneratorActivationFunctionVsTraces {
             final int gamesToPlayPerThreadForStatistics,
             final int simulationsForStatistics,
             final List<Double> explorationRateList,
+            final boolean resetTracesTest,
             final String filePath
     ) {
         List<GeneratorConfig> experiments = new ArrayList<>();
         int                   number      = 0;
-        for (int i = 0; i < alphaList.size(); i++) {
-            for (int j = 0; j < lambdaList.size(); j++) {
-                for (int k = 0; k < gammaList.size(); k++) {
-                    for (int l = 0; l < explorationRateList.size(); l++) {
-                        for (int m = 0; m < annealingAlphaList.size(); m++) {
-                            number++;
-                            experiments.add(new GeneratorConfig(
-                                    classParameters,
-                                    alphaList.get(i),
-                                    annealingAlphaList.get(m),
-                                    lambdaList.get(j),
-                                    gammaList.get(k),
-                                    explorationRateList.get(l),
-                                    null,
-                                    null,
-                                    null,
-                                    null,
-                                    false,
-                                    number
-                            ));
-                            if (explorationRateList.get(l) > 0 && lambdaList.get(j) > 0) {
+        for (int a = 0; a < repetitions; a++) {
+            for (int i = 0; i < alphaList.size(); i++) {
+                for (int j = 0; j < lambdaList.size(); j++) {
+                    for (int k = 0; k < gammaList.size(); k++) {
+                        for (int l = 0; l < explorationRateList.size(); l++) {
+                            for (int m = 0; m < annealingAlphaList.size(); m++) {
                                 number++;
-                                experiments.add(new GeneratorConfig(
+                                experiments.add(new GeneratorConfig(a,
                                         classParameters,
                                         alphaList.get(i),
                                         annealingAlphaList.get(m),
@@ -304,9 +293,26 @@ class TestGeneratorActivationFunctionVsTraces {
                                         null,
                                         null,
                                         null,
-                                        true,
+                                        false,
                                         number
                                 ));
+                                if (explorationRateList.get(l) > 0 && lambdaList.get(j) > 0 && resetTracesTest) {
+                                    number++;
+                                    experiments.add(new GeneratorConfig(a,
+                                            classParameters,
+                                            alphaList.get(i),
+                                            annealingAlphaList.get(m),
+                                            lambdaList.get(j),
+                                            gammaList.get(k),
+                                            explorationRateList.get(l),
+                                            null,
+                                            null,
+                                            null,
+                                            null,
+                                            true,
+                                            number
+                                    ));
+                                }
                             }
                         }
                     }
@@ -328,8 +334,7 @@ class TestGeneratorActivationFunctionVsTraces {
                         try {
                             String newFilePath = filePath +
                                                  "ActivationFunctionVsTraces" +
-                                                 File.separator +
-                                                 "alpha_" +
+                                                 File.separator + expConfig.getRepetitions() + "-alpha_" +
                                                  expConfig.getAlpha() +
                                                  ((expConfig.getAnnealingAlpha() > 0) ? "-anneal_" + expConfig.getAnnealingAlpha() : "") +
                                                  "-lambda_" +

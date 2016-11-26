@@ -37,6 +37,7 @@ class GeneratorConfig {
     private final double   gamma;
     private final double   lambda;
     private final int      number;
+    private final int      repetitions;
     private final boolean  resetTraces;
 
     /**
@@ -55,6 +56,7 @@ class GeneratorConfig {
      */
     public
     GeneratorConfig(
+            final int repetitions,
             final Object[] classParameters,
             final double alpha,
             final int annealingAlpha,
@@ -68,6 +70,7 @@ class GeneratorConfig {
             final boolean resetTraces,
             final int number
     ) {
+        this.repetitions = repetitions;
         this.alpha = alpha;
         this.annealingAlpha = annealingAlpha;
         this.lambda = lambda;
@@ -168,6 +171,11 @@ class GeneratorConfig {
     public
     int getNumber() {
         return number;
+    }
+
+    public
+    int getRepetitions() {
+        return repetitions;
     }
 
     /**

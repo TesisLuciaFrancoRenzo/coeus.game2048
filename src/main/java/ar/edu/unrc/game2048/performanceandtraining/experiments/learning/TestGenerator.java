@@ -174,17 +174,19 @@ class TestGenerator {
 
         //============================== configuraciones manuales ==================================
         //        boolean statistics = true;
-        boolean   statistics                   = false;
+        boolean   statistics                   = true;
+        int       repetitions                  = 7;
         int       maxTrainingThreads           = 8;
         boolean   doBackupStatistics           = true;
-        String    experimentName               = "NTupleLinearWithBias_512";
-        String    experimentClass              = "NTupleLinearWithBias_512";
-        int       gamesToPlay                  = 1;
-        int       saveEvery                    = 1_000;
+        String    experimentName               = "BasicLinear_512";
+        String    experimentClass              = "BasicLinear_512";
+        int       gamesToPlay                  = 10_000;
+        int       saveEvery                    = 500;
         int       saveBackupEvery              = 500;
-        int       tileToWinForStatistics       = 2_048;
+        int       tileToWinForStatistics       = 512;
         boolean[] concurrentLayer              = {false, false};
-        int       gamesToPlayPerThreadForStats = 1_000;
+        int       gamesToPlayPerThreadForStats = 100;
+        boolean   resetTracesTest              = false;
 
         lambdaList.add(0d);
         //        lambdaList.add(0.1d);
@@ -204,7 +206,6 @@ class TestGenerator {
 
         interpolatedExplorationRateInitialValues.add(0.1d);
         interpolatedExplorationRateFinalValues.add(0.01d);
-        interpolatedExplorationRateFinalValues.add(0.005d);
         interpolatedExplorationRateStartInterpolation.add(0);
         interpolatedExplorationRateFinishInterpolation.add(500_000);
 
@@ -310,7 +311,7 @@ class TestGenerator {
             }
         }
 
-        runAllConfigs(maxTrainingThreads,
+        runAllConfigs(repetitions, maxTrainingThreads,
                 experimentName,
                 classConstructor,
                 classParameters,
@@ -331,7 +332,7 @@ class TestGenerator {
                 interpolatedExplorationRateInitialValues,
                 interpolatedExplorationRateFinalValues,
                 interpolatedExplorationRateStartInterpolation,
-                interpolatedExplorationRateFinishInterpolation,
+                interpolatedExplorationRateFinishInterpolation, resetTracesTest,
                 filePath,
                 concurrentLayer
         );
@@ -340,6 +341,7 @@ class TestGenerator {
     @SuppressWarnings("ForLoopReplaceableByForEach")
     private static
     void runAllConfigs(
+            final int repetitions,
             final int maxTrainingThreads,
             final String experimentName,
             final Constructor<?> experiment,
@@ -362,37 +364,24 @@ class TestGenerator {
             final List<Double> explorationRateFinalValues,
             final List<Integer> explorationRateStartInterpolation,
             final List<Integer> explorationRateFinishInterpolation,
+            final boolean resetTracesTest,
             final String filePath,
             final boolean[] concurrentLayer
     ) {
         List<GeneratorConfig> experiments = new ArrayList<>();
         int                   number      = 0;
-        for (int i = 0; i < alphaList.size(); i++) {
-            for (int j = 0; j < lambdaList.size(); j++) {
-                for (int k = 0; k < gammaList.size(); k++) {
-                    for (int m = 0; m < annealingAlphaList.size(); m++) {
-                        if (explorationRateList != null) {
-                            for (int l = 0; l < explorationRateList.size(); l++) {
-                                number++;
-                                experiments.add(new GeneratorConfig(classParameters,
-                                        alphaList.get(i),
-                                        annealingAlphaList.get(m),
-                                        lambdaList.get(j),
-                                        gammaList.get(k),
-                                        explorationRateList.get(l),
-                                        null,
-                                        null,
-                                        null,
-                                        null,
-                                        false,
-                                        number
-                                ));
-                                if (explorationRateList.get(l) > 0 && lambdaList.get(j) > 0) {
+        for (int a = 0; a < repetitions; a++) {
+            for (int i = 0; i < alphaList.size(); i++) {
+                for (int j = 0; j < lambdaList.size(); j++) {
+                    for (int k = 0; k < gammaList.size(); k++) {
+                        for (int m = 0; m < annealingAlphaList.size(); m++) {
+                            if (explorationRateList != null) {
+                                for (int l = 0; l < explorationRateList.size(); l++) {
                                     number++;
-                                    experiments.add(new GeneratorConfig(classParameters,
+                                    experiments.add(new GeneratorConfig(a,
+                                            classParameters,
                                             alphaList.get(i),
-                                            annealingAlphaList.
-                                                                      get(m),
+                                            annealingAlphaList.get(m),
                                             lambdaList.get(j),
                                             gammaList.get(k),
                                             explorationRateList.get(l),
@@ -400,44 +389,65 @@ class TestGenerator {
                                             null,
                                             null,
                                             null,
-                                            true,
+                                            false,
                                             number
                                     ));
+                                    if (explorationRateList.get(l) > 0 && lambdaList.get(j) > 0 && resetTracesTest) {
+                                        number++;
+                                        experiments.add(new GeneratorConfig(a,
+                                                classParameters,
+                                                alphaList.get(i),
+                                                annealingAlphaList.get(m),
+                                                lambdaList.get(j),
+                                                gammaList.get(k),
+                                                explorationRateList.get(l),
+                                                null,
+                                                null,
+                                                null,
+                                                null,
+                                                true,
+                                                number
+                                        ));
+                                    }
                                 }
-                            }
-                        } else {
-                            for (int n = 0; n < explorationRateInitialValues.size(); n++) {
-                                for (int o = 0; o < explorationRateFinalValues.size(); o++) {
-                                    for (int p = 0; p < explorationRateStartInterpolation.size(); p++) {
-                                        for (int q = 0; q < explorationRateFinishInterpolation.size(); q++) {
-                                            number++;
-                                            experiments.add(new GeneratorConfig(classParameters,
-                                                    alphaList.get(i),
-                                                    annealingAlphaList.get(m),
-                                                    lambdaList.get(j),
-                                                    gammaList.get(k),
-                                                    null,
-                                                    explorationRateInitialValues.get(n),
-                                                    explorationRateFinalValues.get(o),
-                                                    explorationRateStartInterpolation.get(p),
-                                                    explorationRateFinishInterpolation.get(q),
-                                                    false,
-                                                    number
-                                            ));
-                                            number++;
-                                            experiments.add(new GeneratorConfig(classParameters,
-                                                    alphaList.get(i),
-                                                    annealingAlphaList.get(m),
-                                                    lambdaList.get(j),
-                                                    gammaList.get(k),
-                                                    null,
-                                                    explorationRateInitialValues.get(n),
-                                                    explorationRateFinalValues.get(o),
-                                                    explorationRateStartInterpolation.get(p),
-                                                    explorationRateFinishInterpolation.get(q),
-                                                    true,
-                                                    number
-                                            ));
+                            } else {
+                                for (int n = 0; n < explorationRateInitialValues.size(); n++) {
+                                    for (int o = 0; o < explorationRateFinalValues.size(); o++) {
+                                        for (int p = 0; p < explorationRateStartInterpolation.size(); p++) {
+                                            for (int q = 0; q < explorationRateFinishInterpolation.size(); q++) {
+                                                number++;
+                                                experiments.add(new GeneratorConfig(a,
+                                                        classParameters,
+                                                        alphaList.get(i),
+                                                        annealingAlphaList.get(m),
+                                                        lambdaList.get(j),
+                                                        gammaList.get(k),
+                                                        null,
+                                                        explorationRateInitialValues.get(n),
+                                                        explorationRateFinalValues.get(o),
+                                                        explorationRateStartInterpolation.get(p),
+                                                        explorationRateFinishInterpolation.get(q),
+                                                        false,
+                                                        number
+                                                ));
+                                                if (resetTracesTest) {
+                                                    number++;
+                                                    experiments.add(new GeneratorConfig(a,
+                                                            classParameters,
+                                                            alphaList.get(i),
+                                                            annealingAlphaList.get(m),
+                                                            lambdaList.get(j),
+                                                            gammaList.get(k),
+                                                            null,
+                                                            explorationRateInitialValues.get(n),
+                                                            explorationRateFinalValues.get(o),
+                                                            explorationRateStartInterpolation.get(p),
+                                                            explorationRateFinishInterpolation.get(q),
+                                                            true,
+                                                            number
+                                                    ));
+                                                }
+                                            }
                                         }
                                     }
                                 }
@@ -474,8 +484,7 @@ class TestGenerator {
                     }
                     String newFilePath = filePath +
                                          "AutomaticTests" +
-                                         File.separator +
-                                         "alpha_" +
+                                         File.separator + expConfig.getRepetitions() + "-alpha_" +
                                          expConfig.getAlpha() +
                                          ((expConfig.getAnnealingAlpha() > 0) ? "-anneal_" + expConfig.getAnnealingAlpha() : "") +
                                          "-lambda_" +
