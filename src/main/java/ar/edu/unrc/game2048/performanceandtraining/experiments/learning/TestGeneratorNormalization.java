@@ -130,7 +130,7 @@ class TestGeneratorNormalization {
         int     saveBackupEvery    = 300;
         boolean resetTracesTest    = true;
 
-        lambdaList.add(0.3d);
+        lambdaList.add(0.5d);
         alphaList.add(0.0025d);
         annealingAlphaList.add(NO_ANNEALING); //Sin annealing
         gammaList.add(1d);
@@ -169,9 +169,11 @@ class TestGeneratorNormalization {
                 simulationsForStatistics
         );
 
+        System.out.println("\n\n*======================= ESTADISTICAS =======================");
+
         statisticsOnly = true;
         runStatisticsForBackups = true;
-        gamesToPlayPerThreadForStatistics = 1_000;
+        gamesToPlayPerThreadForStatistics = 100;
         simulationsForStatistics = 8;
 
         runAll(
