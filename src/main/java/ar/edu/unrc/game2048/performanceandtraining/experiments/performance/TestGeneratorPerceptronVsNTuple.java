@@ -156,8 +156,7 @@ class TestGeneratorPerceptronVsNTuple {
             runAllConfigs(
                     1,
                     maxTrainingThreads,
-                    testDirName,
-                    repetitions + "_NTupleBasicLinearSimplified_512",
+                    testDirName, i + "_NTupleBasicLinearSimplified_512",
                     NTupleBasicLinearSimplified_512.class.getConstructor(),
                     null,
                     alphaList,
@@ -187,8 +186,7 @@ class TestGeneratorPerceptronVsNTuple {
             runAllConfigs(
                     1,
                     maxTrainingThreads,
-                    testDirName,
-                    repetitions + "_EncogNTupleLinearWithBiasSimplified_512",
+                    testDirName, i + "_EncogNTupleLinearWithBiasSimplified_512",
                     EncogNTupleLinearWithBiasSimplified_512.class.getConstructor(EncogNTupleLinearWithBiasSimplified_512.PARAMETER_TYPE),
                     new Object[]{true},
                     alphaList,
@@ -223,8 +221,7 @@ class TestGeneratorPerceptronVsNTuple {
             runAllConfigs(
                     1,
                     maxTrainingThreads,
-                    testDirName,
-                    repetitions + "_NTupleBasicLinearSimplified_512",
+                    testDirName, i + "_NTupleBasicLinearSimplified_512",
                     NTupleBasicLinearSimplified_512.class.getConstructor(),
                     null,
                     alphaList,
@@ -254,8 +251,7 @@ class TestGeneratorPerceptronVsNTuple {
             runAllConfigs(
                     1,
                     maxTrainingThreads,
-                    testDirName,
-                    repetitions + "_EncogNTupleLinearWithBiasSimplified_512",
+                    testDirName, i + "_EncogNTupleLinearWithBiasSimplified_512",
                     EncogNTupleLinearWithBiasSimplified_512.class.getConstructor(EncogNTupleLinearWithBiasSimplified_512.PARAMETER_TYPE),
                     new Object[]{true},
                     alphaList,
