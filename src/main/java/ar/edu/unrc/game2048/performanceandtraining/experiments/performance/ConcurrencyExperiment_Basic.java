@@ -249,8 +249,8 @@ class ConcurrencyExperiment_Basic
             ))) {
                 out.write(outputResults.toString());
             }
-            try (BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(filePath +
-                                                                                                              "Concurrencia_Experimento_01_Calc.txt")),
+            try (BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
+                    new FileOutputStream(new File(filePath + "Concurrencia_Experimento_01_Calc.txt")),
                     "UTF-8"
             ))) {
                 out.write(outputForGraphicsResults.toString());
@@ -268,10 +268,13 @@ class ConcurrencyExperiment_Basic
         outputResults.append("GAMES_TO_PLAY = ").append(GAMES_TO_PLAY).append('\n');
         outputResults.append("MAX_INNER_LAYERS = ").append(MAX_INNER_LAYERS).append('\n');
         outputResults.append("MAX_NEURON_QUANTITY = ")
-                     .append(MAX_NEURON_QUANTITY).append(" (").append(Math.pow(2, (double) MAX_NEURON_QUANTITY)).append(')').append('\n');
+                     .append(MAX_NEURON_QUANTITY)
+                     .append(" (")
+                     .append(Math.pow(2, (double) MAX_NEURON_QUANTITY))
+                     .append(')')
+                     .append('\n');
         outputResults.append("MIN_NEURON_QUANTITY = ")
-                     .append(MIN_NEURON_QUANTITY)
-                     .append(" (").append(Math.pow(2, MIN_NEURON_QUANTITY)).append(')').append('\n');
+                     .append(MIN_NEURON_QUANTITY).append(" (").append(Math.pow(2, MIN_NEURON_QUANTITY)).append(')').append('\n');
         outputResults.append("====================================").append('\n');
     }
 
