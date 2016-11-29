@@ -16,13 +16,11 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ar.edu.unrc.game2048.performanceandtraining.experiments.learning;
+package ar.edu.unrc.game2048.performanceandtraining.experiments;
 
 import ar.edu.unrc.game2048.performanceandtraining.configurations.LearningExperiment;
-import ar.edu.unrc.game2048.performanceandtraining.experiments.ArgumentLoader;
-import ar.edu.unrc.game2048.performanceandtraining.experiments.GeneratorConfig;
-import ar.edu.unrc.game2048.performanceandtraining.experiments.learning.encog.NTupleLinearWithBias_512;
-import ar.edu.unrc.game2048.performanceandtraining.experiments.learning.encog.NTupleLinear_512;
+import ar.edu.unrc.game2048.performanceandtraining.experiments.learning.encog.EncogNTupleLinearSimplified_512;
+import ar.edu.unrc.game2048.performanceandtraining.experiments.learning.encog.EncogNTupleLinearWithBiasSimplified_512;
 import ar.edu.unrc.game2048.performanceandtraining.experiments.learning.ntuple.*;
 
 import java.awt.*;
@@ -179,8 +177,9 @@ class TestGenerator {
         int       repetitions                  = 1;
         int       maxTrainingThreads           = 8;
         boolean   doBackupStatistics           = true;
-        String    experimentName               = "BasicLinear_512";
-        String    experimentClass              = "BasicLinear_512";
+        String    experimentDirName            = "GeneratedTests";
+        String    experimentName               = "ConfigNTupleBasicLinear_512";
+        String    experimentClass              = "ConfigNTupleBasicLinear_512";
         int       gamesToPlay                  = 12_000;
         int       saveEvery                    = 1000;
         int       saveBackupEvery              = 300;
@@ -188,6 +187,7 @@ class TestGenerator {
         boolean[] concurrentLayer              = {false, false};
         int       gamesToPlayPerThreadForStats = 100;
         boolean   resetTracesTest              = true;
+        boolean   noResetTracesTest            = true;
 
         lambdaList.add(0.3d);
 
@@ -280,38 +280,38 @@ class TestGenerator {
         Constructor<?> classConstructor;
         Object[]       classParameters = null;
         switch (experimentClass) {
-            case "BasicLinear": {
-                classConstructor = BasicLinear.class.getConstructor();
+            case "NTupleBasicLinear": {
+                classConstructor = NTupleBasicLinear.class.getConstructor();
                 break;
             }
-            case "BasicTanH": {
-                classConstructor = BasicTanH.class.getConstructor();
+            case "NTupleBasicTanH": {
+                classConstructor = NTupleBasicTanH.class.getConstructor();
                 break;
             }
-            case "BasicLinear_512": {
-                classConstructor = BasicLinear_512.class.getConstructor();
+            case "ConfigNTupleBasicLinear_512": {
+                classConstructor = NTupleBasicLinear_512.class.getConstructor();
                 break;
             }
-            case "BasicLinearSimplified_512": {
-                classConstructor = BasicLinearSimplified_512.class.getConstructor();
+            case "ConfigNTupleBasicLinearSimplified_512": {
+                classConstructor = NTupleBasicLinearSimplified_512.class.getConstructor();
                 break;
             }
-            case "NTupleLinear_512": {
-                classConstructor = NTupleLinear_512.class.getConstructor(NTupleLinear_512.PARAMETER_TYPE);
+            case "EncogNTupleLinearSimplified_512": {
+                classConstructor = EncogNTupleLinearSimplified_512.class.getConstructor(EncogNTupleLinearSimplified_512.PARAMETER_TYPE);
                 classParameters = new Object[]{false};
                 break;
             }
-            case "NTupleLinearWithBias_512": {
-                classConstructor = NTupleLinearWithBias_512.class.getConstructor(NTupleLinearWithBias_512.PARAMETER_TYPE);
+            case "EncogNTupleLinearWithBiasSimplified_512": {
+                classConstructor = EncogNTupleLinearWithBiasSimplified_512.class.getConstructor(EncogNTupleLinearWithBiasSimplified_512.PARAMETER_TYPE);
                 classParameters = new Object[]{true};
                 break;
             }
-            case "BasicLinearNoPartialScore_512": {
-                classConstructor = BasicLinearNoPartialScore_512.class.getConstructor();
+            case "ConfigNTupleBasicLinearNoPartialScore_512": {
+                classConstructor = NTupleBasicLinearNoPartialScore_512.class.getConstructor();
                 break;
             }
-            case "BasicTanH_512": {
-                classConstructor = BasicTanH_512.class.getConstructor();
+            case "ConfigNTupleBasicTanH_512": {
+                classConstructor = NTupleBasicTanH_512.class.getConstructor();
                 break;
             }
             default: {
@@ -319,9 +319,8 @@ class TestGenerator {
             }
         }
 
-        runAllConfigs(
-                repetitions,
-                maxTrainingThreads,
+        runAllConfigs(repetitions,
+                maxTrainingThreads, experimentDirName,
                 experimentName,
                 classConstructor,
                 classParameters,
@@ -343,7 +342,7 @@ class TestGenerator {
                 interpolatedExplorationRateFinalValues,
                 interpolatedExplorationRateStartInterpolation,
                 interpolatedExplorationRateFinishInterpolation,
-                resetTracesTest,
+                resetTracesTest, noResetTracesTest,
                 filePath,
                 concurrentLayer
         );
@@ -352,10 +351,11 @@ class TestGenerator {
     }
 
     @SuppressWarnings("ForLoopReplaceableByForEach")
-    private static
+    public static
     void runAllConfigs(
             final int repetitions,
             final int maxTrainingThreads,
+            final String experimentDirName,
             final String experimentName,
             final Constructor<?> experiment,
             final Object[] classParameters,
@@ -378,6 +378,7 @@ class TestGenerator {
             final List<Integer> explorationRateStartInterpolation,
             final List<Integer> explorationRateFinishInterpolation,
             final boolean resetTracesTest,
+            final boolean noResetTracesTest,
             final String filePath,
             final boolean[] concurrentLayer
     ) {
@@ -390,21 +391,23 @@ class TestGenerator {
                         for (int m = 0; m < annealingAlphaList.size(); m++) {
                             if (explorationRateList != null) {
                                 for (int l = 0; l < explorationRateList.size(); l++) {
-                                    number++;
-                                    experiments.add(new GeneratorConfig(a,
-                                            classParameters,
-                                            alphaList.get(i),
-                                            annealingAlphaList.get(m),
-                                            lambdaList.get(j),
-                                            gammaList.get(k),
-                                            explorationRateList.get(l),
-                                            null,
-                                            null,
-                                            null,
-                                            null,
-                                            false,
-                                            number
-                                    ));
+                                    if (noResetTracesTest) {
+                                        number++;
+                                        experiments.add(new GeneratorConfig(a,
+                                                classParameters,
+                                                alphaList.get(i),
+                                                annealingAlphaList.get(m),
+                                                lambdaList.get(j),
+                                                gammaList.get(k),
+                                                explorationRateList.get(l),
+                                                null,
+                                                null,
+                                                null,
+                                                null,
+                                                false,
+                                                number
+                                        ));
+                                    }
                                     if (explorationRateList.get(l) > 0 && lambdaList.get(j) > 0 && resetTracesTest) {
                                         number++;
                                         experiments.add(new GeneratorConfig(a,
@@ -428,21 +431,23 @@ class TestGenerator {
                                     for (int o = 0; o < explorationRateFinalValues.size(); o++) {
                                         for (int p = 0; p < explorationRateStartInterpolation.size(); p++) {
                                             for (int q = 0; q < explorationRateFinishInterpolation.size(); q++) {
-                                                number++;
-                                                experiments.add(new GeneratorConfig(a,
-                                                        classParameters,
-                                                        alphaList.get(i),
-                                                        annealingAlphaList.get(m),
-                                                        lambdaList.get(j),
-                                                        gammaList.get(k),
-                                                        null,
-                                                        explorationRateInitialValues.get(n),
-                                                        explorationRateFinalValues.get(o),
-                                                        explorationRateStartInterpolation.get(p),
-                                                        explorationRateFinishInterpolation.get(q),
-                                                        false,
-                                                        number
-                                                ));
+                                                if (noResetTracesTest) {
+                                                    number++;
+                                                    experiments.add(new GeneratorConfig(a,
+                                                            classParameters,
+                                                            alphaList.get(i),
+                                                            annealingAlphaList.get(m),
+                                                            lambdaList.get(j),
+                                                            gammaList.get(k),
+                                                            null,
+                                                            explorationRateInitialValues.get(n),
+                                                            explorationRateFinalValues.get(o),
+                                                            explorationRateStartInterpolation.get(p),
+                                                            explorationRateFinishInterpolation.get(q),
+                                                            false,
+                                                            number
+                                                    ));
+                                                }
                                                 if (resetTracesTest) {
                                                     number++;
                                                     experiments.add(new GeneratorConfig(a,
@@ -495,7 +500,7 @@ class TestGenerator {
                                                 '_' +
                                                 expConfig.getExplorationRateFinishInterpolation();
                     }
-                    String newFilePath = filePath + "AutomaticTests" + File.separator + expConfig.getRepetitions() + "-alpha_" +
+                    String newFilePath = filePath + experimentDirName + File.separator + expConfig.getRepetitions() + "-alpha_" +
                                          expConfig.getAlpha() +
                                          ((expConfig.getAnnealingAlpha() > 0) ? "-anneal_" + expConfig.getAnnealingAlpha() : "") +
                                          "-lambda_" +

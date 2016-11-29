@@ -16,15 +16,15 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ar.edu.unrc.game2048.performanceandtraining.experiments.learning.ntuple;
+package ar.edu.unrc.game2048.performanceandtraining.experiments.learning.encog;
 
 import ar.edu.unrc.coeus.interfaces.INeuralNetworkInterface;
 import ar.edu.unrc.coeus.tdlearning.learning.TDLambdaLearning;
 import ar.edu.unrc.coeus.tdlearning.training.ntuple.NTupleSystem;
-import ar.edu.unrc.game2048.NTupleConfiguration2048;
+import ar.edu.unrc.game2048.NeuralNetworkConfiguration2048;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.LearningExperiment;
-import ar.edu.unrc.game2048.performanceandtraining.configurations.librariesinterfaces.NTupleExperimentInterface;
-import ar.edu.unrc.game2048.performanceandtraining.configurations.ntuples.NBasicLinearSimplified_512;
+import ar.edu.unrc.game2048.performanceandtraining.configurations.librariesinterfaces.EncogExperimentInterface;
+import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.ConfigPerceptronNTupleTanHSimplified_512;
 import org.encog.neural.networks.BasicNetwork;
 
 import java.awt.*;
@@ -36,8 +36,22 @@ import static ar.edu.unrc.coeus.tdlearning.learning.ELearningStyle.afterState;
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
 public
-class BasicLinearSimplified_512
+class EncogNTupleTanHSimplified_512
         extends LearningExperiment<BasicNetwork> {
+    /**
+     *
+     */
+    public final static Class<?>[] PARAMETER_TYPE = {Boolean.class};
+    private final Boolean hasBias;
+
+    /**
+     * @param hasBias
+     */
+    public
+    EncogNTupleTanHSimplified_512(final Boolean hasBias) {
+        super();
+        this.hasBias = hasBias;
+    }
 
     /**
      * @param args
@@ -53,26 +67,25 @@ class BasicLinearSimplified_512
         } else {
             filePath = args[0];
         }
-        LearningExperiment experiment = new BasicLinearSimplified_512();
+        LearningExperiment experiment = new EncogNTupleTanHSimplified_512(false);
 
         //        boolean statistics = true;
         boolean statistics = false;
 
+        boolean[] concurrentLayer = {true, false};
+        experiment.setConcurrencyInLayer(concurrentLayer);
         double[] alphas = {0.0025, 0.0025};
         experiment.setAlpha(alphas);
         experiment.setLearningRateAdaptationToFixed();
-
-        experiment.setLambda(0);
+        experiment.setConcurrencyInComputeBestPossibleAction(true);
+        experiment.setLambda(0.7);
         experiment.setGamma(1);
         experiment.setExplorationRateToFixed(0);
         experiment.setReplaceEligibilityTraces(false);
-        experiment.setGamesToPlay(30_000);
-        experiment.setSaveEvery(500);
+        experiment.setGamesToPlay(10_000);
+        experiment.setSaveEvery(200);
         experiment.setSaveBackupEvery(500);
         experiment.setInitializePerceptronRandomized(false);
-        experiment.setConcurrencyInComputeBestPossibleAction(true);
-        boolean[] concurrentLayer = {false, false};
-        experiment.setConcurrencyInLayer(concurrentLayer);
 
         experiment.createLogs(false);
         //para calcular estadisticas
@@ -80,7 +93,7 @@ class BasicLinearSimplified_512
         if (statistics) {
             experiment.setStatisticsOnly(true);
             experiment.setRunStatisticsForBackups(true);
-            experiment.setGamesToPlayPerThreadForStatistics(100);
+            experiment.setGamesToPlayPerThreadForStatistics(1_000);
             experiment.setSimulationsForStatistics(8);
         } else {
             experiment.setStatisticsOnly(false);
@@ -102,8 +115,8 @@ class BasicLinearSimplified_512
             setExperimentName(getClass());
         }
         setNeuralNetworkName(getExperimentName());
-        NTupleConfiguration2048 config = new NBasicLinearSimplified_512();
-        setNeuralNetworkInterfaceFor2048(new NTupleExperimentInterface(config));
+        NeuralNetworkConfiguration2048<BasicNetwork> config = new ConfigPerceptronNTupleTanHSimplified_512<>(hasBias);
+        setNeuralNetworkInterfaceFor2048(new EncogExperimentInterface(config));
     }
 
     @Override
@@ -111,18 +124,9 @@ class BasicLinearSimplified_512
     TDLambdaLearning instanceOfTdLearningImplementation(
             INeuralNetworkInterface perceptronInterface
     ) {
-        return null;
-    }
-
-    @Override
-    public
-    TDLambdaLearning instanceOfTdLearningImplementation(
-            NTupleSystem nTupleSystem
-    ) {
-        return new TDLambdaLearning(
-                nTupleSystem,
+        return new TDLambdaLearning(perceptronInterface,
                 afterState,
-                (getAlpha() != null) ? getAlpha()[0] : null,
+                getAlpha(),
                 getLambda(),
                 getGamma(),
                 getConcurrencyInLayer(),
@@ -131,4 +135,11 @@ class BasicLinearSimplified_512
         );
     }
 
+    @Override
+    public
+    TDLambdaLearning instanceOfTdLearningImplementation(
+            NTupleSystem nTupleSystem
+    ) {
+        return null;
+    }
 }

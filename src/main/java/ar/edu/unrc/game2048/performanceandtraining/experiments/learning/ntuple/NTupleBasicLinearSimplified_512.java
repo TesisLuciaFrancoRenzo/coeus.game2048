@@ -24,7 +24,7 @@ import ar.edu.unrc.coeus.tdlearning.training.ntuple.NTupleSystem;
 import ar.edu.unrc.game2048.NTupleConfiguration2048;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.LearningExperiment;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.librariesinterfaces.NTupleExperimentInterface;
-import ar.edu.unrc.game2048.performanceandtraining.configurations.ntuples.NBasicLinear_32768;
+import ar.edu.unrc.game2048.performanceandtraining.configurations.ntuples.ConfigNTupleBasicLinearSimplified_512;
 import org.encog.neural.networks.BasicNetwork;
 
 import java.awt.*;
@@ -36,7 +36,7 @@ import static ar.edu.unrc.coeus.tdlearning.learning.ELearningStyle.afterState;
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
 public
-class BasicLinear
+class NTupleBasicLinearSimplified_512
         extends LearningExperiment<BasicNetwork> {
 
     /**
@@ -53,7 +53,7 @@ class BasicLinear
         } else {
             filePath = args[0];
         }
-        LearningExperiment experiment = new BasicLinear();
+        LearningExperiment experiment = new NTupleBasicLinearSimplified_512();
 
         //        boolean statistics = true;
         boolean statistics = false;
@@ -61,13 +61,14 @@ class BasicLinear
         double[] alphas = {0.0025, 0.0025};
         experiment.setAlpha(alphas);
         experiment.setLearningRateAdaptationToFixed();
+
         experiment.setLambda(0);
         experiment.setGamma(1);
         experiment.setExplorationRateToFixed(0);
         experiment.setReplaceEligibilityTraces(false);
-        experiment.setGamesToPlay(2_000_000);
-        experiment.setSaveEvery(5_000);
-        experiment.setSaveBackupEvery(25_000);
+        experiment.setGamesToPlay(30_000);
+        experiment.setSaveEvery(500);
+        experiment.setSaveBackupEvery(500);
         experiment.setInitializePerceptronRandomized(false);
         experiment.setConcurrencyInComputeBestPossibleAction(true);
         boolean[] concurrentLayer = {false, false};
@@ -75,11 +76,11 @@ class BasicLinear
 
         experiment.createLogs(false);
         //para calcular estadisticas
-        experiment.setTileToWinForStatistics(2_048);
+        experiment.setTileToWinForStatistics(512);
         if (statistics) {
             experiment.setStatisticsOnly(true);
             experiment.setRunStatisticsForBackups(true);
-            experiment.setGamesToPlayPerThreadForStatistics(5);
+            experiment.setGamesToPlayPerThreadForStatistics(100);
             experiment.setSimulationsForStatistics(8);
         } else {
             experiment.setStatisticsOnly(false);
@@ -96,12 +97,12 @@ class BasicLinear
     @Override
     public
     void initialize() {
-        setTileToWinForTraining(32_768);
+        setTileToWinForTraining(512);
         if (getExperimentName() == null) {
             setExperimentName(getClass());
         }
         setNeuralNetworkName(getExperimentName());
-        NTupleConfiguration2048 config = new NBasicLinear_32768();
+        NTupleConfiguration2048 config = new ConfigNTupleBasicLinearSimplified_512();
         setNeuralNetworkInterfaceFor2048(new NTupleExperimentInterface(config));
     }
 

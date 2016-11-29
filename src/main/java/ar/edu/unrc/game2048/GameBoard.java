@@ -23,7 +23,7 @@ import ar.edu.unrc.coeus.tdlearning.interfaces.IStateNTuple;
 import ar.edu.unrc.coeus.tdlearning.interfaces.IStatePerceptron;
 import ar.edu.unrc.coeus.tdlearning.training.ntuple.SamplePointValue;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.inputs.InputNTupleList;
-import ar.edu.unrc.game2048.performanceandtraining.experiments.learning.greedy.StateProbability;
+import ar.edu.unrc.game2048.performanceandtraining.experiments.learning.greedy.GreedyStateProbability;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -406,8 +406,8 @@ class GameBoard<NeuralNetworkClass>
      * @return
      */
     public
-    List<StateProbability> listAllPossibleNextTurnStateFromAfterState() {
-        List<StateProbability> output = new ArrayList<>(16);
+    List<GreedyStateProbability> listAllPossibleNextTurnStateFromAfterState() {
+        List<GreedyStateProbability> output = new ArrayList<>(16);
         for (int value = 1; value <= 2; value++) {
             double probability;
             if (value == 1) {
@@ -419,7 +419,7 @@ class GameBoard<NeuralNetworkClass>
                 @SuppressWarnings("unchecked") GameBoard<NeuralNetworkClass> copy = (GameBoard<NeuralNetworkClass>) getCopy();
                 copy.tiles[availableSpaceList.get(index)] = tileContainer.getTile(value);
                 copy.updateInternalState(true);
-                output.add(new StateProbability(copy, probability));
+                output.add(new GreedyStateProbability(copy, probability));
             }
         }
         return output;

@@ -19,23 +19,17 @@
 package ar.edu.unrc.game2048.performanceandtraining.experiments.learning;
 
 import ar.edu.unrc.game2048.performanceandtraining.configurations.LearningExperiment;
-import ar.edu.unrc.game2048.performanceandtraining.configurations.ntuples.NBasicTanH_512;
-import ar.edu.unrc.game2048.performanceandtraining.experiments.GeneratorConfig;
-import ar.edu.unrc.game2048.performanceandtraining.experiments.learning.ntuple.BasicTanH_512;
+import ar.edu.unrc.game2048.performanceandtraining.configurations.ntuples.ConfigNTupleBasicTanH_512;
 
 import java.awt.*;
 import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ForkJoinPool;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.stream.Stream;
+
+import static ar.edu.unrc.game2048.performanceandtraining.experiments.TestGenerator.NO_ANNEALING;
+import static ar.edu.unrc.game2048.performanceandtraining.experiments.TestGenerator.runAllConfigs;
 
 /**
  * Test específicamente diseñado para comparar eficiencia de funciones de activación.
@@ -45,10 +39,6 @@ import java.util.stream.Stream;
 public
 class TestGeneratorNormalization {
 
-    /**
-     *
-     */
-    public static final int NO_ANNEALING = -1;
 
     private static
     void configAndExecute(
@@ -115,26 +105,34 @@ class TestGeneratorNormalization {
     public static
     void main(String[] args)
             throws Exception {
-        String        filePath           = ".." + File.separator + "Perceptrones ENTRENADOS" + File.separator;
-        List<Double>  lambdaList         = new ArrayList<>();
-        List<Double>  alphaList          = new ArrayList<>();
-        List<Integer> annealingAlphaList = new ArrayList<>();
-        List<Double>  gammaList          = new ArrayList<>();
-        List<Double>  explorationRate    = new ArrayList<>();
+        String        filePath                                       = ".." + File.separator + "Perceptrones ENTRENADOS" + File.separator;
+        List<Double>  lambdaList                                     = new ArrayList<>();
+        List<Double>  alphaList                                      = new ArrayList<>();
+        List<Integer> annealingAlphaList                             = new ArrayList<>();
+        List<Double>  gammaList                                      = new ArrayList<>();
+        List<Double>  fixedExplorationRate                           = new ArrayList<>();
+        List<Double>  interpolatedExplorationRateFinalValues         = new ArrayList<>();
+        List<Integer> interpolatedExplorationRateFinishInterpolation = new ArrayList<>();
+        List<Double>  interpolatedExplorationRateInitialValues       = new ArrayList<>();
+        List<Integer> interpolatedExplorationRateStartInterpolation  = new ArrayList<>();
 
         //============================== configuraciones manuales ==================================
-        int     repetitions        = 1;
-        int     maxTrainingThreads = 8;
-        int     gamesToPlay        = 12_000;
-        int     saveEvery          = 1_000;
-        int     saveBackupEvery    = 300;
-        boolean resetTracesTest    = true;
+        String    experimentDirName      = "Normalization";
+        int       repetitions            = 1;
+        int       maxTrainingThreads     = 8;
+        int       gamesToPlay            = 12_000;
+        int       saveEvery              = 1000;
+        int       saveBackupEvery        = 300;
+        int       tileToWinForStatistics = 512;
+        boolean[] concurrentLayer        = {false, false};
+        boolean   resetTracesTest        = true;
+        boolean   noResetTracesTest      = true;
 
         lambdaList.add(0.5d);
         alphaList.add(0.0025d);
         annealingAlphaList.add(NO_ANNEALING); //Sin annealing
         gammaList.add(1d);
-        explorationRate.add(0d);
+        fixedExplorationRate.add(0d);
 
         boolean createLogs = false;
         //============================== fin de configuraciones manuales ==================================
@@ -150,12 +148,13 @@ class TestGeneratorNormalization {
         simulationsForStatistics = 0;
 
         runAll(
+                experimentDirName,
                 filePath,
                 lambdaList,
                 alphaList,
                 annealingAlphaList,
                 gammaList,
-                explorationRate,
+                fixedExplorationRate,
                 repetitions,
                 maxTrainingThreads,
                 gamesToPlay,
@@ -166,7 +165,15 @@ class TestGeneratorNormalization {
                 statisticsOnly,
                 runStatisticsForBackups,
                 gamesToPlayPerThreadForStatistics,
-                simulationsForStatistics
+                tileToWinForStatistics,
+                simulationsForStatistics,
+                fixedExplorationRate,
+                interpolatedExplorationRateInitialValues,
+                interpolatedExplorationRateFinalValues,
+                interpolatedExplorationRateStartInterpolation,
+                interpolatedExplorationRateFinishInterpolation,
+                noResetTracesTest,
+                concurrentLayer
         );
 
         System.out.println("\n\n*======================= ESTADISTICAS =======================");
@@ -177,12 +184,13 @@ class TestGeneratorNormalization {
         simulationsForStatistics = 8;
 
         runAll(
+                experimentDirName,
                 filePath,
                 lambdaList,
                 alphaList,
                 annealingAlphaList,
                 gammaList,
-                explorationRate,
+                fixedExplorationRate,
                 repetitions,
                 maxTrainingThreads,
                 gamesToPlay,
@@ -193,7 +201,15 @@ class TestGeneratorNormalization {
                 statisticsOnly,
                 runStatisticsForBackups,
                 gamesToPlayPerThreadForStatistics,
-                simulationsForStatistics
+                tileToWinForStatistics,
+                simulationsForStatistics,
+                fixedExplorationRate,
+                interpolatedExplorationRateInitialValues,
+                interpolatedExplorationRateFinalValues,
+                interpolatedExplorationRateStartInterpolation,
+                interpolatedExplorationRateFinishInterpolation,
+                noResetTracesTest,
+                concurrentLayer
         );
 
         Toolkit.getDefaultToolkit().beep();
@@ -201,6 +217,7 @@ class TestGeneratorNormalization {
 
     private static
     void runAll(
+            final String experimentDirName,
             final String filePath,
             final List<Double> lambdaList,
             final List<Double> alphaList,
@@ -217,17 +234,26 @@ class TestGeneratorNormalization {
             final boolean statisticsOnly,
             final boolean runStatisticsForBackups,
             final int gamesToPlayPerThreadForStatistics,
-            final int simulationsForStatistics
+            final int tileToWinForStatistics,
+            final int simulationsForStatistics,
+            final List<Double> fixedExplorationRate,
+            final List<Double> interpolatedExplorationRateInitialValues,
+            final List<Double> interpolatedExplorationRateFinalValues,
+            final List<Integer> interpolatedExplorationRateStartInterpolation,
+            final List<Integer> interpolatedExplorationRateFinishInterpolation,
+            final boolean noResetTracesTest,
+            final boolean[] concurrentLayer
     )
             throws NoSuchMethodException {
-        NBasicTanH_512.maxReward = 100_000;
-        NBasicTanH_512.minReward = -100_000;
+        ConfigNTupleBasicTanH_512.maxReward = 100_000;
+        ConfigNTupleBasicTanH_512.minReward = -100_000;
 
         runAllConfigs(
                 repetitions,
                 maxTrainingThreads,
+                experimentDirName,
                 "NBasicTanH_512_100k",
-                BasicTanH_512.class.getConstructor(),
+                ar.edu.unrc.game2048.performanceandtraining.experiments.learning.ntuple.NTupleBasicTanH_512.class.getConstructor(),
                 null,
                 alphaList,
                 annealingAlphaList,
@@ -240,20 +266,28 @@ class TestGeneratorNormalization {
                 saveEvery,
                 saveBackupEvery,
                 gamesToPlayPerThreadForStatistics,
+                tileToWinForStatistics,
                 simulationsForStatistics,
-                explorationRate,
+                fixedExplorationRate,
+                interpolatedExplorationRateInitialValues,
+                interpolatedExplorationRateFinalValues,
+                interpolatedExplorationRateStartInterpolation,
+                interpolatedExplorationRateFinishInterpolation,
                 resetTracesTest,
-                filePath
+                noResetTracesTest,
+                filePath,
+                concurrentLayer
         );
 
-        NBasicTanH_512.maxReward = 40_000;
-        NBasicTanH_512.minReward = -40_000;
+        ConfigNTupleBasicTanH_512.maxReward = 40_000;
+        ConfigNTupleBasicTanH_512.minReward = -40_000;
 
         runAllConfigs(
                 repetitions,
                 maxTrainingThreads,
+                experimentDirName,
                 "NBasicTanH_512_40k",
-                BasicTanH_512.class.getConstructor(),
+                ar.edu.unrc.game2048.performanceandtraining.experiments.learning.ntuple.NTupleBasicTanH_512.class.getConstructor(),
                 null,
                 alphaList,
                 annealingAlphaList,
@@ -266,20 +300,28 @@ class TestGeneratorNormalization {
                 saveEvery,
                 saveBackupEvery,
                 gamesToPlayPerThreadForStatistics,
+                tileToWinForStatistics,
                 simulationsForStatistics,
-                explorationRate,
+                fixedExplorationRate,
+                interpolatedExplorationRateInitialValues,
+                interpolatedExplorationRateFinalValues,
+                interpolatedExplorationRateStartInterpolation,
+                interpolatedExplorationRateFinishInterpolation,
                 resetTracesTest,
-                filePath
+                noResetTracesTest,
+                filePath,
+                concurrentLayer
         );
 
-        NBasicTanH_512.maxReward = 20_000;
-        NBasicTanH_512.minReward = -20_000;
+        ConfigNTupleBasicTanH_512.maxReward = 20_000;
+        ConfigNTupleBasicTanH_512.minReward = -20_000;
 
         runAllConfigs(
                 repetitions,
                 maxTrainingThreads,
+                experimentDirName,
                 "NBasicTanH_512_20k",
-                BasicTanH_512.class.getConstructor(),
+                ar.edu.unrc.game2048.performanceandtraining.experiments.learning.ntuple.NTupleBasicTanH_512.class.getConstructor(),
                 null,
                 alphaList,
                 annealingAlphaList,
@@ -292,20 +334,28 @@ class TestGeneratorNormalization {
                 saveEvery,
                 saveBackupEvery,
                 gamesToPlayPerThreadForStatistics,
+                tileToWinForStatistics,
                 simulationsForStatistics,
-                explorationRate,
+                fixedExplorationRate,
+                interpolatedExplorationRateInitialValues,
+                interpolatedExplorationRateFinalValues,
+                interpolatedExplorationRateStartInterpolation,
+                interpolatedExplorationRateFinishInterpolation,
                 resetTracesTest,
-                filePath
+                noResetTracesTest,
+                filePath,
+                concurrentLayer
         );
 
-        NBasicTanH_512.maxReward = 7_000;
-        NBasicTanH_512.minReward = -7_000;
+        ConfigNTupleBasicTanH_512.maxReward = 7_000;
+        ConfigNTupleBasicTanH_512.minReward = -7_000;
 
         runAllConfigs(
                 repetitions,
                 maxTrainingThreads,
+                experimentDirName,
                 "NBasicTanH_512_7k",
-                BasicTanH_512.class.getConstructor(),
+                ar.edu.unrc.game2048.performanceandtraining.experiments.learning.ntuple.NTupleBasicTanH_512.class.getConstructor(),
                 null,
                 alphaList,
                 annealingAlphaList,
@@ -318,144 +368,18 @@ class TestGeneratorNormalization {
                 saveEvery,
                 saveBackupEvery,
                 gamesToPlayPerThreadForStatistics,
+                tileToWinForStatistics,
                 simulationsForStatistics,
-                explorationRate,
+                fixedExplorationRate,
+                interpolatedExplorationRateInitialValues,
+                interpolatedExplorationRateFinalValues,
+                interpolatedExplorationRateStartInterpolation,
+                interpolatedExplorationRateFinishInterpolation,
                 resetTracesTest,
-                filePath
+                noResetTracesTest,
+                filePath,
+                concurrentLayer
         );
     }
 
-    @SuppressWarnings("ForLoopReplaceableByForEach")
-    private static
-    void runAllConfigs(
-            final int repetitions,
-            final int maxTrainingThreads,
-            final String experimentName,
-            final Constructor<?> experiment,
-            final Object[] classParameters,
-            final List<Double> alphaList,
-            final List<Integer> annealingAlphaList,
-            final List<Double> lambdaList,
-            final List<Double> gammaList,
-            final boolean statisticsOnly,
-            final boolean runStatisticsForBackups,
-            final boolean createLogs,
-            final int gamesToPlay,
-            final int saveEvery,
-            final int saveBackupEvery,
-            final int gamesToPlayPerThreadForStatistics,
-            final int simulationsForStatistics,
-            final List<Double> explorationRateList,
-            final boolean resetTracesTest,
-            final String filePath
-    ) {
-        List<GeneratorConfig> experiments = new ArrayList<>();
-        int                   number      = 0;
-        for (int a = 0; a < repetitions; a++) {
-            for (int i = 0; i < alphaList.size(); i++) {
-                for (int j = 0; j < lambdaList.size(); j++) {
-                    for (int k = 0; k < gammaList.size(); k++) {
-                        for (int l = 0; l < explorationRateList.size(); l++) {
-                            for (int m = 0; m < annealingAlphaList.size(); m++) {
-                                number++;
-                                experiments.add(new GeneratorConfig(
-                                        a,
-                                        classParameters,
-                                        alphaList.get(i),
-                                        annealingAlphaList.get(m),
-                                        lambdaList.get(j),
-                                        gammaList.get(k),
-                                        explorationRateList.get(l),
-                                        null,
-                                        null,
-                                        null,
-                                        null,
-                                        false,
-                                        number
-                                ));
-                                if (explorationRateList.get(l) > 0 && lambdaList.get(j) > 0 && resetTracesTest) {
-                                    number++;
-                                    experiments.add(new GeneratorConfig(
-                                            a,
-                                            classParameters,
-                                            alphaList.get(i),
-                                            annealingAlphaList.get(m),
-                                            lambdaList.get(j),
-                                            gammaList.get(k),
-                                            explorationRateList.get(l),
-                                            null,
-                                            null,
-                                            null,
-                                            null,
-                                            true,
-                                            number
-                                    ));
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        Stream<GeneratorConfig> stream;
-        if (statisticsOnly) {
-            stream = experiments.stream();
-        } else {
-            stream = experiments.parallelStream();
-        }
-
-        ForkJoinPool forkJoinPool = new ForkJoinPool(maxTrainingThreads);
-        try {
-            forkJoinPool.submit(() -> //parallel task here, for example
-                    stream.forEach(expConfig -> {
-                        try {
-                            String newFilePath = filePath +
-                                                 "Normalization" +
-                                                 File.separator +
-                                                 expConfig.getRepetitions() +
-                                                 "-alpha_" +
-                                                 expConfig.getAlpha() +
-                                                 ((expConfig.getAnnealingAlpha() > 0) ? "-anneal_" + expConfig.getAnnealingAlpha() : "") +
-                                                 "-lambda_" +
-                                                 expConfig.getLambda() +
-                                                 "-gamma_" +
-                                                 expConfig.getGamma() +
-                                                 "-explorationRate_" +
-                                                 expConfig.getExplorationRate() +
-                                                 "-resetTraces_" +
-                                                 expConfig.isResetTraces() +
-                                                 File.separator;
-                            File newPath = new File(newFilePath);
-                            if (!newPath.exists()) {
-                                newPath.mkdirs();
-                            }
-                            LearningExperiment cloneExperiment = (LearningExperiment) experiment.newInstance();
-                            cloneExperiment.setExperimentName(experimentName);
-                            configAndExecute(
-                                    expConfig.getNumber(),
-                                    cloneExperiment,
-                                    statisticsOnly,
-                                    runStatisticsForBackups,
-                                    createLogs,
-                                    expConfig.getLambda(),
-                                    expConfig.getAlpha(),
-                                    expConfig.getGamma(),
-                                    gamesToPlay,
-                                    saveEvery,
-                                    saveBackupEvery,
-                                    gamesToPlayPerThreadForStatistics,
-                                    simulationsForStatistics,
-                                    expConfig.getExplorationRate(),
-                                    expConfig.isResetTraces(),
-                                    newFilePath
-                            );
-                        } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-                            Logger.getLogger(TestGeneratorNormalization.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    })).get();
-        } catch (InterruptedException | ExecutionException ex) {
-            Logger.getLogger(TestGeneratorNormalization.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
 }

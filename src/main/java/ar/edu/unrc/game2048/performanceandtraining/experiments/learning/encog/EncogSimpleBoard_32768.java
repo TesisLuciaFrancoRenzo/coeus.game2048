@@ -24,7 +24,7 @@ import ar.edu.unrc.coeus.tdlearning.training.ntuple.NTupleSystem;
 import ar.edu.unrc.game2048.NeuralNetworkConfiguration2048;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.LearningExperiment;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.librariesinterfaces.EncogExperimentInterface;
-import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.PNTupleTanH_512;
+import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.ConfigPerceptronBoard_32768;
 import org.encog.neural.networks.BasicNetwork;
 
 import java.awt.*;
@@ -36,7 +36,7 @@ import static ar.edu.unrc.coeus.tdlearning.learning.ELearningStyle.afterState;
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
 public
-class NTupleTanH_512
+class EncogSimpleBoard_32768
         extends LearningExperiment<BasicNetwork> {
     /**
      *
@@ -48,7 +48,7 @@ class NTupleTanH_512
      * @param hasBias
      */
     public
-    NTupleTanH_512(final Boolean hasBias) {
+    EncogSimpleBoard_32768(final Boolean hasBias) {
         super();
         this.hasBias = hasBias;
     }
@@ -67,18 +67,18 @@ class NTupleTanH_512
         } else {
             filePath = args[0];
         }
-        LearningExperiment experiment = new NTupleTanH_512(false);
+        LearningExperiment experiment = new EncogSimpleBoard_32768(false);
 
         //        boolean statistics = true;
         boolean statistics = false;
 
-        boolean[] concurrentLayer = {true, false};
+        boolean[] concurrentLayer = {false, true, true, false};
         experiment.setConcurrencyInLayer(concurrentLayer);
-        double[] alphas = {0.0025, 0.0025};
+        double[] alphas = {0.0025, 0.0025, 0.0025, 0.0025};
         experiment.setAlpha(alphas);
         experiment.setLearningRateAdaptationToFixed();
         experiment.setConcurrencyInComputeBestPossibleAction(true);
-        experiment.setLambda(0.7);
+        experiment.setLambda(0.4);
         experiment.setGamma(1);
         experiment.setExplorationRateToFixed(0);
         experiment.setReplaceEligibilityTraces(false);
@@ -89,7 +89,7 @@ class NTupleTanH_512
 
         experiment.createLogs(false);
         //para calcular estadisticas
-        experiment.setTileToWinForStatistics(512);
+        experiment.setTileToWinForStatistics(2_048);
         if (statistics) {
             experiment.setStatisticsOnly(true);
             experiment.setRunStatisticsForBackups(true);
@@ -110,12 +110,12 @@ class NTupleTanH_512
     @Override
     public
     void initialize() {
-        setTileToWinForTraining(512);
+        setTileToWinForTraining(32_768);
         if (getExperimentName() == null) {
             setExperimentName(getClass());
         }
         setNeuralNetworkName(getExperimentName());
-        NeuralNetworkConfiguration2048<BasicNetwork> config = new PNTupleTanH_512<>(hasBias);
+        NeuralNetworkConfiguration2048<BasicNetwork> config = new ConfigPerceptronBoard_32768<>(hasBias);
         setNeuralNetworkInterfaceFor2048(new EncogExperimentInterface(config));
     }
 

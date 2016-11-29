@@ -30,24 +30,23 @@ import java.util.ArrayList;
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
 public
-class NSymmetricLinear_32768
+class ConfigNTupleBasicLinearNoPartialScore_512
         extends NTupleConfiguration2048 {
 
     /**
-     * Configuración para jugar hasta 32.768 con tablero simétrico, con función de activación Lineal, y puntaje parcial.
+     * Configuración para jugar 512, con función de activación Lineal, sin puntaje parcial.
      */
     public
-    NSymmetricLinear_32768() {
+    ConfigNTupleBasicLinearNoPartialScore_512() {
         activationFunction = FunctionUtils.LINEAR;
         derivedActivationFunction = FunctionUtils.LINEAR_DERIVED;
         concurrency = false;
-        int maxTile = 15;
+        int maxTile = 9;
 
-        nTuplesLength = new int[4];
-        nTuplesLength[0] = 6;
-        nTuplesLength[1] = 6;
-        nTuplesLength[2] = 4;
-        nTuplesLength[3] = 4;
+        nTuplesLength = new int[17];
+        for (int i = 0; i < 17; i++) {
+            nTuplesLength[i] = 4;
+        }
 
         allSamplePointPossibleValues = new ArrayList<>();
         for (int i = 0; i <= maxTile; i++) {
@@ -79,9 +78,8 @@ class NSymmetricLinear_32768
             GameBoard board,
             int outputNeuron
     ) {
-        return board.getPartialScore();
+        return 0;
     }
-
 
     @Override
     public
@@ -90,24 +88,64 @@ class NSymmetricLinear_32768
             int nTupleIndex
     ) {
         switch (nTupleIndex) {
-            // rectángulos
+            // verticales
             case 0: {
-                return new SamplePointValue[]{board.tileAt(0, 0), board.tileAt(0, 1), board.tileAt(0, 2), board.tileAt(1, 0), board.tileAt(1,
-                        1
-                ), board.tileAt(1, 2)};
+                return new SamplePointValue[]{board.tileAt(0, 0), board.tileAt(0, 1), board.tileAt(0, 2), board.tileAt(0, 3)};
             }
             case 1: {
-                return new SamplePointValue[]{board.tileAt(1, 0), board.tileAt(1, 1), board.tileAt(1, 2), board.tileAt(2, 0), board.tileAt(2,
-                        1
-                ), board.tileAt(2, 2)};
+                return new SamplePointValue[]{board.tileAt(1, 0), board.tileAt(1, 1), board.tileAt(1, 2), board.tileAt(1, 3)};
             }
-            // verticales
             case 2: {
                 return new SamplePointValue[]{board.tileAt(2, 0), board.tileAt(2, 1), board.tileAt(2, 2), board.tileAt(2, 3)};
             }
             case 3: {
                 return new SamplePointValue[]{board.tileAt(3, 0), board.tileAt(3, 1), board.tileAt(3, 2), board.tileAt(3, 3)};
             }
+            // horizontales
+            case 4: {
+                return new SamplePointValue[]{board.tileAt(0, 0), board.tileAt(1, 0), board.tileAt(2, 0), board.tileAt(3, 0)};
+            }
+            case 5: {
+                return new SamplePointValue[]{board.tileAt(0, 1), board.tileAt(1, 1), board.tileAt(2, 1), board.tileAt(3, 1)};
+            }
+            case 6: {
+                return new SamplePointValue[]{board.tileAt(0, 2), board.tileAt(1, 2), board.tileAt(2, 2), board.tileAt(3, 2)};
+            }
+            case 7: {
+                return new SamplePointValue[]{board.tileAt(0, 3), board.tileAt(1, 3), board.tileAt(2, 3), board.tileAt(3, 3)};
+            }
+            // cuadrados
+            // primera fila de rectángulos
+            case 8: {
+                return new SamplePointValue[]{board.tileAt(0, 0), board.tileAt(0, 1), board.tileAt(1, 1), board.tileAt(1, 0)};
+            }
+            case 9: {
+                return new SamplePointValue[]{board.tileAt(1, 0), board.tileAt(1, 1), board.tileAt(2, 1), board.tileAt(2, 0)};
+            }
+            case 10: {
+                return new SamplePointValue[]{board.tileAt(2, 0), board.tileAt(2, 1), board.tileAt(3, 1), board.tileAt(3, 0)};
+            }
+            //segunda fila de rectángulos
+            case 11: {
+                return new SamplePointValue[]{board.tileAt(0, 1), board.tileAt(0, 2), board.tileAt(1, 2), board.tileAt(1, 1)};
+            }
+            case 12: {
+                return new SamplePointValue[]{board.tileAt(1, 1), board.tileAt(1, 2), board.tileAt(2, 2), board.tileAt(2, 1)};
+            }
+            case 13: {
+                return new SamplePointValue[]{board.tileAt(2, 1), board.tileAt(2, 2), board.tileAt(3, 2), board.tileAt(3, 1)};
+            }
+            //tercera fila de rectángulos
+            case 14: {
+                return new SamplePointValue[]{board.tileAt(0, 2), board.tileAt(0, 3), board.tileAt(1, 3), board.tileAt(1, 2)};
+            }
+            case 15: {
+                return new SamplePointValue[]{board.tileAt(1, 2), board.tileAt(1, 3), board.tileAt(2, 3), board.tileAt(2, 2)};
+            }
+            case 16: {
+                return new SamplePointValue[]{board.tileAt(2, 2), board.tileAt(2, 3), board.tileAt(3, 3), board.tileAt(3, 2)};
+            }
+
             default: {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
@@ -119,4 +157,5 @@ class NSymmetricLinear_32768
     double normalizeValueToPerceptronOutput(Object value) {
         return (double) value;
     }
+
 }

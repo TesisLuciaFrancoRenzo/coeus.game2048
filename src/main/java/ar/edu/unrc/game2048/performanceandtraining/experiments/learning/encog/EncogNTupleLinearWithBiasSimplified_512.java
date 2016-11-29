@@ -16,15 +16,15 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ar.edu.unrc.game2048.performanceandtraining.experiments.learning.ntuple;
+package ar.edu.unrc.game2048.performanceandtraining.experiments.learning.encog;
 
 import ar.edu.unrc.coeus.interfaces.INeuralNetworkInterface;
 import ar.edu.unrc.coeus.tdlearning.learning.TDLambdaLearning;
 import ar.edu.unrc.coeus.tdlearning.training.ntuple.NTupleSystem;
-import ar.edu.unrc.game2048.NTupleConfiguration2048;
+import ar.edu.unrc.game2048.NeuralNetworkConfiguration2048;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.LearningExperiment;
-import ar.edu.unrc.game2048.performanceandtraining.configurations.librariesinterfaces.NTupleExperimentInterface;
-import ar.edu.unrc.game2048.performanceandtraining.configurations.ntuples.NBasicLinearNoPartialScore_512;
+import ar.edu.unrc.game2048.performanceandtraining.configurations.librariesinterfaces.EncogExperimentInterface;
+import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.ConfigPerceptronNTupleLinearSimplified_512;
 import org.encog.neural.networks.BasicNetwork;
 
 import java.awt.*;
@@ -36,8 +36,23 @@ import static ar.edu.unrc.coeus.tdlearning.learning.ELearningStyle.afterState;
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
 public
-class BasicLinearNoPartialScore_512
+class EncogNTupleLinearWithBiasSimplified_512
         extends LearningExperiment<BasicNetwork> {
+
+    /**
+     *
+     */
+    public final static Class<?>[] PARAMETER_TYPE = {Boolean.class};
+    private final Boolean hasBias;
+
+    /**
+     * @param hasBias
+     */
+    public
+    EncogNTupleLinearWithBiasSimplified_512(final Boolean hasBias) {
+        super();
+        this.hasBias = hasBias;
+    }
 
     /**
      * @param args
@@ -53,7 +68,7 @@ class BasicLinearNoPartialScore_512
         } else {
             filePath = args[0];
         }
-        LearningExperiment experiment = new BasicLinearNoPartialScore_512();
+        LearningExperiment experiment = new EncogNTupleLinearWithBiasSimplified_512(true);
 
         //        boolean statistics = true;
         boolean statistics = false;
@@ -62,16 +77,16 @@ class BasicLinearNoPartialScore_512
         experiment.setAlpha(alphas);
         experiment.setLearningRateAdaptationToFixed();
 
-        experiment.setLambda(0.3);
+        experiment.setLambda(0);
         experiment.setGamma(1);
         experiment.setExplorationRateToFixed(0);
         experiment.setReplaceEligibilityTraces(false);
         experiment.setGamesToPlay(20_000);
         experiment.setSaveEvery(500);
-        experiment.setSaveBackupEvery(1_000);
+        experiment.setSaveBackupEvery(500);
         experiment.setInitializePerceptronRandomized(false);
         experiment.setConcurrencyInComputeBestPossibleAction(true);
-        boolean[] concurrentLayer = {false, false};
+        boolean[] concurrentLayer = {true, false};
         experiment.setConcurrencyInLayer(concurrentLayer);
 
         experiment.createLogs(false);
@@ -102,8 +117,8 @@ class BasicLinearNoPartialScore_512
             setExperimentName(getClass());
         }
         setNeuralNetworkName(getExperimentName());
-        NTupleConfiguration2048 config = new NBasicLinearNoPartialScore_512();
-        setNeuralNetworkInterfaceFor2048(new NTupleExperimentInterface(config));
+        NeuralNetworkConfiguration2048<BasicNetwork> config = new ConfigPerceptronNTupleLinearSimplified_512<>(hasBias);
+        setNeuralNetworkInterfaceFor2048(new EncogExperimentInterface(config));
     }
 
     @Override
@@ -111,18 +126,9 @@ class BasicLinearNoPartialScore_512
     TDLambdaLearning instanceOfTdLearningImplementation(
             INeuralNetworkInterface perceptronInterface
     ) {
-        return null;
-    }
-
-    @Override
-    public
-    TDLambdaLearning instanceOfTdLearningImplementation(
-            NTupleSystem nTupleSystem
-    ) {
-        return new TDLambdaLearning(
-                nTupleSystem,
+        return new TDLambdaLearning(perceptronInterface,
                 afterState,
-                (getAlpha() != null) ? getAlpha()[0] : null,
+                getAlpha(),
                 getLambda(),
                 getGamma(),
                 getConcurrencyInLayer(),
@@ -131,4 +137,11 @@ class BasicLinearNoPartialScore_512
         );
     }
 
+    @Override
+    public
+    TDLambdaLearning instanceOfTdLearningImplementation(
+            NTupleSystem nTupleSystem
+    ) {
+        return null;
+    }
 }

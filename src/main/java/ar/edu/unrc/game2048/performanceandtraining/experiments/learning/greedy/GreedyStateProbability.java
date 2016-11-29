@@ -26,7 +26,7 @@ import ar.edu.unrc.coeus.tdlearning.interfaces.IState;
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
 public
-class StateProbability {
+class GreedyStateProbability {
 
     private IState nextTurnState;
     private double probability;
@@ -36,7 +36,7 @@ class StateProbability {
      * @param probability   probabilidad de que ocurra {@code nextTurnState} como estado efectivo en el siguiente turno
      */
     public
-    StateProbability(
+    GreedyStateProbability(
             final IState nextTurnState,
             final double probability
     ) {

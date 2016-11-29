@@ -16,15 +16,15 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ar.edu.unrc.game2048.performanceandtraining.experiments.learning.encog;
+package ar.edu.unrc.game2048.performanceandtraining.experiments.learning.ntuple;
 
 import ar.edu.unrc.coeus.interfaces.INeuralNetworkInterface;
 import ar.edu.unrc.coeus.tdlearning.learning.TDLambdaLearning;
 import ar.edu.unrc.coeus.tdlearning.training.ntuple.NTupleSystem;
-import ar.edu.unrc.game2048.NeuralNetworkConfiguration2048;
+import ar.edu.unrc.game2048.NTupleConfiguration2048;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.LearningExperiment;
-import ar.edu.unrc.game2048.performanceandtraining.configurations.librariesinterfaces.EncogExperimentInterface;
-import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.PBoard_32768;
+import ar.edu.unrc.game2048.performanceandtraining.configurations.librariesinterfaces.NTupleExperimentInterface;
+import ar.edu.unrc.game2048.performanceandtraining.configurations.ntuples.ConfigNTupleBasicTanH_512;
 import org.encog.neural.networks.BasicNetwork;
 
 import java.awt.*;
@@ -36,22 +36,8 @@ import static ar.edu.unrc.coeus.tdlearning.learning.ELearningStyle.afterState;
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
 public
-class SimpleBoard_32768
+class NTupleBasicTanH_512
         extends LearningExperiment<BasicNetwork> {
-    /**
-     *
-     */
-    public final static Class<?>[] PARAMETER_TYPE = {Boolean.class};
-    private final Boolean hasBias;
-
-    /**
-     * @param hasBias
-     */
-    public
-    SimpleBoard_32768(final Boolean hasBias) {
-        super();
-        this.hasBias = hasBias;
-    }
 
     /**
      * @param args
@@ -67,33 +53,34 @@ class SimpleBoard_32768
         } else {
             filePath = args[0];
         }
-        LearningExperiment experiment = new SimpleBoard_32768(false);
+        LearningExperiment experiment = new NTupleBasicTanH_512();
 
         //        boolean statistics = true;
         boolean statistics = false;
 
-        boolean[] concurrentLayer = {false, true, true, false};
-        experiment.setConcurrencyInLayer(concurrentLayer);
-        double[] alphas = {0.0025, 0.0025, 0.0025, 0.0025};
+        double[] alphas = {0.0025, 0.0025};
         experiment.setAlpha(alphas);
         experiment.setLearningRateAdaptationToFixed();
-        experiment.setConcurrencyInComputeBestPossibleAction(true);
-        experiment.setLambda(0.4);
+
+        experiment.setLambda(0.3);
         experiment.setGamma(1);
         experiment.setExplorationRateToFixed(0);
         experiment.setReplaceEligibilityTraces(false);
-        experiment.setGamesToPlay(10_000);
-        experiment.setSaveEvery(200);
-        experiment.setSaveBackupEvery(500);
+        experiment.setGamesToPlay(12_000);
+        experiment.setSaveEvery(1_000);
+        experiment.setSaveBackupEvery(300);
         experiment.setInitializePerceptronRandomized(false);
+        experiment.setConcurrencyInComputeBestPossibleAction(true);
+        boolean[] concurrentLayer = {false, false};
+        experiment.setConcurrencyInLayer(concurrentLayer);
 
         experiment.createLogs(false);
         //para calcular estadisticas
-        experiment.setTileToWinForStatistics(2_048);
+        experiment.setTileToWinForStatistics(512);
         if (statistics) {
             experiment.setStatisticsOnly(true);
             experiment.setRunStatisticsForBackups(true);
-            experiment.setGamesToPlayPerThreadForStatistics(1_000);
+            experiment.setGamesToPlayPerThreadForStatistics(100);
             experiment.setSimulationsForStatistics(8);
         } else {
             experiment.setStatisticsOnly(false);
@@ -110,13 +97,13 @@ class SimpleBoard_32768
     @Override
     public
     void initialize() {
-        setTileToWinForTraining(32_768);
+        setTileToWinForTraining(512);
         if (getExperimentName() == null) {
             setExperimentName(getClass());
         }
         setNeuralNetworkName(getExperimentName());
-        NeuralNetworkConfiguration2048<BasicNetwork> config = new PBoard_32768<>(hasBias);
-        setNeuralNetworkInterfaceFor2048(new EncogExperimentInterface(config));
+        NTupleConfiguration2048 config = new ConfigNTupleBasicTanH_512();
+        setNeuralNetworkInterfaceFor2048(new NTupleExperimentInterface(config));
     }
 
     @Override
@@ -124,9 +111,18 @@ class SimpleBoard_32768
     TDLambdaLearning instanceOfTdLearningImplementation(
             INeuralNetworkInterface perceptronInterface
     ) {
-        return new TDLambdaLearning(perceptronInterface,
+        return null;
+    }
+
+    @Override
+    public
+    TDLambdaLearning instanceOfTdLearningImplementation(
+            NTupleSystem nTupleSystem
+    ) {
+        return new TDLambdaLearning(
+                nTupleSystem,
                 afterState,
-                getAlpha(),
+                (getAlpha() != null) ? getAlpha()[0] : null,
                 getLambda(),
                 getGamma(),
                 getConcurrencyInLayer(),
@@ -135,11 +131,4 @@ class SimpleBoard_32768
         );
     }
 
-    @Override
-    public
-    TDLambdaLearning instanceOfTdLearningImplementation(
-            NTupleSystem nTupleSystem
-    ) {
-        return null;
-    }
 }

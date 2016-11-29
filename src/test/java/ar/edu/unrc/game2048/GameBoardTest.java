@@ -18,7 +18,7 @@
  */
 package ar.edu.unrc.game2048;
 
-import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.PBoard_32768;
+import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.ConfigPerceptronBoard_32768;
 import org.junit.*;
 
 /**
@@ -28,11 +28,11 @@ import org.junit.*;
 public
 class GameBoardTest {
 
-    private final Tile[]        emptyBoard;
-    private final PBoard_32768  nTupleConfiguration;
-    private final Tile[]        randomBoard;
-    private final TileContainer tileContainer;
-    private       Game2048      game;
+    private final Tile[]                      emptyBoard;
+    private final ConfigPerceptronBoard_32768 nTupleConfiguration;
+    private final Tile[]                      randomBoard;
+    private final TileContainer               tileContainer;
+    private       Game2048                    game;
 
     /**
      *
@@ -51,7 +51,7 @@ class GameBoardTest {
                 getTile(4), tileContainer.getTile(4), tileContainer.getTile(2), tileContainer.getTile(4), tileContainer.
                 getTile(5), tileContainer.getTile(7), tileContainer.getTile(4), tileContainer.getTile(0), tileContainer.
                 getTile(1), tileContainer.getTile(4)};
-        nTupleConfiguration = new PBoard_32768(true);
+        nTupleConfiguration = new ConfigPerceptronBoard_32768(true);
     }
 
     /**

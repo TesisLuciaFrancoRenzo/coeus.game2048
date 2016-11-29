@@ -25,7 +25,9 @@ import ar.edu.unrc.game2048.GameBoard;
 import ar.edu.unrc.game2048.NeuralNetworkConfiguration2048;
 import ar.edu.unrc.game2048.Tile;
 import org.encog.engine.network.activation.ActivationFunction;
-import org.encog.engine.network.activation.ActivationLinear;
+import org.encog.engine.network.activation.ActivationTANH;
+import org.encog.util.arrayutil.NormalizationAction;
+import org.encog.util.arrayutil.NormalizedField;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,7 +42,7 @@ import java.util.List;
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
 public
-class PNTupleLinear_512<NeuralNetworkClass>
+class ConfigPerceptronNTupleTanHSimplified_512<NeuralNetworkClass>
         extends NeuralNetworkConfiguration2048<NeuralNetworkClass> {
 
     private final List<SamplePointValue>             allSamplePointPossibleValues;
@@ -56,9 +58,11 @@ class PNTupleLinear_512<NeuralNetworkClass>
      * @param hasBias
      */
     public
-    PNTupleLinear_512(final Boolean hasBias) {
+    ConfigPerceptronNTupleTanHSimplified_512(final Boolean hasBias) {
         this.hasBias = hasBias;
 
+        int minReward = -20_000;
+        int maxReward = 20_000;
         numSamples = 8;
         maxTile = 9;
         concurrentInput = true;
@@ -76,11 +80,10 @@ class PNTupleLinear_512<NeuralNetworkClass>
             mapSamplePointValuesIndex.put(allSamplePointPossibleValues.get(spvIndex), spvIndex);
         }
 
-        int lutSize                   = 0;
-        int lastNTuplesWeightQuantity = 0;
         nTuplesWeightQuantityIndex = new int[nTuplesLength.length];
+        int lastNTuplesWeightQuantity = 0;
         nTuplesWeightQuantityIndex[0] = lastNTuplesWeightQuantity;
-
+        int lutSize = 0;
         for (int nTupleIndex = 0; nTupleIndex < nTuplesLength.length; nTupleIndex++) {
             int nTuplesWeightQuantity = (int) Math.pow(mapSamplePointValuesIndex.size(), nTuplesLength[nTupleIndex]);
             lutSize += nTuplesWeightQuantity;
@@ -94,10 +97,12 @@ class PNTupleLinear_512<NeuralNetworkClass>
         neuronQuantityInLayer[0] = lutSize;
 
         activationFunctionForEncog = new ActivationFunction[1];
-        activationFunctionForEncog[0] = new ActivationLinear();
+        activationFunctionForEncog[0] = new ActivationTANH();
 
-        //        activationFunctionMax = 1;
-        //        activationFunctionMin = -1;
+        activationFunctionMax = 1;
+        activationFunctionMin = -1;
+
+        normOutput = new NormalizedField(NormalizationAction.Normalize, null, maxReward, minReward, activationFunctionMax, activationFunctionMin);
     }
 
     /**
@@ -122,7 +127,8 @@ class PNTupleLinear_512<NeuralNetworkClass>
             List<Double> normalizedPerceptronInput
     ) {
         for (int i = 0; i < numSamples; i++) {
-            normalizedPerceptronInput.add(calculateIndex(i, getNTuple(board, i)), 1d);
+            normalizedPerceptronInput.
+                                             add(calculateIndex(i, getNTuple(board, i)), 1d);
         }
     }
 
@@ -142,13 +148,14 @@ class PNTupleLinear_512<NeuralNetworkClass>
             Game2048 game,
             Object[] output
     ) {
+        assert output.length == 1;
         return (Double) output[0];
     }
 
     @Override
     public
     double deNormalizeValueFromNeuralNetworkOutput(Object value) {
-        return (Double) value;
+        return normOutput.deNormalize((Double) value);
     }
 
     /**
@@ -261,7 +268,7 @@ class PNTupleLinear_512<NeuralNetworkClass>
     @Override
     public
     double normalizeValueToPerceptronOutput(Object value) {
-        return (Double) value;
+        return normOutput.normalize((Double) value);
     }
 
     @Override

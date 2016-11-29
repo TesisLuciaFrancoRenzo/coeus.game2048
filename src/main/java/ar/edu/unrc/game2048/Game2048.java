@@ -1,7 +1,7 @@
 package ar.edu.unrc.game2048;
 
 import ar.edu.unrc.coeus.tdlearning.interfaces.*;
-import ar.edu.unrc.game2048.performanceandtraining.experiments.learning.greedy.StateProbability;
+import ar.edu.unrc.game2048.performanceandtraining.experiments.learning.greedy.GreedyStateProbability;
 import org.encog.ml.data.MLData;
 import org.encog.ml.data.basic.BasicMLData;
 import org.encog.neural.networks.BasicNetwork;
@@ -561,7 +561,7 @@ class Game2048<NeuralNetworkClass>
      * @return lista de todos los posibles siguientes turnos desde {@code afterState}
      */
     public
-    List<StateProbability> listAllPossibleNextTurnStateFromAfterState(
+    List<GreedyStateProbability> listAllPossibleNextTurnStateFromAfterState(
             IState afterState
     ) {
         //noinspection unchecked

@@ -23,6 +23,8 @@ import ar.edu.unrc.coeus.tdlearning.utils.FunctionUtils;
 import ar.edu.unrc.game2048.GameBoard;
 import ar.edu.unrc.game2048.NTupleConfiguration2048;
 import ar.edu.unrc.game2048.Tile;
+import org.encog.util.arrayutil.NormalizationAction;
+import org.encog.util.arrayutil.NormalizedField;
 
 import java.util.ArrayList;
 
@@ -30,18 +32,25 @@ import java.util.ArrayList;
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
 public
-class NBasicLinearNoPartialScore_512
+class ConfigNTupleBasicSigmoid_32768
         extends NTupleConfiguration2048 {
 
+    private static final int maxReward = 500_000;
+    private static final int minReward = 0;
+
     /**
-     * Configuración para jugar 512, con función de activación Lineal, sin puntaje parcial.
+     * Configuración para jugar hasta 32.768, con función de activación Sigmoideo, y puntaje parcial.
      */
     public
-    NBasicLinearNoPartialScore_512() {
-        activationFunction = FunctionUtils.LINEAR;
-        derivedActivationFunction = FunctionUtils.LINEAR_DERIVED;
+    ConfigNTupleBasicSigmoid_32768() {
+        activationFunction = FunctionUtils.SIGMOID;
+        derivedActivationFunction = FunctionUtils.SIGMOID_DERIVED;
         concurrency = false;
-        int maxTile = 9;
+        double activationFunctionMax = 1;
+        double activationFunctionMin = 0;
+        int    maxTile               = 15;
+
+        normOutput = new NormalizedField(NormalizationAction.Normalize, null, maxReward, minReward, activationFunctionMax, activationFunctionMin);
 
         nTuplesLength = new int[17];
         for (int i = 0; i < 17; i++) {
@@ -69,7 +78,7 @@ class NBasicLinearNoPartialScore_512
     @Override
     public
     double deNormalizeValueFromNeuralNetworkOutput(Object value) {
-        return (double) value;
+        return normOutput.deNormalize((double) value);
     }
 
     @Override
@@ -78,7 +87,7 @@ class NBasicLinearNoPartialScore_512
             GameBoard board,
             int outputNeuron
     ) {
-        return 0;
+        return board.getPartialScore();
     }
 
     @Override
@@ -155,7 +164,9 @@ class NBasicLinearNoPartialScore_512
     @Override
     public
     double normalizeValueToPerceptronOutput(Object value) {
-        return (double) value;
+        if ((Double) value > maxReward) {
+            throw new IllegalArgumentException("value no puede ser mayor a maxReward=" + maxReward);
+        }
+        return normOutput.normalize((Double) value);
     }
-
 }

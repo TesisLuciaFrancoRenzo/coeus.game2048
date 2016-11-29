@@ -34,7 +34,7 @@ import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static ar.edu.unrc.game2048.performanceandtraining.experiments.learning.TestGenerator.getMsj;
+import static ar.edu.unrc.game2048.performanceandtraining.experiments.TestGenerator.getMsj;
 
 /**
  * Experimento especializado para aprendizaje de redes neuronales.
@@ -240,18 +240,11 @@ class LearningExperiment<NeuralNetworkClass> {
     }
 
     /**
-     * Establece el nombre del experimento basado en el nombre de la clase {@code experimentClass}.
-     *
-     * @param experimentClass clase de la cual extraer el nombre del experimento.
+     * @param experimentName nombre del experimento.
      */
     public
-    void setExperimentName(Class experimentClass) {
-        String className = experimentClass.getName();
-        int    lastDot   = className.lastIndexOf('.');
-        if (lastDot != -1) {
-            className = className.substring(lastDot + 1);
-        }
-        experimentName = className;
+    void setExperimentName(String experimentName) {
+        this.experimentName = experimentName;
     }
 
     /**
@@ -817,11 +810,18 @@ class LearningExperiment<NeuralNetworkClass> {
     }
 
     /**
-     * @param experimentName nombre del experimento.
+     * Establece el nombre del experimento basado en el nombre de la clase {@code experimentClass}.
+     *
+     * @param experimentClass clase de la cual extraer el nombre del experimento.
      */
     public
-    void setExperimentName(String experimentName) {
-        this.experimentName = experimentName;
+    void setExperimentName(Class experimentClass) {
+        String className = experimentClass.getName();
+        int    lastDot   = className.lastIndexOf('.');
+        if (lastDot != -1) {
+            className = className.substring(lastDot + 1);
+        }
+        experimentName = className;
     }
 
     /**

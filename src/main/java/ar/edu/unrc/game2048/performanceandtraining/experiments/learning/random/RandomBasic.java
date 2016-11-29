@@ -34,7 +34,7 @@ import java.io.File;
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
 public
-class Basic
+class RandomBasic
         extends LearningExperiment<BasicNetwork> {
 
     /**
@@ -51,7 +51,7 @@ class Basic
         } else {
             filePath = args[0];
         }
-        LearningExperiment experiment = new Basic();
+        LearningExperiment experiment = new RandomBasic();
         experiment.setStatisticsOnly(true);
         experiment.createLogs(false);
         experiment.setSaveEvery(100_000_000);

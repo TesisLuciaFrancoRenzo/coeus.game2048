@@ -16,11 +16,11 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ar.edu.unrc.game2048.performanceandtraining.experiments.learning;
+package ar.edu.unrc.game2048.performanceandtraining.experiments.performance;
 
 import ar.edu.unrc.game2048.performanceandtraining.configurations.LearningExperiment;
-import ar.edu.unrc.game2048.performanceandtraining.experiments.learning.ntuple.NTupleBasicLinear_512;
-import ar.edu.unrc.game2048.performanceandtraining.experiments.learning.ntuple.NTupleBasicTanH_512;
+import ar.edu.unrc.game2048.performanceandtraining.experiments.learning.encog.EncogNTupleLinearWithBiasSimplified_512;
+import ar.edu.unrc.game2048.performanceandtraining.experiments.learning.ntuple.NTupleBasicLinearSimplified_512;
 
 import java.awt.*;
 import java.io.File;
@@ -38,7 +38,7 @@ import static ar.edu.unrc.game2048.performanceandtraining.experiments.TestGenera
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
 public
-class TestGeneratorActivationFunctionVsTraces {
+class TestGeneratorPerceptronVsNTuple {
 
     private static
     void configAndExecute(
@@ -117,8 +117,8 @@ class TestGeneratorActivationFunctionVsTraces {
         List<Integer> interpolatedExplorationRateStartInterpolation  = new ArrayList<>();
 
         //============================== configuraciones manuales ==================================
-        String    testDirName            = "ActivationFunctionVsTraces";
-        int       repetitions            = 1;
+        String    testDirName            = "PerceptronVsNTuple";
+        int       repetitions            = 4;
         int       maxTrainingThreads     = 8;
         int       gamesToPlay            = 12_000;
         int       saveEvery              = 1000;
@@ -126,20 +126,9 @@ class TestGeneratorActivationFunctionVsTraces {
         int       tileToWinForStatistics = 512;
         boolean[] concurrentLayer        = {false, false};
         boolean   resetTracesTest        = true;
-        boolean   noResetTracesTest      = true;
+        boolean   noResetTracesTest      = false;
 
-        lambdaList.add(0d);
-        lambdaList.add(0.1d);
-        lambdaList.add(0.2d);
         lambdaList.add(0.3d);
-        lambdaList.add(0.4d);
-        lambdaList.add(0.5d);
-        lambdaList.add(0.6d);
-        lambdaList.add(0.7d);
-        lambdaList.add(0.8d);
-        lambdaList.add(0.9d);
-        lambdaList.add(1d);
-
         alphaList.add(0.0025d);
         annealingAlphaList.add(NO_ANNEALING); //Sin annealing
 
@@ -149,7 +138,7 @@ class TestGeneratorActivationFunctionVsTraces {
         interpolatedExplorationRateFinalValues = null;
         interpolatedExplorationRateStartInterpolation = null;
         interpolatedExplorationRateFinishInterpolation = null;
-        fixedExplorationRate.add(0d);
+        fixedExplorationRate.add(0.1d);
 
         boolean createLogs = false;
         //============================== fin de configuraciones manuales ==================================
@@ -164,132 +153,139 @@ class TestGeneratorActivationFunctionVsTraces {
         gamesToPlayPerThreadForStatistics = 0;
         simulationsForStatistics = 0;
 
-        runAllConfigs(
-                repetitions,
-                maxTrainingThreads,
-                testDirName,
-                "BasicLinear_512_ActFuncVsTrace",
-                NTupleBasicLinear_512.class.getConstructor(),
-                null,
-                alphaList,
-                annealingAlphaList,
-                lambdaList,
-                gammaList,
-                statisticsOnly,
-                runStatisticsForBackups,
-                createLogs,
-                gamesToPlay,
-                saveEvery,
-                saveBackupEvery,
-                gamesToPlayPerThreadForStatistics,
-                tileToWinForStatistics,
-                simulationsForStatistics,
-                fixedExplorationRate,
-                interpolatedExplorationRateInitialValues,
-                interpolatedExplorationRateFinalValues,
-                interpolatedExplorationRateStartInterpolation,
-                interpolatedExplorationRateFinishInterpolation,
-                resetTracesTest,
-                noResetTracesTest,
-                filePath,
-                concurrentLayer
-        );
-        runAllConfigs(
-                repetitions,
-                maxTrainingThreads,
-                testDirName,
-                "BasicTanH_512_ActFuncVsTrace",
-                NTupleBasicTanH_512.class.getConstructor(),
-                null,
-                alphaList,
-                annealingAlphaList,
-                lambdaList,
-                gammaList,
-                statisticsOnly,
-                runStatisticsForBackups,
-                createLogs,
-                gamesToPlay,
-                saveEvery,
-                saveBackupEvery,
-                gamesToPlayPerThreadForStatistics,
-                tileToWinForStatistics,
-                simulationsForStatistics,
-                fixedExplorationRate,
-                interpolatedExplorationRateInitialValues,
-                interpolatedExplorationRateFinalValues,
-                interpolatedExplorationRateStartInterpolation,
-                interpolatedExplorationRateFinishInterpolation,
-                resetTracesTest,
-                noResetTracesTest,
-                filePath,
-                concurrentLayer
-        );
-
+        for (int i = 0; i < repetitions; i++) {
+            runAllConfigs(
+                    1,
+                    maxTrainingThreads,
+                    testDirName,
+                    repetitions + "_NTupleBasicLinearSimplified_512",
+                    NTupleBasicLinearSimplified_512.class.getConstructor(),
+                    null,
+                    alphaList,
+                    annealingAlphaList,
+                    lambdaList,
+                    gammaList,
+                    statisticsOnly,
+                    runStatisticsForBackups,
+                    createLogs,
+                    gamesToPlay,
+                    saveEvery,
+                    saveBackupEvery,
+                    gamesToPlayPerThreadForStatistics,
+                    tileToWinForStatistics,
+                    simulationsForStatistics,
+                    fixedExplorationRate,
+                    interpolatedExplorationRateInitialValues,
+                    interpolatedExplorationRateFinalValues,
+                    interpolatedExplorationRateStartInterpolation,
+                    interpolatedExplorationRateFinishInterpolation,
+                    resetTracesTest,
+                    noResetTracesTest,
+                    filePath,
+                    concurrentLayer
+            );
+        }
+        for (int i = 0; i < repetitions; i++) {
+            runAllConfigs(
+                    1,
+                    maxTrainingThreads,
+                    testDirName,
+                    repetitions + "_EncogNTupleLinearWithBiasSimplified_512",
+                    EncogNTupleLinearWithBiasSimplified_512.class.getConstructor(EncogNTupleLinearWithBiasSimplified_512.PARAMETER_TYPE),
+                    new Object[]{true},
+                    alphaList,
+                    annealingAlphaList,
+                    lambdaList,
+                    gammaList,
+                    statisticsOnly,
+                    runStatisticsForBackups,
+                    createLogs,
+                    gamesToPlay,
+                    saveEvery,
+                    saveBackupEvery,
+                    gamesToPlayPerThreadForStatistics,
+                    tileToWinForStatistics,
+                    simulationsForStatistics,
+                    fixedExplorationRate,
+                    interpolatedExplorationRateInitialValues,
+                    interpolatedExplorationRateFinalValues,
+                    interpolatedExplorationRateStartInterpolation,
+                    interpolatedExplorationRateFinishInterpolation,
+                    resetTracesTest,
+                    noResetTracesTest,
+                    filePath,
+                    concurrentLayer
+            );
+        }
         statisticsOnly = true;
         runStatisticsForBackups = true;
-        gamesToPlayPerThreadForStatistics = 1_000;
+        gamesToPlayPerThreadForStatistics = 100;
         simulationsForStatistics = 8;
 
-        runAllConfigs(
-                repetitions,
-                maxTrainingThreads,
-                testDirName,
-                "BasicLinear_512_ActFuncVsTrace",
-                NTupleBasicLinear_512.class.getConstructor(),
-                null,
-                alphaList,
-                annealingAlphaList,
-                lambdaList,
-                gammaList,
-                statisticsOnly,
-                runStatisticsForBackups,
-                createLogs,
-                gamesToPlay,
-                saveEvery,
-                saveBackupEvery,
-                gamesToPlayPerThreadForStatistics,
-                tileToWinForStatistics,
-                simulationsForStatistics,
-                fixedExplorationRate,
-                interpolatedExplorationRateInitialValues,
-                interpolatedExplorationRateFinalValues,
-                interpolatedExplorationRateStartInterpolation,
-                interpolatedExplorationRateFinishInterpolation,
-                resetTracesTest,
-                noResetTracesTest,
-                filePath,
-                concurrentLayer
-        );
-        runAllConfigs(
-                repetitions,
-                maxTrainingThreads,
-                testDirName,
-                "BasicTanH_512_ActFuncVsTrace",
-                NTupleBasicTanH_512.class.getConstructor(),
-                null,
-                alphaList,
-                annealingAlphaList,
-                lambdaList,
-                gammaList,
-                statisticsOnly,
-                runStatisticsForBackups,
-                createLogs,
-                gamesToPlay,
-                saveEvery,
-                saveBackupEvery,
-                gamesToPlayPerThreadForStatistics,
-                tileToWinForStatistics,
-                simulationsForStatistics,
-                fixedExplorationRate,
-                interpolatedExplorationRateInitialValues,
-                interpolatedExplorationRateFinalValues,
-                interpolatedExplorationRateStartInterpolation,
-                interpolatedExplorationRateFinishInterpolation,
-                resetTracesTest,
-                noResetTracesTest,
-                filePath,
-                concurrentLayer
-        );
+        for (int i = 0; i < repetitions; i++) {
+            runAllConfigs(
+                    1,
+                    maxTrainingThreads,
+                    testDirName,
+                    repetitions + "_NTupleBasicLinearSimplified_512",
+                    NTupleBasicLinearSimplified_512.class.getConstructor(),
+                    null,
+                    alphaList,
+                    annealingAlphaList,
+                    lambdaList,
+                    gammaList,
+                    statisticsOnly,
+                    runStatisticsForBackups,
+                    createLogs,
+                    gamesToPlay,
+                    saveEvery,
+                    saveBackupEvery,
+                    gamesToPlayPerThreadForStatistics,
+                    tileToWinForStatistics,
+                    simulationsForStatistics,
+                    fixedExplorationRate,
+                    interpolatedExplorationRateInitialValues,
+                    interpolatedExplorationRateFinalValues,
+                    interpolatedExplorationRateStartInterpolation,
+                    interpolatedExplorationRateFinishInterpolation,
+                    resetTracesTest,
+                    noResetTracesTest,
+                    filePath,
+                    concurrentLayer
+            );
+        }
+        for (int i = 0; i < repetitions; i++) {
+            runAllConfigs(
+                    1,
+                    maxTrainingThreads,
+                    testDirName,
+                    repetitions + "_EncogNTupleLinearWithBiasSimplified_512",
+                    EncogNTupleLinearWithBiasSimplified_512.class.getConstructor(EncogNTupleLinearWithBiasSimplified_512.PARAMETER_TYPE),
+                    new Object[]{true},
+                    alphaList,
+                    annealingAlphaList,
+                    lambdaList,
+                    gammaList,
+                    statisticsOnly,
+                    runStatisticsForBackups,
+                    createLogs,
+                    gamesToPlay,
+                    saveEvery,
+                    saveBackupEvery,
+                    gamesToPlayPerThreadForStatistics,
+                    tileToWinForStatistics,
+                    simulationsForStatistics,
+                    fixedExplorationRate,
+                    interpolatedExplorationRateInitialValues,
+                    interpolatedExplorationRateFinalValues,
+                    interpolatedExplorationRateStartInterpolation,
+                    interpolatedExplorationRateFinishInterpolation,
+                    resetTracesTest,
+                    noResetTracesTest,
+                    filePath,
+                    concurrentLayer
+            );
+        }
 
         Toolkit.getDefaultToolkit().beep();
     }

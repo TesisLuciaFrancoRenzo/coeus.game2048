@@ -25,7 +25,7 @@ import ar.edu.unrc.game2048.Game2048;
 import ar.edu.unrc.game2048.GameBoard;
 import ar.edu.unrc.game2048.NeuralNetworkConfiguration2048;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.INeuralNetworkInterfaceFor2048;
-import ar.edu.unrc.game2048.performanceandtraining.experiments.learning.greedy.StateProbability;
+import ar.edu.unrc.game2048.performanceandtraining.experiments.learning.greedy.GreedyStateProbability;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -96,8 +96,8 @@ class GreedyExperimentInterface
         double            bestReward      = -100d;
         ArrayList<Action> possibleActions = (ArrayList<Action>) game.listAllPossibleActions(actualBoard);
         for (Action action : possibleActions) {
-            GameBoard              afterState            = (GameBoard) game.computeAfterState(actualBoard, action);
-            List<StateProbability> allPossibleNextStates = game.listAllPossibleNextTurnStateFromAfterState(afterState);
+            GameBoard                    afterState            = (GameBoard) game.computeAfterState(actualBoard, action);
+            List<GreedyStateProbability> allPossibleNextStates = game.listAllPossibleNextTurnStateFromAfterState(afterState);
             Double reward = allPossibleNextStates.stream().mapToDouble((nextStateProb) -> {
                 if (((GameBoard) nextStateProb.getNextTurnState()).isAWin() || ((GameBoard) nextStateProb.getNextTurnState()).isFull()) {
                     return ((GameBoard) nextStateProb.getNextTurnState()).getPartialScore() * 4 * nextStateProb.getProbability();

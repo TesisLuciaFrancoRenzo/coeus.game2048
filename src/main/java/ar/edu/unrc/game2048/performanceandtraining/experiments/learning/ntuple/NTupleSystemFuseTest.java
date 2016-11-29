@@ -1,7 +1,7 @@
 package ar.edu.unrc.game2048.performanceandtraining.experiments.learning.ntuple;
 
 import ar.edu.unrc.coeus.tdlearning.training.ntuple.NTupleSystem;
-import ar.edu.unrc.game2048.performanceandtraining.configurations.ntuples.NBasicLinear_512;
+import ar.edu.unrc.game2048.performanceandtraining.configurations.ntuples.ConfigNTupleBasicLinear_512;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,16 +12,16 @@ import java.util.List;
  * Created by franc on 26/11/2016.
  */
 public
-class FuseNTupleSystemTest {
+class NTupleSystemFuseTest {
 
     public static
     void main(String[] args)
             throws IOException, ClassNotFoundException {
-        NBasicLinear_512   nTupleConfiguration = new NBasicLinear_512();
-        int                numFiles            = 7;
-        List<NTupleSystem> nTupleSystems       = new ArrayList<>(numFiles);
-        String             dir                 = "c:\\Users\\franc\\Trabajo\\Programas\\Gradle-Projects\\Tesis\\Perceptrones ENTRENADOS\\AutomaticTests\\";
-        String             dirEnd              = "\\NTuple\\BasicLinear_512\\BasicLinear_512_trained.ser";
+        ConfigNTupleBasicLinear_512 nTupleConfiguration = new ConfigNTupleBasicLinear_512();
+        int                         numFiles            = 7;
+        List<NTupleSystem>          nTupleSystems       = new ArrayList<>(numFiles);
+        String                      dir                 = "c:\\Users\\franc\\Trabajo\\Programas\\Gradle-Projects\\Tesis\\Perceptrones ENTRENADOS\\AutomaticTests\\";
+        String                      dirEnd              = "\\NTuple\\ConfigNTupleBasicLinear_512\\BasicLinear_512_trained.ser";
         for (int i = 0; i < numFiles; i++) {
             nTupleSystems.add(new NTupleSystem(
                     nTupleConfiguration.getAllSamplePointPossibleValues(),
