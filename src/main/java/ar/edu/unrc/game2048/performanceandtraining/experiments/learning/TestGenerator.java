@@ -179,27 +179,17 @@ class TestGenerator {
         int       repetitions                  = 1;
         int       maxTrainingThreads           = 8;
         boolean   doBackupStatistics           = true;
-        String    experimentName               = "BasicTanH_512";
-        String    experimentClass              = "BasicTanH_512";
+        String    experimentName               = "BasicLinear_512";
+        String    experimentClass              = "BasicLinear_512";
         int       gamesToPlay                  = 12_000;
         int       saveEvery                    = 1000;
         int       saveBackupEvery              = 300;
         int       tileToWinForStatistics       = 512;
         boolean[] concurrentLayer              = {false, false};
         int       gamesToPlayPerThreadForStats = 100;
-        boolean   resetTracesTest              = false;
+        boolean   resetTracesTest              = true;
 
-        lambdaList.add(0d);
-        lambdaList.add(0.1d);
-        lambdaList.add(0.2d);
         lambdaList.add(0.3d);
-        lambdaList.add(0.4d);
-        lambdaList.add(0.5d);
-        lambdaList.add(0.6d);
-        lambdaList.add(0.7d);
-        lambdaList.add(0.8d);
-        lambdaList.add(0.9d);
-        lambdaList.add(1d);
 
         //        annealingAlphaList.add(2_000_000); //Sin annealing
         //        annealingAlphaList.add(400_000);
@@ -215,8 +205,10 @@ class TestGenerator {
         interpolatedExplorationRateFinalValues = null;
         interpolatedExplorationRateStartInterpolation = null;
         interpolatedExplorationRateFinishInterpolation = null;
-        fixedExplorationRate.add(0d);
-        //        fixedExplorationRate.add(0.1d);
+        fixedExplorationRate.add(0.2d);
+        fixedExplorationRate.add(0.1d);
+        fixedExplorationRate.add(0.01d);
+        fixedExplorationRate.add(0.001d);
 
         // Exploration rates variables
         //        fixedExplorationRate = null;
@@ -327,7 +319,9 @@ class TestGenerator {
             }
         }
 
-        runAllConfigs(repetitions, maxTrainingThreads,
+        runAllConfigs(
+                repetitions,
+                maxTrainingThreads,
                 experimentName,
                 classConstructor,
                 classParameters,
@@ -343,10 +337,13 @@ class TestGenerator {
                 saveBackupEvery,
                 gamesToPlayPerThreadForStatistics,
                 tileToWinForStatistics,
-                simulationsForStatistics, fixedExplorationRate,
+                simulationsForStatistics,
+                fixedExplorationRate,
                 interpolatedExplorationRateInitialValues,
                 interpolatedExplorationRateFinalValues,
-                interpolatedExplorationRateStartInterpolation, interpolatedExplorationRateFinishInterpolation, resetTracesTest,
+                interpolatedExplorationRateStartInterpolation,
+                interpolatedExplorationRateFinishInterpolation,
+                resetTracesTest,
                 filePath,
                 concurrentLayer
         );
@@ -498,8 +495,7 @@ class TestGenerator {
                                                 '_' +
                                                 expConfig.getExplorationRateFinishInterpolation();
                     }
-                    String newFilePath = filePath +
-                                         "AutomaticTests" + File.separator + expConfig.getRepetitions() + "-alpha_" +
+                    String newFilePath = filePath + "AutomaticTests" + File.separator + expConfig.getRepetitions() + "-alpha_" +
                                          expConfig.getAlpha() +
                                          ((expConfig.getAnnealingAlpha() > 0) ? "-anneal_" + expConfig.getAnnealingAlpha() : "") +
                                          "-lambda_" +

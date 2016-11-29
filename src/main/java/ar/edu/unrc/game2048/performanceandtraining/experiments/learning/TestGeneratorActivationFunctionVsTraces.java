@@ -125,10 +125,10 @@ class TestGeneratorActivationFunctionVsTraces {
         //============================== configuraciones manuales ==================================
         int     repetitions = 1;
         int     maxTrainingThreads = 8;
-        int     gamesToPlay = 20_000;
+        int     gamesToPlay = 12_000;
         int     saveEvery = 1_000;
-        int     saveBackupEvery = 500;
-        boolean resetTracesTest = false;
+        int     saveBackupEvery = 300;
+        boolean resetTracesTest = true;
 
         lambdaList.add(0d);
         lambdaList.add(0.1d);
@@ -178,8 +178,7 @@ class TestGeneratorActivationFunctionVsTraces {
                 saveEvery,
                 saveBackupEvery,
                 gamesToPlayPerThreadForStatistics,
-                simulationsForStatistics,
-                explorationRate, resetTracesTest,
+                simulationsForStatistics, explorationRate, resetTracesTest,
                 filePath
         );
         runAllConfigs(repetitions,
@@ -198,8 +197,7 @@ class TestGeneratorActivationFunctionVsTraces {
                 saveEvery,
                 saveBackupEvery,
                 gamesToPlayPerThreadForStatistics,
-                simulationsForStatistics,
-                explorationRate, resetTracesTest,
+                simulationsForStatistics, explorationRate, resetTracesTest,
                 filePath
         );
 
@@ -224,8 +222,7 @@ class TestGeneratorActivationFunctionVsTraces {
                 saveEvery,
                 saveBackupEvery,
                 gamesToPlayPerThreadForStatistics,
-                simulationsForStatistics,
-                explorationRate, resetTracesTest,
+                simulationsForStatistics, explorationRate, resetTracesTest,
                 filePath
         );
         runAllConfigs(repetitions,
@@ -244,8 +241,7 @@ class TestGeneratorActivationFunctionVsTraces {
                 saveEvery,
                 saveBackupEvery,
                 gamesToPlayPerThreadForStatistics,
-                simulationsForStatistics,
-                explorationRate, resetTracesTest,
+                simulationsForStatistics, explorationRate, resetTracesTest,
                 filePath
         );
 
@@ -285,7 +281,8 @@ class TestGeneratorActivationFunctionVsTraces {
                         for (int l = 0; l < explorationRateList.size(); l++) {
                             for (int m = 0; m < annealingAlphaList.size(); m++) {
                                 number++;
-                                experiments.add(new GeneratorConfig(a,
+                                experiments.add(new GeneratorConfig(
+                                        a,
                                         classParameters,
                                         alphaList.get(i),
                                         annealingAlphaList.get(m),
@@ -301,7 +298,8 @@ class TestGeneratorActivationFunctionVsTraces {
                                 ));
                                 if (explorationRateList.get(l) > 0 && lambdaList.get(j) > 0 && resetTracesTest) {
                                     number++;
-                                    experiments.add(new GeneratorConfig(a,
+                                    experiments.add(new GeneratorConfig(
+                                            a,
                                             classParameters,
                                             alphaList.get(i),
                                             annealingAlphaList.get(m),
@@ -336,8 +334,7 @@ class TestGeneratorActivationFunctionVsTraces {
                     stream.forEach(expConfig -> {
                         try {
                             String newFilePath = filePath +
-                                                 "ActivationFunctionVsTraces" +
-                                                 File.separator + expConfig.getRepetitions() + "-alpha_" +
+                                                 "ActivationFunctionVsTraces" + File.separator + expConfig.getRepetitions() + "-alpha_" +
                                                  expConfig.getAlpha() +
                                                  ((expConfig.getAnnealingAlpha() > 0) ? "-anneal_" + expConfig.getAnnealingAlpha() : "") +
                                                  "-lambda_" +

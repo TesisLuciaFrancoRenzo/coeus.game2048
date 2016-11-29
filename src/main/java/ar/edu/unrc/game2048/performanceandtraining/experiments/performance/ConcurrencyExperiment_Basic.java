@@ -179,8 +179,7 @@ class ConcurrencyExperiment_Basic
                 System.out.println("====================================");
                 System.out.println("Fin Experimento:");
                 System.out.println(currentConfig.toString());
-                System.out.
-                                  println("** Training DEMORÓ => " + resultsTraining[0]);
+                System.out.println("** Training DEMORÓ => " + resultsTraining[0]);
                 System.out.println("** Best Possible Action DEMORÓ => " + resultsBestPossible[0]);
                 System.out.println("====================================");
 
@@ -277,7 +276,11 @@ class ConcurrencyExperiment_Basic
                      .append(')')
                      .append('\n');
         outputResults.append("MIN_NEURON_QUANTITY = ")
-                     .append(MIN_NEURON_QUANTITY).append(" (").append(Math.pow(2, MIN_NEURON_QUANTITY)).append(')').append('\n');
+                     .append(MIN_NEURON_QUANTITY)
+                     .append(" (")
+                     .append(Math.pow(2, MIN_NEURON_QUANTITY))
+                     .append(')')
+                     .append('\n');
         outputResults.append("====================================").append('\n');
     }
 
