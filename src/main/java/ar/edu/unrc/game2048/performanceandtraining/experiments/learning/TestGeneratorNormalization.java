@@ -19,8 +19,8 @@
 package ar.edu.unrc.game2048.performanceandtraining.experiments.learning;
 
 import ar.edu.unrc.game2048.performanceandtraining.configurations.LearningExperiment;
+import ar.edu.unrc.game2048.performanceandtraining.configurations.ntuples.NBasicTanH_512;
 import ar.edu.unrc.game2048.performanceandtraining.experiments.GeneratorConfig;
-import ar.edu.unrc.game2048.performanceandtraining.experiments.learning.ntuple.BasicLinear_512;
 import ar.edu.unrc.game2048.performanceandtraining.experiments.learning.ntuple.BasicTanH_512;
 
 import java.awt.*;
@@ -43,7 +43,7 @@ import java.util.stream.Stream;
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
 public
-class TestGeneratorActivationFunctionVsTraces {
+class TestGeneratorNormalization {
 
     /**
      *
@@ -123,30 +123,17 @@ class TestGeneratorActivationFunctionVsTraces {
         List<Double>  explorationRate    = new ArrayList<>();
 
         //============================== configuraciones manuales ==================================
-        int     repetitions = 1;
+        int     repetitions        = 1;
         int     maxTrainingThreads = 8;
-        int     gamesToPlay = 12_000;
-        int     saveEvery = 1_000;
-        int     saveBackupEvery = 300;
-        boolean resetTracesTest = true;
+        int     gamesToPlay        = 12_000;
+        int     saveEvery          = 1_000;
+        int     saveBackupEvery    = 300;
+        boolean resetTracesTest    = true;
 
-        lambdaList.add(0d);
-        lambdaList.add(0.1d);
-        lambdaList.add(0.2d);
         lambdaList.add(0.3d);
-        lambdaList.add(0.4d);
-        lambdaList.add(0.5d);
-        lambdaList.add(0.6d);
-        lambdaList.add(0.7d);
-        lambdaList.add(0.8d);
-        lambdaList.add(0.9d);
-        lambdaList.add(1d);
-
         alphaList.add(0.0025d);
         annealingAlphaList.add(NO_ANNEALING); //Sin annealing
-
         gammaList.add(1d);
-
         explorationRate.add(0d);
 
         boolean createLogs = false;
@@ -162,41 +149,24 @@ class TestGeneratorActivationFunctionVsTraces {
         gamesToPlayPerThreadForStatistics = 0;
         simulationsForStatistics = 0;
 
-        runAllConfigs(repetitions,
-                maxTrainingThreads,
-                "BasicLinear_512_ActFuncVsTrace",
-                BasicLinear_512.class.getConstructor(),
-                null,
+        runAll(
+                filePath,
+                lambdaList,
                 alphaList,
                 annealingAlphaList,
-                lambdaList,
                 gammaList,
-                statisticsOnly,
-                runStatisticsForBackups,
-                createLogs,
+                explorationRate,
+                repetitions,
+                maxTrainingThreads,
                 gamesToPlay,
                 saveEvery,
                 saveBackupEvery,
-                gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, resetTracesTest,
-                filePath
-        );
-        runAllConfigs(repetitions,
-                maxTrainingThreads,
-                "BasicTanH_512_ActFuncVsTrace",
-                BasicTanH_512.class.getConstructor(),
-                null,
-                alphaList,
-                annealingAlphaList,
-                lambdaList,
-                gammaList,
+                resetTracesTest,
+                createLogs,
                 statisticsOnly,
                 runStatisticsForBackups,
-                createLogs,
-                gamesToPlay,
-                saveEvery,
-                saveBackupEvery,
-                gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, resetTracesTest,
-                filePath
+                gamesToPlayPerThreadForStatistics,
+                simulationsForStatistics
         );
 
         statisticsOnly = true;
@@ -204,27 +174,57 @@ class TestGeneratorActivationFunctionVsTraces {
         gamesToPlayPerThreadForStatistics = 1_000;
         simulationsForStatistics = 8;
 
-        runAllConfigs(repetitions,
-                maxTrainingThreads,
-                "BasicLinear_512_ActFuncVsTrace",
-                BasicLinear_512.class.getConstructor(),
-                null,
+        runAll(
+                filePath,
+                lambdaList,
                 alphaList,
                 annealingAlphaList,
-                lambdaList,
                 gammaList,
-                statisticsOnly,
-                runStatisticsForBackups,
-                createLogs,
+                explorationRate,
+                repetitions,
+                maxTrainingThreads,
                 gamesToPlay,
                 saveEvery,
                 saveBackupEvery,
-                gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, resetTracesTest,
-                filePath
+                resetTracesTest,
+                createLogs,
+                statisticsOnly,
+                runStatisticsForBackups,
+                gamesToPlayPerThreadForStatistics,
+                simulationsForStatistics
         );
-        runAllConfigs(repetitions,
+
+        Toolkit.getDefaultToolkit().beep();
+    }
+
+    private static
+    void runAll(
+            final String filePath,
+            final List<Double> lambdaList,
+            final List<Double> alphaList,
+            final List<Integer> annealingAlphaList,
+            final List<Double> gammaList,
+            final List<Double> explorationRate,
+            final int repetitions,
+            final int maxTrainingThreads,
+            final int gamesToPlay,
+            final int saveEvery,
+            final int saveBackupEvery,
+            final boolean resetTracesTest,
+            final boolean createLogs,
+            final boolean statisticsOnly,
+            final boolean runStatisticsForBackups,
+            final int gamesToPlayPerThreadForStatistics,
+            final int simulationsForStatistics
+    )
+            throws NoSuchMethodException {
+        NBasicTanH_512.maxReward = 100_000;
+        NBasicTanH_512.minReward = -100_000;
+
+        runAllConfigs(
+                repetitions,
                 maxTrainingThreads,
-                "BasicTanH_512_ActFuncVsTrace",
+                "NBasicTanH_512_100k",
                 BasicTanH_512.class.getConstructor(),
                 null,
                 alphaList,
@@ -237,11 +237,90 @@ class TestGeneratorActivationFunctionVsTraces {
                 gamesToPlay,
                 saveEvery,
                 saveBackupEvery,
-                gamesToPlayPerThreadForStatistics, simulationsForStatistics, explorationRate, resetTracesTest,
+                gamesToPlayPerThreadForStatistics,
+                simulationsForStatistics,
+                explorationRate,
+                resetTracesTest,
                 filePath
         );
 
-        Toolkit.getDefaultToolkit().beep();
+        NBasicTanH_512.maxReward = 40_000;
+        NBasicTanH_512.minReward = -40_000;
+
+        runAllConfigs(
+                repetitions,
+                maxTrainingThreads,
+                "NBasicTanH_512_40k",
+                BasicTanH_512.class.getConstructor(),
+                null,
+                alphaList,
+                annealingAlphaList,
+                lambdaList,
+                gammaList,
+                statisticsOnly,
+                runStatisticsForBackups,
+                createLogs,
+                gamesToPlay,
+                saveEvery,
+                saveBackupEvery,
+                gamesToPlayPerThreadForStatistics,
+                simulationsForStatistics,
+                explorationRate,
+                resetTracesTest,
+                filePath
+        );
+
+        NBasicTanH_512.maxReward = 20_000;
+        NBasicTanH_512.minReward = -20_000;
+
+        runAllConfigs(
+                repetitions,
+                maxTrainingThreads,
+                "NBasicTanH_512_20k",
+                BasicTanH_512.class.getConstructor(),
+                null,
+                alphaList,
+                annealingAlphaList,
+                lambdaList,
+                gammaList,
+                statisticsOnly,
+                runStatisticsForBackups,
+                createLogs,
+                gamesToPlay,
+                saveEvery,
+                saveBackupEvery,
+                gamesToPlayPerThreadForStatistics,
+                simulationsForStatistics,
+                explorationRate,
+                resetTracesTest,
+                filePath
+        );
+
+        NBasicTanH_512.maxReward = 7_000;
+        NBasicTanH_512.minReward = -7_000;
+
+        runAllConfigs(
+                repetitions,
+                maxTrainingThreads,
+                "NBasicTanH_512_7k",
+                BasicTanH_512.class.getConstructor(),
+                null,
+                alphaList,
+                annealingAlphaList,
+                lambdaList,
+                gammaList,
+                statisticsOnly,
+                runStatisticsForBackups,
+                createLogs,
+                gamesToPlay,
+                saveEvery,
+                saveBackupEvery,
+                gamesToPlayPerThreadForStatistics,
+                simulationsForStatistics,
+                explorationRate,
+                resetTracesTest,
+                filePath
+        );
     }
 
     @SuppressWarnings("ForLoopReplaceableByForEach")
@@ -329,7 +408,11 @@ class TestGeneratorActivationFunctionVsTraces {
             forkJoinPool.submit(() -> //parallel task here, for example
                     stream.forEach(expConfig -> {
                         try {
-                            String newFilePath = filePath + "ActivationFunctionVsTraces" + File.separator + expConfig.getRepetitions() + "-alpha_" +
+                            String newFilePath = filePath +
+                                                 "Normalization" +
+                                                 File.separator +
+                                                 expConfig.getRepetitions() +
+                                                 "-alpha_" +
                                                  expConfig.getAlpha() +
                                                  ((expConfig.getAnnealingAlpha() > 0) ? "-anneal_" + expConfig.getAnnealingAlpha() : "") +
                                                  "-lambda_" +
@@ -366,11 +449,11 @@ class TestGeneratorActivationFunctionVsTraces {
                                     newFilePath
                             );
                         } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-                            Logger.getLogger(TestGeneratorActivationFunctionVsTraces.class.getName()).log(Level.SEVERE, null, ex);
+                            Logger.getLogger(TestGeneratorNormalization.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     })).get();
         } catch (InterruptedException | ExecutionException ex) {
-            Logger.getLogger(TestGeneratorActivationFunctionVsTraces.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TestGeneratorNormalization.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

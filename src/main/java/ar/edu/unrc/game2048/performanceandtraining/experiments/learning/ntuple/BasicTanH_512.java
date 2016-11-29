@@ -55,20 +55,20 @@ class BasicTanH_512
         }
         LearningExperiment experiment = new BasicTanH_512();
 
-        boolean statistics = true;
-        //        boolean statistics = false;
+        //        boolean statistics = true;
+        boolean statistics = false;
 
         double[] alphas = {0.0025, 0.0025};
         experiment.setAlpha(alphas);
         experiment.setLearningRateAdaptationToFixed();
 
-        experiment.setLambda(0.4);
+        experiment.setLambda(0.3);
         experiment.setGamma(1);
         experiment.setExplorationRateToFixed(0);
         experiment.setReplaceEligibilityTraces(false);
-        experiment.setGamesToPlay(30_000);
-        experiment.setSaveEvery(500);
-        experiment.setSaveBackupEvery(1_000);
+        experiment.setGamesToPlay(12_000);
+        experiment.setSaveEvery(1_000);
+        experiment.setSaveBackupEvery(300);
         experiment.setInitializePerceptronRandomized(false);
         experiment.setConcurrencyInComputeBestPossibleAction(true);
         boolean[] concurrentLayer = {false, false};

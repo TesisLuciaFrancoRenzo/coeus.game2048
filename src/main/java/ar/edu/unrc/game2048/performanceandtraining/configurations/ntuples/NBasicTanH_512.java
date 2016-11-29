@@ -35,8 +35,8 @@ public
 class NBasicTanH_512
         extends NTupleConfiguration2048 {
 
-    private static final int maxReward = 100_000;
-    private static final int minReward = -100_000;
+    public static int maxReward = 100_000;
+    public static int minReward = -100_000;
     private static int maxTile;
     private static int numSamples;
 
