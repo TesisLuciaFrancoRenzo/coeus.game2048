@@ -24,7 +24,7 @@ import ar.edu.unrc.coeus.tdlearning.training.ntuple.NTupleSystem;
 import ar.edu.unrc.game2048.NTupleConfiguration2048;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.LearningExperiment;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.librariesinterfaces.NTupleExperimentInterface;
-import ar.edu.unrc.game2048.performanceandtraining.configurations.ntuples.ConfigNTupleBasicTanH_512;
+import ar.edu.unrc.game2048.performanceandtraining.configurations.ntuples.ConfigNTupleBasicTanHSimplified_512;
 import org.encog.neural.networks.BasicNetwork;
 
 import java.awt.*;
@@ -36,7 +36,7 @@ import static ar.edu.unrc.coeus.tdlearning.learning.ELearningStyle.afterState;
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
 public
-class NTupleBasicTanH_512
+class NTupleBasicTanHSimplified_512
         extends LearningExperiment<BasicNetwork> {
 
     /**
@@ -53,7 +53,7 @@ class NTupleBasicTanH_512
         } else {
             filePath = args[0];
         }
-        LearningExperiment experiment = new NTupleBasicTanH_512();
+        LearningExperiment experiment = new NTupleBasicTanHSimplified_512();
 
         //        boolean statistics = true;
         boolean statistics = false;
@@ -102,7 +102,7 @@ class NTupleBasicTanH_512
             setExperimentName(getClass());
         }
         setNeuralNetworkName(getExperimentName());
-        NTupleConfiguration2048 config = new ConfigNTupleBasicTanH_512();
+        NTupleConfiguration2048 config = new ConfigNTupleBasicTanHSimplified_512();
         setNeuralNetworkInterfaceFor2048(new NTupleExperimentInterface(config));
     }
 

@@ -181,7 +181,7 @@ class TestGenerator {
         String    experimentName               = "ConfigNTupleBasicLinear_512";
         String    experimentClass              = "ConfigNTupleBasicLinear_512";
         int       gamesToPlay                  = 12_000;
-        int       saveEvery                    = 1000;
+        int       saveEvery                    = 1_000;
         int       saveBackupEvery              = 300;
         int       tileToWinForStatistics       = 512;
         boolean[] concurrentLayer              = {false, false};
@@ -306,12 +306,8 @@ class TestGenerator {
                 classParameters = new Object[]{true};
                 break;
             }
-            case "ConfigNTupleBasicLinearNoPartialScore_512": {
-                classConstructor = NTupleBasicLinearNoPartialScore_512.class.getConstructor();
-                break;
-            }
-            case "ConfigNTupleBasicTanH_512": {
-                classConstructor = NTupleBasicTanH_512.class.getConstructor();
+            case "ConfigNTupleBasicTanHSimplified_512": {
+                classConstructor = NTupleBasicTanHSimplified_512.class.getConstructor();
                 break;
             }
             default: {

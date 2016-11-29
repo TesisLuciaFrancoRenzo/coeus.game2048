@@ -117,15 +117,15 @@ class TestGeneratorPerceptronVsNTuple {
         List<Integer> interpolatedExplorationRateStartInterpolation  = new ArrayList<>();
 
         //============================== configuraciones manuales ==================================
-        String    testDirName            = "PerceptronVsNTuple";
-        int       repetitions            = 4;
-        int       maxTrainingThreads     = 8;
-        int       gamesToPlay            = 12_000;
-        int       saveEvery              = 1000;
-        int       saveBackupEvery        = 300;
-        int       tileToWinForStatistics = 512;
-        boolean   resetTracesTest        = true;
-        boolean   noResetTracesTest      = false;
+        String  testDirName            = "PerceptronVsNTuple";
+        int     repetitions            = 4;
+        int     maxTrainingThreads     = 8;
+        int     gamesToPlay            = 12_000;
+        int     saveEvery              = 1_000;
+        int     saveBackupEvery        = 300;
+        int     tileToWinForStatistics = 512;
+        boolean resetTracesTest        = true;
+        boolean noResetTracesTest      = false;
 
         lambdaList.add(0.3d);
         alphaList.add(0.0025d);

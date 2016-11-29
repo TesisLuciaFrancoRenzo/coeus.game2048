@@ -32,7 +32,7 @@ import java.util.ArrayList;
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
 public
-class ConfigNTupleBasicTanH_512
+class ConfigNTupleBasicTanHSimplified_512
         extends NTupleConfiguration2048 {
 
     public static int maxReward = 100_000;
@@ -44,7 +44,7 @@ class ConfigNTupleBasicTanH_512
      * Configuración para jugar hasta 512, con función de activación Tangente Hiperbólica, y puntaje parcial.
      */
     public
-    ConfigNTupleBasicTanH_512() {
+    ConfigNTupleBasicTanHSimplified_512() {
         activationFunction = FunctionUtils.TANH;
         derivedActivationFunction = FunctionUtils.TANH_DERIVED;
         concurrency = false;

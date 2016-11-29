@@ -19,8 +19,8 @@
 package ar.edu.unrc.game2048.performanceandtraining.experiments.learning;
 
 import ar.edu.unrc.game2048.performanceandtraining.configurations.LearningExperiment;
-import ar.edu.unrc.game2048.performanceandtraining.experiments.learning.ntuple.NTupleBasicLinear_512;
-import ar.edu.unrc.game2048.performanceandtraining.experiments.learning.ntuple.NTupleBasicTanH_512;
+import ar.edu.unrc.game2048.performanceandtraining.experiments.learning.ntuple.NTupleBasicLinearSimplified_512;
+import ar.edu.unrc.game2048.performanceandtraining.experiments.learning.ntuple.NTupleBasicTanHSimplified_512;
 
 import java.awt.*;
 import java.io.File;
@@ -38,7 +38,7 @@ import static ar.edu.unrc.game2048.performanceandtraining.experiments.TestGenera
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
 public
-class TestGeneratorActivationFunctionVsTraces {
+class TestGeneratorActivationFunctionVsLambda {
 
     private static
     void configAndExecute(
@@ -117,15 +117,15 @@ class TestGeneratorActivationFunctionVsTraces {
         List<Integer> interpolatedExplorationRateStartInterpolation  = new ArrayList<>();
 
         //============================== configuraciones manuales ==================================
-        String    testDirName            = "ActivationFunctionVsTraces";
+        String    testDirName            = "ActivationFunctionVsLambda";
         int       repetitions            = 1;
         int       maxTrainingThreads     = 8;
         int       gamesToPlay            = 12_000;
-        int       saveEvery              = 1000;
+        int       saveEvery              = 1_000;
         int       saveBackupEvery        = 300;
         int       tileToWinForStatistics = 512;
         boolean[] concurrentLayer        = {false, false};
-        boolean   resetTracesTest        = true;
+        boolean   resetTracesTest        = false;
         boolean   noResetTracesTest      = true;
 
         lambdaList.add(0d);
@@ -167,9 +167,7 @@ class TestGeneratorActivationFunctionVsTraces {
         runAllConfigs(
                 repetitions,
                 maxTrainingThreads,
-                testDirName,
-                "BasicLinear_512_ActFuncVsTrace",
-                NTupleBasicLinear_512.class.getConstructor(),
+                testDirName, "NTupleBasicLinearSimplified_512", NTupleBasicLinearSimplified_512.class.getConstructor(),
                 null,
                 alphaList,
                 annealingAlphaList,
@@ -197,9 +195,7 @@ class TestGeneratorActivationFunctionVsTraces {
         runAllConfigs(
                 repetitions,
                 maxTrainingThreads,
-                testDirName,
-                "BasicTanH_512_ActFuncVsTrace",
-                NTupleBasicTanH_512.class.getConstructor(),
+                testDirName, "NTupleBasicTanHSimplified_512", NTupleBasicTanHSimplified_512.class.getConstructor(),
                 null,
                 alphaList,
                 annealingAlphaList,
@@ -227,15 +223,13 @@ class TestGeneratorActivationFunctionVsTraces {
 
         statisticsOnly = true;
         runStatisticsForBackups = true;
-        gamesToPlayPerThreadForStatistics = 1_000;
+        gamesToPlayPerThreadForStatistics = 100;
         simulationsForStatistics = 8;
 
         runAllConfigs(
                 repetitions,
                 maxTrainingThreads,
-                testDirName,
-                "BasicLinear_512_ActFuncVsTrace",
-                NTupleBasicLinear_512.class.getConstructor(),
+                testDirName, "NTupleBasicLinearSimplified_512", NTupleBasicLinearSimplified_512.class.getConstructor(),
                 null,
                 alphaList,
                 annealingAlphaList,
@@ -263,9 +257,7 @@ class TestGeneratorActivationFunctionVsTraces {
         runAllConfigs(
                 repetitions,
                 maxTrainingThreads,
-                testDirName,
-                "BasicTanH_512_ActFuncVsTrace",
-                NTupleBasicTanH_512.class.getConstructor(),
+                testDirName, "NTupleBasicTanHSimplified_512", NTupleBasicTanHSimplified_512.class.getConstructor(),
                 null,
                 alphaList,
                 annealingAlphaList,

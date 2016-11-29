@@ -19,7 +19,8 @@
 package ar.edu.unrc.game2048.performanceandtraining.experiments.learning;
 
 import ar.edu.unrc.game2048.performanceandtraining.configurations.LearningExperiment;
-import ar.edu.unrc.game2048.performanceandtraining.configurations.ntuples.ConfigNTupleBasicTanH_512;
+import ar.edu.unrc.game2048.performanceandtraining.configurations.ntuples.ConfigNTupleBasicTanHSimplified_512;
+import ar.edu.unrc.game2048.performanceandtraining.experiments.learning.ntuple.NTupleBasicTanHSimplified_512;
 
 import java.awt.*;
 import java.io.File;
@@ -121,7 +122,7 @@ class TestGeneratorNormalization {
         int       repetitions            = 1;
         int       maxTrainingThreads     = 8;
         int       gamesToPlay            = 12_000;
-        int       saveEvery              = 1000;
+        int       saveEvery              = 1_000;
         int       saveBackupEvery        = 300;
         int       tileToWinForStatistics = 512;
         boolean[] concurrentLayer        = {false, false};
@@ -245,15 +246,14 @@ class TestGeneratorNormalization {
             final boolean[] concurrentLayer
     )
             throws NoSuchMethodException {
-        ConfigNTupleBasicTanH_512.maxReward = 100_000;
-        ConfigNTupleBasicTanH_512.minReward = -100_000;
+        ConfigNTupleBasicTanHSimplified_512.maxReward = 100_000;
+        ConfigNTupleBasicTanHSimplified_512.minReward = -100_000;
 
         runAllConfigs(
                 repetitions,
                 maxTrainingThreads,
                 experimentDirName,
-                "NBasicTanH_512_100k",
-                ar.edu.unrc.game2048.performanceandtraining.experiments.learning.ntuple.NTupleBasicTanH_512.class.getConstructor(),
+                "NBasicTanH_512_100k", NTupleBasicTanHSimplified_512.class.getConstructor(),
                 null,
                 alphaList,
                 annealingAlphaList,
@@ -279,15 +279,14 @@ class TestGeneratorNormalization {
                 concurrentLayer
         );
 
-        ConfigNTupleBasicTanH_512.maxReward = 40_000;
-        ConfigNTupleBasicTanH_512.minReward = -40_000;
+        ConfigNTupleBasicTanHSimplified_512.maxReward = 40_000;
+        ConfigNTupleBasicTanHSimplified_512.minReward = -40_000;
 
         runAllConfigs(
                 repetitions,
                 maxTrainingThreads,
                 experimentDirName,
-                "NBasicTanH_512_40k",
-                ar.edu.unrc.game2048.performanceandtraining.experiments.learning.ntuple.NTupleBasicTanH_512.class.getConstructor(),
+                "NBasicTanH_512_40k", NTupleBasicTanHSimplified_512.class.getConstructor(),
                 null,
                 alphaList,
                 annealingAlphaList,
@@ -313,15 +312,14 @@ class TestGeneratorNormalization {
                 concurrentLayer
         );
 
-        ConfigNTupleBasicTanH_512.maxReward = 20_000;
-        ConfigNTupleBasicTanH_512.minReward = -20_000;
+        ConfigNTupleBasicTanHSimplified_512.maxReward = 20_000;
+        ConfigNTupleBasicTanHSimplified_512.minReward = -20_000;
 
         runAllConfigs(
                 repetitions,
                 maxTrainingThreads,
                 experimentDirName,
-                "NBasicTanH_512_20k",
-                ar.edu.unrc.game2048.performanceandtraining.experiments.learning.ntuple.NTupleBasicTanH_512.class.getConstructor(),
+                "NBasicTanH_512_20k", NTupleBasicTanHSimplified_512.class.getConstructor(),
                 null,
                 alphaList,
                 annealingAlphaList,
@@ -347,15 +345,14 @@ class TestGeneratorNormalization {
                 concurrentLayer
         );
 
-        ConfigNTupleBasicTanH_512.maxReward = 7_000;
-        ConfigNTupleBasicTanH_512.minReward = -7_000;
+        ConfigNTupleBasicTanHSimplified_512.maxReward = 7_000;
+        ConfigNTupleBasicTanHSimplified_512.minReward = -7_000;
 
         runAllConfigs(
                 repetitions,
                 maxTrainingThreads,
                 experimentDirName,
-                "NBasicTanH_512_7k",
-                ar.edu.unrc.game2048.performanceandtraining.experiments.learning.ntuple.NTupleBasicTanH_512.class.getConstructor(),
+                "NBasicTanH_512_7k", NTupleBasicTanHSimplified_512.class.getConstructor(),
                 null,
                 alphaList,
                 annealingAlphaList,

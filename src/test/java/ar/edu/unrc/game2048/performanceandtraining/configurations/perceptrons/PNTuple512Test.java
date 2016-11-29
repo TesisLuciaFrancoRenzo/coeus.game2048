@@ -5,7 +5,7 @@ import ar.edu.unrc.game2048.Game2048;
 import ar.edu.unrc.game2048.GameBoard;
 import ar.edu.unrc.game2048.Tile;
 import ar.edu.unrc.game2048.TileContainer;
-import ar.edu.unrc.game2048.performanceandtraining.configurations.ntuples.ConfigNTupleBasicTanH_512;
+import ar.edu.unrc.game2048.performanceandtraining.configurations.ntuples.ConfigNTupleBasicTanHSimplified_512;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.inputs.InputNTupleList;
 import org.encog.neural.networks.BasicNetwork;
 import org.junit.*;
@@ -81,7 +81,7 @@ class PNTuple512Test {
         nTupleConfiguration.calculateNormalizedPerceptronInput(board, normalizedPerceptronInput);
 
         //----------------------
-        ConfigNTupleBasicTanH_512 nTupleConfiguration2 = new ConfigNTupleBasicTanH_512();
+        ConfigNTupleBasicTanHSimplified_512 nTupleConfiguration2 = new ConfigNTupleBasicTanHSimplified_512();
         Game2048<BasicNetwork>    game2                = new Game2048<>(
                 null,
                 nTupleConfiguration2,
