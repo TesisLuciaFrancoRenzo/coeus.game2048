@@ -25,6 +25,7 @@ import ar.edu.unrc.game2048.performanceandtraining.experiments.learning.encog.NT
 import ar.edu.unrc.game2048.performanceandtraining.experiments.learning.encog.NTupleLinear_512;
 import ar.edu.unrc.game2048.performanceandtraining.experiments.learning.ntuple.*;
 
+import java.awt.*;
 import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -166,48 +167,63 @@ class TestGenerator {
         List<Double>  alphaList                                      = new ArrayList<>();
         List<Integer> annealingAlphaList                             = new ArrayList<>();
         List<Double>  gammaList                                      = new ArrayList<>();
-        List<Double>  fixedExplorationRateFixed                      = new ArrayList<>();
+        List<Double>  fixedExplorationRate                           = new ArrayList<>();
         List<Double>  interpolatedExplorationRateFinalValues         = new ArrayList<>();
         List<Integer> interpolatedExplorationRateFinishInterpolation = new ArrayList<>();
         List<Double>  interpolatedExplorationRateInitialValues       = new ArrayList<>();
         List<Integer> interpolatedExplorationRateStartInterpolation  = new ArrayList<>();
 
         //============================== configuraciones manuales ==================================
-        //        boolean statistics = true;
+        //        boolean statistics = false;
         boolean   statistics                   = true;
-        int       repetitions                  = 7;
+        int       repetitions                  = 1;
         int       maxTrainingThreads           = 8;
         boolean   doBackupStatistics           = true;
-        String    experimentName               = "BasicLinear_512";
-        String    experimentClass              = "BasicLinear_512";
-        int       gamesToPlay                  = 10_000;
-        int       saveEvery                    = 500;
-        int       saveBackupEvery              = 500;
+        String    experimentName               = "BasicTanH_512";
+        String    experimentClass              = "BasicTanH_512";
+        int       gamesToPlay                  = 12_000;
+        int       saveEvery                    = 1000;
+        int       saveBackupEvery              = 300;
         int       tileToWinForStatistics       = 512;
         boolean[] concurrentLayer              = {false, false};
         int       gamesToPlayPerThreadForStats = 100;
         boolean   resetTracesTest              = false;
 
         lambdaList.add(0d);
-        //        lambdaList.add(0.1d);
-        //        lambdaList.add(0.2d);
+        lambdaList.add(0.1d);
+        lambdaList.add(0.2d);
+        lambdaList.add(0.3d);
+        lambdaList.add(0.4d);
+        lambdaList.add(0.5d);
+        lambdaList.add(0.6d);
+        lambdaList.add(0.7d);
+        lambdaList.add(0.8d);
+        lambdaList.add(0.9d);
+        lambdaList.add(1d);
 
-        alphaList.add(0.005d);
-
-        annealingAlphaList.add(2_000_000); //Sin annealing
+        //        annealingAlphaList.add(2_000_000); //Sin annealing
         //        annealingAlphaList.add(400_000);
         //        annealingAlphaList.add(600_000);
+        annealingAlphaList.add(NO_ANNEALING);
+
+        alphaList.add(0.0025d);
 
         gammaList.add(1d);
 
-        fixedExplorationRateFixed = null;
-        //        explorationRate.add(0d);
-        //        explorationRate.add(0.1d);
+        // Exploration rates constantes
+        interpolatedExplorationRateInitialValues = null;
+        interpolatedExplorationRateFinalValues = null;
+        interpolatedExplorationRateStartInterpolation = null;
+        interpolatedExplorationRateFinishInterpolation = null;
+        fixedExplorationRate.add(0d);
+        //        fixedExplorationRate.add(0.1d);
 
-        interpolatedExplorationRateInitialValues.add(0.1d);
-        interpolatedExplorationRateFinalValues.add(0.01d);
-        interpolatedExplorationRateStartInterpolation.add(0);
-        interpolatedExplorationRateFinishInterpolation.add(500_000);
+        // Exploration rates variables
+        //        fixedExplorationRate = null;
+        //        interpolatedExplorationRateInitialValues.add(0.1d);
+        //        interpolatedExplorationRateFinalValues.add(0.01d);
+        //        interpolatedExplorationRateStartInterpolation.add(0);
+        //        interpolatedExplorationRateFinishInterpolation.add(500_000);
 
         boolean createLogs = false;
         //============================== fin de configuraciones manuales ==================================
@@ -242,13 +258,13 @@ class TestGenerator {
                     System.err.println("La cantidad de parámetros de exploration rate no coinciden");
                     System.exit(-1);
                 }
-                fixedExplorationRateFixed = null;
+                fixedExplorationRate = null;
             } catch (Exception e) {
                 interpolatedExplorationRateInitialValues = null;
                 interpolatedExplorationRateFinalValues = null;
                 interpolatedExplorationRateStartInterpolation = null;
                 interpolatedExplorationRateFinishInterpolation = null;
-                fixedExplorationRateFixed = ArgumentLoader.parseDoubleArray(arguments.getArg("explorationRate"));
+                fixedExplorationRate = ArgumentLoader.parseDoubleArray(arguments.getArg("explorationRate"));
             }
         }
 
@@ -327,15 +343,15 @@ class TestGenerator {
                 saveBackupEvery,
                 gamesToPlayPerThreadForStatistics,
                 tileToWinForStatistics,
-                simulationsForStatistics,
-                fixedExplorationRateFixed,
+                simulationsForStatistics, fixedExplorationRate,
                 interpolatedExplorationRateInitialValues,
                 interpolatedExplorationRateFinalValues,
-                interpolatedExplorationRateStartInterpolation,
-                interpolatedExplorationRateFinishInterpolation, resetTracesTest,
+                interpolatedExplorationRateStartInterpolation, interpolatedExplorationRateFinishInterpolation, resetTracesTest,
                 filePath,
                 concurrentLayer
         );
+
+        Toolkit.getDefaultToolkit().beep();
     }
 
     @SuppressWarnings("ForLoopReplaceableByForEach")
@@ -483,8 +499,7 @@ class TestGenerator {
                                                 expConfig.getExplorationRateFinishInterpolation();
                     }
                     String newFilePath = filePath +
-                                         "AutomaticTests" +
-                                         File.separator + expConfig.getRepetitions() + "-alpha_" +
+                                         "AutomaticTests" + File.separator + expConfig.getRepetitions() + "-alpha_" +
                                          expConfig.getAlpha() +
                                          ((expConfig.getAnnealingAlpha() > 0) ? "-anneal_" + expConfig.getAnnealingAlpha() : "") +
                                          "-lambda_" +

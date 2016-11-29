@@ -27,6 +27,7 @@ import ar.edu.unrc.game2048.performanceandtraining.configurations.librariesinter
 import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.PBoard_32768;
 import org.encog.neural.networks.BasicNetwork;
 
+import java.awt.*;
 import java.io.File;
 
 import static ar.edu.unrc.coeus.tdlearning.learning.ELearningStyle.afterState;
@@ -102,6 +103,8 @@ class SimpleBoard_32768
         }
         experiment.setExportToExcel(true);
         experiment.start(-1, filePath, 0, true, null);
+
+        Toolkit.getDefaultToolkit().beep();
     }
 
     @Override

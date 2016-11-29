@@ -25,6 +25,7 @@ import ar.edu.unrc.game2048.performanceandtraining.configurations.LearningExperi
 import ar.edu.unrc.game2048.performanceandtraining.configurations.librariesinterfaces.GreedyExperimentInterface;
 import org.encog.neural.networks.BasicNetwork;
 
+import java.awt.*;
 import java.io.File;
 
 /**
@@ -59,6 +60,8 @@ class Basic
         experiment.setRunStatisticsForBackups(false);
         experiment.setExportToExcel(false);
         experiment.start(-1, filePath, 0, true, null);
+
+        Toolkit.getDefaultToolkit().beep();
     }
 
     @SuppressWarnings("unchecked")

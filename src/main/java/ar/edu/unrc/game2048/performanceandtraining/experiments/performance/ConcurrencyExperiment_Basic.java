@@ -29,6 +29,7 @@ import org.encog.engine.network.activation.ActivationFunction;
 import org.encog.engine.network.activation.ActivationTANH;
 import org.encog.neural.networks.BasicNetwork;
 
+import java.awt.*;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -255,6 +256,8 @@ class ConcurrencyExperiment_Basic
             ))) {
                 out.write(outputForGraphicsResults.toString());
             }
+
+            Toolkit.getDefaultToolkit().beep();
         } catch (Exception ex) {
             Logger.getLogger(ConcurrencyExperiment_Basic.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -23,6 +23,7 @@ import ar.edu.unrc.game2048.performanceandtraining.experiments.GeneratorConfig;
 import ar.edu.unrc.game2048.performanceandtraining.experiments.learning.ntuple.BasicLinear_512;
 import ar.edu.unrc.game2048.performanceandtraining.experiments.learning.ntuple.BasicTanH_512;
 
+import java.awt.*;
 import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -247,6 +248,8 @@ class TestGeneratorActivationFunctionVsTraces {
                 explorationRate, resetTracesTest,
                 filePath
         );
+
+        Toolkit.getDefaultToolkit().beep();
     }
 
     @SuppressWarnings("ForLoopReplaceableByForEach")
