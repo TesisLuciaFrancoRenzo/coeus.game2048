@@ -404,19 +404,6 @@ class Game2048<NeuralNetworkClass>
         return board;
     }
 
-    @Override
-    public
-    double getFinalReward(
-            IState finalState,
-            int outputNeuron
-    ) {
-        if (neuralNetworkConfiguration != null) {
-            return neuralNetworkConfiguration.getFinalReward((GameBoard) finalState, outputNeuron);
-        } else {
-            return nTupleSystemConfiguration.getFinalReward((GameBoard) finalState, outputNeuron);
-        }
-    }
-
     /**
      * @return último turno alcanzado.
      */

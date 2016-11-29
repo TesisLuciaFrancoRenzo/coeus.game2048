@@ -168,15 +168,6 @@ class PNTupleLinear_512<NeuralNetworkClass>
         return board.getPartialScore();
     }
 
-    @Override
-    public
-    double getFinalReward(
-            GameBoard board,
-            int outputNeuron
-    ) {
-        return board.getGame().getScore();
-    }
-
     /**
      * @return mapSamplePointValuesIndex
      */

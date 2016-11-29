@@ -132,15 +132,6 @@ class PBinary_2048<NeuralNetworkClass>
 
     @Override
     public
-    double getFinalReward(
-            GameBoard board,
-            int outputNeuron
-    ) {
-        return board.getGame().getScore();
-    }
-
-    @Override
-    public
     boolean isConcurrentInputEnabled() {
         return concurrentInput;
     }

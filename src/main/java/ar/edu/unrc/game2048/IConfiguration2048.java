@@ -45,17 +45,6 @@ interface IConfiguration2048 {
     );
 
     /**
-     * @param board        tablero (siendo este un estado final).
-     * @param outputNeuron neurona de salida.
-     *
-     * @return recompensa final obtenida al terminar el partido.
-     */
-    double getFinalReward(
-            GameBoard board,
-            int outputNeuron
-    );
-
-    /**
      * @param value valor a normalizar.
      *
      * @return {@code value} normalizado con el estilo de las neuronas de salida.

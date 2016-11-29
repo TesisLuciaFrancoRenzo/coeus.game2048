@@ -94,15 +94,6 @@ class NSymmetricTanH_32768
 
     @Override
     public
-    double getFinalReward(
-            GameBoard board,
-            int outputNeuron
-    ) {
-        return board.getGame().getScore();
-    }
-
-    @Override
-    public
     SamplePointValue[] getNTuple(
             GameBoard board,
             int nTupleIndex

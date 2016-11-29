@@ -83,15 +83,6 @@ class NBasicLinearNoPartialScore_512
 
     @Override
     public
-    double getFinalReward(
-            GameBoard board,
-            int outputNeuron
-    ) {
-        return board.getGame().getScore();
-    }
-
-    @Override
-    public
     SamplePointValue[] getNTuple(
             GameBoard board,
             int nTupleIndex

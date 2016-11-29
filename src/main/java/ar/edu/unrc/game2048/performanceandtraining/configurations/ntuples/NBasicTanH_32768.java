@@ -90,14 +90,6 @@ class NBasicTanH_32768
         return board.getPartialScore();
     }
 
-    @Override
-    public
-    double getFinalReward(
-            GameBoard board,
-            int outputNeuron
-    ) {
-        return board.getGame().getScore();
-    }
 
     @Override
     public
