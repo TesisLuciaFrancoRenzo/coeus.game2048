@@ -124,7 +124,6 @@ class TestGeneratorPerceptronVsNTuple {
         int       saveEvery              = 1000;
         int       saveBackupEvery        = 300;
         int       tileToWinForStatistics = 512;
-        boolean[] concurrentLayer        = {false, false};
         boolean   resetTracesTest        = true;
         boolean   noResetTracesTest      = false;
 
@@ -181,8 +180,7 @@ class TestGeneratorPerceptronVsNTuple {
                     interpolatedExplorationRateFinishInterpolation,
                     resetTracesTest,
                     noResetTracesTest,
-                    filePath,
-                    concurrentLayer
+                    filePath, new boolean[]{false, false}
             );
         }
         for (int i = 0; i < repetitions; i++) {
@@ -213,8 +211,7 @@ class TestGeneratorPerceptronVsNTuple {
                     interpolatedExplorationRateFinishInterpolation,
                     resetTracesTest,
                     noResetTracesTest,
-                    filePath,
-                    concurrentLayer
+                    filePath, new boolean[]{true, false}
             );
         }
         statisticsOnly = true;
@@ -250,8 +247,7 @@ class TestGeneratorPerceptronVsNTuple {
                     interpolatedExplorationRateFinishInterpolation,
                     resetTracesTest,
                     noResetTracesTest,
-                    filePath,
-                    concurrentLayer
+                    filePath, new boolean[]{false, false}
             );
         }
         for (int i = 0; i < repetitions; i++) {
@@ -282,8 +278,7 @@ class TestGeneratorPerceptronVsNTuple {
                     interpolatedExplorationRateFinishInterpolation,
                     resetTracesTest,
                     noResetTracesTest,
-                    filePath,
-                    concurrentLayer
+                    filePath, new boolean[]{true, false}
             );
         }
 
