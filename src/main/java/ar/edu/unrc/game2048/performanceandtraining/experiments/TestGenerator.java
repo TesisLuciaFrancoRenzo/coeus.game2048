@@ -180,9 +180,9 @@ class TestGenerator {
         int       repetitions                  = 1;
         int       maxTrainingThreads           = 8;
         boolean   doBackupStatistics           = true;
-        String    experimentDirName            = "GeneratedTests";
-        String    experimentName               = "ConfigNTupleBasicLinear_512";
-        String    experimentClass              = "ConfigNTupleBasicLinear_512";
+        String    experimentDirName            = "ExplorationRate";
+        String    experimentName               = "NTupleBasicLinearSimplified_512";
+        String    experimentClass              = "NTupleBasicLinearSimplified_512";
         int       gamesToPlay                  = 12_000;
         int       saveEvery                    = 1_000;
         int       saveBackupEvery              = 300;
@@ -291,7 +291,7 @@ class TestGenerator {
                 classConstructor = NTupleBasicTanH.class.getConstructor();
                 break;
             }
-            case "ConfigNTupleBasicLinearSimplified_512": {
+            case "NTupleBasicLinearSimplified_512": {
                 classConstructor = NTupleBasicLinearSimplified_512.class.getConstructor();
                 break;
             }
@@ -305,7 +305,7 @@ class TestGenerator {
                 classParameters = new Object[]{true};
                 break;
             }
-            case "ConfigNTupleBasicTanHSimplified_512": {
+            case "NTupleBasicTanHSimplified_512": {
                 classConstructor = NTupleBasicTanHSimplified_512.class.getConstructor();
                 break;
             }

@@ -5,6 +5,7 @@
     <content url="file://$MODULE_DIR$/../../../coeus.game2048.visual">
       <excludeFolder url="file://$MODULE_DIR$/../../../coeus.game2048.visual/.gradle" />
       <excludeFolder url="file://$MODULE_DIR$/../../../coeus.game2048.visual/build" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../coeus.game2048.visual/out" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

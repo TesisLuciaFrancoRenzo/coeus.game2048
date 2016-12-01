@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact name="coeus.game2048.visual_main:jar">
+    <output-path>$PROJECT_DIR$/../coeus.game2048.visual/out/artifacts/coeus_game2048_visual_main_jar</output-path>
+    <root id="root">
+      <element id="archive" name="coeus.game2048.visual_main.jar">
+        <element id="module-output" name="coeus.game2048.visual_main" />
+        <element id="module-output" name="coeus_main" />
+      </element>
+      <element id="library" level="project" name="Gradle: org.apache.commons:commons-math3:3.0" />
+      <element id="library" level="project" name="Gradle: org.encog:encog-core:3.2.0" />
+    </root>
+  </artifact>
+</component>

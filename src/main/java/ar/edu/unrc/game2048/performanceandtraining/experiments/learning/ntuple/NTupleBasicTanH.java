@@ -55,15 +55,15 @@ class NTupleBasicTanH
         }
         LearningExperiment experiment = new NTupleBasicTanH();
 
-        //                        boolean statistics = true;
-        boolean statistics = false;
+        boolean statistics = true;
+        //        boolean statistics = false;
 
         double[] alphas = {0.005, 0.005};
         experiment.setAlpha(alphas);
         experiment.setLearningRateAdaptationToAnnealing(2_000_000);
-        experiment.setLambda(0.3);
+        experiment.setLambda(0);
         experiment.setGamma(1);
-        experiment.setExplorationRateToFixed(0.1);
+        experiment.setExplorationRateToFixed(0);
         experiment.setReplaceEligibilityTraces(true);
         experiment.setGamesToPlay(2_000_000);
         experiment.setSaveEvery(5_000);
