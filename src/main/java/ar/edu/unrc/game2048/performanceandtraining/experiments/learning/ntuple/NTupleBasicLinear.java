@@ -58,13 +58,13 @@ class NTupleBasicLinear
         //        boolean statistics = true;
         boolean statistics = false;
 
-        double[] alphas = {0.0025, 0.0025};
+        double[] alphas = {0.005, 0.005};
         experiment.setAlpha(alphas);
-        experiment.setLearningRateAdaptationToFixed();
-        experiment.setLambda(0);
+        experiment.setLearningRateAdaptationToAnnealing(2_000_000);
+        experiment.setLambda(0.3);
         experiment.setGamma(1);
-        experiment.setExplorationRateToFixed(0);
-        experiment.setReplaceEligibilityTraces(false);
+        experiment.setExplorationRateToFixed(0.1);
+        experiment.setReplaceEligibilityTraces(true);
         experiment.setGamesToPlay(2_000_000);
         experiment.setSaveEvery(5_000);
         experiment.setSaveBackupEvery(25_000);
@@ -79,7 +79,7 @@ class NTupleBasicLinear
         if (statistics) {
             experiment.setStatisticsOnly(true);
             experiment.setRunStatisticsForBackups(true);
-            experiment.setGamesToPlayPerThreadForStatistics(5);
+            experiment.setGamesToPlayPerThreadForStatistics(1_000);
             experiment.setSimulationsForStatistics(8);
         } else {
             experiment.setStatisticsOnly(false);
