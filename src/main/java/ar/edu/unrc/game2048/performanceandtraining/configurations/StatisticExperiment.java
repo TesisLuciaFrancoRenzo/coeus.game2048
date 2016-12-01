@@ -194,7 +194,7 @@ class StatisticExperiment<NeuralNetworkClass> {
             if (!resultsRandom.isEmpty()) {
                 int file = 0;
                 cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
-                cellDoubleValue = resultsPerFile.get(backupFiles.get(file)).getMinScore();
+                cellDoubleValue = resultsRandom.get(randomNeuralNetworkFile).getMinScore();
                 cell.setCellStyle(cellStyle);
                 cell.setCellValue(cellDoubleValue);
             }
@@ -210,7 +210,7 @@ class StatisticExperiment<NeuralNetworkClass> {
             if (!resultsRandom.isEmpty()) {
                 int file = 0;
                 cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
-                cellDoubleValue = resultsPerFile.get(backupFiles.get(file)).getMeanScore();
+                cellDoubleValue = resultsRandom.get(randomNeuralNetworkFile).getMeanScore();
                 cell.setCellStyle(cellStyle);
                 cell.setCellValue(cellDoubleValue);
             }
@@ -226,7 +226,7 @@ class StatisticExperiment<NeuralNetworkClass> {
             if (!resultsRandom.isEmpty()) {
                 int file = 0;
                 cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
-                cellDoubleValue = resultsPerFile.get(backupFiles.get(file)).getMaxScore();
+                cellDoubleValue = resultsRandom.get(randomNeuralNetworkFile).getMaxScore();
                 cell.setCellStyle(cellStyle);
                 cell.setCellValue(cellDoubleValue);
             }
@@ -249,7 +249,7 @@ class StatisticExperiment<NeuralNetworkClass> {
                 int file = 0;
                 cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
                 cell.setCellStyle(cellStyle);
-                cellDoubleValue = resultsPerFile.get(backupFiles.get(file)).getWinRate();
+                cellDoubleValue = resultsRandom.get(randomNeuralNetworkFile).getWinRate();
                 assert cellDoubleValue <= 100 && cellDoubleValue >= 0;
                 cell.setCellValue(cellDoubleValue);
             }
@@ -281,7 +281,7 @@ class StatisticExperiment<NeuralNetworkClass> {
                 int file = 0;
                 cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
                 cell.setCellStyle(cellStyle);
-                cellDoubleValue = resultsPerFile.get(backupFiles.get(file)).getMinTurn();
+                cellDoubleValue = resultsRandom.get(randomNeuralNetworkFile).getMinTurn();
                 cell.setCellValue(cellDoubleValue);
             }
 
@@ -297,7 +297,7 @@ class StatisticExperiment<NeuralNetworkClass> {
                 int file = 0;
                 cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
                 cell.setCellStyle(cellStyle);
-                cellDoubleValue = resultsPerFile.get(backupFiles.get(file)).getMeanTurn();
+                cellDoubleValue = resultsRandom.get(randomNeuralNetworkFile).getMeanTurn();
                 cell.setCellValue(cellDoubleValue);
             }
 
@@ -313,7 +313,7 @@ class StatisticExperiment<NeuralNetworkClass> {
                 int file = 0;
                 cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
                 cell.setCellStyle(cellStyle);
-                cellDoubleValue = resultsPerFile.get(backupFiles.get(file)).getMaxTurn();
+                cellDoubleValue = resultsRandom.get(randomNeuralNetworkFile).getMaxTurn();
                 cell.setCellValue(cellDoubleValue);
             }
 

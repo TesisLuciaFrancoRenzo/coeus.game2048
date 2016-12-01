@@ -21,7 +21,10 @@ package ar.edu.unrc.game2048.performanceandtraining.experiments;
 import ar.edu.unrc.game2048.performanceandtraining.configurations.LearningExperiment;
 import ar.edu.unrc.game2048.performanceandtraining.experiments.learning.encog.EncogNTupleLinearSimplified_512;
 import ar.edu.unrc.game2048.performanceandtraining.experiments.learning.encog.EncogNTupleLinearWithBiasSimplified_512;
-import ar.edu.unrc.game2048.performanceandtraining.experiments.learning.ntuple.*;
+import ar.edu.unrc.game2048.performanceandtraining.experiments.learning.ntuple.NTupleBasicLinear;
+import ar.edu.unrc.game2048.performanceandtraining.experiments.learning.ntuple.NTupleBasicLinearSimplified_512;
+import ar.edu.unrc.game2048.performanceandtraining.experiments.learning.ntuple.NTupleBasicTanH;
+import ar.edu.unrc.game2048.performanceandtraining.experiments.learning.ntuple.NTupleBasicTanHSimplified_512;
 
 import java.awt.*;
 import java.io.File;
@@ -286,10 +289,6 @@ class TestGenerator {
             }
             case "NTupleBasicTanH": {
                 classConstructor = NTupleBasicTanH.class.getConstructor();
-                break;
-            }
-            case "ConfigNTupleBasicLinear_512": {
-                classConstructor = NTupleBasicLinear_512.class.getConstructor();
                 break;
             }
             case "ConfigNTupleBasicLinearSimplified_512": {
