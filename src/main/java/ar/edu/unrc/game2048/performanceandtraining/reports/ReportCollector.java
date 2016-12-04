@@ -44,6 +44,7 @@ class ReportCollector {
             WORKING_DIRECTORY = workingDir();
         }
         items = new HashMap<>();
+        assert WORKING_DIRECTORY != null;
         workFiles(WORKING_DIRECTORY.listFiles());
         List<ReportItem> finalReportItems = new ArrayList<>(items.values());
 
