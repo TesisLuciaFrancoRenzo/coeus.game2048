@@ -125,7 +125,6 @@ class TestGenerator {
         experiment.setConcurrencyInComputeBestPossibleAction(true);
         experiment.setConcurrencyInLayer(concurrentLayer);
         experiment.setTileToWinForStatistics(tileToWinForStatistics);
-        experiment.setReplaceEligibilityTraces(replaceEligibilityTraces);
         if (annealingAlpha == NO_ANNEALING) {
             experiment.setLearningRateAdaptationToFixed();
         } else {

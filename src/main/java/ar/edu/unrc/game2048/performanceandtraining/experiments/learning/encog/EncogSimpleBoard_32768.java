@@ -81,7 +81,6 @@ class EncogSimpleBoard_32768
         experiment.setLambda(0.4);
         experiment.setGamma(1);
         experiment.setExplorationRateToFixed(0);
-        experiment.setReplaceEligibilityTraces(false);
         experiment.setGamesToPlay(10_000);
         experiment.setSaveEvery(200);
         experiment.setSaveBackupEvery(500);
@@ -130,7 +129,6 @@ class EncogSimpleBoard_32768
                 getLambda(),
                 getGamma(),
                 getConcurrencyInLayer(),
-                isReplaceEligibilityTraces(),
                 false
         );
     }

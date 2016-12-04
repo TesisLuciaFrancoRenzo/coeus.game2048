@@ -73,7 +73,6 @@ class TestGeneratorNormalization {
         boolean[] concurrentLayer = {false, false};
         experiment.setConcurrencyInLayer(concurrentLayer);
         experiment.setTileToWinForStatistics(512);
-        experiment.setReplaceEligibilityTraces(replaceEligibilityTraces);
         experiment.setLearningRateAdaptationToFixed();
         experiment.setGamesToPlay(gamesToPlay);
         experiment.setSaveEvery(saveEvery);

@@ -65,7 +65,6 @@ class NTupleBasicLinearSimplified_512
         experiment.setLambda(0);
         experiment.setGamma(1);
         experiment.setExplorationRateToFixed(0);
-        experiment.setReplaceEligibilityTraces(false);
         experiment.setGamesToPlay(12_000);
         experiment.setSaveEvery(1_000);
         experiment.setSaveBackupEvery(300);
@@ -126,7 +125,6 @@ class NTupleBasicLinearSimplified_512
                 getLambda(),
                 getGamma(),
                 getConcurrencyInLayer(),
-                isReplaceEligibilityTraces(),
                 false
         );
     }

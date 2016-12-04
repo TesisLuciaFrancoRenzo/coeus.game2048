@@ -111,7 +111,6 @@ class LearningExperiment<NeuralNetworkClass> {
     private boolean logsActivated = false;
     private INeuralNetworkInterfaceFor2048<NeuralNetworkClass> neuralNetworkInterfaceFor2048;
     private String                                             neuralNetworkName;
-    private boolean replaceEligibilityTraces = false;
     private boolean runStatisticsForBackups  = false;
     private int     saveBackupEvery          = 0;
     private int     saveEvery                = 0;
@@ -240,11 +239,18 @@ class LearningExperiment<NeuralNetworkClass> {
     }
 
     /**
-     * @param experimentName nombre del experimento.
+     * Establece el nombre del experimento basado en el nombre de la clase {@code experimentClass}.
+     *
+     * @param experimentClass clase de la cual extraer el nombre del experimento.
      */
     public
-    void setExperimentName(String experimentName) {
-        this.experimentName = experimentName;
+    void setExperimentName(Class experimentClass) {
+        String className = experimentClass.getName();
+        int    lastDot   = className.lastIndexOf('.');
+        if (lastDot != -1) {
+            className = className.substring(lastDot + 1);
+        }
+        experimentName = className;
     }
 
     /**
@@ -497,22 +503,6 @@ class LearningExperiment<NeuralNetworkClass> {
     );
 
     /**
-     * @return true si se están reemplazando las trazas de elegibilidad al jugar al azar mediante tasa de exploración.
-     */
-    public
-    boolean isReplaceEligibilityTraces() {
-        return replaceEligibilityTraces;
-    }
-
-    /**
-     * @param replaceEligibilityTraces true si se están reemplazando las trazas de elegibilidad al jugar al azar mediante tasa de exploración.
-     */
-    public
-    void setReplaceEligibilityTraces(boolean replaceEligibilityTraces) {
-        this.replaceEligibilityTraces = replaceEligibilityTraces;
-    }
-
-    /**
      * @return true si se debe realizar estadísticas sobre las copias de las redes neuronales, realizadas a través del tiempo de entrenamiento total,
      * para notar su progreso.
      */
@@ -755,7 +745,6 @@ class LearningExperiment<NeuralNetworkClass> {
             out.write("annealingT: " + annealingT + '\n');
             out.write("learningRateAdaptation: " + learningRateAdaptation + '\n');
             out.write("initializePerceptronRandomized: " + initializePerceptronRandomized + '\n');
-            out.write("replaceEligibilityTraces: " + replaceEligibilityTraces + '\n');
             out.write("concurrencyInComputeBestPossibleAction: " + concurrencyInComputeBestPossibleAction + '\n');
             out.write("concurrencyInLayer: " + Arrays.toString(concurrencyInLayer) + '\n');
             out.write("explorationRate: " + explorationRate + '\n');
@@ -810,18 +799,11 @@ class LearningExperiment<NeuralNetworkClass> {
     }
 
     /**
-     * Establece el nombre del experimento basado en el nombre de la clase {@code experimentClass}.
-     *
-     * @param experimentClass clase de la cual extraer el nombre del experimento.
+     * @param experimentName nombre del experimento.
      */
     public
-    void setExperimentName(Class experimentClass) {
-        String className = experimentClass.getName();
-        int    lastDot   = className.lastIndexOf('.');
-        if (lastDot != -1) {
-            className = className.substring(lastDot + 1);
-        }
-        experimentName = className;
+    void setExperimentName(String experimentName) {
+        this.experimentName = experimentName;
     }
 
     /**

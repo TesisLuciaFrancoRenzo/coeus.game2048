@@ -80,7 +80,6 @@ class EncogNTupleLinearSimplified_512
         experiment.setLambda(0);
         experiment.setGamma(1);
         experiment.setExplorationRateToFixed(0);
-        experiment.setReplaceEligibilityTraces(false);
         experiment.setGamesToPlay(20_000);
         experiment.setSaveEvery(500);
         experiment.setSaveBackupEvery(500);
@@ -132,7 +131,6 @@ class EncogNTupleLinearSimplified_512
                 getLambda(),
                 getGamma(),
                 getConcurrencyInLayer(),
-                isReplaceEligibilityTraces(),
                 false
         );
     }

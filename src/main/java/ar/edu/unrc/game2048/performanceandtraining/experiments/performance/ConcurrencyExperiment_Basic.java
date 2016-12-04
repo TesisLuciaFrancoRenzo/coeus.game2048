@@ -297,7 +297,6 @@ class ConcurrencyExperiment_Basic
         experiment.setLambda(0.7);
         experiment.setGamma(1);
         experiment.setExplorationRateToFixed(0);
-        experiment.setReplaceEligibilityTraces(false);
         experiment.setGamesToPlay(GAMES_TO_PLAY);
         experiment.setSaveEvery(10_000); //no se guarda nada
         experiment.setSaveBackupEvery(10_000); //no se hacen backup
@@ -339,7 +338,6 @@ class ConcurrencyExperiment_Basic
                 getLambda(),
                 getGamma(),
                 getConcurrencyInLayer(),
-                isReplaceEligibilityTraces(),
                 true
         );
     }
