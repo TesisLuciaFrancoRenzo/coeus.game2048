@@ -55,18 +55,18 @@ class NTupleBasicLinear
         }
         LearningExperiment experiment = new NTupleBasicLinear();
 
-        boolean statistics = true;
-        //        boolean statistics = false;
+        //                boolean statistics = true;
+        boolean statistics = false;
 
         double[] alphas = {0.005, 0.005};
         experiment.setAlpha(alphas);
-        experiment.setLearningRateAdaptationToAnnealing(2_000_000);
+        experiment.setLearningRateAdaptationToAnnealing(500_000);
         experiment.setLambda(0);
         experiment.setGamma(1);
         experiment.setExplorationRateToFixed(0);
         experiment.setReplaceEligibilityTraces(true);
         experiment.setGamesToPlay(2_000_000);
-        experiment.setSaveEvery(5_000);
+        experiment.setSaveEvery(2_000);
         experiment.setSaveBackupEvery(25_000);
         experiment.setInitializePerceptronRandomized(false);
         experiment.setConcurrencyInComputeBestPossibleAction(true);

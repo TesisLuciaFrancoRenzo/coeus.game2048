@@ -166,7 +166,7 @@ class INeuralNetworkInterfaceFor2048<NeuralNetworkClass>
                 null,
                 learningMethod.isComputeParallelBestPossibleAction(),
                 learningMethod.getStatisticsBestPossibleActionTimes()
-        );
+        ).getAction();
 
         switch (bestAction) {
             case left: {
