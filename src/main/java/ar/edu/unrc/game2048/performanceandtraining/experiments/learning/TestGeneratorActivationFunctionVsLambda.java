@@ -124,8 +124,8 @@ class TestGeneratorActivationFunctionVsLambda {
         int       saveBackupEvery        = 300;
         int       tileToWinForStatistics = 512;
         boolean[] concurrentLayer        = {false, false};
-        boolean   resetTracesTest        = false;
-        boolean   noResetTracesTest      = true;
+        boolean   replaceTraces          = false;
+        boolean   accumulatingTraces     = true;
 
         lambdaList.add(0d);
         lambdaList.add(0.1d);
@@ -167,11 +167,15 @@ class TestGeneratorActivationFunctionVsLambda {
 
         runAllConfigs(
                 repetitions,
-                maxTrainingThreads, testDirName, "NTupleBasicLinearSimplified_512", NTupleBasicLinearSimplified_512.class.getConstructor(),
+                maxTrainingThreads,
+                testDirName,
+                "NTupleBasicLinearSimplified_512",
+                NTupleBasicLinearSimplified_512.class.getConstructor(),
                 null,
                 alphaList,
                 annealingAlphaList,
-                lambdaList, eligibilityTraceLengthList,
+                lambdaList,
+                eligibilityTraceLengthList,
                 gammaList,
                 statisticsOnly,
                 runStatisticsForBackups,
@@ -187,18 +191,16 @@ class TestGeneratorActivationFunctionVsLambda {
                 interpolatedExplorationRateFinalValues,
                 interpolatedExplorationRateStartInterpolation,
                 interpolatedExplorationRateFinishInterpolation,
-                resetTracesTest,
-                noResetTracesTest,
+                replaceTraces,
+                accumulatingTraces,
                 filePath,
                 concurrentLayer
         );
         runAllConfigs(
-                repetitions,
-                maxTrainingThreads, testDirName, "NTupleBasicTanHSimplified_512", NTupleBasicTanHSimplified_512.class.getConstructor(),
+                repetitions, maxTrainingThreads, testDirName, "NTupleBasicTanHSimplified_512", NTupleBasicTanHSimplified_512.class.getConstructor(),
                 null,
                 alphaList,
-                annealingAlphaList,
-                lambdaList, eligibilityTraceLengthList,
+                annealingAlphaList, lambdaList, eligibilityTraceLengthList,
                 gammaList,
                 statisticsOnly,
                 runStatisticsForBackups,
@@ -213,9 +215,7 @@ class TestGeneratorActivationFunctionVsLambda {
                 interpolatedExplorationRateInitialValues,
                 interpolatedExplorationRateFinalValues,
                 interpolatedExplorationRateStartInterpolation,
-                interpolatedExplorationRateFinishInterpolation,
-                resetTracesTest,
-                noResetTracesTest,
+                interpolatedExplorationRateFinishInterpolation, replaceTraces, accumulatingTraces,
                 filePath,
                 concurrentLayer
         );
@@ -227,11 +227,15 @@ class TestGeneratorActivationFunctionVsLambda {
 
         runAllConfigs(
                 repetitions,
-                maxTrainingThreads, testDirName, "NTupleBasicLinearSimplified_512", NTupleBasicLinearSimplified_512.class.getConstructor(),
+                maxTrainingThreads,
+                testDirName,
+                "NTupleBasicLinearSimplified_512",
+                NTupleBasicLinearSimplified_512.class.getConstructor(),
                 null,
                 alphaList,
                 annealingAlphaList,
-                lambdaList, eligibilityTraceLengthList,
+                lambdaList,
+                eligibilityTraceLengthList,
                 gammaList,
                 statisticsOnly,
                 runStatisticsForBackups,
@@ -247,18 +251,16 @@ class TestGeneratorActivationFunctionVsLambda {
                 interpolatedExplorationRateFinalValues,
                 interpolatedExplorationRateStartInterpolation,
                 interpolatedExplorationRateFinishInterpolation,
-                resetTracesTest,
-                noResetTracesTest,
+                replaceTraces,
+                accumulatingTraces,
                 filePath,
                 concurrentLayer
         );
         runAllConfigs(
-                repetitions,
-                maxTrainingThreads, testDirName, "NTupleBasicTanHSimplified_512", NTupleBasicTanHSimplified_512.class.getConstructor(),
+                repetitions, maxTrainingThreads, testDirName, "NTupleBasicTanHSimplified_512", NTupleBasicTanHSimplified_512.class.getConstructor(),
                 null,
                 alphaList,
-                annealingAlphaList,
-                lambdaList, eligibilityTraceLengthList,
+                annealingAlphaList, lambdaList, eligibilityTraceLengthList,
                 gammaList,
                 statisticsOnly,
                 runStatisticsForBackups,
@@ -273,9 +275,7 @@ class TestGeneratorActivationFunctionVsLambda {
                 interpolatedExplorationRateInitialValues,
                 interpolatedExplorationRateFinalValues,
                 interpolatedExplorationRateStartInterpolation,
-                interpolatedExplorationRateFinishInterpolation,
-                resetTracesTest,
-                noResetTracesTest,
+                interpolatedExplorationRateFinishInterpolation, replaceTraces, accumulatingTraces,
                 filePath,
                 concurrentLayer
         );

@@ -39,7 +39,7 @@ class GeneratorConfig {
     private final double   lambda;
     private final int      number;
     private final int      repetitions;
-    private final boolean  resetTraces;
+    private final boolean  replaceTraces;
 
     /**
      * @param classParameters
@@ -49,7 +49,7 @@ class GeneratorConfig {
      * @param gamma
      * @param explorationRate
      * @param explorationRateInitialValue
-     * @param resetTraces
+     * @param replaceTraces
      * @param explorationRateFinalValue
      * @param number
      * @param explorationRateStartInterpolation
@@ -69,7 +69,7 @@ class GeneratorConfig {
             final Double explorationRateFinalValue,
             final Integer explorationRateStartInterpolation,
             final Integer explorationRateFinishInterpolation,
-            final boolean resetTraces,
+            final boolean replaceTraces,
             final int number
     ) {
         this.repetitions = repetitions;
@@ -80,7 +80,7 @@ class GeneratorConfig {
         this.gamma = gamma;
         this.explorationRate = explorationRate;
         this.explorationRateFinishInterpolation = explorationRateFinishInterpolation;
-        this.resetTraces = resetTraces;
+        this.replaceTraces = replaceTraces;
         this.number = number;
         this.explorationRateInitialValue = explorationRateInitialValue;
         this.explorationRateFinalValue = explorationRateFinalValue;
@@ -187,11 +187,11 @@ class GeneratorConfig {
     }
 
     /**
-     * @return resetTraces
+     * @return replaceTraces
      */
     public
-    boolean isResetTraces() {
-        return resetTraces;
+    boolean isReplaceTraces() {
+        return replaceTraces;
     }
 
 }

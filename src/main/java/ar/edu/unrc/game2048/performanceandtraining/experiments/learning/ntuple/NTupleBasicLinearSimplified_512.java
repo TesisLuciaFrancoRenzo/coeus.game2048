@@ -63,6 +63,7 @@ class NTupleBasicLinearSimplified_512
         experiment.setAlpha(alphas);
         experiment.setLearningRateAdaptationToFixed();
         experiment.setLambda(0.5);
+        experiment.setReplaceEligibilityTraces(false);
         experiment.setEligibilityTraceLength(-1); //Se calcula su longitud dinámicamente
         experiment.setGamma(1);
         experiment.setExplorationRateToFixed(0);
@@ -121,8 +122,7 @@ class NTupleBasicLinearSimplified_512
     ) {
         return new TDLambdaLearning(nTupleSystem,
                 afterState,
-                (getAlpha() != null) ? getAlpha()[0] : null,
-                getLambda(), getEligibilityTraceLength(),
+                (getAlpha() != null) ? getAlpha()[0] : null, getLambda(), getEligibilityTraceLength(), isReplaceEligibilityTraces(),
                 getGamma(),
                 getConcurrencyInLayer(),
                 false

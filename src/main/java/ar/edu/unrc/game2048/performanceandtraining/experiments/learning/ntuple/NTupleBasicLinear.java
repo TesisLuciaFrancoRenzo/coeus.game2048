@@ -63,6 +63,7 @@ class NTupleBasicLinear
         experiment.setAlpha(alphas);
         experiment.setLearningRateAdaptationToAnnealing(500_000);
         experiment.setLambda(0);
+        experiment.setReplaceEligibilityTraces(false);
         experiment.setEligibilityTraceLength(-1); //Se calcula su longitud dinámicamente
         experiment.setGamma(1);
         experiment.setExplorationRateToFixed(0);
@@ -122,8 +123,7 @@ class NTupleBasicLinear
         return new TDLambdaLearning(
                 nTupleSystem,
                 afterState,
-                (getAlpha() != null) ? getAlpha()[0] : null,
-                getLambda(), getEligibilityTraceLength(),
+                (getAlpha() != null) ? getAlpha()[0] : null, getLambda(), getEligibilityTraceLength(), isReplaceEligibilityTraces(),
                 getGamma(),
                 getConcurrencyInLayer(),
                 false

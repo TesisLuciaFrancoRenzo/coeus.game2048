@@ -79,6 +79,7 @@ class EncogNTupleLinearWithBiasSimplified_512
         experiment.setLearningRateAdaptationToFixed();
 
         experiment.setLambda(0.5);
+        experiment.setReplaceEligibilityTraces(false);
         experiment.setGamma(1);
         experiment.setExplorationRateToFixed(0);
         experiment.setGamesToPlay(12_000);
@@ -126,7 +127,16 @@ class EncogNTupleLinearWithBiasSimplified_512
     TDLambdaLearning instanceOfTdLearningImplementation(
             INeuralNetworkInterface perceptronInterface
     ) {
-        return new TDLambdaLearning(perceptronInterface, afterState, getAlpha(), getLambda(), getGamma(), getConcurrencyInLayer(), false);
+        return new TDLambdaLearning(
+                perceptronInterface,
+                afterState,
+                getAlpha(),
+                getLambda(),
+                isReplaceEligibilityTraces(),
+                getGamma(),
+                getConcurrencyInLayer(),
+                false
+        );
     }
 
     @Override

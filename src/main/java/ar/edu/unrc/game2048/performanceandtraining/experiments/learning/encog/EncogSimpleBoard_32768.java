@@ -80,6 +80,7 @@ class EncogSimpleBoard_32768
         experiment.setLearningRateAdaptationToFixed();
         experiment.setConcurrencyInComputeBestPossibleAction(true);
         experiment.setLambda(0.4);
+        experiment.setReplaceEligibilityTraces(false);
         experiment.setGamma(1);
         experiment.setExplorationRateToFixed(0);
         experiment.setGamesToPlay(10_000);
@@ -126,8 +127,7 @@ class EncogSimpleBoard_32768
     ) {
         return new TDLambdaLearning(perceptronInterface,
                 afterState,
-                getAlpha(),
-                getLambda(),
+                getAlpha(), getLambda(), isReplaceEligibilityTraces(),
                 getGamma(),
                 getConcurrencyInLayer(),
                 false

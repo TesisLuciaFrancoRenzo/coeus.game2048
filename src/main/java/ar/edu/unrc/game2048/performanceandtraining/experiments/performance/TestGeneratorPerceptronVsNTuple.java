@@ -79,8 +79,8 @@ class TestGeneratorPerceptronVsNTuple {
         int     saveEvery              = 1_000;
         int     saveBackupEvery        = 300;
         int     tileToWinForStatistics = 512;
-        boolean resetTracesTest        = true;
-        boolean noResetTracesTest      = false;
+        boolean replaceTraces          = true;
+        boolean accumulatingTraces     = false;
 
         lambdaList.add(0.3d);
         int eligibilityTraceLengthList = -1;
@@ -112,13 +112,11 @@ class TestGeneratorPerceptronVsNTuple {
         for (int i = 0; i < repetitions; i++) {
             runAllConfigs(
                     1,
-                    maxTrainingThreads,
-                    testDirName, i + "_NTupleBasicLinearSimplified_512",
+                    maxTrainingThreads, testDirName, i + "_NTupleBasicLinearSimplified_512",
                     NTupleBasicLinearSimplified_512.class.getConstructor(),
                     null,
                     alphaList,
-                    annealingAlphaList,
-                    lambdaList, eligibilityTraceLengthList,
+                    annealingAlphaList, lambdaList, eligibilityTraceLengthList,
                     gammaList,
                     statisticsOnly,
                     runStatisticsForBackups,
@@ -133,22 +131,17 @@ class TestGeneratorPerceptronVsNTuple {
                     interpolatedExplorationRateInitialValues,
                     interpolatedExplorationRateFinalValues,
                     interpolatedExplorationRateStartInterpolation,
-                    interpolatedExplorationRateFinishInterpolation,
-                    resetTracesTest,
-                    noResetTracesTest,
-                    filePath, new boolean[]{false, false}
+                    interpolatedExplorationRateFinishInterpolation, replaceTraces, accumulatingTraces, filePath, new boolean[]{false, false}
             );
         }
         for (int i = 0; i < repetitions; i++) {
             runAllConfigs(
                     1,
-                    maxTrainingThreads,
-                    testDirName, i + "_EncogNTupleLinearWithBiasSimplified_512",
+                    maxTrainingThreads, testDirName, i + "_EncogNTupleLinearWithBiasSimplified_512",
                     EncogNTupleLinearWithBiasSimplified_512.class.getConstructor(EncogNTupleLinearWithBiasSimplified_512.PARAMETER_TYPE),
                     new Object[]{true},
                     alphaList,
-                    annealingAlphaList,
-                    lambdaList, eligibilityTraceLengthList,
+                    annealingAlphaList, lambdaList, eligibilityTraceLengthList,
                     gammaList,
                     statisticsOnly,
                     runStatisticsForBackups,
@@ -163,10 +156,7 @@ class TestGeneratorPerceptronVsNTuple {
                     interpolatedExplorationRateInitialValues,
                     interpolatedExplorationRateFinalValues,
                     interpolatedExplorationRateStartInterpolation,
-                    interpolatedExplorationRateFinishInterpolation,
-                    resetTracesTest,
-                    noResetTracesTest,
-                    filePath, new boolean[]{true, false}
+                    interpolatedExplorationRateFinishInterpolation, replaceTraces, accumulatingTraces, filePath, new boolean[]{true, false}
             );
         }
         statisticsOnly = true;
@@ -177,13 +167,11 @@ class TestGeneratorPerceptronVsNTuple {
         for (int i = 0; i < repetitions; i++) {
             runAllConfigs(
                     1,
-                    maxTrainingThreads,
-                    testDirName, i + "_NTupleBasicLinearSimplified_512",
+                    maxTrainingThreads, testDirName, i + "_NTupleBasicLinearSimplified_512",
                     NTupleBasicLinearSimplified_512.class.getConstructor(),
                     null,
                     alphaList,
-                    annealingAlphaList,
-                    lambdaList, eligibilityTraceLengthList,
+                    annealingAlphaList, lambdaList, eligibilityTraceLengthList,
                     gammaList,
                     statisticsOnly,
                     runStatisticsForBackups,
@@ -198,22 +186,17 @@ class TestGeneratorPerceptronVsNTuple {
                     interpolatedExplorationRateInitialValues,
                     interpolatedExplorationRateFinalValues,
                     interpolatedExplorationRateStartInterpolation,
-                    interpolatedExplorationRateFinishInterpolation,
-                    resetTracesTest,
-                    noResetTracesTest,
-                    filePath, new boolean[]{false, false}
+                    interpolatedExplorationRateFinishInterpolation, replaceTraces, accumulatingTraces, filePath, new boolean[]{false, false}
             );
         }
         for (int i = 0; i < repetitions; i++) {
             runAllConfigs(
                     1,
-                    maxTrainingThreads,
-                    testDirName, i + "_EncogNTupleLinearWithBiasSimplified_512",
+                    maxTrainingThreads, testDirName, i + "_EncogNTupleLinearWithBiasSimplified_512",
                     EncogNTupleLinearWithBiasSimplified_512.class.getConstructor(EncogNTupleLinearWithBiasSimplified_512.PARAMETER_TYPE),
                     new Object[]{true},
                     alphaList,
-                    annealingAlphaList,
-                    lambdaList, eligibilityTraceLengthList,
+                    annealingAlphaList, lambdaList, eligibilityTraceLengthList,
                     gammaList,
                     statisticsOnly,
                     runStatisticsForBackups,
@@ -228,10 +211,7 @@ class TestGeneratorPerceptronVsNTuple {
                     interpolatedExplorationRateInitialValues,
                     interpolatedExplorationRateFinalValues,
                     interpolatedExplorationRateStartInterpolation,
-                    interpolatedExplorationRateFinishInterpolation,
-                    resetTracesTest,
-                    noResetTracesTest,
-                    filePath, new boolean[]{true, false}
+                    interpolatedExplorationRateFinishInterpolation, replaceTraces, accumulatingTraces, filePath, new boolean[]{true, false}
             );
         }
 

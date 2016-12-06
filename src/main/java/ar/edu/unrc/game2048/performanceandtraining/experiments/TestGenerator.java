@@ -102,13 +102,15 @@ class TestGenerator {
             final Integer explorationRateStartInterpolation,
             final Integer explorationRateFinishInterpolation,
             final String filePath,
-            final boolean[] concurrentLayer
+            final boolean[] concurrentLayer,
+            final boolean replaceEligibilityTraces
     ) {
         experiment.setStatisticsOnly(statisticsOnly);
         experiment.setRunStatisticsForBackups(runStatisticsForBackups);
         experiment.createLogs(createLogs);
         experiment.setLambda(lambda);
         experiment.setEligibilityTraceLength(eligibilityTraceLength);
+        experiment.setReplaceEligibilityTraces(replaceEligibilityTraces);
         experiment.setGamma(gamma);
         double[] alphas = {alpha, alpha};
         experiment.setAlpha(alphas);
@@ -188,8 +190,8 @@ class TestGenerator {
         int       tileToWinForStatistics       = 512;
         boolean[] concurrentLayer              = {false, false};
         int       gamesToPlayPerThreadForStats = 100;
-        boolean   resetTracesTest              = true;
-        boolean   noResetTracesTest            = true;
+        boolean   replacingTraces              = false;
+        boolean   accumulatingTraces           = true;
 
         lambdaList.add(0.3d);
 
@@ -320,8 +322,7 @@ class TestGenerator {
                 classConstructor,
                 classParameters,
                 alphaList,
-                annealingAlphaList,
-                lambdaList, eligibilityTraceLengthList,
+                annealingAlphaList, lambdaList, eligibilityTraceLengthList,
                 gammaList,
                 statisticsOnly,
                 runStatisticsForBackups,
@@ -335,8 +336,7 @@ class TestGenerator {
                 fixedExplorationRate,
                 interpolatedExplorationRateInitialValues,
                 interpolatedExplorationRateFinalValues,
-                interpolatedExplorationRateStartInterpolation,
-                interpolatedExplorationRateFinishInterpolation, resetTracesTest, noResetTracesTest,
+                interpolatedExplorationRateStartInterpolation, interpolatedExplorationRateFinishInterpolation, replacingTraces, accumulatingTraces,
                 filePath,
                 concurrentLayer
         );
@@ -372,8 +372,8 @@ class TestGenerator {
             final List<Double> explorationRateFinalValues,
             final List<Integer> explorationRateStartInterpolation,
             final List<Integer> explorationRateFinishInterpolation,
-            final boolean resetTracesTest,
-            final boolean noResetTracesTest,
+            final boolean replacingTraces,
+            final boolean accumulatingTraces,
             final String filePath,
             final boolean[] concurrentLayer
     ) {
@@ -386,13 +386,12 @@ class TestGenerator {
                         for (int m = 0; m < annealingAlphaList.size(); m++) {
                             if (explorationRateList != null) {
                                 for (int l = 0; l < explorationRateList.size(); l++) {
-                                    if (noResetTracesTest) {
+                                    if (accumulatingTraces) {
                                         number++;
                                         experiments.add(new GeneratorConfig(a,
                                                 classParameters,
                                                 alphaList.get(i),
-                                                annealingAlphaList.get(m),
-                                                lambdaList.get(j), eligibilityTraceLengthList,
+                                                annealingAlphaList.get(m), lambdaList.get(j), eligibilityTraceLengthList,
                                                 gammaList.get(k),
                                                 explorationRateList.get(l),
                                                 null,
@@ -403,13 +402,12 @@ class TestGenerator {
                                                 number
                                         ));
                                     }
-                                    if (explorationRateList.get(l) > 0 && lambdaList.get(j) > 0 && resetTracesTest) {
+                                    if (replacingTraces) {
                                         number++;
                                         experiments.add(new GeneratorConfig(a,
                                                 classParameters,
                                                 alphaList.get(i),
-                                                annealingAlphaList.get(m),
-                                                lambdaList.get(j), eligibilityTraceLengthList,
+                                                annealingAlphaList.get(m), lambdaList.get(j), eligibilityTraceLengthList,
                                                 gammaList.get(k),
                                                 explorationRateList.get(l),
                                                 null,
@@ -426,13 +424,12 @@ class TestGenerator {
                                     for (int o = 0; o < explorationRateFinalValues.size(); o++) {
                                         for (int p = 0; p < explorationRateStartInterpolation.size(); p++) {
                                             for (int q = 0; q < explorationRateFinishInterpolation.size(); q++) {
-                                                if (noResetTracesTest) {
+                                                if (accumulatingTraces) {
                                                     number++;
                                                     experiments.add(new GeneratorConfig(a,
                                                             classParameters,
                                                             alphaList.get(i),
-                                                            annealingAlphaList.get(m),
-                                                            lambdaList.get(j), eligibilityTraceLengthList,
+                                                            annealingAlphaList.get(m), lambdaList.get(j), eligibilityTraceLengthList,
                                                             gammaList.get(k),
                                                             null,
                                                             explorationRateInitialValues.get(n),
@@ -443,13 +440,12 @@ class TestGenerator {
                                                             number
                                                     ));
                                                 }
-                                                if (resetTracesTest) {
+                                                if (replacingTraces) {
                                                     number++;
                                                     experiments.add(new GeneratorConfig(a,
                                                             classParameters,
                                                             alphaList.get(i),
-                                                            annealingAlphaList.get(m),
-                                                            lambdaList.get(j), eligibilityTraceLengthList,
+                                                            annealingAlphaList.get(m), lambdaList.get(j), eligibilityTraceLengthList,
                                                             gammaList.get(k),
                                                             null,
                                                             explorationRateInitialValues.get(n),
@@ -502,9 +498,7 @@ class TestGenerator {
                                          expConfig.getLambda() +
                                          "-gamma_" +
                                          expConfig.getGamma() +
-                                         explorationRateString +
-                                         "-resetTraces_" +
-                                         expConfig.isResetTraces() +
+                                         explorationRateString + "-replaceTraces_" + expConfig.isReplaceTraces() +
                                          File.separator;
                     File newPath = new File(newFilePath);
                     if (!newPath.exists()) {
@@ -521,8 +515,7 @@ class TestGenerator {
                             cloneExperiment,
                             statisticsOnly,
                             runStatisticsForBackups,
-                            createLogs,
-                            expConfig.getLambda(), expConfig.getEligibilityTraceLength(),
+                            createLogs, expConfig.getLambda(), expConfig.getEligibilityTraceLength(),
                             expConfig.getAlpha(),
                             expConfig.getAnnealingAlpha(),
                             expConfig.getGamma(),
@@ -537,8 +530,7 @@ class TestGenerator {
                             expConfig.getExplorationRateFinalValue(),
                             expConfig.getExplorationRateStartInterpolation(),
                             expConfig.getExplorationRateFinishInterpolation(),
-                            newFilePath,
-                            concurrentLayer
+                            newFilePath, concurrentLayer, expConfig.isReplaceTraces()
                     );
                 } catch (ClassCastException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
                     Logger.getLogger(TestGenerator.class.getName()).log(Level.SEVERE, null, ex);

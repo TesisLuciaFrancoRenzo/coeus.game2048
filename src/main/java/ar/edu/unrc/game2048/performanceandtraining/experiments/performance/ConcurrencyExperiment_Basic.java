@@ -336,7 +336,7 @@ class ConcurrencyExperiment_Basic
         return new TDLambdaLearning(perceptronInterface,
                 afterState,
                 getAlpha(),
-                getLambda(),
+                getLambda(), isReplaceEligibilityTraces(),
                 getGamma(),
                 getConcurrencyInLayer(),
                 true
