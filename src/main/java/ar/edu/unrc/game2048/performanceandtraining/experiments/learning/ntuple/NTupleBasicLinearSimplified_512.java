@@ -62,7 +62,7 @@ class NTupleBasicLinearSimplified_512
         double[] alphas = {0.0025, 0.0025};
         experiment.setAlpha(alphas);
         experiment.setLearningRateAdaptationToFixed();
-        experiment.setLambda(0);
+        experiment.setLambda(0.5);
         experiment.setEligibilityTraceLength(-1); //Se calcula su longitud dinámicamente
         experiment.setGamma(1);
         experiment.setExplorationRateToFixed(0);

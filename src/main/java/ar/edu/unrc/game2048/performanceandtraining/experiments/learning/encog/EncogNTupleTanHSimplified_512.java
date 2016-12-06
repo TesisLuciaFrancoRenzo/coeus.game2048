@@ -77,7 +77,7 @@ class EncogNTupleTanHSimplified_512
         experiment.setAlpha(alphas);
         experiment.setLearningRateAdaptationToFixed();
 
-        experiment.setLambda(0);
+        experiment.setLambda(0.5);
         experiment.setGamma(1);
         experiment.setExplorationRateToFixed(0);
         experiment.setGamesToPlay(12_000);

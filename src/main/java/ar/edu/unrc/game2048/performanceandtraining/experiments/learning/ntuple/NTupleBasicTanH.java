@@ -56,7 +56,7 @@ class NTupleBasicTanH
         LearningExperiment experiment   = new NTupleBasicTanH();
         boolean            printHistory = false;
 
-        //        boolean statistics = true;
+        //                boolean statistics = true;
         boolean statistics = false;
 
         double[] alphas = {0.005, 0.005};
