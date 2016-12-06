@@ -75,7 +75,6 @@ class TestGenerator {
      * @param explorationRateFinalValue
      * @param explorationRateStartInterpolation
      * @param explorationRateFinishInterpolation
-     * @param replaceEligibilityTraces
      * @param filePath
      * @param concurrentLayer
      */
@@ -87,6 +86,7 @@ class TestGenerator {
             final boolean runStatisticsForBackups,
             final boolean createLogs,
             final double lambda,
+            final int eligibilityTraceLength,
             final double alpha,
             final int annealingAlpha,
             final double gamma,
@@ -101,7 +101,6 @@ class TestGenerator {
             final Double explorationRateFinalValue,
             final Integer explorationRateStartInterpolation,
             final Integer explorationRateFinishInterpolation,
-            final boolean replaceEligibilityTraces,
             final String filePath,
             final boolean[] concurrentLayer
     ) {
@@ -109,6 +108,7 @@ class TestGenerator {
         experiment.setRunStatisticsForBackups(runStatisticsForBackups);
         experiment.createLogs(createLogs);
         experiment.setLambda(lambda);
+        experiment.setEligibilityTraceLength(eligibilityTraceLength);
         experiment.setGamma(gamma);
         double[] alphas = {alpha, alpha};
         experiment.setAlpha(alphas);
@@ -137,7 +137,7 @@ class TestGenerator {
         experiment.setSimulationsForStatistics(simulationsForStatistics);
         experiment.setExportToExcel(true);
         System.out.println("*=*=*=*=*=*=*=*=*=*=* N" + numberForShow + " Ejecutando " + filePath + " *=*=*=*=*=*=*=*=*=*=*");
-        experiment.start(numberForShow, filePath, 0, true, null);
+        experiment.start(numberForShow, filePath, 0, true, null, false);
     }
 
     /**
@@ -192,6 +192,8 @@ class TestGenerator {
         boolean   noResetTracesTest            = true;
 
         lambdaList.add(0.3d);
+
+        int eligibilityTraceLengthList = -1;
 
         //        annealingAlphaList.add(2_000_000); //Sin annealing
         //        annealingAlphaList.add(400_000);
@@ -313,14 +315,13 @@ class TestGenerator {
             }
         }
 
-        runAllConfigs(repetitions,
-                maxTrainingThreads, experimentDirName,
+        runAllConfigs(repetitions, maxTrainingThreads, experimentDirName,
                 experimentName,
                 classConstructor,
                 classParameters,
                 alphaList,
                 annealingAlphaList,
-                lambdaList,
+                lambdaList, eligibilityTraceLengthList,
                 gammaList,
                 statisticsOnly,
                 runStatisticsForBackups,
@@ -335,8 +336,7 @@ class TestGenerator {
                 interpolatedExplorationRateInitialValues,
                 interpolatedExplorationRateFinalValues,
                 interpolatedExplorationRateStartInterpolation,
-                interpolatedExplorationRateFinishInterpolation,
-                resetTracesTest, noResetTracesTest,
+                interpolatedExplorationRateFinishInterpolation, resetTracesTest, noResetTracesTest,
                 filePath,
                 concurrentLayer
         );
@@ -356,6 +356,7 @@ class TestGenerator {
             final List<Double> alphaList,
             final List<Integer> annealingAlphaList,
             final List<Double> lambdaList,
+            final int eligibilityTraceLengthList,
             final List<Double> gammaList,
             final boolean statisticsOnly,
             final boolean runStatisticsForBackups,
@@ -391,7 +392,7 @@ class TestGenerator {
                                                 classParameters,
                                                 alphaList.get(i),
                                                 annealingAlphaList.get(m),
-                                                lambdaList.get(j),
+                                                lambdaList.get(j), eligibilityTraceLengthList,
                                                 gammaList.get(k),
                                                 explorationRateList.get(l),
                                                 null,
@@ -408,7 +409,7 @@ class TestGenerator {
                                                 classParameters,
                                                 alphaList.get(i),
                                                 annealingAlphaList.get(m),
-                                                lambdaList.get(j),
+                                                lambdaList.get(j), eligibilityTraceLengthList,
                                                 gammaList.get(k),
                                                 explorationRateList.get(l),
                                                 null,
@@ -431,7 +432,7 @@ class TestGenerator {
                                                             classParameters,
                                                             alphaList.get(i),
                                                             annealingAlphaList.get(m),
-                                                            lambdaList.get(j),
+                                                            lambdaList.get(j), eligibilityTraceLengthList,
                                                             gammaList.get(k),
                                                             null,
                                                             explorationRateInitialValues.get(n),
@@ -448,7 +449,7 @@ class TestGenerator {
                                                             classParameters,
                                                             alphaList.get(i),
                                                             annealingAlphaList.get(m),
-                                                            lambdaList.get(j),
+                                                            lambdaList.get(j), eligibilityTraceLengthList,
                                                             gammaList.get(k),
                                                             null,
                                                             explorationRateInitialValues.get(n),
@@ -521,7 +522,7 @@ class TestGenerator {
                             statisticsOnly,
                             runStatisticsForBackups,
                             createLogs,
-                            expConfig.getLambda(),
+                            expConfig.getLambda(), expConfig.getEligibilityTraceLength(),
                             expConfig.getAlpha(),
                             expConfig.getAnnealingAlpha(),
                             expConfig.getGamma(),
@@ -536,7 +537,6 @@ class TestGenerator {
                             expConfig.getExplorationRateFinalValue(),
                             expConfig.getExplorationRateStartInterpolation(),
                             expConfig.getExplorationRateFinishInterpolation(),
-                            expConfig.isResetTraces(),
                             newFilePath,
                             concurrentLayer
                     );

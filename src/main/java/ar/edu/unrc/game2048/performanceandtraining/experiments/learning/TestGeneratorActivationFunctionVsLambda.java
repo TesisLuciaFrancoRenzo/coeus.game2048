@@ -80,7 +80,7 @@ class TestGeneratorActivationFunctionVsLambda {
         experiment.setSimulationsForStatistics(simulationsForStatistics);
         experiment.setExportToExcel(true);
         System.out.println("*=*=*=*=*=*=*=*=*=*=* N" + numberForShow + " Ejecutando " + filePath + " *=*=*=*=*=*=*=*=*=*=*");
-        experiment.start(numberForShow, filePath, 0, true, null);
+        experiment.start(numberForShow, filePath, 0, true, null, false);
     }
 
     /**
@@ -139,6 +139,8 @@ class TestGeneratorActivationFunctionVsLambda {
         lambdaList.add(0.9d);
         lambdaList.add(1d);
 
+        int eligibilityTraceLengthList = -1;
+
         alphaList.add(0.0025d);
         annealingAlphaList.add(NO_ANNEALING); //Sin annealing
 
@@ -165,12 +167,11 @@ class TestGeneratorActivationFunctionVsLambda {
 
         runAllConfigs(
                 repetitions,
-                maxTrainingThreads,
-                testDirName, "NTupleBasicLinearSimplified_512", NTupleBasicLinearSimplified_512.class.getConstructor(),
+                maxTrainingThreads, testDirName, "NTupleBasicLinearSimplified_512", NTupleBasicLinearSimplified_512.class.getConstructor(),
                 null,
                 alphaList,
                 annealingAlphaList,
-                lambdaList,
+                lambdaList, eligibilityTraceLengthList,
                 gammaList,
                 statisticsOnly,
                 runStatisticsForBackups,
@@ -193,12 +194,11 @@ class TestGeneratorActivationFunctionVsLambda {
         );
         runAllConfigs(
                 repetitions,
-                maxTrainingThreads,
-                testDirName, "NTupleBasicTanHSimplified_512", NTupleBasicTanHSimplified_512.class.getConstructor(),
+                maxTrainingThreads, testDirName, "NTupleBasicTanHSimplified_512", NTupleBasicTanHSimplified_512.class.getConstructor(),
                 null,
                 alphaList,
                 annealingAlphaList,
-                lambdaList,
+                lambdaList, eligibilityTraceLengthList,
                 gammaList,
                 statisticsOnly,
                 runStatisticsForBackups,
@@ -227,12 +227,11 @@ class TestGeneratorActivationFunctionVsLambda {
 
         runAllConfigs(
                 repetitions,
-                maxTrainingThreads,
-                testDirName, "NTupleBasicLinearSimplified_512", NTupleBasicLinearSimplified_512.class.getConstructor(),
+                maxTrainingThreads, testDirName, "NTupleBasicLinearSimplified_512", NTupleBasicLinearSimplified_512.class.getConstructor(),
                 null,
                 alphaList,
                 annealingAlphaList,
-                lambdaList,
+                lambdaList, eligibilityTraceLengthList,
                 gammaList,
                 statisticsOnly,
                 runStatisticsForBackups,
@@ -255,12 +254,11 @@ class TestGeneratorActivationFunctionVsLambda {
         );
         runAllConfigs(
                 repetitions,
-                maxTrainingThreads,
-                testDirName, "NTupleBasicTanHSimplified_512", NTupleBasicTanHSimplified_512.class.getConstructor(),
+                maxTrainingThreads, testDirName, "NTupleBasicTanHSimplified_512", NTupleBasicTanHSimplified_512.class.getConstructor(),
                 null,
                 alphaList,
                 annealingAlphaList,
-                lambdaList,
+                lambdaList, eligibilityTraceLengthList,
                 gammaList,
                 statisticsOnly,
                 runStatisticsForBackups,

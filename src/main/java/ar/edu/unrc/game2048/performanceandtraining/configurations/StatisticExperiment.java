@@ -499,7 +499,8 @@ class StatisticExperiment<NeuralNetworkClass> {
     void processFile(
             String fileToProcess,
             int delayPerMove,
-            boolean createNeuralNetworkFile
+            boolean createNeuralNetworkFile,
+            boolean printHistory
     )
             throws Exception {
 
@@ -546,8 +547,7 @@ class StatisticExperiment<NeuralNetworkClass> {
 
                 Game2048<NeuralNetworkClass> game = new Game2048<>(tempPerceptronConfiguration,
                         tempNTupleConfiguration,
-                        tileToWinForStatistics,
-                        delayPerMove
+                        tileToWinForStatistics, delayPerMove, printHistory
                 );
 
                 neuralNetworkInterfaces.add(neuralNetworkInterfaceClone);
@@ -699,7 +699,8 @@ class StatisticExperiment<NeuralNetworkClass> {
     void run(
             String experimentPath,
             int delayPerMove,
-            boolean createNeuralNetworkFile
+            boolean createNeuralNetworkFile,
+            boolean printHistory
     )
             throws Exception {
         String dirPath = experimentPath + learningExperiment.getNeuralNetworkInterfaceFor2048().getLibName() +
@@ -716,7 +717,7 @@ class StatisticExperiment<NeuralNetworkClass> {
         //hacemos estadisticas del perceptron random, si es necesario
         Map<File, StatisticForCalc> resultsRandom = new HashMap<>();
         System.out.print("Starting " + experimentName + LearningExperiment.RANDOM + " Statistics... ");
-        processFile(dirPath + experimentName + LearningExperiment.RANDOM, delayPerMove, createNeuralNetworkFile);
+        processFile(dirPath + experimentName + LearningExperiment.RANDOM, delayPerMove, createNeuralNetworkFile, printHistory);
         resultsRandom.put(randomPerceptronFile, getTileStatistics());
 
         //calculamos las estadisticas de los backup si es necesario
@@ -737,13 +738,13 @@ class StatisticExperiment<NeuralNetworkClass> {
             if (runStatisticsForBackups) {
                 if (f.getName().matches(".*_BackupN-.*\\.ser")) {
                     System.out.print("Starting " + f.getName() + " Statistics... ");
-                    processFile(dirPath + f.getName().replaceAll("\\.ser$", ""), delayPerMove, createNeuralNetworkFile);
+                    processFile(dirPath + f.getName().replaceAll("\\.ser$", ""), delayPerMove, createNeuralNetworkFile, printHistory);
                     resultsPerFile.put(f, getTileStatistics());
                     backupFiles.add(f);
                 }
             } else if (f.getName().matches(".*_trained\\.ser")) {
                 System.out.print("Starting " + f.getName() + " Statistics... ");
-                processFile(dirPath + f.getName().replaceAll("\\.ser$", ""), delayPerMove, createNeuralNetworkFile);
+                processFile(dirPath + f.getName().replaceAll("\\.ser$", ""), delayPerMove, createNeuralNetworkFile, printHistory);
                 resultsPerFile.put(f, getTileStatistics());
                 backupFiles.add(f);
             }
@@ -814,7 +815,8 @@ class StatisticExperiment<NeuralNetworkClass> {
     void start(
             String experimentPath,
             int delayPerMove,
-            boolean createPerceptronFile
+            boolean createPerceptronFile,
+            boolean printHistory
     ) {
         File experimentPathFile = new File(experimentPath);
         if (experimentPathFile.exists() && !experimentPathFile.isDirectory()) {
@@ -830,7 +832,7 @@ class StatisticExperiment<NeuralNetworkClass> {
                 experimentName = learningExperiment.getExperimentName();
             }
             initializeStatistics();
-            run(experimentPath, delayPerMove, createPerceptronFile);
+            run(experimentPath, delayPerMove, createPerceptronFile, printHistory);
         } catch (Exception ex) {
             Logger.getLogger(StatisticExperiment.class.getName()).log(Level.SEVERE, null, ex);
         }

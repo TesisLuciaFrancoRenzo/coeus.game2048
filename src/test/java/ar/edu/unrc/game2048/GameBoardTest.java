@@ -76,7 +76,7 @@ class GameBoardTest {
     @Before
     public
     void setUp() {
-        game = new Game2048(nTupleConfiguration, null, 2_048, 0);
+        game = new Game2048(nTupleConfiguration, null, 2_048, 0, false);
     }
 
     /**

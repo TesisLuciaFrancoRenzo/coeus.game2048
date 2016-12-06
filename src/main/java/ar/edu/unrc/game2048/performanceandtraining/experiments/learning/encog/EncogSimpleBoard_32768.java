@@ -67,7 +67,8 @@ class EncogSimpleBoard_32768
         } else {
             filePath = args[0];
         }
-        LearningExperiment experiment = new EncogSimpleBoard_32768(false);
+        LearningExperiment experiment   = new EncogSimpleBoard_32768(false);
+        boolean            printHistory = false;
 
         //        boolean statistics = true;
         boolean statistics = false;
@@ -101,7 +102,7 @@ class EncogSimpleBoard_32768
             experiment.setSimulationsForStatistics(0);
         }
         experiment.setExportToExcel(true);
-        experiment.start(-1, filePath, 0, true, null);
+        experiment.start(-1, filePath, 0, true, null, printHistory);
 
         Toolkit.getDefaultToolkit().beep();
     }

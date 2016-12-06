@@ -49,7 +49,9 @@ class GreedyBasic
         } else {
             filePath = args[0];
         }
-        LearningExperiment experiment = new GreedyBasic();
+        LearningExperiment experiment   = new GreedyBasic();
+        boolean            printHistory = false;
+
         experiment.setStatisticsOnly(true);
         experiment.createLogs(false);
         experiment.setSaveEvery(100_000_000);
@@ -59,7 +61,7 @@ class GreedyBasic
         experiment.setSimulationsForStatistics(8);
         experiment.setRunStatisticsForBackups(false);
         experiment.setExportToExcel(false);
-        experiment.start(-1, filePath, 0, true, null);
+        experiment.start(-1, filePath, 0, true, null, printHistory);
 
         Toolkit.getDefaultToolkit().beep();
     }

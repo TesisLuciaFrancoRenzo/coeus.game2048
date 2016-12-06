@@ -143,6 +143,11 @@ class GameBoard<NeuralNetworkClass>
             Integer tilePos = availableSpaceList.get(index);
             int     value   = random() < 0.9 ? 1 : 2;
             tiles[tilePos] = tileContainer.getTile(value);
+            if (game.printHistory) {
+                //                System.out.println("newRandomTile=" + tilePos + "\t" + value);
+                assert game.historyLog != null;
+                game.historyLog.append("NT=").append(tilePos).append("\t").append(value).append("\n");
+            }
         }
         updateInternalState(updateInputs);
     }

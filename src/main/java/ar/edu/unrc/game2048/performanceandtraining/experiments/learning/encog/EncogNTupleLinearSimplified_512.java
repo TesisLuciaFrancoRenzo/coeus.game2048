@@ -68,7 +68,8 @@ class EncogNTupleLinearSimplified_512
         } else {
             filePath = args[0];
         }
-        LearningExperiment experiment = new EncogNTupleLinearSimplified_512(false);
+        LearningExperiment experiment   = new EncogNTupleLinearSimplified_512(false);
+        boolean            printHistory = false;
 
         //        boolean statistics = true;
         boolean statistics = false;
@@ -80,12 +81,12 @@ class EncogNTupleLinearSimplified_512
         experiment.setLambda(0);
         experiment.setGamma(1);
         experiment.setExplorationRateToFixed(0);
-        experiment.setGamesToPlay(20_000);
-        experiment.setSaveEvery(500);
-        experiment.setSaveBackupEvery(500);
+        experiment.setGamesToPlay(12_000);
+        experiment.setSaveEvery(1_000);
+        experiment.setSaveBackupEvery(300);
         experiment.setInitializePerceptronRandomized(false);
         experiment.setConcurrencyInComputeBestPossibleAction(true);
-        boolean[] concurrentLayer = {true, false};
+        boolean[] concurrentLayer = {false, false};
         experiment.setConcurrencyInLayer(concurrentLayer);
 
         experiment.createLogs(false);
@@ -94,7 +95,7 @@ class EncogNTupleLinearSimplified_512
         if (statistics) {
             experiment.setStatisticsOnly(true);
             experiment.setRunStatisticsForBackups(true);
-            experiment.setGamesToPlayPerThreadForStatistics(1_000);
+            experiment.setGamesToPlayPerThreadForStatistics(100);
             experiment.setSimulationsForStatistics(8);
         } else {
             experiment.setStatisticsOnly(false);
@@ -103,7 +104,7 @@ class EncogNTupleLinearSimplified_512
             experiment.setSimulationsForStatistics(0);
         }
         experiment.setExportToExcel(true);
-        experiment.start(-1, filePath, 0, true, null);
+        experiment.start(-1, filePath, 0, true, null, printHistory);
 
         Toolkit.getDefaultToolkit().beep();
     }
@@ -125,14 +126,7 @@ class EncogNTupleLinearSimplified_512
     TDLambdaLearning instanceOfTdLearningImplementation(
             INeuralNetworkInterface perceptronInterface
     ) {
-        return new TDLambdaLearning(perceptronInterface,
-                afterState,
-                getAlpha(),
-                getLambda(),
-                getGamma(),
-                getConcurrencyInLayer(),
-                false
-        );
+        return new TDLambdaLearning(perceptronInterface, afterState, getAlpha(), getLambda(), getGamma(), getConcurrencyInLayer(), false);
     }
 
     @Override

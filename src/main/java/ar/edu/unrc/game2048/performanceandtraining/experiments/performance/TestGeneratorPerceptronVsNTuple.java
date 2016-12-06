@@ -18,7 +18,6 @@
  */
 package ar.edu.unrc.game2048.performanceandtraining.experiments.performance;
 
-import ar.edu.unrc.game2048.performanceandtraining.configurations.LearningExperiment;
 import ar.edu.unrc.game2048.performanceandtraining.experiments.learning.encog.EncogNTupleLinearWithBiasSimplified_512;
 import ar.edu.unrc.game2048.performanceandtraining.experiments.learning.ntuple.NTupleBasicLinearSimplified_512;
 
@@ -39,49 +38,6 @@ import static ar.edu.unrc.game2048.performanceandtraining.experiments.TestGenera
  */
 public
 class TestGeneratorPerceptronVsNTuple {
-
-    private static
-    void configAndExecute(
-            int numberForShow,
-            LearningExperiment experiment,
-            boolean statisticsOnly,
-            boolean runStatisticsForBackups,
-            boolean createLogs,
-            double lambda,
-            double alpha,
-            double gamma,
-            int gamesToPlay,
-            int saveEvery,
-            int saveBackupEvery,
-            int gamesToPlayPerThreadForStatistics,
-            int simulationsForStatistics,
-            double explorationRate,
-            boolean replaceEligibilityTraces,
-            String filePath
-    ) {
-        experiment.setStatisticsOnly(statisticsOnly);
-        experiment.setRunStatisticsForBackups(runStatisticsForBackups);
-        experiment.createLogs(createLogs);
-        experiment.setLambda(lambda);
-        experiment.setGamma(gamma);
-        double[] alphas = {alpha, alpha};
-        experiment.setAlpha(alphas);
-        experiment.setExplorationRateToFixed(explorationRate);
-        experiment.setInitializePerceptronRandomized(false);
-        experiment.setConcurrencyInComputeBestPossibleAction(true);
-        boolean[] concurrentLayer = {false, false};
-        experiment.setConcurrencyInLayer(concurrentLayer);
-        experiment.setTileToWinForStatistics(512);
-        experiment.setLearningRateAdaptationToFixed();
-        experiment.setGamesToPlay(gamesToPlay);
-        experiment.setSaveEvery(saveEvery);
-        experiment.setSaveBackupEvery(saveBackupEvery);
-        experiment.setGamesToPlayPerThreadForStatistics(gamesToPlayPerThreadForStatistics);
-        experiment.setSimulationsForStatistics(simulationsForStatistics);
-        experiment.setExportToExcel(true);
-        System.out.println("*=*=*=*=*=*=*=*=*=*=* N" + numberForShow + " Ejecutando " + filePath + " *=*=*=*=*=*=*=*=*=*=*");
-        experiment.start(numberForShow, filePath, 0, true, null);
-    }
 
     /**
      * @param ex error a tratar.
@@ -127,6 +83,8 @@ class TestGeneratorPerceptronVsNTuple {
         boolean noResetTracesTest      = false;
 
         lambdaList.add(0.3d);
+        int eligibilityTraceLengthList = -1;
+
         alphaList.add(0.0025d);
         annealingAlphaList.add(NO_ANNEALING); //Sin annealing
 
@@ -160,7 +118,7 @@ class TestGeneratorPerceptronVsNTuple {
                     null,
                     alphaList,
                     annealingAlphaList,
-                    lambdaList,
+                    lambdaList, eligibilityTraceLengthList,
                     gammaList,
                     statisticsOnly,
                     runStatisticsForBackups,
@@ -190,7 +148,7 @@ class TestGeneratorPerceptronVsNTuple {
                     new Object[]{true},
                     alphaList,
                     annealingAlphaList,
-                    lambdaList,
+                    lambdaList, eligibilityTraceLengthList,
                     gammaList,
                     statisticsOnly,
                     runStatisticsForBackups,
@@ -225,7 +183,7 @@ class TestGeneratorPerceptronVsNTuple {
                     null,
                     alphaList,
                     annealingAlphaList,
-                    lambdaList,
+                    lambdaList, eligibilityTraceLengthList,
                     gammaList,
                     statisticsOnly,
                     runStatisticsForBackups,
@@ -255,7 +213,7 @@ class TestGeneratorPerceptronVsNTuple {
                     new Object[]{true},
                     alphaList,
                     annealingAlphaList,
-                    lambdaList,
+                    lambdaList, eligibilityTraceLengthList,
                     gammaList,
                     statisticsOnly,
                     runStatisticsForBackups,

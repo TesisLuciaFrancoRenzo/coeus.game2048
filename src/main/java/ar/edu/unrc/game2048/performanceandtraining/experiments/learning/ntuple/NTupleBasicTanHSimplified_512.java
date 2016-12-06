@@ -54,6 +54,7 @@ class NTupleBasicTanHSimplified_512
             filePath = args[0];
         }
         LearningExperiment experiment = new NTupleBasicTanHSimplified_512();
+        boolean            printHistory = false;
 
         //        boolean statistics = true;
         boolean statistics = false;
@@ -61,8 +62,8 @@ class NTupleBasicTanHSimplified_512
         double[] alphas = {0.0025, 0.0025};
         experiment.setAlpha(alphas);
         experiment.setLearningRateAdaptationToFixed();
-
-        experiment.setLambda(0.3);
+        experiment.setLambda(0.5);
+        experiment.setEligibilityTraceLength(-1); //Se calcula su longitud dinámicamente
         experiment.setGamma(1);
         experiment.setExplorationRateToFixed(0);
         experiment.setGamesToPlay(12_000);
@@ -88,7 +89,7 @@ class NTupleBasicTanHSimplified_512
             experiment.setSimulationsForStatistics(0);
         }
         experiment.setExportToExcel(true);
-        experiment.start(-1, filePath, 0, true, null);
+        experiment.start(-1, filePath, 0, true, null, printHistory);
 
         Toolkit.getDefaultToolkit().beep();
     }
@@ -118,11 +119,10 @@ class NTupleBasicTanHSimplified_512
     TDLambdaLearning instanceOfTdLearningImplementation(
             NTupleSystem nTupleSystem
     ) {
-        return new TDLambdaLearning(
-                nTupleSystem,
+        return new TDLambdaLearning(nTupleSystem,
                 afterState,
                 (getAlpha() != null) ? getAlpha()[0] : null,
-                getLambda(),
+                getLambda(), getEligibilityTraceLength(),
                 getGamma(),
                 getConcurrencyInLayer(),
                 false

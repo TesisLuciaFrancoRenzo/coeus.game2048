@@ -69,7 +69,7 @@ class PNTuple512Test {
         ConfigPerceptronNTupleTanHSimplified_512<BasicNetwork> nTupleConfiguration = new ConfigPerceptronNTupleTanHSimplified_512<>(true);
         TileContainer                                          tileContainer       = new TileContainer(nTupleConfiguration.getMaxTile());
 
-        Game2048<BasicNetwork>  game  = new Game2048<>(nTupleConfiguration, null, (int) Math.pow(2, nTupleConfiguration.getMaxTile()), 0);
+        Game2048<BasicNetwork>  game  = new Game2048<>(nTupleConfiguration, null, (int) Math.pow(2, nTupleConfiguration.getMaxTile()), 0, false);
         GameBoard<BasicNetwork> board = new GameBoard<>(game, tileContainer);
         board.setTiles(new Tile[]{tileContainer.getTile(0), tileContainer.getTile(4), tileContainer.
                 getTile(0), tileContainer.getTile(9), tileContainer.getTile(4), tileContainer.getTile(6), tileContainer.
@@ -82,13 +82,14 @@ class PNTuple512Test {
 
         //----------------------
         ConfigNTupleBasicTanHSimplified_512 nTupleConfiguration2 = new ConfigNTupleBasicTanHSimplified_512();
-        Game2048<BasicNetwork>    game2                = new Game2048<>(
+        Game2048<BasicNetwork>              game2                = new Game2048<>(
                 null,
                 nTupleConfiguration2,
                 (int) Math.pow(2, nTupleConfiguration2.getMaxTile()),
-                0
+                0,
+                false
         );
-        GameBoard<BasicNetwork>   board2               = new GameBoard<>(game2, tileContainer);
+        GameBoard<BasicNetwork>             board2               = new GameBoard<>(game2, tileContainer);
         board2.setTiles(new Tile[]{tileContainer.getTile(0), tileContainer.getTile(4), tileContainer.
                 getTile(0), tileContainer.getTile(9), tileContainer.getTile(4), tileContainer.getTile(6), tileContainer.
                 getTile(4), tileContainer.getTile(4), tileContainer.getTile(2), tileContainer.getTile(4), tileContainer.

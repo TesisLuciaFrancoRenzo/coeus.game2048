@@ -65,6 +65,8 @@ class LearningExperiment<NeuralNetworkClass> {
      */
     public static final String ERROR_DUMP = "ERROR_DUMP";
 
+    public static final String HISTORY_DUMP = "HISTORY_DUMP";
+
     /**
      * Nombre del archivo con los datos de la ultima red neuronal guardada en disco.
      */
@@ -93,6 +95,7 @@ class LearningExperiment<NeuralNetworkClass> {
     private boolean concurrencyInComputeBestPossibleAction = false;
     private boolean[] concurrencyInLayer;
     private long elapsedTime = 0;
+    private int  eligibilityTraceLength = -1;
     private String                     experimentName;
     private EExplorationRateAlgorithms explorationRate;
     private double                     explorationRateFinalValue;
@@ -111,9 +114,9 @@ class LearningExperiment<NeuralNetworkClass> {
     private boolean logsActivated = false;
     private INeuralNetworkInterfaceFor2048<NeuralNetworkClass> neuralNetworkInterfaceFor2048;
     private String                                             neuralNetworkName;
-    private boolean runStatisticsForBackups  = false;
-    private int     saveBackupEvery          = 0;
-    private int     saveEvery                = 0;
+    private boolean runStatisticsForBackups = false;
+    private int     saveBackupEvery         = 0;
+    private int     saveEvery               = 0;
     private int simulationsForStatistics;
     private boolean statisticsOnly         = false;
     private int     tileToWinForStatistics = 2_048;
@@ -230,6 +233,16 @@ class LearningExperiment<NeuralNetworkClass> {
         this.concurrencyInLayer = concurrencyInLayer;
     }
 
+    public
+    int getEligibilityTraceLength() {
+        return eligibilityTraceLength;
+    }
+
+    public
+    void setEligibilityTraceLength(int eligibilityTraceLength) {
+        this.eligibilityTraceLength = eligibilityTraceLength;
+    }
+
     /**
      * @return Nombre del experimento.
      */
@@ -239,18 +252,11 @@ class LearningExperiment<NeuralNetworkClass> {
     }
 
     /**
-     * Establece el nombre del experimento basado en el nombre de la clase {@code experimentClass}.
-     *
-     * @param experimentClass clase de la cual extraer el nombre del experimento.
+     * @param experimentName nombre del experimento.
      */
     public
-    void setExperimentName(Class experimentClass) {
-        String className = experimentClass.getName();
-        int    lastDot   = className.lastIndexOf('.');
-        if (lastDot != -1) {
-            className = className.substring(lastDot + 1);
-        }
-        experimentName = className;
+    void setExperimentName(String experimentName) {
+        this.experimentName = experimentName;
     }
 
     /**
@@ -553,7 +559,8 @@ class LearningExperiment<NeuralNetworkClass> {
             String experimentPath,
             int delayPerMove,
             boolean createPerceptronFile,
-            String errorDumpDir
+            String errorDumpDir,
+            boolean printHistory
     ) {
         if (saveEvery == 0) {
             throw new IllegalArgumentException("se debe configurar cada cuanto guardar el perceptron mediante la variable saveEvery");
@@ -568,6 +575,12 @@ class LearningExperiment<NeuralNetworkClass> {
             bugFilePath = dirPath + ERROR_DUMP + ".txt";
         } else {
             bugFilePath = errorDumpDir + ERROR_DUMP + ".txt";
+        }
+        File historyFile;
+        if (printHistory) {
+            historyFile = new File(dirPath + HISTORY_DUMP + ".txt");
+        } else {
+            historyFile = null;
         }
         try {
             Date now = new Date();
@@ -658,21 +671,28 @@ class LearningExperiment<NeuralNetworkClass> {
             File logFile = new File(filePath + '_' + DATE_FILE_FORMATTER.format(now) + "_LOG" + ".txt");
 
             //creamos el juego
-            Game2048<NeuralNetworkClass> game = new Game2048<>(
-                    neuralNetworkInterfaceFor2048.getPerceptronConfiguration(),
+            Game2048<NeuralNetworkClass> game = new Game2048<>(neuralNetworkInterfaceFor2048.getPerceptronConfiguration(),
                     neuralNetworkInterfaceFor2048.getNTupleConfiguration(),
-                    tileToWinForTraining,
-                    delayPerMove
+                    tileToWinForTraining, delayPerMove, printHistory
             );
 
             if (!statisticsOnly) {
                 //comenzamos a entrenar y guardar estadisticas en el archivo de log
                 if (logsActivated) {
                     try (PrintStream printStream = new PrintStream(logFile, "UTF-8")) {
-                        training(numberForShow, game, printStream, randomPerceptronFile, perceptronFile, lastSaveDataFile, filePath, zeroNumbers);
+                        training(numberForShow,
+                                game,
+                                printStream,
+                                randomPerceptronFile,
+                                perceptronFile,
+                                lastSaveDataFile,
+                                filePath,
+                                zeroNumbers,
+                                historyFile
+                        );
                     }
                 } else {
-                    training(numberForShow, game, null, randomPerceptronFile, perceptronFile, lastSaveDataFile, filePath, zeroNumbers);
+                    training(numberForShow, game, null, randomPerceptronFile, perceptronFile, lastSaveDataFile, filePath, zeroNumbers, historyFile);
                 }
                 if (learningAlgorithm.canCollectStatistics()) {
                     avgBestPossibleActionTimes = 0d;
@@ -712,7 +732,7 @@ class LearningExperiment<NeuralNetworkClass> {
                     }
                 };
                 statisticExperiment.setFileName(experimentName);
-                statisticExperiment.start(experimentPath, delayPerMove, createPerceptronFile);
+                statisticExperiment.start(experimentPath, delayPerMove, createPerceptronFile, printHistory);
             }
         } catch (Exception ex) {
             printErrorInFile(ex, new File(bugFilePath));
@@ -799,11 +819,18 @@ class LearningExperiment<NeuralNetworkClass> {
     }
 
     /**
-     * @param experimentName nombre del experimento.
+     * Establece el nombre del experimento basado en el nombre de la clase {@code experimentClass}.
+     *
+     * @param experimentClass clase de la cual extraer el nombre del experimento.
      */
     public
-    void setExperimentName(String experimentName) {
-        this.experimentName = experimentName;
+    void setExperimentName(Class experimentClass) {
+        String className = experimentClass.getName();
+        int    lastDot   = className.lastIndexOf('.');
+        if (lastDot != -1) {
+            className = className.substring(lastDot + 1);
+        }
+        experimentName = className;
     }
 
     /**
@@ -905,7 +932,8 @@ class LearningExperiment<NeuralNetworkClass> {
             String experimentPath,
             int delayPerMove,
             boolean createPerceptronFile,
-            String errorDumpDir
+            String errorDumpDir,
+            boolean printHistory
     ) {
         File experimentPathFile = new File(experimentPath);
         if (experimentPathFile.exists() && !experimentPathFile.isDirectory()) {
@@ -915,7 +943,7 @@ class LearningExperiment<NeuralNetworkClass> {
             experimentPathFile.mkdirs();
         }
         initialize();
-        runExperiment(numberForShow, experimentPath, delayPerMove, createPerceptronFile, errorDumpDir);
+        runExperiment(numberForShow, experimentPath, delayPerMove, createPerceptronFile, errorDumpDir, printHistory);
     }
 
     /**
@@ -940,7 +968,8 @@ class LearningExperiment<NeuralNetworkClass> {
             File perceptronFile,
             File lastSaveDataFile,
             String filePath,
-            int zeroNumbers
+            int zeroNumbers,
+            File historyFile
     )
             throws Exception {
         File perceptronFileBackup;
@@ -978,6 +1007,14 @@ class LearningExperiment<NeuralNetworkClass> {
             long start = System.nanoTime();
             learningAlgorithm.solveAndTrainOnce(game, i);
             elapsedTime += System.nanoTime() - start;
+            if (game.isPrintHistory()) {
+                try (BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(historyFile, true), "UTF-8"))) {
+                    out.append("\n========== NEW GAME (" + i + ")==========\n");
+                    out.append(game.getHistoryLog() + "\n");
+                    out.append("score=" + game.getScore() + "\n");
+                    out.append("turn=" + game.getLastTurn() + "\n");
+                }
+            }
             if (learningAlgorithm.canCollectStatistics()) {
                 double avg = 0;
                 for (Long sample : learningAlgorithm.getStatisticsBestPossibleActionTimes()) {

@@ -81,7 +81,7 @@ class TestGeneratorNormalization {
         experiment.setSimulationsForStatistics(simulationsForStatistics);
         experiment.setExportToExcel(true);
         System.out.println("*=*=*=*=*=*=*=*=*=*=* N" + numberForShow + " Ejecutando " + filePath + " *=*=*=*=*=*=*=*=*=*=*");
-        experiment.start(numberForShow, filePath, 0, true, null);
+        experiment.start(numberForShow, filePath, 0, true, null, false);
     }
 
     /**
@@ -129,6 +129,8 @@ class TestGeneratorNormalization {
         boolean   noResetTracesTest      = true;
 
         lambdaList.add(0.5d);
+        int eligibilityTraceLengthList = -1;
+
         alphaList.add(0.0025d);
         annealingAlphaList.add(NO_ANNEALING); //Sin annealing
         gammaList.add(1d);
@@ -150,7 +152,7 @@ class TestGeneratorNormalization {
         runAll(
                 experimentDirName,
                 filePath,
-                lambdaList,
+                lambdaList, eligibilityTraceLengthList,
                 alphaList,
                 annealingAlphaList,
                 gammaList,
@@ -186,7 +188,7 @@ class TestGeneratorNormalization {
         runAll(
                 experimentDirName,
                 filePath,
-                lambdaList,
+                lambdaList, eligibilityTraceLengthList,
                 alphaList,
                 annealingAlphaList,
                 gammaList,
@@ -220,6 +222,7 @@ class TestGeneratorNormalization {
             final String experimentDirName,
             final String filePath,
             final List<Double> lambdaList,
+            final int eligibilityTraceLengthList,
             final List<Double> alphaList,
             final List<Integer> annealingAlphaList,
             final List<Double> gammaList,
@@ -251,12 +254,11 @@ class TestGeneratorNormalization {
         runAllConfigs(
                 repetitions,
                 maxTrainingThreads,
-                experimentDirName,
-                "NBasicTanH_512_100k", NTupleBasicTanHSimplified_512.class.getConstructor(),
+                experimentDirName, "NBasicTanH_512_100k", NTupleBasicTanHSimplified_512.class.getConstructor(),
                 null,
                 alphaList,
                 annealingAlphaList,
-                lambdaList,
+                lambdaList, eligibilityTraceLengthList,
                 gammaList,
                 statisticsOnly,
                 runStatisticsForBackups,
@@ -284,12 +286,11 @@ class TestGeneratorNormalization {
         runAllConfigs(
                 repetitions,
                 maxTrainingThreads,
-                experimentDirName,
-                "NBasicTanH_512_40k", NTupleBasicTanHSimplified_512.class.getConstructor(),
+                experimentDirName, "NBasicTanH_512_40k", NTupleBasicTanHSimplified_512.class.getConstructor(),
                 null,
                 alphaList,
                 annealingAlphaList,
-                lambdaList,
+                lambdaList, eligibilityTraceLengthList,
                 gammaList,
                 statisticsOnly,
                 runStatisticsForBackups,
@@ -317,12 +318,11 @@ class TestGeneratorNormalization {
         runAllConfigs(
                 repetitions,
                 maxTrainingThreads,
-                experimentDirName,
-                "NBasicTanH_512_20k", NTupleBasicTanHSimplified_512.class.getConstructor(),
+                experimentDirName, "NBasicTanH_512_20k", NTupleBasicTanHSimplified_512.class.getConstructor(),
                 null,
                 alphaList,
                 annealingAlphaList,
-                lambdaList,
+                lambdaList, eligibilityTraceLengthList,
                 gammaList,
                 statisticsOnly,
                 runStatisticsForBackups,
@@ -350,12 +350,11 @@ class TestGeneratorNormalization {
         runAllConfigs(
                 repetitions,
                 maxTrainingThreads,
-                experimentDirName,
-                "NBasicTanH_512_7k", NTupleBasicTanHSimplified_512.class.getConstructor(),
+                experimentDirName, "NBasicTanH_512_7k", NTupleBasicTanHSimplified_512.class.getConstructor(),
                 null,
                 alphaList,
                 annealingAlphaList,
-                lambdaList,
+                lambdaList, eligibilityTraceLengthList,
                 gammaList,
                 statisticsOnly,
                 runStatisticsForBackups,

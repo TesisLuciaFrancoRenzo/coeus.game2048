@@ -53,15 +53,17 @@ class NTupleBasicTanH
         } else {
             filePath = args[0];
         }
-        LearningExperiment experiment = new NTupleBasicTanH();
+        LearningExperiment experiment   = new NTupleBasicTanH();
+        boolean            printHistory = false;
 
-        //                        boolean statistics = true;
+        //        boolean statistics = true;
         boolean statistics = false;
 
         double[] alphas = {0.005, 0.005};
         experiment.setAlpha(alphas);
         experiment.setLearningRateAdaptationToAnnealing(500_000);
         experiment.setLambda(0);
+        experiment.setEligibilityTraceLength(-1); //Se calcula su longitud dinámicamente
         experiment.setGamma(1);
         experiment.setExplorationRateToFixed(0);
         experiment.setGamesToPlay(2_000_000);
@@ -87,7 +89,7 @@ class NTupleBasicTanH
             experiment.setSimulationsForStatistics(0);
         }
         experiment.setExportToExcel(true);
-        experiment.start(-1, filePath, 0, true, null);
+        experiment.start(-1, filePath, 0, true, null, printHistory);
 
         Toolkit.getDefaultToolkit().beep();
     }
@@ -121,7 +123,7 @@ class NTupleBasicTanH
                 nTupleSystem,
                 afterState,
                 (getAlpha() != null) ? getAlpha()[0] : null,
-                getLambda(),
+                getLambda(), getEligibilityTraceLength(),
                 getGamma(),
                 getConcurrencyInLayer(),
                 false

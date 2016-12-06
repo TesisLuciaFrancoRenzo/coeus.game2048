@@ -295,6 +295,7 @@ class ConcurrencyExperiment_Basic
         experiment.setConcurrencyInComputeBestPossibleAction(currentConfig.isConcurrencyInEvaluate());
         experiment.setLearningRateAdaptationToAnnealing(500_000);
         experiment.setLambda(0.7);
+        experiment.setEligibilityTraceLength(-1);
         experiment.setGamma(1);
         experiment.setExplorationRateToFixed(0);
         experiment.setGamesToPlay(GAMES_TO_PLAY);
@@ -307,7 +308,7 @@ class ConcurrencyExperiment_Basic
         experiment.setRunStatisticsForBackups(false);
         experiment.setGamesToPlayPerThreadForStatistics(0);
         experiment.setSimulationsForStatistics(0);
-        experiment.start(-1, filePath, 0, false, filePath);
+        experiment.start(-1, filePath, 0, false, filePath, false);
 
         bestPossibleStats.addSample(experiment.getAvgBestPossibleActionTimes());
         trainingStats.addSample(experiment.getAvgTrainingTimes());

@@ -29,6 +29,7 @@ class GeneratorConfig {
     private final double   alpha;
     private final int      annealingAlpha;
     private final Object[] classParameters;
+    private final int      eligibilityTraceLength;
     private final Double   explorationRate;
     private final Double   explorationRateFinalValue;
     private final Integer  explorationRateFinishInterpolation;
@@ -61,6 +62,7 @@ class GeneratorConfig {
             final double alpha,
             final int annealingAlpha,
             final double lambda,
+            final int eligibilityTraceLength,
             final Double gamma,
             final Double explorationRate,
             final Double explorationRateInitialValue,
@@ -74,6 +76,7 @@ class GeneratorConfig {
         this.alpha = alpha;
         this.annealingAlpha = annealingAlpha;
         this.lambda = lambda;
+        this.eligibilityTraceLength = eligibilityTraceLength;
         this.gamma = gamma;
         this.explorationRate = explorationRate;
         this.explorationRateFinishInterpolation = explorationRateFinishInterpolation;
@@ -107,6 +110,11 @@ class GeneratorConfig {
     public
     Object[] getClassParameters() {
         return classParameters;
+    }
+
+    public
+    int getEligibilityTraceLength() {
+        return eligibilityTraceLength;
     }
 
     /**

@@ -91,7 +91,7 @@ class Game2048Test {
     public
     void testListAllPossibleActions() {
         System.out.println("listAllPossibleActions");
-        game = new Game2048(null, null, 2_048, 0);
+        game = new Game2048(null, null, 2_048, 0, false);
         IStatePerceptron state1;
         IState           state2;
 

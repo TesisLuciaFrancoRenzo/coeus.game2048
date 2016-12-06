@@ -38,7 +38,6 @@ public final
 class Game2048<NeuralNetworkClass>
         extends JPanel
         implements IGame, IProblemToTrain {
-
     private static final Color  BG_COLOR     = new Color(0xbb_ada0);
     private static final String FONT_NAME    = "Arial";
     private static final int    TILES_MARGIN = 16;
@@ -50,6 +49,8 @@ class Game2048<NeuralNetworkClass>
     private final int                                                numberToWin;
     private final boolean                                            repaint;
     private final TileContainer                                      tileContainer;
+    protected     StringBuilder                                      historyLog;
+    protected     boolean                                            printHistory;
     private       GameBoard<NeuralNetworkClass>                      board;
     private       ArrayList<GameBoard<NeuralNetworkClass>>           futurePossibleBoards;
     private       GameBoard<NeuralNetworkClass>                      lastInitialStateForPossibleActions;
@@ -71,9 +72,10 @@ class Game2048<NeuralNetworkClass>
     Game2048(
             NeuralNetworkConfiguration2048<NeuralNetworkClass> perceptronConfiguration,
             NTupleConfiguration2048 nTupleSystemConfiguration,
-            int delayPerMove
+            int delayPerMove,
+            boolean printHistory
     ) {
-        this(perceptronConfiguration, nTupleSystemConfiguration, (int) pow(2, 17), delayPerMove);
+        this(perceptronConfiguration, nTupleSystemConfiguration, (int) pow(2, 17), delayPerMove, printHistory);
     }
 
     /**
@@ -91,10 +93,17 @@ class Game2048<NeuralNetworkClass>
             NeuralNetworkConfiguration2048<NeuralNetworkClass> perceptronConfiguration,
             NTupleConfiguration2048 nTupleSystemConfiguration,
             int numberToWin,
-            int delayPerMove
+            int delayPerMove,
+            boolean printHistory
     ) {
         neuralNetworkConfiguration = perceptronConfiguration;
         this.delayPerMove = delayPerMove;
+        this.printHistory = printHistory;
+        if (printHistory) {
+            historyLog = new StringBuilder();
+        } else {
+            historyLog = null;
+        }
         gameFrame = new JFrame();
         gameFrame.setTitle("2048 Game");
         gameFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -148,7 +157,7 @@ class Game2048<NeuralNetworkClass>
     public static
     void main(String[] args) {
         //noinspection unchecked
-        new Game2048(null, null, 2_048, 1);
+        new Game2048(null, null, 2_048, 1, true);
     }
 
     private static
@@ -404,6 +413,11 @@ class Game2048<NeuralNetworkClass>
         return board;
     }
 
+    public
+    StringBuilder getHistoryLog() {
+        return historyLog;
+    }
+
     /**
      * @return último turno alcanzado.
      */
@@ -478,6 +492,11 @@ class Game2048<NeuralNetworkClass>
         resetGame();
         assert board.getMaxTileNumberCode() != 0;
         return board.getCopy();
+    }
+
+    public
+    boolean isPrintHistory() {
+        return printHistory;
     }
 
     /**
@@ -660,18 +679,30 @@ class Game2048<NeuralNetworkClass>
             switch (keyCode) {
                 case VK_LEFT: {
                     afterState = computeAfterState(board, Action.left);
+                    if (printHistory) {
+                        historyLog.append("M=").append(Action.left).append("\n");
+                    }
                     break;
                 }
                 case VK_RIGHT: {
                     afterState = computeAfterState(board, Action.right);
+                    if (printHistory) {
+                        historyLog.append("M=").append(Action.left).append("\n");
+                    }
                     break;
                 }
                 case VK_DOWN: {
                     afterState = computeAfterState(board, Action.down);
+                    if (printHistory) {
+                        historyLog.append("M=").append(Action.left).append("\n");
+                    }
                     break;
                 }
                 case VK_UP: {
                     afterState = computeAfterState(board, Action.up);
+                    if (printHistory) {
+                        historyLog.append("M=").append(Action.left).append("\n");
+                    }
                     break;
                 }
                 default: {

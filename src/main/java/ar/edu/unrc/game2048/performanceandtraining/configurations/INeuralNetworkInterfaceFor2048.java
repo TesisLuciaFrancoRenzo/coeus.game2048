@@ -189,6 +189,9 @@ class INeuralNetworkInterfaceFor2048<NeuralNetworkClass>
                 throw new IllegalStateException("Mejor acción no reconocida");
             }
         }
+        if (game.isPrintHistory()) {
+            game.getHistoryLog().append("M=").append(bestAction).append("\n");
+        }
     }
 
     /**
