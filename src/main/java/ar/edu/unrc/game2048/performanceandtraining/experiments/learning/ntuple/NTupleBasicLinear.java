@@ -56,7 +56,7 @@ class NTupleBasicLinear
         LearningExperiment experiment   = new NTupleBasicLinear();
         boolean            printHistory = false;
 
-        //                boolean statistics = true;
+        //                        boolean statistics = true;
         boolean statistics = false;
 
         double[] alphas = {0.005, 0.005};
@@ -122,8 +122,7 @@ class NTupleBasicLinear
     ) {
         return new TDLambdaLearning(
                 nTupleSystem,
-                afterState,
-                (getAlpha() != null) ? getAlpha()[0] : null, getLambda(), getEligibilityTraceLength(), isReplaceEligibilityTraces(),
+                afterState, (getAlpha() != null) ? getAlpha()[0] : null, getLambda(), getEligibilityTraceLength(), isReplaceEligibilityTraces(),
                 getGamma(),
                 getConcurrencyInLayer(),
                 false
