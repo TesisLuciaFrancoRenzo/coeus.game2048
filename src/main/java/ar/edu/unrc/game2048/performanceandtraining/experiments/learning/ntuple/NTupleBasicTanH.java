@@ -62,7 +62,7 @@ class NTupleBasicTanH
         double[] alphas = {0.005, 0.005};
         experiment.setAlpha(alphas);
         experiment.setLearningRateAdaptationToAnnealing(500_000);
-        experiment.setLambda(0);
+        experiment.setLambda(0.5);
         experiment.setReplaceEligibilityTraces(false);
         experiment.setEligibilityTraceLength(-1); //Se calcula su longitud dinámicamente
         experiment.setGamma(1);

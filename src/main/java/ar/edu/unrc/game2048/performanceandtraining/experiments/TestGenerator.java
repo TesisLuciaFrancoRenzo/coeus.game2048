@@ -176,33 +176,36 @@ class TestGenerator {
         List<Integer> interpolatedExplorationRateStartInterpolation  = new ArrayList<>();
 
         //============================== configuraciones manuales ==================================
-        //        boolean statistics = false;
-        boolean   statistics                   = true;
+        boolean statistics = false;
+        //        boolean   statistics                   = true;
         int       repetitions                  = 1;
         int       maxTrainingThreads           = 8;
         boolean   doBackupStatistics           = true;
-        String    experimentDirName            = "ExplorationRate";
-        String    experimentName               = "NTupleBasicLinearSimplified_512";
-        String    experimentClass              = "NTupleBasicLinearSimplified_512";
-        int       gamesToPlay                  = 12_000;
-        int       saveEvery                    = 1_000;
-        int       saveBackupEvery              = 300;
-        int       tileToWinForStatistics       = 512;
+        String    experimentDirName            = "NTupleBasicTanH-Lambdas";
+        String    experimentName               = "NTupleBasicTanH";
+        String    experimentClass              = "NTupleBasicTanH";
+        int       gamesToPlay                  = 500_000;
+        int       saveEvery                    = 2_000;
+        int       saveBackupEvery              = 10_000;
+        int       tileToWinForStatistics       = 2048;
         boolean[] concurrentLayer              = {false, false};
         int       gamesToPlayPerThreadForStats = 100;
-        boolean   replacingTraces              = false;
+        boolean   replacingTraces              = true;
         boolean   accumulatingTraces           = true;
 
+        lambdaList.add(0d);
         lambdaList.add(0.3d);
+        lambdaList.add(0.6d);
+        lambdaList.add(0.8d);
 
         int eligibilityTraceLengthList = -1;
 
         //        annealingAlphaList.add(2_000_000); //Sin annealing
         //        annealingAlphaList.add(400_000);
         //        annealingAlphaList.add(600_000);
-        annealingAlphaList.add(NO_ANNEALING);
+        annealingAlphaList.add(500_000);
 
-        alphaList.add(0.0025d);
+        alphaList.add(0.005d);
 
         gammaList.add(1d);
 
@@ -211,10 +214,7 @@ class TestGenerator {
         interpolatedExplorationRateFinalValues = null;
         interpolatedExplorationRateStartInterpolation = null;
         interpolatedExplorationRateFinishInterpolation = null;
-        fixedExplorationRate.add(0.2d);
-        fixedExplorationRate.add(0.1d);
-        fixedExplorationRate.add(0.01d);
-        fixedExplorationRate.add(0.001d);
+        fixedExplorationRate.add(0d);
 
         // Exploration rates variables
         //        fixedExplorationRate = null;
@@ -317,12 +317,17 @@ class TestGenerator {
             }
         }
 
-        runAllConfigs(repetitions, maxTrainingThreads, experimentDirName,
+        runAllConfigs(
+                repetitions,
+                maxTrainingThreads,
+                experimentDirName,
                 experimentName,
                 classConstructor,
                 classParameters,
                 alphaList,
-                annealingAlphaList, lambdaList, eligibilityTraceLengthList,
+                annealingAlphaList,
+                lambdaList,
+                eligibilityTraceLengthList,
                 gammaList,
                 statisticsOnly,
                 runStatisticsForBackups,
@@ -336,7 +341,10 @@ class TestGenerator {
                 fixedExplorationRate,
                 interpolatedExplorationRateInitialValues,
                 interpolatedExplorationRateFinalValues,
-                interpolatedExplorationRateStartInterpolation, interpolatedExplorationRateFinishInterpolation, replacingTraces, accumulatingTraces,
+                interpolatedExplorationRateStartInterpolation,
+                interpolatedExplorationRateFinishInterpolation,
+                replacingTraces,
+                accumulatingTraces,
                 filePath,
                 concurrentLayer
         );
@@ -386,12 +394,15 @@ class TestGenerator {
                         for (int m = 0; m < annealingAlphaList.size(); m++) {
                             if (explorationRateList != null) {
                                 for (int l = 0; l < explorationRateList.size(); l++) {
-                                    if (accumulatingTraces) {
+                                    if (lambdaList.get(j) == 0) {
                                         number++;
-                                        experiments.add(new GeneratorConfig(a,
+                                        experiments.add(new GeneratorConfig(
+                                                a,
                                                 classParameters,
                                                 alphaList.get(i),
-                                                annealingAlphaList.get(m), lambdaList.get(j), eligibilityTraceLengthList,
+                                                annealingAlphaList.get(m),
+                                                lambdaList.get(j),
+                                                eligibilityTraceLengthList,
                                                 gammaList.get(k),
                                                 explorationRateList.get(l),
                                                 null,
@@ -401,22 +412,45 @@ class TestGenerator {
                                                 false,
                                                 number
                                         ));
-                                    }
-                                    if (replacingTraces) {
-                                        number++;
-                                        experiments.add(new GeneratorConfig(a,
-                                                classParameters,
-                                                alphaList.get(i),
-                                                annealingAlphaList.get(m), lambdaList.get(j), eligibilityTraceLengthList,
-                                                gammaList.get(k),
-                                                explorationRateList.get(l),
-                                                null,
-                                                null,
-                                                null,
-                                                null,
-                                                true,
-                                                number
-                                        ));
+                                    } else {
+                                        if (accumulatingTraces) {
+                                            number++;
+                                            experiments.add(new GeneratorConfig(
+                                                    a,
+                                                    classParameters,
+                                                    alphaList.get(i),
+                                                    annealingAlphaList.get(m),
+                                                    lambdaList.get(j),
+                                                    eligibilityTraceLengthList,
+                                                    gammaList.get(k),
+                                                    explorationRateList.get(l),
+                                                    null,
+                                                    null,
+                                                    null,
+                                                    null,
+                                                    false,
+                                                    number
+                                            ));
+                                        }
+                                        if (replacingTraces) {
+                                            number++;
+                                            experiments.add(new GeneratorConfig(
+                                                    a,
+                                                    classParameters,
+                                                    alphaList.get(i),
+                                                    annealingAlphaList.get(m),
+                                                    lambdaList.get(j),
+                                                    eligibilityTraceLengthList,
+                                                    gammaList.get(k),
+                                                    explorationRateList.get(l),
+                                                    null,
+                                                    null,
+                                                    null,
+                                                    null,
+                                                    true,
+                                                    number
+                                            ));
+                                        }
                                     }
                                 }
                             } else {
@@ -424,37 +458,65 @@ class TestGenerator {
                                     for (int o = 0; o < explorationRateFinalValues.size(); o++) {
                                         for (int p = 0; p < explorationRateStartInterpolation.size(); p++) {
                                             for (int q = 0; q < explorationRateFinishInterpolation.size(); q++) {
-                                                if (accumulatingTraces) {
-                                                    number++;
-                                                    experiments.add(new GeneratorConfig(a,
-                                                            classParameters,
-                                                            alphaList.get(i),
-                                                            annealingAlphaList.get(m), lambdaList.get(j), eligibilityTraceLengthList,
-                                                            gammaList.get(k),
-                                                            null,
-                                                            explorationRateInitialValues.get(n),
-                                                            explorationRateFinalValues.get(o),
-                                                            explorationRateStartInterpolation.get(p),
-                                                            explorationRateFinishInterpolation.get(q),
-                                                            false,
-                                                            number
-                                                    ));
-                                                }
-                                                if (replacingTraces) {
-                                                    number++;
-                                                    experiments.add(new GeneratorConfig(a,
-                                                            classParameters,
-                                                            alphaList.get(i),
-                                                            annealingAlphaList.get(m), lambdaList.get(j), eligibilityTraceLengthList,
-                                                            gammaList.get(k),
-                                                            null,
-                                                            explorationRateInitialValues.get(n),
-                                                            explorationRateFinalValues.get(o),
-                                                            explorationRateStartInterpolation.get(p),
-                                                            explorationRateFinishInterpolation.get(q),
-                                                            true,
-                                                            number
-                                                    ));
+                                                if (lambdaList.get(j) == 0) {
+                                                    if (accumulatingTraces) {
+                                                        number++;
+                                                        experiments.add(new GeneratorConfig(
+                                                                a,
+                                                                classParameters,
+                                                                alphaList.get(i),
+                                                                annealingAlphaList.get(m),
+                                                                lambdaList.get(j),
+                                                                eligibilityTraceLengthList,
+                                                                gammaList.get(k),
+                                                                null,
+                                                                explorationRateInitialValues.get(n),
+                                                                explorationRateFinalValues.get(o),
+                                                                explorationRateStartInterpolation.get(p),
+                                                                explorationRateFinishInterpolation.get(q),
+                                                                false,
+                                                                number
+                                                        ));
+                                                    }
+                                                } else {
+                                                    if (accumulatingTraces) {
+                                                        number++;
+                                                        experiments.add(new GeneratorConfig(
+                                                                a,
+                                                                classParameters,
+                                                                alphaList.get(i),
+                                                                annealingAlphaList.get(m),
+                                                                lambdaList.get(j),
+                                                                eligibilityTraceLengthList,
+                                                                gammaList.get(k),
+                                                                null,
+                                                                explorationRateInitialValues.get(n),
+                                                                explorationRateFinalValues.get(o),
+                                                                explorationRateStartInterpolation.get(p),
+                                                                explorationRateFinishInterpolation.get(q),
+                                                                false,
+                                                                number
+                                                        ));
+                                                    }
+                                                    if (replacingTraces) {
+                                                        number++;
+                                                        experiments.add(new GeneratorConfig(
+                                                                a,
+                                                                classParameters,
+                                                                alphaList.get(i),
+                                                                annealingAlphaList.get(m),
+                                                                lambdaList.get(j),
+                                                                eligibilityTraceLengthList,
+                                                                gammaList.get(k),
+                                                                null,
+                                                                explorationRateInitialValues.get(n),
+                                                                explorationRateFinalValues.get(o),
+                                                                explorationRateStartInterpolation.get(p),
+                                                                explorationRateFinishInterpolation.get(q),
+                                                                true,
+                                                                number
+                                                        ));
+                                                    }
                                                 }
                                             }
                                         }
@@ -497,8 +559,7 @@ class TestGenerator {
                                          "-lambda_" +
                                          expConfig.getLambda() +
                                          "-gamma_" +
-                                         expConfig.getGamma() +
-                                         explorationRateString + "-replaceTraces_" + expConfig.isReplaceTraces() +
+                                         expConfig.getGamma() + explorationRateString + "-replaceTraces_" + expConfig.isReplaceTraces() +
                                          File.separator;
                     File newPath = new File(newFilePath);
                     if (!newPath.exists()) {
@@ -514,8 +575,7 @@ class TestGenerator {
                     configAndExecute(expConfig.getNumber(),
                             cloneExperiment,
                             statisticsOnly,
-                            runStatisticsForBackups,
-                            createLogs, expConfig.getLambda(), expConfig.getEligibilityTraceLength(),
+                            runStatisticsForBackups, createLogs, expConfig.getLambda(), expConfig.getEligibilityTraceLength(),
                             expConfig.getAlpha(),
                             expConfig.getAnnealingAlpha(),
                             expConfig.getGamma(),
@@ -529,8 +589,7 @@ class TestGenerator {
                             expConfig.getExplorationRateInitialValue(),
                             expConfig.getExplorationRateFinalValue(),
                             expConfig.getExplorationRateStartInterpolation(),
-                            expConfig.getExplorationRateFinishInterpolation(),
-                            newFilePath, concurrentLayer, expConfig.isReplaceTraces()
+                            expConfig.getExplorationRateFinishInterpolation(), newFilePath, concurrentLayer, expConfig.isReplaceTraces()
                     );
                 } catch (ClassCastException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
                     Logger.getLogger(TestGenerator.class.getName()).log(Level.SEVERE, null, ex);
