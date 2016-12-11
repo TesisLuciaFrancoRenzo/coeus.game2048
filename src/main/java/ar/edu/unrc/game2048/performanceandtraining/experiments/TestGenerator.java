@@ -34,11 +34,9 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Stream;
 
 /**
  * Tests parametrizables mediante parámetros, útil para correr variedades de simulaciones sin recompilar todo el
@@ -166,6 +164,7 @@ class TestGenerator {
             throws Exception {
         String        filePath                                       = ".." + File.separator + "Perceptrones ENTRENADOS" + File.separator;
         List<Double>  lambdaList                                     = new ArrayList<>();
+        List<String>  experimentClassNameList                        = new ArrayList<>();
         List<Double>  alphaList                                      = new ArrayList<>();
         List<Integer> annealingAlphaList                             = new ArrayList<>();
         List<Double>  gammaList                                      = new ArrayList<>();
@@ -176,14 +175,14 @@ class TestGenerator {
         List<Integer> interpolatedExplorationRateStartInterpolation  = new ArrayList<>();
 
         //============================== configuraciones manuales ==================================
-        boolean statistics = false;
-        //                boolean   statistics                   = true;
+        String experimentDirName = "NTupleBasicTanH-Lambdas";
+        experimentClassNameList.add("NTupleBasicTanH");
+
         int       repetitions                  = 1;
         int       maxTrainingThreads           = 8;
-        boolean   doBackupStatistics           = true;
-        String    experimentDirName            = "NTupleBasicTanH-Lambdas";
-        String    experimentName               = "NTupleBasicTanH";
-        String    experimentClass              = "NTupleBasicTanH";
+        int       simulationsForStatistics     = 8;
+        boolean   runBackupStatistics          = true;
+        boolean   statisticsOnly               = false;
         int       gamesToPlay                  = 500_000;
         int       saveEvery                    = 2_000;
         int       saveBackupEvery              = 10_000;
@@ -198,7 +197,7 @@ class TestGenerator {
         lambdaList.add(0.6d);
         lambdaList.add(0.8d);
 
-        int eligibilityTraceLengthList = -1;
+        int eligibilityTraceLength = -1;
 
         //        annealingAlphaList.add(2_000_000); //Sin annealing
         //        annealingAlphaList.add(400_000);
@@ -227,18 +226,34 @@ class TestGenerator {
         //============================== fin de configuraciones manuales ==================================
 
         if (args.length != 0) {
+            lambdaList.clear();
+            experimentClassNameList.clear();
+            alphaList.clear();
+            annealingAlphaList.clear();
+            gammaList.clear();
+            fixedExplorationRate.clear();
+            interpolatedExplorationRateFinalValues.clear();
+            interpolatedExplorationRateFinishInterpolation.clear();
+            interpolatedExplorationRateInitialValues.clear();
+            interpolatedExplorationRateStartInterpolation.clear();
+
             ArgumentLoader arguments = new ArgumentLoader(args);
-            statistics = Boolean.parseBoolean(arguments.getArg("statistics"));
             maxTrainingThreads = Integer.parseInt(arguments.getArg("maxTrainingThreads"));
+            eligibilityTraceLength = Integer.parseInt(arguments.getArg("eligibilityTraceLength"));
+            simulationsForStatistics = Integer.parseInt(arguments.getArg("simulationsForStatistics"));
             tileToWinForStatistics = Integer.parseInt(arguments.getArg("tileToWinForStatistics"));
-            doBackupStatistics = Boolean.parseBoolean(arguments.getArg("doBackupStatistics"));
+            runBackupStatistics = Boolean.parseBoolean(arguments.getArg("runBackupStatistics"));
+            statisticsOnly = Boolean.parseBoolean(arguments.getArg("statisticsOnly"));
+            createLogs = Boolean.parseBoolean(arguments.getArg("createLogs"));
+            replacingTraces = Boolean.parseBoolean(arguments.getArg("replacingTraces"));
+            accumulatingTraces = Boolean.parseBoolean(arguments.getArg("accumulatingTraces"));
             gamesToPlay = Integer.parseInt(arguments.getArg("gamesToPlay"));
             gamesToPlayPerThreadForStats = Integer.parseInt(arguments.getArg("gamesToPlayPerThreadForStats"));
             saveEvery = Integer.parseInt(arguments.getArg("saveEvery"));
             saveBackupEvery = Integer.parseInt(arguments.getArg("saveBackupEvery"));
-            experimentName = arguments.getArg("experimentName");
-            experimentClass = arguments.getArg("experimentClass");
-
+            repetitions = Integer.parseInt(arguments.getArg("repetitions"));
+            experimentDirName = arguments.getArg("experimentDirName");
+            experimentClassNameList = ArgumentLoader.parseStringArray(arguments.getArg("experimentClassName"));
             lambdaList = ArgumentLoader.parseDoubleArray(arguments.getArg("lambdaList"));
             annealingAlphaList = ArgumentLoader.parseIntegerArray(arguments.getArg("annealingAlphaList"));
             alphaList = ArgumentLoader.parseDoubleArray(arguments.getArg("alphaList"));
@@ -266,76 +281,18 @@ class TestGenerator {
             }
         }
 
-        boolean statisticsOnly;
-        boolean runStatisticsForBackups;
-        int     gamesToPlayPerThreadForStatistics;
-        int     simulationsForStatistics;
-
-        if (statistics) {
-            statisticsOnly = true;
-            runStatisticsForBackups = doBackupStatistics;
-            gamesToPlayPerThreadForStatistics = gamesToPlayPerThreadForStats;
-            simulationsForStatistics = 8;
-        } else {
-            statisticsOnly = false;
-            runStatisticsForBackups = false;
-            gamesToPlayPerThreadForStatistics = 0;
-            simulationsForStatistics = 0;
-        }
-
-        Constructor<?> classConstructor;
-        Object[]       classParameters = null;
-        switch (experimentClass) {
-            case "NTupleBasicLinear": {
-                classConstructor = NTupleBasicLinear.class.getConstructor();
-                break;
-            }
-            case "NTupleBasicTanH": {
-                classConstructor = NTupleBasicTanH.class.getConstructor();
-                break;
-            }
-            case "NTupleBasicLinearSimplified_512": {
-                classConstructor = NTupleBasicLinearSimplified_512.class.getConstructor();
-                break;
-            }
-            case "EncogNTupleLinearSimplified_512": {
-                classConstructor = EncogNTupleLinearSimplified_512.class.getConstructor(EncogNTupleLinearSimplified_512.PARAMETER_TYPE);
-                classParameters = new Object[]{false};
-                break;
-            }
-            case "EncogNTupleLinearWithBiasSimplified_512": {
-                classConstructor = EncogNTupleLinearWithBiasSimplified_512.class.getConstructor(EncogNTupleLinearWithBiasSimplified_512.PARAMETER_TYPE);
-                classParameters = new Object[]{true};
-                break;
-            }
-            case "NTupleBasicTanHSimplified_512": {
-                classConstructor = NTupleBasicTanHSimplified_512.class.getConstructor();
-                break;
-            }
-            default: {
-                throw new IllegalArgumentException("no se reconoce la clase: " + experimentClass);
-            }
-        }
-
-        runAllConfigs(
-                repetitions,
+        runAllConfigs(repetitions,
                 maxTrainingThreads,
-                experimentDirName,
-                experimentName,
-                classConstructor,
-                classParameters,
+                experimentDirName, experimentClassNameList,
                 alphaList,
                 annealingAlphaList,
-                lambdaList,
-                eligibilityTraceLengthList,
+                lambdaList, eligibilityTraceLength,
                 gammaList,
-                statisticsOnly,
-                runStatisticsForBackups,
+                statisticsOnly, runBackupStatistics,
                 createLogs,
                 gamesToPlay,
                 saveEvery,
-                saveBackupEvery,
-                gamesToPlayPerThreadForStatistics,
+                saveBackupEvery, gamesToPlayPerThreadForStats,
                 tileToWinForStatistics,
                 simulationsForStatistics,
                 fixedExplorationRate,
@@ -358,13 +315,11 @@ class TestGenerator {
             final int repetitions,
             final int maxTrainingThreads,
             final String experimentDirName,
-            final String experimentName,
-            final Constructor<?> experiment,
-            final Object[] classParameters,
+            final List<String> experimentClassNameList,
             final List<Double> alphaList,
             final List<Integer> annealingAlphaList,
             final List<Double> lambdaList,
-            final int eligibilityTraceLengthList,
+            final int eligibilityTraceLength,
             final List<Double> gammaList,
             final boolean statisticsOnly,
             final boolean runStatisticsForBackups,
@@ -388,40 +343,21 @@ class TestGenerator {
         List<GeneratorConfig> experiments = new ArrayList<>();
         int                   number      = 0;
         for (int a = 0; a < repetitions; a++) {
-            for (int i = 0; i < alphaList.size(); i++) {
-                for (int j = 0; j < lambdaList.size(); j++) {
-                    for (int k = 0; k < gammaList.size(); k++) {
-                        for (int m = 0; m < annealingAlphaList.size(); m++) {
-                            if (explorationRateList != null) {
-                                for (int l = 0; l < explorationRateList.size(); l++) {
-                                    if (lambdaList.get(j) == 0) {
-                                        number++;
-                                        experiments.add(new GeneratorConfig(
-                                                a,
-                                                classParameters,
-                                                alphaList.get(i),
-                                                annealingAlphaList.get(m),
-                                                lambdaList.get(j),
-                                                eligibilityTraceLengthList,
-                                                gammaList.get(k),
-                                                explorationRateList.get(l),
-                                                null,
-                                                null,
-                                                null,
-                                                null,
-                                                false,
-                                                number
-                                        ));
-                                    } else {
-                                        if (accumulatingTraces) {
+            for (int className = 0; className < experimentClassNameList.size(); className++) {
+                for (int i = 0; i < alphaList.size(); i++) {
+                    for (int j = 0; j < lambdaList.size(); j++) {
+                        for (int k = 0; k < gammaList.size(); k++) {
+                            for (int m = 0; m < annealingAlphaList.size(); m++) {
+                                if (explorationRateList != null) {
+                                    for (int l = 0; l < explorationRateList.size(); l++) {
+                                        if (lambdaList.get(j) == 0) {
                                             number++;
-                                            experiments.add(new GeneratorConfig(
-                                                    a,
-                                                    classParameters,
+                                            experiments.add(new GeneratorConfig(a,
+                                                    experimentClassNameList.get(className),
                                                     alphaList.get(i),
                                                     annealingAlphaList.get(m),
                                                     lambdaList.get(j),
-                                                    eligibilityTraceLengthList,
+                                                    eligibilityTraceLength,
                                                     gammaList.get(k),
                                                     explorationRateList.get(l),
                                                     null,
@@ -431,91 +367,106 @@ class TestGenerator {
                                                     false,
                                                     number
                                             ));
-                                        }
-                                        if (replacingTraces) {
-                                            number++;
-                                            experiments.add(new GeneratorConfig(
-                                                    a,
-                                                    classParameters,
-                                                    alphaList.get(i),
-                                                    annealingAlphaList.get(m),
-                                                    lambdaList.get(j),
-                                                    eligibilityTraceLengthList,
-                                                    gammaList.get(k),
-                                                    explorationRateList.get(l),
-                                                    null,
-                                                    null,
-                                                    null,
-                                                    null,
-                                                    true,
-                                                    number
-                                            ));
+                                        } else {
+                                            if (accumulatingTraces) {
+                                                number++;
+                                                experiments.add(new GeneratorConfig(a,
+                                                        experimentClassNameList.get(className),
+                                                        alphaList.get(i),
+                                                        annealingAlphaList.get(m),
+                                                        lambdaList.get(j),
+                                                        eligibilityTraceLength,
+                                                        gammaList.get(k),
+                                                        explorationRateList.get(l),
+                                                        null,
+                                                        null,
+                                                        null,
+                                                        null,
+                                                        false,
+                                                        number
+                                                ));
+                                            }
+                                            if (replacingTraces) {
+                                                number++;
+                                                experiments.add(new GeneratorConfig(a,
+                                                        experimentClassNameList.get(className),
+                                                        alphaList.get(i),
+                                                        annealingAlphaList.get(m),
+                                                        lambdaList.get(j),
+                                                        eligibilityTraceLength,
+                                                        gammaList.get(k),
+                                                        explorationRateList.get(l),
+                                                        null,
+                                                        null,
+                                                        null,
+                                                        null,
+                                                        true,
+                                                        number
+                                                ));
+                                            }
                                         }
                                     }
-                                }
-                            } else {
-                                for (int n = 0; n < explorationRateInitialValues.size(); n++) {
-                                    for (int o = 0; o < explorationRateFinalValues.size(); o++) {
-                                        for (int p = 0; p < explorationRateStartInterpolation.size(); p++) {
-                                            for (int q = 0; q < explorationRateFinishInterpolation.size(); q++) {
-                                                if (lambdaList.get(j) == 0) {
-                                                    if (accumulatingTraces) {
-                                                        number++;
-                                                        experiments.add(new GeneratorConfig(
-                                                                a,
-                                                                classParameters,
-                                                                alphaList.get(i),
-                                                                annealingAlphaList.get(m),
-                                                                lambdaList.get(j),
-                                                                eligibilityTraceLengthList,
-                                                                gammaList.get(k),
-                                                                null,
-                                                                explorationRateInitialValues.get(n),
-                                                                explorationRateFinalValues.get(o),
-                                                                explorationRateStartInterpolation.get(p),
-                                                                explorationRateFinishInterpolation.get(q),
-                                                                false,
-                                                                number
-                                                        ));
-                                                    }
-                                                } else {
-                                                    if (accumulatingTraces) {
-                                                        number++;
-                                                        experiments.add(new GeneratorConfig(
-                                                                a,
-                                                                classParameters,
-                                                                alphaList.get(i),
-                                                                annealingAlphaList.get(m),
-                                                                lambdaList.get(j),
-                                                                eligibilityTraceLengthList,
-                                                                gammaList.get(k),
-                                                                null,
-                                                                explorationRateInitialValues.get(n),
-                                                                explorationRateFinalValues.get(o),
-                                                                explorationRateStartInterpolation.get(p),
-                                                                explorationRateFinishInterpolation.get(q),
-                                                                false,
-                                                                number
-                                                        ));
-                                                    }
-                                                    if (replacingTraces) {
-                                                        number++;
-                                                        experiments.add(new GeneratorConfig(
-                                                                a,
-                                                                classParameters,
-                                                                alphaList.get(i),
-                                                                annealingAlphaList.get(m),
-                                                                lambdaList.get(j),
-                                                                eligibilityTraceLengthList,
-                                                                gammaList.get(k),
-                                                                null,
-                                                                explorationRateInitialValues.get(n),
-                                                                explorationRateFinalValues.get(o),
-                                                                explorationRateStartInterpolation.get(p),
-                                                                explorationRateFinishInterpolation.get(q),
-                                                                true,
-                                                                number
-                                                        ));
+                                } else {
+                                    for (int n = 0; n < explorationRateInitialValues.size(); n++) {
+                                        for (int o = 0; o < explorationRateFinalValues.size(); o++) {
+                                            for (int p = 0; p < explorationRateStartInterpolation.size(); p++) {
+                                                for (int q = 0; q < explorationRateFinishInterpolation.size(); q++) {
+                                                    if (lambdaList.get(j) == 0) {
+                                                        if (accumulatingTraces) {
+                                                            number++;
+                                                            experiments.add(new GeneratorConfig(a,
+                                                                    experimentClassNameList.get(className),
+                                                                    alphaList.get(i),
+                                                                    annealingAlphaList.get(m),
+                                                                    lambdaList.get(j),
+                                                                    eligibilityTraceLength,
+                                                                    gammaList.get(k),
+                                                                    null,
+                                                                    explorationRateInitialValues.get(n),
+                                                                    explorationRateFinalValues.get(o),
+                                                                    explorationRateStartInterpolation.get(p),
+                                                                    explorationRateFinishInterpolation.get(q),
+                                                                    false,
+                                                                    number
+                                                            ));
+                                                        }
+                                                    } else {
+                                                        if (accumulatingTraces) {
+                                                            number++;
+                                                            experiments.add(new GeneratorConfig(a,
+                                                                    experimentClassNameList.get(className),
+                                                                    alphaList.get(i),
+                                                                    annealingAlphaList.get(m),
+                                                                    lambdaList.get(j),
+                                                                    eligibilityTraceLength,
+                                                                    gammaList.get(k),
+                                                                    null,
+                                                                    explorationRateInitialValues.get(n),
+                                                                    explorationRateFinalValues.get(o),
+                                                                    explorationRateStartInterpolation.get(p),
+                                                                    explorationRateFinishInterpolation.get(q),
+                                                                    false,
+                                                                    number
+                                                            ));
+                                                        }
+                                                        if (replacingTraces) {
+                                                            number++;
+                                                            experiments.add(new GeneratorConfig(a,
+                                                                    experimentClassNameList.get(className),
+                                                                    alphaList.get(i),
+                                                                    annealingAlphaList.get(m),
+                                                                    lambdaList.get(j),
+                                                                    eligibilityTraceLength,
+                                                                    gammaList.get(k),
+                                                                    null,
+                                                                    explorationRateInitialValues.get(n),
+                                                                    explorationRateFinalValues.get(o),
+                                                                    explorationRateStartInterpolation.get(p),
+                                                                    explorationRateFinishInterpolation.get(q),
+                                                                    true,
+                                                                    number
+                                                            ));
+                                                        }
                                                     }
                                                 }
                                             }
@@ -529,73 +480,181 @@ class TestGenerator {
             }
         }
 
-        Stream<GeneratorConfig> stream;
-        if (statisticsOnly) {
-            stream = experiments.stream();
-        } else {
-            stream = experiments.parallelStream();
+        if (!statisticsOnly) {
+            try {
+                final BlockingQueue<GeneratorConfig> queue = new ArrayBlockingQueue<>(experiments.size());
+                for (GeneratorConfig config : experiments) {
+                    queue.add(config);
+                }
+
+                ExecutorService pool = Executors.newFixedThreadPool(maxTrainingThreads);
+
+                for (int i = 1; i <= maxTrainingThreads; i++) {
+                    pool.execute(() -> {
+                        GeneratorConfig expConfig;
+                        while ((expConfig = queue.poll()) != null) {
+                            runOneConfig(experimentDirName,
+                                    statisticsOnly,
+                                    false,
+                                    createLogs,
+                                    gamesToPlay,
+                                    saveEvery,
+                                    saveBackupEvery,
+                                    0,
+                                    tileToWinForStatistics,
+                                    0,
+                                    explorationRateList,
+                                    filePath,
+                                    concurrentLayer,
+                                    expConfig
+                            );
+                        }
+                    });
+                }
+                pool.shutdown();
+                pool.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
+            } catch (InterruptedException e) {
+                Logger.getLogger(TestGenerator.class.getName()).log(Level.SEVERE, null, e);
+            }
         }
 
-        ForkJoinPool forkJoinPool = new ForkJoinPool(maxTrainingThreads); //TODO arreglar problema de maxThreads internos
+        experiments.stream().forEachOrdered(expConfig -> {
+            runOneConfig(experimentDirName,
+                    true,
+                    runStatisticsForBackups,
+                    createLogs,
+                    gamesToPlay,
+                    saveEvery,
+                    saveBackupEvery,
+                    gamesToPlayPerThreadForStatistics,
+                    tileToWinForStatistics,
+                    simulationsForStatistics,
+                    explorationRateList,
+                    filePath,
+                    concurrentLayer,
+                    expConfig
+            );
+        });
+    }
+
+    private static
+    void runOneConfig(
+            String experimentDirName,
+            boolean statisticsOnly,
+            boolean runStatisticsForBackups,
+            boolean createLogs,
+            int gamesToPlay,
+            int saveEvery,
+            int saveBackupEvery,
+            int gamesToPlayPerThreadForStatistics,
+            int tileToWinForStatistics,
+            int simulationsForStatistics,
+            List<Double> explorationRateList,
+            String filePath,
+            boolean[] concurrentLayer,
+            GeneratorConfig expConfig
+    ) {
         try {
-            forkJoinPool.submit(() -> stream.forEach(expConfig -> {
-                try {
-                    String explorationRateString;
-                    if (explorationRateList != null) {
-                        explorationRateString = "-explorationRate_" + expConfig.getExplorationRate();
-                    } else {
-                        explorationRateString = "-explorationRate_" +
-                                                expConfig.getExplorationRateInitialValue() +
-                                                '_' +
-                                                expConfig.getExplorationRateFinalValue() +
-                                                '_' +
-                                                expConfig.getExplorationRateStartInterpolation() +
-                                                '_' +
-                                                expConfig.getExplorationRateFinishInterpolation();
-                    }
-                    String newFilePath = filePath + experimentDirName + File.separator + expConfig.getRepetitions() + "-alpha_" +
-                                         expConfig.getAlpha() +
-                                         ((expConfig.getAnnealingAlpha() > 0) ? "-anneal_" + expConfig.getAnnealingAlpha() : "") +
-                                         "-lambda_" +
-                                         expConfig.getLambda() +
-                                         "-gamma_" +
-                                         expConfig.getGamma() + explorationRateString + "-replaceTraces_" + expConfig.isReplaceTraces() +
-                                         File.separator;
-                    File newPath = new File(newFilePath);
-                    if (!newPath.exists()) {
-                        newPath.mkdirs();
-                    }
-                    LearningExperiment<?> cloneExperiment;
-                    if (expConfig.getClassParameters() != null) {
-                        cloneExperiment = (LearningExperiment<?>) experiment.newInstance(expConfig.getClassParameters());
-                    } else {
-                        cloneExperiment = (LearningExperiment<?>) experiment.newInstance();
-                    }
-                    cloneExperiment.setExperimentName(experimentName);
-                    configAndExecute(expConfig.getNumber(),
-                            cloneExperiment,
-                            statisticsOnly,
-                            runStatisticsForBackups, createLogs, expConfig.getLambda(), expConfig.getEligibilityTraceLength(),
-                            expConfig.getAlpha(),
-                            expConfig.getAnnealingAlpha(),
-                            expConfig.getGamma(),
-                            gamesToPlay,
-                            saveEvery,
-                            saveBackupEvery,
-                            gamesToPlayPerThreadForStatistics,
-                            tileToWinForStatistics,
-                            simulationsForStatistics,
-                            expConfig.getExplorationRate(),
-                            expConfig.getExplorationRateInitialValue(),
-                            expConfig.getExplorationRateFinalValue(),
-                            expConfig.getExplorationRateStartInterpolation(),
-                            expConfig.getExplorationRateFinishInterpolation(), newFilePath, concurrentLayer, expConfig.isReplaceTraces()
-                    );
-                } catch (ClassCastException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-                    Logger.getLogger(TestGenerator.class.getName()).log(Level.SEVERE, null, ex);
+            String explorationRateString;
+            if (explorationRateList != null) {
+                explorationRateString = "-explorationRate_" + expConfig.getExplorationRate();
+            } else {
+                explorationRateString = "-explorationRate_" +
+                                        expConfig.getExplorationRateInitialValue() +
+                                        '_' +
+                                        expConfig.getExplorationRateFinalValue() +
+                                        '_' +
+                                        expConfig.getExplorationRateStartInterpolation() +
+                                        '_' +
+                                        expConfig.getExplorationRateFinishInterpolation();
+            }
+            String newFilePath = filePath +
+                                 experimentDirName +
+                                 File.separator +
+                                 expConfig.getRepetitions() +
+                                 "-alpha_" +
+                                 expConfig.getAlpha() +
+                                 ((expConfig.getAnnealingAlpha() > 0) ? "-anneal_" + expConfig.getAnnealingAlpha() : "") +
+                                 "-lambda_" +
+                                 expConfig.getLambda() +
+                                 "-gamma_" +
+                                 expConfig.getGamma() +
+                                 explorationRateString +
+                                 "-replaceTraces_" +
+                                 expConfig.isReplaceTraces() +
+                                 File.separator;
+            File newPath = new File(newFilePath);
+            if (!newPath.exists()) {
+                newPath.mkdirs();
+            }
+
+            Constructor<?> classConstructor;
+            Object[]       classParameters = null;
+            switch (expConfig.getClassName()) {
+                case "NTupleBasicLinear": {
+                    classConstructor = NTupleBasicLinear.class.getConstructor();
+                    break;
                 }
-            })).get();
-        } catch (InterruptedException | ExecutionException ex) {
+                case "NTupleBasicTanH": {
+                    classConstructor = NTupleBasicTanH.class.getConstructor();
+                    break;
+                }
+                case "NTupleBasicLinearSimplified_512": {
+                    classConstructor = NTupleBasicLinearSimplified_512.class.getConstructor();
+                    break;
+                }
+                case "EncogNTupleLinearSimplified_512": {
+                    classConstructor = EncogNTupleLinearSimplified_512.class.getConstructor(EncogNTupleLinearSimplified_512.PARAMETER_TYPE);
+                    classParameters = new Object[]{false};
+                    break;
+                }
+                case "EncogNTupleLinearWithBiasSimplified_512": {
+                    classConstructor = EncogNTupleLinearWithBiasSimplified_512.class.getConstructor(EncogNTupleLinearWithBiasSimplified_512.PARAMETER_TYPE);
+                    classParameters = new Object[]{true};
+                    break;
+                }
+                case "NTupleBasicTanHSimplified_512": {
+                    classConstructor = NTupleBasicTanHSimplified_512.class.getConstructor();
+                    break;
+                }
+                default: {
+                    throw new IllegalArgumentException("no se reconoce la clase: " + expConfig.getClassName());
+                }
+            }
+
+            LearningExperiment<?> cloneExperiment;
+            if (classParameters != null) {
+                cloneExperiment = (LearningExperiment<?>) classConstructor.newInstance(classParameters);
+            } else {
+                cloneExperiment = (LearningExperiment<?>) classConstructor.newInstance();
+            }
+            cloneExperiment.setExperimentName(expConfig.getClassName());
+            configAndExecute(expConfig.getNumber(),
+                    cloneExperiment,
+                    statisticsOnly,
+                    runStatisticsForBackups,
+                    createLogs,
+                    expConfig.getLambda(),
+                    expConfig.getEligibilityTraceLength(),
+                    expConfig.getAlpha(),
+                    expConfig.getAnnealingAlpha(),
+                    expConfig.getGamma(),
+                    gamesToPlay,
+                    saveEvery,
+                    saveBackupEvery,
+                    gamesToPlayPerThreadForStatistics,
+                    tileToWinForStatistics,
+                    simulationsForStatistics,
+                    expConfig.getExplorationRate(),
+                    expConfig.getExplorationRateInitialValue(),
+                    expConfig.getExplorationRateFinalValue(),
+                    expConfig.getExplorationRateStartInterpolation(),
+                    expConfig.getExplorationRateFinishInterpolation(),
+                    newFilePath,
+                    concurrentLayer,
+                    expConfig.isReplaceTraces()
+            );
+        } catch (NoSuchMethodException | ClassCastException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
             Logger.getLogger(TestGenerator.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

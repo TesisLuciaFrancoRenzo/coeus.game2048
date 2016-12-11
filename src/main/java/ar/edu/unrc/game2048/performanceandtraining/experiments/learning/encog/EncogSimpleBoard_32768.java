@@ -70,9 +70,6 @@ class EncogSimpleBoard_32768
         LearningExperiment experiment   = new EncogSimpleBoard_32768(false);
         boolean            printHistory = false;
 
-        //        boolean statistics = true;
-        boolean statistics = false;
-
         boolean[] concurrentLayer = {false, true, true, false};
         experiment.setConcurrencyInLayer(concurrentLayer);
         double[] alphas = {0.0025, 0.0025, 0.0025, 0.0025};
@@ -90,18 +87,12 @@ class EncogSimpleBoard_32768
 
         experiment.createLogs(false);
         //para calcular estadisticas
+        experiment.setStatisticsOnly(false);
         experiment.setTileToWinForStatistics(2_048);
-        if (statistics) {
-            experiment.setStatisticsOnly(true);
-            experiment.setRunStatisticsForBackups(true);
-            experiment.setGamesToPlayPerThreadForStatistics(1_000);
-            experiment.setSimulationsForStatistics(8);
-        } else {
-            experiment.setStatisticsOnly(false);
-            experiment.setRunStatisticsForBackups(false);
-            experiment.setGamesToPlayPerThreadForStatistics(0);
-            experiment.setSimulationsForStatistics(0);
-        }
+        experiment.setRunStatisticsForBackups(true);
+        experiment.setGamesToPlayPerThreadForStatistics(100);
+        experiment.setSimulationsForStatistics(8);
+
         experiment.setExportToExcel(true);
         experiment.start(-1, filePath, 0, true, null, printHistory);
 

@@ -16,7 +16,7 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ar.edu.unrc.game2048.performanceandtraining.experiments.performance;
+package ar.edu.unrc.game2048.performanceandtraining.experiments.learning;
 
 import java.awt.*;
 import java.io.File;
@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static ar.edu.unrc.game2048.performanceandtraining.experiments.TestGenerator.NO_ANNEALING;
 import static ar.edu.unrc.game2048.performanceandtraining.experiments.TestGenerator.runAllConfigs;
 
 /**
@@ -33,7 +32,7 @@ import static ar.edu.unrc.game2048.performanceandtraining.experiments.TestGenera
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
 public
-class TestGeneratorPerceptronVsNTuple {
+class TestGeneratorLambdas {
 
     /**
      * @param args
@@ -55,42 +54,62 @@ class TestGeneratorPerceptronVsNTuple {
         List<Integer> interpolatedExplorationRateStartInterpolation  = new ArrayList<>();
 
         //============================== configuraciones manuales ==================================
-        String  testDirName            = "PerceptronVsNTuple";
-        int     repetitions            = 4;
-        int     gamesToPlay            = 10; //2_000
-        int     saveEvery              = 1_000;
-        int     saveBackupEvery        = 5;
-        int     tileToWinForStatistics = 512;
-        boolean replacingTraces        = true;
-        boolean accumulatingTraces     = false;
+        String    testDirName                  = "NTupleBasicTanH-Lambdas";
+        int       repetitions                  = 1;
+        int       maxTrainingThreads           = 8;
+        int       simulationsForStatistics     = 8;
+        boolean   runBackupStatistics          = true;
+        boolean   statisticsOnly               = false;
+        int       gamesToPlay                  = 500_000;
+        int       saveEvery                    = 2_000;
+        int       saveBackupEvery              = 10_000;
+        int       tileToWinForStatistics       = 2048;
+        boolean[] concurrentLayer              = {false, false};
+        int       gamesToPlayPerThreadForStats = 100;
+        boolean   replacingTraces              = true;
+        boolean   accumulatingTraces           = true;
 
-        boolean statisticsOnly               = false;
-        boolean runBackupStatistics          = true;
-        int     gamesToPlayPerThreadForStats = 2;
-        int     simulationsForStatistics     = 8;
-
+        lambdaList.add(0d);
         lambdaList.add(0.3d);
+        lambdaList.add(0.6d);
+        lambdaList.add(0.8d);
+
         int eligibilityTraceLength = -1;
 
-        alphaList.add(0.0025d);
-        annealingAlphaList.add(NO_ANNEALING); //Sin annealing
+        //        annealingAlphaList.add(2_000_000); //Sin annealing
+        //        annealingAlphaList.add(400_000);
+        //        annealingAlphaList.add(600_000);
+        annealingAlphaList.add(500_000);
+
+        alphaList.add(0.005d);
 
         gammaList.add(1d);
 
+        // Exploration rates constantes
         interpolatedExplorationRateInitialValues = null;
         interpolatedExplorationRateFinalValues = null;
         interpolatedExplorationRateStartInterpolation = null;
         interpolatedExplorationRateFinishInterpolation = null;
+        fixedExplorationRate.add(0d);
+        fixedExplorationRate.add(0.05d);
         fixedExplorationRate.add(0.1d);
+
+        // Exploration rates variables
+        //        fixedExplorationRate = null;
+        //        interpolatedExplorationRateInitialValues.add(0.1d);
+        //        interpolatedExplorationRateFinalValues.add(0.01d);
+        //        interpolatedExplorationRateStartInterpolation.add(0);
+        //        interpolatedExplorationRateFinishInterpolation.add(500_000);
 
         boolean createLogs = false;
 
         //============================== fin de configuraciones manuales ==================================
+
         runAllConfigs(
                 repetitions,
-                1,
+                maxTrainingThreads,
                 testDirName,
-                Arrays.asList("EncogNTupleLinearWithBiasSimplified_512", "NTupleBasicLinearSimplified_512"),
+                Arrays.asList("NTupleBasicTanH"),
                 alphaList,
                 annealingAlphaList,
                 lambdaList,
@@ -113,7 +132,7 @@ class TestGeneratorPerceptronVsNTuple {
                 replacingTraces,
                 accumulatingTraces,
                 filePath,
-                new boolean[]{true, false}
+                concurrentLayer
         );
 
         Toolkit.getDefaultToolkit().beep();

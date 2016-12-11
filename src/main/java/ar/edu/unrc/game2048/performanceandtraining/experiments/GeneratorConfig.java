@@ -26,23 +26,23 @@ package ar.edu.unrc.game2048.performanceandtraining.experiments;
 public
 class GeneratorConfig {
 
-    private final double   alpha;
-    private final int      annealingAlpha;
-    private final Object[] classParameters;
-    private final int      eligibilityTraceLength;
-    private final Double   explorationRate;
-    private final Double   explorationRateFinalValue;
-    private final Integer  explorationRateFinishInterpolation;
-    private final Double   explorationRateInitialValue;
-    private final Integer  explorationRateStartInterpolation;
-    private final double   gamma;
-    private final double   lambda;
-    private final int      number;
-    private final int      repetitions;
-    private final boolean  replaceTraces;
+    private final double  alpha;
+    private final int     annealingAlpha;
+    private final String  className;
+    private final int     eligibilityTraceLength;
+    private final Double  explorationRate;
+    private final Double  explorationRateFinalValue;
+    private final Integer explorationRateFinishInterpolation;
+    private final Double  explorationRateInitialValue;
+    private final Integer explorationRateStartInterpolation;
+    private final double  gamma;
+    private final double  lambda;
+    private final int     number;
+    private final int     repetitions;
+    private final boolean replaceTraces;
 
     /**
-     * @param classParameters
+     * @param className
      * @param alpha
      * @param annealingAlpha
      * @param lambda
@@ -58,7 +58,7 @@ class GeneratorConfig {
     public
     GeneratorConfig(
             final int repetitions,
-            final Object[] classParameters,
+            final String className,
             final double alpha,
             final int annealingAlpha,
             final double lambda,
@@ -85,7 +85,7 @@ class GeneratorConfig {
         this.explorationRateInitialValue = explorationRateInitialValue;
         this.explorationRateFinalValue = explorationRateFinalValue;
         this.explorationRateStartInterpolation = explorationRateStartInterpolation;
-        this.classParameters = classParameters;
+        this.className = className;
     }
 
     /**
@@ -108,8 +108,8 @@ class GeneratorConfig {
      * @return
      */
     public
-    Object[] getClassParameters() {
-        return classParameters;
+    String getClassName() {
+        return className;
     }
 
     public

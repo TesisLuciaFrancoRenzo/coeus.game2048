@@ -140,6 +140,22 @@ class ArgumentLoader {
     }
 
     /**
+     * Parsea arreglos de Strings.
+     *
+     * @param arrayString formato del estilo [clase 1, clase-2, clase_3]
+     *
+     * @return lista de Strings.
+     */
+    public static
+    List<String> parseStringArray(String arrayString) {
+
+        if (arrayString == null || !arrayString.startsWith("[") || !arrayString.endsWith("]")) {
+            throw new IllegalArgumentException("arrayString format unknown: " + arrayString);
+        }
+        return Arrays.asList(arrayString.substring(1, arrayString.length() - 1).split(","));
+    }
+
+    /**
      * @param id identificador del argumento.
      *
      * @return valor que contiene argumento.

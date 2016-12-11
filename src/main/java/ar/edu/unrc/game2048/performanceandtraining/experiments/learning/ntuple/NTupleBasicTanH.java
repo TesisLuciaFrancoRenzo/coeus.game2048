@@ -56,9 +56,6 @@ class NTupleBasicTanH
         LearningExperiment experiment   = new NTupleBasicTanH();
         boolean            printHistory = false;
 
-        //                        boolean statistics = true;
-        boolean statistics = false;
-
         double[] alphas = {0.005, 0.005};
         experiment.setAlpha(alphas);
         experiment.setLearningRateAdaptationToAnnealing(500_000);
@@ -77,18 +74,12 @@ class NTupleBasicTanH
 
         experiment.createLogs(false);
         //para calcular estadisticas
+        experiment.setStatisticsOnly(false);
         experiment.setTileToWinForStatistics(2_048);
-        if (statistics) {
-            experiment.setStatisticsOnly(true);
-            experiment.setRunStatisticsForBackups(true);
-            experiment.setGamesToPlayPerThreadForStatistics(1_000);
-            experiment.setSimulationsForStatistics(8);
-        } else {
-            experiment.setStatisticsOnly(false);
-            experiment.setRunStatisticsForBackups(false);
-            experiment.setGamesToPlayPerThreadForStatistics(0);
-            experiment.setSimulationsForStatistics(0);
-        }
+        experiment.setRunStatisticsForBackups(true);
+        experiment.setGamesToPlayPerThreadForStatistics(1_000);
+        experiment.setSimulationsForStatistics(8);
+
         experiment.setExportToExcel(true);
         experiment.start(-1, filePath, 0, true, null, printHistory);
 
@@ -122,7 +113,11 @@ class NTupleBasicTanH
     ) {
         return new TDLambdaLearning(
                 nTupleSystem,
-                afterState, (getAlpha() != null) ? getAlpha()[0] : null, getLambda(), getEligibilityTraceLength(), isReplaceEligibilityTraces(),
+                afterState,
+                (getAlpha() != null) ? getAlpha()[0] : null,
+                getLambda(),
+                getEligibilityTraceLength(),
+                isReplaceEligibilityTraces(),
                 getGamma(),
                 getConcurrencyInLayer(),
                 false

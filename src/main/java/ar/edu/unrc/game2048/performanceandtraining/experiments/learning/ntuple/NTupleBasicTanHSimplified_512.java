@@ -56,9 +56,6 @@ class NTupleBasicTanHSimplified_512
         LearningExperiment experiment = new NTupleBasicTanHSimplified_512();
         boolean            printHistory = false;
 
-        //        boolean statistics = true;
-        boolean statistics = false;
-
         double[] alphas = {0.0025, 0.0025};
         experiment.setAlpha(alphas);
         experiment.setLearningRateAdaptationToFixed();
@@ -76,19 +73,14 @@ class NTupleBasicTanHSimplified_512
         experiment.setConcurrencyInLayer(concurrentLayer);
 
         experiment.createLogs(false);
+
         //para calcular estadisticas
+        experiment.setStatisticsOnly(false);
         experiment.setTileToWinForStatistics(512);
-        if (statistics) {
-            experiment.setStatisticsOnly(true);
-            experiment.setRunStatisticsForBackups(true);
-            experiment.setGamesToPlayPerThreadForStatistics(100);
-            experiment.setSimulationsForStatistics(8);
-        } else {
-            experiment.setStatisticsOnly(false);
-            experiment.setRunStatisticsForBackups(false);
-            experiment.setGamesToPlayPerThreadForStatistics(0);
-            experiment.setSimulationsForStatistics(0);
-        }
+        experiment.setRunStatisticsForBackups(true);
+        experiment.setGamesToPlayPerThreadForStatistics(100);
+        experiment.setSimulationsForStatistics(8);
+
         experiment.setExportToExcel(true);
         experiment.start(-1, filePath, 0, true, null, printHistory);
 
@@ -121,8 +113,7 @@ class NTupleBasicTanHSimplified_512
             NTupleSystem nTupleSystem
     ) {
         return new TDLambdaLearning(nTupleSystem,
-                afterState,
-                (getAlpha() != null) ? getAlpha()[0] : null, getLambda(), getEligibilityTraceLength(), isReplaceEligibilityTraces(),
+                afterState, (getAlpha() != null) ? getAlpha()[0] : null, getLambda(), getEligibilityTraceLength(), isReplaceEligibilityTraces(),
                 getGamma(),
                 getConcurrencyInLayer(),
                 false
