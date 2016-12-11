@@ -114,15 +114,17 @@ class LearningExperiment<NeuralNetworkClass> {
     private boolean logsActivated = false;
     private INeuralNetworkInterfaceFor2048<NeuralNetworkClass> neuralNetworkInterfaceFor2048;
     private String                                             neuralNetworkName;
-    private boolean replaceEligibilityTraces = false;
-    private boolean runStatisticsForBackups  = false;
-    private int     saveBackupEvery          = 0;
-    private int     saveEvery                = 0;
+    private boolean replaceEligibilityTraces    = false;
+    private boolean runStatisticsForBackups     = false;
+    private int     sampleSizeForDynamicWinRate = 1000;
+    private int     saveBackupEvery             = 0;
+    private int     saveEvery                   = 0;
     private int simulationsForStatistics;
     private boolean statisticsOnly         = false;
     private int     tileToWinForStatistics = 2_048;
     private int                tileToWinForTraining;
     private LinkedList<Double> trainingTimes;
+    private WinRateEstimator   winRateEstimator;
 
     private static
     void printErrorInFile(
@@ -253,18 +255,11 @@ class LearningExperiment<NeuralNetworkClass> {
     }
 
     /**
-     * Establece el nombre del experimento basado en el nombre de la clase {@code experimentClass}.
-     *
-     * @param experimentClass clase de la cual extraer el nombre del experimento.
+     * @param experimentName nombre del experimento.
      */
     public
-    void setExperimentName(Class experimentClass) {
-        String className = experimentClass.getName();
-        int    lastDot   = className.lastIndexOf('.');
-        if (lastDot != -1) {
-            className = className.substring(lastDot + 1);
-        }
-        experimentName = className;
+    void setExperimentName(String experimentName) {
+        this.experimentName = experimentName;
     }
 
     /**
@@ -399,6 +394,16 @@ class LearningExperiment<NeuralNetworkClass> {
     public
     void setNeuralNetworkName(String neuralNetworkName) {
         this.neuralNetworkName = neuralNetworkName;
+    }
+
+    public
+    int getSampleSizeForDynamicWinRate() {
+        return sampleSizeForDynamicWinRate;
+    }
+
+    public
+    void setSampleSizeForDynamicWinRate(int sampleSizeForDynamicWinRate) {
+        this.sampleSizeForDynamicWinRate = sampleSizeForDynamicWinRate;
     }
 
     /**
@@ -600,6 +605,8 @@ class LearningExperiment<NeuralNetworkClass> {
         } else {
             historyFile = null;
         }
+        winRateEstimator = new WinRateEstimator(sampleSizeForDynamicWinRate, tileToWinForStatistics, 2);
+
         try {
             Date now = new Date();
             if (createPerceptronFile) {
@@ -690,7 +697,10 @@ class LearningExperiment<NeuralNetworkClass> {
 
             //creamos el juego
             Game2048<NeuralNetworkClass> game = new Game2048<>(neuralNetworkInterfaceFor2048.getPerceptronConfiguration(),
-                    neuralNetworkInterfaceFor2048.getNTupleConfiguration(), tileToWinForTraining, delayPerMove, printHistory
+                    neuralNetworkInterfaceFor2048.getNTupleConfiguration(),
+                    tileToWinForTraining,
+                    delayPerMove,
+                    printHistory
             );
 
             if (!statisticsOnly) {
@@ -838,11 +848,18 @@ class LearningExperiment<NeuralNetworkClass> {
     }
 
     /**
-     * @param experimentName nombre del experimento.
+     * Establece el nombre del experimento basado en el nombre de la clase {@code experimentClass}.
+     *
+     * @param experimentClass clase de la cual extraer el nombre del experimento.
      */
     public
-    void setExperimentName(String experimentName) {
-        this.experimentName = experimentName;
+    void setExperimentName(Class experimentClass) {
+        String className = experimentClass.getName();
+        int    lastDot   = className.lastIndexOf('.');
+        if (lastDot != -1) {
+            className = className.substring(lastDot + 1);
+        }
+        experimentName = className;
     }
 
     /**
@@ -1044,6 +1061,8 @@ class LearningExperiment<NeuralNetworkClass> {
             }
 
             int percent = (int) (((i * 1d) / (gamesToPlay * 1d)) * 100d);
+            winRateEstimator.addSample(game.getMaxNumber());
+
             if (numberForShow != -1) {
                 System.out.println(numberForShow +
                                    "- Juego número " +
@@ -1053,7 +1072,7 @@ class LearningExperiment<NeuralNetworkClass> {
                                    "%)    puntaje = " +
                                    game.getScore() +
                                    "    ficha max = " +
-                                   game.getMaxNumber() +
+                                   game.getMaxNumber() + " (winRate=\"" + winRateEstimator.printableAverage() + "\")" +
                                    "    turno alcanzado = " +
                                    game.getLastTurn() +
                                    "      current alpha = " +
@@ -1066,12 +1085,13 @@ class LearningExperiment<NeuralNetworkClass> {
                                    "%)    puntaje = " +
                                    game.getScore() +
                                    "    ficha max = " +
-                                   game.getMaxNumber() +
+                                   game.getMaxNumber() + " (winRate=\"" + winRateEstimator.printableAverage() + "\")" +
                                    "    turno alcanzado = " +
                                    game.getLastTurn() +
                                    "      current alpha = " +
                                    Arrays.toString(learningAlgorithm.getCurrentAlpha()));
             }
+
             if (printStream != null) {
                 printStream.println(game.getScore() + "\t" + game.getMaxNumber());
             }

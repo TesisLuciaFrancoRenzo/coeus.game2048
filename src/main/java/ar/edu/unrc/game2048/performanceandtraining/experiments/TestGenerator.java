@@ -177,7 +177,7 @@ class TestGenerator {
 
         //============================== configuraciones manuales ==================================
         boolean statistics = false;
-        //        boolean   statistics                   = true;
+        //                boolean   statistics                   = true;
         int       repetitions                  = 1;
         int       maxTrainingThreads           = 8;
         boolean   doBackupStatistics           = true;
