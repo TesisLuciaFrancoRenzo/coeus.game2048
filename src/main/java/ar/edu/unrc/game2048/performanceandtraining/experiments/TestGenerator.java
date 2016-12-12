@@ -173,59 +173,26 @@ class TestGenerator {
         List<Integer> interpolatedExplorationRateFinishInterpolation = new ArrayList<>();
         List<Double>  interpolatedExplorationRateInitialValues       = new ArrayList<>();
         List<Integer> interpolatedExplorationRateStartInterpolation  = new ArrayList<>();
-
-        //============================== configuraciones manuales ==================================
-        String experimentDirName = "NTupleBasicTanH-Lambdas";
-        experimentClassNameList.add("NTupleBasicTanH");
-
-        int       repetitions                  = 1;
-        int       maxTrainingThreads           = 8;
-        int       simulationsForStatistics     = 8;
-        boolean   runBackupStatistics          = true;
-        boolean   statisticsOnly               = false;
-        int       gamesToPlay                  = 500_000;
-        int       saveEvery                    = 2_000;
-        int       saveBackupEvery              = 10_000;
-        int       tileToWinForStatistics       = 2048;
-        boolean[] concurrentLayer              = {false, false};
-        int       gamesToPlayPerThreadForStats = 100;
-        boolean   replacingTraces              = true;
-        boolean   accumulatingTraces           = true;
-
-        lambdaList.add(0d);
-        lambdaList.add(0.3d);
-        lambdaList.add(0.6d);
-        lambdaList.add(0.8d);
-
-        int eligibilityTraceLength = -1;
-
-        //        annealingAlphaList.add(2_000_000); //Sin annealing
-        //        annealingAlphaList.add(400_000);
-        //        annealingAlphaList.add(600_000);
-        annealingAlphaList.add(500_000);
-
-        alphaList.add(0.005d);
-
-        gammaList.add(1d);
-
-        // Exploration rates constantes
-        interpolatedExplorationRateInitialValues = null;
-        interpolatedExplorationRateFinalValues = null;
-        interpolatedExplorationRateStartInterpolation = null;
-        interpolatedExplorationRateFinishInterpolation = null;
-        fixedExplorationRate.add(0d);
-
-        // Exploration rates variables
-        //        fixedExplorationRate = null;
-        //        interpolatedExplorationRateInitialValues.add(0.1d);
-        //        interpolatedExplorationRateFinalValues.add(0.01d);
-        //        interpolatedExplorationRateStartInterpolation.add(0);
-        //        interpolatedExplorationRateFinishInterpolation.add(500_000);
-
-        boolean createLogs = false;
+        String        experimentDirName;
+        int           repetitions;
+        int           maxTrainingThreads;
+        int           simulationsForStatistics;
+        boolean       runBackupStatistics;
+        boolean       statisticsOnly;
+        int           gamesToPlay;
+        int           saveEvery;
+        int           saveBackupEvery;
+        int           tileToWinForStatistics;
+        boolean[]     concurrentLayer;
+        int           gamesToPlayPerThreadForStats;
+        boolean       replacingTraces;
+        boolean       accumulatingTraces;
+        int           eligibilityTraceLength;
+        boolean       createLogs;
         //============================== fin de configuraciones manuales ==================================
 
         if (args.length != 0) {
+
             lambdaList.clear();
             experimentClassNameList.clear();
             alphaList.clear();
@@ -238,33 +205,40 @@ class TestGenerator {
             interpolatedExplorationRateStartInterpolation.clear();
 
             ArgumentLoader arguments = new ArgumentLoader(args);
-            maxTrainingThreads = Integer.parseInt(arguments.getArg("maxTrainingThreads"));
-            eligibilityTraceLength = Integer.parseInt(arguments.getArg("eligibilityTraceLength"));
-            simulationsForStatistics = Integer.parseInt(arguments.getArg("simulationsForStatistics"));
-            tileToWinForStatistics = Integer.parseInt(arguments.getArg("tileToWinForStatistics"));
-            runBackupStatistics = Boolean.parseBoolean(arguments.getArg("runBackupStatistics"));
-            statisticsOnly = Boolean.parseBoolean(arguments.getArg("statisticsOnly"));
+
+            experimentDirName = arguments.getArg("experimentDirName");
+            experimentClassNameList = ArgumentLoader.parseStringArray(arguments.getArg("experimentClassNameList"));
             createLogs = Boolean.parseBoolean(arguments.getArg("createLogs"));
-            replacingTraces = Boolean.parseBoolean(arguments.getArg("replacingTraces"));
-            accumulatingTraces = Boolean.parseBoolean(arguments.getArg("accumulatingTraces"));
+
+            repetitions = Integer.parseInt(arguments.getArg("repetitions"));
+            maxTrainingThreads = Integer.parseInt(arguments.getArg("maxTrainingThreads"));
+
             gamesToPlay = Integer.parseInt(arguments.getArg("gamesToPlay"));
             gamesToPlayPerThreadForStats = Integer.parseInt(arguments.getArg("gamesToPlayPerThreadForStats"));
             saveEvery = Integer.parseInt(arguments.getArg("saveEvery"));
             saveBackupEvery = Integer.parseInt(arguments.getArg("saveBackupEvery"));
-            repetitions = Integer.parseInt(arguments.getArg("repetitions"));
-            experimentDirName = arguments.getArg("experimentDirName");
-            experimentClassNameList = ArgumentLoader.parseStringArray(arguments.getArg("experimentClassName"));
+
+            statisticsOnly = Boolean.parseBoolean(arguments.getArg("statisticsOnly"));
+            simulationsForStatistics = Integer.parseInt(arguments.getArg("simulationsForStatistics"));
+            tileToWinForStatistics = Integer.parseInt(arguments.getArg("tileToWinForStatistics"));
+            runBackupStatistics = Boolean.parseBoolean(arguments.getArg("runBackupStatistics"));
+
             lambdaList = ArgumentLoader.parseDoubleArray(arguments.getArg("lambdaList"));
+            eligibilityTraceLength = Integer.parseInt(arguments.getArg("eligibilityTraceLength"));
+            replacingTraces = Boolean.parseBoolean(arguments.getArg("replacingTraces"));
+            accumulatingTraces = Boolean.parseBoolean(arguments.getArg("accumulatingTraces"));
+
             annealingAlphaList = ArgumentLoader.parseIntegerArray(arguments.getArg("annealingAlphaList"));
             alphaList = ArgumentLoader.parseDoubleArray(arguments.getArg("alphaList"));
             gammaList = ArgumentLoader.parseDoubleArray(arguments.getArg("gammaList"));
-            concurrentLayer = ArgumentLoader.parseBooleanArray(arguments.getArg("concurrentLayer"));
+            concurrentLayer = ArgumentLoader.parseBooleanArray(arguments.getArg("concurrentLayerList"));
             try {
-                interpolatedExplorationRateInitialValues = ArgumentLoader.parseDoubleArray(arguments.getArg("explorationRateInitialValue"));
-                interpolatedExplorationRateFinalValues = ArgumentLoader.parseDoubleArray(arguments.getArg("explorationRateFinalValues"));
-                interpolatedExplorationRateStartInterpolation = ArgumentLoader.parseIntegerArray(arguments.getArg("explorationRateStartInterpolation"));
+                interpolatedExplorationRateInitialValues = ArgumentLoader.parseDoubleArray(arguments.getArg("explorationRateInitialValueList"));
+                interpolatedExplorationRateFinalValues = ArgumentLoader.parseDoubleArray(arguments.getArg("explorationRateFinalValuesList"));
+                interpolatedExplorationRateStartInterpolation = ArgumentLoader.parseIntegerArray(arguments.getArg(
+                        "explorationRateStartInterpolationList"));
                 interpolatedExplorationRateFinishInterpolation = ArgumentLoader.parseIntegerArray(arguments.getArg(
-                        "explorationRateFinishInterpolation"));
+                        "explorationRateFinishInterpolationList"));
                 if (interpolatedExplorationRateFinalValues.size() != interpolatedExplorationRateFinalValues.size() ||
                     interpolatedExplorationRateFinalValues.size() != interpolatedExplorationRateStartInterpolation.size() ||
                     interpolatedExplorationRateInitialValues.size() != interpolatedExplorationRateFinishInterpolation.size()) {
@@ -273,40 +247,53 @@ class TestGenerator {
                 }
                 fixedExplorationRate = null;
             } catch (Exception e) {
-                interpolatedExplorationRateInitialValues = null;
-                interpolatedExplorationRateFinalValues = null;
-                interpolatedExplorationRateStartInterpolation = null;
-                interpolatedExplorationRateFinishInterpolation = null;
-                fixedExplorationRate = ArgumentLoader.parseDoubleArray(arguments.getArg("explorationRate"));
+                try {
+                    interpolatedExplorationRateInitialValues = null;
+                    interpolatedExplorationRateFinalValues = null;
+                    interpolatedExplorationRateStartInterpolation = null;
+                    interpolatedExplorationRateFinishInterpolation = null;
+                    fixedExplorationRate = ArgumentLoader.parseDoubleArray(arguments.getArg("fixedExplorationRateList"));
+                } catch (Exception e2) {
+                    System.err.println("No se encuentran parámetros para explorationRate constantes o variables");
+                    System.exit(-1);
+                }
             }
+
+            runAllConfigs(
+                    repetitions,
+                    maxTrainingThreads,
+                    experimentDirName,
+                    experimentClassNameList,
+                    alphaList,
+                    annealingAlphaList,
+                    lambdaList,
+                    eligibilityTraceLength,
+                    gammaList,
+                    statisticsOnly,
+                    runBackupStatistics,
+                    createLogs,
+                    gamesToPlay,
+                    saveEvery,
+                    saveBackupEvery,
+                    gamesToPlayPerThreadForStats,
+                    tileToWinForStatistics,
+                    simulationsForStatistics,
+                    fixedExplorationRate,
+                    interpolatedExplorationRateInitialValues,
+                    interpolatedExplorationRateFinalValues,
+                    interpolatedExplorationRateStartInterpolation,
+                    interpolatedExplorationRateFinishInterpolation,
+                    replacingTraces,
+                    accumulatingTraces,
+                    filePath,
+                    concurrentLayer
+            );
+
+            Toolkit.getDefaultToolkit().beep();
+        } else {
+            System.err.println("No se encuentran parámetros de configuración"); //TODO detallar
+            System.exit(-1);
         }
-
-        runAllConfigs(repetitions,
-                maxTrainingThreads,
-                experimentDirName, experimentClassNameList,
-                alphaList,
-                annealingAlphaList,
-                lambdaList, eligibilityTraceLength,
-                gammaList,
-                statisticsOnly, runBackupStatistics,
-                createLogs,
-                gamesToPlay,
-                saveEvery,
-                saveBackupEvery, gamesToPlayPerThreadForStats,
-                tileToWinForStatistics,
-                simulationsForStatistics,
-                fixedExplorationRate,
-                interpolatedExplorationRateInitialValues,
-                interpolatedExplorationRateFinalValues,
-                interpolatedExplorationRateStartInterpolation,
-                interpolatedExplorationRateFinishInterpolation,
-                replacingTraces,
-                accumulatingTraces,
-                filePath,
-                concurrentLayer
-        );
-
-        Toolkit.getDefaultToolkit().beep();
     }
 
     @SuppressWarnings("ForLoopReplaceableByForEach")

@@ -142,7 +142,7 @@ class ArgumentLoader {
     /**
      * Parsea arreglos de Strings.
      *
-     * @param arrayString formato del estilo [clase 1, clase-2, clase_3]
+     * @param arrayString formato del estilo [clase1,clase-2,clase_3]
      *
      * @return lista de Strings.
      */

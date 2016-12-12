@@ -1,0 +1,23 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Experiment: PerceptronVsNTuple (NTuple part)" type="Application" factoryName="Application">
+    <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+      <pattern>
+        <option name="PATTERN" value="ar.edu.unrc.game2048.performanceandtraining.experiments.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <extension name="org.jetbrains.fluid.java.FluidRunConfigurationExtension" fluid.enabledBundledTracers="false" fluid.enabledBundledTracers.list="" />
+    <option name="MAIN_CLASS_NAME" value="ar.edu.unrc.game2048.performanceandtraining.experiments.TestGenerator" />
+    <option name="VM_PARAMETERS" value="" />
+    <option name="PROGRAM_PARAMETERS" value="experimentDirName=PerceptronVsNTuple experimentClassNameList=[NTupleBasicLinearSimplified_512] createLogs=false repetitions=4 maxTrainingThreads=1 gamesToPlay=12000 gamesToPlayPerThreadForStats=100 saveEvery=100 saveBackupEvery=300 statisticsOnly=false simulationsForStatistics=8 tileToWinForStatistics=512 runBackupStatistics=true lambdaList=[0.3] eligibilityTraceLength=-1 replacingTraces=true accumulatingTraces=false annealingAlphaList=[-1] alphaList=[0.0025] gammaList=[1] concurrentLayerList=[false,false] fixedExplorationRateList=[0.1]" />
+    <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
+    <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+    <option name="ALTERNATIVE_JRE_PATH" />
+    <option name="ENABLE_SWING_INSPECTOR" value="false" />
+    <option name="ENV_VARIABLES" />
+    <option name="PASS_PARENT_ENVS" value="true" />
+    <module name="coeus.game2048_main" />
+    <envs />
+    <method />
+  </configuration>
+</component>
