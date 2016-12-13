@@ -505,7 +505,7 @@ class TestGenerator {
             }
         }
 
-        experiments.stream().forEachOrdered(expConfig -> {
+        experiments.forEach(expConfig -> {
             runOneConfig(experimentDirName,
                     true,
                     runStatisticsForBackups,

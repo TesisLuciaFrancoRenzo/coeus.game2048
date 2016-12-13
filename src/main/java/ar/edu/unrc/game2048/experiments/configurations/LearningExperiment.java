@@ -39,8 +39,6 @@ import static ar.edu.unrc.game2048.experiments.TestGenerator.getMsj;
 /**
  * Experimento especializado para aprendizaje de redes neuronales.
  *
- * @param tipo de red neuronal a entrenar
- *
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
 public abstract
@@ -255,18 +253,11 @@ class LearningExperiment {
     }
 
     /**
-     * Establece el nombre del experimento basado en el nombre de la clase {@code experimentClass}.
-     *
-     * @param experimentClass clase de la cual extraer el nombre del experimento.
+     * @param experimentName nombre del experimento.
      */
     public
-    void setExperimentName(Class experimentClass) {
-        String className = experimentClass.getName();
-        int    lastDot   = className.lastIndexOf('.');
-        if (lastDot != -1) {
-            className = className.substring(lastDot + 1);
-        }
-        experimentName = className;
+    void setExperimentName(String experimentName) {
+        this.experimentName = experimentName;
     }
 
     /**
@@ -856,11 +847,18 @@ class LearningExperiment {
     }
 
     /**
-     * @param experimentName nombre del experimento.
+     * Establece el nombre del experimento basado en el nombre de la clase {@code experimentClass}.
+     *
+     * @param experimentClass clase de la cual extraer el nombre del experimento.
      */
     public
-    void setExperimentName(String experimentName) {
-        this.experimentName = experimentName;
+    void setExperimentName(Class experimentClass) {
+        String className = experimentClass.getName();
+        int    lastDot   = className.lastIndexOf('.');
+        if (lastDot != -1) {
+            className = className.substring(lastDot + 1);
+        }
+        experimentName = className;
     }
 
     /**
@@ -1039,10 +1037,17 @@ class LearningExperiment {
             elapsedTime += System.nanoTime() - start;
             if (game.isPrintHistory()) {
                 try (BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(historyFile, true), "UTF-8"))) {
-                    out.append("\n========== NEW GAME (" + i + ")==========\n");
-                    out.append(game.getHistoryLog() + "\n");
-                    out.append("score=" + game.getScore() + "\n");
-                    out.append("turn=" + game.getLastTurn() + "\n");
+                    out.append("\n========== NEW GAME (")
+                       .append(Integer.toString(i))
+                       .append(")==========\n")
+                       .append(game.getHistoryLog())
+                       .append("\n")
+                       .append("score=")
+                       .append(Integer.toString(game.getScore()))
+                       .append("\n")
+                       .append("turn=")
+                       .append(Integer.toString(game.getLastTurn()))
+                       .append("\n");
                 }
             }
             if (learningAlgorithm.canCollectStatistics()) {
@@ -1072,7 +1077,11 @@ class LearningExperiment {
                                    percent +
                                    "%)    puntaje = " +
                                    game.getScore() +
-                                   "    ficha max = " + game.getMaxNumber() + " (winRate=\"" + winRateEstimator.printableAverage() + "\")" +
+                                   "    ficha max = " +
+                                   game.getMaxNumber() +
+                                   " (winRate=\"" +
+                                   winRateEstimator.printableAverage() +
+                                   "\")" +
                                    "    turno alcanzado = " +
                                    game.getLastTurn() +
                                    "      current alpha = " +
@@ -1084,7 +1093,11 @@ class LearningExperiment {
                                    percent +
                                    "%)    puntaje = " +
                                    game.getScore() +
-                                   "    ficha max = " + game.getMaxNumber() + " (winRate=\"" + winRateEstimator.printableAverage() + "\")" +
+                                   "    ficha max = " +
+                                   game.getMaxNumber() +
+                                   " (winRate=\"" +
+                                   winRateEstimator.printableAverage() +
+                                   "\")" +
                                    "    turno alcanzado = " +
                                    game.getLastTurn() +
                                    "      current alpha = " +
