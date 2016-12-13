@@ -1,7 +1,7 @@
 package ar.edu.unrc.game2048;
 
 import ar.edu.unrc.coeus.tdlearning.interfaces.*;
-import ar.edu.unrc.game2048.performanceandtraining.experiments.learning.greedy.GreedyStateProbability;
+import ar.edu.unrc.game2048.experiments.statistics.greedy.GreedyStateProbability;
 import org.encog.ml.data.MLData;
 import org.encog.ml.data.basic.BasicMLData;
 import org.encog.neural.networks.BasicNetwork;
@@ -30,30 +30,30 @@ import static java.lang.Thread.sleep;
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
 /**
- * @param <NeuralNetworkClass>
+ * @param
  *
  * @author Konstantin Bulenkov, lucia bressan, franco pellegrini, renzo bianchini
  */
 public final
-class Game2048<NeuralNetworkClass>
+class Game2048
         extends JPanel
         implements IGame, IProblemToTrain {
     private static final Color  BG_COLOR     = new Color(0xbb_ada0);
     private static final String FONT_NAME    = "Arial";
     private static final int    TILES_MARGIN = 16;
     private static final int    TILE_SIZE    = 64;
-    private final int                                                delayPerMove;
-    private final JFrame                                             gameFrame;
-    private final NTupleConfiguration2048                            nTupleSystemConfiguration;
-    private final NeuralNetworkConfiguration2048<NeuralNetworkClass> neuralNetworkConfiguration;
-    private final int                                                numberToWin;
-    private final boolean                                            repaint;
-    private final TileContainer                                      tileContainer;
-    protected     StringBuilder                                      historyLog;
-    protected     boolean                                            printHistory;
-    private       GameBoard<NeuralNetworkClass>                      board;
-    private       ArrayList<GameBoard<NeuralNetworkClass>>           futurePossibleBoards;
-    private       GameBoard<NeuralNetworkClass>                      lastInitialStateForPossibleActions;
+    private final int                     delayPerMove;
+    private final JFrame                  gameFrame;
+    private final NTupleConfiguration2048 nTupleSystemConfiguration;
+    private final EncogConfiguration2048  neuralNetworkConfiguration;
+    private final int                     numberToWin;
+    private final boolean                 repaint;
+    private final TileContainer           tileContainer;
+    protected     StringBuilder           historyLog;
+    protected     boolean                 printHistory;
+    private       GameBoard               board;
+    private       ArrayList<GameBoard>    futurePossibleBoards;
+    private       GameBoard               lastInitialStateForPossibleActions;
     private int     maxNumber     = 0;
     private int     maxNumberCode = 0;
     private boolean myLoose       = false;
@@ -70,7 +70,7 @@ class Game2048<NeuralNetworkClass>
      */
     public
     Game2048(
-            NeuralNetworkConfiguration2048<NeuralNetworkClass> perceptronConfiguration,
+            EncogConfiguration2048 perceptronConfiguration,
             NTupleConfiguration2048 nTupleSystemConfiguration,
             int delayPerMove,
             boolean printHistory
@@ -90,7 +90,7 @@ class Game2048<NeuralNetworkClass>
     @SuppressWarnings({"LeakingThisInConstructor", "OverridableMethodCallInConstructor"})
     public
     Game2048(
-            NeuralNetworkConfiguration2048<NeuralNetworkClass> perceptronConfiguration,
+            EncogConfiguration2048 perceptronConfiguration,
             NTupleConfiguration2048 nTupleSystemConfiguration,
             int numberToWin,
             int delayPerMove,
@@ -226,7 +226,7 @@ class Game2048<NeuralNetworkClass>
             IState turnInitialState,
             IAction action
     ) {
-        GameBoard<NeuralNetworkClass> futureBoard = (GameBoard<NeuralNetworkClass>) turnInitialState.getCopy();
+        GameBoard futureBoard = (GameBoard) turnInitialState.getCopy();
         switch ((Action) action) {
             case left: {
                 if (lastInitialStateForPossibleActions != null && lastInitialStateForPossibleActions.equals(turnInitialState)) {
@@ -281,7 +281,7 @@ class Game2048<NeuralNetworkClass>
     @Override
     public
     IState computeNextTurnStateFromAfterState(IState s1) {
-        GameBoard<NeuralNetworkClass> finalBoard = (GameBoard<NeuralNetworkClass>) s1.getCopy();
+        GameBoard finalBoard = (GameBoard) s1.getCopy();
         if (finalBoard.isNeedToAddTile()) {
             finalBoard.addTile(true);
         }
@@ -385,7 +385,7 @@ class Game2048<NeuralNetworkClass>
 
                 //cargamos la entrada a la red
                 MLData   inputData = new BasicMLData(inputs);
-                MLData   output    = ((BasicNetwork) neuralNetworkConfiguration.getNeuralNetwork()).compute(inputData);
+                MLData   output    = neuralNetworkConfiguration.getNeuralNetwork().compute(inputData);
                 Double[] out       = new Double[output.getData().length];
                 for (int i = 0; i < output.size(); i++) {
                     out[i] = output.getData()[i];
@@ -409,7 +409,7 @@ class Game2048<NeuralNetworkClass>
      * @return the board
      */
     public
-    GameBoard<NeuralNetworkClass> getBoard() {
+    GameBoard getBoard() {
         return board;
     }
 
@@ -429,7 +429,7 @@ class Game2048<NeuralNetworkClass>
     private
     Tile[] getLine(
             int index,
-            GameBoard<NeuralNetworkClass> board
+            GameBoard board
     ) {
         Tile[] result = new Tile[4];
         for (int i = 0; i < 4; i++) {
@@ -464,7 +464,7 @@ class Game2048<NeuralNetworkClass>
      * @return configuración de la red neuronal utilizada.
      */
     public
-    NeuralNetworkConfiguration2048<NeuralNetworkClass> getNeuralNetworkConfiguration() {
+    EncogConfiguration2048 getNeuralNetworkConfiguration() {
         return neuralNetworkConfiguration;
     }
 
@@ -508,8 +508,8 @@ class Game2048<NeuralNetworkClass>
      * tile.
      */
     public
-    GameBoard<NeuralNetworkClass> left(
-            GameBoard<NeuralNetworkClass> board
+    GameBoard left(
+            GameBoard board
     ) {
         boolean needAddTile = false;
         board.setPartialScore(0);
@@ -529,42 +529,41 @@ class Game2048<NeuralNetworkClass>
         return board;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public
     ArrayList<IAction> listAllPossibleActions(IState initialState) {
         ArrayList<IAction> actions = new ArrayList<>(4);
         lastInitialStateForPossibleActions = null;
-        GameBoard state = (GameBoard<NeuralNetworkClass>) initialState;
+        GameBoard state = (GameBoard) initialState;
         if (!initialState.isTerminalState()) {
             IStatePerceptron afterState = computeAfterState(state, Action.left);
-            if (!state.isEqual((GameBoard<NeuralNetworkClass>) afterState)) {
+            if (!state.isEqual((GameBoard) afterState)) {
                 actions.add(Action.left);
-                futurePossibleBoards.add(0, (GameBoard<NeuralNetworkClass>) afterState);
+                futurePossibleBoards.add(0, (GameBoard) afterState);
             } else {
                 futurePossibleBoards.add(0, null);
             }
 
             afterState = computeAfterState(state, right);
-            if (!state.isEqual((GameBoard<NeuralNetworkClass>) afterState)) {
+            if (!state.isEqual((GameBoard) afterState)) {
                 actions.add(right);
-                futurePossibleBoards.add(1, (GameBoard<NeuralNetworkClass>) afterState);
+                futurePossibleBoards.add(1, (GameBoard) afterState);
             } else {
                 futurePossibleBoards.add(1, null);
             }
 
             afterState = computeAfterState(state, up);
-            if (!state.isEqual((GameBoard<NeuralNetworkClass>) afterState)) {
+            if (!state.isEqual((GameBoard) afterState)) {
                 actions.add(up);
-                futurePossibleBoards.add(2, (GameBoard<NeuralNetworkClass>) afterState);
+                futurePossibleBoards.add(2, (GameBoard) afterState);
             } else {
                 futurePossibleBoards.add(2, null);
             }
 
             afterState = computeAfterState(state, down);
-            if (!state.isEqual((GameBoard<NeuralNetworkClass>) afterState)) {
+            if (!state.isEqual((GameBoard) afterState)) {
                 actions.add(down);
-                futurePossibleBoards.add(3, (GameBoard<NeuralNetworkClass>) afterState);
+                futurePossibleBoards.add(3, (GameBoard) afterState);
             } else {
                 futurePossibleBoards.add(3, null);
             }
@@ -584,13 +583,13 @@ class Game2048<NeuralNetworkClass>
             IState afterState
     ) {
         //noinspection unchecked
-        return ((GameBoard<NeuralNetworkClass>) afterState).listAllPossibleNextTurnStateFromAfterState();
+        return ((GameBoard) afterState).listAllPossibleNextTurnStateFromAfterState();
     }
 
     private
     Tile[] mergeLine(
             Tile[] oldLine,
-            GameBoard<NeuralNetworkClass> afterState
+            GameBoard afterState
     ) {
         LinkedList<Tile> list = new LinkedList<>();
         for (int i = 0; i < 4 && !oldLine[i].isEmpty(); i++) {
@@ -711,8 +710,8 @@ class Game2048<NeuralNetworkClass>
             }
             if (afterState != null) {
                 turnNumber++;
-                myScore += ((GameBoard<NeuralNetworkClass>) afterState).getPartialScore();
-                board = (GameBoard<NeuralNetworkClass>) computeNextTurnStateFromAfterState(afterState);
+                myScore += ((GameBoard) afterState).getPartialScore();
+                board = (GameBoard) computeNextTurnStateFromAfterState(afterState);
                 if (board.isAWin()) {
                     myWin = true;
                 }
@@ -749,7 +748,7 @@ class Game2048<NeuralNetworkClass>
         turnNumber = 0;
         myWin = false;
         myLoose = false;
-        board = new GameBoard<>(this, tileContainer);
+        board = new GameBoard(this, tileContainer);
         board.clearBoard(tileContainer);
         board.updateInternalState(false);
         board.addTile(false);
@@ -759,7 +758,7 @@ class Game2048<NeuralNetworkClass>
     private
     void rotate(
             int angle,
-            GameBoard<NeuralNetworkClass> original
+            GameBoard original
     ) {
         arraycopy(rotateBoardTiles(angle, original.getTiles()), 0, original.getTiles(), 0, TILE_NUMBER);
     }
@@ -772,8 +771,8 @@ class Game2048<NeuralNetworkClass>
             throw new IllegalArgumentException("nextTurnState can't be null");
         }
         turnNumber++;
-        myScore += ((GameBoard<NeuralNetworkClass>) nextTurnState).getPartialScore();
-        board = (GameBoard<NeuralNetworkClass>) nextTurnState;
+        myScore += ((GameBoard) nextTurnState).getPartialScore();
+        board = (GameBoard) nextTurnState;
 
         if (board.isAWin()) {
             myWin = true;
@@ -801,7 +800,7 @@ class Game2048<NeuralNetworkClass>
     void setLine(
             int index,
             Tile[] re,
-            GameBoard<NeuralNetworkClass> board
+            GameBoard board
     ) {
         arraycopy(re, 0, board.getTiles(), index * 4, 4);
     }

@@ -18,7 +18,7 @@
  */
 package ar.edu.unrc.game2048;
 
-import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.ConfigPerceptronBoard_32768;
+import ar.edu.unrc.game2048.experiments.configurations.perceptrons.ConfigPerceptronBoard_32768;
 import org.junit.*;
 
 /**

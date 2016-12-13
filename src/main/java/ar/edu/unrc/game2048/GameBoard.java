@@ -22,8 +22,8 @@ import ar.edu.unrc.coeus.tdlearning.interfaces.IState;
 import ar.edu.unrc.coeus.tdlearning.interfaces.IStateNTuple;
 import ar.edu.unrc.coeus.tdlearning.interfaces.IStatePerceptron;
 import ar.edu.unrc.coeus.tdlearning.training.ntuple.SamplePointValue;
-import ar.edu.unrc.game2048.performanceandtraining.configurations.perceptrons.inputs.InputNTupleList;
-import ar.edu.unrc.game2048.performanceandtraining.experiments.learning.greedy.GreedyStateProbability;
+import ar.edu.unrc.game2048.experiments.configurations.perceptrons.inputs.InputNTupleList;
+import ar.edu.unrc.game2048.experiments.statistics.greedy.GreedyStateProbability;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,29 +34,29 @@ import static java.lang.Math.random;
 import static java.lang.System.arraycopy;
 
 /**
- * @param <NeuralNetworkClass>
+ * @param
  *
  * @author lucia bressan, franco pellegrini, renzo bianchini pellegrini
  */
 public
-class GameBoard<NeuralNetworkClass>
+class GameBoard
         implements IStatePerceptron, IStateNTuple {
     /**
      *
      */
     public static final int TILE_NUMBER = 4 * 4;
-    private final Game2048<NeuralNetworkClass> game;
-    private final List<Double>                 normalizedPerceptronInput;
-    private final TileContainer                tileContainer;
-    private       List<Integer>                availableSpaceList;
-    private       boolean                      canMove;
-    private       boolean                      iWin;
-    private       boolean                      isFull;
-    private       int                          maxTileNumberCode;
-    private       int                          maxTileNumberValue;
-    private       boolean                      needToAddTile;
-    private       int                          partialScore;
-    private       Tile[]                       tiles;
+    private final Game2048      game;
+    private final List<Double>  normalizedPerceptronInput;
+    private final TileContainer tileContainer;
+    private       List<Integer> availableSpaceList;
+    private       boolean       canMove;
+    private       boolean       iWin;
+    private       boolean       isFull;
+    private       int           maxTileNumberCode;
+    private       int           maxTileNumberValue;
+    private       boolean       needToAddTile;
+    private       int           partialScore;
+    private       Tile[]        tiles;
 
     /**
      * @param game
@@ -64,7 +64,7 @@ class GameBoard<NeuralNetworkClass>
      */
     public
     GameBoard(
-            Game2048<NeuralNetworkClass> game,
+            Game2048 game,
             TileContainer tileContainer
     ) {
         iWin = false;
@@ -232,7 +232,7 @@ class GameBoard<NeuralNetworkClass>
         if (!Objects.equals(getClass(), obj.getClass())) {
             return false;
         }
-        final GameBoard<NeuralNetworkClass> other = (GameBoard<NeuralNetworkClass>) obj;
+        final GameBoard other = (GameBoard) obj;
         return iWin == other.iWin &&
                canMove == other.canMove &&
                isFull == other.isFull &&
@@ -249,7 +249,7 @@ class GameBoard<NeuralNetworkClass>
     @Override
     public
     IState getCopy() {
-        GameBoard<NeuralNetworkClass> copy = new GameBoard<>(game, tileContainer);
+        GameBoard copy = new GameBoard(game, tileContainer);
         arraycopy(tiles, 0, copy.tiles, 0, GameBoard.TILE_NUMBER);
         copy.iWin = iWin;
         copy.canMove = canMove;
@@ -266,7 +266,7 @@ class GameBoard<NeuralNetworkClass>
      * @return the game
      */
     public
-    Game2048<NeuralNetworkClass> getGame() {
+    Game2048 getGame() {
         return game;
     }
 
@@ -368,7 +368,7 @@ class GameBoard<NeuralNetworkClass>
      * @return true si los 2 tableros son iguales topológicamente
      */
     public
-    boolean isEqual(GameBoard<NeuralNetworkClass> gameBoard) {
+    boolean isEqual(GameBoard gameBoard) {
         for (int i = 0; i < tiles.length; i++) {
             if (!tiles[i].equals(gameBoard.tiles[i])) {
                 return false;
@@ -421,7 +421,7 @@ class GameBoard<NeuralNetworkClass>
                 probability = 0.1;
             }
             for (int index = 0; index < availableSpaceList.size() - 1; index++) {
-                @SuppressWarnings("unchecked") GameBoard<NeuralNetworkClass> copy = (GameBoard<NeuralNetworkClass>) getCopy();
+                @SuppressWarnings("unchecked") GameBoard copy = (GameBoard) getCopy();
                 copy.tiles[availableSpaceList.get(index)] = tileContainer.getTile(value);
                 copy.updateInternalState(true);
                 output.add(new GreedyStateProbability(copy, probability));

@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Experiment: ActivationFunctionVsLambda" type="Application" factoryName="Application">
+  <configuration default="false" name="Experiment: NTuple 2048 TD(0)" type="Application" factoryName="Application">
     <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
       <pattern>
         <option name="PATTERN" value="ar.edu.unrc.game2048.experiments.*" />
@@ -9,7 +9,7 @@
     <extension name="org.jetbrains.fluid.java.FluidRunConfigurationExtension" fluid.enabledBundledTracers="false" fluid.enabledBundledTracers.list="" />
     <option name="MAIN_CLASS_NAME" value="ar.edu.unrc.game2048.experiments.TestGenerator" />
     <option name="VM_PARAMETERS" value="" />
-    <option name="PROGRAM_PARAMETERS" value="experimentDirName=ActivationFunctionVsLambda experimentClassNameList=[ConfigNTupleBasicLinearSimplified_512,ConfigNTupleBasicTanHSimplified_512] createLogs=false repetitions=1 maxTrainingThreads=8 gamesToPlay=12000 gamesToPlayPerThreadForStats=100 saveEvery=1000 saveBackupEvery=300 statisticsOnly=false simulationsForStatistics=8 tileToWinForStatistics=512 runBackupStatistics=true lambdaList=[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1] eligibilityTraceLength=-1 replacingTraces=true accumulatingTraces=true annealingAlphaList=[-1] alphaList=[0.0025] gammaList=[1] concurrentLayerList=[false,false] fixedExplorationRateList=[0,0.1]" />
+    <option name="PROGRAM_PARAMETERS" value="experimentDirName=NTuple-BestTD0 experimentClassNameList=[ConfigNTupleBasicLinear_32768,ConfigNTupleBasicTanH_32768] createLogs=false repetitions=1 maxTrainingThreads=8 gamesToPlay=2000000 gamesToPlayPerThreadForStats=1000 saveEvery=2000 saveBackupEvery=25000 statisticsOnly=false simulationsForStatistics=8 tileToWinForStatistics=2048 runBackupStatistics=true lambdaList=[0] eligibilityTraceLength=-1 replacingTraces=true accumulatingTraces=true annealingAlphaList=[500000] alphaList=[0.005] gammaList=[1] concurrentLayerList=[false,false] fixedExplorationRateList=[0]" />
     <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
     <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
     <option name="ALTERNATIVE_JRE_PATH" />

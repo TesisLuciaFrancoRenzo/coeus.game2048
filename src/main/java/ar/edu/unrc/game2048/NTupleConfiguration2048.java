@@ -18,18 +18,25 @@
  */
 package ar.edu.unrc.game2048;
 
+import ar.edu.unrc.coeus.interfaces.INeuralNetworkInterface;
+import ar.edu.unrc.coeus.tdlearning.learning.TDLambdaLearning;
 import ar.edu.unrc.coeus.tdlearning.training.ntuple.NTupleSystem;
 import ar.edu.unrc.coeus.tdlearning.training.ntuple.SamplePointValue;
+import ar.edu.unrc.game2048.experiments.configurations.LearningExperiment;
+import ar.edu.unrc.game2048.experiments.configurations.librariesinterfaces.NTupleExperimentInterface;
 import org.encog.util.arrayutil.NormalizedField;
 
 import java.util.List;
 import java.util.function.Function;
+
+import static ar.edu.unrc.coeus.tdlearning.learning.ELearningStyle.afterState;
 
 /**
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
 public abstract
 class NTupleConfiguration2048
+        extends LearningExperiment
         implements Cloneable, IConfiguration2048 {
     protected Function<Double, Double> activationFunction;
     protected List<SamplePointValue>   allSamplePointPossibleValues;
@@ -117,6 +124,42 @@ class NTupleConfiguration2048
     public
     NormalizedField getNormOutput() {
         return normOutput;
+    }
+
+    @Override
+    public
+    void initialize() {
+        if (getExperimentName() == null) {
+            setExperimentName(getClass());
+        }
+        setNeuralNetworkName(getExperimentName());
+        setNeuralNetworkInterfaceFor2048(new NTupleExperimentInterface(this));
+    }
+
+    @Override
+    public
+    TDLambdaLearning instanceOfTdLearningImplementation(
+            NTupleSystem nTupleSystem
+    ) {
+        return new TDLambdaLearning(
+                nTupleSystem,
+                afterState,
+                (getAlpha() != null) ? getAlpha()[0] : null,
+                getLambda(),
+                getEligibilityTraceLength(),
+                isReplaceEligibilityTraces(),
+                getGamma(),
+                getConcurrencyInLayer(),
+                false
+        );
+    }
+
+    @Override
+    public
+    TDLambdaLearning instanceOfTdLearningImplementation(
+            INeuralNetworkInterface perceptronInterface
+    ) {
+        return null;
     }
 
     /**

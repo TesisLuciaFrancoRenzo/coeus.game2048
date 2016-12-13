@@ -16,9 +16,8 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ar.edu.unrc.game2048;
+package ar.edu.unrc.game2048.experiments.configurations.perceptrons;
 
-import ar.edu.unrc.game2048.experiments.ExperimentsSuite;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -30,9 +29,9 @@ import org.junit.runners.Suite;
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({GameBoardTest.class, Game2048Test.class, ExperimentsSuite.class})
+@Suite.SuiteClasses({PNTuple512Test.class})
 public
-class Game2048Suite {
+class PerceptronsSuite {
 
     /**
      * @throws Exception

@@ -6,6 +6,7 @@
         <option name="ENABLED" value="true" />
       </pattern>
     </extension>
+    <extension name="org.jetbrains.fluid.java.FluidRunConfigurationExtension" fluid.enabledBundledTracers="false" fluid.enabledBundledTracers.list="" />
     <option name="MAIN_CLASS_NAME" value="org.hol.game2048.Game2048" />
     <option name="VM_PARAMETERS" value="" />
     <option name="PROGRAM_PARAMETERS" value="" />
