@@ -45,10 +45,13 @@ public abstract
 class LearningExperiment {
 
     /**
+     * Nombre para el archivo salvado con mejor entrenamiento hasta el momento
+     */
+    public static final String     BEST_TRAINED        = "_best_trained";
+    /**
      * Extensión de las configuraciones de entrenamiento del experimento.
      */
-    public static final String CONFIG = "_config";
-
+    public static final String     CONFIG              = "_config";
     /**
      * Formato para fechas en los nombres de archivos.
      */
@@ -57,29 +60,24 @@ class LearningExperiment {
      * Formato para fechas.
      */
     public static final DateFormat DATE_FORMATTER      = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-
     /**
      * Nombre del archivo para las salidas de errores.
      */
-    public static final String ERROR_DUMP = "ERROR_DUMP";
-
-    public static final String HISTORY_DUMP = "HISTORY_DUMP";
-
+    public static final String     ERROR_DUMP          = "ERROR_DUMP";
+    public static final String     HISTORY_DUMP        = "HISTORY_DUMP";
     /**
      * Nombre del archivo con los datos de la ultima red neuronal guardada en disco.
      */
-    public static final String LAST_SAVE_DATA = "_last_save_data";
-
+    public static final String     LAST_SAVE_DATA      = "_last_save_data";
     /**
      * Nombre que se le agrega a los archivos de redes neuronales inicializados sin entrenamiento, para comparar al
      * final del experimento con la versión entrenada.
      */
-    public static final String RANDOM = "_random";
-
+    public static final String     RANDOM              = "_random";
     /**
      * Nombre que se le agrega a los archivos de redes neuronales con entrenamiento.
      */
-    public static final String TRAINED = "_trained";
+    public static final String     TRAINED             = "_trained";
     /**
      * Experimento encargad de las estadísticas.
      */
@@ -89,7 +87,10 @@ class LearningExperiment {
     private   double              avgBestPossibleActionTimes;
     private   double              avgTrainingTimes;
     private   int                 backupNumber;
+    private   int                 bestGame;
+    private   double              bestMaxTile;
     private   LinkedList<Double>  bestPossibleActionTimes;
+    private   double              bestWinRate;
     private boolean concurrencyInComputeBestPossibleAction = false;
     private boolean[] concurrencyInLayer;
     private long elapsedTime            = 0;
@@ -253,18 +254,11 @@ class LearningExperiment {
     }
 
     /**
-     * Establece el nombre del experimento basado en el nombre de la clase {@code experimentClass}.
-     *
-     * @param experimentClass clase de la cual extraer el nombre del experimento.
+     * @param experimentName nombre del experimento.
      */
     public
-    void setExperimentName(Class experimentClass) {
-        String className = experimentClass.getName();
-        int    lastDot   = className.lastIndexOf('.');
-        if (lastDot != -1) {
-            className = className.substring(lastDot + 1);
-        }
-        experimentName = className;
+    void setExperimentName(String experimentName) {
+        this.experimentName = experimentName;
     }
 
     /**
@@ -649,6 +643,30 @@ class LearningExperiment {
                         throw new IllegalArgumentException("el archivo de configuración no tiene un formato válido");
                     }
                     elapsedTime = Long.parseLong(line);
+                    try {
+                        line = reader.readLine();
+                        if (line == null) {
+                            throw new IllegalArgumentException("el archivo de configuración no tiene un formato válido");
+                        }
+                        bestGame = Integer.parseInt(line);
+                        line = reader.readLine();
+                        if (line == null) {
+                            throw new IllegalArgumentException("el archivo de configuración no tiene un formato válido");
+                        }
+                        bestWinRate = Double.parseDouble(line);
+                    } catch (Exception e) {
+                        bestGame = 0;
+                        bestWinRate = 0;
+                    }
+                    try {
+                        line = reader.readLine();
+                        if (line == null) {
+                            throw new IllegalArgumentException("el archivo de configuración no tiene un formato válido");
+                        }
+                        bestMaxTile = Double.parseDouble(line);
+                    } catch (Exception e) {
+                        bestMaxTile = 0;
+                    }
                 }
             }
 
@@ -854,11 +872,18 @@ class LearningExperiment {
     }
 
     /**
-     * @param experimentName nombre del experimento.
+     * Establece el nombre del experimento basado en el nombre de la clase {@code experimentClass}.
+     *
+     * @param experimentClass clase de la cual extraer el nombre del experimento.
      */
     public
-    void setExperimentName(String experimentName) {
-        this.experimentName = experimentName;
+    void setExperimentName(Class experimentClass) {
+        String className = experimentClass.getName();
+        int    lastDot   = className.lastIndexOf('.');
+        if (lastDot != -1) {
+            className = className.substring(lastDot + 1);
+        }
+        experimentName = className;
     }
 
     /**
@@ -1031,6 +1056,9 @@ class LearningExperiment {
             trainingTimes = new LinkedList<>();
         }
 
+        ByteArrayOutputStream bestSavedGameCache = new ByteArrayOutputStream();
+        boolean               needToSaveBestGame = false;
+
         for (int i = lastSavedGamePlayedNumber + 1; i <= gamesToPlay; i++) {
             long start = System.nanoTime();
             learningAlgorithm.solveAndTrainOnce(game, i);
@@ -1070,38 +1098,35 @@ class LearningExperiment {
             winRateEstimator.addSample(game.getMaxNumber());
 
             if (numberForShow != -1) {
-                System.out.println(numberForShow +
+                System.out.println(((needToSaveBestGame) ? "!! " : "") + numberForShow +
                                    "- Juego número " +
                                    i +
                                    " (" +
-                                   percent +
-                                   "%)    puntaje = " +
-                                   game.getScore() +
-                                   "    ficha max = " +
-                                   game.getMaxNumber() +
-                                   " (winRate=\"" +
-                                   winRateEstimator.printableAverage() +
-                                   "\")" +
-                                   "    turno alcanzado = " +
-                                   game.getLastTurn() +
-                                   "      current alpha = " +
+                                   percent + "%)\tpuntaje = " +
+                                   game.getScore() + "\tficha max = " +
+                                   game.getMaxNumber() + " (" + winRateEstimator.printableAverages() + ")" + "\tturno alcanzado = " +
+                                   game.getLastTurn() + "\tcurrent alpha = " +
                                    Arrays.toString(learningAlgorithm.getCurrentAlpha()));
             } else {
-                System.out.println("Juego número " +
+                System.out.println(((needToSaveBestGame) ? "!! " : "") + "Juego número " +
                                    i +
                                    " (" +
-                                   percent +
-                                   "%)    puntaje = " +
-                                   game.getScore() +
-                                   "    ficha max = " +
-                                   game.getMaxNumber() +
-                                   " (winRate=\"" +
-                                   winRateEstimator.printableAverage() +
-                                   "\")" +
-                                   "    turno alcanzado = " +
-                                   game.getLastTurn() +
-                                   "      current alpha = " +
+                                   percent + "%)\tpuntaje = " +
+                                   game.getScore() + "\tficha max = " +
+                                   game.getMaxNumber() + " (" + winRateEstimator.printableAverages() + ")" + "\tturno alcanzado = " +
+                                   game.getLastTurn() + "\tcurrent alpha = " +
                                    Arrays.toString(learningAlgorithm.getCurrentAlpha()));
+            }
+
+            double currentAverage = winRateEstimator.averageMaxValue();
+            if (currentAverage > bestMaxTile) {
+                bestMaxTile = currentAverage;
+                bestGame = i;
+                bestWinRate = winRateEstimator.averageWinRate();
+                bestSavedGameCache = new ByteArrayOutputStream();
+                neuralNetworkInterfaceFor2048.saveNeuralNetwork(bestSavedGameCache);
+                needToSaveBestGame = true;
+                System.out.println("** ¡NUEVO RECORD! winRate de " + bestWinRate + "% - maxTile " + bestMaxTile + " **");
             }
 
             if (printStream != null) {
@@ -1110,6 +1135,12 @@ class LearningExperiment {
             boolean writeConfig = false;
             if (i % saveEvery == 0 || i % saveBackupEvery == 0) {
                 neuralNetworkInterfaceFor2048.saveNeuralNetwork(perceptronFile);
+                if (needToSaveBestGame && bestSavedGameCache.size() > 0) {
+                    try (FileOutputStream f2 = new FileOutputStream(filePath + BEST_TRAINED + ".ser", false)) {
+                        bestSavedGameCache.writeTo(f2);
+                    }
+                    needToSaveBestGame = false;
+                }
                 System.out.println("============ Perceptron Exportado Exitosamente (SAVE) ============");
                 writeConfig = true;
             }
@@ -1122,7 +1153,17 @@ class LearningExperiment {
             }
             if (writeConfig) {
                 try (BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(lastSaveDataFile), "UTF-8"))) {
-                    out.write(Integer.toString(i) + '\n' + Integer.toString(backupNumber) + '\n' + Long.toString(elapsedTime));
+                    out.write(Integer.toString(i) +
+                              '\n' +
+                              Integer.toString(backupNumber) +
+                              '\n' +
+                              Long.toString(elapsedTime) +
+                              '\n' +
+                              Integer.toString(bestGame) +
+                              '\n' +
+                              Double.toString(bestWinRate) +
+                              '\n' +
+                              Double.toString(bestMaxTile));
                 }
             }
         }

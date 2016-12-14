@@ -24,6 +24,7 @@ import ar.edu.unrc.game2048.NTupleConfiguration2048;
 import ar.edu.unrc.game2048.experiments.configurations.INeuralNetworkInterfaceFor2048;
 
 import java.io.File;
+import java.io.OutputStream;
 
 /**
  * @author lucia bressan, franco pellegrini, renzo bianchini
@@ -113,6 +114,13 @@ class NTupleExperimentInterface
     void saveNeuralNetwork(File perceptronFile)
             throws Exception {
         getNTupleConfiguration().getNTupleSystem().save(perceptronFile);
+    }
+
+    @Override
+    public
+    void saveNeuralNetwork(OutputStream outputStream)
+            throws Exception {
+        getNTupleConfiguration().getNTupleSystem().save(outputStream);
     }
 
 }

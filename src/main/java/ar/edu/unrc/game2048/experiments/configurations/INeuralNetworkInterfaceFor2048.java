@@ -28,6 +28,7 @@ import ar.edu.unrc.game2048.Game2048;
 import ar.edu.unrc.game2048.NTupleConfiguration2048;
 
 import java.io.File;
+import java.io.OutputStream;
 import java.util.List;
 
 import static java.awt.event.KeyEvent.*;
@@ -202,7 +203,19 @@ class INeuralNetworkInterfaceFor2048
      * @throws Exception
      */
     public abstract
-    void saveNeuralNetwork(File neuralNetworkFile)
+    void saveNeuralNetwork(final File neuralNetworkFile)
+            throws Exception;
+
+
+    /**
+     * Guarda la red neuronal en un archivo
+     *
+     * @param neuralNetworkFile red neuronal a salvar en archivo.
+     *
+     * @throws Exception
+     */
+    public abstract
+    void saveNeuralNetwork(final OutputStream outputStream)
             throws Exception;
 
 }

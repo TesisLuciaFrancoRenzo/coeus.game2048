@@ -31,6 +31,7 @@ import org.encog.neural.networks.layers.BasicLayer;
 import org.encog.util.obj.SerializeObject;
 
 import java.io.File;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
@@ -247,6 +248,13 @@ class EncogExperimentInterface
     void saveNeuralNetwork(File perceptronFile)
             throws Exception {
         SerializeObject.save(perceptronFile, perceptronConfiguration.getNeuralNetwork());
+    }
+
+    @Override
+    public
+    void saveNeuralNetwork(OutputStream outputStream)
+            throws Exception {
+        //TODO implementar cuando sea necesario
     }
 
     /**

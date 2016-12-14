@@ -25,6 +25,7 @@ import ar.edu.unrc.game2048.Game2048;
 import ar.edu.unrc.game2048.experiments.configurations.INeuralNetworkInterfaceFor2048;
 
 import java.io.File;
+import java.io.OutputStream;
 
 import static java.awt.event.KeyEvent.*;
 
@@ -113,6 +114,13 @@ class RandomExperimentInterface
     public
     void saveNeuralNetwork(File perceptronFile)
             throws Exception {
+    }
+
+    @Override
+    public
+    void saveNeuralNetwork(OutputStream outputStream)
+            throws Exception {
+
     }
 
 }

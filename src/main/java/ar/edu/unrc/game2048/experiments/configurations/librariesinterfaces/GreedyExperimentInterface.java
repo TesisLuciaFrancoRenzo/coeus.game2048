@@ -29,6 +29,7 @@ import ar.edu.unrc.game2048.experiments.configurations.INeuralNetworkInterfaceFo
 import ar.edu.unrc.game2048.experiments.statistics.greedy.GreedyStateProbability;
 
 import java.io.File;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -152,6 +153,13 @@ class GreedyExperimentInterface
     public
     void saveNeuralNetwork(File perceptronFile)
             throws Exception {
+    }
+
+    @Override
+    public
+    void saveNeuralNetwork(OutputStream outputStream)
+            throws Exception {
+
     }
 
 }

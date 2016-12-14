@@ -95,25 +95,23 @@ class StatisticExperiment {
     /**
      * Exporta a una hoja de cálculo los resultados de las estadísticas ya calculadas en archivos de texto.
      *
-     * @param filePath                Ruta de donde se exporta la hoja de cálculo.
-     * @param backupFiles             Lista de los archivos con las redes neuronales que se le realizaron estadísticas.
-     * @param resultsPerFile          Mapeo de los archivos asociados a los resultados parseados.
-     * @param resultsRandom           Mapeo de los archivos asociados a los resultados parseados de la red sin entrenamiento.
-     * @param randomNeuralNetworkFile Archivo con la red neuronal sin entrenar.
+     * @param filePath       Ruta de donde se exporta la hoja de cálculo.
+     * @param backupFiles    Lista de los archivos con las redes neuronales que se le realizaron estadísticas.
+     * @param resultsPerFile Mapeo de los archivos asociados a los resultados parseados.
+     * @param resultsRandom  Mapeo de los archivos asociados a los resultados parseados de la red sin entrenamiento.
      *
      * @throws IOException
      * @throws InvalidFormatException
      */
     public
     void exportToExcel(
-            String filePath,
-            List<File> backupFiles,
-            Map<File, StatisticForCalc> resultsPerFile,
-            Map<File, StatisticForCalc> resultsRandom,
-            File randomNeuralNetworkFile
+            final String filePath,
+            final List<File> backupFiles,
+            final Map<File, StatisticForCalc> resultsPerFile,
+            final StatisticForCalc resultsRandom
     )
             throws IOException, InvalidFormatException {
-        InputStream inputXLSX = getClass().getResourceAsStream("/ar/edu/unrc/game2048/performanceandtraining/Estadisticas.xlsx");
+        InputStream inputXLSX = getClass().getResourceAsStream("/ar/edu/unrc/game2048/experiments/Estadisticas.xlsx");
         Workbook    wb        = WorkbookFactory.create(inputXLSX);
 
         try (FileOutputStream outputXLSX = new FileOutputStream(filePath + "_STATISTICS" + ".xlsx")) {
@@ -169,12 +167,12 @@ class StatisticExperiment {
                     cell.setCellValue(cellDoubleValue);
                 }
             }
-            if (!resultsRandom.isEmpty()) {
+            if (resultsRandom != null) {
                 for (int tile = 0; tile <= tiles; tile++) {
                     int file = 0;
                     row = sheet.getRow(tile + rowStart - 1);
                     cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
-                    cellDoubleValue = resultsRandom.get(randomNeuralNetworkFile).getTileStatistics().get(tile);
+                    cellDoubleValue = resultsRandom.getTileStatistics().get(tile);
                     cell.setCellStyle(cellStyle);
                     cell.setCellValue(cellDoubleValue);
                 }
@@ -191,10 +189,10 @@ class StatisticExperiment {
                 cellDoubleValue = resultsPerFile.get(backupFiles.get(file)).getMinScore();
                 cell.setCellValue(cellDoubleValue);
             }
-            if (!resultsRandom.isEmpty()) {
+            if (resultsRandom != null) {
                 int file = 0;
                 cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
-                cellDoubleValue = resultsRandom.get(randomNeuralNetworkFile).getMinScore();
+                cellDoubleValue = resultsRandom.getMinScore();
                 cell.setCellStyle(cellStyle);
                 cell.setCellValue(cellDoubleValue);
             }
@@ -207,10 +205,10 @@ class StatisticExperiment {
                 cell.setCellStyle(cellStyle);
                 cell.setCellValue(cellDoubleValue);
             }
-            if (!resultsRandom.isEmpty()) {
+            if (resultsRandom != null) {
                 int file = 0;
                 cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
-                cellDoubleValue = resultsRandom.get(randomNeuralNetworkFile).getMeanScore();
+                cellDoubleValue = resultsRandom.getMeanScore();
                 cell.setCellStyle(cellStyle);
                 cell.setCellValue(cellDoubleValue);
             }
@@ -223,10 +221,10 @@ class StatisticExperiment {
                 cell.setCellStyle(cellStyle);
                 cell.setCellValue(cellDoubleValue);
             }
-            if (!resultsRandom.isEmpty()) {
+            if (resultsRandom != null) {
                 int file = 0;
                 cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
-                cellDoubleValue = resultsRandom.get(randomNeuralNetworkFile).getMaxScore();
+                cellDoubleValue = resultsRandom.getMaxScore();
                 cell.setCellStyle(cellStyle);
                 cell.setCellValue(cellDoubleValue);
             }
@@ -245,11 +243,11 @@ class StatisticExperiment {
                 assert cellDoubleValue <= 100 && cellDoubleValue >= 0;
                 cell.setCellValue(cellDoubleValue);
             }
-            if (!resultsRandom.isEmpty()) {
+            if (resultsRandom != null) {
                 int file = 0;
                 cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
                 cell.setCellStyle(cellStyle);
-                cellDoubleValue = resultsRandom.get(randomNeuralNetworkFile).getWinRate();
+                cellDoubleValue = resultsRandom.getWinRate();
                 assert cellDoubleValue <= 100 && cellDoubleValue >= 0;
                 cell.setCellValue(cellDoubleValue);
             }
@@ -277,11 +275,11 @@ class StatisticExperiment {
                 cellDoubleValue = resultsPerFile.get(backupFiles.get(file)).getMinTurn();
                 cell.setCellValue(cellDoubleValue);
             }
-            if (!resultsRandom.isEmpty()) {
+            if (resultsRandom != null) {
                 int file = 0;
                 cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
                 cell.setCellStyle(cellStyle);
-                cellDoubleValue = resultsRandom.get(randomNeuralNetworkFile).getMinTurn();
+                cellDoubleValue = resultsRandom.getMinTurn();
                 cell.setCellValue(cellDoubleValue);
             }
 
@@ -293,11 +291,11 @@ class StatisticExperiment {
                 cellDoubleValue = resultsPerFile.get(backupFiles.get(file)).getMeanTurn();
                 cell.setCellValue(cellDoubleValue);
             }
-            if (!resultsRandom.isEmpty()) {
+            if (resultsRandom != null) {
                 int file = 0;
                 cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
                 cell.setCellStyle(cellStyle);
-                cellDoubleValue = resultsRandom.get(randomNeuralNetworkFile).getMeanTurn();
+                cellDoubleValue = resultsRandom.getMeanTurn();
                 cell.setCellValue(cellDoubleValue);
             }
 
@@ -309,11 +307,11 @@ class StatisticExperiment {
                 cellDoubleValue = resultsPerFile.get(backupFiles.get(file)).getMaxTurn();
                 cell.setCellValue(cellDoubleValue);
             }
-            if (!resultsRandom.isEmpty()) {
+            if (resultsRandom != null) {
                 int file = 0;
                 cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
                 cell.setCellStyle(cellStyle);
-                cellDoubleValue = resultsRandom.get(randomNeuralNetworkFile).getMaxTurn();
+                cellDoubleValue = resultsRandom.getMaxTurn();
                 cell.setCellValue(cellDoubleValue);
             }
 
@@ -516,8 +514,7 @@ class StatisticExperiment {
             for (int i = 0; i < simulations; i++) {
                 INeuralNetworkInterfaceFor2048 neuralNetworkInterfaceClone;
                 EncogConfiguration2048         tempPerceptronConfiguration = null;
-                neuralNetworkInterfaceClone = (INeuralNetworkInterfaceFor2048) learningExperiment.getNeuralNetworkInterfaceFor2048()
-                                                                                                                     .clone();
+                neuralNetworkInterfaceClone = (INeuralNetworkInterfaceFor2048) learningExperiment.getNeuralNetworkInterfaceFor2048().clone();
 
                 NTupleConfiguration2048 tempNTupleConfiguration = null;
                 INeuralNetworkInterface tempPerceptronInterface = null;
@@ -545,8 +542,7 @@ class StatisticExperiment {
                     neuralNetworkInterfaceClone.loadOrCreatePerceptron(perceptronFile, true, createNeuralNetworkFile);
                 }
 
-                Game2048 game = new Game2048(tempPerceptronConfiguration,
-                        tempNTupleConfiguration, tileToWinForStatistics, delayPerMove, printHistory
+                Game2048 game = new Game2048(tempPerceptronConfiguration, tempNTupleConfiguration, tileToWinForStatistics, delayPerMove, printHistory
                 );
 
                 neuralNetworkInterfaces.add(neuralNetworkInterfaceClone);
@@ -710,14 +706,16 @@ class StatisticExperiment {
         if (!dirPathFile.exists()) {
             dirPathFile.mkdirs();
         }
-        String filePath             = dirPath + fileName;
-        File   randomPerceptronFile = new File(dirPath + experimentName + LearningExperiment.RANDOM + ".ser");
+        String filePath = dirPath + fileName;
 
         //hacemos estadisticas del perceptron random, si es necesario
-        Map<File, StatisticForCalc> resultsRandom = new HashMap<>();
         System.out.print("Starting " + experimentName + LearningExperiment.RANDOM + " Statistics... ");
         processFile(dirPath + experimentName + LearningExperiment.RANDOM, delayPerMove, createNeuralNetworkFile, printHistory);
-        resultsRandom.put(randomPerceptronFile, getTileStatistics());
+        StatisticForCalc resultsRandom = getTileStatistics();
+
+        //hacemos estadisticas del mejor perceptron, si es necesario
+        System.out.print("Starting " + experimentName + LearningExperiment.BEST_TRAINED + " Statistics... ");
+        processFile(dirPath + experimentName + LearningExperiment.BEST_TRAINED, delayPerMove, createNeuralNetworkFile, printHistory);
 
         //calculamos las estadisticas de los backup si es necesario
         File[] allFiles = (new File(dirPath)).listFiles();
@@ -759,7 +757,7 @@ class StatisticExperiment {
         });
 
         if (exportToExcel) {
-            exportToExcel(filePath, backupFiles, resultsPerFile, resultsRandom, randomPerceptronFile);
+            exportToExcel(filePath, backupFiles, resultsPerFile, resultsRandom);
         }
     }
 
