@@ -252,11 +252,18 @@ class LearningExperiment {
     }
 
     /**
-     * @param experimentName nombre del experimento.
+     * Establece el nombre del experimento basado en el nombre de la clase {@code experimentClass}.
+     *
+     * @param experimentClass clase de la cual extraer el nombre del experimento.
      */
     public
-    void setExperimentName( String experimentName ) {
-        this.experimentName = experimentName;
+    void setExperimentName( Class experimentClass ) {
+        String className = experimentClass.getName();
+        int    lastDot   = className.lastIndexOf('.');
+        if ( lastDot != -1 ) {
+            className = className.substring(lastDot + 1);
+        }
+        experimentName = className;
     }
 
     /**
@@ -729,19 +736,10 @@ class LearningExperiment {
                 //comenzamos a entrenar y guardar estadisticas en el archivo de log
                 if ( logsActivated ) {
                     try ( PrintStream printStream = new PrintStream(logFile, "UTF-8") ) {
-                        training(numberForShow,
-                                 game,
-                                 printStream,
-                                 randomPerceptronFile,
-                                 perceptronFile,
-                                 lastSaveDataFile,
-                                 filePath,
-                                 zeroNumbers,
-                                 historyFile
-                        );
+                        training(numberForShow, game, printStream, perceptronFile, lastSaveDataFile, filePath, zeroNumbers, historyFile);
                     }
                 } else {
-                    training(numberForShow, game, null, randomPerceptronFile, perceptronFile, lastSaveDataFile, filePath, zeroNumbers, historyFile);
+                    training(numberForShow, game, null, perceptronFile, lastSaveDataFile, filePath, zeroNumbers, historyFile);
                 }
                 if ( learningAlgorithm.canCollectStatistics() ) {
                     avgBestPossibleActionTimes = 0d;
@@ -868,18 +866,11 @@ class LearningExperiment {
     }
 
     /**
-     * Establece el nombre del experimento basado en el nombre de la clase {@code experimentClass}.
-     *
-     * @param experimentClass clase de la cual extraer el nombre del experimento.
+     * @param experimentName nombre del experimento.
      */
     public
-    void setExperimentName( Class experimentClass ) {
-        String className = experimentClass.getName();
-        int    lastDot   = className.lastIndexOf('.');
-        if ( lastDot != -1 ) {
-            className = className.substring(lastDot + 1);
-        }
-        experimentName = className;
+    void setExperimentName( String experimentName ) {
+        this.experimentName = experimentName;
     }
 
     /**
@@ -996,15 +987,14 @@ class LearningExperiment {
     }
 
     /**
-     * @param numberForShow           Numero para mostrar en la terminal al mostrar los valores alcanzado. Útil para ejecutar muchos experimentos en
-     *                                paralelo e identificar los resultados parciales en la terminal.
-     * @param game                    juego a entrenar
-     * @param printStream             salida de textos de debug e información.
-     * @param randomNeuralNetworkFile archivo de la red neuronal sin entrenamiento.
-     * @param perceptronFile          archivo de la red neuronal con entrenamiento.
-     * @param lastSaveDataFile        archivo donde se guardan los datos del ultimo entrenamiento, para poder continuar en caso de interrupciones.
-     * @param filePath                ruta en donde se guardan los resultados.
-     * @param zeroNumbers             cantidad de ceros a la izquierda en los números de los archivos de backup.
+     * @param numberForShow    Numero para mostrar en la terminal al mostrar los valores alcanzado. Útil para ejecutar muchos experimentos en paralelo
+     *                         e identificar los resultados parciales en la terminal.
+     * @param game             juego a entrenar
+     * @param printStream      salida de textos de debug e información.
+     * @param perceptronFile   archivo de la red neuronal con entrenamiento.
+     * @param lastSaveDataFile archivo donde se guardan los datos del ultimo entrenamiento, para poder continuar en caso de interrupciones.
+     * @param filePath         ruta en donde se guardan los resultados.
+     * @param zeroNumbers      cantidad de ceros a la izquierda en los números de los archivos de backup.
      *
      * @throws Exception
      */
@@ -1013,7 +1003,6 @@ class LearningExperiment {
             int numberForShow,
             Game2048 game,
             final PrintStream printStream,
-            File randomNeuralNetworkFile,
             File perceptronFile,
             File lastSaveDataFile,
             String filePath,
@@ -1081,7 +1070,6 @@ class LearningExperiment {
                 }
                 avg /= ( learningAlgorithm.getStatisticsBestPossibleActionTimes().size() * 1d );
                 bestPossibleActionTimes.add(avg);
-
                 avg = 0;
                 for ( Long sample : learningAlgorithm.getStatisticsTrainingTimes() ) {
                     avg += sample;
@@ -1094,15 +1082,42 @@ class LearningExperiment {
             winRateEstimator.addSample(game.getMaxNumber());
 
             if ( numberForShow != -1 ) {
-                System.out.println(
-                        ( ( needToSaveBestGame ) ? "!! " : "" ) + numberForShow + "- Juego número " + i + " (" + percent + "%)\tpuntaje = " +
-                        game.getScore() + "\tficha max = " + game.getMaxNumber() + " (" + winRateEstimator.printableAverages() + ")" +
-                        "\tturno alcanzado = " + game.getLastTurn() + "\tcurrent alpha = " + Arrays.toString(learningAlgorithm.getCurrentAlpha()));
+                System.out.println(new StringBuilder().append(( needToSaveBestGame ) ? "!! " : "")
+                                                      .append(numberForShow)
+                                                      .append("- Juego número ")
+                                                      .append(i)
+                                                      .append(" (")
+                                                      .append(percent)
+                                                      .append("%)\tpuntaje = ")
+                                                      .append(game.getScore())
+                                                      .append("\tficha max = ")
+                                                      .append(game.getMaxNumber())
+                                                      .append(" (")
+                                                      .append(winRateEstimator.printableAverages())
+                                                      .append(")")
+                                                      .append("\tturno alcanzado = ")
+                                                      .append(game.getLastTurn())
+                                                      .append("\tcurrent alpha = ")
+                                                      .append(Arrays.toString(learningAlgorithm.getCurrentAlpha()))
+                                                      .toString());
             } else {
-                System.out.println(
-                        ( ( needToSaveBestGame ) ? "!! " : "" ) + "Juego número " + i + " (" + percent + "%)\tpuntaje = " + game.getScore() +
-                        "\tficha max = " + game.getMaxNumber() + " (" + winRateEstimator.printableAverages() + ")" + "\tturno alcanzado = " +
-                        game.getLastTurn() + "\tcurrent alpha = " + Arrays.toString(learningAlgorithm.getCurrentAlpha()));
+                System.out.println(new StringBuilder().append(( needToSaveBestGame ) ? "!! " : "")
+                                                      .append("Juego número ")
+                                                      .append(i)
+                                                      .append(" (")
+                                                      .append(percent)
+                                                      .append("%)\tpuntaje = ")
+                                                      .append(game.getScore())
+                                                      .append("\tficha max = ")
+                                                      .append(game.getMaxNumber())
+                                                      .append(" (")
+                                                      .append(winRateEstimator.printableAverages())
+                                                      .append(")")
+                                                      .append("\tturno alcanzado = ")
+                                                      .append(game.getLastTurn())
+                                                      .append("\tcurrent alpha = ")
+                                                      .append(Arrays.toString(learningAlgorithm.getCurrentAlpha()))
+                                                      .toString());
             }
 
             double averageMaxValue = winRateEstimator.averageMaxValue();

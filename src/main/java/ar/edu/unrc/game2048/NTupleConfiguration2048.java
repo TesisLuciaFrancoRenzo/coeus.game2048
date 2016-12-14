@@ -142,8 +142,7 @@ class NTupleConfiguration2048
             NTupleSystem nTupleSystem
     ) {
         return new TDLambdaLearning(
-                nTupleSystem,
-                afterState, ( getAlpha() != null ) ? getAlpha()[0] : null,
+                nTupleSystem, afterState, ( getAlpha() != null ) ? getAlpha()[0] : null,
                 getLambda(),
                 getEligibilityTraceLength(),
                 isReplaceEligibilityTraces(),
