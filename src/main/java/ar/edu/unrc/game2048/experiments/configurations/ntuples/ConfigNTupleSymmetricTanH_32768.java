@@ -62,7 +62,7 @@ class ConfigNTupleSymmetricTanH_32768
 
         int maxTile = 15;
         allSamplePointPossibleValues = new ArrayList<>();
-        for (int i = 0; i <= maxTile; i++) {
+        for ( int i = 0; i <= maxTile; i++ ) {
             allSamplePointPossibleValues.add(new Tile(i));
         }
     }
@@ -81,7 +81,7 @@ class ConfigNTupleSymmetricTanH_32768
 
     @Override
     public
-    double deNormalizeValueFromNeuralNetworkOutput(Object value) {
+    double deNormalizeValueFromNeuralNetworkOutput( Object value ) {
         return normOutput.deNormalize((double) value);
     }
 
@@ -100,24 +100,24 @@ class ConfigNTupleSymmetricTanH_32768
             GameBoard board,
             int nTupleIndex
     ) {
-        switch (nTupleIndex) {
+        switch ( nTupleIndex ) {
             // rectángulos
             case 0: {
-                return new SamplePointValue[]{board.tileAt(0, 0), board.tileAt(0, 1), board.tileAt(0, 2), board.tileAt(1, 0), board.tileAt(1,
-                        1
-                ), board.tileAt(1, 2)};
+                return new SamplePointValue[] {
+                        board.tileAt(0, 0), board.tileAt(0, 1), board.tileAt(0, 2), board.tileAt(1, 0), board.tileAt(1, 1), board.tileAt(1, 2)
+                };
             }
             case 1: {
-                return new SamplePointValue[]{board.tileAt(1, 0), board.tileAt(1, 1), board.tileAt(1, 2), board.tileAt(2, 0), board.tileAt(2,
-                        1
-                ), board.tileAt(2, 2)};
+                return new SamplePointValue[] {
+                        board.tileAt(1, 0), board.tileAt(1, 1), board.tileAt(1, 2), board.tileAt(2, 0), board.tileAt(2, 1), board.tileAt(2, 2)
+                };
             }
             // verticales
             case 2: {
-                return new SamplePointValue[]{board.tileAt(2, 0), board.tileAt(2, 1), board.tileAt(2, 2), board.tileAt(2, 3)};
+                return new SamplePointValue[] { board.tileAt(2, 0), board.tileAt(2, 1), board.tileAt(2, 2), board.tileAt(2, 3) };
             }
             case 3: {
-                return new SamplePointValue[]{board.tileAt(3, 0), board.tileAt(3, 1), board.tileAt(3, 2), board.tileAt(3, 3)};
+                return new SamplePointValue[] { board.tileAt(3, 0), board.tileAt(3, 1), board.tileAt(3, 2), board.tileAt(3, 3) };
             }
             default: {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -127,8 +127,8 @@ class ConfigNTupleSymmetricTanH_32768
 
     @Override
     public
-    double normalizeValueToPerceptronOutput(Object value) {
-        if ((Double) value > maxReward) {
+    double normalizeValueToPerceptronOutput( Object value ) {
+        if ( (Double) value > maxReward ) {
             throw new IllegalArgumentException("value no puede ser mayor a maxReward=" + maxReward);
         }
         return normOutput.normalize((Double) value);

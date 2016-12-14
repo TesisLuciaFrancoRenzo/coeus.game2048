@@ -44,7 +44,7 @@ class ConfigPerceptronBoard_32768
      * @param hasBias
      */
     public
-    ConfigPerceptronBoard_32768(final Boolean hasBias) {
+    ConfigPerceptronBoard_32768( final Boolean hasBias ) {
         this.hasBias = hasBias;
         setTileToWinForTraining(32768);
 
@@ -70,13 +70,12 @@ class ConfigPerceptronBoard_32768
         activationFunctionMax = 1;
         activationFunctionMin = -1;
 
-        normInput = new NormalizedField(
-                NormalizationAction.Normalize,
-                null,
-                maxCodedBoardNumber,
-                minCodedBoardNumber,
-                activationFunctionMax,
-                activationFunctionMin
+        normInput = new NormalizedField(NormalizationAction.Normalize,
+                                        null,
+                                        maxCodedBoardNumber,
+                                        minCodedBoardNumber,
+                                        activationFunctionMax,
+                                        activationFunctionMin
         );
         normOutput = new NormalizedField(NormalizationAction.Normalize, null, maxScore, minScore, activationFunctionMax, activationFunctionMin);
     }
@@ -85,7 +84,7 @@ class ConfigPerceptronBoard_32768
     public
     void calculateNormalizedPerceptronInput(
             GameBoard board,
-            List<Double> normalizedPerceptronInput
+            List< Double > normalizedPerceptronInput
     ) {
         // primera fila
         normalizedPerceptronInput.set(0, normInput.normalize(board.tileAt(0, 0).getCode()));
@@ -131,7 +130,7 @@ class ConfigPerceptronBoard_32768
 
     @Override
     public
-    double deNormalizeValueFromNeuralNetworkOutput(Object value) {
+    double deNormalizeValueFromNeuralNetworkOutput( Object value ) {
         return normOutput.deNormalize((Double) value);
     }
 
@@ -152,7 +151,7 @@ class ConfigPerceptronBoard_32768
 
     @Override
     public
-    double normalizeValueToPerceptronOutput(Object value) {
+    double normalizeValueToPerceptronOutput( Object value ) {
         return normOutput.normalize((Double) value);
     }
 

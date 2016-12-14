@@ -75,7 +75,7 @@ class NTupleExperimentInterface
      * @return una NTupla inicializada.
      */
     public
-    NTupleSystem initializeNTupleSystem(boolean randomized) {
+    NTupleSystem initializeNTupleSystem( boolean randomized ) {
         NTupleSystem nTupleSystem = new NTupleSystem(
                 getNTupleConfiguration().getAllSamplePointPossibleValues(),
                 getNTupleConfiguration().getNTuplesLength(),
@@ -83,7 +83,7 @@ class NTupleExperimentInterface
                 getNTupleConfiguration().getDerivedActivationFunction(),
                 getNTupleConfiguration().isConcurrency()
         );
-        if (randomized) {
+        if ( randomized ) {
             nTupleSystem.randomize();
         }
         return nTupleSystem;
@@ -98,8 +98,8 @@ class NTupleExperimentInterface
     )
             throws Exception {
         getNTupleConfiguration().setNTupleSystem(initializeNTupleSystem(randomizedIfNotExist));
-        if (createPerceptronFile) {
-            if (!perceptronFile.exists()) {
+        if ( createPerceptronFile ) {
+            if ( !perceptronFile.exists() ) {
                 //Si el archivo no existe, creamos un perceptron nuevo inicializado al azar
                 getNTupleConfiguration().getNTupleSystem().save(perceptronFile);
             } else {
@@ -111,14 +111,14 @@ class NTupleExperimentInterface
 
     @Override
     public
-    void saveNeuralNetwork(File perceptronFile)
+    void saveNeuralNetwork( File perceptronFile )
             throws Exception {
         getNTupleConfiguration().getNTupleSystem().save(perceptronFile);
     }
 
     @Override
     public
-    void saveNeuralNetwork(OutputStream outputStream)
+    void saveNeuralNetwork( OutputStream outputStream )
             throws Exception {
         getNTupleConfiguration().getNTupleSystem().save(outputStream);
     }

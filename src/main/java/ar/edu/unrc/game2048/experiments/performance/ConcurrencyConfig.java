@@ -49,7 +49,7 @@ class ConcurrencyConfig {
      * @param alphas
      */
     public
-    void setAlphas(double[] alphas) {
+    void setAlphas( double[] alphas ) {
         this.alphas = alphas;
     }
 
@@ -65,7 +65,7 @@ class ConcurrencyConfig {
      * @param concurrencyInLayer
      */
     public
-    void setConcurrencyInLayer(boolean[] concurrencyInLayer) {
+    void setConcurrencyInLayer( boolean[] concurrencyInLayer ) {
         this.concurrencyInLayer = concurrencyInLayer;
     }
 
@@ -81,7 +81,7 @@ class ConcurrencyConfig {
      * @param neuronQuantityInLayer
      */
     public
-    void setNeuronQuantityInLayer(int[] neuronQuantityInLayer) {
+    void setNeuronQuantityInLayer( int[] neuronQuantityInLayer ) {
         this.neuronQuantityInLayer = neuronQuantityInLayer;
     }
 
@@ -97,14 +97,14 @@ class ConcurrencyConfig {
      * @param concurrencyInEvaluate
      */
     public
-    void setConcurrencyInEvaluate(boolean concurrencyInEvaluate) {
+    void setConcurrencyInEvaluate( boolean concurrencyInEvaluate ) {
         this.concurrencyInEvaluate = concurrencyInEvaluate;
     }
 
     /**
      * @return
      */
-    @SuppressWarnings("ForLoopReplaceableByForEach")
+    @SuppressWarnings( "ForLoopReplaceableByForEach" )
     @Override
     public
     String toString() {
@@ -113,31 +113,31 @@ class ConcurrencyConfig {
         output.append("evaluate concurrency: ");
         output.append(concurrencyInEvaluate);
 
-        if (concurrencyInLayer != null) {
+        if ( concurrencyInLayer != null ) {
             output.append('\n');
             output.append("training concurrency: ");
-            for (int i = 0; i < concurrencyInLayer.length; i++) {
+            for ( int i = 0; i < concurrencyInLayer.length; i++ ) {
                 output.append(concurrencyInLayer[i]).append(", ");
             }
         }
-        if (alphas != null) {
+        if ( alphas != null ) {
             output.append('\n');
             output.append("alphas: ");
-            for (int i = 0; i < alphas.length; i++) {
+            for ( int i = 0; i < alphas.length; i++ ) {
                 output.append(concurrencyInLayer[i]).append(", ");
             }
         }
-        if (neuronQuantityInLayer != null) {
+        if ( neuronQuantityInLayer != null ) {
             output.append('\n');
             output.append("neuronQuantityInLayer: ");
-            for (int i = 0; i < neuronQuantityInLayer.length; i++) {
+            for ( int i = 0; i < neuronQuantityInLayer.length; i++ ) {
                 output.append(neuronQuantityInLayer[i]).append(", ");
             }
         }
-        if (activationFunctionForEncog != null) {
+        if ( activationFunctionForEncog != null ) {
             output.append('\n');
             output.append("activationFunctionForEncog: ");
-            for (ActivationFunction activationFunction : activationFunctionForEncog) {
+            for ( ActivationFunction activationFunction : activationFunctionForEncog ) {
                 output.append(activationFunction.getClass().getName()).append(", ");
             }
         }

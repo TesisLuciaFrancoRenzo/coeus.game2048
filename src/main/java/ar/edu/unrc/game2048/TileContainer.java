@@ -32,9 +32,9 @@ class TileContainer {
      * @param maxCodedValue código de tile en base 2 del numero mas alto que se va a utilizar.
      */
     public
-    TileContainer(int maxCodedValue) {
+    TileContainer( int maxCodedValue ) {
         tiles = new Tile[maxCodedValue + 1];
-        for (int i = 0; i <= maxCodedValue; i++) {
+        for ( int i = 0; i <= maxCodedValue; i++ ) {
             tiles[i] = new Tile(i);
         }
     }
@@ -45,7 +45,7 @@ class TileContainer {
      * @return
      */
     public
-    Tile getTile(int code) {
+    Tile getTile( int code ) {
         return tiles[code];
     }
 

@@ -42,10 +42,10 @@ class RandomBasic
      * @throws Exception
      */
     public static
-    void main(String[] args)
+    void main( String[] args )
             throws Exception {
         String filePath;
-        if (args.length == 0) {
+        if ( args.length == 0 ) {
             filePath = ".." + File.separator + "Perceptrones ENTRENADOS" + File.separator;
         } else {
             filePath = args[0];
@@ -67,11 +67,11 @@ class RandomBasic
         Toolkit.getDefaultToolkit().beep();
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings( "unchecked" )
     @Override
     public
     void initialize() {
-        if (getExperimentName() == null) {
+        if ( getExperimentName() == null ) {
             setExperimentName(getClass());
         }
         setNeuralNetworkName(getExperimentName());

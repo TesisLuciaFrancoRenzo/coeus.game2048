@@ -45,18 +45,18 @@ class GameBoard
      *
      */
     public static final int TILE_NUMBER = 4 * 4;
-    private final Game2048      game;
-    private final List<Double>  normalizedPerceptronInput;
-    private final TileContainer tileContainer;
-    private       List<Integer> availableSpaceList;
-    private       boolean       canMove;
-    private       boolean       iWin;
-    private       boolean       isFull;
-    private       int           maxTileNumberCode;
-    private       int           maxTileNumberValue;
-    private       boolean       needToAddTile;
-    private       int           partialScore;
-    private       Tile[]        tiles;
+    private final Game2048        game;
+    private final List< Double >  normalizedPerceptronInput;
+    private final TileContainer   tileContainer;
+    private       List< Integer > availableSpaceList;
+    private       boolean         canMove;
+    private       boolean         iWin;
+    private       boolean         isFull;
+    private       int             maxTileNumberCode;
+    private       int             maxTileNumberValue;
+    private       boolean         needToAddTile;
+    private       int             partialScore;
+    private       Tile[]          tiles;
 
     /**
      * @param game
@@ -76,12 +76,12 @@ class GameBoard
         maxTileNumberCode = 0;
         maxTileNumberValue = 0;
         //inicializamos el tablero para su traducción a las entradas de la red neuronal
-        if (game.getNeuralNetworkConfiguration() != null) {
-            if (game.getNeuralNetworkConfiguration().useNTupleList()) {
+        if ( game.getNeuralNetworkConfiguration() != null ) {
+            if ( game.getNeuralNetworkConfiguration().useNTupleList() ) {
                 normalizedPerceptronInput = new InputNTupleList();
             } else {
                 normalizedPerceptronInput = new ArrayList<>(game.getNeuralNetworkConfiguration().getNeuronQuantityInLayer()[0]);
-                for (int i = 0; i < game.getNeuralNetworkConfiguration().getNeuronQuantityInLayer()[0]; i++) {
+                for ( int i = 0; i < game.getNeuralNetworkConfiguration().getNeuronQuantityInLayer()[0]; i++ ) {
                     normalizedPerceptronInput.add(null);
                 }
             }
@@ -129,7 +129,7 @@ class GameBoard
         return tileArray[x + y * 4];
     }
 
-    void addPartialScore(int value) {
+    void addPartialScore( int value ) {
         partialScore += value;
     }
 
@@ -137,13 +137,13 @@ class GameBoard
      * @param updateInputs
      */
     public
-    void addTile(boolean updateInputs) {
-        if (!availableSpaceList.isEmpty()) {
-            int     index   = (int) (random() * availableSpaceList.size()) % availableSpaceList.size();
+    void addTile( boolean updateInputs ) {
+        if ( !availableSpaceList.isEmpty() ) {
+            int     index   = (int) ( random() * availableSpaceList.size() ) % availableSpaceList.size();
             Integer tilePos = availableSpaceList.get(index);
             int     value   = random() < 0.9 ? 1 : 2;
             tiles[tilePos] = tileContainer.getTile(value);
-            if (game.printHistory) {
+            if ( game.printHistory ) {
                 //                System.out.println("newRandomTile=" + tilePos + "\t" + value);
                 assert game.historyLog != null;
                 game.historyLog.append("NT=").append(tilePos).append("\t").append(value).append("\n");
@@ -156,15 +156,15 @@ class GameBoard
      * @return
      */
     public
-    List<Integer> availableSpace() {
+    List< Integer > availableSpace() {
         return availableSpaceList;
     }
 
     private
-    List<Integer> calculateAvailableSpace() {
-        List<Integer> list = new ArrayList<>(16);
-        for (int i = 0; i < tiles.length; i++) {
-            if (tiles[i].isEmpty()) {
+    List< Integer > calculateAvailableSpace() {
+        List< Integer > list = new ArrayList<>(16);
+        for ( int i = 0; i < tiles.length; i++ ) {
+            if ( tiles[i].isEmpty() ) {
                 list.add(i);
             }
         }
@@ -173,13 +173,13 @@ class GameBoard
 
     private
     boolean calculateCanMove() {
-        if (!isFull) {
+        if ( !isFull ) {
             return true;
         }
-        for (int x = 0; x < 4; x++) {
-            for (int y = 0; y < 4; y++) {
+        for ( int x = 0; x < 4; x++ ) {
+            for ( int y = 0; y < 4; y++ ) {
                 Tile t = tileAt(x, y);
-                if ((x < 3 && t.getCode() == tileAt(x + 1, y).getCode()) || ((y < 3) && t.getCode() == tileAt(x, y + 1).getCode())) {
+                if ( ( x < 3 && t.getCode() == tileAt(x + 1, y).getCode() ) || ( ( y < 3 ) && t.getCode() == tileAt(x, y + 1).getCode() ) ) {
                     return true;
                 }
             }
@@ -191,8 +191,8 @@ class GameBoard
     void calculateMaxTile() {
         maxTileNumberValue = 0;
         maxTileNumberCode = 0;
-        for (Tile t : tiles) {
-            if (t.getGameValue() > maxTileNumberValue) {
+        for ( Tile t : tiles ) {
+            if ( t.getGameValue() > maxTileNumberValue ) {
                 maxTileNumberValue = t.getGameValue();
                 maxTileNumberCode = t.getCode();
             }
@@ -211,8 +211,8 @@ class GameBoard
      * @param tileContainer
      */
     public
-    void clearBoard(TileContainer tileContainer) {
-        for (int i = 0; i < TILE_NUMBER; i++) {
+    void clearBoard( TileContainer tileContainer ) {
+        for ( int i = 0; i < TILE_NUMBER; i++ ) {
             tiles[i] = tileContainer.getTile(0);
         }
     }
@@ -222,24 +222,19 @@ class GameBoard
      *
      * @return
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings( "unchecked" )
     @Override
     public
-    boolean equals(Object obj) {
-        if (obj == null) {
+    boolean equals( Object obj ) {
+        if ( obj == null ) {
             return false;
         }
-        if (!Objects.equals(getClass(), obj.getClass())) {
+        if ( !Objects.equals(getClass(), obj.getClass()) ) {
             return false;
         }
         final GameBoard other = (GameBoard) obj;
-        return iWin == other.iWin &&
-               canMove == other.canMove &&
-               isFull == other.isFull &&
-               maxTileNumberValue == other.maxTileNumberValue &&
-               needToAddTile == other.needToAddTile &&
-               partialScore == other.partialScore &&
-               Arrays.deepEquals(tiles, other.tiles) &&
+        return iWin == other.iWin && canMove == other.canMove && isFull == other.isFull && maxTileNumberValue == other.maxTileNumberValue &&
+               needToAddTile == other.needToAddTile && partialScore == other.partialScore && Arrays.deepEquals(tiles, other.tiles) &&
                Objects.equals(availableSpaceList, other.availableSpaceList);
     }
 
@@ -256,7 +251,7 @@ class GameBoard
         copy.isFull = isFull;
         copy.maxTileNumberValue = maxTileNumberValue;
         copy.availableSpaceList = new ArrayList<>(16);
-        availableSpaceList.forEach((space) -> copy.availableSpaceList.add(space));
+        availableSpaceList.forEach(( space ) -> copy.availableSpaceList.add(space));
         copy.needToAddTile = needToAddTile;
         copy.partialScore = partialScore;
         return copy;
@@ -288,7 +283,7 @@ class GameBoard
 
     @Override
     public
-    SamplePointValue[] getNTuple(int nTupleIndex) {
+    SamplePointValue[] getNTuple( int nTupleIndex ) {
         return game.getNTupleSystemConfiguration().getNTuple(this, nTupleIndex);
     }
 
@@ -304,14 +299,14 @@ class GameBoard
      * @param partialScore the partialScore to set
      */
     public
-    void setPartialScore(int partialScore) {
+    void setPartialScore( int partialScore ) {
         this.partialScore = partialScore;
     }
 
     @Override
     public
-    double getStateReward(int outputNeuron) {
-        if (game.getNTupleSystemConfiguration() != null) {
+    double getStateReward( int outputNeuron ) {
+        if ( game.getNTupleSystemConfiguration() != null ) {
             return game.getNTupleSystemConfiguration().getBoardReward(this, outputNeuron);
         } else {
             return game.getNeuralNetworkConfiguration().getBoardReward(this, outputNeuron);
@@ -330,7 +325,7 @@ class GameBoard
      * @param tiles the tiles to set
      */
     public
-    void setTiles(Tile[] tiles) {
+    void setTiles( Tile[] tiles ) {
         this.tiles = tiles;
     }
 
@@ -341,12 +336,12 @@ class GameBoard
     public
     int hashCode() {
         int hash = 5;
-        hash = 97 * hash + (iWin ? 1 : 0);
-        hash = 97 * hash + (canMove ? 1 : 0);
-        hash = 97 * hash + (isFull ? 1 : 0);
+        hash = 97 * hash + ( iWin ? 1 : 0 );
+        hash = 97 * hash + ( canMove ? 1 : 0 );
+        hash = 97 * hash + ( isFull ? 1 : 0 );
         hash = 97 * hash + maxTileNumberValue;
         hash = 97 * hash + maxTileNumberCode;
-        hash = 97 * hash + (needToAddTile ? 1 : 0);
+        hash = 97 * hash + ( needToAddTile ? 1 : 0 );
         hash = 97 * hash + partialScore;
         hash = 97 * hash + Arrays.deepHashCode(tiles);
         hash = 97 * hash + Objects.hashCode(availableSpaceList);
@@ -368,9 +363,9 @@ class GameBoard
      * @return true si los 2 tableros son iguales topológicamente
      */
     public
-    boolean isEqual(GameBoard gameBoard) {
-        for (int i = 0; i < tiles.length; i++) {
-            if (!tiles[i].equals(gameBoard.tiles[i])) {
+    boolean isEqual( GameBoard gameBoard ) {
+        for ( int i = 0; i < tiles.length; i++ ) {
+            if ( !tiles[i].equals(gameBoard.tiles[i]) ) {
                 return false;
             }
         }
@@ -397,7 +392,7 @@ class GameBoard
      * @param needToAddTile the needToAddTile to set
      */
     public
-    void setNeedToAddTile(boolean needToAddTile) {
+    void setNeedToAddTile( boolean needToAddTile ) {
         this.needToAddTile = needToAddTile;
     }
 
@@ -411,17 +406,17 @@ class GameBoard
      * @return
      */
     public
-    List<GreedyStateProbability> listAllPossibleNextTurnStateFromAfterState() {
-        List<GreedyStateProbability> output = new ArrayList<>(16);
-        for (int value = 1; value <= 2; value++) {
+    List< GreedyStateProbability > listAllPossibleNextTurnStateFromAfterState() {
+        List< GreedyStateProbability > output = new ArrayList<>(16);
+        for ( int value = 1; value <= 2; value++ ) {
             double probability;
-            if (value == 1) {
+            if ( value == 1 ) {
                 probability = 0.9;
             } else {
                 probability = 0.1;
             }
-            for (int index = 0; index < availableSpaceList.size() - 1; index++) {
-                @SuppressWarnings("unchecked") GameBoard copy = (GameBoard) getCopy();
+            for ( int index = 0; index < availableSpaceList.size() - 1; index++ ) {
+                @SuppressWarnings( "unchecked" ) GameBoard copy = (GameBoard) getCopy();
                 copy.tiles[availableSpaceList.get(index)] = tileContainer.getTile(value);
                 copy.updateInternalState(true);
                 output.add(new GreedyStateProbability(copy, probability));
@@ -454,12 +449,11 @@ class GameBoard
 
     @Override
     public
-    Double translateToPerceptronInput(int neuronIndex) {
-        if (neuronIndex < 0 || neuronIndex >= game.getNeuralNetworkConfiguration().getNeuronQuantityInLayer()[0]) {
-            throw new IllegalArgumentException("neuronIndex range for output layer must be [0," +
-                                               game.getNeuralNetworkConfiguration().getNeuronQuantityInLayer()[0] +
-                                               "] but was " +
-                                               neuronIndex);
+    Double translateToPerceptronInput( int neuronIndex ) {
+        if ( neuronIndex < 0 || neuronIndex >= game.getNeuralNetworkConfiguration().getNeuronQuantityInLayer()[0] ) {
+            throw new IllegalArgumentException(
+                    "neuronIndex range for output layer must be [0," + game.getNeuralNetworkConfiguration().getNeuronQuantityInLayer()[0] +
+                    "] but was " + neuronIndex);
         }
         return normalizedPerceptronInput.get(neuronIndex);
     }
@@ -471,12 +465,12 @@ class GameBoard
      * @param updateInputs
      */
     public
-    void updateInternalState(boolean updateInputs) {
+    void updateInternalState( boolean updateInputs ) {
         availableSpaceList = calculateAvailableSpace();
         isFull = availableSpaceList.isEmpty();
         canMove = calculateCanMove();
         calculateMaxTile();
-        if (game.getNeuralNetworkConfiguration() != null && updateInputs) {
+        if ( game.getNeuralNetworkConfiguration() != null && updateInputs ) {
             //   assert this.getMaxTileNumberCode() != 0;
             game.getNeuralNetworkConfiguration().calculateNormalizedPerceptronInput(this, normalizedPerceptronInput);
         }

@@ -48,9 +48,9 @@ class Tile
      * @param num numero del tablero en base 2.
      */
     public
-    Tile(int num) {
+    Tile( int num ) {
         code = num;
-        if (code == 0) {
+        if ( code == 0 ) {
             gameValue = 0;
         } else {
             gameValue = (int) pow(2, code);
@@ -59,11 +59,11 @@ class Tile
 
     @Override
     public
-    boolean equals(Object obj) {
-        if (obj == null) {
+    boolean equals( Object obj ) {
+        if ( obj == null ) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
+        if ( getClass() != obj.getClass() ) {
             return false;
         }
         final Tile other = (Tile) obj;
@@ -75,7 +75,7 @@ class Tile
      */
     public
     Color getBackground() {
-        switch (code) {
+        switch ( code ) {
             case 1:
                 return new Color(0xee_e4da);
             case 2:

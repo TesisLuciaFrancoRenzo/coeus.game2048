@@ -158,7 +158,7 @@ class INeuralNetworkInterfaceFor2048
     ) {
         // evaluamos cada acción aplicada al estado inicial y elegimos la mejor
         // acción basada en las predicciones del problema
-        List<IAction> possibleActions = game.listAllPossibleActions(game.getBoard());
+        List< IAction > possibleActions = game.listAllPossibleActions(game.getBoard());
         Action bestAction = (Action) TDLambdaLearning.computeBestPossibleAction(
                 game,
                 ELearningStyle.afterState,
@@ -169,7 +169,7 @@ class INeuralNetworkInterfaceFor2048
                 learningMethod.getStatisticsBestPossibleActionTimes()
         ).getAction();
 
-        switch (bestAction) {
+        switch ( bestAction ) {
             case left: {
                 game.processInput(VK_LEFT);
                 break;
@@ -190,7 +190,7 @@ class INeuralNetworkInterfaceFor2048
                 throw new IllegalStateException("Mejor acción no reconocida");
             }
         }
-        if (game.isPrintHistory()) {
+        if ( game.isPrintHistory() ) {
             game.getHistoryLog().append("M=").append(bestAction).append("\n");
         }
     }
@@ -203,7 +203,7 @@ class INeuralNetworkInterfaceFor2048
      * @throws Exception
      */
     public abstract
-    void saveNeuralNetwork(final File neuralNetworkFile)
+    void saveNeuralNetwork( final File neuralNetworkFile )
             throws Exception;
 
 
@@ -215,7 +215,7 @@ class INeuralNetworkInterfaceFor2048
      * @throws Exception
      */
     public abstract
-    void saveNeuralNetwork(final OutputStream outputStream)
+    void saveNeuralNetwork( final OutputStream outputStream )
             throws Exception;
 
 }

@@ -39,7 +39,7 @@ class EncogConfiguration2048
         extends LearningExperiment
         implements Cloneable, IConfiguration2048 {
 
-    public final static Class<?>[] PARAMETER_TYPE = {Boolean.class};
+    public final static Class< ? >[] PARAMETER_TYPE = { Boolean.class };
 
     protected ActivationFunction[] activationFunctionForEncog;
     protected double               activationFunctionMax;
@@ -58,7 +58,7 @@ class EncogConfiguration2048
     public abstract
     void calculateNormalizedPerceptronInput(
             GameBoard board,
-            List<Double> normalizedPerceptronInput
+            List< Double > normalizedPerceptronInput
     );
 
     /**
@@ -121,7 +121,7 @@ class EncogConfiguration2048
      * @param activationFunctionMax
      */
     public
-    void setActivationFunctionMax(double activationFunctionMax) {
+    void setActivationFunctionMax( double activationFunctionMax ) {
         this.activationFunctionMax = activationFunctionMax;
     }
 
@@ -137,7 +137,7 @@ class EncogConfiguration2048
      * @param activationFunctionMin
      */
     public
-    void setActivationFunctionMin(double activationFunctionMin) {
+    void setActivationFunctionMin( double activationFunctionMin ) {
         this.activationFunctionMin = activationFunctionMin;
     }
 
@@ -153,7 +153,7 @@ class EncogConfiguration2048
      * @param neuralNetwork the neuralNetwork to set
      */
     public
-    void setNeuralNetwork(BasicNetwork neuralNetwork) {
+    void setNeuralNetwork( BasicNetwork neuralNetwork ) {
         this.neuralNetwork = neuralNetwork;
     }
 
@@ -169,7 +169,7 @@ class EncogConfiguration2048
      * @param neuronQuantityInLayer the neuronQuantityInLayer to set
      */
     public
-    void setNeuronQuantityInLayer(int[] neuronQuantityInLayer) {
+    void setNeuronQuantityInLayer( int[] neuronQuantityInLayer ) {
         this.neuronQuantityInLayer = neuronQuantityInLayer;
     }
 
@@ -192,7 +192,7 @@ class EncogConfiguration2048
     @Override
     public
     void initialize() {
-        if (getExperimentName() == null) {
+        if ( getExperimentName() == null ) {
             setExperimentName(getClass());
         }
         setNeuralNetworkName(getExperimentName());
@@ -205,13 +205,13 @@ class EncogConfiguration2048
             INeuralNetworkInterface perceptronInterface
     ) {
         return new TDLambdaLearning(perceptronInterface,
-                afterState,
-                getAlpha(),
-                getLambda(),
-                isReplaceEligibilityTraces(),
-                getGamma(),
-                getConcurrencyInLayer(),
-                false
+                                    afterState,
+                                    getAlpha(),
+                                    getLambda(),
+                                    isReplaceEligibilityTraces(),
+                                    getGamma(),
+                                    getConcurrencyInLayer(),
+                                    false
         );
     }
 
@@ -241,7 +241,7 @@ class EncogConfiguration2048
      * @param hasBias
      */
     public
-    void setHasBias(boolean hasBias) {
+    void setHasBias( boolean hasBias ) {
         this.hasBias = hasBias;
     }
 

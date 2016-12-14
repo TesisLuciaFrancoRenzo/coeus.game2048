@@ -43,20 +43,20 @@ public
 class ConfigPerceptronNTupleTanHSimplified_512
         extends EncogConfiguration2048 {
 
-    private final List<SamplePointValue>             allSamplePointPossibleValues;
-    private final boolean                            concurrentInput;
-    private final HashMap<SamplePointValue, Integer> mapSamplePointValuesIndex;
-    private final int                                maxTile;
-    private final int[]                              nTuplesLength;
-    private final int[]                              nTuplesWeightQuantityIndex;
-    private final int                                numSamples;
-    private final boolean                            useNTupleList;
+    private final List< SamplePointValue >             allSamplePointPossibleValues;
+    private final boolean                              concurrentInput;
+    private final HashMap< SamplePointValue, Integer > mapSamplePointValuesIndex;
+    private final int                                  maxTile;
+    private final int[]                                nTuplesLength;
+    private final int[]                                nTuplesWeightQuantityIndex;
+    private final int                                  numSamples;
+    private final boolean                              useNTupleList;
 
     /**
      * @param hasBias
      */
     public
-    ConfigPerceptronNTupleTanHSimplified_512(final Boolean hasBias) {
+    ConfigPerceptronNTupleTanHSimplified_512( final Boolean hasBias ) {
         this.hasBias = hasBias;
         setTileToWinForTraining(512);
 
@@ -68,13 +68,13 @@ class ConfigPerceptronNTupleTanHSimplified_512
         useNTupleList = true;
 
         nTuplesLength = new int[numSamples];
-        for (int i = 0; i < numSamples; i++) {
+        for ( int i = 0; i < numSamples; i++ ) {
             nTuplesLength[i] = 4;
         }
 
         allSamplePointPossibleValues = new ArrayList<>();
         mapSamplePointValuesIndex = new HashMap<>();
-        for (int spvIndex = 0; spvIndex <= maxTile; spvIndex++) {
+        for ( int spvIndex = 0; spvIndex <= maxTile; spvIndex++ ) {
             allSamplePointPossibleValues.add(new Tile(spvIndex));
             mapSamplePointValuesIndex.put(allSamplePointPossibleValues.get(spvIndex), spvIndex);
         }
@@ -83,10 +83,10 @@ class ConfigPerceptronNTupleTanHSimplified_512
         int lastNTuplesWeightQuantity = 0;
         nTuplesWeightQuantityIndex[0] = lastNTuplesWeightQuantity;
         int lutSize = 0;
-        for (int nTupleIndex = 0; nTupleIndex < nTuplesLength.length; nTupleIndex++) {
+        for ( int nTupleIndex = 0; nTupleIndex < nTuplesLength.length; nTupleIndex++ ) {
             int nTuplesWeightQuantity = (int) Math.pow(mapSamplePointValuesIndex.size(), nTuplesLength[nTupleIndex]);
             lutSize += nTuplesWeightQuantity;
-            if (nTupleIndex > 0) {
+            if ( nTupleIndex > 0 ) {
                 nTuplesWeightQuantityIndex[nTupleIndex] = nTuplesWeightQuantityIndex[nTupleIndex - 1] + lastNTuplesWeightQuantity;
             }
             lastNTuplesWeightQuantity = nTuplesWeightQuantity;
@@ -123,9 +123,9 @@ class ConfigPerceptronNTupleTanHSimplified_512
     public
     void calculateNormalizedPerceptronInput(
             GameBoard board,
-            List<Double> normalizedPerceptronInput
+            List< Double > normalizedPerceptronInput
     ) {
-        for (int i = 0; i < numSamples; i++) {
+        for ( int i = 0; i < numSamples; i++ ) {
             normalizedPerceptronInput.add(calculateIndex(i, getNTuple(board, i)), 1d);
         }
     }
@@ -152,7 +152,7 @@ class ConfigPerceptronNTupleTanHSimplified_512
 
     @Override
     public
-    double deNormalizeValueFromNeuralNetworkOutput(Object value) {
+    double deNormalizeValueFromNeuralNetworkOutput( Object value ) {
         return normOutput.deNormalize((Double) value);
     }
 
@@ -160,7 +160,7 @@ class ConfigPerceptronNTupleTanHSimplified_512
      * @return allSamplePointPossibleValues
      */
     public
-    List<SamplePointValue> getAllSamplePointPossibleValues() {
+    List< SamplePointValue > getAllSamplePointPossibleValues() {
         return allSamplePointPossibleValues;
     }
 
@@ -177,7 +177,7 @@ class ConfigPerceptronNTupleTanHSimplified_512
      * @return mapSamplePointValuesIndex
      */
     public
-    HashMap<SamplePointValue, Integer> getMapSamplePointValuesIndex() {
+    HashMap< SamplePointValue, Integer > getMapSamplePointValuesIndex() {
         return mapSamplePointValuesIndex;
     }
 
@@ -200,32 +200,32 @@ class ConfigPerceptronNTupleTanHSimplified_512
             GameBoard board,
             int nTupleIndex
     ) {
-        switch (nTupleIndex) {
+        switch ( nTupleIndex ) {
             // verticales
             case 0: {
-                return new SamplePointValue[]{board.tileAt(0, 0), board.tileAt(0, 1), board.tileAt(0, 2), board.tileAt(0, 3)};
+                return new SamplePointValue[] { board.tileAt(0, 0), board.tileAt(0, 1), board.tileAt(0, 2), board.tileAt(0, 3) };
             }
             case 1: {
-                return new SamplePointValue[]{board.tileAt(1, 0), board.tileAt(1, 1), board.tileAt(1, 2), board.tileAt(1, 3)};
+                return new SamplePointValue[] { board.tileAt(1, 0), board.tileAt(1, 1), board.tileAt(1, 2), board.tileAt(1, 3) };
             }
             case 2: {
-                return new SamplePointValue[]{board.tileAt(2, 0), board.tileAt(2, 1), board.tileAt(2, 2), board.tileAt(2, 3)};
+                return new SamplePointValue[] { board.tileAt(2, 0), board.tileAt(2, 1), board.tileAt(2, 2), board.tileAt(2, 3) };
             }
             case 3: {
-                return new SamplePointValue[]{board.tileAt(3, 0), board.tileAt(3, 1), board.tileAt(3, 2), board.tileAt(3, 3)};
+                return new SamplePointValue[] { board.tileAt(3, 0), board.tileAt(3, 1), board.tileAt(3, 2), board.tileAt(3, 3) };
             }
             // horizontales
             case 4: {
-                return new SamplePointValue[]{board.tileAt(0, 0), board.tileAt(1, 0), board.tileAt(2, 0), board.tileAt(3, 0)};
+                return new SamplePointValue[] { board.tileAt(0, 0), board.tileAt(1, 0), board.tileAt(2, 0), board.tileAt(3, 0) };
             }
             case 5: {
-                return new SamplePointValue[]{board.tileAt(0, 1), board.tileAt(1, 1), board.tileAt(2, 1), board.tileAt(3, 1)};
+                return new SamplePointValue[] { board.tileAt(0, 1), board.tileAt(1, 1), board.tileAt(2, 1), board.tileAt(3, 1) };
             }
             case 6: {
-                return new SamplePointValue[]{board.tileAt(0, 2), board.tileAt(1, 2), board.tileAt(2, 2), board.tileAt(3, 2)};
+                return new SamplePointValue[] { board.tileAt(0, 2), board.tileAt(1, 2), board.tileAt(2, 2), board.tileAt(3, 2) };
             }
             case 7: {
-                return new SamplePointValue[]{board.tileAt(0, 3), board.tileAt(1, 3), board.tileAt(2, 3), board.tileAt(3, 3)};
+                return new SamplePointValue[] { board.tileAt(0, 3), board.tileAt(1, 3), board.tileAt(2, 3), board.tileAt(3, 3) };
             }
             default: {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -265,7 +265,7 @@ class ConfigPerceptronNTupleTanHSimplified_512
 
     @Override
     public
-    double normalizeValueToPerceptronOutput(Object value) {
+    double normalizeValueToPerceptronOutput( Object value ) {
         return normOutput.normalize((Double) value);
     }
 

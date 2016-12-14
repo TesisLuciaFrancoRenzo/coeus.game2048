@@ -31,7 +31,7 @@ interface IConfiguration2048 {
      *
      * @return {@code value} desnormalizado.
      */
-    double deNormalizeValueFromNeuralNetworkOutput(Object value);
+    double deNormalizeValueFromNeuralNetworkOutput( Object value );
 
     /**
      * @param board        tablero.
@@ -49,6 +49,6 @@ interface IConfiguration2048 {
      *
      * @return {@code value} normalizado con el estilo de las neuronas de salida.
      */
-    double normalizeValueToPerceptronOutput(Object value);
+    double normalizeValueToPerceptronOutput( Object value );
 
 }

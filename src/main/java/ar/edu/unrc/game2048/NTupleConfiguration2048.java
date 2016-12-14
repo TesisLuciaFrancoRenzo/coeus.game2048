@@ -38,13 +38,13 @@ public abstract
 class NTupleConfiguration2048
         extends LearningExperiment
         implements Cloneable, IConfiguration2048 {
-    protected Function<Double, Double> activationFunction;
-    protected List<SamplePointValue>   allSamplePointPossibleValues;
-    protected boolean                  concurrency;
-    protected Function<Double, Double> derivedActivationFunction;
-    protected int[]                    nTuplesLength;
-    protected NormalizedField          normOutput;
-    private   NTupleSystem             nTupleSystem;
+    protected Function< Double, Double > activationFunction;
+    protected List< SamplePointValue >   allSamplePointPossibleValues;
+    protected boolean                    concurrency;
+    protected Function< Double, Double > derivedActivationFunction;
+    protected int[]                      nTuplesLength;
+    protected NormalizedField            normOutput;
+    private   NTupleSystem               nTupleSystem;
 
     /**
      * @return
@@ -62,7 +62,7 @@ class NTupleConfiguration2048
      * @return
      */
     public
-    Function<Double, Double> getActivationFunction() {
+    Function< Double, Double > getActivationFunction() {
         return activationFunction;
     }
 
@@ -70,7 +70,7 @@ class NTupleConfiguration2048
      * @return
      */
     public
-    List<SamplePointValue> getAllSamplePointPossibleValues() {
+    List< SamplePointValue > getAllSamplePointPossibleValues() {
         return allSamplePointPossibleValues;
     }
 
@@ -78,7 +78,7 @@ class NTupleConfiguration2048
      * @return
      */
     public
-    Function<Double, Double> getDerivedActivationFunction() {
+    Function< Double, Double > getDerivedActivationFunction() {
         return derivedActivationFunction;
     }
 
@@ -106,7 +106,7 @@ class NTupleConfiguration2048
      * @param nTupleSystem
      */
     public
-    void setNTupleSystem(NTupleSystem nTupleSystem) {
+    void setNTupleSystem( NTupleSystem nTupleSystem ) {
         this.nTupleSystem = nTupleSystem;
     }
 
@@ -129,7 +129,7 @@ class NTupleConfiguration2048
     @Override
     public
     void initialize() {
-        if (getExperimentName() == null) {
+        if ( getExperimentName() == null ) {
             setExperimentName(getClass());
         }
         setNeuralNetworkName(getExperimentName());
@@ -143,8 +143,7 @@ class NTupleConfiguration2048
     ) {
         return new TDLambdaLearning(
                 nTupleSystem,
-                afterState,
-                (getAlpha() != null) ? getAlpha()[0] : null,
+                afterState, ( getAlpha() != null ) ? getAlpha()[0] : null,
                 getLambda(),
                 getEligibilityTraceLength(),
                 isReplaceEligibilityTraces(),

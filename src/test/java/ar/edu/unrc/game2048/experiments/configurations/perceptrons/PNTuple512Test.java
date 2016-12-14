@@ -70,30 +70,28 @@ class PNTuple512Test {
 
         Game2048  game  = new Game2048(nTupleConfiguration, null, (int) Math.pow(2, nTupleConfiguration.getMaxTile()), 0, false);
         GameBoard board = new GameBoard(game, tileContainer);
-        board.setTiles(new Tile[]{tileContainer.getTile(0), tileContainer.getTile(4), tileContainer.
+        board.setTiles(new Tile[] {
+                tileContainer.getTile(0), tileContainer.getTile(4), tileContainer.
                 getTile(0), tileContainer.getTile(9), tileContainer.getTile(4), tileContainer.getTile(6), tileContainer.
                 getTile(4), tileContainer.getTile(4), tileContainer.getTile(2), tileContainer.getTile(4), tileContainer.
                 getTile(5), tileContainer.getTile(7), tileContainer.getTile(4), tileContainer.getTile(0), tileContainer.
-                getTile(1), tileContainer.getTile(4)});
+                getTile(1), tileContainer.getTile(4)
+        });
 
         InputNTupleList normalizedPerceptronInput = new InputNTupleList();
         nTupleConfiguration.calculateNormalizedPerceptronInput(board, normalizedPerceptronInput);
 
         //----------------------
         ConfigNTupleBasicTanHSimplified_512 nTupleConfiguration2 = new ConfigNTupleBasicTanHSimplified_512();
-        Game2048                            game2                = new Game2048(
-                null,
-                nTupleConfiguration2,
-                (int) Math.pow(2, nTupleConfiguration2.getMaxTile()),
-                0,
-                false
-        );
+        Game2048 game2 = new Game2048(null, nTupleConfiguration2, (int) Math.pow(2, nTupleConfiguration2.getMaxTile()), 0, false);
         GameBoard                           board2               = new GameBoard(game2, tileContainer);
-        board2.setTiles(new Tile[]{tileContainer.getTile(0), tileContainer.getTile(4), tileContainer.
+        board2.setTiles(new Tile[] {
+                tileContainer.getTile(0), tileContainer.getTile(4), tileContainer.
                 getTile(0), tileContainer.getTile(9), tileContainer.getTile(4), tileContainer.getTile(6), tileContainer.
                 getTile(4), tileContainer.getTile(4), tileContainer.getTile(2), tileContainer.getTile(4), tileContainer.
                 getTile(5), tileContainer.getTile(7), tileContainer.getTile(4), tileContainer.getTile(0), tileContainer.
-                getTile(1), tileContainer.getTile(4)});
+                getTile(1), tileContainer.getTile(4)
+        });
 
         NTupleSystem nTupleSystem = new NTupleSystem(nTupleConfiguration2.getAllSamplePointPossibleValues(), nTupleConfiguration2.getNTuplesLength(),
                 nTupleConfiguration2.getActivationFunction(),
@@ -102,7 +100,7 @@ class PNTuple512Test {
         );
         int[] indexes = nTupleSystem.getComplexComputation(board2).getIndexes();
         assertThat(normalizedPerceptronInput.getInternalSetSize(), is(indexes.length));
-        for (int i : indexes) {
+        for ( int i : indexes ) {
             assertThat(normalizedPerceptronInput.get(i), is(1d));
         }
     }

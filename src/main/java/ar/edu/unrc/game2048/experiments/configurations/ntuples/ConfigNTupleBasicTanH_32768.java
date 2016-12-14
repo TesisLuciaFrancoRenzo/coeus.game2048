@@ -54,12 +54,12 @@ class ConfigNTupleBasicTanH_32768
         normOutput = new NormalizedField(NormalizationAction.Normalize, null, maxReward, minReward, activationFunctionMax, activationFunctionMin);
 
         nTuplesLength = new int[17];
-        for (int i = 0; i < 17; i++) {
+        for ( int i = 0; i < 17; i++ ) {
             nTuplesLength[i] = 4;
         }
 
         allSamplePointPossibleValues = new ArrayList<>();
-        for (int i = 0; i <= maxTile; i++) {
+        for ( int i = 0; i <= maxTile; i++ ) {
             allSamplePointPossibleValues.add(new Tile(i));
         }
     }
@@ -78,7 +78,7 @@ class ConfigNTupleBasicTanH_32768
 
     @Override
     public
-    double deNormalizeValueFromNeuralNetworkOutput(Object value) {
+    double deNormalizeValueFromNeuralNetworkOutput( Object value ) {
         return normOutput.deNormalize((double) value);
     }
 
@@ -98,63 +98,63 @@ class ConfigNTupleBasicTanH_32768
             GameBoard board,
             int nTupleIndex
     ) {
-        switch (nTupleIndex) {
+        switch ( nTupleIndex ) {
             // verticales
             case 0: {
-                return new SamplePointValue[]{board.tileAt(0, 0), board.tileAt(0, 1), board.tileAt(0, 2), board.tileAt(0, 3)};
+                return new SamplePointValue[] { board.tileAt(0, 0), board.tileAt(0, 1), board.tileAt(0, 2), board.tileAt(0, 3) };
             }
             case 1: {
-                return new SamplePointValue[]{board.tileAt(1, 0), board.tileAt(1, 1), board.tileAt(1, 2), board.tileAt(1, 3)};
+                return new SamplePointValue[] { board.tileAt(1, 0), board.tileAt(1, 1), board.tileAt(1, 2), board.tileAt(1, 3) };
             }
             case 2: {
-                return new SamplePointValue[]{board.tileAt(2, 0), board.tileAt(2, 1), board.tileAt(2, 2), board.tileAt(2, 3)};
+                return new SamplePointValue[] { board.tileAt(2, 0), board.tileAt(2, 1), board.tileAt(2, 2), board.tileAt(2, 3) };
             }
             case 3: {
-                return new SamplePointValue[]{board.tileAt(3, 0), board.tileAt(3, 1), board.tileAt(3, 2), board.tileAt(3, 3)};
+                return new SamplePointValue[] { board.tileAt(3, 0), board.tileAt(3, 1), board.tileAt(3, 2), board.tileAt(3, 3) };
             }
             // horizontales
             case 4: {
-                return new SamplePointValue[]{board.tileAt(0, 0), board.tileAt(1, 0), board.tileAt(2, 0), board.tileAt(3, 0)};
+                return new SamplePointValue[] { board.tileAt(0, 0), board.tileAt(1, 0), board.tileAt(2, 0), board.tileAt(3, 0) };
             }
             case 5: {
-                return new SamplePointValue[]{board.tileAt(0, 1), board.tileAt(1, 1), board.tileAt(2, 1), board.tileAt(3, 1)};
+                return new SamplePointValue[] { board.tileAt(0, 1), board.tileAt(1, 1), board.tileAt(2, 1), board.tileAt(3, 1) };
             }
             case 6: {
-                return new SamplePointValue[]{board.tileAt(0, 2), board.tileAt(1, 2), board.tileAt(2, 2), board.tileAt(3, 2)};
+                return new SamplePointValue[] { board.tileAt(0, 2), board.tileAt(1, 2), board.tileAt(2, 2), board.tileAt(3, 2) };
             }
             case 7: {
-                return new SamplePointValue[]{board.tileAt(0, 3), board.tileAt(1, 3), board.tileAt(2, 3), board.tileAt(3, 3)};
+                return new SamplePointValue[] { board.tileAt(0, 3), board.tileAt(1, 3), board.tileAt(2, 3), board.tileAt(3, 3) };
             }
             // cuadrados
             // primera fila de rectángulos
             case 8: {
-                return new SamplePointValue[]{board.tileAt(0, 0), board.tileAt(0, 1), board.tileAt(1, 1), board.tileAt(1, 0)};
+                return new SamplePointValue[] { board.tileAt(0, 0), board.tileAt(0, 1), board.tileAt(1, 1), board.tileAt(1, 0) };
             }
             case 9: {
-                return new SamplePointValue[]{board.tileAt(1, 0), board.tileAt(1, 1), board.tileAt(2, 1), board.tileAt(2, 0)};
+                return new SamplePointValue[] { board.tileAt(1, 0), board.tileAt(1, 1), board.tileAt(2, 1), board.tileAt(2, 0) };
             }
             case 10: {
-                return new SamplePointValue[]{board.tileAt(2, 0), board.tileAt(2, 1), board.tileAt(3, 1), board.tileAt(3, 0)};
+                return new SamplePointValue[] { board.tileAt(2, 0), board.tileAt(2, 1), board.tileAt(3, 1), board.tileAt(3, 0) };
             }
             //segunda fila de rectángulos
             case 11: {
-                return new SamplePointValue[]{board.tileAt(0, 1), board.tileAt(0, 2), board.tileAt(1, 2), board.tileAt(1, 1)};
+                return new SamplePointValue[] { board.tileAt(0, 1), board.tileAt(0, 2), board.tileAt(1, 2), board.tileAt(1, 1) };
             }
             case 12: {
-                return new SamplePointValue[]{board.tileAt(1, 1), board.tileAt(1, 2), board.tileAt(2, 2), board.tileAt(2, 1)};
+                return new SamplePointValue[] { board.tileAt(1, 1), board.tileAt(1, 2), board.tileAt(2, 2), board.tileAt(2, 1) };
             }
             case 13: {
-                return new SamplePointValue[]{board.tileAt(2, 1), board.tileAt(2, 2), board.tileAt(3, 2), board.tileAt(3, 1)};
+                return new SamplePointValue[] { board.tileAt(2, 1), board.tileAt(2, 2), board.tileAt(3, 2), board.tileAt(3, 1) };
             }
             //tercera fila de rectángulos
             case 14: {
-                return new SamplePointValue[]{board.tileAt(0, 2), board.tileAt(0, 3), board.tileAt(1, 3), board.tileAt(1, 2)};
+                return new SamplePointValue[] { board.tileAt(0, 2), board.tileAt(0, 3), board.tileAt(1, 3), board.tileAt(1, 2) };
             }
             case 15: {
-                return new SamplePointValue[]{board.tileAt(1, 2), board.tileAt(1, 3), board.tileAt(2, 3), board.tileAt(2, 2)};
+                return new SamplePointValue[] { board.tileAt(1, 2), board.tileAt(1, 3), board.tileAt(2, 3), board.tileAt(2, 2) };
             }
             case 16: {
-                return new SamplePointValue[]{board.tileAt(2, 2), board.tileAt(2, 3), board.tileAt(3, 3), board.tileAt(3, 2)};
+                return new SamplePointValue[] { board.tileAt(2, 2), board.tileAt(2, 3), board.tileAt(3, 3), board.tileAt(3, 2) };
             }
 
             default: {
@@ -165,8 +165,8 @@ class ConfigNTupleBasicTanH_32768
 
     @Override
     public
-    double normalizeValueToPerceptronOutput(Object value) {
-        if ((Double) value > maxReward) {
+    double normalizeValueToPerceptronOutput( Object value ) {
+        if ( (Double) value > maxReward ) {
             throw new IllegalArgumentException("value no puede ser mayor a maxReward=" + maxReward);
         }
         return normOutput.normalize((Double) value);

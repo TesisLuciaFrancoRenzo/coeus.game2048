@@ -56,7 +56,7 @@ class GreedyStateProbability {
      * @param nextTurnState posible siguiente estado luego de calcular acciones no determinísticas.
      */
     public
-    void setNextTurnState(final IState nextTurnState) {
+    void setNextTurnState( final IState nextTurnState ) {
         this.nextTurnState = nextTurnState;
     }
 
@@ -72,8 +72,8 @@ class GreedyStateProbability {
      * @param probability probabilidad de que se alcance el estado {@code nextTurnState}
      */
     public
-    void setProbability(final double probability) {
-        if (probability < 0 && probability > 1) {
+    void setProbability( final double probability ) {
+        if ( probability < 0 && probability > 1 ) {
             throw new IllegalArgumentException("probability debe estar en el rango 0<=probability<=1");
         }
         this.probability = probability;

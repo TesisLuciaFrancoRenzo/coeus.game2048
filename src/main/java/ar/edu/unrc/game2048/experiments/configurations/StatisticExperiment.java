@@ -77,7 +77,7 @@ class StatisticExperiment {
     private boolean          runStatisticsForBackups;
     private int              saveBackupEvery;
     private int              simulations;
-    private List<Double>     tileStatistics;
+    private List< Double >   tileStatistics;
     private int              tileToWin;
     private int tileToWinForStatistics = 2_048;
     private double winRate;
@@ -106,15 +106,15 @@ class StatisticExperiment {
     public
     void exportToExcel(
             final String filePath,
-            final List<File> backupFiles,
-            final Map<File, StatisticForCalc> resultsPerFile,
+            final List< File > backupFiles,
+            final Map< File, StatisticForCalc > resultsPerFile,
             final StatisticForCalc resultsRandom
     )
             throws IOException, InvalidFormatException {
         InputStream inputXLSX = getClass().getResourceAsStream("/ar/edu/unrc/game2048/experiments/Estadisticas.xlsx");
         Workbook    wb        = WorkbookFactory.create(inputXLSX);
 
-        try (FileOutputStream outputXLSX = new FileOutputStream(filePath + "_STATISTICS" + ".xlsx")) {
+        try ( FileOutputStream outputXLSX = new FileOutputStream(filePath + "_STATISTICS" + ".xlsx") ) {
             //============= imprimimos en la hoja de tiles ===================
 
             Sheet sheet = wb.getSheetAt(0);
@@ -158,17 +158,17 @@ class StatisticExperiment {
             Double cellDoubleValue;
             int    rowStart = 2;
             int    colStart = 3;
-            for (int tile = 0; tile <= tiles; tile++) {
+            for ( int tile = 0; tile <= tiles; tile++ ) {
                 row = sheet.getRow(tile + rowStart - 1);
-                for (int file = 0; file < backupFiles.size(); file++) {
+                for ( int file = 0; file < backupFiles.size(); file++ ) {
                     cell = row.createCell(file + colStart, Cell.CELL_TYPE_NUMERIC);
                     cell.setCellStyle(cellStyle);
                     cellDoubleValue = resultsPerFile.get(backupFiles.get(file)).getTileStatistics().get(tile);
                     cell.setCellValue(cellDoubleValue);
                 }
             }
-            if (resultsRandom != null) {
-                for (int tile = 0; tile <= tiles; tile++) {
+            if ( resultsRandom != null ) {
+                for ( int tile = 0; tile <= tiles; tile++ ) {
                     int file = 0;
                     row = sheet.getRow(tile + rowStart - 1);
                     cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
@@ -183,13 +183,13 @@ class StatisticExperiment {
             rowStart = 2;
             loadTitle(rowStartTitle, colStartTitle, sheet, backupFiles.size(), CellStyleTitle);
             row = sheet.getRow(rowStart - 1);
-            for (int file = 0; file < backupFiles.size(); file++) {
+            for ( int file = 0; file < backupFiles.size(); file++ ) {
                 cell = row.createCell(file + colStart, Cell.CELL_TYPE_NUMERIC);
                 cell.setCellStyle(cellStyle);
                 cellDoubleValue = resultsPerFile.get(backupFiles.get(file)).getMinScore();
                 cell.setCellValue(cellDoubleValue);
             }
-            if (resultsRandom != null) {
+            if ( resultsRandom != null ) {
                 int file = 0;
                 cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
                 cellDoubleValue = resultsRandom.getMinScore();
@@ -199,13 +199,13 @@ class StatisticExperiment {
 
             rowStart = 3;
             row = sheet.getRow(rowStart - 1);
-            for (int file = 0; file < backupFiles.size(); file++) {
+            for ( int file = 0; file < backupFiles.size(); file++ ) {
                 cell = row.createCell(file + colStart, Cell.CELL_TYPE_NUMERIC);
                 cellDoubleValue = resultsPerFile.get(backupFiles.get(file)).getMeanScore();
                 cell.setCellStyle(cellStyle);
                 cell.setCellValue(cellDoubleValue);
             }
-            if (resultsRandom != null) {
+            if ( resultsRandom != null ) {
                 int file = 0;
                 cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
                 cellDoubleValue = resultsRandom.getMeanScore();
@@ -215,13 +215,13 @@ class StatisticExperiment {
 
             rowStart = 4;
             row = sheet.getRow(rowStart - 1);
-            for (int file = 0; file < backupFiles.size(); file++) {
+            for ( int file = 0; file < backupFiles.size(); file++ ) {
                 cell = row.createCell(file + colStart, Cell.CELL_TYPE_NUMERIC);
                 cellDoubleValue = resultsPerFile.get(backupFiles.get(file)).getMaxScore();
                 cell.setCellStyle(cellStyle);
                 cell.setCellValue(cellDoubleValue);
             }
-            if (resultsRandom != null) {
+            if ( resultsRandom != null ) {
                 int file = 0;
                 cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
                 cellDoubleValue = resultsRandom.getMaxScore();
@@ -236,14 +236,14 @@ class StatisticExperiment {
             loadTitle(rowStartTitle, colStartTitle, sheet, backupFiles.size(), CellStyleTitle);
             loadTitle(rowStartTitle + 2, colStartTitle, sheet, backupFiles.size(), CellStyleTitle);
             row = sheet.getRow(rowStart - 1);
-            for (int file = 0; file < backupFiles.size(); file++) {
+            for ( int file = 0; file < backupFiles.size(); file++ ) {
                 cell = row.createCell(file + colStart, Cell.CELL_TYPE_NUMERIC);
                 cell.setCellStyle(cellStyle);
                 cellDoubleValue = resultsPerFile.get(backupFiles.get(file)).getWinRate();
                 assert cellDoubleValue <= 100 && cellDoubleValue >= 0;
                 cell.setCellValue(cellDoubleValue);
             }
-            if (resultsRandom != null) {
+            if ( resultsRandom != null ) {
                 int file = 0;
                 cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
                 cell.setCellStyle(cellStyle);
@@ -269,13 +269,13 @@ class StatisticExperiment {
             rowStart = 2;
             loadTitle(rowStartTitle, colStartTitle, sheet, backupFiles.size(), CellStyleTitle);
             row = sheet.getRow(rowStart - 1);
-            for (int file = 0; file < backupFiles.size(); file++) {
+            for ( int file = 0; file < backupFiles.size(); file++ ) {
                 cell = row.createCell(file + colStart, Cell.CELL_TYPE_NUMERIC);
                 cell.setCellStyle(cellStyle);
                 cellDoubleValue = resultsPerFile.get(backupFiles.get(file)).getMinTurn();
                 cell.setCellValue(cellDoubleValue);
             }
-            if (resultsRandom != null) {
+            if ( resultsRandom != null ) {
                 int file = 0;
                 cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
                 cell.setCellStyle(cellStyle);
@@ -285,13 +285,13 @@ class StatisticExperiment {
 
             rowStart = 3;
             row = sheet.getRow(rowStart - 1);
-            for (int file = 0; file < backupFiles.size(); file++) {
+            for ( int file = 0; file < backupFiles.size(); file++ ) {
                 cell = row.createCell(file + colStart, Cell.CELL_TYPE_NUMERIC);
                 cell.setCellStyle(cellStyle);
                 cellDoubleValue = resultsPerFile.get(backupFiles.get(file)).getMeanTurn();
                 cell.setCellValue(cellDoubleValue);
             }
-            if (resultsRandom != null) {
+            if ( resultsRandom != null ) {
                 int file = 0;
                 cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
                 cell.setCellStyle(cellStyle);
@@ -301,13 +301,13 @@ class StatisticExperiment {
 
             rowStart = 4;
             row = sheet.getRow(rowStart - 1);
-            for (int file = 0; file < backupFiles.size(); file++) {
+            for ( int file = 0; file < backupFiles.size(); file++ ) {
                 cell = row.createCell(file + colStart, Cell.CELL_TYPE_NUMERIC);
                 cell.setCellStyle(cellStyle);
                 cellDoubleValue = resultsPerFile.get(backupFiles.get(file)).getMaxTurn();
                 cell.setCellValue(cellDoubleValue);
             }
-            if (resultsRandom != null) {
+            if ( resultsRandom != null ) {
                 int file = 0;
                 cell = row.createCell(file + colStart - 1, Cell.CELL_TYPE_NUMERIC);
                 cell.setCellStyle(cellStyle);
@@ -320,7 +320,7 @@ class StatisticExperiment {
     }
 
     private
-    double extractNumber(String line) {
+    double extractNumber( String line ) {
         int index = line.indexOf(':');
         assert index != -1;
         return Double.parseDouble(line.substring(index + 1).trim().replaceFirst(",", "."));
@@ -338,7 +338,7 @@ class StatisticExperiment {
      * @param experimentName nuevo nombre del experimento.
      */
     protected
-    void setExperimentName(String experimentName) {
+    void setExperimentName( String experimentName ) {
         this.experimentName = experimentName;
     }
 
@@ -354,7 +354,7 @@ class StatisticExperiment {
      * @param fileName nuevo nombre del archivo sobre el cual trabajar.
      */
     protected
-    void setFileName(String fileName) {
+    void setFileName( String fileName ) {
         this.fileName = fileName;
     }
 
@@ -378,7 +378,7 @@ class StatisticExperiment {
      * @param learningMethod nuevo método TDLearning
      */
     protected
-    void setLearningMethod(TDLambdaLearning learningMethod) {
+    void setLearningMethod( TDLambdaLearning learningMethod ) {
         this.learningMethod = learningMethod;
     }
 
@@ -394,7 +394,7 @@ class StatisticExperiment {
      * @param threads cantidad de simulaciones a realizar (concurrentemente).
      */
     public
-    void setSimulations(int threads) {
+    void setSimulations( int threads ) {
         simulations = threads;
     }
 
@@ -427,7 +427,7 @@ class StatisticExperiment {
      * @param tileToWin valor considerado como ganador en una partida.
      */
     protected
-    void setTileToWin(int tileToWin) {
+    void setTileToWin( int tileToWin ) {
         this.tileToWin = tileToWin;
     }
 
@@ -470,13 +470,13 @@ class StatisticExperiment {
     ) {
         int totalGames = saveBackupEvery;
         Row row1       = sheet.getRow(rowStartTitle);
-        for (int file = 1; file <= backupFilesSize; file++) {
+        for ( int file = 1; file <= backupFilesSize; file++ ) {
             Cell cell = row1.createCell(file + colStartTitle, Cell.CELL_TYPE_NUMERIC);
             cell.setCellStyle(CellStyleTitle);
             Integer value    = totalGames * file;
             String  valueStr = value.toString();
             String  cellV    = valueStr;
-            if (valueStr.length() > 3) {
+            if ( valueStr.length() > 3 ) {
                 cellV = valueStr.substring(0, valueStr.length() - 3) + 'K';
             }
             cell.setCellValue(cellV);
@@ -492,7 +492,7 @@ class StatisticExperiment {
      *
      * @throws Exception
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings( "unchecked" )
     public
     void processFile(
             String fileToProcess,
@@ -505,13 +505,13 @@ class StatisticExperiment {
         //preparamos los destinos de las simulaciones para posterior sumatoria final
         File logFile = new File(fileToProcess + "_STATISTICS" + ".txt");
 
-        if (!logFile.exists()) {
-            List<ThreadResult>                   results                 = new ArrayList<>(simulations);
-            List<Game2048>                       games                   = new ArrayList<>(simulations);
-            List<INeuralNetworkInterfaceFor2048> neuralNetworkInterfaces = new ArrayList<>(simulations);
-            List<TDLambdaLearning>               tdLambdaLearning        = new ArrayList<>(simulations);
+        if ( !logFile.exists() ) {
+            List< ThreadResult >                   results                 = new ArrayList<>(simulations);
+            List< Game2048 >                       games                   = new ArrayList<>(simulations);
+            List< INeuralNetworkInterfaceFor2048 > neuralNetworkInterfaces = new ArrayList<>(simulations);
+            List< TDLambdaLearning >               tdLambdaLearning        = new ArrayList<>(simulations);
 
-            for (int i = 0; i < simulations; i++) {
+            for ( int i = 0; i < simulations; i++ ) {
                 INeuralNetworkInterfaceFor2048 neuralNetworkInterfaceClone;
                 EncogConfiguration2048         tempPerceptronConfiguration = null;
                 neuralNetworkInterfaceClone = (INeuralNetworkInterfaceFor2048) learningExperiment.getNeuralNetworkInterfaceFor2048().clone();
@@ -519,37 +519,35 @@ class StatisticExperiment {
                 NTupleConfiguration2048 tempNTupleConfiguration = null;
                 INeuralNetworkInterface tempPerceptronInterface = null;
 
-                if (learningExperiment.getNeuralNetworkInterfaceFor2048().getPerceptronConfiguration() != null) {
-                    tempPerceptronConfiguration = (EncogConfiguration2048) learningExperiment.getNeuralNetworkInterfaceFor2048()
-                                                                                             .getPerceptronConfiguration()
-                                                                                             .clone();
+                if ( learningExperiment.getNeuralNetworkInterfaceFor2048().getPerceptronConfiguration() != null ) {
+                    tempPerceptronConfiguration =
+                            (EncogConfiguration2048) learningExperiment.getNeuralNetworkInterfaceFor2048().getPerceptronConfiguration().clone();
                     neuralNetworkInterfaceClone.setPerceptronConfiguration(tempPerceptronConfiguration);
                     tempPerceptronInterface = neuralNetworkInterfaceClone.getNeuralNetworkInterface();
                 }
-                if (learningExperiment.getNeuralNetworkInterfaceFor2048().getNTupleConfiguration() != null) {
-                    tempNTupleConfiguration = (NTupleConfiguration2048) learningExperiment.getNeuralNetworkInterfaceFor2048()
-                                                                                          .getNTupleConfiguration()
-                                                                                          .clone();
+                if ( learningExperiment.getNeuralNetworkInterfaceFor2048().getNTupleConfiguration() != null ) {
+                    tempNTupleConfiguration =
+                            (NTupleConfiguration2048) learningExperiment.getNeuralNetworkInterfaceFor2048().getNTupleConfiguration().clone();
                     neuralNetworkInterfaceClone.setNTupleConfiguration(tempNTupleConfiguration);
                 }
 
-                if (tempPerceptronConfiguration != null || tempNTupleConfiguration != null) {
+                if ( tempPerceptronConfiguration != null || tempNTupleConfiguration != null ) {
                     //cargamos la red neuronal entrenada
                     File perceptronFile = new File(fileToProcess + ".ser");
-                    if (!perceptronFile.exists()) {
+                    if ( !perceptronFile.exists() ) {
                         throw new IllegalArgumentException("perceptron file must exists: " + perceptronFile.getCanonicalPath());
                     }
                     neuralNetworkInterfaceClone.loadOrCreatePerceptron(perceptronFile, true, createNeuralNetworkFile);
                 }
 
-                Game2048 game = new Game2048(tempPerceptronConfiguration, tempNTupleConfiguration, tileToWinForStatistics, delayPerMove, printHistory
-                );
+                Game2048 game =
+                        new Game2048(tempPerceptronConfiguration, tempNTupleConfiguration, tileToWinForStatistics, delayPerMove, printHistory);
 
                 neuralNetworkInterfaces.add(neuralNetworkInterfaceClone);
-                if (tempPerceptronConfiguration != null) {
+                if ( tempPerceptronConfiguration != null ) {
                     tdLambdaLearning.add(learningExperiment.instanceOfTdLearningImplementation(tempPerceptronInterface));
                 }
-                if (tempNTupleConfiguration != null) {
+                if ( tempNTupleConfiguration != null ) {
                     tdLambdaLearning.add(learningExperiment.instanceOfTdLearningImplementation(tempNTupleConfiguration.getNTupleSystem()));
                 }
                 games.add(game);
@@ -559,11 +557,11 @@ class StatisticExperiment {
             IntStream.range(0, simulations).parallel().forEach(i -> {
                 // Si hay un perceptron ya entrenado, lo buscamos en el archivo.
                 // En caso contrario creamos un perceptron vacío, inicializado al azar
-                for (results.get(i).setProcessedGames(1); results.get(i).getProcessedGames() < gamesToPlay; results.get(i).addProcessedGames()) {
+                for ( results.get(i).setProcessedGames(1); results.get(i).getProcessedGames() < gamesToPlay; results.get(i).addProcessedGames() ) {
                     games.get(i).resetGame(); //reset
                     int turnNumber = 0;
-                    while (!games.get(i).iLoose() && !games.get(i).iWin()) {
-                        if (tdLambdaLearning.isEmpty()) {
+                    while ( !games.get(i).iLoose() && !games.get(i).iWin() ) {
+                        if ( tdLambdaLearning.isEmpty() ) {
                             neuralNetworkInterfaces.get(i).playATurn(games.get(i), null);
                         } else {
                             neuralNetworkInterfaces.get(i).playATurn(games.get(i), tdLambdaLearning.get(i));
@@ -574,7 +572,7 @@ class StatisticExperiment {
                     results.get(i).addStatisticForTile(games.get(i).getMaxNumberCode());
                     results.get(i).addScore(games.get(i).getScore());
 
-                    if (games.get(i).getMaxNumber() >= tileToWinForStatistics) {
+                    if ( games.get(i).getMaxNumber() >= tileToWinForStatistics ) {
                         results.get(i).addWin();
                         results.get(i).addLastTurn(turnNumber);
                     }
@@ -591,10 +589,10 @@ class StatisticExperiment {
             meanTurn = 0;
 
             tileStatistics = new ArrayList<>(18);
-            for (int i = 0; i <= 17; i++) {
+            for ( int i = 0; i <= 17; i++ ) {
                 tileStatistics.add(0d);
             }
-            results.forEach((result) -> {
+            results.forEach(( result ) -> {
                 winRate += result.getWinRate();
                 maxScore += result.getMaxScore();
                 minScore += result.getMinScore();
@@ -602,34 +600,30 @@ class StatisticExperiment {
                 maxTurn += result.getMaxTurn();
                 minTurn += result.getMinTurn();
                 meanTurn += result.getMeanTurn();
-                for (int i = 0; i <= 17; i++) {
+                for ( int i = 0; i <= 17; i++ ) {
                     tileStatistics.set(i, tileStatistics.get(i) + result.getStatisticForTile(i));
                 }
             });
 
-            for (int i = 0; i <= 17; i++) {
-                tileStatistics.set(i, tileStatistics.get(i) / (simulations * 1d));
+            for ( int i = 0; i <= 17; i++ ) {
+                tileStatistics.set(i, tileStatistics.get(i) / ( simulations * 1d ));
             }
-            winRate /= (simulations * 1d);
+            winRate /= ( simulations * 1d );
             assert winRate <= 100;
-            maxScore /= (simulations * 1d);
-            minScore /= (simulations * 1d);
-            meanScore /= (simulations * 1d);
-            maxTurn /= (simulations * 1d);
-            minTurn /= (simulations * 1d);
-            meanTurn /= (simulations * 1d);
+            maxScore /= ( simulations * 1d );
+            minScore /= ( simulations * 1d );
+            meanScore /= ( simulations * 1d );
+            maxTurn /= ( simulations * 1d );
+            minTurn /= ( simulations * 1d );
+            meanTurn /= ( simulations * 1d );
 
-            if (!results.isEmpty()) {
-                try (PrintStream printStream = new PrintStream(logFile, "UTF-8")) {
-                    printStream.println("Gano: " +
-                                        round(winRate) +
-                                        "% - Total de partidas: " +
-                                        gamesToPlay +
-                                        " (promedios obtenidos con " +
-                                        simulations +
-                                        " simulaciones)");
+            if ( !results.isEmpty() ) {
+                try ( PrintStream printStream = new PrintStream(logFile, "UTF-8") ) {
+                    printStream.println(
+                            "Gano: " + round(winRate) + "% - Total de partidas: " + gamesToPlay + " (promedios obtenidos con " + simulations +
+                            " simulaciones)");
                     printStream.println("Valores alcanzados:");
-                    for (int i = 0; i <= 17; i++) {
+                    for ( int i = 0; i <= 17; i++ ) {
                         printStream.println(tileStatistics.get(i).toString().replaceAll("\\.", ","));
                     }
 
@@ -647,30 +641,30 @@ class StatisticExperiment {
             }
         } else {
             //cargamos el archivo ya guardado
-            try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(logFile), "UTF-8"))) {
+            try ( BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(logFile), "UTF-8")) ) {
                 int lastTileStatistic = -1;
                 tileStatistics = new ArrayList<>(18);
-                for (String line = br.readLine(); line != null; line = br.readLine()) {
-                    if (line.contains(WIN_RATE)) {
+                for ( String line = br.readLine(); line != null; line = br.readLine() ) {
+                    if ( line.contains(WIN_RATE) ) {
                         winRate = extractNumber(line);
-                    } else if (line.contains(MIN_TURN)) {
+                    } else if ( line.contains(MIN_TURN) ) {
                         minTurn = extractNumber(line);
-                    } else if (line.contains(MEAN_TURN)) {
+                    } else if ( line.contains(MEAN_TURN) ) {
                         meanTurn = extractNumber(line);
-                    } else if (line.contains(MAX_TURN)) {
+                    } else if ( line.contains(MAX_TURN) ) {
                         maxTurn = extractNumber(line);
-                    } else if (line.contains(MIN_SCORE)) {
+                    } else if ( line.contains(MIN_SCORE) ) {
                         minScore = extractNumber(line);
-                    } else if (line.contains(MEAN_SCORE)) {
+                    } else if ( line.contains(MEAN_SCORE) ) {
                         meanScore = extractNumber(line);
-                    } else if (line.contains(MAX_SCORE)) {
+                    } else if ( line.contains(MAX_SCORE) ) {
                         maxScore = extractNumber(line);
                     } else {
                         try {
                             double value = Double.parseDouble(line.trim().replaceFirst(",", "."));
                             lastTileStatistic++;
                             tileStatistics.add(value);
-                        } catch (NumberFormatException numberFormatException) {
+                        } catch ( NumberFormatException numberFormatException ) {
                         }
                     }
 
@@ -698,12 +692,10 @@ class StatisticExperiment {
             boolean printHistory
     )
             throws Exception {
-        String dirPath = experimentPath + learningExperiment.getNeuralNetworkInterfaceFor2048().getLibName() +
-                         File.separator +
-                         experimentName +
+        String dirPath = experimentPath + learningExperiment.getNeuralNetworkInterfaceFor2048().getLibName() + File.separator + experimentName +
                          File.separator;
         File dirPathFile = new File(dirPath);
-        if (!dirPathFile.exists()) {
+        if ( !dirPathFile.exists() ) {
             dirPathFile.mkdirs();
         }
         String filePath = dirPath + fileName;
@@ -718,45 +710,45 @@ class StatisticExperiment {
         processFile(dirPath + experimentName + LearningExperiment.BEST_TRAINED, delayPerMove, createNeuralNetworkFile, printHistory);
 
         //calculamos las estadisticas de los backup si es necesario
-        File[] allFiles = (new File(dirPath)).listFiles();
+        File[] allFiles = ( new File(dirPath) ).listFiles();
         assert allFiles != null;
-        Arrays.sort(allFiles, (Object o1, Object o2) -> {
-            if (((File) o1).lastModified() > ((File) o2).lastModified()) {
+        Arrays.sort(allFiles, ( Object o1, Object o2 ) -> {
+            if ( ( (File) o1 ).lastModified() > ( (File) o2 ).lastModified() ) {
                 return +1;
-            } else if (((File) o1).lastModified() < ((File) o2).lastModified()) {
+            } else if ( ( (File) o1 ).lastModified() < ( (File) o2 ).lastModified() ) {
                 return -1;
             } else {
                 return 0;
             }
         });
-        List<File>                  backupFiles    = new ArrayList<>();
-        Map<File, StatisticForCalc> resultsPerFile = new HashMap<>();
-        for (File f : allFiles) {
-            if (runStatisticsForBackups) {
-                if (f.getName().matches(".*_BackupN-.*\\.ser")) {
+        List< File >                  backupFiles    = new ArrayList<>();
+        Map< File, StatisticForCalc > resultsPerFile = new HashMap<>();
+        for ( File f : allFiles ) {
+            if ( runStatisticsForBackups ) {
+                if ( f.getName().matches(".*_BackupN-.*\\.ser") ) {
                     System.out.print("Starting " + f.getName() + " Statistics... ");
                     processFile(dirPath + f.getName().replaceAll("\\.ser$", ""), delayPerMove, createNeuralNetworkFile, printHistory);
                     resultsPerFile.put(f, getTileStatistics());
                     backupFiles.add(f);
                 }
-            } else if (f.getName().matches(".*_trained\\.ser")) {
+            } else if ( f.getName().matches(".*_trained\\.ser") ) {
                 System.out.print("Starting " + f.getName() + " Statistics... ");
                 processFile(dirPath + f.getName().replaceAll("\\.ser$", ""), delayPerMove, createNeuralNetworkFile, printHistory);
                 resultsPerFile.put(f, getTileStatistics());
                 backupFiles.add(f);
             }
         }
-        backupFiles.sort((Object o1, Object o2) -> {
-            if (((File) o1).lastModified() > ((File) o2).lastModified()) {
+        backupFiles.sort(( Object o1, Object o2 ) -> {
+            if ( ( (File) o1 ).lastModified() > ( (File) o2 ).lastModified() ) {
                 return +1;
-            } else if (((File) o1).lastModified() < ((File) o2).lastModified()) {
+            } else if ( ( (File) o1 ).lastModified() < ( (File) o2 ).lastModified() ) {
                 return -1;
             } else {
                 return 0;
             }
         });
 
-        if (exportToExcel) {
+        if ( exportToExcel ) {
             exportToExcel(filePath, backupFiles, resultsPerFile, resultsRandom);
         }
     }
@@ -765,7 +757,7 @@ class StatisticExperiment {
      * @param saveBackupEvery cantidad de partidas en que se debe guardar una copia de respaldo.
      */
     protected
-    void saveBackupEvery(int saveBackupEvery) {
+    void saveBackupEvery( int saveBackupEvery ) {
         this.saveBackupEvery = saveBackupEvery;
     }
 
@@ -773,7 +765,7 @@ class StatisticExperiment {
      * @param exportToExcel true si se debe exportar los resultados a una hoja de cálculo.
      */
     public
-    void setExportToExcel(boolean exportToExcel) {
+    void setExportToExcel( boolean exportToExcel ) {
         this.exportToExcel = exportToExcel;
     }
 
@@ -781,7 +773,7 @@ class StatisticExperiment {
      * @param gamesToPlay cantidad de partidas a jugar por hilo, en el cálculo de estadísticas.
      */
     public
-    void setGamesToPlayPerThread(int gamesToPlay) {
+    void setGamesToPlayPerThread( int gamesToPlay ) {
         this.gamesToPlay = gamesToPlay;
     }
 
@@ -789,7 +781,7 @@ class StatisticExperiment {
      * @param runStatisticsForBackups true si debe computar estadísticas sobre los archivos de respaldo.
      */
     public
-    void setRunStatisticsForBackups(boolean runStatisticsForBackups) {
+    void setRunStatisticsForBackups( boolean runStatisticsForBackups ) {
         this.runStatisticsForBackups = runStatisticsForBackups;
     }
 
@@ -797,7 +789,7 @@ class StatisticExperiment {
      * @param tileToWinForStatistics valor que se considera como ganador, a la hora de ejecutar estadísticas.
      */
     public
-    void setTileToWinForStatistics(int tileToWinForStatistics) {
+    void setTileToWinForStatistics( int tileToWinForStatistics ) {
         this.tileToWinForStatistics = tileToWinForStatistics;
     }
 
@@ -816,21 +808,21 @@ class StatisticExperiment {
             boolean printHistory
     ) {
         File experimentPathFile = new File(experimentPath);
-        if (experimentPathFile.exists() && !experimentPathFile.isDirectory()) {
+        if ( experimentPathFile.exists() && !experimentPathFile.isDirectory() ) {
             throw new IllegalArgumentException("experimentPath must be a directory");
         }
-        if (!experimentPathFile.exists()) {
+        if ( !experimentPathFile.exists() ) {
             experimentPathFile.mkdirs();
         }
         try {
             learningMethod = null;
-            if (learningExperiment != null) {
+            if ( learningExperiment != null ) {
                 tileToWin = learningExperiment.getTileToWinForTraining();
                 experimentName = learningExperiment.getExperimentName();
             }
             initializeStatistics();
             run(experimentPath, delayPerMove, createPerceptronFile, printHistory);
-        } catch (Exception ex) {
+        } catch ( Exception ex ) {
             Logger.getLogger(StatisticExperiment.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

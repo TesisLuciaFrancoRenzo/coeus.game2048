@@ -41,7 +41,7 @@ class RandomExperimentInterface
     /**
      * @param perceptronConfiguration configuración
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings( "unchecked" )
     public
     RandomExperimentInterface(
             EncogConfiguration2048 perceptronConfiguration
@@ -87,7 +87,7 @@ class RandomExperimentInterface
             Game2048 game,
             TDLambdaLearning learningMethod
     ) {
-        switch (TDLambdaLearning.randomBetween(1, 4)) {
+        switch ( TDLambdaLearning.randomBetween(1, 4) ) {
             case 1: {
                 game.processInput(VK_LEFT);
                 break;
@@ -112,13 +112,13 @@ class RandomExperimentInterface
 
     @Override
     public
-    void saveNeuralNetwork(File perceptronFile)
+    void saveNeuralNetwork( File perceptronFile )
             throws Exception {
     }
 
     @Override
     public
-    void saveNeuralNetwork(OutputStream outputStream)
+    void saveNeuralNetwork( OutputStream outputStream )
             throws Exception {
 
     }

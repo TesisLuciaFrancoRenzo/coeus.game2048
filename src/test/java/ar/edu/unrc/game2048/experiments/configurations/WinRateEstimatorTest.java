@@ -115,7 +115,7 @@ class WinRateEstimatorTest {
         assertThat(estimator.printableAverages(), is("winRate 40 % - maxTile 2,4"));
 
         estimator = new WinRateEstimator(30, 3, 2);
-        for (int i = 0; i < 29; i++) {
+        for ( int i = 0; i < 29; i++ ) {
             estimator.addSample(0);
         }
         estimator.addSample(3.2);

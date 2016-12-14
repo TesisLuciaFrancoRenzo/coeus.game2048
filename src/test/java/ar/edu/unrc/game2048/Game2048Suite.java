@@ -29,8 +29,8 @@ import org.junit.runners.Suite;
 /**
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
-@RunWith(Suite.class)
-@Suite.SuiteClasses({GameBoardTest.class, Game2048Test.class, ExperimentsSuite.class})
+@RunWith( Suite.class )
+@Suite.SuiteClasses( { GameBoardTest.class, Game2048Test.class, ExperimentsSuite.class } )
 public
 class Game2048Suite {
 

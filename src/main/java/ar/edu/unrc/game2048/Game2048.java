@@ -52,7 +52,7 @@ class Game2048
     protected     StringBuilder           historyLog;
     protected     boolean                 printHistory;
     private       GameBoard               board;
-    private       ArrayList<GameBoard>    futurePossibleBoards;
+    private       ArrayList< GameBoard >  futurePossibleBoards;
     private       GameBoard               lastInitialStateForPossibleActions;
     private int     maxNumber     = 0;
     private int     maxNumberCode = 0;
@@ -87,7 +87,7 @@ class Game2048
      * @param numberToWin               puntaje que alcanzar para ganar el juego
      * @param delayPerMove
      */
-    @SuppressWarnings({"LeakingThisInConstructor", "OverridableMethodCallInConstructor"})
+    @SuppressWarnings( { "LeakingThisInConstructor", "OverridableMethodCallInConstructor" } )
     public
     Game2048(
             EncogConfiguration2048 perceptronConfiguration,
@@ -99,7 +99,7 @@ class Game2048
         neuralNetworkConfiguration = perceptronConfiguration;
         this.delayPerMove = delayPerMove;
         this.printHistory = printHistory;
-        if (printHistory) {
+        if ( printHistory ) {
             historyLog = new StringBuilder();
         } else {
             historyLog = null;
@@ -118,7 +118,7 @@ class Game2048
         addKeyListener(new KeyAdapter() {
             @Override
             public
-            void keyPressed(KeyEvent e) {
+            void keyPressed( KeyEvent e ) {
                 processInput(e.getKeyCode());
             }
         });
@@ -126,7 +126,7 @@ class Game2048
         tileContainer = new TileContainer(17);
         resetGame();
 
-        if (delayPerMove > 0) {
+        if ( delayPerMove > 0 ) {
             repaint = true;
             gameFrame.setLocationRelativeTo(null);
             gameFrame.setVisible(true);
@@ -141,11 +141,11 @@ class Game2048
 
     private static
     void ensureSize(
-            java.util.List<Tile> l,
+            java.util.List< Tile > l,
             int s,
             TileContainer tileContainer
     ) {
-        while (l.size() != s) {
+        while ( l.size() != s ) {
             l.add(tileContainer.getTile(0));
         }
     }
@@ -153,16 +153,16 @@ class Game2048
     /**
      * @param args
      */
-    @SuppressWarnings("ResultOfObjectAllocationIgnored")
+    @SuppressWarnings( "ResultOfObjectAllocationIgnored" )
     public static
-    void main(String[] args) {
+    void main( String[] args ) {
         //noinspection unchecked
         new Game2048(null, null, 2_048, 1, true);
     }
 
     private static
-    int offsetCoors(int arg) {
-        return arg * (TILES_MARGIN + TILE_SIZE) + TILES_MARGIN;
+    int offsetCoors( int arg ) {
+        return arg * ( TILES_MARGIN + TILE_SIZE ) + TILES_MARGIN;
     }
 
     /**
@@ -180,18 +180,18 @@ class Game2048
     ) {
         Tile[] rotatedTiles = new Tile[TILE_NUMBER];
         int    offsetX      = 3, offsetY = 3;
-        if (angle == 90) {
+        if ( angle == 90 ) {
             offsetY = 0;
-        } else if (angle == 270) {
+        } else if ( angle == 270 ) {
             offsetX = 0;
         }
         double rad = toRadians(angle);
         int    cos = (int) cos(rad);
         int    sin = (int) sin(rad);
-        for (int x = 0; x < 4; x++) {
-            for (int y = 0; y < 4; y++) {
-                int newX = (x * cos) - (y * sin) + offsetX;
-                int newY = (x * sin) + (y * cos) + offsetY;
+        for ( int x = 0; x < 4; x++ ) {
+            for ( int y = 0; y < 4; y++ ) {
+                int newX = ( x * cos ) - ( y * sin ) + offsetX;
+                int newY = ( x * sin ) + ( y * cos ) + offsetY;
                 rotatedTiles[newX + newY * 4] = originalTiles[x + y * 4];
             }
         }
@@ -204,14 +204,14 @@ class Game2048
             Tile[] line2
     ) {
         //noinspection ArrayEquality
-        if (line1 == line2) {
+        if ( line1 == line2 ) {
             return true;
-        } else if (line1.length != line2.length) {
+        } else if ( line1.length != line2.length ) {
             return false;
         }
 
-        for (int i = 0; i < line1.length; i++) {
-            if (line1[i].getCode() != line2[i].getCode()) {
+        for ( int i = 0; i < line1.length; i++ ) {
+            if ( line1[i].getCode() != line2[i].getCode() ) {
                 return false;
             }
         }
@@ -219,7 +219,7 @@ class Game2048
         return true;
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings( "unchecked" )
     @Override
     public
     IStatePerceptron computeAfterState(
@@ -227,9 +227,9 @@ class Game2048
             IAction action
     ) {
         GameBoard futureBoard = (GameBoard) turnInitialState.getCopy();
-        switch ((Action) action) {
+        switch ( (Action) action ) {
             case left: {
-                if (lastInitialStateForPossibleActions != null && lastInitialStateForPossibleActions.equals(turnInitialState)) {
+                if ( lastInitialStateForPossibleActions != null && lastInitialStateForPossibleActions.equals(turnInitialState) ) {
                     futureBoard = futurePossibleBoards.get(0);
                 } else {
                     futureBoard = left(futureBoard);
@@ -238,7 +238,7 @@ class Game2048
                 break;
             }
             case right: {
-                if (lastInitialStateForPossibleActions != null && lastInitialStateForPossibleActions.equals(turnInitialState)) {
+                if ( lastInitialStateForPossibleActions != null && lastInitialStateForPossibleActions.equals(turnInitialState) ) {
                     futureBoard = futurePossibleBoards.get(1);
                 } else {
                     rotate(180, futureBoard);
@@ -249,7 +249,7 @@ class Game2048
                 break;
             }
             case up: {
-                if (lastInitialStateForPossibleActions != null && lastInitialStateForPossibleActions.equals(turnInitialState)) {
+                if ( lastInitialStateForPossibleActions != null && lastInitialStateForPossibleActions.equals(turnInitialState) ) {
                     futureBoard = futurePossibleBoards.get(2);
                 } else {
                     rotate(270, futureBoard);
@@ -260,7 +260,7 @@ class Game2048
                 break;
             }
             case down: {
-                if (lastInitialStateForPossibleActions != null && lastInitialStateForPossibleActions.equals(turnInitialState)) {
+                if ( lastInitialStateForPossibleActions != null && lastInitialStateForPossibleActions.equals(turnInitialState) ) {
                     futureBoard = futurePossibleBoards.get(3);
                 } else {
                     rotate(90, futureBoard);
@@ -277,12 +277,12 @@ class Game2048
         return futureBoard;
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings( "unchecked" )
     @Override
     public
-    IState computeNextTurnStateFromAfterState(IState s1) {
+    IState computeNextTurnStateFromAfterState( IState s1 ) {
         GameBoard finalBoard = (GameBoard) s1.getCopy();
-        if (finalBoard.isNeedToAddTile()) {
+        if ( finalBoard.isNeedToAddTile() ) {
             finalBoard.addTile(true);
         }
         return finalBoard;
@@ -294,7 +294,7 @@ class Game2048
             Object[] output,
             IActor actor
     ) {
-        if (neuralNetworkConfiguration != null) {
+        if ( neuralNetworkConfiguration != null ) {
             return neuralNetworkConfiguration.computeNumericRepresentationFor(this, output);
         } else {
             assert output.length == 1;
@@ -304,8 +304,8 @@ class Game2048
 
     @Override
     public
-    double deNormalizeValueFromPerceptronOutput(Object value) {
-        if (neuralNetworkConfiguration != null) {
+    double deNormalizeValueFromPerceptronOutput( Object value ) {
+        if ( neuralNetworkConfiguration != null ) {
             return neuralNetworkConfiguration.deNormalizeValueFromNeuralNetworkOutput(value);
         } else {
             return nTupleSystemConfiguration.deNormalizeValueFromNeuralNetworkOutput(value);
@@ -325,7 +325,7 @@ class Game2048
             int x,
             int y
     ) {
-        Graphics2D g = ((Graphics2D) g2);
+        Graphics2D g = ( (Graphics2D) g2 );
         g.setRenderingHint(KEY_ANTIALIASING, VALUE_ANTIALIAS_ON);
         g.setRenderingHint(KEY_STROKE_CONTROL, VALUE_STROKE_NORMALIZE);
         int value   = tile.getGameValue();
@@ -341,22 +341,22 @@ class Game2048
         final FontMetrics fm = getFontMetrics(font);
         final int         w  = fm.stringWidth(s);
         final int         h  = -(int) fm.getLineMetrics(s, g).getBaselineOffsets()[2];
-        if (value != 0) {
-            g.drawString(s, xOffset + (TILE_SIZE - w) / 2, yOffset + TILE_SIZE - (TILE_SIZE - h) / 2 - 2);
+        if ( value != 0 ) {
+            g.drawString(s, xOffset + ( TILE_SIZE - w ) / 2, yOffset + TILE_SIZE - ( TILE_SIZE - h ) / 2 - 2);
         }
-        if (myWin || myLoose) {
+        if ( myWin || myLoose ) {
             g.setColor(new Color(255, 255, 255, 30));
             g.fillRect(0, 0, getWidth(), getHeight());
             g.setColor(new Color(78, 139, 202));
             g.setFont(new Font(FONT_NAME, BOLD, 48));
-            if (myWin) {
+            if ( myWin ) {
                 g.drawString("You won!", 68, 150);
             }
-            if (myLoose) {
+            if ( myLoose ) {
                 g.drawString("Game over!", 50, 130);
                 g.drawString("You lose!", 64, 200);
             }
-            if (myWin || myLoose) {
+            if ( myWin || myLoose ) {
                 g.setFont(new Font(FONT_NAME, PLAIN, 16));
                 g.setColor(new Color(128, 128, 128, 128));
                 g.drawString("Press ESC to play again", 80, getHeight() - 40);
@@ -368,33 +368,33 @@ class Game2048
 
     @Override
     public
-    Object[] evaluateBoardWithPerceptron(IState state) {
+    Object[] evaluateBoardWithPerceptron( IState state ) {
         //dependiendo de que tipo de red neuronal utilizamos, evaluamos las entradas y calculamos una salida
-        if (neuralNetworkConfiguration != null && neuralNetworkConfiguration.
-                                                                                    getNeuralNetwork() != null) {
-            if (neuralNetworkConfiguration.getNeuralNetwork() instanceof BasicNetwork) { //es sobre la librería encog
+        if ( neuralNetworkConfiguration != null && neuralNetworkConfiguration.
+                                                                                     getNeuralNetwork() != null ) {
+            if ( neuralNetworkConfiguration.getNeuralNetwork() instanceof BasicNetwork ) { //es sobre la librería encog
                 //creamos las entradas de la red neuronal
                 double[]  inputs     = new double[neuralNetworkConfiguration.getNeuronQuantityInLayer()[0]];
                 IntStream inputLayer = IntStream.range(0, neuralNetworkConfiguration.getNeuronQuantityInLayer()[0]);
-                if (neuralNetworkConfiguration.isConcurrentInputEnabled()) {
+                if ( neuralNetworkConfiguration.isConcurrentInputEnabled() ) {
                     inputLayer = inputLayer.parallel();
                 } else {
                     inputLayer = inputLayer.sequential();
                 }
-                inputLayer.forEach(index -> inputs[index] = ((IStatePerceptron) state).translateToPerceptronInput(index));
+                inputLayer.forEach(index -> inputs[index] = ( (IStatePerceptron) state ).translateToPerceptronInput(index));
 
                 //cargamos la entrada a la red
                 MLData   inputData = new BasicMLData(inputs);
                 MLData   output    = neuralNetworkConfiguration.getNeuralNetwork().compute(inputData);
                 Double[] out       = new Double[output.getData().length];
-                for (int i = 0; i < output.size(); i++) {
+                for ( int i = 0; i < output.size(); i++ ) {
                     out[i] = output.getData()[i];
                 }
                 return out;
             }
         }
-        if (nTupleSystemConfiguration != null && nTupleSystemConfiguration.getNTupleSystem() != null) {
-            return new Double[]{nTupleSystemConfiguration.getNTupleSystem().getComputation((IStateNTuple) state)};
+        if ( nTupleSystemConfiguration != null && nTupleSystemConfiguration.getNTupleSystem() != null ) {
+            return new Double[] { nTupleSystemConfiguration.getNTupleSystem().getComputation((IStateNTuple) state) };
         }
         throw new UnsupportedOperationException("only Encog and NTupleSystem is implemented");
     }
@@ -432,7 +432,7 @@ class Game2048
             GameBoard board
     ) {
         Tile[] result = new Tile[4];
-        for (int i = 0; i < 4; i++) {
+        for ( int i = 0; i < 4; i++ ) {
             result[i] = board.tileAt(i, index);
         }
         return result;
@@ -488,7 +488,7 @@ class Game2048
 
     @Override
     public
-    IState initialize(IActor actor) {
+    IState initialize( IActor actor ) {
         resetGame();
         assert board.getMaxTileNumberCode() != 0;
         return board.getCopy();
@@ -513,16 +513,16 @@ class Game2048
     ) {
         boolean needAddTile = false;
         board.setPartialScore(0);
-        for (int i = 0; i < 4; i++) {
+        for ( int i = 0; i < 4; i++ ) {
             Tile[] line   = getLine(i, board);
             Tile[] merged = mergeLine(moveLine(line), board);
             setLine(i, merged, board);
-            if (!needAddTile && !compare(line, merged)) {
+            if ( !needAddTile && !compare(line, merged) ) {
                 needAddTile = true;
             }
         }
 
-        if (needAddTile) {
+        if ( needAddTile ) {
             board.setNeedToAddTile(true);
         }
 
@@ -531,13 +531,13 @@ class Game2048
 
     @Override
     public
-    ArrayList<IAction> listAllPossibleActions(IState initialState) {
-        ArrayList<IAction> actions = new ArrayList<>(4);
+    ArrayList< IAction > listAllPossibleActions( IState initialState ) {
+        ArrayList< IAction > actions = new ArrayList<>(4);
         lastInitialStateForPossibleActions = null;
         GameBoard state = (GameBoard) initialState;
-        if (!initialState.isTerminalState()) {
+        if ( !initialState.isTerminalState() ) {
             IStatePerceptron afterState = computeAfterState(state, Action.left);
-            if (!state.isEqual((GameBoard) afterState)) {
+            if ( !state.isEqual((GameBoard) afterState) ) {
                 actions.add(Action.left);
                 futurePossibleBoards.add(0, (GameBoard) afterState);
             } else {
@@ -545,7 +545,7 @@ class Game2048
             }
 
             afterState = computeAfterState(state, right);
-            if (!state.isEqual((GameBoard) afterState)) {
+            if ( !state.isEqual((GameBoard) afterState) ) {
                 actions.add(right);
                 futurePossibleBoards.add(1, (GameBoard) afterState);
             } else {
@@ -553,7 +553,7 @@ class Game2048
             }
 
             afterState = computeAfterState(state, up);
-            if (!state.isEqual((GameBoard) afterState)) {
+            if ( !state.isEqual((GameBoard) afterState) ) {
                 actions.add(up);
                 futurePossibleBoards.add(2, (GameBoard) afterState);
             } else {
@@ -561,7 +561,7 @@ class Game2048
             }
 
             afterState = computeAfterState(state, down);
-            if (!state.isEqual((GameBoard) afterState)) {
+            if ( !state.isEqual((GameBoard) afterState) ) {
                 actions.add(down);
                 futurePossibleBoards.add(3, (GameBoard) afterState);
             } else {
@@ -579,11 +579,11 @@ class Game2048
      * @return lista de todos los posibles siguientes turnos desde {@code afterState}
      */
     public
-    List<GreedyStateProbability> listAllPossibleNextTurnStateFromAfterState(
+    List< GreedyStateProbability > listAllPossibleNextTurnStateFromAfterState(
             IState afterState
     ) {
         //noinspection unchecked
-        return ((GameBoard) afterState).listAllPossibleNextTurnStateFromAfterState();
+        return ( (GameBoard) afterState ).listAllPossibleNextTurnStateFromAfterState();
     }
 
     private
@@ -591,23 +591,23 @@ class Game2048
             Tile[] oldLine,
             GameBoard afterState
     ) {
-        LinkedList<Tile> list = new LinkedList<>();
-        for (int i = 0; i < 4 && !oldLine[i].isEmpty(); i++) {
+        LinkedList< Tile > list = new LinkedList<>();
+        for ( int i = 0; i < 4 && !oldLine[i].isEmpty(); i++ ) {
             Tile tile = oldLine[i];
-            if (i < 3 && tile.getCode() == oldLine[i + 1].getCode()) {
+            if ( i < 3 && tile.getCode() == oldLine[i + 1].getCode() ) {
                 tile = tileContainer.getTile(tile.getCode() + 1);
                 afterState.addPartialScore(tile.getGameValue());
-                if (tile.getGameValue() >= numberToWin) {
+                if ( tile.getGameValue() >= numberToWin ) {
                     afterState.setToWin();
                 }
-                if (tile.getGameValue() > numberToWin) {
+                if ( tile.getGameValue() > numberToWin ) {
                     afterState.setToWin();
                 }
                 i++;
             }
             list.add(tile);
         }
-        if (list.isEmpty()) {
+        if ( list.isEmpty() ) {
             return oldLine;
         } else {
             ensureSize(list, 4, tileContainer);
@@ -616,21 +616,21 @@ class Game2048
     }
 
     private
-    Tile[] moveLine(Tile[] oldLine) {
-        LinkedList<Tile> l = new LinkedList<>();
+    Tile[] moveLine( Tile[] oldLine ) {
+        LinkedList< Tile > l = new LinkedList<>();
 
-        for (int i = 0; i < 4; i++) {
-            if (!oldLine[i].isEmpty()) {
+        for ( int i = 0; i < 4; i++ ) {
+            if ( !oldLine[i].isEmpty() ) {
                 l.addLast(oldLine[i]);
             }
         }
 
-        if (l.isEmpty()) {
+        if ( l.isEmpty() ) {
             return oldLine;
         } else {
             Tile[] newLine = new Tile[4];
             ensureSize(l, 4, tileContainer);
-            for (int i = 0; i < 4; i++) {
+            for ( int i = 0; i < 4; i++ ) {
                 newLine[i] = l.removeFirst();
             }
             return newLine;
@@ -639,8 +639,8 @@ class Game2048
 
     @Override
     public
-    double normalizeValueToPerceptronOutput(Object value) {
-        if (nTupleSystemConfiguration != null) {
+    double normalizeValueToPerceptronOutput( Object value ) {
+        if ( nTupleSystemConfiguration != null ) {
             return nTupleSystemConfiguration.normalizeValueToPerceptronOutput(value);
         } else {
             return neuralNetworkConfiguration.normalizeValueToPerceptronOutput(value);
@@ -652,54 +652,54 @@ class Game2048
      */
     @Override
     public
-    void paint(Graphics g) {
+    void paint( Graphics g ) {
         super.paint(g);
         g.setColor(BG_COLOR);
         g.fillRect(0, 0, getSize().width, getSize().height);
-        for (int y = 0; y < 4; y++) {
-            for (int x = 0; x < 4; x++) {
+        for ( int y = 0; y < 4; y++ ) {
+            for ( int x = 0; x < 4; x++ ) {
                 drawTile(g, board.getTiles()[x + y * 4], x, y);
             }
         }
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings( "unchecked" )
     @Override
     public
-    void processInput(int keyCode) {
-        if (keyCode == VK_ESCAPE) {
+    void processInput( int keyCode ) {
+        if ( keyCode == VK_ESCAPE ) {
             resetGame();
         }
-        if (!board.canMove()) {
+        if ( !board.canMove() ) {
             myLoose = true;
         }
-        if (!myWin && !myLoose) {
+        if ( !myWin && !myLoose ) {
             IStatePerceptron afterState;
-            switch (keyCode) {
+            switch ( keyCode ) {
                 case VK_LEFT: {
                     afterState = computeAfterState(board, Action.left);
-                    if (printHistory) {
+                    if ( printHistory ) {
                         historyLog.append("M=").append(Action.left).append("\n");
                     }
                     break;
                 }
                 case VK_RIGHT: {
                     afterState = computeAfterState(board, Action.right);
-                    if (printHistory) {
+                    if ( printHistory ) {
                         historyLog.append("M=").append(Action.left).append("\n");
                     }
                     break;
                 }
                 case VK_DOWN: {
                     afterState = computeAfterState(board, Action.down);
-                    if (printHistory) {
+                    if ( printHistory ) {
                         historyLog.append("M=").append(Action.left).append("\n");
                     }
                     break;
                 }
                 case VK_UP: {
                     afterState = computeAfterState(board, Action.up);
-                    if (printHistory) {
+                    if ( printHistory ) {
                         historyLog.append("M=").append(Action.left).append("\n");
                     }
                     break;
@@ -708,29 +708,29 @@ class Game2048
                     throw new IllegalArgumentException("Cant use the action keyCode = " + keyCode);
                 }
             }
-            if (afterState != null) {
+            if ( afterState != null ) {
                 turnNumber++;
-                myScore += ((GameBoard) afterState).getPartialScore();
+                myScore += ( (GameBoard) afterState ).getPartialScore();
                 board = (GameBoard) computeNextTurnStateFromAfterState(afterState);
-                if (board.isAWin()) {
+                if ( board.isAWin() ) {
                     myWin = true;
                 }
             }
         }
-        if (!myWin && !board.canMove()) {
+        if ( !myWin && !board.canMove() ) {
             myLoose = true;
         }
-        if (myWin || myLoose) {
+        if ( myWin || myLoose ) {
             maxNumber = board.getMaxTileNumberValue();
             maxNumberCode = board.getMaxTileNumberCode();
         }
-        if (repaint) {
+        if ( repaint ) {
             try {
                 repaint();
-                if (delayPerMove > 0) {
+                if ( delayPerMove > 0 ) {
                     sleep(delayPerMove);
                 }
-            } catch (InterruptedException ex) {
+            } catch ( InterruptedException ex ) {
                 Logger.getLogger(Game2048.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -763,34 +763,34 @@ class Game2048
         arraycopy(rotateBoardTiles(angle, original.getTiles()), 0, original.getTiles(), 0, TILE_NUMBER);
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings( "unchecked" )
     @Override
     public
-    void setCurrentState(IState nextTurnState) {
-        if (nextTurnState == null) {
+    void setCurrentState( IState nextTurnState ) {
+        if ( nextTurnState == null ) {
             throw new IllegalArgumentException("nextTurnState can't be null");
         }
         turnNumber++;
-        myScore += ((GameBoard) nextTurnState).getPartialScore();
+        myScore += ( (GameBoard) nextTurnState ).getPartialScore();
         board = (GameBoard) nextTurnState;
 
-        if (board.isAWin()) {
+        if ( board.isAWin() ) {
             myWin = true;
         }
-        if (!myWin && !board.canMove()) {
+        if ( !myWin && !board.canMove() ) {
             myLoose = true;
         }
-        if (myWin || myLoose) {
+        if ( myWin || myLoose ) {
             maxNumber = board.getMaxTileNumberValue();
             maxNumberCode = board.getMaxTileNumberCode();
         }
-        if (repaint) {
+        if ( repaint ) {
             try {
                 repaint();
-                if (delayPerMove > 0) {
+                if ( delayPerMove > 0 ) {
                     sleep((long) delayPerMove);
                 }
-            } catch (InterruptedException ex) {
+            } catch ( InterruptedException ex ) {
                 Logger.getLogger(Game2048.class.getName()).log(Level.SEVERE, null, ex);
             }
         }

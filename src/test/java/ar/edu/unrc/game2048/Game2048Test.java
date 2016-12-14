@@ -77,7 +77,7 @@ class Game2048Test {
     @After
     public
     void tearDown() {
-        if (game != null) {
+        if ( game != null ) {
             game.dispose();
             game = null;
         }
@@ -86,7 +86,7 @@ class Game2048Test {
     /**
      * Test of listAllPossibleActions method, of class Game2048.
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings( "unchecked" )
     @Test
     public
     void testListAllPossibleActions() {
@@ -97,29 +97,33 @@ class Game2048Test {
 
         //inicializamos un tablero terminal
         GameBoard board = new GameBoard(game, tileContainer);
-        Tile[] terminalBoard = {tileContainer.getTile(7), tileContainer.getTile(1), tileContainer.
+        Tile[] terminalBoard = {
+                tileContainer.getTile(7), tileContainer.getTile(1), tileContainer.
                 getTile(3), tileContainer.getTile(2), tileContainer.getTile(1), tileContainer.getTile(4), tileContainer.
                 getTile(5), tileContainer.getTile(1), tileContainer.getTile(3), tileContainer.getTile(5), tileContainer.
                 getTile(1), tileContainer.getTile(6), tileContainer.getTile(1), tileContainer.getTile(8), tileContainer.
-                getTile(5), tileContainer.getTile(2)};
+                getTile(5), tileContainer.getTile(2)
+        };
         board.setTiles(terminalBoard);
         board.updateInternalState(true);
 
-        ArrayList<IAction> result = game.listAllPossibleActions(board);
+        ArrayList< IAction > result = game.listAllPossibleActions(board);
         assertThat(result.isEmpty(), is(true));
 
         // =========================================== //
         //inicializamos un tablero no terminal
         board = new GameBoard(game, tileContainer);
-        Tile[] fullNotTerminalBoard = {tileContainer.getTile(7), tileContainer.getTile(1), tileContainer.
+        Tile[] fullNotTerminalBoard = {
+                tileContainer.getTile(7), tileContainer.getTile(1), tileContainer.
                 getTile(3), tileContainer.getTile(2), tileContainer.getTile(1), tileContainer.getTile(4), tileContainer.
                 getTile(5), tileContainer.getTile(1), tileContainer.getTile(3), tileContainer.getTile(5), tileContainer.
                 getTile(1), tileContainer.getTile(6), tileContainer.getTile(1), tileContainer.getTile(8), tileContainer.
-                getTile(1), tileContainer.getTile(2)};
+                getTile(1), tileContainer.getTile(2)
+        };
         board.setTiles(fullNotTerminalBoard);
         board.updateInternalState(true);
 
-        @SuppressWarnings("MismatchedQueryAndUpdateOfCollection") Set<IAction> expResult = new HashSet<>();
+        @SuppressWarnings( "MismatchedQueryAndUpdateOfCollection" ) Set< IAction > expResult = new HashSet<>();
         expResult.add(Action.down);
         expResult.add(Action.up);
 
@@ -129,8 +133,8 @@ class Game2048Test {
         result = game.listAllPossibleActions(board);
         assertThat(result.size(), is(2));
 
-        Set<IAction> resultSet = new HashSet<>(game.listAllPossibleActions(board));
-        for (IAction action : resultSet) {
+        Set< IAction > resultSet = new HashSet<>(game.listAllPossibleActions(board));
+        for ( IAction action : resultSet ) {
             assertThat(resultSet, hasItem(action));
         }
 
@@ -159,11 +163,13 @@ class Game2048Test {
         // =========================================== //
         //inicializamos un tablero con muchos movimientos terminal
         board = new GameBoard(game, tileContainer);
-        Tile[] multipleMovesTerminalBoard = {tileContainer.getTile(7), tileContainer.getTile(1), tileContainer.
+        Tile[] multipleMovesTerminalBoard = {
+                tileContainer.getTile(7), tileContainer.getTile(1), tileContainer.
                 getTile(3), tileContainer.getTile(2), tileContainer.getTile(1), tileContainer.getTile(0), tileContainer.
                 getTile(5), tileContainer.getTile(1), tileContainer.getTile(3), tileContainer.getTile(5), tileContainer.
                 getTile(1), tileContainer.getTile(6), tileContainer.getTile(1), tileContainer.getTile(8), tileContainer.
-                getTile(1), tileContainer.getTile(2)};
+                getTile(1), tileContainer.getTile(2)
+        };
         board.setTiles(multipleMovesTerminalBoard);
         board.updateInternalState(true);
 
@@ -175,7 +181,7 @@ class Game2048Test {
         result = game.listAllPossibleActions(board);
         assertThat(result.size(), is(4));
         resultSet = new HashSet<>(game.listAllPossibleActions(board));
-        for (IAction action : resultSet) {
+        for ( IAction action : resultSet ) {
             assertThat(result, hasItem(action));
         }
 

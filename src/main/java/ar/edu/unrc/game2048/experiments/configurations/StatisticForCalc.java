@@ -28,14 +28,14 @@ import java.util.List;
 public
 class StatisticForCalc {
 
-    private double       maxScore;
-    private double       maxTurn;
-    private double       meanScore;
-    private double       meanTurn;
-    private double       minScore;
-    private double       minTurn;
-    private List<Double> tileStatistics;
-    private double       winRate;
+    private double         maxScore;
+    private double         maxTurn;
+    private double         meanScore;
+    private double         meanTurn;
+    private double         minScore;
+    private double         minTurn;
+    private List< Double > tileStatistics;
+    private double         winRate;
 
     /**
      * @return puntaje máximo.
@@ -49,7 +49,7 @@ class StatisticForCalc {
      * @param maxScore nuevo puntaje máximo.
      */
     public
-    void setMaxScore(double maxScore) {
+    void setMaxScore( double maxScore ) {
         this.maxScore = maxScore;
     }
 
@@ -65,7 +65,7 @@ class StatisticForCalc {
      * @param maxTurn nuevo mayor turno ganador.
      */
     public
-    void setMaxTurn(double maxTurn) {
+    void setMaxTurn( double maxTurn ) {
         this.maxTurn = maxTurn;
     }
 
@@ -81,7 +81,7 @@ class StatisticForCalc {
      * @param meanScore nuevo puntaje medio.
      */
     public
-    void setMeanScore(double meanScore) {
+    void setMeanScore( double meanScore ) {
         this.meanScore = meanScore;
     }
 
@@ -97,7 +97,7 @@ class StatisticForCalc {
      * @param meanTurn nuevo turno ganador medio.
      */
     public
-    void setMeanTurn(double meanTurn) {
+    void setMeanTurn( double meanTurn ) {
         this.meanTurn = meanTurn;
     }
 
@@ -113,7 +113,7 @@ class StatisticForCalc {
      * @param minScore nuevo menor puntaje.
      */
     public
-    void setMinScore(double minScore) {
+    void setMinScore( double minScore ) {
         this.minScore = minScore;
     }
 
@@ -129,7 +129,7 @@ class StatisticForCalc {
      * @param minTurn nuevo menor turno.
      */
     public
-    void setMinTurn(double minTurn) {
+    void setMinTurn( double minTurn ) {
         this.minTurn = minTurn;
     }
 
@@ -137,7 +137,7 @@ class StatisticForCalc {
      * @return lista con la cantidad de veces que se alcanzo cada Tile, siendo el valor del tile = 2^índice.
      */
     public
-    List<Double> getTileStatistics() {
+    List< Double > getTileStatistics() {
         return tileStatistics;
     }
 
@@ -145,7 +145,7 @@ class StatisticForCalc {
      * @param tileStatistics nueva lista con la cantidad de veces que se alcanzo cada Tile, siendo el valor del tile = 2^índice.
      */
     public
-    void setTileStatistics(List<Double> tileStatistics) {
+    void setTileStatistics( List< Double > tileStatistics ) {
         this.tileStatistics = tileStatistics;
     }
 
@@ -161,7 +161,7 @@ class StatisticForCalc {
      * @param winRate nueva tasa de partidas ganadoras.
      */
     public
-    void setWinRate(double winRate) {
+    void setWinRate( double winRate ) {
         this.winRate = winRate;
     }
 }

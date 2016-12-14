@@ -72,18 +72,18 @@ class ConfigPerceptronBinary_2048
     public
     void calculateNormalizedPerceptronInput(
             GameBoard board,
-            List<Double> normalizedPerceptronInput
+            List< Double > normalizedPerceptronInput
     ) {
         Tile[] tiles         = board.getTiles();
         int    currentNeuron = 0;
-        for (Tile tile : tiles) {
+        for ( Tile tile : tiles ) {
             String bits = Integer.toBinaryString(tile.getCode());
-            for (int k = 0; k < BINARY_LENGTH - bits.length(); k++) {
+            for ( int k = 0; k < BINARY_LENGTH - bits.length(); k++ ) {
                 normalizedPerceptronInput.set(currentNeuron, activationFunctionMin);
                 currentNeuron++;
             }
-            for (int j = 0; j < bits.length(); j++) {
-                if (bits.charAt(j) == '0') {
+            for ( int j = 0; j < bits.length(); j++ ) {
+                if ( bits.charAt(j) == '0' ) {
                     normalizedPerceptronInput.set(currentNeuron, activationFunctionMin);
                 } else {
                     normalizedPerceptronInput.set(currentNeuron, activationFunctionMax);
@@ -118,7 +118,7 @@ class ConfigPerceptronBinary_2048
 
     @Override
     public
-    double deNormalizeValueFromNeuralNetworkOutput(Object value) {
+    double deNormalizeValueFromNeuralNetworkOutput( Object value ) {
         return normOutput.deNormalize((Double) value);
     }
 
@@ -139,7 +139,7 @@ class ConfigPerceptronBinary_2048
 
     @Override
     public
-    double normalizeValueToPerceptronOutput(Object value) {
+    double normalizeValueToPerceptronOutput( Object value ) {
         return normOutput.normalize((Double) value);
     }
 

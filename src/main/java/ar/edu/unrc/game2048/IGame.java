@@ -57,6 +57,6 @@ interface IGame {
      *
      * @param keyCode
      */
-    void processInput(int keyCode);
+    void processInput( int keyCode );
 
 }

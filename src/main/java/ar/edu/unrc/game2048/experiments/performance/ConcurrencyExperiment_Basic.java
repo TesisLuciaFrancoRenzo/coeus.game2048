@@ -48,55 +48,55 @@ class ConcurrencyExperiment_Basic
     /**
      *
      */
-    @SuppressWarnings("PublicField")
+    @SuppressWarnings( "PublicField" )
     public static int GAMES_TO_PLAY;
 
     /**
      *
      */
-    @SuppressWarnings("PublicField")
+    @SuppressWarnings( "PublicField" )
     public static int MAX_INNER_LAYERS;
 
     /**
      *
      */
-    @SuppressWarnings("PublicField")
+    @SuppressWarnings( "PublicField" )
     public static int MAX_NEURON_QUANTITY;
 
     /**
      *
      */
-    @SuppressWarnings("PublicField")
+    @SuppressWarnings( "PublicField" )
     public static int MIN_NEURON_QUANTITY;
 
     /**
      *
      */
-    @SuppressWarnings("PublicField")
+    @SuppressWarnings( "PublicField" )
     public static int SAMPLES_PER_EXPERIMENT;
 
     /**
      *
      */
-    @SuppressWarnings("PublicField")
+    @SuppressWarnings( "PublicField" )
     public static ConcurrencyConfig currentConfig;
 
     /**
      *
      */
-    @SuppressWarnings("PublicField")
+    @SuppressWarnings( "PublicField" )
     public static String filePath;
 
     /**
      *
      */
-    @SuppressWarnings("PublicField")
+    @SuppressWarnings( "PublicField" )
     public static StringBuilder outputForGraphicsResults;
 
     /**
      *
      */
-    @SuppressWarnings("PublicField")
+    @SuppressWarnings( "PublicField" )
     public static StringBuilder outputResults;
 
     /**
@@ -107,13 +107,13 @@ class ConcurrencyExperiment_Basic
      *
      * @throws Exception
      */
-    @SuppressWarnings("HardcodedFileSeparator")
+    @SuppressWarnings( "HardcodedFileSeparator" )
     public static
     void experimentRun(
             boolean trainConcurrency,
             boolean evaluateConcurrency
     ) {
-        for (int innerLayerQuantity = 1; innerLayerQuantity <= MAX_INNER_LAYERS; innerLayerQuantity++) {
+        for ( int innerLayerQuantity = 1; innerLayerQuantity <= MAX_INNER_LAYERS; innerLayerQuantity++ ) {
             System.out.println("===============================================================================");
             System.out.println("Capas intermedias: " + innerLayerQuantity);
             outputForGraphicsResults.append("============ Capas intermedias: ")
@@ -127,31 +127,33 @@ class ConcurrencyExperiment_Basic
 
             StringBuilder trainingOutput = new StringBuilder();
             StringBuilder evaluateOutput = new StringBuilder();
-            for (int innerLayersNeuronQuantity = MIN_NEURON_QUANTITY; innerLayersNeuronQuantity <= MAX_NEURON_QUANTITY; innerLayersNeuronQuantity++) {
+            for ( int innerLayersNeuronQuantity = MIN_NEURON_QUANTITY;
+                  innerLayersNeuronQuantity <= MAX_NEURON_QUANTITY;
+                  innerLayersNeuronQuantity++ ) {
                 // Primer experimento, con 1 capa, en serie
                 currentConfig = new ConcurrencyConfig();
                 currentConfig.setConcurrencyInEvaluate(evaluateConcurrency);
 
                 currentConfig.setConcurrencyInLayer(new boolean[innerLayerQuantity + 2]);
-                for (int i = 0; i < innerLayerQuantity + 1; i++) {
+                for ( int i = 0; i < innerLayerQuantity + 1; i++ ) {
                     currentConfig.getConcurrencyInLayer()[i] = trainConcurrency;
                 }
                 currentConfig.getConcurrencyInLayer()[currentConfig.getConcurrencyInLayer().length - 1] = false;
 
                 currentConfig.setAlphas(new double[innerLayerQuantity + 2]);
-                for (int i = 0; i < innerLayerQuantity + 2; i++) {
+                for ( int i = 0; i < innerLayerQuantity + 2; i++ ) {
                     currentConfig.getAlphas()[i] = 0.0025;
                 }
 
                 currentConfig.setNeuronQuantityInLayer(new int[innerLayerQuantity + 2]);
                 currentConfig.getNeuronQuantityInLayer()[0] = 64;
-                for (int i = 1; i <= innerLayerQuantity; i++) {
+                for ( int i = 1; i <= innerLayerQuantity; i++ ) {
                     currentConfig.getNeuronQuantityInLayer()[i] = (int) Math.pow(2, innerLayersNeuronQuantity);
                 }
                 currentConfig.getNeuronQuantityInLayer()[currentConfig.getNeuronQuantityInLayer().length - 1] = 1;
 
                 currentConfig.setActivationFunctionForEncog(new ActivationFunction[innerLayerQuantity + 1]);
-                for (int i = 0; i < innerLayerQuantity + 1; i++) {
+                for ( int i = 0; i < innerLayerQuantity + 1; i++ ) {
                     currentConfig.getActivationFunctionForEncog()[i] = new ActivationTANH();
                 }
 
@@ -163,7 +165,7 @@ class ConcurrencyExperiment_Basic
                 StatisticCalculator trainingStats     = new StatisticCalculator(SAMPLES_PER_EXPERIMENT);
                 StatisticCalculator bestPossibleStats = new StatisticCalculator(SAMPLES_PER_EXPERIMENT);
                 long                time;
-                for (int i = 1; i <= SAMPLES_PER_EXPERIMENT; i++) {
+                for ( int i = 1; i <= SAMPLES_PER_EXPERIMENT; i++ ) {
                     System.out.println("Calculo de muestra N" + i);
                     time = System.currentTimeMillis();
                     startStatistics(trainingStats, bestPossibleStats);
@@ -205,16 +207,16 @@ class ConcurrencyExperiment_Basic
      * @param args
      */
     public static
-    void main(String[] args) {
+    void main( String[] args ) {
         try {
             File output;
-            if (args.length == 0) {
+            if ( args.length == 0 ) {
                 filePath = ".." + File.separator + "Estadisticas" + File.separator;
             } else {
                 filePath = args[0];
             }
             output = new File(filePath);
-            if (!output.exists()) {
+            if ( !output.exists() ) {
                 output.mkdirs();
             }
 
@@ -242,28 +244,24 @@ class ConcurrencyExperiment_Basic
             outputResults.append("\n\n==========\nDemoró ").append(time).append(" ms.");
             outputForGraphicsResults.append("\n\n==========\nDemoró ").append(time).append(" ms.");
 
-            try (BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(filePath +
-                                                                                                              "Concurrencia_Experimento_01.txt")),
-                    "UTF-8"
-            ))) {
+            try ( BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(
+                    filePath + "Concurrencia_Experimento_01.txt")), "UTF-8")) ) {
                 out.write(outputResults.toString());
             }
-            try (BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
-                    new FileOutputStream(new File(filePath + "Concurrencia_Experimento_01_Calc.txt")),
-                    "UTF-8"
-            ))) {
+            try ( BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(
+                    filePath + "Concurrencia_Experimento_01_Calc.txt")), "UTF-8")) ) {
                 out.write(outputForGraphicsResults.toString());
             }
 
             Toolkit.getDefaultToolkit().beep();
-        } catch (Exception ex) {
+        } catch ( Exception ex ) {
             Logger.getLogger(ConcurrencyExperiment_Basic.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
 
     private static
-    void printConfig(StringBuilder outputResults) {
+    void printConfig( StringBuilder outputResults ) {
         outputResults.append("====================================").append('\n');
         outputResults.append("SAMPLES_PER_EXPERIMENT = ").append(SAMPLES_PER_EXPERIMENT).append('\n');
         outputResults.append("GAMES_TO_PLAY = ").append(GAMES_TO_PLAY).append('\n');
@@ -317,7 +315,7 @@ class ConcurrencyExperiment_Basic
     public
     void initialize() {
         setTileToWinForTraining(2_048);
-        if (getExperimentName() == null) {
+        if ( getExperimentName() == null ) {
             setExperimentName("ConcurrencyTimes");
         }
         setNeuralNetworkName(getExperimentName());
@@ -333,12 +331,13 @@ class ConcurrencyExperiment_Basic
             INeuralNetworkInterface perceptronInterface
     ) {
         return new TDLambdaLearning(perceptronInterface,
-                afterState,
-                getAlpha(),
-                getLambda(), isReplaceEligibilityTraces(),
-                getGamma(),
-                getConcurrencyInLayer(),
-                true
+                                    afterState,
+                                    getAlpha(),
+                                    getLambda(),
+                                    isReplaceEligibilityTraces(),
+                                    getGamma(),
+                                    getConcurrencyInLayer(),
+                                    true
         );
     }
 

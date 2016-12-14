@@ -30,17 +30,17 @@ import java.util.*;
 public
 class ArgumentLoader {
 
-    private final Map<String, String> map;
+    private final Map< String, String > map;
 
     /**
      * @param args argumentos a parsear.
      */
     public
-    ArgumentLoader(String[] args) {
+    ArgumentLoader( String[] args ) {
         map = new HashMap<>(args.length);
-        for (String arg : args) {
+        for ( String arg : args ) {
             int index = arg.indexOf('=');
-            if (index == -1) {
+            if ( index == -1 ) {
                 throw new IllegalArgumentException("No se reconoce el argumento: " + arg);
             }
             String id    = arg.substring(0, index).trim();
@@ -57,9 +57,9 @@ class ArgumentLoader {
      * @throws Exception
      */
     public static
-    void main(String[] args)
+    void main( String[] args )
             throws Exception {
-        List<Double> lambdaList = new ArrayList<>();
+        List< Double > lambdaList = new ArrayList<>();
         lambdaList.add(0d);
         lambdaList.add(0.1d);
         lambdaList.add(0.2d);
@@ -79,16 +79,16 @@ class ArgumentLoader {
      * @return lista de Boolean.
      */
     public static
-    boolean[] parseBooleanArray(String arrayString) {
+    boolean[] parseBooleanArray( String arrayString ) {
 
-        if (arrayString == null || !arrayString.startsWith("[") || !arrayString.endsWith("]")) {
+        if ( arrayString == null || !arrayString.startsWith("[") || !arrayString.endsWith("]") ) {
             throw new IllegalArgumentException("arrayString format unknown: " + arrayString);
         }
 
         String[]  list = arrayString.substring(1, arrayString.length() - 1).split(",");
         boolean[] out  = new boolean[list.length];
         int       i    = 0;
-        for (String bool : list) {
+        for ( String bool : list ) {
             out[i] = Boolean.parseBoolean(bool.trim());
             i++;
         }
@@ -103,15 +103,15 @@ class ArgumentLoader {
      * @return lista de Double.
      */
     public static
-    List<Double> parseDoubleArray(String arrayString) {
+    List< Double > parseDoubleArray( String arrayString ) {
 
-        if (arrayString == null || !arrayString.startsWith("[") || !arrayString.endsWith("]")) {
+        if ( arrayString == null || !arrayString.startsWith("[") || !arrayString.endsWith("]") ) {
             throw new IllegalArgumentException("arrayString format unknown: " + arrayString);
         }
 
-        String[]     list = arrayString.substring(1, arrayString.length() - 1).split(",");
-        List<Double> out  = new ArrayList<>(list.length);
-        for (String number : list) {
+        String[]       list = arrayString.substring(1, arrayString.length() - 1).split(",");
+        List< Double > out  = new ArrayList<>(list.length);
+        for ( String number : list ) {
             out.add(Double.parseDouble(number.trim()));
         }
         return out;
@@ -125,15 +125,15 @@ class ArgumentLoader {
      * @return lista de Integer.
      */
     public static
-    List<Integer> parseIntegerArray(String arrayString) {
+    List< Integer > parseIntegerArray( String arrayString ) {
 
-        if (arrayString == null || !arrayString.startsWith("[") || !arrayString.endsWith("]")) {
+        if ( arrayString == null || !arrayString.startsWith("[") || !arrayString.endsWith("]") ) {
             throw new IllegalArgumentException("arrayString format unknown: " + arrayString);
         }
 
-        String[]      list = arrayString.substring(1, arrayString.length() - 1).split(",");
-        List<Integer> out  = new ArrayList<>(list.length);
-        for (String number : list) {
+        String[]        list = arrayString.substring(1, arrayString.length() - 1).split(",");
+        List< Integer > out  = new ArrayList<>(list.length);
+        for ( String number : list ) {
             out.add(Integer.parseInt(number.trim()));
         }
         return out;
@@ -147,9 +147,9 @@ class ArgumentLoader {
      * @return lista de Strings.
      */
     public static
-    List<String> parseStringArray(String arrayString) {
+    List< String > parseStringArray( String arrayString ) {
 
-        if (arrayString == null || !arrayString.startsWith("[") || !arrayString.endsWith("]")) {
+        if ( arrayString == null || !arrayString.startsWith("[") || !arrayString.endsWith("]") ) {
             throw new IllegalArgumentException("arrayString format unknown: " + arrayString);
         }
         return Arrays.asList(arrayString.substring(1, arrayString.length() - 1).split(","));
@@ -161,9 +161,9 @@ class ArgumentLoader {
      * @return valor que contiene argumento.
      */
     public
-    String getArg(String id) {
+    String getArg( String id ) {
         String value = map.get(id);
-        if (value == null) {
+        if ( value == null ) {
             throw new IllegalArgumentException("No se reconoce el argumento: " + id);
         }
         return map.get(id);

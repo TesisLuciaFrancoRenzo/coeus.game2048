@@ -24,7 +24,7 @@ import org.junit.*;
 /**
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
-@SuppressWarnings({"unchecked", "UnusedAssignment"})
+@SuppressWarnings( { "unchecked", "UnusedAssignment" } )
 public
 class GameBoardTest {
 
@@ -40,17 +40,21 @@ class GameBoardTest {
     public
     GameBoardTest() {
         tileContainer = new TileContainer(17);
-        emptyBoard = new Tile[]{tileContainer.getTile(0), tileContainer.getTile(0), tileContainer.
+        emptyBoard = new Tile[] {
+                tileContainer.getTile(0), tileContainer.getTile(0), tileContainer.
                 getTile(0), tileContainer.getTile(0), tileContainer.getTile(0), tileContainer.getTile(0), tileContainer.
                 getTile(0), tileContainer.getTile(0), tileContainer.getTile(0), tileContainer.getTile(0), tileContainer.
                 getTile(0), tileContainer.getTile(0), tileContainer.getTile(0), tileContainer.getTile(0), tileContainer.
-                getTile(0), tileContainer.getTile(0)};
+                getTile(0), tileContainer.getTile(0)
+        };
 
-        randomBoard = new Tile[]{tileContainer.getTile(0), tileContainer.getTile(4), tileContainer.
+        randomBoard = new Tile[] {
+                tileContainer.getTile(0), tileContainer.getTile(4), tileContainer.
                 getTile(0), tileContainer.getTile(17), tileContainer.getTile(4), tileContainer.getTile(6), tileContainer.
                 getTile(4), tileContainer.getTile(4), tileContainer.getTile(2), tileContainer.getTile(4), tileContainer.
                 getTile(5), tileContainer.getTile(7), tileContainer.getTile(4), tileContainer.getTile(0), tileContainer.
-                getTile(1), tileContainer.getTile(4)};
+                getTile(1), tileContainer.getTile(4)
+        };
         nTupleConfiguration = new ConfigPerceptronBoard_32768(true);
     }
 
@@ -90,7 +94,7 @@ class GameBoardTest {
     /**
      * Test of tileAt method, of class GameBoard.
      */
-    @Test(expected = java.lang.ArrayIndexOutOfBoundsException.class)
+    @Test( expected = java.lang.ArrayIndexOutOfBoundsException.class )
     public
     void testFailTileAt() {
         System.out.println("tileAt Fail");
@@ -130,11 +134,13 @@ class GameBoardTest {
 
         // =========================================== //
         board = new GameBoard(game, tileContainer);
-        Tile[] fullBoard = {tileContainer.getTile(4), tileContainer.getTile(4), tileContainer.
+        Tile[] fullBoard = {
+                tileContainer.getTile(4), tileContainer.getTile(4), tileContainer.
                 getTile(4), tileContainer.getTile(4), tileContainer.getTile(4), tileContainer.getTile(4), tileContainer.
                 getTile(4), tileContainer.getTile(4), tileContainer.getTile(4), tileContainer.getTile(4), tileContainer.
                 getTile(4), tileContainer.getTile(4), tileContainer.getTile(4), tileContainer.getTile(4), tileContainer.
-                getTile(4), tileContainer.getTile(4)};
+                getTile(4), tileContainer.getTile(4)
+        };
         board.setTiles(fullBoard);
         board.updateInternalState(true);
 
@@ -144,11 +150,13 @@ class GameBoardTest {
 
         // =========================================== //
         board = new GameBoard(game, tileContainer);
-        Tile[] almostFull = {tileContainer.getTile(0), tileContainer.getTile(4), tileContainer.
+        Tile[] almostFull = {
+                tileContainer.getTile(0), tileContainer.getTile(4), tileContainer.
                 getTile(4), tileContainer.getTile(4), tileContainer.getTile(4), tileContainer.getTile(4), tileContainer.
                 getTile(4), tileContainer.getTile(4), tileContainer.getTile(4), tileContainer.getTile(4), tileContainer.
                 getTile(4), tileContainer.getTile(4), tileContainer.getTile(4), tileContainer.getTile(4), tileContainer.
-                getTile(4), tileContainer.getTile(4)};
+                getTile(4), tileContainer.getTile(4)
+        };
         board.setTiles(almostFull);
         board.updateInternalState(true);
 
@@ -200,11 +208,13 @@ class GameBoardTest {
     void testIsTerminalState() {
         System.out.println("isTerminalState");
         GameBoard board = new GameBoard(game, tileContainer);
-        Tile[] terminalBoard = {tileContainer.getTile(7), tileContainer.getTile(1), tileContainer.
+        Tile[] terminalBoard = {
+                tileContainer.getTile(7), tileContainer.getTile(1), tileContainer.
                 getTile(3), tileContainer.getTile(2), tileContainer.getTile(1), tileContainer.getTile(4), tileContainer.
                 getTile(5), tileContainer.getTile(1), tileContainer.getTile(3), tileContainer.getTile(5), tileContainer.
                 getTile(1), tileContainer.getTile(6), tileContainer.getTile(1), tileContainer.getTile(8), tileContainer.
-                getTile(5), tileContainer.getTile(2)};
+                getTile(5), tileContainer.getTile(2)
+        };
         board.setTiles(terminalBoard);
         board.updateInternalState(true);
 
@@ -214,11 +224,13 @@ class GameBoardTest {
 
         // =========================================== //
         board = new GameBoard(game, tileContainer);
-        Tile[] fullNotTerminalBoard = {tileContainer.getTile(7), tileContainer.getTile(1), tileContainer.
+        Tile[] fullNotTerminalBoard = {
+                tileContainer.getTile(7), tileContainer.getTile(1), tileContainer.
                 getTile(3), tileContainer.getTile(2), tileContainer.getTile(1), tileContainer.getTile(4), tileContainer.
                 getTile(5), tileContainer.getTile(1), tileContainer.getTile(3), tileContainer.getTile(5), tileContainer.
                 getTile(1), tileContainer.getTile(6), tileContainer.getTile(1), tileContainer.getTile(8), tileContainer.
-                getTile(1), tileContainer.getTile(2)};
+                getTile(1), tileContainer.getTile(2)
+        };
         board.setTiles(fullNotTerminalBoard);
         board.updateInternalState(true);
 
@@ -237,11 +249,13 @@ class GameBoardTest {
 
         // =========================================== //
         board = new GameBoard(game, tileContainer);
-        Tile[] winBoard = {tileContainer.getTile(7), tileContainer.getTile(1), tileContainer.
+        Tile[] winBoard = {
+                tileContainer.getTile(7), tileContainer.getTile(1), tileContainer.
                 getTile(3), tileContainer.getTile(2), tileContainer.getTile(1), tileContainer.getTile(0), tileContainer.
                 getTile(5), tileContainer.getTile(1), tileContainer.getTile(3), tileContainer.getTile(5), tileContainer.
                 getTile(1), tileContainer.getTile(6), tileContainer.getTile(1), tileContainer.getTile(8), tileContainer.
-                getTile(1), tileContainer.getTile(2)};
+                getTile(1), tileContainer.getTile(2)
+        };
         board.setTiles(winBoard);
         board.updateInternalState(true);
         board.setToWin(); //simulamos ser el juego, configurando este tablero como ganador
@@ -288,7 +302,7 @@ class GameBoardTest {
         board.setTiles(randomBoard);
         board.updateInternalState(true);
 
-        Integer[] expResult = {0, 2, 13};
+        Integer[] expResult = { 0, 2, 13 };
         Integer[] result    = new Integer[3];
         board.availableSpace().toArray(result);
 

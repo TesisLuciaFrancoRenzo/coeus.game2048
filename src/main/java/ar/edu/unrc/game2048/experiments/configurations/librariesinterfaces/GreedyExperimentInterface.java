@@ -40,7 +40,7 @@ import static java.awt.event.KeyEvent.*;
  *
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
-@SuppressWarnings("unchecked")
+@SuppressWarnings( "unchecked" )
 public
 class GreedyExperimentInterface
         extends INeuralNetworkInterfaceFor2048 {
@@ -93,36 +93,36 @@ class GreedyExperimentInterface
             Game2048 game,
             TDLambdaLearning learningMethod
     ) {
-        GameBoard          actualBoard     = game.getBoard();
-        List<Action>       bestActions     = new ArrayList<>(4);
-        double             bestReward      = -100d;
-        ArrayList<IAction> possibleActions = game.listAllPossibleActions(actualBoard);
-        for (IAction action : possibleActions) {
-            GameBoard                    afterState            = (GameBoard) game.computeAfterState(actualBoard, action);
-            List<GreedyStateProbability> allPossibleNextStates = game.listAllPossibleNextTurnStateFromAfterState(afterState);
-            Double reward = allPossibleNextStates.stream().mapToDouble((nextStateProb) -> {
-                if (((GameBoard) nextStateProb.getNextTurnState()).isAWin() || ((GameBoard) nextStateProb.getNextTurnState()).isFull()) {
-                    return ((GameBoard) nextStateProb.getNextTurnState()).getPartialScore() * 4 * nextStateProb.getProbability();
+        GameBoard            actualBoard     = game.getBoard();
+        List< Action >       bestActions     = new ArrayList<>(4);
+        double               bestReward      = -100d;
+        ArrayList< IAction > possibleActions = game.listAllPossibleActions(actualBoard);
+        for ( IAction action : possibleActions ) {
+            GameBoard                      afterState            = (GameBoard) game.computeAfterState(actualBoard, action);
+            List< GreedyStateProbability > allPossibleNextStates = game.listAllPossibleNextTurnStateFromAfterState(afterState);
+            Double reward = allPossibleNextStates.stream().mapToDouble(( nextStateProb ) -> {
+                if ( ( (GameBoard) nextStateProb.getNextTurnState() ).isAWin() || ( (GameBoard) nextStateProb.getNextTurnState() ).isFull() ) {
+                    return ( (GameBoard) nextStateProb.getNextTurnState() ).getPartialScore() * 4 * nextStateProb.getProbability();
                 } else {
-                    ArrayList<IAction> possibleNextActions = game.listAllPossibleActions(actualBoard);
-                    return possibleNextActions.stream().mapToDouble((nextAction) -> {
+                    ArrayList< IAction > possibleNextActions = game.listAllPossibleActions(actualBoard);
+                    return possibleNextActions.stream().mapToDouble(( nextAction ) -> {
                         GameBoard nextAfterState = (GameBoard) game.computeAfterState(nextStateProb.getNextTurnState(), nextAction);
                         return nextAfterState.getPartialScore();
                     }).sum() * nextStateProb.getProbability();
                 }
             }).sum() + afterState.getPartialScore();
-            if (reward == bestReward) {
+            if ( reward == bestReward ) {
                 bestActions.add((Action) action);
-            } else if (reward > bestReward) {
+            } else if ( reward > bestReward ) {
                 bestReward = reward;
                 bestActions.clear();
                 bestActions.add((Action) action);
             }
         }
 
-        if (!bestActions.isEmpty()) {
+        if ( !bestActions.isEmpty() ) {
             Action bestAction = bestActions.get(TDLambdaLearning.randomBetween(0, bestActions.size() - 1));
-            switch (bestAction) {
+            switch ( bestAction ) {
                 case left: {
                     game.processInput(VK_LEFT);
                     break;
@@ -151,13 +151,13 @@ class GreedyExperimentInterface
 
     @Override
     public
-    void saveNeuralNetwork(File perceptronFile)
+    void saveNeuralNetwork( File perceptronFile )
             throws Exception {
     }
 
     @Override
     public
-    void saveNeuralNetwork(OutputStream outputStream)
+    void saveNeuralNetwork( OutputStream outputStream )
             throws Exception {
 
     }

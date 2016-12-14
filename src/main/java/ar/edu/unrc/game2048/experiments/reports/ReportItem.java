@@ -17,7 +17,7 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
  * @author franc
  */
 class ReportItem
-        implements Comparable<ReportItem> {
+        implements Comparable< ReportItem > {
 
     protected Double bestValue;
     protected boolean failed = false;
@@ -28,24 +28,24 @@ class ReportItem
 
     @Override
     public
-    int compareTo(ReportItem o) {
+    int compareTo( ReportItem o ) {
         return bestValue.compareTo(o.bestValue) * -1;
     }
 
     public
     void createBackupFile() {
-        if (bestNeuralNetworkFile != null && bestNeuralNetworkFile.exists()) {
+        if ( bestNeuralNetworkFile != null && bestNeuralNetworkFile.exists() ) {
             try {
                 File destiny = new File(bestNeuralNetworkFile.getCanonicalPath().replace(".ser", ".BEST"));
                 Files.copy(bestNeuralNetworkFile.toPath(), destiny.toPath(), REPLACE_EXISTING);
                 // System.out.println("copy (" + bytes + ") = " + destiny);
-            } catch (IOException ex) {
+            } catch ( IOException ex ) {
                 Logger.getLogger(ReportItem.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
 
-    void failed(String motive) {
+    void failed( String motive ) {
         failed = true;
         this.motive = motive;
     }
@@ -63,7 +63,7 @@ class ReportItem
         return bestValue;
     }
 
-    void setBestValue(double bestValue) {
+    void setBestValue( double bestValue ) {
         this.bestValue = bestValue;
     }
 
@@ -79,7 +79,7 @@ class ReportItem
      * @param file the file to set
      */
     public
-    void setFile(String file) {
+    void setFile( String file ) {
         this.file = file;
     }
 
@@ -95,7 +95,7 @@ class ReportItem
      * @param trainingNumber the trainingNumber to set
      */
     public
-    void setTrainingNumber(String trainingNumber) {
+    void setTrainingNumber( String trainingNumber ) {
         this.trainingNumber = trainingNumber;
     }
 
@@ -107,14 +107,14 @@ class ReportItem
         return failed;
     }
 
-    void setBestNeuralNetworkSerFile(File bestNeuralNetworkFile) {
+    void setBestNeuralNetworkSerFile( File bestNeuralNetworkFile ) {
         this.bestNeuralNetworkFile = bestNeuralNetworkFile;
     }
 
     @Override
     public
     String toString() {
-        return ((failed) ? "Fail: " + motive + "\t" : "") + bestValue + "\t" + trainingNumber + "\t" + file;
+        return ( ( failed ) ? "Fail: " + motive + "\t" : "" ) + bestValue + "\t" + trainingNumber + "\t" + file;
     }
 
 

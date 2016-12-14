@@ -21,10 +21,10 @@ class ReportCollector {
 
     private static File WORKING_DIRECTORY;
 
-    private static Map<String, ReportItem> items;
+    private static Map< String, ReportItem > items;
 
     private static
-    double extractNumber(String line) {
+    double extractNumber( String line ) {
         int index = line.indexOf(':');
         assert index != -1;
         return Double.parseDouble(line.substring(index + 1).trim().replaceFirst(",", "."));
@@ -36,9 +36,9 @@ class ReportCollector {
      * @throws java.io.IOException
      */
     public static
-    void main(String[] args)
+    void main( String[] args )
             throws IOException {
-        if (args.length != 0) {
+        if ( args.length != 0 ) {
             WORKING_DIRECTORY = new File(args[0]);
         } else {
             WORKING_DIRECTORY = workingDir();
@@ -46,42 +46,42 @@ class ReportCollector {
         items = new HashMap<>();
         assert WORKING_DIRECTORY != null;
         workFiles(WORKING_DIRECTORY.listFiles());
-        List<ReportItem> finalReportItems = new ArrayList<>(items.values());
+        List< ReportItem > finalReportItems = new ArrayList<>(items.values());
 
         Collections.sort(finalReportItems);
         Collections.sort(finalReportItems);
 
         File output = new File("./BestResults.txt");
-        try (PrintStream printStream = new PrintStream(output, "UTF-8")) {
+        try ( PrintStream printStream = new PrintStream(output, "UTF-8") ) {
             finalReportItems.
-                    forEach((reportItem) -> {
-                        reportItem.createBackupFile();
-                        printStream.println(reportItem);
-                    });
+                                    forEach(( reportItem ) -> {
+                                        reportItem.createBackupFile();
+                                        printStream.println(reportItem);
+                                    });
         }
     }
 
     private static
-    void parseFile(File file) {
+    void parseFile( File file ) {
         //cargamos el archivo ya guardado
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"))) {
-            for (String line = br.readLine(); line != null; line = br.readLine()) {
-                if (line.matches("Win rate: [-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?")) {
+        try ( BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8")) ) {
+            for ( String line = br.readLine(); line != null; line = br.readLine() ) {
+                if ( line.matches("Win rate: [-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?") ) {
                     ReportItem reportItem = new ReportItem();
                     reportItem.setFile(file.getCanonicalPath().replace(WORKING_DIRECTORY.getCanonicalPath(), ""));
                     try {
                         File neuralNetworkFile = new File(file.getCanonicalPath().replace("_STATISTICS.txt", ".ser"));
-                        if (neuralNetworkFile.exists()) {
+                        if ( neuralNetworkFile.exists() ) {
                             reportItem.setBestNeuralNetworkSerFile(neuralNetworkFile);
                         }
-                    } catch (IOException ex) {
+                    } catch ( IOException ex ) {
                         Logger.getLogger(ReportCollector.class.getName()).log(Level.SEVERE, null, ex);
                     }
 
                     String indexToFind = "_trained_BackupN-";
                     int    index       = reportItem.getFile().indexOf(indexToFind);
 
-                    if (index < 0) {
+                    if ( index < 0 ) {
                         System.err.println(" no se encuentra _trained_BackupN- en el nombre del archivo");
                     } else {
                         String key = reportItem.getFile().substring(0, index);
@@ -91,9 +91,9 @@ class ReportCollector {
                         reportItem.setTrainingNumber(reportItem.getFile().substring(index, index2));
                         reportItem.setBestValue(extractNumber(line));
 
-                        if (items.containsKey(key)) {
+                        if ( items.containsKey(key) ) {
                             ReportItem oldReportItem = items.get(key);
-                            if (reportItem.getBestValue() > oldReportItem.getBestValue()) {
+                            if ( reportItem.getBestValue() > oldReportItem.getBestValue() ) {
                                 items.put(key, reportItem);
                             }
                         } else {
@@ -102,17 +102,17 @@ class ReportCollector {
                     }
                 }
             }
-        } catch (IOException ex) {
+        } catch ( IOException ex ) {
             Logger.getLogger(ReportCollector.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     private static
-    void workFiles(File[] files) {
-        for (File file : files) {
-            if (file.isDirectory()) {
+    void workFiles( File[] files ) {
+        for ( File file : files ) {
+            if ( file.isDirectory() ) {
                 workFiles(file.listFiles()); // Calls same method again.
-            } else if (file.getName().matches(".+_trained_BackupN-\\d+_STATISTICS\\.txt")) {
+            } else if ( file.getName().matches(".+_trained_BackupN-\\d+_STATISTICS\\.txt") ) {
                 parseFile(file);
             }
         }
@@ -120,17 +120,17 @@ class ReportCollector {
 
     private static
     File workingDir() {
-        if (WORKING_DIRECTORY == null) {
+        if ( WORKING_DIRECTORY == null ) {
             String Recurso = ReportCollector.class.getSimpleName() + ".class";
             try {
                 URL url = ReportCollector.class.getResource(Recurso);
-                switch (url.getProtocol()) {
+                switch ( url.getProtocol() ) {
                     case "file": {
                         File f = new File(url.toURI());
                         do {
 
                             f = f.getParentFile();
-                        } while (!f.isDirectory());
+                        } while ( !f.isDirectory() );
                         WORKING_DIRECTORY = f.getParentFile();
                         break;
                     }
@@ -143,12 +143,12 @@ class ReportCollector {
                         do {
 
                             f = f.getParentFile();
-                        } while (!f.isDirectory());
+                        } while ( !f.isDirectory() );
                         WORKING_DIRECTORY = f.getParentFile();
                         break;
                     }
                 }
-            } catch (URISyntaxException | MalformedURLException e) {
+            } catch ( URISyntaxException | MalformedURLException e ) {
                 WORKING_DIRECTORY = new File(".");
             }
         }

@@ -15,13 +15,13 @@ import java.util.ArrayList;
 public
 class StatisticCalculator {
 
-    private final ArrayList<Double> experiment;
+    private final ArrayList< Double > experiment;
 
     /**
      * @param defaultCapacity solo para inicializar variables internas.
      */
     public
-    StatisticCalculator(Integer defaultCapacity) {
+    StatisticCalculator( Integer defaultCapacity ) {
         experiment = new ArrayList<>(defaultCapacity);
     }
 
@@ -31,7 +31,7 @@ class StatisticCalculator {
      * @param milliseconds
      */
     public
-    void addSample(double milliseconds) {
+    void addSample( double milliseconds ) {
         experiment.add(milliseconds);
     }
 
@@ -43,22 +43,22 @@ class StatisticCalculator {
     public
     String[] computeBasicStatistics() {
         String[] output = new String[2];
-        if (experiment.isEmpty()) {
+        if ( experiment.isEmpty() ) {
             throw new IllegalStateException("la cantidad de experimentos no debe ser vacía");
         }
         Double min = Double.MAX_VALUE;
         Double max = Double.MIN_VALUE;
         double avg = 0;
-        for (Double sample : experiment) {
+        for ( Double sample : experiment ) {
             avg += sample;
-            if (sample < min) {
+            if ( sample < min ) {
                 min = sample;
             }
-            if (sample > max) {
+            if ( sample > max ) {
                 max = sample;
             }
         }
-        avg /= (experiment.size() * 1d);
+        avg /= ( experiment.size() * 1d );
         output[0] = "Promedio: " + avg + "ms. Mínimo: " + min + "ms. Máximo: " + max + "ms.";
         output[1] = avg + "\t" + min + '\t' + max;
         return output;
@@ -71,7 +71,7 @@ class StatisticCalculator {
     public
     String toString() {
         StringBuilder output = new StringBuilder();
-        experiment.forEach((sample) -> output.append(sample).append('\t'));
+        experiment.forEach(( sample ) -> output.append(sample).append('\t'));
         return output.toString();
     }
 
