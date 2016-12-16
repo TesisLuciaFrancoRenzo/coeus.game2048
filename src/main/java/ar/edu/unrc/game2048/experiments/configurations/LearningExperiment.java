@@ -25,6 +25,7 @@ import ar.edu.unrc.coeus.tdlearning.learning.TDLambdaLearning;
 import ar.edu.unrc.coeus.tdlearning.training.ntuple.NTupleSystem;
 import ar.edu.unrc.game2048.Game2048;
 
+import java.awt.*;
 import java.io.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -91,6 +92,7 @@ class LearningExperiment {
     private   double               bestMaxTile;
     private   LinkedList< Double > bestPossibleActionTimes;
     private   double               bestWinRate;
+    private   boolean              canCollectStatistics;
     private boolean concurrencyInComputeBestPossibleAction = false;
     private boolean[] concurrencyInLayer;
     private long elapsedTime            = 0;
@@ -115,7 +117,7 @@ class LearningExperiment {
     private String                         neuralNetworkName;
     private boolean replaceEligibilityTraces       = false;
     private boolean runStatisticsForBackups        = false;
-    private int     sampleSizeForWinRateEstimation = 1000;
+    private int     sampleSizeForWinRateEstimation = 2_000;
     private int     saveBackupEvery                = 0;
     private int     saveEvery                      = 0;
     private int simulationsForStatistics;
@@ -252,18 +254,11 @@ class LearningExperiment {
     }
 
     /**
-     * Establece el nombre del experimento basado en el nombre de la clase {@code experimentClass}.
-     *
-     * @param experimentClass clase de la cual extraer el nombre del experimento.
+     * @param experimentName nombre del experimento.
      */
     public
-    void setExperimentName( Class experimentClass ) {
-        String className = experimentClass.getName();
-        int    lastDot   = className.lastIndexOf('.');
-        if ( lastDot != -1 ) {
-            className = className.substring(lastDot + 1);
-        }
-        experimentName = className;
+    void setExperimentName( String experimentName ) {
+        this.experimentName = experimentName;
     }
 
     /**
@@ -741,23 +736,6 @@ class LearningExperiment {
                 } else {
                     training(numberForShow, game, null, perceptronFile, lastSaveDataFile, filePath, zeroNumbers, historyFile);
                 }
-                if ( learningAlgorithm.canCollectStatistics() ) {
-                    avgBestPossibleActionTimes = 0d;
-                    for ( Double sample : bestPossibleActionTimes ) {
-                        avgBestPossibleActionTimes += sample;
-                    }
-                    avgBestPossibleActionTimes /= ( bestPossibleActionTimes.size() * 1d );
-
-                    avgTrainingTimes = 0d;
-                    for ( Double sample : trainingTimes ) {
-                        avgTrainingTimes += sample;
-                    }
-                    avgTrainingTimes /= ( trainingTimes.size() * 1d );
-                }
-                //guardamos los progresos en un archivo
-                if ( createPerceptronFile ) {
-                    neuralNetworkInterfaceFor2048.saveNeuralNetwork(perceptronFile);
-                }
             }
             //cerramos el juego
             game.dispose();
@@ -866,11 +844,18 @@ class LearningExperiment {
     }
 
     /**
-     * @param experimentName nombre del experimento.
+     * Establece el nombre del experimento basado en el nombre de la clase {@code experimentClass}.
+     *
+     * @param experimentClass clase de la cual extraer el nombre del experimento.
      */
     public
-    void setExperimentName( String experimentName ) {
-        this.experimentName = experimentName;
+    void setExperimentName( Class experimentClass ) {
+        String className = experimentClass.getName();
+        int    lastDot   = className.lastIndexOf('.');
+        if ( lastDot != -1 ) {
+            className = className.substring(lastDot + 1);
+        }
+        experimentName = className;
     }
 
     /**
@@ -1043,10 +1028,12 @@ class LearningExperiment {
 
         ByteArrayOutputStream bestSavedGameCache = new ByteArrayOutputStream();
         boolean               needToSaveBestGame = false;
+        Double                timePerTurn        = null;
+        double                finalTimePerTurn   = 0;
 
         for ( int i = lastSavedGamePlayedNumber + 1; i <= gamesToPlay; i++ ) {
             long start = System.nanoTime();
-            learningAlgorithm.solveAndTrainOnce(game, i);
+            timePerTurn = learningAlgorithm.solveAndTrainOnce(game, i);
             elapsedTime += System.nanoTime() - start;
             if ( game.isPrintHistory() ) {
                 try ( BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(historyFile, true), "UTF-8")) ) {
@@ -1076,6 +1063,8 @@ class LearningExperiment {
                 }
                 avg /= ( learningAlgorithm.getStatisticsTrainingTimes().size() * 1d );
                 trainingTimes.add(avg);
+
+                finalTimePerTurn += timePerTurn;
             }
 
             int percent = (int) ( ( ( i * 1d ) / ( gamesToPlay * 1d ) ) * 100d );
@@ -1156,10 +1145,43 @@ class LearningExperiment {
             }
             if ( writeConfig ) {
                 try ( BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(lastSaveDataFile), "UTF-8")) ) {
-                    out.write(Integer.toString(i) + '\n' + Integer.toString(backupNumber) + '\n' + Long.toString(elapsedTime) + '\n' +
-                              Integer.toString(bestGame) + '\n' + Double.toString(bestWinRate) + '\n' + Double.toString(bestMaxTile));
+                    out.write(new StringBuilder().append(Integer.toString(i))
+                                                 .append('\n')
+                                                 .append(Integer.toString(backupNumber))
+                                                 .append('\n')
+                                                 .append(Long.toString(elapsedTime))
+                                                 .append('\n')
+                                                 .append(Integer.toString(bestGame))
+                                                 .append('\n')
+                                                 .append(Double.toString(bestWinRate))
+                                                 .append('\n')
+                                                 .append(Double.toString(bestMaxTile))
+                                                 .toString());
                 }
             }
+        }
+        if ( learningAlgorithm.canCollectStatistics() ) {
+            StringBuilder out = new StringBuilder();
+
+            out.append("\nEstadísticas Recolectadas:\ntimePerTurn = ")
+               .append(Double.valueOf(finalTimePerTurn / ( ( gamesToPlay - lastSavedGamePlayedNumber + 1 ) * 1d )))
+               .append(" ms.\n");
+
+            double avg = 0;
+            for ( Double sample : bestPossibleActionTimes ) {
+                avg += sample;
+            }
+            avg /= ( bestPossibleActionTimes.size() * 1d );
+            out.append("bestPossibleActionTimes = ").append(avg).append(" ms.\n");
+
+            avg = 0;
+            for ( Double sample : trainingTimes ) {
+                avg += sample;
+            }
+            avg /= ( trainingTimes.size() * 1d );
+            out.append("trainingTimes = ").append(avg).append(" ms.\n");
+            System.out.println(out.toString());
+            Toolkit.getDefaultToolkit().beep();
         }
     }
 

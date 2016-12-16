@@ -546,14 +546,32 @@ class TestGenerator {
             if ( explorationRateList != null ) {
                 explorationRateString = "-explorationRate_" + expConfig.getExplorationRate();
             } else {
-                explorationRateString =
-                        "-explorationRate_" + expConfig.getExplorationRateInitialValue() + '_' + expConfig.getExplorationRateFinalValue() + '_' +
-                        expConfig.getExplorationRateStartInterpolation() + '_' + expConfig.getExplorationRateFinishInterpolation();
+                explorationRateString = new StringBuilder().append("-explorationRate_")
+                                                           .append(expConfig.getExplorationRateInitialValue())
+                                                           .append('_')
+                                                           .append(expConfig.getExplorationRateFinalValue())
+                                                           .append('_')
+                                                           .append(expConfig.getExplorationRateStartInterpolation())
+                                                           .append('_')
+                                                           .append(expConfig.getExplorationRateFinishInterpolation())
+                                                           .toString();
             }
-            String newFilePath = filePath + experimentDirName + File.separator + expConfig.getRepetitions() + "-alpha_" + expConfig.getAlpha() +
-                                 ( ( expConfig.getAnnealingAlpha() > 0 ) ? "-anneal_" + expConfig.getAnnealingAlpha() : "" ) + "-lambda_" +
-                                 expConfig.getLambda() + "-gamma_" + expConfig.getGamma() + explorationRateString + "-replaceTraces_" +
-                                 expConfig.isReplaceTraces() + File.separator;
+            String newFilePath = new StringBuilder().append(filePath)
+                                                    .append(experimentDirName)
+                                                    .append(File.separator)
+                                                    .append(expConfig.getRepetitions())
+                                                    .append("-alpha_")
+                                                    .append(expConfig.getAlpha())
+                                                    .append(( expConfig.getAnnealingAlpha() > 0 ) ? "-anneal_" + expConfig.getAnnealingAlpha() : "")
+                                                    .append("-lambda_")
+                                                    .append(expConfig.getLambda())
+                                                    .append("-gamma_")
+                                                    .append(expConfig.getGamma())
+                                                    .append(explorationRateString)
+                                                    .append("-replaceTraces_")
+                                                    .append(expConfig.isReplaceTraces())
+                                                    .append(File.separator)
+                                                    .toString();
             File newPath = new File(newFilePath);
             if ( !newPath.exists() ) {
                 newPath.mkdirs();
