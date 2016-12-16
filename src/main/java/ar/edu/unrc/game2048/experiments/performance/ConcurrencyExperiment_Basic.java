@@ -117,12 +117,12 @@ class ConcurrencyExperiment_Basic
             System.out.println("===============================================================================");
             System.out.println("Capas intermedias: " + innerLayerQuantity);
             outputForGraphicsResults.append("============ Capas intermedias: ")
-                                    .append(innerLayerQuantity)
-                                    .append(" - Training Concurrency: ")
-                                    .append(trainConcurrency)
-                                    .append(" - evaluating Concurrency: ")
-                                    .append(evaluateConcurrency)
-                                    .append(" =============\n");
+                    .append(innerLayerQuantity)
+                    .append(" - Training Concurrency: ")
+                    .append(trainConcurrency)
+                    .append(" - evaluating Concurrency: ")
+                    .append(evaluateConcurrency)
+                    .append(" =============\n");
             System.out.println("===============================================================================");
 
             StringBuilder trainingOutput = new StringBuilder();
@@ -162,9 +162,9 @@ class ConcurrencyExperiment_Basic
                 System.out.println(currentConfig.toString());
                 System.out.println("========================================================");
 
-                StatisticCalculator trainingStats     = new StatisticCalculator(SAMPLES_PER_EXPERIMENT);
-                StatisticCalculator bestPossibleStats = new StatisticCalculator(SAMPLES_PER_EXPERIMENT);
-                long                time;
+                StatisticCalculatorPerformance trainingStats     = new StatisticCalculatorPerformance(SAMPLES_PER_EXPERIMENT);
+                StatisticCalculatorPerformance bestPossibleStats = new StatisticCalculatorPerformance(SAMPLES_PER_EXPERIMENT);
+                long                           time;
                 for ( int i = 1; i <= SAMPLES_PER_EXPERIMENT; i++ ) {
                     System.out.println("Calculo de muestra N" + i);
                     time = System.currentTimeMillis();
@@ -267,24 +267,24 @@ class ConcurrencyExperiment_Basic
         outputResults.append("GAMES_TO_PLAY = ").append(GAMES_TO_PLAY).append('\n');
         outputResults.append("MAX_INNER_LAYERS = ").append(MAX_INNER_LAYERS).append('\n');
         outputResults.append("MAX_NEURON_QUANTITY = ")
-                     .append(MAX_NEURON_QUANTITY)
-                     .append(" (")
-                     .append(Math.pow(2, (double) MAX_NEURON_QUANTITY))
-                     .append(')')
-                     .append('\n');
+                .append(MAX_NEURON_QUANTITY)
+                .append(" (")
+                .append(Math.pow(2, (double) MAX_NEURON_QUANTITY))
+                .append(')')
+                .append('\n');
         outputResults.append("MIN_NEURON_QUANTITY = ")
-                     .append(MIN_NEURON_QUANTITY)
-                     .append(" (")
-                     .append(Math.pow(2, MIN_NEURON_QUANTITY))
-                     .append(')')
-                     .append('\n');
+                .append(MIN_NEURON_QUANTITY)
+                .append(" (")
+                .append(Math.pow(2, MIN_NEURON_QUANTITY))
+                .append(')')
+                .append('\n');
         outputResults.append("====================================").append('\n');
     }
 
     private static
     void startStatistics(
-            StatisticCalculator trainingStats,
-            StatisticCalculator bestPossibleStats
+            StatisticCalculatorPerformance trainingStats,
+            StatisticCalculatorPerformance bestPossibleStats
     ) {
         LearningExperiment experiment = new ConcurrencyExperiment_Basic();
         experiment.setAlpha(currentConfig.getAlphas());
@@ -307,8 +307,8 @@ class ConcurrencyExperiment_Basic
         experiment.setSimulationsForStatistics(0);
         experiment.start(-1, filePath, 0, false, filePath, false);
 
-        bestPossibleStats.addSample(experiment.getAvgBestPossibleActionTimes());
-        trainingStats.addSample(experiment.getAvgTrainingTimes());
+        bestPossibleStats.addSample(experiment.getBestPossibleActionTimesAverage());
+        trainingStats.addSample(experiment.getTrainingTimesAverage());
     }
 
     @Override
@@ -331,14 +331,13 @@ class ConcurrencyExperiment_Basic
             INeuralNetworkInterface perceptronInterface
     ) {
         return new TDLambdaLearning(perceptronInterface,
-                                    afterState,
-                                    getAlpha(),
-                                    getLambda(),
-                                    isReplaceEligibilityTraces(),
-                                    getGamma(),
-                                    getConcurrencyInLayer(),
-                                    true
-        );
+                afterState,
+                getAlpha(),
+                getLambda(),
+                isReplaceEligibilityTraces(),
+                getGamma(),
+                getConcurrencyInLayer(),
+                true);
     }
 
     @Override

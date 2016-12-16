@@ -28,6 +28,7 @@ class GeneratorConfig {
 
     private final double  alpha;
     private final int     annealingAlpha;
+    private final boolean canCollectStatistics;
     private final String  className;
     private final int     eligibilityTraceLength;
     private final Double  explorationRate;
@@ -58,6 +59,7 @@ class GeneratorConfig {
     public
     GeneratorConfig(
             final int repetitions,
+            final boolean canCollectStatistics,
             final String className,
             final double alpha,
             final int annealingAlpha,
@@ -73,6 +75,7 @@ class GeneratorConfig {
             final int number
     ) {
         this.repetitions = repetitions;
+        this.canCollectStatistics = canCollectStatistics;
         this.alpha = alpha;
         this.annealingAlpha = annealingAlpha;
         this.lambda = lambda;
@@ -184,6 +187,11 @@ class GeneratorConfig {
     public
     int getRepetitions() {
         return repetitions;
+    }
+
+    public
+    boolean isCanCollectStatistics() {
+        return canCollectStatistics;
     }
 
     /**

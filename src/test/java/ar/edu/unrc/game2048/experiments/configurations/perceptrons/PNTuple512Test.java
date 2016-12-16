@@ -83,7 +83,7 @@ class PNTuple512Test {
 
         //----------------------
         ConfigNTupleBasicTanHSimplified_512 nTupleConfiguration2 = new ConfigNTupleBasicTanHSimplified_512();
-        Game2048 game2 = new Game2048(null, nTupleConfiguration2, (int) Math.pow(2, nTupleConfiguration2.getMaxTile()), 0, false);
+        Game2048                            game2                = new Game2048(null, nTupleConfiguration2, (int) Math.pow(2, nTupleConfiguration2.getMaxTile()), 0, false);
         GameBoard                           board2               = new GameBoard(game2, tileContainer);
         board2.setTiles(new Tile[] {
                 tileContainer.getTile(0), tileContainer.getTile(4), tileContainer.
@@ -93,13 +93,10 @@ class PNTuple512Test {
                 getTile(1), tileContainer.getTile(4)
         });
 
-        NTupleSystem nTupleSystem = new NTupleSystem(
-                nTupleConfiguration2.getAllSamplePointPossibleValues(),
+        NTupleSystem nTupleSystem = new NTupleSystem(nTupleConfiguration2.getAllSamplePointPossibleValues(),
                 nTupleConfiguration2.getNTuplesLength(),
                 nTupleConfiguration2.getActivationFunction(),
-                nTupleConfiguration2.getDerivedActivationFunction(),
-                false
-        );
+                nTupleConfiguration2.getDerivedActivationFunction(), false);
         int[] indexes = nTupleSystem.getComplexComputation(board2).getIndexes();
         assertThat(normalizedPerceptronInput.getInternalSetSize(), is(indexes.length));
         for ( int i : indexes ) {

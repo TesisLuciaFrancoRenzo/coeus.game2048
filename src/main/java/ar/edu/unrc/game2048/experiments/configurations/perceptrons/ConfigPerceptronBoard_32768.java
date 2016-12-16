@@ -71,12 +71,11 @@ class ConfigPerceptronBoard_32768
         activationFunctionMin = -1;
 
         normInput = new NormalizedField(NormalizationAction.Normalize,
-                                        null,
-                                        maxCodedBoardNumber,
-                                        minCodedBoardNumber,
-                                        activationFunctionMax,
-                                        activationFunctionMin
-        );
+                null,
+                maxCodedBoardNumber,
+                minCodedBoardNumber,
+                activationFunctionMax,
+                activationFunctionMin);
         normOutput = new NormalizedField(NormalizationAction.Normalize, null, maxScore, minScore, activationFunctionMax, activationFunctionMin);
     }
 

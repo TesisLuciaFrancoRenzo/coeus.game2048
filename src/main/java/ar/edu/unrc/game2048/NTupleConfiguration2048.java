@@ -141,15 +141,12 @@ class NTupleConfiguration2048
     TDLambdaLearning instanceOfTdLearningImplementation(
             NTupleSystem nTupleSystem
     ) {
-        return new TDLambdaLearning(
-                nTupleSystem, afterState, ( getAlpha() != null ) ? getAlpha()[0] : null,
+        return new TDLambdaLearning(nTupleSystem, afterState, ( getAlpha() != null ) ? getAlpha()[0] : null,
                 getLambda(),
                 getEligibilityTraceLength(),
                 isReplaceEligibilityTraces(),
                 getGamma(),
-                getConcurrencyInLayer(),
-                false
-        );
+                getConcurrencyInLayer(), isCanCollectStatistics());
     }
 
     @Override

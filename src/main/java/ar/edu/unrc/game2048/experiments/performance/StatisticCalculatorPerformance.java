@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
 public
-class StatisticCalculator {
+class StatisticCalculatorPerformance {
 
     private final ArrayList< Double > experiment;
 
@@ -21,7 +21,7 @@ class StatisticCalculator {
      * @param defaultCapacity solo para inicializar variables internas.
      */
     public
-    StatisticCalculator( Integer defaultCapacity ) {
+    StatisticCalculatorPerformance( Integer defaultCapacity ) {
         experiment = new ArrayList<>(defaultCapacity);
     }
 

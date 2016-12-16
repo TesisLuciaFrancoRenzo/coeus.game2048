@@ -557,23 +557,14 @@ class EncogExperimentInterfaceTest {
             String activationInterface = encogInterface.getActivationFunction(layer).toString();
 
             if ( perceptron.getActivation(layer) instanceof ActivationTANH ) {
-                assertThat(
-                        "capa=" + layer + " activationEncog=" + activationEncog + " vs activationInterface=" + activationInterface,
-                        encogInterface.getActivationFunction(layer),
-                        is(FunctionUtils.TANH)
-                );
+                assertThat("capa=" + layer + " activationEncog=" + activationEncog + " vs activationInterface=" + activationInterface,
+                        encogInterface.getActivationFunction(layer), is(FunctionUtils.TANH));
             } else if ( perceptron.getActivation(layer) instanceof ActivationSigmoid ) {
-                assertThat(
-                        "capa=" + layer + " activationEncog=" + activationEncog + " vs activationInterface=" + activationInterface,
-                        encogInterface.getActivationFunction(layer),
-                        is(FunctionUtils.SIGMOID)
-                );
+                assertThat("capa=" + layer + " activationEncog=" + activationEncog + " vs activationInterface=" + activationInterface,
+                        encogInterface.getActivationFunction(layer), is(FunctionUtils.SIGMOID));
             } else if ( perceptron.getActivation(layer) instanceof ActivationLinear ) {
-                assertThat(
-                        "capa=" + layer + " activationEncog=" + activationEncog + " vs activationInterface=" + activationInterface,
-                        encogInterface.getActivationFunction(layer),
-                        is(FunctionUtils.LINEAR)
-                );
+                assertThat("capa=" + layer + " activationEncog=" + activationEncog + " vs activationInterface=" + activationInterface,
+                        encogInterface.getActivationFunction(layer), is(FunctionUtils.LINEAR));
             } else {
                 throw new IllegalArgumentException("El test esta pensado para utilizar TANH, Sigmoid o Linear como función de activación");
             }

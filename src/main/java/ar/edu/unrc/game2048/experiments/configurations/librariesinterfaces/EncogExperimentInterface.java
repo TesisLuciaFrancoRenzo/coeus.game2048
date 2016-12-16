@@ -198,22 +198,21 @@ class EncogExperimentInterface
         if ( perceptronConfiguration.getNeuronQuantityInLayer() == null || perceptronConfiguration.getNeuronQuantityInLayer().length < 2 ) {
             throw new IllegalArgumentException("la cantidad de capas es de mínimo 2 para un perceptrón (incluyendo entrada y salida)");
         }
-        BasicNetwork perceptron = new BasicNetwork();
+        BasicNetwork       perceptron = new BasicNetwork();
         ActivationFunction function;
         perceptron.addLayer(new BasicLayer(null, perceptronConfiguration.containBias(), perceptronConfiguration.getNeuronQuantityInLayer()[0]));
         for ( int i = 1; i < perceptronConfiguration.getNeuronQuantityInLayer().length - 1; i++ ) {
             function = perceptronConfiguration.getActivationFunctionForEncog()[i - 1].clone();
-            perceptron.addLayer(new BasicLayer(function, perceptronConfiguration.containBias(), perceptronConfiguration.getNeuronQuantityInLayer()[i]
-            ));
+            perceptron.addLayer(new BasicLayer(function,
+                    perceptronConfiguration.containBias(),
+                    perceptronConfiguration.getNeuronQuantityInLayer()[i]));
         }
         //perceptronConfiguration.getNeuronQuantityInLayer().length - 2 porque el for finaliza en perceptronConfiguration.getNeuronQuantityInLayer
         // ().length - 1
         function = perceptronConfiguration.getActivationFunctionForEncog()[perceptronConfiguration.getNeuronQuantityInLayer().length - 2].clone();
         perceptron.addLayer(new BasicLayer(function,
-                                           false,
-                                           perceptronConfiguration.getNeuronQuantityInLayer()[
-                                                   perceptronConfiguration.getNeuronQuantityInLayer().length - 1]
-        ));
+                false,
+                perceptronConfiguration.getNeuronQuantityInLayer()[perceptronConfiguration.getNeuronQuantityInLayer().length - 1]));
         perceptron.getStructure().finalizeStructure();
         if ( randomized ) {
             perceptron.reset();

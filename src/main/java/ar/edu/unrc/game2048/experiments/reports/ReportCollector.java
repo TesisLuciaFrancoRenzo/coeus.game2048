@@ -54,10 +54,10 @@ class ReportCollector {
         File output = new File("./BestResults.txt");
         try ( PrintStream printStream = new PrintStream(output, "UTF-8") ) {
             finalReportItems.
-                                    forEach(( reportItem ) -> {
-                                        reportItem.createBackupFile();
-                                        printStream.println(reportItem);
-                                    });
+                    forEach(( reportItem ) -> {
+                        reportItem.createBackupFile();
+                        printStream.println(reportItem);
+                    });
         }
     }
 

@@ -23,6 +23,7 @@ import ar.edu.unrc.coeus.tdlearning.learning.EExplorationRateAlgorithms;
 import ar.edu.unrc.coeus.tdlearning.learning.ELearningRateAdaptation;
 import ar.edu.unrc.coeus.tdlearning.learning.TDLambdaLearning;
 import ar.edu.unrc.coeus.tdlearning.training.ntuple.NTupleSystem;
+import ar.edu.unrc.coeus.tdlearning.utils.StatisticCalculator;
 import ar.edu.unrc.game2048.Game2048;
 
 import java.awt.*;
@@ -31,7 +32,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -82,17 +82,15 @@ class LearningExperiment {
     /**
      * Experimento encargad de las estadísticas.
      */
-    protected StatisticExperiment  statisticExperiment;
-    private   double[]             alpha;
-    private   int                  annealingT;
-    private   double               avgBestPossibleActionTimes;
-    private   double               avgTrainingTimes;
-    private   int                  backupNumber;
-    private   int                  bestGame;
-    private   double               bestMaxTile;
-    private   LinkedList< Double > bestPossibleActionTimes;
-    private   double               bestWinRate;
-    private   boolean              canCollectStatistics;
+    protected StatisticExperiment statisticExperiment;
+    private   double[]            alpha;
+    private   int                 annealingT;
+    private   int                 backupNumber;
+    private   int                 bestGame;
+    private   double              bestMaxTile;
+    private   StatisticCalculator bestPossibleActionTimes;
+    private   double              bestWinRate;
+    private boolean canCollectStatistics                   = false;
     private boolean concurrencyInComputeBestPossibleAction = false;
     private boolean[] concurrencyInLayer;
     private long elapsedTime            = 0;
@@ -123,9 +121,9 @@ class LearningExperiment {
     private int simulationsForStatistics;
     private boolean statisticsOnly         = false;
     private int     tileToWinForStatistics = 2_048;
-    private int                  tileToWinForTraining;
-    private LinkedList< Double > trainingTimes;
-    private WinRateEstimator     winRateEstimator;
+    private int                 tileToWinForTraining;
+    private StatisticCalculator trainingTimes;
+    private WinRateEstimator    winRateEstimator;
 
     private static
     void printErrorInFile(
@@ -203,20 +201,9 @@ class LearningExperiment {
         this.annealingT = annealingT;
     }
 
-    /**
-     * @return Promedio de los tiempos demorados al calcular las mejores acciones.
-     */
     public
-    double getAvgBestPossibleActionTimes() {
-        return avgBestPossibleActionTimes;
-    }
-
-    /**
-     * @return Promedio de los tiempos demorados en entrenamientos.
-     */
-    public
-    double getAvgTrainingTimes() {
-        return avgTrainingTimes;
+    double getBestPossibleActionTimesAverage() {
+        return bestPossibleActionTimes.getAverage();
     }
 
     /**
@@ -254,11 +241,18 @@ class LearningExperiment {
     }
 
     /**
-     * @param experimentName nombre del experimento.
+     * Establece el nombre del experimento basado en el nombre de la clase {@code experimentClass}.
+     *
+     * @param experimentClass clase de la cual extraer el nombre del experimento.
      */
     public
-    void setExperimentName( String experimentName ) {
-        this.experimentName = experimentName;
+    void setExperimentName( Class experimentClass ) {
+        String className = experimentClass.getName();
+        int    lastDot   = className.lastIndexOf('.');
+        if ( lastDot != -1 ) {
+            className = className.substring(lastDot + 1);
+        }
+        experimentName = className;
     }
 
     /**
@@ -477,6 +471,11 @@ class LearningExperiment {
         this.tileToWinForTraining = tileToWinForTraining;
     }
 
+    public
+    double getTrainingTimesAverage() {
+        return trainingTimes.getAverage();
+    }
+
     /**
      * Valores que se deben inicializar del experimento, por ejemplo:
      * <ul>
@@ -519,6 +518,16 @@ class LearningExperiment {
     TDLambdaLearning instanceOfTdLearningImplementation(
             NTupleSystem nTupleSystem
     );
+
+    public
+    boolean isCanCollectStatistics() {
+        return canCollectStatistics;
+    }
+
+    public
+    void setCanCollectStatistics( boolean canCollectStatistics ) {
+        this.canCollectStatistics = canCollectStatistics;
+    }
 
     public
     boolean isReplaceEligibilityTraces() {
@@ -719,13 +728,10 @@ class LearningExperiment {
             File logFile = new File(filePath + '_' + DATE_FILE_FORMATTER.format(now) + "_LOG" + ".txt");
 
             //creamos el juego
-            Game2048 game = new Game2048(
-                    neuralNetworkInterfaceFor2048.getPerceptronConfiguration(),
+            Game2048 game = new Game2048(neuralNetworkInterfaceFor2048.getPerceptronConfiguration(),
                     neuralNetworkInterfaceFor2048.getNTupleConfiguration(),
                     tileToWinForTraining,
-                    delayPerMove,
-                    printHistory
-            );
+                    delayPerMove, printHistory);
 
             if ( !statisticsOnly ) {
                 //comenzamos a entrenar y guardar estadisticas en el archivo de log
@@ -844,18 +850,11 @@ class LearningExperiment {
     }
 
     /**
-     * Establece el nombre del experimento basado en el nombre de la clase {@code experimentClass}.
-     *
-     * @param experimentClass clase de la cual extraer el nombre del experimento.
+     * @param experimentName nombre del experimento.
      */
     public
-    void setExperimentName( Class experimentClass ) {
-        String className = experimentClass.getName();
-        int    lastDot   = className.lastIndexOf('.');
-        if ( lastDot != -1 ) {
-            className = className.substring(lastDot + 1);
-        }
-        experimentName = className;
+    void setExperimentName( String experimentName ) {
+        this.experimentName = experimentName;
     }
 
     /**
@@ -1013,58 +1012,46 @@ class LearningExperiment {
             }
             case linear: {
                 learningAlgorithm.setLinearExplorationRate(explorationRateInitialValue,
-                                                           explorationRateStartDecrementing,
-                                                           explorationRateFinalValue,
-                                                           explorationRateFinishDecrementing
-                );
+                        explorationRateStartDecrementing,
+                        explorationRateFinalValue,
+                        explorationRateFinishDecrementing);
                 break;
             }
         }
 
         if ( learningAlgorithm.canCollectStatistics() ) {
-            bestPossibleActionTimes = new LinkedList<>();
-            trainingTimes = new LinkedList<>();
+            bestPossibleActionTimes = new StatisticCalculator();
+            trainingTimes = new StatisticCalculator();
         }
 
         ByteArrayOutputStream bestSavedGameCache = new ByteArrayOutputStream();
         boolean               needToSaveBestGame = false;
-        Double                timePerTurn        = null;
-        double                finalTimePerTurn   = 0;
+        StatisticCalculator   timePerTurn        = new StatisticCalculator();
+        Double                lastTimePerTurn;
 
         for ( int i = lastSavedGamePlayedNumber + 1; i <= gamesToPlay; i++ ) {
             long start = System.nanoTime();
-            timePerTurn = learningAlgorithm.solveAndTrainOnce(game, i);
+            lastTimePerTurn = learningAlgorithm.solveAndTrainOnce(game, i);
             elapsedTime += System.nanoTime() - start;
             if ( game.isPrintHistory() ) {
                 try ( BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(historyFile, true), "UTF-8")) ) {
                     out.append("\n========== NEW GAME (")
-                       .append(Integer.toString(i))
-                       .append(")==========\n")
-                       .append(game.getHistoryLog())
-                       .append("\n")
-                       .append("score=")
-                       .append(Integer.toString(game.getScore()))
-                       .append("\n")
-                       .append("turn=")
-                       .append(Integer.toString(game.getLastTurn()))
-                       .append("\n");
+                            .append(Integer.toString(i))
+                            .append(")==========\n")
+                            .append(game.getHistoryLog())
+                            .append("\n")
+                            .append("score=")
+                            .append(Integer.toString(game.getScore()))
+                            .append("\n")
+                            .append("turn=")
+                            .append(Integer.toString(game.getLastTurn()))
+                            .append("\n");
                 }
             }
             if ( learningAlgorithm.canCollectStatistics() ) {
-                double avg = 0;
-                for ( Long sample : learningAlgorithm.getStatisticsBestPossibleActionTimes() ) {
-                    avg += sample;
-                }
-                avg /= ( learningAlgorithm.getStatisticsBestPossibleActionTimes().size() * 1d );
-                bestPossibleActionTimes.add(avg);
-                avg = 0;
-                for ( Long sample : learningAlgorithm.getStatisticsTrainingTimes() ) {
-                    avg += sample;
-                }
-                avg /= ( learningAlgorithm.getStatisticsTrainingTimes().size() * 1d );
-                trainingTimes.add(avg);
-
-                finalTimePerTurn += timePerTurn;
+                bestPossibleActionTimes.addSample(learningAlgorithm.getBestPossibleActionTimesAverage());
+                trainingTimes.addSample(learningAlgorithm.getTrainingTimesAverage());
+                timePerTurn.addSample(lastTimePerTurn);
             }
 
             int percent = (int) ( ( ( i * 1d ) / ( gamesToPlay * 1d ) ) * 100d );
@@ -1072,41 +1059,41 @@ class LearningExperiment {
 
             if ( numberForShow != -1 ) {
                 System.out.println(new StringBuilder().append(( needToSaveBestGame ) ? "!! " : "")
-                                                      .append(numberForShow)
-                                                      .append("- Juego número ")
-                                                      .append(i)
-                                                      .append(" (")
-                                                      .append(percent)
-                                                      .append("%)\tpuntaje = ")
-                                                      .append(game.getScore())
-                                                      .append("\tficha max = ")
-                                                      .append(game.getMaxNumber())
-                                                      .append(" (")
-                                                      .append(winRateEstimator.printableAverages())
-                                                      .append(")")
-                                                      .append("\tturno alcanzado = ")
-                                                      .append(game.getLastTurn())
-                                                      .append("\tcurrent alpha = ")
-                                                      .append(Arrays.toString(learningAlgorithm.getCurrentAlpha()))
-                                                      .toString());
+                        .append(numberForShow)
+                        .append("- Juego número ")
+                        .append(i)
+                        .append(" (")
+                        .append(percent)
+                        .append("%)\tpuntaje = ")
+                        .append(game.getScore())
+                        .append("\tficha max = ")
+                        .append(game.getMaxNumber())
+                        .append(" (")
+                        .append(winRateEstimator.printableAverages())
+                        .append(")")
+                        .append("\tturno alcanzado = ")
+                        .append(game.getLastTurn())
+                        .append("\tcurrent alpha = ")
+                        .append(Arrays.toString(learningAlgorithm.getCurrentAlpha()))
+                        .toString());
             } else {
                 System.out.println(new StringBuilder().append(( needToSaveBestGame ) ? "!! " : "")
-                                                      .append("Juego número ")
-                                                      .append(i)
-                                                      .append(" (")
-                                                      .append(percent)
-                                                      .append("%)\tpuntaje = ")
-                                                      .append(game.getScore())
-                                                      .append("\tficha max = ")
-                                                      .append(game.getMaxNumber())
-                                                      .append(" (")
-                                                      .append(winRateEstimator.printableAverages())
-                                                      .append(")")
-                                                      .append("\tturno alcanzado = ")
-                                                      .append(game.getLastTurn())
-                                                      .append("\tcurrent alpha = ")
-                                                      .append(Arrays.toString(learningAlgorithm.getCurrentAlpha()))
-                                                      .toString());
+                        .append("Juego número ")
+                        .append(i)
+                        .append(" (")
+                        .append(percent)
+                        .append("%)\tpuntaje = ")
+                        .append(game.getScore())
+                        .append("\tficha max = ")
+                        .append(game.getMaxNumber())
+                        .append(" (")
+                        .append(winRateEstimator.printableAverages())
+                        .append(")")
+                        .append("\tturno alcanzado = ")
+                        .append(game.getLastTurn())
+                        .append("\tcurrent alpha = ")
+                        .append(Arrays.toString(learningAlgorithm.getCurrentAlpha()))
+                        .toString());
             }
 
             double averageMaxValue = winRateEstimator.averageMaxValue();
@@ -1146,41 +1133,31 @@ class LearningExperiment {
             if ( writeConfig ) {
                 try ( BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(lastSaveDataFile), "UTF-8")) ) {
                     out.write(new StringBuilder().append(Integer.toString(i))
-                                                 .append('\n')
-                                                 .append(Integer.toString(backupNumber))
-                                                 .append('\n')
-                                                 .append(Long.toString(elapsedTime))
-                                                 .append('\n')
-                                                 .append(Integer.toString(bestGame))
-                                                 .append('\n')
-                                                 .append(Double.toString(bestWinRate))
-                                                 .append('\n')
-                                                 .append(Double.toString(bestMaxTile))
-                                                 .toString());
+                            .append('\n')
+                            .append(Integer.toString(backupNumber))
+                            .append('\n')
+                            .append(Long.toString(elapsedTime))
+                            .append('\n')
+                            .append(Integer.toString(bestGame))
+                            .append('\n')
+                            .append(Double.toString(bestWinRate))
+                            .append('\n')
+                            .append(Double.toString(bestMaxTile))
+                            .toString());
                 }
             }
         }
         if ( learningAlgorithm.canCollectStatistics() ) {
-            StringBuilder out = new StringBuilder();
-
-            out.append("\nEstadísticas Recolectadas:\ntimePerTurn = ")
-               .append(Double.valueOf(finalTimePerTurn / ( ( gamesToPlay - lastSavedGamePlayedNumber + 1 ) * 1d )))
-               .append(" ms.\n");
-
-            double avg = 0;
-            for ( Double sample : bestPossibleActionTimes ) {
-                avg += sample;
-            }
-            avg /= ( bestPossibleActionTimes.size() * 1d );
-            out.append("bestPossibleActionTimes = ").append(avg).append(" ms.\n");
-
-            avg = 0;
-            for ( Double sample : trainingTimes ) {
-                avg += sample;
-            }
-            avg /= ( trainingTimes.size() * 1d );
-            out.append("trainingTimes = ").append(avg).append(" ms.\n");
-            System.out.println(out.toString());
+            System.out.println(new StringBuilder().append("\nEstadísticas Recolectadas:\ntimePerTurn = ")
+                    .append(timePerTurn.getAverage())
+                    .append(" ms.\n")
+                    .append("bestPossibleActionTimes = ")
+                    .append(bestPossibleActionTimes.getAverage())
+                    .append(" ms.\n")
+                    .append("trainingTimes = ")
+                    .append(trainingTimes.getAverage())
+                    .append(" ms.\n")
+                    .toString());
             Toolkit.getDefaultToolkit().beep();
         }
     }

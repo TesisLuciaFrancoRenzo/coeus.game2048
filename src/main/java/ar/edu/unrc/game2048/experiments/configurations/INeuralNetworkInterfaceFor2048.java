@@ -54,9 +54,7 @@ class INeuralNetworkInterfaceFor2048
      * @param perceptronConfiguration configuración del Perceptrón.
      */
     public
-    INeuralNetworkInterfaceFor2048(
-            EncogConfiguration2048 perceptronConfiguration
-    ) {
+    INeuralNetworkInterfaceFor2048( EncogConfiguration2048 perceptronConfiguration ) {
         this.perceptronConfiguration = perceptronConfiguration;
     }
 
@@ -64,9 +62,7 @@ class INeuralNetworkInterfaceFor2048
      * @param nTupleConfiguration configuración de la NTupla.
      */
     public
-    INeuralNetworkInterfaceFor2048(
-            NTupleConfiguration2048 nTupleConfiguration
-    ) {
+    INeuralNetworkInterfaceFor2048( NTupleConfiguration2048 nTupleConfiguration ) {
         this.nTupleConfiguration = nTupleConfiguration;
     }
 
@@ -98,9 +94,7 @@ class INeuralNetworkInterfaceFor2048
      * @param nTupleConfiguration configuración de la NTupla.
      */
     public
-    void setNTupleConfiguration(
-            NTupleConfiguration2048 nTupleConfiguration
-    ) {
+    void setNTupleConfiguration( NTupleConfiguration2048 nTupleConfiguration ) {
         this.nTupleConfiguration = nTupleConfiguration;
     }
 
@@ -122,9 +116,7 @@ class INeuralNetworkInterfaceFor2048
      * @param perceptronConfiguration configuración del Perceptrón.
      */
     public
-    void setPerceptronConfiguration(
-            EncogConfiguration2048 perceptronConfiguration
-    ) {
+    void setPerceptronConfiguration( EncogConfiguration2048 perceptronConfiguration ) {
         this.perceptronConfiguration = perceptronConfiguration;
     }
 
@@ -159,16 +151,12 @@ class INeuralNetworkInterfaceFor2048
         // evaluamos cada acción aplicada al estado inicial y elegimos la mejor
         // acción basada en las predicciones del problema
         List< IAction > possibleActions = game.listAllPossibleActions(game.getBoard());
-        Action bestAction = (Action) TDLambdaLearning.computeBestPossibleAction(
-                game,
+        Action bestAction = (Action) TDLambdaLearning.computeBestPossibleAction(game,
                 ELearningStyle.afterState,
                 game.getBoard(),
                 possibleActions,
                 null,
-                learningMethod.isComputeParallelBestPossibleAction(),
-                learningMethod.getStatisticsBestPossibleActionTimes()
-        ).getAction();
-
+                learningMethod.isComputeParallelBestPossibleAction(), null).getAction();
         switch ( bestAction ) {
             case left: {
                 game.processInput(VK_LEFT);

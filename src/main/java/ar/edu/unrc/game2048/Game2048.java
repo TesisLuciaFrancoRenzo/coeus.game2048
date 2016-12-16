@@ -371,7 +371,7 @@ class Game2048
     Object[] evaluateBoardWithPerceptron( IState state ) {
         //dependiendo de que tipo de red neuronal utilizamos, evaluamos las entradas y calculamos una salida
         if ( neuralNetworkConfiguration != null && neuralNetworkConfiguration.
-                                                                                     getNeuralNetwork() != null ) {
+                getNeuralNetwork() != null ) {
             if ( neuralNetworkConfiguration.getNeuralNetwork() instanceof BasicNetwork ) { //es sobre la librería encog
                 //creamos las entradas de la red neuronal
                 double[]  inputs     = new double[neuralNetworkConfiguration.getNeuronQuantityInLayer()[0]];

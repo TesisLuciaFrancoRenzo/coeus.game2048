@@ -45,8 +45,8 @@ class EncogConfiguration2048
     protected double               activationFunctionMax;
     protected double               activationFunctionMin;
     protected boolean hasBias = true;
-    protected BasicNetwork neuralNetwork;
-    protected int[] neuronQuantityInLayer;
+    protected BasicNetwork    neuralNetwork;
+    protected int[]           neuronQuantityInLayer;
     protected NormalizedField normInput;
     protected NormalizedField normOutput;
     protected int tileToWin = -1;
@@ -205,14 +205,13 @@ class EncogConfiguration2048
             INeuralNetworkInterface perceptronInterface
     ) {
         return new TDLambdaLearning(perceptronInterface,
-                                    afterState,
-                                    getAlpha(),
-                                    getLambda(),
-                                    isReplaceEligibilityTraces(),
-                                    getGamma(),
-                                    getConcurrencyInLayer(),
-                                    false
-        );
+                afterState,
+                getAlpha(),
+                getLambda(),
+                isReplaceEligibilityTraces(),
+                getGamma(),
+                getConcurrencyInLayer(),
+                isCanCollectStatistics());
     }
 
     @Override
