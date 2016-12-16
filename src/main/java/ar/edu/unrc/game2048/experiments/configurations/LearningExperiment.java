@@ -111,19 +111,20 @@ class LearningExperiment {
     private TDLambdaLearning        learningAlgorithm;
     private ELearningRateAdaptation learningRateAdaptation;
     private boolean logsActivated = false;
+    private StatisticCalculator            maxTileEstimator;
     private INeuralNetworkInterfaceFor2048 neuralNetworkInterfaceFor2048;
     private String                         neuralNetworkName;
-    private boolean replaceEligibilityTraces       = false;
-    private boolean runStatisticsForBackups        = false;
-    private int     sampleSizeForWinRateEstimation = 2_000;
-    private int     saveBackupEvery                = 0;
-    private int     saveEvery                      = 0;
+    private boolean replaceEligibilityTraces = false;
+    private boolean runStatisticsForBackups  = false;
+    private int     sampleSizeForEstimation  = 2_000;
+    private int     saveBackupEvery          = 0;
+    private int     saveEvery                = 0;
     private int simulationsForStatistics;
     private boolean statisticsOnly         = false;
     private int     tileToWinForStatistics = 2_048;
     private int                 tileToWinForTraining;
     private StatisticCalculator trainingTimes;
-    private WinRateEstimator    winRateEstimator;
+    private StatisticCalculator winRateEstimator;
 
     private static
     void printErrorInFile(
@@ -390,13 +391,13 @@ class LearningExperiment {
     }
 
     public
-    int getSampleSizeForWinRateEstimation() {
-        return sampleSizeForWinRateEstimation;
+    int getSampleSizeForEstimation() {
+        return sampleSizeForEstimation;
     }
 
     public
-    void setSampleSizeForWinRateEstimation( int sampleSizeForWinRateEstimation ) {
-        this.sampleSizeForWinRateEstimation = sampleSizeForWinRateEstimation;
+    void setSampleSizeForEstimation( int sampleSizeForEstimation ) {
+        this.sampleSizeForEstimation = sampleSizeForEstimation;
     }
 
     /**
@@ -613,7 +614,8 @@ class LearningExperiment {
         } else {
             historyFile = null;
         }
-        winRateEstimator = new WinRateEstimator(sampleSizeForWinRateEstimation, tileToWinForStatistics, 2);
+        maxTileEstimator = new StatisticCalculator(sampleSizeForEstimation, 2);
+        winRateEstimator = new StatisticCalculator(sampleSizeForEstimation, 2);
 
         try {
             Date now = new Date();
@@ -730,8 +732,7 @@ class LearningExperiment {
             //creamos el juego
             Game2048 game = new Game2048(neuralNetworkInterfaceFor2048.getPerceptronConfiguration(),
                     neuralNetworkInterfaceFor2048.getNTupleConfiguration(),
-                    tileToWinForTraining,
-                    delayPerMove, printHistory);
+                    tileToWinForTraining, delayPerMove, printHistory);
 
             if ( !statisticsOnly ) {
                 //comenzamos a entrenar y guardar estadisticas en el archivo de log
@@ -1055,7 +1056,8 @@ class LearningExperiment {
             }
 
             int percent = (int) ( ( ( i * 1d ) / ( gamesToPlay * 1d ) ) * 100d );
-            winRateEstimator.addSample(game.getMaxNumber());
+            winRateEstimator.addSample(( game.getMaxNumber() >= tileToWinForStatistics ) ? 1 : 0);
+            maxTileEstimator.addSample(game.getMaxNumber());
 
             if ( numberForShow != -1 ) {
                 System.out.println(new StringBuilder().append(( needToSaveBestGame ) ? "!! " : "")
@@ -1069,7 +1071,10 @@ class LearningExperiment {
                         .append("\tficha max = ")
                         .append(game.getMaxNumber())
                         .append(" (")
-                        .append(winRateEstimator.printableAverages())
+                        .append("winRate ")
+                        .append(winRateEstimator.printableFullCapacityAverage())
+                        .append(" % - maxTile ")
+                        .append(maxTileEstimator.printableFullCapacityAverage())
                         .append(")")
                         .append("\tturno alcanzado = ")
                         .append(game.getLastTurn())
@@ -1087,7 +1092,10 @@ class LearningExperiment {
                         .append("\tficha max = ")
                         .append(game.getMaxNumber())
                         .append(" (")
-                        .append(winRateEstimator.printableAverages())
+                        .append("winRate ")
+                        .append(winRateEstimator.printableFullCapacityAverage())
+                        .append(" % - maxTile ")
+                        .append(maxTileEstimator.printableFullCapacityAverage())
                         .append(")")
                         .append("\tturno alcanzado = ")
                         .append(game.getLastTurn())
@@ -1096,8 +1104,10 @@ class LearningExperiment {
                         .toString());
             }
 
-            double averageMaxValue = winRateEstimator.averageMaxValue();
-            double averageWinRate  = winRateEstimator.averageWinRate();
+            Double averageMaxValue = maxTileEstimator.getFullCapacityAverage();
+            Double averageWinRate  = winRateEstimator.getFullCapacityAverage();
+            if ( averageMaxValue == null ) { averageMaxValue = 0d; }
+            if ( averageWinRate == null ) { averageWinRate = 0d; }
             if ( ( averageWinRate > bestWinRate ) || ( averageWinRate >= 100d && averageWinRate >= bestWinRate && averageMaxValue > bestMaxTile ) ) {
                 bestMaxTile = averageMaxValue;
                 bestGame = i;

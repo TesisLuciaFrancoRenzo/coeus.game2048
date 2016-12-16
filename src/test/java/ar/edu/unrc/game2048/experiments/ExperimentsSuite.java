@@ -30,8 +30,7 @@ import org.junit.runners.Suite;
  */
 @RunWith( Suite.class )
 @Suite.SuiteClasses( {
-                             ar.edu.unrc.game2048.experiments.configurations.ConfigurationsSuite.class,
-                             ar.edu.unrc.game2048.experiments.configurations.WinRateEstimatorTest.class
+                             ar.edu.unrc.game2048.experiments.configurations.ConfigurationsSuite.class
                      } )
 public
 class ExperimentsSuite {
