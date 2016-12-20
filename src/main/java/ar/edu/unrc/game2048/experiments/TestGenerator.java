@@ -102,7 +102,8 @@ class TestGenerator {
             final Integer explorationRateFinishInterpolation,
             final String filePath,
             final boolean[] concurrentLayer,
-            final boolean replaceEligibilityTraces
+            final boolean replaceEligibilityTraces,
+            final boolean concurrencyInComputeBestPossibleAction
     ) {
         experiment.setCanCollectStatistics(canCollectStatistics);
         experiment.setStatisticsOnly(statisticsOnly);
@@ -123,7 +124,7 @@ class TestGenerator {
                     explorationRateFinishInterpolation);
         }
         experiment.setInitializePerceptronRandomized(false);
-        experiment.setConcurrencyInComputeBestPossibleAction(true);
+        experiment.setConcurrencyInComputeBestPossibleAction(concurrencyInComputeBestPossibleAction);
         experiment.setConcurrencyInLayer(concurrentLayer);
         experiment.setTileToWinForStatistics(tileToWinForStatistics);
         if ( annealingAlpha == NO_ANNEALING ) {
@@ -178,19 +179,20 @@ class TestGenerator {
         int             repetitions;
         int             maxTrainingThreads;
         int             simulationsForStatistics;
-        boolean   runBackupStatistics;
-        boolean   statisticsOnly;
-        int       gamesToPlay;
-        int       saveEvery;
-        int       saveBackupEvery;
-        int       tileToWinForStatistics;
-        boolean[] concurrentLayer;
-        int       gamesToPlayPerThreadForStats;
-        boolean   replacingTraces;
-        boolean   accumulatingTraces;
-        int       eligibilityTraceLength;
-        boolean   createLogs;
-        boolean   canCollectStatistics;
+        boolean         runBackupStatistics;
+        boolean         statisticsOnly;
+        int             gamesToPlay;
+        int             saveEvery;
+        int             saveBackupEvery;
+        int             tileToWinForStatistics;
+        boolean[]       concurrentLayer;
+        int             gamesToPlayPerThreadForStats;
+        boolean         replacingTraces;
+        boolean         accumulatingTraces;
+        int             eligibilityTraceLength;
+        boolean         createLogs;
+        boolean         canCollectStatistics;
+        boolean         concurrencyInComputeBestPossibleAction;
         //============================== fin de configuraciones manuales ==================================
 
         if ( args.length != 0 ) {
@@ -235,6 +237,7 @@ class TestGenerator {
             alphaList = ArgumentLoader.parseDoubleArray(arguments.getArg("alphaList"));
             gammaList = ArgumentLoader.parseDoubleArray(arguments.getArg("gammaList"));
             concurrentLayer = ArgumentLoader.parseBooleanArray(arguments.getArg("concurrentLayerList"));
+            concurrencyInComputeBestPossibleAction = Boolean.parseBoolean(arguments.getArg("concurrencyInComputeBestPossibleAction"));
             try {
                 interpolatedExplorationRateInitialValues = ArgumentLoader.parseDoubleArray(arguments.getArg("explorationRateInitialValueList"));
                 interpolatedExplorationRateFinalValues = ArgumentLoader.parseDoubleArray(arguments.getArg("explorationRateFinalValuesList"));
@@ -286,8 +289,7 @@ class TestGenerator {
                     interpolatedExplorationRateStartInterpolation,
                     interpolatedExplorationRateFinishInterpolation,
                     replacingTraces,
-                    accumulatingTraces,
-                    filePath, concurrentLayer);
+                    accumulatingTraces, filePath, concurrentLayer, concurrencyInComputeBestPossibleAction);
 
             Toolkit.getDefaultToolkit().beep();
         } else {
@@ -326,7 +328,8 @@ class TestGenerator {
             final boolean replacingTraces,
             final boolean accumulatingTraces,
             final String filePath,
-            final boolean[] concurrentLayer
+            final boolean[] concurrentLayer,
+            final boolean concurrencyInComputeBestPossibleAction
     ) {
         List< GeneratorConfig > experiments = new ArrayList<>();
         int                     number      = 0;
@@ -493,8 +496,7 @@ class TestGenerator {
                                     0,
                                     explorationRateList,
                                     filePath,
-                                    concurrentLayer,
-                                    expConfig);
+                                    concurrentLayer, expConfig, concurrencyInComputeBestPossibleAction);
                         }
                     });
                 }
@@ -518,8 +520,7 @@ class TestGenerator {
                     simulationsForStatistics,
                     explorationRateList,
                     filePath,
-                    concurrentLayer,
-                    expConfig);
+                    concurrentLayer, expConfig, concurrencyInComputeBestPossibleAction);
         });
     }
 
@@ -538,7 +539,8 @@ class TestGenerator {
             List< Double > explorationRateList,
             String filePath,
             boolean[] concurrentLayer,
-            GeneratorConfig expConfig
+            GeneratorConfig expConfig,
+            final boolean concurrencyInComputeBestPossibleAction
     ) {
         try {
             String explorationRateString;
@@ -681,8 +683,7 @@ class TestGenerator {
                     expConfig.getExplorationRateStartInterpolation(),
                     expConfig.getExplorationRateFinishInterpolation(),
                     newFilePath,
-                    concurrentLayer,
-                    expConfig.isReplaceTraces());
+                    concurrentLayer, expConfig.isReplaceTraces(), concurrencyInComputeBestPossibleAction);
         } catch ( NoSuchMethodException | ClassCastException | InstantiationException | IllegalAccessException | IllegalArgumentException |
                 InvocationTargetException ex ) {
             Logger.getLogger(TestGenerator.class.getName()).log(Level.SEVERE, null, ex);
