@@ -242,18 +242,11 @@ class LearningExperiment {
     }
 
     /**
-     * Establece el nombre del experimento basado en el nombre de la clase {@code experimentClass}.
-     *
-     * @param experimentClass clase de la cual extraer el nombre del experimento.
+     * @param experimentName nombre del experimento.
      */
     public
-    void setExperimentName( Class experimentClass ) {
-        String className = experimentClass.getName();
-        int    lastDot   = className.lastIndexOf('.');
-        if ( lastDot != -1 ) {
-            className = className.substring(lastDot + 1);
-        }
-        experimentName = className;
+    void setExperimentName( String experimentName ) {
+        this.experimentName = experimentName;
     }
 
     /**
@@ -851,11 +844,18 @@ class LearningExperiment {
     }
 
     /**
-     * @param experimentName nombre del experimento.
+     * Establece el nombre del experimento basado en el nombre de la clase {@code experimentClass}.
+     *
+     * @param experimentClass clase de la cual extraer el nombre del experimento.
      */
     public
-    void setExperimentName( String experimentName ) {
-        this.experimentName = experimentName;
+    void setExperimentName( Class experimentClass ) {
+        String className = experimentClass.getName();
+        int    lastDot   = className.lastIndexOf('.');
+        if ( lastDot != -1 ) {
+            className = className.substring(lastDot + 1);
+        }
+        experimentName = className;
     }
 
     /**
@@ -1075,7 +1075,7 @@ class LearningExperiment {
                         .append(winRateEstimator.printableFullCapacityAverage())
                         .append(" % - maxTile ")
                         .append(maxTileEstimator.printableFullCapacityAverage())
-                        .append(")")
+                        .append(")").append("\tRandomChoices = ").append(learningAlgorithm.getRandomChoicesCounter())
                         .append("\tturno alcanzado = ")
                         .append(game.getLastTurn())
                         .append("\tcurrentAlpha = ")
@@ -1098,7 +1098,7 @@ class LearningExperiment {
                         .append(winRateEstimator.printableFullCapacityAverage())
                         .append(" % - maxTile ")
                         .append(maxTileEstimator.printableFullCapacityAverage())
-                        .append(")")
+                        .append(")").append("\tRandomChoices = ").append(learningAlgorithm.getRandomChoicesCounter())
                         .append("\tturno alcanzado = ")
                         .append(game.getLastTurn())
                         .append("\tcurrent alpha = ")
