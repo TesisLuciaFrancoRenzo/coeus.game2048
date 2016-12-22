@@ -288,8 +288,7 @@ class TestGenerator {
                     interpolatedExplorationRateFinalValues,
                     interpolatedExplorationRateStartInterpolation,
                     interpolatedExplorationRateFinishInterpolation,
-                    replacingTraces,
-                    accumulatingTraces, filePath, concurrentLayer, concurrencyInComputeBestPossibleAction);
+                    replacingTraces, accumulatingTraces, filePath, concurrentLayer, concurrencyInComputeBestPossibleAction);
 
             Toolkit.getDefaultToolkit().beep();
         } else {
@@ -403,24 +402,22 @@ class TestGenerator {
                                             for ( int p = 0; p < explorationRateStartInterpolation.size(); p++ ) {
                                                 for ( int q = 0; q < explorationRateFinishInterpolation.size(); q++ ) {
                                                     if ( lambdaList.get(j) == 0 ) {
-                                                        if ( accumulatingTraces ) {
-                                                            number++;
-                                                            experiments.add(new GeneratorConfig(a,
-                                                                    canCollectStatistics,
-                                                                    experimentClassNameList.get(className),
-                                                                    alphaList.get(i),
-                                                                    annealingAlphaList.get(m),
-                                                                    lambdaList.get(j),
-                                                                    eligibilityTraceLength,
-                                                                    gammaList.get(k),
-                                                                    null,
-                                                                    explorationRateInitialValues.get(n),
-                                                                    explorationRateFinalValues.get(o),
-                                                                    explorationRateStartInterpolation.get(p),
-                                                                    explorationRateFinishInterpolation.get(q),
-                                                                    false,
-                                                                    number));
-                                                        }
+                                                        number++;
+                                                        experiments.add(new GeneratorConfig(a,
+                                                                canCollectStatistics,
+                                                                experimentClassNameList.get(className),
+                                                                alphaList.get(i),
+                                                                annealingAlphaList.get(m),
+                                                                lambdaList.get(j),
+                                                                eligibilityTraceLength,
+                                                                gammaList.get(k),
+                                                                null,
+                                                                explorationRateInitialValues.get(n),
+                                                                explorationRateFinalValues.get(o),
+                                                                explorationRateStartInterpolation.get(p),
+                                                                explorationRateFinishInterpolation.get(q),
+                                                                false,
+                                                                number));
                                                     } else {
                                                         if ( accumulatingTraces ) {
                                                             number++;
@@ -495,8 +492,7 @@ class TestGenerator {
                                     tileToWinForStatistics,
                                     0,
                                     explorationRateList,
-                                    filePath,
-                                    concurrentLayer, expConfig, concurrencyInComputeBestPossibleAction);
+                                    filePath, concurrentLayer, expConfig, concurrencyInComputeBestPossibleAction);
                         }
                     });
                 }
@@ -519,8 +515,7 @@ class TestGenerator {
                     tileToWinForStatistics,
                     simulationsForStatistics,
                     explorationRateList,
-                    filePath,
-                    concurrentLayer, expConfig, concurrencyInComputeBestPossibleAction);
+                    filePath, concurrentLayer, expConfig, concurrencyInComputeBestPossibleAction);
         });
     }
 
@@ -682,10 +677,8 @@ class TestGenerator {
                     expConfig.getExplorationRateFinalValue(),
                     expConfig.getExplorationRateStartInterpolation(),
                     expConfig.getExplorationRateFinishInterpolation(),
-                    newFilePath,
-                    concurrentLayer, expConfig.isReplaceTraces(), concurrencyInComputeBestPossibleAction);
-        } catch ( NoSuchMethodException | ClassCastException | InstantiationException | IllegalAccessException | IllegalArgumentException |
-                InvocationTargetException ex ) {
+                    newFilePath, concurrentLayer, expConfig.isReplaceTraces(), concurrencyInComputeBestPossibleAction);
+        } catch ( NoSuchMethodException | ClassCastException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex ) {
             Logger.getLogger(TestGenerator.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
