@@ -19,7 +19,7 @@
 package ar.edu.unrc.game2048.experiments.configurations.librariesinterfaces;
 
 import ar.edu.unrc.coeus.interfaces.INeuralNetworkInterface;
-import ar.edu.unrc.coeus.tdlearning.utils.FunctionUtils;
+import ar.edu.unrc.coeus.utils.FunctionUtils;
 import ar.edu.unrc.game2048.EncogConfiguration2048;
 import ar.edu.unrc.game2048.Game2048;
 import ar.edu.unrc.game2048.GameBoard;

@@ -198,8 +198,6 @@ class INeuralNetworkInterfaceFor2048
     /**
      * Guarda la red neuronal en un archivo
      *
-     * @param neuralNetworkFile red neuronal a salvar en archivo.
-     *
      * @throws Exception
      */
     public abstract

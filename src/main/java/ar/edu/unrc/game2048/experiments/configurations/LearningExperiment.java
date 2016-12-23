@@ -23,7 +23,7 @@ import ar.edu.unrc.coeus.tdlearning.learning.EExplorationRateAlgorithms;
 import ar.edu.unrc.coeus.tdlearning.learning.ELearningRateAdaptation;
 import ar.edu.unrc.coeus.tdlearning.learning.TDLambdaLearning;
 import ar.edu.unrc.coeus.tdlearning.training.ntuple.NTupleSystem;
-import ar.edu.unrc.coeus.tdlearning.utils.StatisticCalculator;
+import ar.edu.unrc.coeus.utils.StatisticCalculator;
 import ar.edu.unrc.game2048.Game2048;
 
 import java.awt.*;
@@ -61,6 +61,7 @@ class LearningExperiment {
      * Formato para fechas.
      */
     public static final DateFormat DATE_FORMATTER      = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+    public static final boolean    DEBUG_MODE          = true;
     /**
      * Nombre del archivo para las salidas de errores.
      */
@@ -724,8 +725,7 @@ class LearningExperiment {
 
             //creamos el juego
             Game2048 game = new Game2048(neuralNetworkInterfaceFor2048.getPerceptronConfiguration(),
-                    neuralNetworkInterfaceFor2048.getNTupleConfiguration(),
-                    tileToWinForTraining, delayPerMove, printHistory);
+                    neuralNetworkInterfaceFor2048.getNTupleConfiguration(), tileToWinForTraining, delayPerMove, printHistory);
 
             if ( !statisticsOnly ) {
                 //comenzamos a entrenar y guardar estadisticas en el archivo de log
@@ -1059,54 +1059,35 @@ class LearningExperiment {
             winRateEstimator.addSample(( game.getMaxNumber() >= tileToWinForStatistics ) ? 100 : 0);
             maxTileEstimator.addSample(game.getMaxNumber());
 
+            StringBuilder msj = new StringBuilder().append(( needToSaveBestGame ) ? "!! " : "");
             if ( numberForShow != -1 ) {
-                System.out.println(new StringBuilder().append(( needToSaveBestGame ) ? "!! " : "")
-                        .append(numberForShow)
-                        .append("- Juego número ")
-                        .append(i)
-                        .append(" (")
-                        .append(percent)
-                        .append("%)\tpuntaje = ")
-                        .append(game.getScore())
-                        .append("\tficha max = ")
-                        .append(game.getMaxNumber())
-                        .append(" (")
-                        .append("winRate ")
-                        .append(winRateEstimator.printableFullCapacityAverage())
-                        .append(" % - maxTile ")
-                        .append(maxTileEstimator.printableFullCapacityAverage())
-                        .append(")").append("\tRandomChoices = ").append(learningAlgorithm.getRandomChoicesCounter())
-                        .append("\tturno alcanzado = ")
-                        .append(game.getLastTurn())
-                        .append("\tcurrentAlpha = ")
-                        .append(Arrays.toString(learningAlgorithm.getCurrentAlpha()))
-                        .append("\tcurrentExplorationRate = ")
-                        .append(learningAlgorithm.getCurrentExplorationRate())
-                        .toString());
+                msj.append(numberForShow).append("- Juego número ");
             } else {
-                System.out.println(new StringBuilder().append(( needToSaveBestGame ) ? "!! " : "")
-                        .append("Juego número ")
-                        .append(i)
-                        .append(" (")
-                        .append(percent)
-                        .append("%)\tpuntaje = ")
-                        .append(game.getScore())
-                        .append("\tficha max = ")
-                        .append(game.getMaxNumber())
-                        .append(" (")
-                        .append("winRate ")
-                        .append(winRateEstimator.printableFullCapacityAverage())
-                        .append(" % - maxTile ")
-                        .append(maxTileEstimator.printableFullCapacityAverage())
-                        .append(")").append("\tRandomChoices = ").append(learningAlgorithm.getRandomChoicesCounter())
-                        .append("\tturno alcanzado = ")
-                        .append(game.getLastTurn())
-                        .append("\tcurrent alpha = ")
-                        .append(Arrays.toString(learningAlgorithm.getCurrentAlpha()))
-                        .append("\tcurrentExplorationRate = ")
-                        .append(learningAlgorithm.getCurrentExplorationRate())
-                        .toString());
+                msj.append("Juego número ");
             }
+            msj.append(i)
+                    .append(" (")
+                    .append(percent)
+                    .append("%)\tpuntaje = ")
+                    .append(game.getScore())
+                    .append("\tficha max = ")
+                    .append(game.getMaxNumber())
+                    .append(" (")
+                    .append("winRate ")
+                    .append(winRateEstimator.printableFullCapacityAverage())
+                    .append(" % - maxTile ")
+                    .append(maxTileEstimator.printableFullCapacityAverage())
+                    .append(")")
+                    .append("\tRandomChoices = ")
+                    .append(learningAlgorithm.getRandomChoicesCounter())
+                    .append("\tturno alcanzado = ")
+                    .append(game.getLastTurn())
+                    .append("\tcurrent alpha = ")
+                    .append(Arrays.toString(learningAlgorithm.getCurrentAlpha()))
+                    .append("\tcurrentExplorationRate = ")
+                    .append(learningAlgorithm.getCurrentExplorationRate());
+
+            System.out.println(msj.toString());
 
             Double averageMaxValue = maxTileEstimator.getFullCapacityAverage();
             Double averageWinRate  = winRateEstimator.getFullCapacityAverage();
@@ -1175,5 +1156,4 @@ class LearningExperiment {
             Toolkit.getDefaultToolkit().beep();
         }
     }
-
 }

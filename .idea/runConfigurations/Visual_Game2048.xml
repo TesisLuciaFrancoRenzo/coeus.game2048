@@ -1,13 +1,13 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Visual RUN" type="Application" factoryName="Application">
+  <configuration default="false" name="Visual Game2048" type="Application" factoryName="Application">
     <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
       <pattern>
-        <option name="PATTERN" value="org.hol.game2048.*" />
+        <option name="PATTERN" value="ar.edu.unrc.game2048.*" />
         <option name="ENABLED" value="true" />
       </pattern>
     </extension>
     <extension name="org.jetbrains.fluid.java.FluidRunConfigurationExtension" fluid.enabledBundledTracers="false" fluid.enabledBundledTracers.list="" />
-    <option name="MAIN_CLASS_NAME" value="org.hol.game2048.Game2048" />
+    <option name="MAIN_CLASS_NAME" value="ar.edu.unrc.game2048.Game2048" />
     <option name="VM_PARAMETERS" value="" />
     <option name="PROGRAM_PARAMETERS" value="" />
     <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
@@ -16,11 +16,8 @@
     <option name="ENABLE_SWING_INSPECTOR" value="false" />
     <option name="ENV_VARIABLES" />
     <option name="PASS_PARENT_ENVS" value="true" />
-    <module name="coeus.game2048.visual_main" />
+    <module name="coeus.game2048_main" />
     <envs />
-    <RunnerSettings RunnerId="Debug with VisualVM">
-      <option name="visualVMId" value="5845352519299" />
-    </RunnerSettings>
     <method />
   </configuration>
 </component>

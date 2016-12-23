@@ -19,7 +19,7 @@
 package ar.edu.unrc.game2048.experiments.configurations.ntuples;
 
 import ar.edu.unrc.coeus.tdlearning.training.ntuple.SamplePointValue;
-import ar.edu.unrc.coeus.tdlearning.utils.FunctionUtils;
+import ar.edu.unrc.coeus.utils.FunctionUtils;
 import ar.edu.unrc.game2048.GameBoard;
 import ar.edu.unrc.game2048.NTupleConfiguration2048;
 import ar.edu.unrc.game2048.Tile;
