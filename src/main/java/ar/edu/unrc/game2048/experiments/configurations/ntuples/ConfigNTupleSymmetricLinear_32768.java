@@ -52,8 +52,9 @@ class ConfigNTupleSymmetricLinear_32768
         nTuplesLength[3] = 4;
 
         allSamplePointPossibleValues = new ArrayList<>();
-        for ( int i = 0; i <= maxTile; i++ ) {
-            allSamplePointPossibleValues.add(new Tile(i));
+        allSamplePointPossibleValues.add(null);
+        for ( int i = 1; i <= maxTile; i++ ) {
+            allSamplePointPossibleValues.add(new Tile((int) Math.pow(2, i)));
         }
     }
 
@@ -74,16 +75,6 @@ class ConfigNTupleSymmetricLinear_32768
     double deNormalizeValueFromNeuralNetworkOutput( Object value ) {
         return (double) value;
     }
-
-    @Override
-    public
-    double getBoardReward(
-            GameBoard board,
-            int outputNeuron
-    ) {
-        return board.getPartialScore();
-    }
-
 
     @Override
     public

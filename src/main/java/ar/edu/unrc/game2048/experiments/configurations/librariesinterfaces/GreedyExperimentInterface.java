@@ -33,8 +33,6 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.awt.event.KeyEvent.*;
-
 /**
  * Interfaz de experimentos entre la IA greedy y Coeus
  *
@@ -124,25 +122,26 @@ class GreedyExperimentInterface
             Action bestAction = bestActions.get(TDLambdaLearning.randomBetween(0, bestActions.size() - 1));
             switch ( bestAction ) {
                 case left: {
-                    game.processInput(VK_LEFT);
+                    game.getBoard().moveLeft();
                     break;
                 }
                 case right: {
-                    game.processInput(VK_RIGHT);
+                    game.getBoard().moveRight();
                     break;
                 }
                 case down: {
-                    game.processInput(VK_DOWN);
+                    game.getBoard().canMoveDown();
                     break;
                 }
                 case up: {
-                    game.processInput(VK_UP);
+                    game.getBoard().moveUp();
                     break;
                 }
                 default: {
-                    throw new IllegalArgumentException("no se encontró mejor acción.");
+                    throw new IllegalStateException("Mejor acción no reconocida");
                 }
             }
+            game.setCurrentState(game.computeNextTurnStateFromAfterState(game.getBoard()));
         } else {
             throw new IllegalArgumentException("no se encontró mejor acción.");
         }

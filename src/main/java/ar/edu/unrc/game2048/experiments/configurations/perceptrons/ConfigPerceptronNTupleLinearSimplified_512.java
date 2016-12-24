@@ -70,8 +70,10 @@ class ConfigPerceptronNTupleLinearSimplified_512
 
         allSamplePointPossibleValues = new ArrayList<>();
         mapSamplePointValuesIndex = new HashMap<>();
-        for ( int spvIndex = 0; spvIndex <= maxTile; spvIndex++ ) {
-            allSamplePointPossibleValues.add(new Tile(spvIndex));
+        allSamplePointPossibleValues.add(null);
+        mapSamplePointValuesIndex.put(null, 0);
+        for ( int spvIndex = 1; spvIndex <= maxTile; spvIndex++ ) {
+            allSamplePointPossibleValues.add(new Tile((int) Math.pow(2, spvIndex)));
             mapSamplePointValuesIndex.put(allSamplePointPossibleValues.get(spvIndex), spvIndex);
         }
 
@@ -156,15 +158,6 @@ class ConfigPerceptronNTupleLinearSimplified_512
     public
     List< SamplePointValue > getAllSamplePointPossibleValues() {
         return allSamplePointPossibleValues;
-    }
-
-    @Override
-    public
-    double getBoardReward(
-            GameBoard board,
-            int outputNeuron
-    ) {
-        return board.getPartialScore();
     }
 
     /**

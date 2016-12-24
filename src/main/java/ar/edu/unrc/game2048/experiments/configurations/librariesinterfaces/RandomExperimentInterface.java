@@ -27,8 +27,6 @@ import ar.edu.unrc.game2048.experiments.configurations.INeuralNetworkInterfaceFo
 import java.io.File;
 import java.io.OutputStream;
 
-import static java.awt.event.KeyEvent.*;
-
 /**
  * Interfaz de experimentos entre IA random y Coeus
  *
@@ -89,25 +87,26 @@ class RandomExperimentInterface
     ) {
         switch ( TDLambdaLearning.randomBetween(1, 4) ) {
             case 1: {
-                game.processInput(VK_LEFT);
+                game.getBoard().moveLeft();
                 break;
             }
             case 2: {
-                game.processInput(VK_RIGHT);
+                game.getBoard().moveRight();
                 break;
             }
             case 3: {
-                game.processInput(VK_DOWN);
+                game.getBoard().canMoveDown();
                 break;
             }
             case 4: {
-                game.processInput(VK_UP);
+                game.getBoard().moveUp();
                 break;
             }
             default: {
-                throw new IllegalStateException("El numero al azar elegido debe ir entre 1 y 4");
+                throw new IllegalStateException("Mejor acción no reconocida");
             }
         }
+        game.setCurrentState(game.computeNextTurnStateFromAfterState(game.getBoard()));
     }
 
     @Override

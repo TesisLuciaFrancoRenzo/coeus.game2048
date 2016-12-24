@@ -60,7 +60,7 @@ class GreedyBasic
         experiment.setSimulationsForStatistics(8);
         experiment.setRunStatisticsForBackups(false);
         experiment.setExportToExcel(false);
-        experiment.start(-1, filePath, 0, true, null, printHistory);
+        experiment.start(-1, filePath, true, null, printHistory);
 
         Toolkit.getDefaultToolkit().beep();
     }

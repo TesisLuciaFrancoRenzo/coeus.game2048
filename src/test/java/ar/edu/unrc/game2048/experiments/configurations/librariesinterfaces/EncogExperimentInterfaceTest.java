@@ -118,15 +118,6 @@ class EncogExperimentInterfaceTest {
 
             @Override
             public
-            double getBoardReward(
-                    GameBoard board,
-                    int outputNeuron
-            ) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public
             boolean isConcurrentInputEnabled() {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
@@ -448,15 +439,6 @@ class EncogExperimentInterfaceTest {
             @Override
             public
             double deNormalizeValueFromNeuralNetworkOutput( Object value ) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public
-            double getBoardReward(
-                    GameBoard board,
-                    int outputNeuron
-            ) {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
 

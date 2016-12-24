@@ -24,7 +24,7 @@ import ar.edu.unrc.coeus.tdlearning.training.ntuple.NTupleSystem;
 import ar.edu.unrc.game2048.EncogConfiguration2048;
 import ar.edu.unrc.game2048.experiments.configurations.LearningExperiment;
 import ar.edu.unrc.game2048.experiments.configurations.librariesinterfaces.EncogExperimentInterface;
-import ar.edu.unrc.game2048.experiments.configurations.perceptrons.ConfigPerceptronBinary_2048;
+import ar.edu.unrc.game2048.experiments.configurations.perceptrons.ConfigPerceptronNTupleTanHSimplified_512;
 import org.encog.engine.network.activation.ActivationFunction;
 import org.encog.engine.network.activation.ActivationTANH;
 
@@ -305,7 +305,7 @@ class ConcurrencyExperiment_Basic
         experiment.setRunStatisticsForBackups(false);
         experiment.setGamesToPlayPerThreadForStatistics(0);
         experiment.setSimulationsForStatistics(0);
-        experiment.start(-1, filePath, 0, false, filePath, false);
+        experiment.start(-1, filePath, false, filePath, false);
 
         bestPossibleStats.addSample(experiment.getBestPossibleActionTimesAverage());
         trainingStats.addSample(experiment.getTrainingTimesAverage());
@@ -319,7 +319,7 @@ class ConcurrencyExperiment_Basic
             setExperimentName("ConcurrencyTimes");
         }
         setNeuralNetworkName(getExperimentName());
-        EncogConfiguration2048 config = new ConfigPerceptronBinary_2048();
+        EncogConfiguration2048 config = new ConfigPerceptronNTupleTanHSimplified_512(true);
         config.setNeuronQuantityInLayer(currentConfig.getNeuronQuantityInLayer());
         config.setActivationFunctionForEncog(currentConfig.getActivationFunctionForEncog());
         setNeuralNetworkInterfaceFor2048(new EncogExperimentInterface(config));

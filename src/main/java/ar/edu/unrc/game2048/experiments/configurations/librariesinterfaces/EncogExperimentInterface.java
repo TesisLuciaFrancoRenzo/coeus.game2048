@@ -29,6 +29,7 @@ import org.encog.engine.network.activation.ActivationTANH;
 import org.encog.neural.networks.BasicNetwork;
 import org.encog.neural.networks.layers.BasicLayer;
 import org.encog.util.obj.SerializeObject;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.io.File;
 import java.io.OutputStream;
@@ -253,7 +254,7 @@ class EncogExperimentInterface
     public
     void saveNeuralNetwork( OutputStream outputStream )
             throws Exception {
-        //TODO implementar cuando sea necesario
+        throw new NotImplementedException();
     }
 
     /**

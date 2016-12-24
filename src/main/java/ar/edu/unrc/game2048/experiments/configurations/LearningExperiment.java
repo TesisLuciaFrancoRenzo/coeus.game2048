@@ -243,11 +243,18 @@ class LearningExperiment {
     }
 
     /**
-     * @param experimentName nombre del experimento.
+     * Establece el nombre del experimento basado en el nombre de la clase {@code experimentClass}.
+     *
+     * @param experimentClass clase de la cual extraer el nombre del experimento.
      */
     public
-    void setExperimentName( String experimentName ) {
-        this.experimentName = experimentName;
+    void setExperimentName( Class experimentClass ) {
+        String className = experimentClass.getName();
+        int    lastDot   = className.lastIndexOf('.');
+        if ( lastDot != -1 ) {
+            className = className.substring(lastDot + 1);
+        }
+        experimentName = className;
     }
 
     /**
@@ -574,7 +581,6 @@ class LearningExperiment {
      * @param numberForShow        Numero para mostrar en la terminal al mostrar los valores alcanzado. Útil para ejecutar muchos experimentos en
      *                             paralelo e identificar los resultados parciales en la terminal.
      * @param experimentPath       Ruta del directorio donde se guardan los resultados.
-     * @param delayPerMove         Tiempo de espera entre movimientos. Útil para mostrar animaciones de como entrena, visualmente.
      * @param createPerceptronFile true si se deben crear las redes neuronales si no existen.
      * @param errorDumpDir         directorio donde se vuelcan los archivos de errores.
      */
@@ -583,7 +589,6 @@ class LearningExperiment {
     void runExperiment(
             int numberForShow,
             String experimentPath,
-            int delayPerMove,
             boolean createPerceptronFile,
             String errorDumpDir,
             boolean printHistory
@@ -725,7 +730,9 @@ class LearningExperiment {
 
             //creamos el juego
             Game2048 game = new Game2048(neuralNetworkInterfaceFor2048.getPerceptronConfiguration(),
-                    neuralNetworkInterfaceFor2048.getNTupleConfiguration(), tileToWinForTraining, delayPerMove, printHistory);
+                    neuralNetworkInterfaceFor2048.getNTupleConfiguration(),
+                    tileToWinForTraining,
+                    printHistory);
 
             if ( !statisticsOnly ) {
                 //comenzamos a entrenar y guardar estadisticas en el archivo de log
@@ -737,8 +744,6 @@ class LearningExperiment {
                     training(numberForShow, game, null, perceptronFile, lastSaveDataFile, filePath, zeroNumbers, historyFile);
                 }
             }
-            //cerramos el juego
-            game.dispose();
 
             System.out.println("Training Finished.");
 
@@ -757,7 +762,7 @@ class LearningExperiment {
                     }
                 };
                 statisticExperiment.setFileName(experimentName);
-                statisticExperiment.start(experimentPath, delayPerMove, createPerceptronFile, printHistory);
+                statisticExperiment.start(experimentPath, createPerceptronFile, printHistory);
             }
         } catch ( Exception ex ) {
             printErrorInFile(ex, new File(bugFilePath));
@@ -844,18 +849,11 @@ class LearningExperiment {
     }
 
     /**
-     * Establece el nombre del experimento basado en el nombre de la clase {@code experimentClass}.
-     *
-     * @param experimentClass clase de la cual extraer el nombre del experimento.
+     * @param experimentName nombre del experimento.
      */
     public
-    void setExperimentName( Class experimentClass ) {
-        String className = experimentClass.getName();
-        int    lastDot   = className.lastIndexOf('.');
-        if ( lastDot != -1 ) {
-            className = className.substring(lastDot + 1);
-        }
-        experimentName = className;
+    void setExperimentName( String experimentName ) {
+        this.experimentName = experimentName;
     }
 
     /**
@@ -947,7 +945,6 @@ class LearningExperiment {
      * @param numberForShow        Numero para mostrar en la terminal al mostrar los valores alcanzado. Útil para ejecutar muchos experimentos en
      *                             paralelo e identificar los resultados parciales en la terminal.
      * @param experimentPath       Ruta del directorio donde se guardan los resultados.
-     * @param delayPerMove         Tiempo de espera entre movimientos. Útil para mostrar animaciones de como entrena, visualmente.
      * @param createPerceptronFile true si se deben crear las redes neuronales si no existen.
      * @param errorDumpDir         directorio donde se vuelcan los archivos de errores.
      */
@@ -955,7 +952,6 @@ class LearningExperiment {
     void start(
             int numberForShow,
             String experimentPath,
-            int delayPerMove,
             boolean createPerceptronFile,
             String errorDumpDir,
             boolean printHistory
@@ -968,7 +964,7 @@ class LearningExperiment {
             experimentPathFile.mkdirs();
         }
         initialize();
-        runExperiment(numberForShow, experimentPath, delayPerMove, createPerceptronFile, errorDumpDir, printHistory);
+        runExperiment(numberForShow, experimentPath, createPerceptronFile, errorDumpDir, printHistory);
     }
 
     /**

@@ -20,7 +20,6 @@ package ar.edu.unrc.game2048;
 
 import ar.edu.unrc.coeus.tdlearning.interfaces.IAction;
 import ar.edu.unrc.coeus.tdlearning.interfaces.IState;
-import ar.edu.unrc.coeus.tdlearning.interfaces.IStatePerceptron;
 import org.junit.*;
 
 import java.util.ArrayList;
@@ -36,7 +35,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public
 class Game2048Test {
 
-    private final TileContainer tileContainer;
     private       Game2048      game;
 
     /**
@@ -44,7 +42,7 @@ class Game2048Test {
      */
     public
     Game2048Test() {
-        tileContainer = new TileContainer(17);
+
     }
 
     /**
@@ -78,7 +76,6 @@ class Game2048Test {
     public
     void tearDown() {
         if ( game != null ) {
-            game.dispose();
             game = null;
         }
     }
@@ -91,37 +88,35 @@ class Game2048Test {
     public
     void testListAllPossibleActions() {
         System.out.println("listAllPossibleActions");
-        game = new Game2048(null, null, 2_048, 0, false);
-        IStatePerceptron state1;
-        IState           state2;
+        game = new Game2048(null, null, 2_048, false);
+        IState state1;
+        IState state2;
 
         //inicializamos un tablero terminal
-        GameBoard board = new GameBoard(game, tileContainer);
-        Tile[] terminalBoard = {
-                tileContainer.getTile(7), tileContainer.getTile(1), tileContainer.
-                getTile(3), tileContainer.getTile(2), tileContainer.getTile(1), tileContainer.getTile(4), tileContainer.
-                getTile(5), tileContainer.getTile(1), tileContainer.getTile(3), tileContainer.getTile(5), tileContainer.
-                getTile(1), tileContainer.getTile(6), tileContainer.getTile(1), tileContainer.getTile(8), tileContainer.
-                getTile(5), tileContainer.getTile(2)
+        GameBoard board = new GameBoard(game);
+        Tile[][] terminalBoard = {
+                { new Tile(128), new Tile(2), new Tile(8), new Tile(4) },
+                { new Tile(2), new Tile(16), new Tile(32), new Tile(2) },
+                { new Tile(8), new Tile(32), new Tile(2), new Tile(64) },
+                { new Tile(2), new Tile(256), new Tile(32), new Tile(4) }
         };
         board.setTiles(terminalBoard);
-        board.updateInternalState(true);
+        board.clearInterns(true);
 
         ArrayList< IAction > result = game.listAllPossibleActions(board);
         assertThat(result.isEmpty(), is(true));
 
         // =========================================== //
         //inicializamos un tablero no terminal
-        board = new GameBoard(game, tileContainer);
-        Tile[] fullNotTerminalBoard = {
-                tileContainer.getTile(7), tileContainer.getTile(1), tileContainer.
-                getTile(3), tileContainer.getTile(2), tileContainer.getTile(1), tileContainer.getTile(4), tileContainer.
-                getTile(5), tileContainer.getTile(1), tileContainer.getTile(3), tileContainer.getTile(5), tileContainer.
-                getTile(1), tileContainer.getTile(6), tileContainer.getTile(1), tileContainer.getTile(8), tileContainer.
-                getTile(1), tileContainer.getTile(2)
+        board = new GameBoard(game);
+        Tile[][] fullNotTerminalBoard = {
+                { new Tile(128), new Tile(2), new Tile(8), new Tile(4) },
+                { new Tile(2), new Tile(16), new Tile(32), new Tile(2) },
+                { new Tile(8), new Tile(32), new Tile(2), new Tile(64) },
+                { new Tile(2), new Tile(256), new Tile(2), new Tile(4) }
         };
         board.setTiles(fullNotTerminalBoard);
-        board.updateInternalState(true);
+        board.clearInterns(true);
 
         @SuppressWarnings( "MismatchedQueryAndUpdateOfCollection" ) Set< IAction > expResult = new HashSet<>();
         expResult.add(Action.down);
@@ -142,7 +137,7 @@ class Game2048Test {
         // con los mismos tableros, devuelven instancias diferentes, pero con el mismo contenido lógico
         state2 = game.computeAfterState(board, Action.down);
         Assert.assertNotSame(state1, state2);
-        assertThat(state1, is((GameBoard) state2));
+        assertThat(state1, is(state2));
 
         //verificamos que próximas llamadas a computeAfterState retorne valores ya calculados y no los calcule otra vez
         state1 = game.computeAfterState(board, Action.down);
@@ -154,24 +149,17 @@ class Game2048Test {
         state2 = game.computeAfterState(board, Action.up);
         Assert.assertNotSame(state1, state2);
 
-        //verificamos que valores no calculados retornen null
-        state1 = game.computeAfterState(board, Action.left);
-        Assert.assertNull(state1);
-        state1 = game.computeAfterState(board, Action.right);
-        Assert.assertNull(state1);
-
         // =========================================== //
         //inicializamos un tablero con muchos movimientos terminal
-        board = new GameBoard(game, tileContainer);
-        Tile[] multipleMovesTerminalBoard = {
-                tileContainer.getTile(7), tileContainer.getTile(1), tileContainer.
-                getTile(3), tileContainer.getTile(2), tileContainer.getTile(1), tileContainer.getTile(0), tileContainer.
-                getTile(5), tileContainer.getTile(1), tileContainer.getTile(3), tileContainer.getTile(5), tileContainer.
-                getTile(1), tileContainer.getTile(6), tileContainer.getTile(1), tileContainer.getTile(8), tileContainer.
-                getTile(1), tileContainer.getTile(2)
+        board = new GameBoard(game);
+        Tile[][] multipleMovesTerminalBoard = {
+                { new Tile(128), new Tile(2), new Tile(8), new Tile(4) },
+                { new Tile(2), null, new Tile(32), new Tile(2) },
+                { new Tile(8), new Tile(32), new Tile(2), new Tile(64) },
+                { new Tile(2), new Tile(256), new Tile(2), new Tile(4) }
         };
         board.setTiles(multipleMovesTerminalBoard);
-        board.updateInternalState(true);
+        board.clearInterns(true);
 
         expResult.clear();
         expResult.add(Action.down);

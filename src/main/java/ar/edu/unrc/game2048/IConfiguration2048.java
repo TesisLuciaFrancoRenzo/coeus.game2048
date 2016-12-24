@@ -34,17 +34,6 @@ interface IConfiguration2048 {
     double deNormalizeValueFromNeuralNetworkOutput( Object value );
 
     /**
-     * @param board        tablero.
-     * @param outputNeuron neurona de salida.
-     *
-     * @return recompensa que se obtiene en dicho tablero, luego de un movimiento.
-     */
-    double getBoardReward(
-            GameBoard board,
-            int outputNeuron
-    );
-
-    /**
      * @param value valor a normalizar.
      *
      * @return {@code value} normalizado con el estilo de las neuronas de salida.

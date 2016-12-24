@@ -4,7 +4,6 @@ import ar.edu.unrc.coeus.tdlearning.training.ntuple.NTupleSystem;
 import ar.edu.unrc.game2048.Game2048;
 import ar.edu.unrc.game2048.GameBoard;
 import ar.edu.unrc.game2048.Tile;
-import ar.edu.unrc.game2048.TileContainer;
 import ar.edu.unrc.game2048.experiments.configurations.ntuples.ConfigNTupleBasicTanHSimplified_512;
 import ar.edu.unrc.game2048.experiments.configurations.perceptrons.inputs.InputNTupleList;
 import org.junit.*;
@@ -66,16 +65,14 @@ class PNTuple512Test {
         System.out.println("calculateNormalizedPerceptronInput");
 
         ConfigPerceptronNTupleTanHSimplified_512 nTupleConfiguration = new ConfigPerceptronNTupleTanHSimplified_512(true);
-        TileContainer                            tileContainer       = new TileContainer(nTupleConfiguration.getMaxTile());
 
-        Game2048  game  = new Game2048(nTupleConfiguration, null, (int) Math.pow(2, nTupleConfiguration.getMaxTile()), 0, false);
-        GameBoard board = new GameBoard(game, tileContainer);
-        board.setTiles(new Tile[] {
-                tileContainer.getTile(0), tileContainer.getTile(4), tileContainer.
-                getTile(0), tileContainer.getTile(9), tileContainer.getTile(4), tileContainer.getTile(6), tileContainer.
-                getTile(4), tileContainer.getTile(4), tileContainer.getTile(2), tileContainer.getTile(4), tileContainer.
-                getTile(5), tileContainer.getTile(7), tileContainer.getTile(4), tileContainer.getTile(0), tileContainer.
-                getTile(1), tileContainer.getTile(4)
+        Game2048  game  = new Game2048(nTupleConfiguration, null, (int) Math.pow(2, nTupleConfiguration.getMaxTile()), false);
+        GameBoard board = new GameBoard(game);
+        board.setTiles(new Tile[][] {
+                { null, new Tile(16), null, new Tile(512) },
+                { new Tile(16), new Tile(64), new Tile(16), new Tile(16) },
+                { new Tile(4), new Tile(16), new Tile(32), new Tile(128) },
+                { new Tile(16), null, new Tile(2), new Tile(16) }
         });
 
         InputNTupleList normalizedPerceptronInput = new InputNTupleList();
@@ -83,20 +80,20 @@ class PNTuple512Test {
 
         //----------------------
         ConfigNTupleBasicTanHSimplified_512 nTupleConfiguration2 = new ConfigNTupleBasicTanHSimplified_512();
-        Game2048                            game2                = new Game2048(null, nTupleConfiguration2, (int) Math.pow(2, nTupleConfiguration2.getMaxTile()), 0, false);
-        GameBoard                           board2               = new GameBoard(game2, tileContainer);
-        board2.setTiles(new Tile[] {
-                tileContainer.getTile(0), tileContainer.getTile(4), tileContainer.
-                getTile(0), tileContainer.getTile(9), tileContainer.getTile(4), tileContainer.getTile(6), tileContainer.
-                getTile(4), tileContainer.getTile(4), tileContainer.getTile(2), tileContainer.getTile(4), tileContainer.
-                getTile(5), tileContainer.getTile(7), tileContainer.getTile(4), tileContainer.getTile(0), tileContainer.
-                getTile(1), tileContainer.getTile(4)
+        Game2048                            game2                =
+                new Game2048(null, nTupleConfiguration2, (int) Math.pow(2, nTupleConfiguration2.getMaxTile()), false);
+        GameBoard                           board2               = new GameBoard(game2);
+        board2.setTiles(new Tile[][] {
+                { null, new Tile(16), null, new Tile(512) },
+                { new Tile(16), new Tile(64), new Tile(16), new Tile(16) },
+                { new Tile(4), new Tile(16), new Tile(32), new Tile(128) },
+                { new Tile(16), null, new Tile(2), new Tile(16) }
         });
-
         NTupleSystem nTupleSystem = new NTupleSystem(nTupleConfiguration2.getAllSamplePointPossibleValues(),
                 nTupleConfiguration2.getNTuplesLength(),
                 nTupleConfiguration2.getActivationFunction(),
-                nTupleConfiguration2.getDerivedActivationFunction(), false);
+                nTupleConfiguration2.getDerivedActivationFunction(),
+                false);
         int[] indexes = nTupleSystem.getComplexComputation(board2).getIndexes();
         assertThat(normalizedPerceptronInput.getInternalSetSize(), is(indexes.length));
         for ( int i : indexes ) {

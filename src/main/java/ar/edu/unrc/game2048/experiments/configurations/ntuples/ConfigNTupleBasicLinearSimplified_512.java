@@ -54,8 +54,9 @@ class ConfigNTupleBasicLinearSimplified_512
         }
 
         allSamplePointPossibleValues = new ArrayList<>();
-        for ( int spvIndex = 0; spvIndex <= maxTile; spvIndex++ ) {
-            allSamplePointPossibleValues.add(new Tile(spvIndex));
+        allSamplePointPossibleValues.add(null);
+        for ( int i = 1; i <= maxTile; i++ ) {
+            allSamplePointPossibleValues.add(new Tile((int) Math.pow(2, i)));
         }
     }
 
@@ -75,14 +76,6 @@ class ConfigNTupleBasicLinearSimplified_512
         return (double) value;
     }
 
-    @Override
-    public
-    double getBoardReward(
-            GameBoard board,
-            int outputNeuron
-    ) {
-        return board.getPartialScore();
-    }
 
 
     @Override

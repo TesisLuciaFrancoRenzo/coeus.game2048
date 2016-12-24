@@ -31,8 +31,6 @@ import java.io.File;
 import java.io.OutputStream;
 import java.util.List;
 
-import static java.awt.event.KeyEvent.*;
-
 /**
  * Representación de la configuración de las redes neuronales, ya sea NTupla o Perceptrón.
  *
@@ -159,25 +157,26 @@ class INeuralNetworkInterfaceFor2048
                 learningMethod.isComputeParallelBestPossibleAction(), null).getAction();
         switch ( bestAction ) {
             case left: {
-                game.processInput(VK_LEFT);
+                game.getBoard().moveLeft();
                 break;
             }
             case right: {
-                game.processInput(VK_RIGHT);
+                game.getBoard().moveRight();
                 break;
             }
             case down: {
-                game.processInput(VK_DOWN);
+                game.getBoard().moveDown();
                 break;
             }
             case up: {
-                game.processInput(VK_UP);
+                game.getBoard().moveUp();
                 break;
             }
             default: {
                 throw new IllegalStateException("Mejor acción no reconocida");
             }
         }
+        game.setCurrentState(game.computeNextTurnStateFromAfterState(game.getBoard()));
         if ( game.isPrintHistory() ) {
             game.getHistoryLog().append("M=").append(bestAction).append("\n");
         }

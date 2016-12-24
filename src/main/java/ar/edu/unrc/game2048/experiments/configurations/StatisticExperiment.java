@@ -487,7 +487,6 @@ class StatisticExperiment {
      * Calcula las estadísticas de una red neuronal.
      *
      * @param fileToProcess           archivo a procesar.
-     * @param delayPerMove            retraso entre movimientos, útil para observar visualmente como calcula estadísticas.
      * @param createNeuralNetworkFile true si debe crear los perceptrones faltantes.
      *
      * @throws Exception
@@ -496,7 +495,6 @@ class StatisticExperiment {
     public
     void processFile(
             String fileToProcess,
-            int delayPerMove,
             boolean createNeuralNetworkFile,
             boolean printHistory
     )
@@ -540,8 +538,7 @@ class StatisticExperiment {
                     neuralNetworkInterfaceClone.loadOrCreatePerceptron(perceptronFile, true, createNeuralNetworkFile);
                 }
 
-                Game2048 game =
-                        new Game2048(tempPerceptronConfiguration, tempNTupleConfiguration, tileToWinForStatistics, delayPerMove, printHistory);
+                Game2048 game = new Game2048(tempPerceptronConfiguration, tempNTupleConfiguration, tileToWinForStatistics, printHistory);
 
                 neuralNetworkInterfaces.add(neuralNetworkInterfaceClone);
                 if ( tempPerceptronConfiguration != null ) {
@@ -558,9 +555,9 @@ class StatisticExperiment {
                 // Si hay un perceptron ya entrenado, lo buscamos en el archivo.
                 // En caso contrario creamos un perceptron vacío, inicializado al azar
                 for ( results.get(i).setProcessedGames(1); results.get(i).getProcessedGames() < gamesToPlay; results.get(i).addProcessedGames() ) {
-                    games.get(i).resetGame(); //reset
+                    games.get(i).initialize(null); //reset
                     int turnNumber = 0;
-                    while ( !games.get(i).iLoose() && !games.get(i).iWin() ) {
+                    while ( games.get(i).isRunning() ) {
                         if ( tdLambdaLearning.isEmpty() ) {
                             neuralNetworkInterfaces.get(i).playATurn(games.get(i), null);
                         } else {
@@ -569,7 +566,8 @@ class StatisticExperiment {
                         turnNumber++;
                     }
                     //calculamos estadisticas
-                    results.get(i).addStatisticForTile(games.get(i).getMaxNumberCode());
+                    results.get(i).addStatisticForTile((int) ( Math.log(games.get(i).getMaxNumber()) / Math.log(2) ));
+                    //TODO revisar esto que cambio, ya que se pedia el CODE y no el valor
                     results.get(i).addScore(games.get(i).getScore());
 
                     if ( games.get(i).getMaxNumber() >= tileToWinForStatistics ) {
@@ -577,7 +575,6 @@ class StatisticExperiment {
                         results.get(i).addLastTurn(turnNumber);
                     }
                 }
-                games.get(i).dispose();
             });
 
             winRate = 0;
@@ -679,7 +676,6 @@ class StatisticExperiment {
      * Inicia las estadísticas.
      *
      * @param experimentPath          directorio de la red neuronal.
-     * @param delayPerMove            retraso visual entre movimientos.
      * @param createNeuralNetworkFile crea redes neuronales en caso de no existir.
      *
      * @throws Exception
@@ -687,7 +683,6 @@ class StatisticExperiment {
     protected
     void run(
             String experimentPath,
-            int delayPerMove,
             boolean createNeuralNetworkFile,
             boolean printHistory
     )
@@ -702,12 +697,12 @@ class StatisticExperiment {
 
         //hacemos estadisticas del perceptron random, si es necesario
         System.out.print("Starting " + experimentName + LearningExperiment.RANDOM + " Statistics... ");
-        processFile(dirPath + experimentName + LearningExperiment.RANDOM, delayPerMove, createNeuralNetworkFile, printHistory);
+        processFile(dirPath + experimentName + LearningExperiment.RANDOM, createNeuralNetworkFile, printHistory);
         StatisticForCalc resultsRandom = getTileStatistics();
 
         //hacemos estadisticas del mejor perceptron, si es necesario
         System.out.print("Starting " + experimentName + LearningExperiment.BEST_TRAINED + " Statistics... ");
-        processFile(dirPath + experimentName + LearningExperiment.BEST_TRAINED, delayPerMove, createNeuralNetworkFile, printHistory);
+        processFile(dirPath + experimentName + LearningExperiment.BEST_TRAINED, createNeuralNetworkFile, printHistory);
 
         //calculamos las estadisticas de los backup si es necesario
         File[] allFiles = ( new File(dirPath) ).listFiles();
@@ -727,13 +722,13 @@ class StatisticExperiment {
             if ( runStatisticsForBackups ) {
                 if ( f.getName().matches(".*_BackupN-.*\\.ser") ) {
                     System.out.print("Starting " + f.getName() + " Statistics... ");
-                    processFile(dirPath + f.getName().replaceAll("\\.ser$", ""), delayPerMove, createNeuralNetworkFile, printHistory);
+                    processFile(dirPath + f.getName().replaceAll("\\.ser$", ""), createNeuralNetworkFile, printHistory);
                     resultsPerFile.put(f, getTileStatistics());
                     backupFiles.add(f);
                 }
             } else if ( f.getName().matches(".*_trained\\.ser") ) {
                 System.out.print("Starting " + f.getName() + " Statistics... ");
-                processFile(dirPath + f.getName().replaceAll("\\.ser$", ""), delayPerMove, createNeuralNetworkFile, printHistory);
+                processFile(dirPath + f.getName().replaceAll("\\.ser$", ""), createNeuralNetworkFile, printHistory);
                 resultsPerFile.put(f, getTileStatistics());
                 backupFiles.add(f);
             }
@@ -797,13 +792,11 @@ class StatisticExperiment {
      * Inicia el cálculo de estadísticas.
      *
      * @param experimentPath       directorio donde están las redes neuronales sobre las que se calculan las estadísticas.
-     * @param delayPerMove         retraso entre visual entre movimientos.
      * @param createPerceptronFile true si debe crear las redes neuronales faltantes.
      */
     public
     void start(
             String experimentPath,
-            int delayPerMove,
             boolean createPerceptronFile,
             boolean printHistory
     ) {
@@ -821,7 +814,7 @@ class StatisticExperiment {
                 experimentName = learningExperiment.getExperimentName();
             }
             initializeStatistics();
-            run(experimentPath, delayPerMove, createPerceptronFile, printHistory);
+            run(experimentPath, createPerceptronFile, printHistory);
         } catch ( Exception ex ) {
             Logger.getLogger(StatisticExperiment.class.getName()).log(Level.SEVERE, null, ex);
         }

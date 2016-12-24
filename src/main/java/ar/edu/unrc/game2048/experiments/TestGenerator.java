@@ -21,8 +21,6 @@ package ar.edu.unrc.game2048.experiments;
 import ar.edu.unrc.game2048.EncogConfiguration2048;
 import ar.edu.unrc.game2048.experiments.configurations.LearningExperiment;
 import ar.edu.unrc.game2048.experiments.configurations.ntuples.*;
-import ar.edu.unrc.game2048.experiments.configurations.perceptrons.ConfigPerceptronBinary_2048;
-import ar.edu.unrc.game2048.experiments.configurations.perceptrons.ConfigPerceptronBoard_32768;
 import ar.edu.unrc.game2048.experiments.configurations.perceptrons.ConfigPerceptronNTupleLinearSimplified_512;
 import ar.edu.unrc.game2048.experiments.configurations.perceptrons.ConfigPerceptronNTupleTanHSimplified_512;
 
@@ -39,7 +37,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Tests parametrizables mediante parámetros, útil para correr variedades de simulaciones sin recompilar todo el
+ * Tests parametrizables mediante parámetros, útil para correr variedades de simulaciones sin recompilar el
  * programa.
  *
  * @author lucia bressan, franco pellegrini, renzo bianchini
@@ -139,7 +137,7 @@ class TestGenerator {
         experiment.setSimulationsForStatistics(simulationsForStatistics);
         experiment.setExportToExcel(true);
         System.out.println("*=*=*=*=*=*=*=*=*=*=* N" + numberForShow + " Ejecutando " + filePath + " *=*=*=*=*=*=*=*=*=*=*");
-        experiment.start(numberForShow, filePath, 0, true, null, false);
+        experiment.start(numberForShow, filePath, true, null, false);
     }
 
     /**
@@ -606,20 +604,6 @@ class TestGenerator {
                 }
                 case "ConfigNTupleSymmetricTanH_32768": {
                     classConstructor = ConfigNTupleSymmetricTanH_32768.class.getConstructor();
-                    break;
-                }
-                case "ConfigPerceptronBinary_2048": {
-                    classConstructor = ConfigPerceptronBinary_2048.class.getConstructor();
-                    break;
-                }
-                case "ConfigPerceptronBoard_noBias_32768": {
-                    classConstructor = ConfigPerceptronBoard_32768.class.getConstructor(EncogConfiguration2048.PARAMETER_TYPE);
-                    classParameters = new Object[] { false };
-                    break;
-                }
-                case "ConfigPerceptronBoard_withBias_32768": {
-                    classConstructor = ConfigPerceptronBoard_32768.class.getConstructor(EncogConfiguration2048.PARAMETER_TYPE);
-                    classParameters = new Object[] { true };
                     break;
                 }
                 case "ConfigPerceptronNTupleLinearSimplified_noBias_512": {
