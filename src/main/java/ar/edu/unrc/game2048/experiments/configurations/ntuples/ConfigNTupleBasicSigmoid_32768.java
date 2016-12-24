@@ -35,7 +35,7 @@ public
 class ConfigNTupleBasicSigmoid_32768
         extends NTupleConfiguration2048 {
 
-    private static final int maxReward = 500_000;
+    private static final int maxReward = 800_000;
     private static final int minReward = 0;
 
     /**

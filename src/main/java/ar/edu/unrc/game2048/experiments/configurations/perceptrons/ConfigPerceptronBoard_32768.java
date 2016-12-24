@@ -50,8 +50,8 @@ class ConfigPerceptronBoard_32768
 
         int maxCodedBoardNumber = 15;
         int minCodedBoardNumber = 0;
-        int maxScore            = 500_000;
-        int minScore            = -500_000;
+        int maxScore            = 800_000;
+        int minScore            = -800_000;
 
         neuronQuantityInLayer = new int[4];
         neuronQuantityInLayer[0] = 16;

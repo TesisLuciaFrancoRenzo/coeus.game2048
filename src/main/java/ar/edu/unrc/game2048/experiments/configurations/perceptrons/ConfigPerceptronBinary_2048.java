@@ -48,8 +48,8 @@ class ConfigPerceptronBinary_2048
         setTileToWinForTraining(32768);
         hasBias = false;
 
-        int maxScore = 500_000;
-        int minScore = -500_000;
+        int maxScore = 800_000;
+        int minScore = -800_000;
 
         neuronQuantityInLayer = new int[3];
         neuronQuantityInLayer[0] = 64;
