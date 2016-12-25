@@ -19,7 +19,9 @@
 package ar.edu.unrc.game2048;
 
 import ar.edu.unrc.game2048.experiments.configurations.ntuples.ConfigNTupleBasicLinear_32768;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -27,7 +29,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 /**
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
-@SuppressWarnings( { "unchecked", "UnusedAssignment" } )
+@SuppressWarnings( { "UnusedAssignment" } )
 public
 class GameBoardTest {
 
@@ -57,22 +59,6 @@ class GameBoardTest {
     /**
      *
      */
-    @BeforeClass
-    public static
-    void setUpClass() {
-    }
-
-    /**
-     *
-     */
-    @AfterClass
-    public static
-    void tearDownClass() {
-    }
-
-    /**
-     *
-     */
     @Before
     public
     void setUp() {
@@ -80,17 +66,9 @@ class GameBoardTest {
     }
 
     /**
-     *
-     */
-    @After
-    public
-    void tearDown() {
-    }
-
-    /**
      * Test of tileAt method, of class GameBoard.
      */
-    @Test( expected = java.lang.ArrayIndexOutOfBoundsException.class )
+    @Test( expected = ArrayIndexOutOfBoundsException.class )
     public
     void testFailTileAt() {
         System.out.println("tileAt Fail");
@@ -130,7 +108,7 @@ class GameBoardTest {
 
         // =========================================== //
         board = new GameBoard(game);
-        Tile[][] fullBoard = {
+        final Tile[][] fullBoard = {
                 { new Tile(16), new Tile(16), new Tile(16), new Tile(16) },
                 { new Tile(16), new Tile(16), new Tile(16), new Tile(16) },
                 { new Tile(16), new Tile(16), new Tile(16), new Tile(16) },
@@ -145,7 +123,7 @@ class GameBoardTest {
 
         // =========================================== //
         board = new GameBoard(game);
-        Tile[][] almostFull = {
+        final Tile[][] almostFull = {
                 { null, new Tile(16), new Tile(16), new Tile(16) },
                 { new Tile(16), new Tile(16), new Tile(16), new Tile(16) },
                 { new Tile(16), new Tile(16), new Tile(16), new Tile(16) },
@@ -198,7 +176,7 @@ class GameBoardTest {
     void testIsTerminalState() {
         System.out.println("isTerminalState");
         GameBoard board = new GameBoard(game);
-        Tile[][] terminalBoard = {
+        final Tile[][] terminalBoard = {
                 { new Tile(128), new Tile(2), new Tile(8), new Tile(4) },
                 { new Tile(2), new Tile(16), new Tile(32), new Tile(2) },
                 { new Tile(8), new Tile(32), new Tile(2), new Tile(64) },
@@ -213,7 +191,7 @@ class GameBoardTest {
 
         // =========================================== //
         board = new GameBoard(game);
-        Tile[][] fullNotTerminalBoard = {
+        final Tile[][] fullNotTerminalBoard = {
                 { new Tile(128), new Tile(2), new Tile(8), new Tile(4) },
                 { new Tile(2), new Tile(16), new Tile(32), new Tile(2) },
                 { new Tile(8), new Tile(32), new Tile(2), new Tile(64) },
@@ -237,7 +215,7 @@ class GameBoardTest {
 
         // =========================================== //
         board = new GameBoard(game);
-        Tile[][] winBoard = {
+        final Tile[][] winBoard = {
                 { new Tile(128), new Tile(2), new Tile(8), new Tile(4) },
                 { new Tile(2), new Tile(2048), new Tile(32), new Tile(2) },
                 { new Tile(8), new Tile(32), new Tile(2), new Tile(64) },
@@ -260,7 +238,7 @@ class GameBoardTest {
     void testTileAt() {
         System.out.println("tileAt");
 
-        GameBoard board = new GameBoard(game);
+        final GameBoard board = new GameBoard(game);
         board.setTiles(randomBoard);
         board.clearInterns(true);
 
@@ -285,12 +263,12 @@ class GameBoardTest {
     void testUpdateInternalState() {
         System.out.println("updateInternalState");
 
-        GameBoard board = new GameBoard(game);
+        final GameBoard board = new GameBoard(game);
         board.setTiles(randomBoard);
         board.clearInterns(true);
 
-        Integer[] expResult = { 0, 2, 13 };
-        Integer[] result    = new Integer[3];
+        final Integer[] expResult = { 0, 2, 13 };
+        final Integer[] result    = new Integer[3];
         board.getAvailableSpace().toArray(result);
 
         Assert.assertArrayEquals(expResult, result);

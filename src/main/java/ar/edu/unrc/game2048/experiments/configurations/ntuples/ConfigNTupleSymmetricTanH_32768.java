@@ -49,8 +49,8 @@ class ConfigNTupleSymmetricTanH_32768
         activationFunction = FunctionUtils.TANH;
         derivedActivationFunction = FunctionUtils.TANH_DERIVED;
         concurrency = false;
-        double activationFunctionMax = 1;
-        double activationFunctionMin = -1;
+        final double activationFunctionMax = 1;
+        final double activationFunctionMin = -1;
 
         normOutput = new NormalizedField(NormalizationAction.Normalize, null, maxReward, minReward, activationFunctionMax, activationFunctionMin);
 
@@ -60,7 +60,7 @@ class ConfigNTupleSymmetricTanH_32768
         nTuplesLength[2] = 4;
         nTuplesLength[3] = 4;
 
-        int maxTile = 15;
+        final int maxTile = 15;
         allSamplePointPossibleValues = new ArrayList<>();
         allSamplePointPossibleValues.add(null);
         for ( int i = 1; i <= maxTile; i++ ) {
@@ -75,51 +75,46 @@ class ConfigNTupleSymmetricTanH_32768
      */
     @Override
     public
-    Object clone()
+    ConfigNTupleSymmetricTanH_32768 clone()
             throws CloneNotSupportedException {
-        return super.clone(); //To change body of generated methods, choose Tools | Templates.
+        return (ConfigNTupleSymmetricTanH_32768) super.clone();
     }
 
     @Override
     public
-    double deNormalizeValueFromNeuralNetworkOutput( Object value ) {
+    double deNormalizeValueFromNeuralNetworkOutput( final Object value ) {
         return normOutput.deNormalize((double) value);
     }
 
     @Override
     public
     SamplePointValue[] getNTuple(
-            GameBoard board,
-            int nTupleIndex
+            final GameBoard board,
+            final int nTupleIndex
     ) {
         switch ( nTupleIndex ) {
             // rectángulos
-            case 0: {
+            case 0:
                 return new SamplePointValue[] {
                         board.tileAt(0, 0), board.tileAt(0, 1), board.tileAt(0, 2), board.tileAt(1, 0), board.tileAt(1, 1), board.tileAt(1, 2)
                 };
-            }
-            case 1: {
+            case 1:
                 return new SamplePointValue[] {
                         board.tileAt(1, 0), board.tileAt(1, 1), board.tileAt(1, 2), board.tileAt(2, 0), board.tileAt(2, 1), board.tileAt(2, 2)
                 };
-            }
             // verticales
-            case 2: {
+            case 2:
                 return new SamplePointValue[] { board.tileAt(2, 0), board.tileAt(2, 1), board.tileAt(2, 2), board.tileAt(2, 3) };
-            }
-            case 3: {
+            case 3:
                 return new SamplePointValue[] { board.tileAt(3, 0), board.tileAt(3, 1), board.tileAt(3, 2), board.tileAt(3, 3) };
-            }
-            default: {
+            default:
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
         }
     }
 
     @Override
     public
-    double normalizeValueToPerceptronOutput( Object value ) {
+    double normalizeValueToPerceptronOutput( final Object value ) {
         if ( (Double) value > maxReward ) {
             throw new IllegalArgumentException("value no puede ser mayor a maxReward=" + maxReward);
         }

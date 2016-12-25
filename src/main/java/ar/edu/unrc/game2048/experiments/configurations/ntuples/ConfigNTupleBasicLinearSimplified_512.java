@@ -41,8 +41,8 @@ class ConfigNTupleBasicLinearSimplified_512
     public
     ConfigNTupleBasicLinearSimplified_512() {
         setTileToWinForTraining(512);
-        int numSamples = 8;
-        int maxTile    = 9;
+        final int numSamples = 8;
+        final int maxTile    = 9;
 
         activationFunction = FunctionUtils.LINEAR;
         derivedActivationFunction = FunctionUtils.LINEAR_DERIVED;
@@ -65,14 +65,14 @@ class ConfigNTupleBasicLinearSimplified_512
      */
     @Override
     public
-    Object clone()
+    ConfigNTupleBasicLinearSimplified_512 clone()
             throws CloneNotSupportedException {
-        return super.clone(); //To change body of generated methods, choose Tools | Templates.
+        return (ConfigNTupleBasicLinearSimplified_512) super.clone();
     }
 
     @Override
     public
-    double deNormalizeValueFromNeuralNetworkOutput( Object value ) {
+    double deNormalizeValueFromNeuralNetworkOutput( final Object value ) {
         return (double) value;
     }
 
@@ -81,45 +81,36 @@ class ConfigNTupleBasicLinearSimplified_512
     @Override
     public
     SamplePointValue[] getNTuple(
-            GameBoard board,
-            int nTupleIndex
+            final GameBoard board,
+            final int nTupleIndex
     ) {
         switch ( nTupleIndex ) {
             // verticales
-            case 0: {
+            case 0:
                 return new SamplePointValue[] { board.tileAt(0, 0), board.tileAt(0, 1), board.tileAt(0, 2), board.tileAt(0, 3) };
-            }
-            case 1: {
+            case 1:
                 return new SamplePointValue[] { board.tileAt(1, 0), board.tileAt(1, 1), board.tileAt(1, 2), board.tileAt(1, 3) };
-            }
-            case 2: {
+            case 2:
                 return new SamplePointValue[] { board.tileAt(2, 0), board.tileAt(2, 1), board.tileAt(2, 2), board.tileAt(2, 3) };
-            }
-            case 3: {
+            case 3:
                 return new SamplePointValue[] { board.tileAt(3, 0), board.tileAt(3, 1), board.tileAt(3, 2), board.tileAt(3, 3) };
-            }
             // horizontales
-            case 4: {
+            case 4:
                 return new SamplePointValue[] { board.tileAt(0, 0), board.tileAt(1, 0), board.tileAt(2, 0), board.tileAt(3, 0) };
-            }
-            case 5: {
+            case 5:
                 return new SamplePointValue[] { board.tileAt(0, 1), board.tileAt(1, 1), board.tileAt(2, 1), board.tileAt(3, 1) };
-            }
-            case 6: {
+            case 6:
                 return new SamplePointValue[] { board.tileAt(0, 2), board.tileAt(1, 2), board.tileAt(2, 2), board.tileAt(3, 2) };
-            }
-            case 7: {
+            case 7:
                 return new SamplePointValue[] { board.tileAt(0, 3), board.tileAt(1, 3), board.tileAt(2, 3), board.tileAt(3, 3) };
-            }
-            default: {
+            default:
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
         }
     }
 
     @Override
     public
-    double normalizeValueToPerceptronOutput( Object value ) {
+    double normalizeValueToPerceptronOutput( final Object value ) {
         return (double) value;
     }
 

@@ -44,9 +44,5 @@ enum Action
     /**
      * Derecha
      */
-    right,
-    /**
-     * Restablecer
-     */
-    reset
+    right
 }

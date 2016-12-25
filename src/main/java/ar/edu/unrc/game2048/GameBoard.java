@@ -10,25 +10,25 @@ import ar.edu.unrc.game2048.experiments.statistics.greedy.GreedyStateProbability
 import java.util.*;
 
 /**
- * Created by franco on 24/12/16.
+ * @author lucia bressan, franco pellegrini, renzo bianchini
  */
 public
 class GameBoard
         implements IStatePerceptron, IStateNTuple {
-    private final static Random rand = new Random();
-    private final static int    side = 4;
+    private static final Random rand = new Random();
+    private static final int    side = 4;
+    private final List< Integer > availableSpace;
     private final Game2048        game;
     private final List< Double >  normalizedPerceptronInput;
-    private       List< Integer > availableSpace;
     private       boolean         checkingAvailableMoves;
     private       int             highestValue;
     private       int             partialScore;
     private       Tile[][]        tiles;
 
     public
-    GameBoard( Game2048 game ) {
+    GameBoard( final Game2048 game ) {
         this.game = game;
-        this.tiles = new Tile[side][side];
+        tiles = new Tile[side][side];
         availableSpace = new LinkedList<>();
         //inicializamos el tablero para su traducción a las entradas de la red neuronal
         if ( game.getNeuralNetworkConfiguration() != null ) {
@@ -36,7 +36,8 @@ class GameBoard
                 normalizedPerceptronInput = new InputNTupleList();
             } else {
                 normalizedPerceptronInput = new ArrayList<>(game.getNeuralNetworkConfiguration().getNeuronQuantityInLayer()[0]);
-                for ( int i = 0; i < game.getNeuralNetworkConfiguration().getNeuronQuantityInLayer()[0]; i++ ) {
+                final int neuronQuantityInLayerLength = game.getNeuralNetworkConfiguration().getNeuronQuantityInLayer()[0];
+                for ( int i = 0; i < neuronQuantityInLayerLength; i++ ) {
                     normalizedPerceptronInput.add(null);
                 }
             }
@@ -48,11 +49,12 @@ class GameBoard
     public
     void addRandomTile() {
         if ( !availableSpace.isEmpty() ) {
-            int pos = availableSpace.get(rand.nextInt(availableSpace.size()));
-            int row, col;
+            final int pos = availableSpace.get(rand.nextInt(availableSpace.size()));
+            final int row;
+            final int col;
             row = pos / side;
             col = pos % side;
-            int val = rand.nextInt(10) == 0 ? 4 : 2;
+            final int val = ( rand.nextInt(10) == 0 ) ? 4 : 2;
             assert tiles[row][col] == null;
             tiles[row][col] = new Tile(val);
             updateNormalizedPerceptronInput();
@@ -62,7 +64,7 @@ class GameBoard
     public
     boolean canMoveDown() {
         checkingAvailableMoves = true;
-        boolean hasMoves = moveDown();
+        final boolean hasMoves = moveDown();
         checkingAvailableMoves = false;
         return hasMoves;
     }
@@ -70,7 +72,7 @@ class GameBoard
     public
     boolean canMoveLeft() {
         checkingAvailableMoves = true;
-        boolean hasMoves = moveLeft();
+        final boolean hasMoves = moveLeft();
         checkingAvailableMoves = false;
         return hasMoves;
     }
@@ -78,7 +80,7 @@ class GameBoard
     public
     boolean canMoveRight() {
         checkingAvailableMoves = true;
-        boolean hasMoves = moveRight();
+        final boolean hasMoves = moveRight();
         checkingAvailableMoves = false;
         return hasMoves;
     }
@@ -86,20 +88,20 @@ class GameBoard
     public
     boolean canMoveUp() {
         checkingAvailableMoves = true;
-        boolean hasMoves = moveUp();
+        final boolean hasMoves = moveUp();
         checkingAvailableMoves = false;
         return hasMoves;
     }
 
     public
-    void clearInterns( boolean resetMerged ) {
+    void clearInterns( final boolean resetMerged ) {
         availableSpace.clear();
         for ( int row = 0; row < side; row++ ) {
             for ( int col = 0; col < side; col++ ) {
                 if ( tiles[row][col] != null ) {
                     if ( resetMerged ) { tiles[row][col].setMerged(false); }
                 } else {
-                    availableSpace.add(side * row + col);
+                    availableSpace.add(( side * row ) + col);
                 }
             }
         }
@@ -107,19 +109,20 @@ class GameBoard
 
     @Override
     public
-    boolean equals( Object o ) {
+    boolean equals( final Object o ) {
         if ( this == o ) { return true; }
         if ( !( o instanceof GameBoard ) ) { return false; }
 
-        GameBoard gameBoard = (GameBoard) o;
+        final GameBoard gameBoard = (GameBoard) o;
 
         if ( checkingAvailableMoves != gameBoard.checkingAvailableMoves ) { return false; }
         if ( highestValue != gameBoard.highestValue ) { return false; }
         if ( partialScore != gameBoard.partialScore ) { return false; }
         if ( !game.equals(gameBoard.game) ) { return false; }
-        if ( normalizedPerceptronInput != null
-             ? !normalizedPerceptronInput.equals(gameBoard.normalizedPerceptronInput)
-             : gameBoard.normalizedPerceptronInput != null ) { return false; }
+        if ( ( normalizedPerceptronInput != null )
+             ? !normalizedPerceptronInput.equals(gameBoard.normalizedPerceptronInput) : ( gameBoard.normalizedPerceptronInput != null ) ) {
+            return false;
+        }
         if ( !availableSpace.equals(gameBoard.availableSpace) ) { return false; }
         return Arrays.deepEquals(tiles, gameBoard.tiles);
     }
@@ -132,7 +135,7 @@ class GameBoard
     @Override
     public
     IState getCopy() {
-        GameBoard copy = new GameBoard(game);
+        final GameBoard copy = new GameBoard(game);
         copy.highestValue = highestValue;
         copy.partialScore = partialScore;
         for ( int row = 0; row < side; row++ ) {
@@ -154,7 +157,7 @@ class GameBoard
 
     @Override
     public
-    SamplePointValue[] getNTuple( int nTupleIndex ) {
+    SamplePointValue[] getNTuple( final int nTupleIndex ) {
         return game.getNTupleSystemConfiguration().getNTuple(this, nTupleIndex);
     }
 
@@ -165,7 +168,7 @@ class GameBoard
 
     @Override
     public
-    double getStateReward( int outputNeuron ) {
+    double getStateReward( final int outputNeuron ) {
         return partialScore;
     }
 
@@ -175,7 +178,7 @@ class GameBoard
     }
 
     public
-    void setTiles( Tile[][] tiles ) {
+    void setTiles( final Tile[][] tiles ) {
         this.tiles = tiles;
     }
 
@@ -183,12 +186,12 @@ class GameBoard
     public
     int hashCode() {
         int result = game.hashCode();
-        result = 31 * result + ( normalizedPerceptronInput != null ? normalizedPerceptronInput.hashCode() : 0 );
-        result = 31 * result + availableSpace.hashCode();
-        result = 31 * result + ( checkingAvailableMoves ? 1 : 0 );
-        result = 31 * result + highestValue;
-        result = 31 * result + partialScore;
-        result = 31 * result + Arrays.deepHashCode(tiles);
+        result = ( 31 * result ) + ( ( normalizedPerceptronInput != null ) ? normalizedPerceptronInput.hashCode() : 0 );
+        result = ( 31 * result ) + availableSpace.hashCode();
+        result = ( 31 * result ) + ( checkingAvailableMoves ? 1 : 0 );
+        result = ( 31 * result ) + highestValue;
+        result = ( 31 * result ) + partialScore;
+        result = ( 31 * result ) + Arrays.deepHashCode(tiles);
         return result;
     }
 
@@ -206,9 +209,9 @@ class GameBoard
     public
     boolean isTerminalState() {
         checkingAvailableMoves = true;
-        boolean hasMoves = !game.isAWin(highestValue) && ( moveUp() || moveDown() || moveLeft() || moveRight() );
+        final boolean noMovesLeft = game.isAWin(highestValue) || ( !moveUp() && !moveDown() && !moveLeft() && !moveRight() );
         checkingAvailableMoves = false;
-        return !hasMoves;
+        return noMovesLeft;
     }
 
     /**
@@ -216,19 +219,17 @@ class GameBoard
      */
     public
     List< GreedyStateProbability > listAllPossibleNextTurnStateFromAfterState() {
-        List< GreedyStateProbability > output = new ArrayList<>(16);
+        final List< GreedyStateProbability > output = new ArrayList<>(16);
         for ( int value = 1; value <= 2; value++ ) {
-            double probability;
-            if ( value == 1 ) {
-                probability = 0.9;
-            } else {
-                probability = 0.1;
-            }
-            this.clearInterns(false);
-            for ( int index = 0; index < availableSpace.size() - 1; index++ ) {
-                @SuppressWarnings( "unchecked" ) GameBoard copy = (GameBoard) getCopy();
-                int                                        pos  = availableSpace.get(index);
-                int                                        row, col;
+            final double probability;
+            probability = ( value == 1 ) ? 0.9 : 0.1;
+            clearInterns(false);
+            final int availableSpaceSize = availableSpace.size() - 1;
+            for ( int index = 0; index < availableSpaceSize; index++ ) {
+                @SuppressWarnings( "unchecked" ) final GameBoard copy = (GameBoard) getCopy();
+                final int                                        pos  = availableSpace.get(index);
+                final int                                        row;
+                final int                                        col;
                 row = pos / side;
                 col = pos % side;
                 copy.tiles[row][col] = new Tile((int) Math.pow(2, value));
@@ -241,16 +242,16 @@ class GameBoard
 
     private
     boolean move(
-            int countDownFrom,
-            int yInc,
-            int xInc
+            final int countDownFrom,
+            final int yInc,
+            final int xInc
     ) {
         boolean moved = false;
         highestValue = 0;
         partialScore = 0;
 
-        for ( int i = 0; i < side * side; i++ ) {
-            int j = Math.abs(countDownFrom - i);
+        for ( int i = 0; i < ( side * side ); i++ ) {
+            final int j = Math.abs(countDownFrom - i);
 
             int r = j / side;
             int c = j % side;
@@ -260,10 +261,10 @@ class GameBoard
             int nextR = r + yInc;
             int nextC = c + xInc;
 
-            while ( nextR >= 0 && nextR < side && nextC >= 0 && nextC < side ) {
+            while ( ( nextR >= 0 ) && ( nextR < side ) && ( nextC >= 0 ) && ( nextC < side ) ) {
 
-                Tile next = tiles[nextR][nextC];
-                Tile curr = tiles[r][c];
+                final Tile next = tiles[nextR][nextC];
+                final Tile curr = tiles[r][c];
 
                 if ( next == null ) {
 
@@ -281,7 +282,7 @@ class GameBoard
 
                     if ( checkingAvailableMoves ) { return true; }
 
-                    int value = next.mergeWith(curr);
+                    final int value = next.mergeWith(curr);
                     if ( value > highestValue ) {
                         highestValue = value;
                     }
@@ -302,7 +303,7 @@ class GameBoard
 
     public
     boolean moveDown() {
-        return move(side * side - 1, 1, 0);
+        return move(( side * side ) - 1, 1, 0);
     }
 
     public
@@ -312,7 +313,7 @@ class GameBoard
 
     public
     boolean moveRight() {
-        return move(side * side - 1, 0, 1);
+        return move(( side * side ) - 1, 0, 1);
     }
 
     public
@@ -322,8 +323,8 @@ class GameBoard
 
     public
     Tile tileAt(
-            int row,
-            int col
+            final int row,
+            final int col
     ) {
         return tiles[row][col];
     }
@@ -331,25 +332,25 @@ class GameBoard
     @Override
     public
     String toString() {
-        StringBuilder out = new StringBuilder();
-        out.append("\n");
+        final StringBuilder out = new StringBuilder();
+        out.append('\n');
         for ( int r = 0; r < side; r++ ) {
             for ( int c = 0; c < side; c++ ) {
                 if ( tiles[r][c] == null ) {
                     out.append("-\t");
                 } else {
-                    out.append(tiles[r][c].getValue() + "\t");
+                    out.append(tiles[r][c].getValue()).append("\t");
                 }
             }
-            out.append("\n");
+            out.append('\n');
         }
         return out.toString();
     }
 
     @Override
     public
-    Double translateToPerceptronInput( int neuronIndex ) {
-        if ( neuronIndex < 0 || neuronIndex >= game.getNeuralNetworkConfiguration().getNeuronQuantityInLayer()[0] ) {
+    Double translateToPerceptronInput( final int neuronIndex ) {
+        if ( ( neuronIndex < 0 ) || ( neuronIndex >= game.getNeuralNetworkConfiguration().getNeuronQuantityInLayer()[0] ) ) {
             throw new IllegalArgumentException(
                     "neuronIndex range for output layer must be [0," + game.getNeuralNetworkConfiguration().getNeuronQuantityInLayer()[0] +
                     "] but was " + neuronIndex);
@@ -357,7 +358,7 @@ class GameBoard
         return normalizedPerceptronInput.get(neuronIndex);
     }
 
-    public
+    private
     void updateNormalizedPerceptronInput() {
         if ( game.getNeuralNetworkConfiguration() != null ) {
             //   assert this.getMaxTileNumberCode() != 0;

@@ -40,16 +40,12 @@ class GreedyBasic
      * @throws Exception
      */
     public static
-    void main( String[] args )
+    void main( final String... args )
             throws Exception {
-        String filePath;
-        if ( args.length == 0 ) {
-            filePath = ".." + File.separator + "Perceptrones ENTRENADOS" + File.separator;
-        } else {
-            filePath = args[0];
-        }
-        LearningExperiment experiment   = new GreedyBasic();
-        boolean            printHistory = false;
+        final String filePath;
+        filePath = ( args.length == 0 ) ? ( ".." + File.separator + "Perceptrones ENTRENADOS" + File.separator ) : args[0];
+        final LearningExperiment experiment   = new GreedyBasic();
+        final boolean            printHistory = false;
 
         experiment.setStatisticsOnly(true);
         experiment.createLogs(false);
@@ -65,7 +61,6 @@ class GreedyBasic
         Toolkit.getDefaultToolkit().beep();
     }
 
-    @SuppressWarnings( "unchecked" )
     @Override
     public
     void initialize() {
@@ -80,7 +75,7 @@ class GreedyBasic
     @Override
     public
     TDLambdaLearning instanceOfTdLearningImplementation(
-            INeuralNetworkInterface perceptronInterface
+            final INeuralNetworkInterface perceptronInterface
     ) {
         return null;
     }
@@ -88,7 +83,7 @@ class GreedyBasic
     @Override
     public
     TDLambdaLearning instanceOfTdLearningImplementation(
-            NTupleSystem nTupleSystem
+            final NTupleSystem nTupleSystem
     ) {
         return null;
     }

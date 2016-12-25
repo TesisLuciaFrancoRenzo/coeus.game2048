@@ -73,7 +73,7 @@ class GreedyStateProbability {
      */
     public
     void setProbability( final double probability ) {
-        if ( probability < 0 && probability > 1 ) {
+        if ( ( probability < 0 ) && ( probability > 1 ) ) {
             throw new IllegalArgumentException("probability debe estar en el rango 0<=probability<=1");
         }
         this.probability = probability;

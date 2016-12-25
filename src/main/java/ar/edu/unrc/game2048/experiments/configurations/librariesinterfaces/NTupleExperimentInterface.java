@@ -40,7 +40,7 @@ class NTupleExperimentInterface
      */
     public
     NTupleExperimentInterface(
-            NTupleConfiguration2048 perceptronConfiguration
+            final NTupleConfiguration2048 perceptronConfiguration
     ) {
         super(perceptronConfiguration);
     }
@@ -50,9 +50,9 @@ class NTupleExperimentInterface
      */
     @Override
     public
-    Object clone()
+    NTupleExperimentInterface clone()
             throws CloneNotSupportedException {
-        return super.clone(); //To change body of generated methods, choose Tools | Templates.
+        return (NTupleExperimentInterface) super.clone();
     }
 
     @Override
@@ -75,8 +75,8 @@ class NTupleExperimentInterface
      * @return una NTupla inicializada.
      */
     public
-    NTupleSystem initializeNTupleSystem( boolean randomized ) {
-        NTupleSystem nTupleSystem = new NTupleSystem(getNTupleConfiguration().getAllSamplePointPossibleValues(),
+    NTupleSystem initializeNTupleSystem( final boolean randomized ) {
+        final NTupleSystem nTupleSystem = new NTupleSystem(getNTupleConfiguration().getAllSamplePointPossibleValues(),
                 getNTupleConfiguration().getNTuplesLength(),
                 getNTupleConfiguration().getActivationFunction(),
                 getNTupleConfiguration().getDerivedActivationFunction(), getNTupleConfiguration().isConcurrency());
@@ -89,33 +89,33 @@ class NTupleExperimentInterface
     @Override
     public
     void loadOrCreatePerceptron(
-            File perceptronFile,
-            boolean randomizedIfNotExist,
-            boolean createPerceptronFile
+            final File perceptronFile,
+            final boolean randomizedIfNotExist,
+            final boolean createPerceptronFile
     )
             throws Exception {
         getNTupleConfiguration().setNTupleSystem(initializeNTupleSystem(randomizedIfNotExist));
         if ( createPerceptronFile ) {
-            if ( !perceptronFile.exists() ) {
-                //Si el archivo no existe, creamos un perceptron nuevo inicializado al azar
-                getNTupleConfiguration().getNTupleSystem().save(perceptronFile);
-            } else {
+            if ( perceptronFile.exists() ) {
                 //si el archivo existe, lo cargamos como perceptron entrenado al juego
                 getNTupleConfiguration().getNTupleSystem().load(perceptronFile);
+            } else {
+                //Si el archivo no existe, creamos un perceptron nuevo inicializado al azar
+                getNTupleConfiguration().getNTupleSystem().save(perceptronFile);
             }
         }
     }
 
     @Override
     public
-    void saveNeuralNetwork( File perceptronFile )
+    void saveNeuralNetwork( final File perceptronFile )
             throws Exception {
         getNTupleConfiguration().getNTupleSystem().save(perceptronFile);
     }
 
     @Override
     public
-    void saveNeuralNetwork( OutputStream outputStream )
+    void saveNeuralNetwork( final OutputStream outputStream )
             throws Exception {
         getNTupleConfiguration().getNTupleSystem().save(outputStream);
     }

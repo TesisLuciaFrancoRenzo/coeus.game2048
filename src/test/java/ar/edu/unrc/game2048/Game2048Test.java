@@ -20,10 +20,12 @@ package ar.edu.unrc.game2048;
 
 import ar.edu.unrc.coeus.tdlearning.interfaces.IAction;
 import ar.edu.unrc.coeus.tdlearning.interfaces.IState;
-import org.junit.*;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.*;
@@ -40,38 +42,6 @@ class Game2048Test {
     /**
      *
      */
-    public
-    Game2048Test() {
-
-    }
-
-    /**
-     *
-     */
-    @BeforeClass
-    public static
-    void setUpClass() {
-    }
-
-    /**
-     *
-     */
-    @AfterClass
-    public static
-    void tearDownClass() {
-    }
-
-    /**
-     *
-     */
-    @Before
-    public
-    void setUp() {
-    }
-
-    /**
-     *
-     */
     @After
     public
     void tearDown() {
@@ -83,7 +53,6 @@ class Game2048Test {
     /**
      * Test of listAllPossibleActions method, of class Game2048.
      */
-    @SuppressWarnings( "unchecked" )
     @Test
     public
     void testListAllPossibleActions() {
@@ -94,7 +63,7 @@ class Game2048Test {
 
         //inicializamos un tablero terminal
         GameBoard board = new GameBoard(game);
-        Tile[][] terminalBoard = {
+        final Tile[][] terminalBoard = {
                 { new Tile(128), new Tile(2), new Tile(8), new Tile(4) },
                 { new Tile(2), new Tile(16), new Tile(32), new Tile(2) },
                 { new Tile(8), new Tile(32), new Tile(2), new Tile(64) },
@@ -103,13 +72,13 @@ class Game2048Test {
         board.setTiles(terminalBoard);
         board.clearInterns(true);
 
-        ArrayList< IAction > result = game.listAllPossibleActions(board);
+        List< IAction > result = game.listAllPossibleActions(board);
         assertThat(result.isEmpty(), is(true));
 
         // =========================================== //
         //inicializamos un tablero no terminal
         board = new GameBoard(game);
-        Tile[][] fullNotTerminalBoard = {
+        final Tile[][] fullNotTerminalBoard = {
                 { new Tile(128), new Tile(2), new Tile(8), new Tile(4) },
                 { new Tile(2), new Tile(16), new Tile(32), new Tile(2) },
                 { new Tile(8), new Tile(32), new Tile(2), new Tile(64) },
@@ -118,7 +87,7 @@ class Game2048Test {
         board.setTiles(fullNotTerminalBoard);
         board.clearInterns(true);
 
-        @SuppressWarnings( "MismatchedQueryAndUpdateOfCollection" ) Set< IAction > expResult = new HashSet<>();
+        @SuppressWarnings( "MismatchedQueryAndUpdateOfCollection" ) final Set< IAction > expResult = new HashSet<>();
         expResult.add(Action.down);
         expResult.add(Action.up);
 
@@ -129,7 +98,7 @@ class Game2048Test {
         assertThat(result.size(), is(2));
 
         Set< IAction > resultSet = new HashSet<>(game.listAllPossibleActions(board));
-        for ( IAction action : resultSet ) {
+        for ( final IAction action : resultSet ) {
             assertThat(resultSet, hasItem(action));
         }
 
@@ -152,7 +121,7 @@ class Game2048Test {
         // =========================================== //
         //inicializamos un tablero con muchos movimientos terminal
         board = new GameBoard(game);
-        Tile[][] multipleMovesTerminalBoard = {
+        final Tile[][] multipleMovesTerminalBoard = {
                 { new Tile(128), new Tile(2), new Tile(8), new Tile(4) },
                 { new Tile(2), null, new Tile(32), new Tile(2) },
                 { new Tile(8), new Tile(32), new Tile(2), new Tile(64) },
@@ -169,7 +138,7 @@ class Game2048Test {
         result = game.listAllPossibleActions(board);
         assertThat(result.size(), is(4));
         resultSet = new HashSet<>(game.listAllPossibleActions(board));
-        for ( IAction action : resultSet ) {
+        for ( final IAction action : resultSet ) {
             assertThat(result, hasItem(action));
         }
 

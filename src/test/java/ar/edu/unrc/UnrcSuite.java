@@ -18,18 +18,20 @@
  */
 package ar.edu.unrc;
 
+import ar.edu.unrc.game2048.Game2048Suite;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 
 /**
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
 @RunWith( Suite.class )
-@Suite.SuiteClasses( { ar.edu.unrc.game2048.Game2048Suite.class } )
+@SuiteClasses( Game2048Suite.class )
 public
 class UnrcSuite {
 

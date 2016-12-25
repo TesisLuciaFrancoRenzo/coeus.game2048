@@ -43,7 +43,7 @@ class ConfigNTupleSymmetricLinear_32768
         activationFunction = FunctionUtils.LINEAR;
         derivedActivationFunction = FunctionUtils.LINEAR_DERIVED;
         concurrency = false;
-        int maxTile = 15;
+        final int maxTile = 15;
 
         nTuplesLength = new int[4];
         nTuplesLength[0] = 6;
@@ -65,51 +65,46 @@ class ConfigNTupleSymmetricLinear_32768
      */
     @Override
     public
-    Object clone()
+    ConfigNTupleSymmetricLinear_32768 clone()
             throws CloneNotSupportedException {
-        return super.clone(); //To change body of generated methods, choose Tools | Templates.
+        return (ConfigNTupleSymmetricLinear_32768) super.clone();
     }
 
     @Override
     public
-    double deNormalizeValueFromNeuralNetworkOutput( Object value ) {
+    double deNormalizeValueFromNeuralNetworkOutput( final Object value ) {
         return (double) value;
     }
 
     @Override
     public
     SamplePointValue[] getNTuple(
-            GameBoard board,
-            int nTupleIndex
+            final GameBoard board,
+            final int nTupleIndex
     ) {
         switch ( nTupleIndex ) {
             // rectángulos
-            case 0: {
+            case 0:
                 return new SamplePointValue[] {
                         board.tileAt(0, 0), board.tileAt(0, 1), board.tileAt(0, 2), board.tileAt(1, 0), board.tileAt(1, 1), board.tileAt(1, 2)
                 };
-            }
-            case 1: {
+            case 1:
                 return new SamplePointValue[] {
                         board.tileAt(1, 0), board.tileAt(1, 1), board.tileAt(1, 2), board.tileAt(2, 0), board.tileAt(2, 1), board.tileAt(2, 2)
                 };
-            }
             // verticales
-            case 2: {
+            case 2:
                 return new SamplePointValue[] { board.tileAt(2, 0), board.tileAt(2, 1), board.tileAt(2, 2), board.tileAt(2, 3) };
-            }
-            case 3: {
+            case 3:
                 return new SamplePointValue[] { board.tileAt(3, 0), board.tileAt(3, 1), board.tileAt(3, 2), board.tileAt(3, 3) };
-            }
-            default: {
+            default:
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
         }
     }
 
     @Override
     public
-    double normalizeValueToPerceptronOutput( Object value ) {
+    double normalizeValueToPerceptronOutput( final Object value ) {
         return (double) value;
     }
 }

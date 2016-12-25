@@ -11,6 +11,9 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.IntStream;
 
+/**
+ * @author lucia bressan, franco pellegrini, renzo bianchini
+ */
 public
 class Game2048
         implements IProblemToTrain {
@@ -22,22 +25,18 @@ class Game2048
     private final boolean                 printHistory;
     private       GameBoard               board;
     private State gameState = State.start;
-    private int highest;
     private int lastTurn;
+    private int maxNumber;
     private int score;
 
     public
     Game2048(
-            EncogConfiguration2048 neuralNetworkConfiguration,
-            NTupleConfiguration2048 nTupleSystemConfiguration,
-            int numberToWin,
-            boolean printHistory
+            final EncogConfiguration2048 neuralNetworkConfiguration,
+            final NTupleConfiguration2048 nTupleSystemConfiguration,
+            final int numberToWin,
+            final boolean printHistory
     ) {
-        if ( printHistory ) {
-            historyLog = new StringBuilder();
-        } else {
-            historyLog = null;
-        }
+        historyLog = printHistory ? new StringBuilder() : null;
         this.numberToWin = numberToWin;
         this.neuralNetworkConfiguration = neuralNetworkConfiguration;
         this.nTupleSystemConfiguration = nTupleSystemConfiguration;
@@ -45,11 +44,11 @@ class Game2048
     }
 
     public static
-    void main( String[] args ) {
-        Game2048 game = new Game2048(null, null, 2048, false);
+    void main( final String... args ) {
+        final Game2048 game = new Game2048(null, null, 2048, false);
         System.out.println("Press \"ENTER\" to continue...");
-        Scanner scanner = new Scanner(System.in);
-        String  line;
+        final Scanner scanner = new Scanner(System.in);
+        String        line;
         do {
             line = scanner.nextLine();
             game.processInput(line);
@@ -60,48 +59,43 @@ class Game2048
     @Override
     public
     IState computeAfterState(
-            IState turnInitialState,
-            IAction action
+            final IState turnInitialState,
+            final IAction action
     ) {
-        GameBoard futureBoard = (GameBoard) turnInitialState.getCopy();
+        final GameBoard futureBoard = (GameBoard) turnInitialState.getCopy();
         switch ( (Action) action ) {
-            case left: {
+            case left:
                 futureBoard.moveLeft();
                 break;
-            }
-            case right: {
+            case right:
                 futureBoard.moveRight();
                 break;
-            }
-            case up: {
+            case up:
                 futureBoard.moveUp();
                 break;
-            }
-            case down: {
+            case down:
                 futureBoard.moveDown();
                 break;
-            }
-            default: {
-                throw new IllegalArgumentException("la acción \"" + action.toString() + "\" no es valida");
-            }
+            default:
+                throw new IllegalArgumentException("la acción \"" + action + "\" no es valida");
         }
         return futureBoard;
     }
 
     @Override
     public
-    IState computeNextTurnStateFromAfterState( IState afterState ) {
-        GameBoard finalBoard = (GameBoard) afterState.getCopy(); //FIXME optimizar?
-        highest = ( finalBoard.getHighestValue() > highest ) ? finalBoard.getHighestValue() : highest;
+    IState computeNextTurnStateFromAfterState( final IState afterState ) {
+        final GameBoard finalBoard = (GameBoard) afterState.getCopy(); //FIXME optimizar?
+        maxNumber = ( finalBoard.getHighestValue() > maxNumber ) ? finalBoard.getHighestValue() : maxNumber;
         score += finalBoard.getPartialScore();
         lastTurn++;
-        if ( highest < numberToWin ) {
+        if ( maxNumber < numberToWin ) {
             finalBoard.clearInterns(true);
             finalBoard.addRandomTile();
             if ( finalBoard.isTerminalState() ) {
                 gameState = State.over;
             }
-        } else if ( highest == numberToWin ) {
+        } else if ( maxNumber == numberToWin ) {
             gameState = State.won;
         }
         return finalBoard;
@@ -110,8 +104,8 @@ class Game2048
     @Override
     public
     Double computeNumericRepresentationFor(
-            Object[] output,
-            IActor actor
+            final Object[] output,
+            final IActor actor
     ) {
         if ( neuralNetworkConfiguration != null ) {
             return neuralNetworkConfiguration.computeNumericRepresentationFor(this, output);
@@ -123,24 +117,22 @@ class Game2048
 
     @Override
     public
-    double deNormalizeValueFromPerceptronOutput( Object value ) {
-        if ( neuralNetworkConfiguration != null ) {
-            return neuralNetworkConfiguration.deNormalizeValueFromNeuralNetworkOutput(value);
-        } else {
-            return nTupleSystemConfiguration.deNormalizeValueFromNeuralNetworkOutput(value);
-        }
+    double deNormalizeValueFromPerceptronOutput( final Object value ) {
+        return ( neuralNetworkConfiguration != null )
+               ? neuralNetworkConfiguration.deNormalizeValueFromNeuralNetworkOutput(value)
+               : nTupleSystemConfiguration.deNormalizeValueFromNeuralNetworkOutput(value);
     }
 
     private
     void draw() {
         if ( gameState == State.running ) {
-            System.out.println(board.toString() + "\nhighest=" + highest + " score=" + score);
+            System.out.println(board + "\nmaxNumber=" + maxNumber + " score=" + score);
         } else {
             if ( gameState == State.won ) {
-                System.out.println(board.toString() + "\nGanaste!");
+                System.out.println(board + "\nGanaste!");
 
             } else if ( gameState == State.over ) {
-                System.out.println(board.toString() + "\nPerdiste!");
+                System.out.println(board + "\nPerdiste!");
             }
         }
         System.out.println("======================================================");
@@ -148,32 +140,28 @@ class Game2048
 
     @Override
     public
-    Object[] evaluateBoardWithPerceptron( IState state ) {
+    Object[] evaluateBoardWithPerceptron( final IState state ) {
         //dependiendo de que tipo de red neuronal utilizamos, evaluamos las entradas y calculamos una salida
-        if ( neuralNetworkConfiguration != null && neuralNetworkConfiguration.
-                getNeuralNetwork() != null ) {
+        if ( ( neuralNetworkConfiguration != null ) && ( neuralNetworkConfiguration.getNeuralNetwork() != null ) ) {
             if ( neuralNetworkConfiguration.getNeuralNetwork() instanceof BasicNetwork ) { //es sobre la librería encog
                 //creamos las entradas de la red neuronal
-                double[]  inputs     = new double[neuralNetworkConfiguration.getNeuronQuantityInLayer()[0]];
-                IntStream inputLayer = IntStream.range(0, neuralNetworkConfiguration.getNeuronQuantityInLayer()[0]);
-                if ( neuralNetworkConfiguration.isConcurrentInputEnabled() ) {
-                    inputLayer = inputLayer.parallel();
-                } else {
-                    inputLayer = inputLayer.sequential();
-                }
+                final double[] inputs     = new double[neuralNetworkConfiguration.getNeuronQuantityInLayer()[0]];
+                IntStream      inputLayer = IntStream.range(0, neuralNetworkConfiguration.getNeuronQuantityInLayer()[0]);
+                inputLayer = neuralNetworkConfiguration.isConcurrentInputEnabled() ? inputLayer.parallel() : inputLayer.sequential();
                 inputLayer.forEach(index -> inputs[index] = ( (IStatePerceptron) state ).translateToPerceptronInput(index));
 
                 //cargamos la entrada a la red
-                MLData   inputData = new BasicMLData(inputs);
-                MLData   output    = neuralNetworkConfiguration.getNeuralNetwork().compute(inputData);
-                Double[] out       = new Double[output.getData().length];
-                for ( int i = 0; i < output.size(); i++ ) {
+                final MLData   inputData  = new BasicMLData(inputs);
+                final MLData   output     = neuralNetworkConfiguration.getNeuralNetwork().compute(inputData);
+                final Double[] out        = new Double[output.getData().length];
+                final int      outputSize = output.size();
+                for ( int i = 0; i < outputSize; i++ ) {
                     out[i] = output.getData()[i];
                 }
                 return out;
             }
         }
-        if ( nTupleSystemConfiguration != null && nTupleSystemConfiguration.getNTupleSystem() != null ) {
+        if ( ( nTupleSystemConfiguration != null ) && ( nTupleSystemConfiguration.getNTupleSystem() != null ) ) {
             return new Double[] { nTupleSystemConfiguration.getNTupleSystem().getComputation((IStateNTuple) state) };
         }
         throw new UnsupportedOperationException("only Encog and NTupleSystem is implemented");
@@ -202,7 +190,7 @@ class Game2048
 
     public
     int getMaxNumber() {
-        return highest;
+        return maxNumber;
     }
 
     public
@@ -222,10 +210,10 @@ class Game2048
 
     @Override
     public
-    IState initialize( IActor actor ) {
+    IState initialize( final IActor actor ) {
         score = 0;
         lastTurn = 0;
-        highest = 0;
+        maxNumber = 0;
         gameState = State.running;
         board = new GameBoard(this);
         board.clearInterns(true);
@@ -236,7 +224,7 @@ class Game2048
     }
 
     public
-    boolean isAWin( int value ) {
+    boolean isAWin( final int value ) {
         return value >= numberToWin;
     }
 
@@ -252,9 +240,9 @@ class Game2048
 
     @Override
     public
-    ArrayList< IAction > listAllPossibleActions( IState turnInitialState ) {
-        ArrayList< IAction > actions = new ArrayList<>(4);
-        GameBoard            state   = (GameBoard) turnInitialState;
+    List< IAction > listAllPossibleActions( final IState turnInitialState ) {
+        final ArrayList< IAction > actions = new ArrayList<>(4);
+        final GameBoard            state   = (GameBoard) turnInitialState;
         if ( state.canMoveUp() ) { actions.add(Action.up); }
         if ( state.canMoveDown() ) { actions.add(Action.down); }
         if ( state.canMoveLeft() ) { actions.add(Action.left); }
@@ -269,24 +257,21 @@ class Game2048
      */
     public
     List< GreedyStateProbability > listAllPossibleNextTurnStateFromAfterState(
-            IState afterState
+            final IState afterState
     ) {
-        //noinspection unchecked
         return ( (GameBoard) afterState ).listAllPossibleNextTurnStateFromAfterState();
     }
 
     @Override
     public
-    double normalizeValueToPerceptronOutput( Object value ) {
-        if ( nTupleSystemConfiguration != null ) {
-            return nTupleSystemConfiguration.normalizeValueToPerceptronOutput(value);
-        } else {
-            return neuralNetworkConfiguration.normalizeValueToPerceptronOutput(value);
-        }
+    double normalizeValueToPerceptronOutput( final Object value ) {
+        return ( nTupleSystemConfiguration != null )
+               ? nTupleSystemConfiguration.normalizeValueToPerceptronOutput(value)
+               : neuralNetworkConfiguration.normalizeValueToPerceptronOutput(value);
     }
 
     private
-    void processInput( String input ) {
+    void processInput( final String input ) {
         switch ( input ) {
             case "w":
                 if ( board.canMoveUp() ) {
@@ -324,7 +309,7 @@ class Game2048
 
     @Override
     public
-    void setCurrentState( IState nextTurnState ) {
+    void setCurrentState( final IState nextTurnState ) {
         board = (GameBoard) nextTurnState;
     }
 

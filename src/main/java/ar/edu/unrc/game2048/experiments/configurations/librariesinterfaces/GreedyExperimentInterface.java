@@ -31,6 +31,7 @@ import ar.edu.unrc.game2048.experiments.statistics.greedy.GreedyStateProbability
 import java.io.File;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -38,7 +39,6 @@ import java.util.List;
  *
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
-@SuppressWarnings( "unchecked" )
 public
 class GreedyExperimentInterface
         extends INeuralNetworkInterfaceFor2048 {
@@ -48,7 +48,7 @@ class GreedyExperimentInterface
      */
     public
     GreedyExperimentInterface(
-            EncogConfiguration2048 perceptronConfiguration
+            final EncogConfiguration2048 perceptronConfiguration
     ) {
         super(perceptronConfiguration);
     }
@@ -58,9 +58,9 @@ class GreedyExperimentInterface
      */
     @Override
     public
-    Object clone()
+    GreedyExperimentInterface clone()
             throws CloneNotSupportedException {
-        return super.clone(); //To change body of generated methods, choose Tools | Templates.
+        return (GreedyExperimentInterface) super.clone();
     }
 
     @Override
@@ -78,9 +78,9 @@ class GreedyExperimentInterface
     @Override
     public
     void loadOrCreatePerceptron(
-            File perceptronFile,
-            boolean randomizedIfNotExist,
-            boolean createPerceptronFile
+            final File perceptronFile,
+            final boolean randomizedIfNotExist,
+            final boolean createPerceptronFile
     )
             throws Exception {
     }
@@ -88,21 +88,21 @@ class GreedyExperimentInterface
     @Override
     public
     void playATurn(
-            Game2048 game,
-            TDLambdaLearning learningMethod
+            final Game2048 game,
+            final TDLambdaLearning learningMethod
     ) {
-        GameBoard            actualBoard     = game.getBoard();
-        List< Action >       bestActions     = new ArrayList<>(4);
-        double               bestReward      = -100d;
-        ArrayList< IAction > possibleActions = game.listAllPossibleActions(actualBoard);
-        for ( IAction action : possibleActions ) {
-            GameBoard                      afterState            = (GameBoard) game.computeAfterState(actualBoard, action);
-            List< GreedyStateProbability > allPossibleNextStates = game.listAllPossibleNextTurnStateFromAfterState(afterState);
-            Double reward = allPossibleNextStates.stream().mapToDouble(( nextStateProb ) -> {
+        final GameBoard           actualBoard     = game.getBoard();
+        final List< Action >      bestActions     = new ArrayList<>(4);
+        double                    bestReward      = -100.0d;
+        final Iterable< IAction > possibleActions = game.listAllPossibleActions(actualBoard);
+        for ( final IAction action : possibleActions ) {
+            final GameBoard                      afterState            = (GameBoard) game.computeAfterState(actualBoard, action);
+            final List< GreedyStateProbability > allPossibleNextStates = game.listAllPossibleNextTurnStateFromAfterState(afterState);
+            final Double reward = allPossibleNextStates.stream().mapToDouble(( nextStateProb ) -> {
                 if ( ( (GameBoard) nextStateProb.getNextTurnState() ).isAWin() || ( (GameBoard) nextStateProb.getNextTurnState() ).isFull() ) {
                     return ( (GameBoard) nextStateProb.getNextTurnState() ).getPartialScore() * 4 * nextStateProb.getProbability();
                 } else {
-                    ArrayList< IAction > possibleNextActions = game.listAllPossibleActions(actualBoard);
+                    Collection< IAction > possibleNextActions = game.listAllPossibleActions(actualBoard);
                     return possibleNextActions.stream().mapToDouble(( nextAction ) -> {
                         GameBoard nextAfterState = (GameBoard) game.computeAfterState(nextStateProb.getNextTurnState(), nextAction);
                         return nextAfterState.getPartialScore();
@@ -118,45 +118,40 @@ class GreedyExperimentInterface
             }
         }
 
-        if ( !bestActions.isEmpty() ) {
-            Action bestAction = bestActions.get(TDLambdaLearning.randomBetween(0, bestActions.size() - 1));
+        if ( bestActions.isEmpty() ) {
+            throw new IllegalArgumentException("no se encontró mejor acción.");
+        } else {
+            final Action bestAction = bestActions.get(TDLambdaLearning.randomBetween(0, bestActions.size() - 1));
             switch ( bestAction ) {
-                case left: {
+                case left:
                     game.getBoard().moveLeft();
                     break;
-                }
-                case right: {
+                case right:
                     game.getBoard().moveRight();
                     break;
-                }
-                case down: {
+                case down:
                     game.getBoard().canMoveDown();
                     break;
-                }
-                case up: {
+                case up:
                     game.getBoard().moveUp();
                     break;
-                }
-                default: {
+                default:
                     throw new IllegalStateException("Mejor acción no reconocida");
-                }
             }
             game.setCurrentState(game.computeNextTurnStateFromAfterState(game.getBoard()));
-        } else {
-            throw new IllegalArgumentException("no se encontró mejor acción.");
         }
 
     }
 
     @Override
     public
-    void saveNeuralNetwork( File perceptronFile )
+    void saveNeuralNetwork( final File perceptronFile )
             throws Exception {
     }
 
     @Override
     public
-    void saveNeuralNetwork( OutputStream outputStream )
+    void saveNeuralNetwork( final OutputStream outputStream )
             throws Exception {
 
     }

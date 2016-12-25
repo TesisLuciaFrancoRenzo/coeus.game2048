@@ -49,7 +49,7 @@ class StatisticForCalc {
      * @param maxScore nuevo puntaje máximo.
      */
     public
-    void setMaxScore( double maxScore ) {
+    void setMaxScore( final double maxScore ) {
         this.maxScore = maxScore;
     }
 
@@ -65,7 +65,7 @@ class StatisticForCalc {
      * @param maxTurn nuevo mayor turno ganador.
      */
     public
-    void setMaxTurn( double maxTurn ) {
+    void setMaxTurn( final double maxTurn ) {
         this.maxTurn = maxTurn;
     }
 
@@ -81,7 +81,7 @@ class StatisticForCalc {
      * @param meanScore nuevo puntaje medio.
      */
     public
-    void setMeanScore( double meanScore ) {
+    void setMeanScore( final double meanScore ) {
         this.meanScore = meanScore;
     }
 
@@ -97,7 +97,7 @@ class StatisticForCalc {
      * @param meanTurn nuevo turno ganador medio.
      */
     public
-    void setMeanTurn( double meanTurn ) {
+    void setMeanTurn( final double meanTurn ) {
         this.meanTurn = meanTurn;
     }
 
@@ -113,7 +113,7 @@ class StatisticForCalc {
      * @param minScore nuevo menor puntaje.
      */
     public
-    void setMinScore( double minScore ) {
+    void setMinScore( final double minScore ) {
         this.minScore = minScore;
     }
 
@@ -129,7 +129,7 @@ class StatisticForCalc {
      * @param minTurn nuevo menor turno.
      */
     public
-    void setMinTurn( double minTurn ) {
+    void setMinTurn( final double minTurn ) {
         this.minTurn = minTurn;
     }
 
@@ -145,7 +145,7 @@ class StatisticForCalc {
      * @param tileStatistics nueva lista con la cantidad de veces que se alcanzo cada Tile, siendo el valor del tile = 2^índice.
      */
     public
-    void setTileStatistics( List< Double > tileStatistics ) {
+    void setTileStatistics( final List< Double > tileStatistics ) {
         this.tileStatistics = tileStatistics;
     }
 
@@ -161,7 +161,7 @@ class StatisticForCalc {
      * @param winRate nueva tasa de partidas ganadoras.
      */
     public
-    void setWinRate( double winRate ) {
+    void setWinRate( final double winRate ) {
         this.winRate = winRate;
     }
 }

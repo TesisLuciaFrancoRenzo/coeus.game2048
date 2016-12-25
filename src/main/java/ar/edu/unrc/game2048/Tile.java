@@ -3,9 +3,8 @@ package ar.edu.unrc.game2048;
 import ar.edu.unrc.coeus.tdlearning.training.ntuple.SamplePointValue;
 
 /**
- * Created by franco on 24/12/16.
+ * @author lucia bressan, franco pellegrini, renzo bianchini
  */
-
 public
 class Tile
         implements SamplePointValue {
@@ -13,21 +12,21 @@ class Tile
     private int     value;
 
     public
-    Tile( int val ) {
+    Tile( final int val ) {
         value = val;
     }
 
-    boolean canMergeWith( Tile other ) {
-        return !merged && other != null && !other.merged && value == other.getValue();
+    boolean canMergeWith( final Tile other ) {
+        return !merged && ( other != null ) && !other.merged && ( value == other.value );
     }
 
     @Override
     public
-    boolean equals( Object o ) {
+    boolean equals( final Object o ) {
         if ( this == o ) { return true; }
         if ( !( o instanceof Tile ) ) { return false; }
 
-        Tile tile = (Tile) o;
+        final Tile tile = (Tile) o;
 
         return value == tile.value;
     }
@@ -42,16 +41,16 @@ class Tile
         return value;
     }
 
-    int mergeWith( Tile other ) {
+    int mergeWith( final Tile other ) {
         if ( canMergeWith(other) ) {
-            value *= 2;
+            value <<= 1;
             merged = true;
             return value;
         }
         return -1;
     }
 
-    void setMerged( boolean m ) {
+    void setMerged( final boolean m ) {
         merged = m;
     }
 

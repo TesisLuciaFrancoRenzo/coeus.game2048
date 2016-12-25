@@ -39,10 +39,9 @@ class RandomExperimentInterface
     /**
      * @param perceptronConfiguration configuración
      */
-    @SuppressWarnings( "unchecked" )
     public
     RandomExperimentInterface(
-            EncogConfiguration2048 perceptronConfiguration
+            final EncogConfiguration2048 perceptronConfiguration
     ) {
         super(perceptronConfiguration);
     }
@@ -52,9 +51,9 @@ class RandomExperimentInterface
      */
     @Override
     public
-    Object clone()
+    RandomExperimentInterface clone()
             throws CloneNotSupportedException {
-        return super.clone(); //To change body of generated methods, choose Tools | Templates.
+        return (RandomExperimentInterface) super.clone();
     }
 
     @Override
@@ -72,9 +71,9 @@ class RandomExperimentInterface
     @Override
     public
     void loadOrCreatePerceptron(
-            File perceptronFile,
-            boolean randomizedIfNotExist,
-            boolean createPerceptronFile
+            final File perceptronFile,
+            final boolean randomizedIfNotExist,
+            final boolean createPerceptronFile
     )
             throws Exception {
     }
@@ -82,42 +81,37 @@ class RandomExperimentInterface
     @Override
     public
     void playATurn(
-            Game2048 game,
-            TDLambdaLearning learningMethod
+            final Game2048 game,
+            final TDLambdaLearning learningMethod
     ) {
         switch ( TDLambdaLearning.randomBetween(1, 4) ) {
-            case 1: {
+            case 1:
                 game.getBoard().moveLeft();
                 break;
-            }
-            case 2: {
+            case 2:
                 game.getBoard().moveRight();
                 break;
-            }
-            case 3: {
+            case 3:
                 game.getBoard().canMoveDown();
                 break;
-            }
-            case 4: {
+            case 4:
                 game.getBoard().moveUp();
                 break;
-            }
-            default: {
+            default:
                 throw new IllegalStateException("Mejor acción no reconocida");
-            }
         }
         game.setCurrentState(game.computeNextTurnStateFromAfterState(game.getBoard()));
     }
 
     @Override
     public
-    void saveNeuralNetwork( File perceptronFile )
+    void saveNeuralNetwork( final File perceptronFile )
             throws Exception {
     }
 
     @Override
     public
-    void saveNeuralNetwork( OutputStream outputStream )
+    void saveNeuralNetwork( final OutputStream outputStream )
             throws Exception {
 
     }

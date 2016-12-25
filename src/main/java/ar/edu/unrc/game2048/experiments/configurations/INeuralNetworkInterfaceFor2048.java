@@ -51,16 +51,16 @@ class INeuralNetworkInterfaceFor2048
     /**
      * @param perceptronConfiguration configuración del Perceptrón.
      */
-    public
-    INeuralNetworkInterfaceFor2048( EncogConfiguration2048 perceptronConfiguration ) {
+    protected
+    INeuralNetworkInterfaceFor2048( final EncogConfiguration2048 perceptronConfiguration ) {
         this.perceptronConfiguration = perceptronConfiguration;
     }
 
     /**
      * @param nTupleConfiguration configuración de la NTupla.
      */
-    public
-    INeuralNetworkInterfaceFor2048( NTupleConfiguration2048 nTupleConfiguration ) {
+    protected
+    INeuralNetworkInterfaceFor2048( final NTupleConfiguration2048 nTupleConfiguration ) {
         this.nTupleConfiguration = nTupleConfiguration;
     }
 
@@ -69,9 +69,9 @@ class INeuralNetworkInterfaceFor2048
      */
     @Override
     public
-    Object clone()
+    INeuralNetworkInterfaceFor2048 clone()
             throws CloneNotSupportedException {
-        return super.clone(); //To change body of generated methods, choose Tools | Templates.
+        return (INeuralNetworkInterfaceFor2048) super.clone();
     }
 
     /**
@@ -92,7 +92,7 @@ class INeuralNetworkInterfaceFor2048
      * @param nTupleConfiguration configuración de la NTupla.
      */
     public
-    void setNTupleConfiguration( NTupleConfiguration2048 nTupleConfiguration ) {
+    void setNTupleConfiguration( final NTupleConfiguration2048 nTupleConfiguration ) {
         this.nTupleConfiguration = nTupleConfiguration;
     }
 
@@ -114,7 +114,7 @@ class INeuralNetworkInterfaceFor2048
      * @param perceptronConfiguration configuración del Perceptrón.
      */
     public
-    void setPerceptronConfiguration( EncogConfiguration2048 perceptronConfiguration ) {
+    void setPerceptronConfiguration( final EncogConfiguration2048 perceptronConfiguration ) {
         this.perceptronConfiguration = perceptronConfiguration;
     }
 
@@ -143,42 +143,37 @@ class INeuralNetworkInterfaceFor2048
      */
     public
     void playATurn(
-            Game2048 game,
-            TDLambdaLearning learningMethod
+            final Game2048 game,
+            final TDLambdaLearning learningMethod
     ) {
         // evaluamos cada acción aplicada al estado inicial y elegimos la mejor
         // acción basada en las predicciones del problema
-        List< IAction > possibleActions = game.listAllPossibleActions(game.getBoard());
-        Action bestAction = (Action) TDLambdaLearning.computeBestPossibleAction(game,
+        final List< IAction > possibleActions = game.listAllPossibleActions(game.getBoard());
+        final Action bestAction = (Action) TDLambdaLearning.computeBestPossibleAction(game,
                 ELearningStyle.afterState,
                 game.getBoard(),
                 possibleActions,
                 null,
                 learningMethod.isComputeParallelBestPossibleAction(), null).getAction();
         switch ( bestAction ) {
-            case left: {
+            case left:
                 game.getBoard().moveLeft();
                 break;
-            }
-            case right: {
+            case right:
                 game.getBoard().moveRight();
                 break;
-            }
-            case down: {
+            case down:
                 game.getBoard().moveDown();
                 break;
-            }
-            case up: {
+            case up:
                 game.getBoard().moveUp();
                 break;
-            }
-            default: {
+            default:
                 throw new IllegalStateException("Mejor acción no reconocida");
-            }
         }
         game.setCurrentState(game.computeNextTurnStateFromAfterState(game.getBoard()));
         if ( game.isPrintHistory() ) {
-            game.getHistoryLog().append("M=").append(bestAction).append("\n");
+            game.getHistoryLog().append("M=").append(bestAction).append('\n');
         }
     }
 

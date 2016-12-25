@@ -53,9 +53,9 @@ class NTupleConfiguration2048
      */
     @Override
     public
-    Object clone()
+    NTupleConfiguration2048 clone()
             throws CloneNotSupportedException {
-        return super.clone(); //To change body of generated methods, choose Tools | Templates.
+        return (NTupleConfiguration2048) super.clone();
     }
 
     /**
@@ -106,7 +106,7 @@ class NTupleConfiguration2048
      * @param nTupleSystem
      */
     public
-    void setNTupleSystem( NTupleSystem nTupleSystem ) {
+    void setNTupleSystem( final NTupleSystem nTupleSystem ) {
         this.nTupleSystem = nTupleSystem;
     }
 
@@ -139,7 +139,7 @@ class NTupleConfiguration2048
     @Override
     public
     TDLambdaLearning instanceOfTdLearningImplementation(
-            NTupleSystem nTupleSystem
+            final NTupleSystem nTupleSystem
     ) {
         return new TDLambdaLearning(nTupleSystem, afterState, ( getAlpha() != null ) ? getAlpha()[0] : null,
                 getLambda(),
@@ -152,7 +152,7 @@ class NTupleConfiguration2048
     @Override
     public
     TDLambdaLearning instanceOfTdLearningImplementation(
-            INeuralNetworkInterface perceptronInterface
+            final INeuralNetworkInterface perceptronInterface
     ) {
         return null;
     }

@@ -39,7 +39,7 @@ class EncogConfiguration2048
         extends LearningExperiment
         implements Cloneable, IConfiguration2048 {
 
-    public final static Class< ? >[] PARAMETER_TYPE = { Boolean.class };
+    public static final Class< ? >[] PARAMETER_TYPE = { Boolean.class };
 
     protected ActivationFunction[] activationFunctionForEncog;
     protected double               activationFunctionMax;
@@ -66,9 +66,9 @@ class EncogConfiguration2048
      */
     @Override
     public
-    Object clone()
+    EncogConfiguration2048 clone()
             throws CloneNotSupportedException {
-        return super.clone(); //To change body of generated methods, choose Tools | Templates.
+        return (EncogConfiguration2048) super.clone();
     }
 
     /**
@@ -104,7 +104,7 @@ class EncogConfiguration2048
      */
     public
     void setActivationFunctionForEncog(
-            ActivationFunction[] activationFunctionForEncog
+            final ActivationFunction[] activationFunctionForEncog
     ) {
         this.activationFunctionForEncog = activationFunctionForEncog;
     }
@@ -121,7 +121,7 @@ class EncogConfiguration2048
      * @param activationFunctionMax
      */
     public
-    void setActivationFunctionMax( double activationFunctionMax ) {
+    void setActivationFunctionMax( final double activationFunctionMax ) {
         this.activationFunctionMax = activationFunctionMax;
     }
 
@@ -137,7 +137,7 @@ class EncogConfiguration2048
      * @param activationFunctionMin
      */
     public
-    void setActivationFunctionMin( double activationFunctionMin ) {
+    void setActivationFunctionMin( final double activationFunctionMin ) {
         this.activationFunctionMin = activationFunctionMin;
     }
 
@@ -153,7 +153,7 @@ class EncogConfiguration2048
      * @param neuralNetwork the neuralNetwork to set
      */
     public
-    void setNeuralNetwork( BasicNetwork neuralNetwork ) {
+    void setNeuralNetwork( final BasicNetwork neuralNetwork ) {
         this.neuralNetwork = neuralNetwork;
     }
 
@@ -169,7 +169,7 @@ class EncogConfiguration2048
      * @param neuronQuantityInLayer the neuronQuantityInLayer to set
      */
     public
-    void setNeuronQuantityInLayer( int[] neuronQuantityInLayer ) {
+    void setNeuronQuantityInLayer( final int[] neuronQuantityInLayer ) {
         this.neuronQuantityInLayer = neuronQuantityInLayer;
     }
 
@@ -202,7 +202,7 @@ class EncogConfiguration2048
     @Override
     public
     TDLambdaLearning instanceOfTdLearningImplementation(
-            INeuralNetworkInterface perceptronInterface
+            final INeuralNetworkInterface perceptronInterface
     ) {
         return new TDLambdaLearning(perceptronInterface,
                 afterState,
@@ -217,7 +217,7 @@ class EncogConfiguration2048
     @Override
     public
     TDLambdaLearning instanceOfTdLearningImplementation(
-            NTupleSystem nTupleSystem
+            final NTupleSystem nTupleSystem
     ) {
         return null;
     }
@@ -240,7 +240,7 @@ class EncogConfiguration2048
      * @param hasBias
      */
     public
-    void setHasBias( boolean hasBias ) {
+    void setHasBias( final boolean hasBias ) {
         this.hasBias = hasBias;
     }
 
