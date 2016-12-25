@@ -50,28 +50,6 @@ class ArgumentLoader {
     }
 
     /**
-     * Test.
-     *
-     * @param args
-     *
-     * @throws Exception
-     */
-    public static
-    void main( final String... args )
-            throws Exception {
-        final List< Double > lambdaList = new ArrayList<>();
-        lambdaList.add(0.0d);
-        lambdaList.add(0.1d);
-        lambdaList.add(0.2d);
-        //noinspection ZeroLengthArrayAllocation
-        System.out.println(Arrays.toString(lambdaList.toArray(new Double[0])));
-        //[0.0, 0.1, 0.2]
-
-        final String toLoad = "[0.0,0.1,0.2,5547]";
-        System.out.println(parseDoubleArray(toLoad));
-    }
-
-    /**
      * Parsea arreglos de Boolean.
      *
      * @param arrayString formato del estilo [true,false,false]

@@ -2,7 +2,7 @@
   <configuration default="false" name="Visual Game2048" type="Application" factoryName="Application">
     <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
       <pattern>
-        <option name="PATTERN" value="ar.edu.unrc.game2048.*" />
+        <option name="PATTERN" value="ar.edu.unrc.game2048.experiments.configurations.*" />
         <option name="ENABLED" value="true" />
       </pattern>
     </extension>

@@ -2,9 +2,7 @@ package ar.edu.unrc.game2048.experiments.configurations;
 
 import ar.edu.unrc.coeus.interfaces.INeuralNetworkInterface;
 import ar.edu.unrc.coeus.tdlearning.learning.TDLambdaLearning;
-import ar.edu.unrc.game2048.EncogConfiguration2048;
 import ar.edu.unrc.game2048.Game2048;
-import ar.edu.unrc.game2048.NTupleConfiguration2048;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellReference;

@@ -20,10 +20,10 @@ package ar.edu.unrc.game2048.experiments.configurations.perceptrons;
 
 import ar.edu.unrc.coeus.tdlearning.training.ntuple.NTupleSystem;
 import ar.edu.unrc.coeus.tdlearning.training.ntuple.SamplePointValue;
-import ar.edu.unrc.game2048.EncogConfiguration2048;
 import ar.edu.unrc.game2048.Game2048;
 import ar.edu.unrc.game2048.GameBoard;
 import ar.edu.unrc.game2048.Tile;
+import ar.edu.unrc.game2048.experiments.configurations.EncogConfiguration2048;
 import org.encog.engine.network.activation.ActivationFunction;
 import org.encog.engine.network.activation.ActivationLinear;
 

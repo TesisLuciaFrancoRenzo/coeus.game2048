@@ -16,7 +16,7 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ar.edu.unrc.game2048;
+package ar.edu.unrc.game2048.experiments.configurations;
 
 /**
  * Estructura que debe tener una configuración para un experimento.

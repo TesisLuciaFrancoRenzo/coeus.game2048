@@ -20,8 +20,8 @@ package ar.edu.unrc.game2048.experiments.configurations.librariesinterfaces;
 
 import ar.edu.unrc.coeus.interfaces.INeuralNetworkInterface;
 import ar.edu.unrc.coeus.tdlearning.learning.TDLambdaLearning;
-import ar.edu.unrc.game2048.EncogConfiguration2048;
 import ar.edu.unrc.game2048.Game2048;
+import ar.edu.unrc.game2048.experiments.configurations.EncogConfiguration2048;
 import ar.edu.unrc.game2048.experiments.configurations.INeuralNetworkInterfaceFor2048;
 
 import java.io.File;

@@ -18,7 +18,7 @@
  */
 package ar.edu.unrc.game2048.experiments;
 
-import ar.edu.unrc.game2048.EncogConfiguration2048;
+import ar.edu.unrc.game2048.experiments.configurations.EncogConfiguration2048;
 import ar.edu.unrc.game2048.experiments.configurations.LearningExperiment;
 import ar.edu.unrc.game2048.experiments.configurations.ntuples.*;
 import ar.edu.unrc.game2048.experiments.configurations.perceptrons.ConfigPerceptronNTupleLinearSimplified_512;

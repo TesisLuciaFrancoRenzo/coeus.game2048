@@ -1,6 +1,8 @@
 package ar.edu.unrc.game2048;
 
 import ar.edu.unrc.coeus.tdlearning.interfaces.*;
+import ar.edu.unrc.game2048.experiments.configurations.EncogConfiguration2048;
+import ar.edu.unrc.game2048.experiments.configurations.NTupleConfiguration2048;
 import ar.edu.unrc.game2048.experiments.statistics.greedy.GreedyStateProbability;
 import org.encog.ml.data.MLData;
 import org.encog.ml.data.basic.BasicMLData;
@@ -52,7 +54,6 @@ class Game2048
         do {
             line = scanner.nextLine();
             game.processInput(line);
-
         } while ( line.compareToIgnoreCase("q") != 0 );
     }
 
@@ -130,7 +131,6 @@ class Game2048
         } else {
             if ( gameState == State.won ) {
                 System.out.println(board + "\nGanaste!");
-
             } else if ( gameState == State.over ) {
                 System.out.println(board + "\nPerdiste!");
             }

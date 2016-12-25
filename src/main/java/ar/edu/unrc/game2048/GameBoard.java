@@ -120,7 +120,8 @@ class GameBoard
         if ( partialScore != gameBoard.partialScore ) { return false; }
         if ( !game.equals(gameBoard.game) ) { return false; }
         if ( ( normalizedPerceptronInput != null )
-             ? !normalizedPerceptronInput.equals(gameBoard.normalizedPerceptronInput) : ( gameBoard.normalizedPerceptronInput != null ) ) {
+             ? !normalizedPerceptronInput.equals(gameBoard.normalizedPerceptronInput)
+             : ( gameBoard.normalizedPerceptronInput != null ) ) {
             return false;
         }
         if ( !availableSpace.equals(gameBoard.availableSpace) ) { return false; }
@@ -226,10 +227,10 @@ class GameBoard
             clearInterns(false);
             final int availableSpaceSize = availableSpace.size() - 1;
             for ( int index = 0; index < availableSpaceSize; index++ ) {
-                @SuppressWarnings( "unchecked" ) final GameBoard copy = (GameBoard) getCopy();
-                final int                                        pos  = availableSpace.get(index);
-                final int                                        row;
-                final int                                        col;
+                final GameBoard copy = (GameBoard) getCopy();
+                final int       pos  = availableSpace.get(index);
+                final int       row;
+                final int       col;
                 row = pos / side;
                 col = pos % side;
                 copy.tiles[row][col] = new Tile((int) Math.pow(2, value));

@@ -20,8 +20,8 @@ package ar.edu.unrc.game2048.experiments.configurations.librariesinterfaces;
 
 import ar.edu.unrc.coeus.interfaces.INeuralNetworkInterface;
 import ar.edu.unrc.coeus.tdlearning.training.ntuple.NTupleSystem;
-import ar.edu.unrc.game2048.NTupleConfiguration2048;
 import ar.edu.unrc.game2048.experiments.configurations.INeuralNetworkInterfaceFor2048;
+import ar.edu.unrc.game2048.experiments.configurations.NTupleConfiguration2048;
 
 import java.io.File;
 import java.io.OutputStream;

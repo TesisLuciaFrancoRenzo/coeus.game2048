@@ -16,13 +16,13 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ar.edu.unrc.game2048;
+package ar.edu.unrc.game2048.experiments.configurations;
 
 import ar.edu.unrc.coeus.interfaces.INeuralNetworkInterface;
 import ar.edu.unrc.coeus.tdlearning.learning.TDLambdaLearning;
 import ar.edu.unrc.coeus.tdlearning.training.ntuple.NTupleSystem;
 import ar.edu.unrc.coeus.tdlearning.training.ntuple.SamplePointValue;
-import ar.edu.unrc.game2048.experiments.configurations.LearningExperiment;
+import ar.edu.unrc.game2048.GameBoard;
 import ar.edu.unrc.game2048.experiments.configurations.librariesinterfaces.NTupleExperimentInterface;
 import org.encog.util.arrayutil.NormalizedField;
 
