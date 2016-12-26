@@ -573,6 +573,9 @@ class TestGenerator {
                 case "ConfigNTupleBasicTanH_32768":
                     classConstructor = ConfigNTupleBasicTanH_32768.class.getConstructor();
                     break;
+                case "ConfigNTupleBasicTanHExtra_32768":
+                    classConstructor = ConfigNTupleBasicTanHExtra_32768.class.getConstructor();
+                    break;
                 case "ConfigNTupleBasicTanHSimplified_512":
                     classConstructor = ConfigNTupleBasicTanHSimplified_512.class.getConstructor();
                     break;

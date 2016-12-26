@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="STATISTICS: NTuple 2048 TD" type="Application" factoryName="Application">
+  <configuration default="false" name="STATISTICS: NTuple TD" type="Application" factoryName="Application">
     <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
       <pattern>
         <option name="PATTERN" value="ar.edu.unrc.game2048.experiments.*" />
