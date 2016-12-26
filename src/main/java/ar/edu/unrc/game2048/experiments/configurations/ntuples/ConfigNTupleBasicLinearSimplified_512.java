@@ -33,8 +33,6 @@ public
 class ConfigNTupleBasicLinearSimplified_512
         extends NTupleConfiguration2048 {
 
-    private int tileToWin;
-
     /**
      * Configuración para jugar hasta 512, con función de activación Lineal, y puntaje parcial.
      */

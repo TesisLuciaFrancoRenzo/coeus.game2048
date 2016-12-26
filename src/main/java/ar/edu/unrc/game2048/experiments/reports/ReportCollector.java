@@ -5,6 +5,8 @@
  */
 package ar.edu.unrc.game2048.experiments.reports;
 
+import com.sun.istack.internal.NotNull;
+
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
@@ -104,7 +106,7 @@ class ReportCollector {
     }
 
     private static
-    void workFiles( final File... files ) {
+    void workFiles( @NotNull final File... files ) {
         for ( final File file : files ) {
             if ( file.isDirectory() ) {
                 workFiles(file.listFiles()); // Calls same method again.
@@ -141,8 +143,10 @@ class ReportCollector {
                         } while ( !f.isDirectory() );
                         WORKING_DIRECTORY = f.getParentFile();
                         break;
+                    default:
+                        throw new IllegalArgumentException("not supported format");
                 }
-            } catch ( URISyntaxException | MalformedURLException e ) {
+            } catch ( URISyntaxException | MalformedURLException | IllegalArgumentException e ) {
                 WORKING_DIRECTORY = new File(".");
             }
         }

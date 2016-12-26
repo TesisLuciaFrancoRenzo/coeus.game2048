@@ -35,10 +35,10 @@ public
 class ConfigNTupleBasicTanHSimplified_512
         extends NTupleConfiguration2048 {
 
-    public static int maxReward = 100_000;
-    public static int minReward = -100_000;
-    private static int maxTile;
-    private static int numSamples;
+    private static final int maxReward = 100_000;
+    private static final int minReward = -100_000;
+    private int maxTile;
+    private int numSamples;
 
     /**
      * Configuración para jugar hasta 512, con función de activación Tangente Hiperbólica, y puntaje parcial.

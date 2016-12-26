@@ -49,7 +49,7 @@ class Game2048
     void main( final String... args ) {
         final Game2048 game = new Game2048(null, null, 2048, false);
         System.out.println("Press \"ENTER\" to continue...");
-        final Scanner scanner = new Scanner(System.in);
+        final Scanner scanner = new Scanner(System.in, "UTF-8");
         String        line;
         do {
             line = scanner.nextLine();

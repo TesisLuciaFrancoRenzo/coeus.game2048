@@ -48,38 +48,39 @@ class LearningExperiment {
     /**
      * Nombre para el archivo salvado con mejor entrenamiento hasta el momento
      */
-    public static final String     BEST_TRAINED        = "_best_trained";
+    public static final String     BEST_TRAINED                = "_best_trained";
     /**
      * Extensión de las configuraciones de entrenamiento del experimento.
      */
-    public static final String     CONFIG              = "_config";
-    /**
-     * Formato para fechas en los nombres de archivos.
-     */
-    public static final DateFormat DATE_FILE_FORMATTER = new SimpleDateFormat("dd-MM-yyyy_HH'h'mm'm'ss's'");
-    /**
-     * Formato para fechas.
-     */
-    public static final DateFormat DATE_FORMATTER      = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-    public static final boolean    DEBUG_MODE          = true;
+    public static final String     CONFIG                      = "_config";
+    public static final String     DATE_FILE_FORMATTER_PATTERN = "dd-MM-yyyy_HH'h'mm'm'ss's'";
+    public static final String     DATE_FORMATTER_PATTERN      = "dd/MM/yyyy HH:mm:ss";
     /**
      * Nombre del archivo para las salidas de errores.
      */
-    public static final String     ERROR_DUMP          = "ERROR_DUMP";
-    public static final String     HISTORY_DUMP        = "HISTORY_DUMP";
+    public static final String     ERROR_DUMP                  = "ERROR_DUMP";
+    public static final String     HISTORY_DUMP                = "HISTORY_DUMP";
     /**
      * Nombre del archivo con los datos de la ultima red neuronal guardada en disco.
      */
-    public static final String     LAST_SAVE_DATA      = "_last_save_data";
+    public static final String     LAST_SAVE_DATA              = "_last_save_data";
     /**
      * Nombre que se le agrega a los archivos de redes neuronales inicializados sin entrenamiento, para comparar al
      * final del experimento con la versión entrenada.
      */
-    public static final String     RANDOM              = "_random";
+    public static final String     RANDOM                      = "_random";
     /**
      * Nombre que se le agrega a los archivos de redes neuronales con entrenamiento.
      */
-    public static final String     TRAINED             = "_trained";
+    public static final String     TRAINED                     = "_trained";
+    /**
+     * Formato para fechas.
+     */
+    private final       DateFormat dateFormat                  = new SimpleDateFormat(DATE_FORMATTER_PATTERN);
+    /**
+     * Formato para fechas en los nombres de archivos.
+     */
+    private final       DateFormat simpleDateFormat            = new SimpleDateFormat(DATE_FILE_FORMATTER_PATTERN);
     /**
      * Experimento encargad de las estadísticas.
      */
@@ -137,9 +138,10 @@ class LearningExperiment {
             if ( !dumpFile.exists() ) {
                 dumpFile.createNewFile();
             }
+            DateFormat dateFormat = new SimpleDateFormat(DATE_FORMATTER_PATTERN);
             printStream = new PrintStream(new FileOutputStream(dumpFile, true), true, "UTF-8");
             final String msj =
-                    "* " + DATE_FORMATTER.format(new Date()) + "----------------------------------------------------------------------------\n" +
+                    "* " + dateFormat.format(new Date()) + "----------------------------------------------------------------------------\n" +
                     getMsj(ex);
             printStream.println(msj);
             System.err.println(msj);
@@ -244,18 +246,11 @@ class LearningExperiment {
     }
 
     /**
-     * Establece el nombre del experimento basado en el nombre de la clase {@code experimentClass}.
-     *
-     * @param experimentClass clase de la cual extraer el nombre del experimento.
+     * @param experimentName nombre del experimento.
      */
     public
-    void setExperimentName( final Class experimentClass ) {
-        String    className = experimentClass.getName();
-        final int lastDot   = className.lastIndexOf('.');
-        if ( lastDot != -1 ) {
-            className = className.substring(lastDot + 1);
-        }
-        experimentName = className;
+    void setExperimentName( final String experimentName ) {
+        this.experimentName = experimentName;
     }
 
     /**
@@ -714,7 +709,7 @@ class LearningExperiment {
             System.out.println("Training...");
 
             //creamos un archivo de logs para acumular estadisticas
-            final File logFile = new File(filePath + '_' + DATE_FILE_FORMATTER.format(now) + "_LOG" + ".txt");
+            final File logFile = new File(filePath + '_' + simpleDateFormat.format(now) + "_LOG" + ".txt");
 
             //creamos el juego
             final Game2048 game = new Game2048(neuralNetworkInterfaceFor2048.getPerceptronConfiguration(),
@@ -837,11 +832,18 @@ class LearningExperiment {
     }
 
     /**
-     * @param experimentName nombre del experimento.
+     * Establece el nombre del experimento basado en el nombre de la clase {@code experimentClass}.
+     *
+     * @param experimentClass clase de la cual extraer el nombre del experimento.
      */
     public
-    void setExperimentName( final String experimentName ) {
-        this.experimentName = experimentName;
+    void setExperimentName( final Class experimentClass ) {
+        String    className = experimentClass.getName();
+        final int lastDot   = className.lastIndexOf('.');
+        if ( lastDot != -1 ) {
+            className = className.substring(lastDot + 1);
+        }
+        experimentName = className;
     }
 
     /**
@@ -1055,8 +1057,7 @@ class LearningExperiment {
                     .append(" (")
                     .append("winRate ")
                     .append(winRateEstimator.printableFullCapacityAverage())
-                    .append(" % - maxTile ")
-                    .append(maxTileEstimator.printableFullCapacityAverage()).append(')')
+                    .append(" % - maxTile ").append(maxTileEstimator.printableFullCapacityAverage()).append(')')
                     .append("\tRandomChoices = ")
                     .append(learningAlgorithm.getRandomChoicesCounter())
                     .append("\tturno alcanzado = ")
@@ -1119,8 +1120,7 @@ class LearningExperiment {
                     .append("bestPossibleActionTimes = ")
                     .append(bestPossibleActionTimes.getAverage())
                     .append(" ms.\n")
-                    .append("trainingTimes = ")
-                    .append(trainingTimes.getAverage()).append(" ms.\n"));
+                    .append("trainingTimes = ").append(trainingTimes.getAverage()).append(" ms.\n"));
             Toolkit.getDefaultToolkit().beep();
         }
     }

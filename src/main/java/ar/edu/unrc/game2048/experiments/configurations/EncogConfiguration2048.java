@@ -50,7 +50,6 @@ class EncogConfiguration2048
     protected int[]           neuronQuantityInLayer;
     protected NormalizedField normInput;
     protected NormalizedField normOutput;
-    protected int tileToWin = -1;
 
     /**
      * @param board
