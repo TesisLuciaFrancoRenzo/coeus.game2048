@@ -257,11 +257,18 @@ class LearningExperiment {
     }
 
     /**
-     * @param experimentName nombre del experimento.
+     * Establece el nombre del experimento basado en el nombre de la clase {@code experimentClass}.
+     *
+     * @param experimentClass clase de la cual extraer el nombre del experimento.
      */
     public
-    void setExperimentName( final String experimentName ) {
-        this.experimentName = experimentName;
+    void setExperimentName( final Class experimentClass ) {
+        String    className = experimentClass.getName();
+        final int lastDot   = className.lastIndexOf('.');
+        if ( lastDot != -1 ) {
+            className = className.substring(lastDot + 1);
+        }
+        experimentName = className;
     }
 
     /**
@@ -807,6 +814,7 @@ class LearningExperiment {
             out.write("initializePerceptronRandomized: " + initializePerceptronRandomized + '\n');
             out.write("concurrencyInComputeBestPossibleAction: " + concurrencyInComputeBestPossibleAction + '\n');
             out.write("concurrencyInLayer: " + Arrays.toString(concurrencyInLayer) + '\n');
+            out.write("whenStartToExplore: " + whenStartToExplore + '\n');
             out.write("explorationRate: " + explorationRate + '\n');
             out.write("explorationRateFinalValue: " + explorationRateFinalValue + '\n');
             out.write("explorationRateInitialValue: " + explorationRateInitialValue + '\n');
@@ -859,18 +867,11 @@ class LearningExperiment {
     }
 
     /**
-     * Establece el nombre del experimento basado en el nombre de la clase {@code experimentClass}.
-     *
-     * @param experimentClass clase de la cual extraer el nombre del experimento.
+     * @param experimentName nombre del experimento.
      */
     public
-    void setExperimentName( final Class experimentClass ) {
-        String    className = experimentClass.getName();
-        final int lastDot   = className.lastIndexOf('.');
-        if ( lastDot != -1 ) {
-            className = className.substring(lastDot + 1);
-        }
-        experimentName = className;
+    void setExperimentName( final String experimentName ) {
+        this.experimentName = experimentName;
     }
 
     /**

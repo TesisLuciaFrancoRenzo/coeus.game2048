@@ -93,6 +93,7 @@ class TestGenerator {
             final int gamesToPlayPerThreadForStatistics,
             final int tileToWinForStatistics,
             final int simulationsForStatistics,
+            final double whenStartToExplore,
             final Double explorationRate,
             final Double explorationRateInitialValue,
             final Double explorationRateFinalValue,
@@ -113,6 +114,7 @@ class TestGenerator {
         experiment.setGamma(gamma);
         final double[] alphas = { alpha, alpha };
         experiment.setAlpha(alphas);
+        experiment.setWhenStartToExplore(whenStartToExplore);
         if ( explorationRate != null ) {
             experiment.setExplorationRateToFixed(explorationRate);
         } else {
@@ -641,7 +643,7 @@ class TestGenerator {
                     saveBackupEvery,
                     gamesToPlayPerThreadForStatistics,
                     tileToWinForStatistics,
-                    simulationsForStatistics,
+                    simulationsForStatistics, expConfig.getWhenStartToExplore(),
                     expConfig.getExplorationRate(),
                     expConfig.getExplorationRateInitialValue(),
                     expConfig.getExplorationRateFinalValue(),

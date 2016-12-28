@@ -492,6 +492,7 @@ class StatisticExperiment {
     public
     void processFile(
             final String fileToProcess,
+            //TODO y si no existe? agregar parche
             final boolean createNeuralNetworkFile,
             final boolean printHistory
     )
