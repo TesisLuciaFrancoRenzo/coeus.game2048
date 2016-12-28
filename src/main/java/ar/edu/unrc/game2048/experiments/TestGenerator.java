@@ -264,7 +264,7 @@ class TestGenerator {
                     System.exit(-1);
                 }
             }
-
+            long time = System.currentTimeMillis();
             runAllConfigs(repetitions,
                     canCollectStatistics,
                     maxTrainingThreads,
@@ -294,7 +294,8 @@ class TestGenerator {
                     filePath,
                     concurrentLayer,
                     concurrencyInComputeBestPossibleAction);
-
+            time = time - System.currentTimeMillis();
+            System.out.println("\ntiempo de ejecución = " + time + " ms.");
             Toolkit.getDefaultToolkit().beep();
         }
     }
@@ -492,8 +493,7 @@ class TestGenerator {
                                     saveBackupEvery,
                                     0,
                                     tileToWinForStatistics,
-                                    0,
-                                    explorationRateList, filePath, concurrentLayer, expConfig, concurrencyInComputeBestPossibleAction);
+                                    0, explorationRateList, filePath, concurrentLayer, expConfig, concurrencyInComputeBestPossibleAction);
                         }
                     });
                 }
@@ -634,8 +634,7 @@ class TestGenerator {
                     concurrentLayer,
                     expConfig.isReplaceTraces(),
                     concurrencyInComputeBestPossibleAction);
-        } catch ( NoSuchMethodException | ClassCastException | InstantiationException | IllegalAccessException | IllegalArgumentException |
-                InvocationTargetException ex ) {
+        } catch ( NoSuchMethodException | ClassCastException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex ) {
             Logger.getLogger(TestGenerator.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
