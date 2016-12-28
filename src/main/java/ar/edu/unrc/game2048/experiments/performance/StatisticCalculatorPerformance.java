@@ -42,13 +42,12 @@ class StatisticCalculatorPerformance {
      */
     public
     String[] computeBasicStatistics() {
-        final String[] output = new String[2];
         if ( experiment.isEmpty() ) {
             throw new IllegalStateException("la cantidad de experimentos no debe ser vacía");
         }
         Double min = Double.MAX_VALUE;
         Double max = Double.MIN_VALUE;
-        double avg = 0;
+        double avg = 0.0d;
         for ( final Double sample : experiment ) {
             avg += sample;
             if ( sample < min ) {
@@ -58,7 +57,8 @@ class StatisticCalculatorPerformance {
                 max = sample;
             }
         }
-        avg /= ( experiment.size() * 1.0d );
+        avg /= ( (double) experiment.size() * 1.0d );
+        final String[] output = new String[2];
         output[0] = "Promedio: " + avg + "ms. Mínimo: " + min + "ms. Máximo: " + max + "ms.";
         output[1] = avg + "\t" + min + '\t' + max;
         return output;

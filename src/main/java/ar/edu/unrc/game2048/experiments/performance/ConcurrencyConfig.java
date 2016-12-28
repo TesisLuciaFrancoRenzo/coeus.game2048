@@ -13,11 +13,11 @@ import org.encog.engine.network.activation.ActivationFunction;
 public
 class ConcurrencyConfig {
 
-    private ActivationFunction[] activationFunctionForEncog;
-    private double[]             alphas;
-    private boolean              concurrencyInEvaluate;
-    private boolean[]            concurrencyInLayer;
-    private int[]                neuronQuantityInLayer;
+    private ActivationFunction[] activationFunctionForEncog = null;
+    private double[]             alphas                     = null;
+    private boolean              concurrencyInEvaluate      = false;
+    private boolean[]            concurrencyInLayer         = null;
+    private int[]                neuronQuantityInLayer      = null;
 
     /**
      * @return activationFunctionForEncog

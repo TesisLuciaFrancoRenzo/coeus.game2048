@@ -20,9 +20,9 @@ class GameBoard
     private final List< Integer > availableSpace;
     private final Game2048        game;
     private final List< Double >  normalizedPerceptronInput;
-    private       boolean         checkingAvailableMoves;
-    private       int             highestValue;
-    private       int             partialScore;
+    private boolean checkingAvailableMoves = false;
+    private int     highestValue           = 0;
+    private int     partialScore           = 0;
     private       Tile[][]        tiles;
 
     public
@@ -50,10 +50,8 @@ class GameBoard
     void addRandomTile() {
         if ( !availableSpace.isEmpty() ) {
             final int pos = availableSpace.get(rand.nextInt(availableSpace.size()));
-            final int row;
-            final int col;
-            row = pos / side;
-            col = pos % side;
+            final int row = pos / side;
+            final int col = pos % side;
             final int val = ( rand.nextInt(10) == 0 ) ? 4 : 2;
             assert tiles[row][col] == null;
             tiles[row][col] = new Tile(val);
@@ -229,10 +227,8 @@ class GameBoard
             for ( int index = 0; index < availableSpaceSize; index++ ) {
                 final GameBoard copy = (GameBoard) getCopy();
                 final int       pos  = availableSpace.get(index);
-                final int       row;
-                final int       col;
-                row = pos / side;
-                col = pos % side;
+                final int       row  = pos / side;
+                final int       col  = pos % side;
                 copy.tiles[row][col] = new Tile((int) Math.pow(2, value));
                 copy.updateNormalizedPerceptronInput();
                 output.add(new GreedyStateProbability(copy, probability));
@@ -247,10 +243,10 @@ class GameBoard
             final int yInc,
             final int xInc
     ) {
-        boolean moved = false;
         highestValue = 0;
         partialScore = 0;
 
+        boolean moved = false;
         for ( int i = 0; i < ( side * side ); i++ ) {
             final int j = Math.abs(countDownFrom - i);
 

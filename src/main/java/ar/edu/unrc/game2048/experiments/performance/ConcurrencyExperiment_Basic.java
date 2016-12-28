@@ -36,7 +36,7 @@ import java.io.OutputStreamWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static ar.edu.unrc.coeus.tdlearning.learning.ELearningStyle.afterState;
+import static ar.edu.unrc.coeus.tdlearning.learning.ELearningStyle.AFTER_STATE;
 
 /**
  * @author lucia bressan, franco pellegrini, renzo bianchini
@@ -164,10 +164,9 @@ class ConcurrencyExperiment_Basic
 
                 final StatisticCalculatorPerformance trainingStats     = new StatisticCalculatorPerformance(SAMPLES_PER_EXPERIMENT);
                 final StatisticCalculatorPerformance bestPossibleStats = new StatisticCalculatorPerformance(SAMPLES_PER_EXPERIMENT);
-                long                                 time;
                 for ( int i = 1; i <= SAMPLES_PER_EXPERIMENT; i++ ) {
                     System.out.println("Calculo de muestra N" + i);
-                    time = System.currentTimeMillis();
+                    long time = System.currentTimeMillis();
                     startStatistics(trainingStats, bestPossibleStats);
                     time = System.currentTimeMillis() - time;
                     System.out.println("Final de Calculo de muestra N" + i + " - demoró " + time + "ms");
@@ -209,9 +208,8 @@ class ConcurrencyExperiment_Basic
     public static
     void main( final String[] args ) {
         try {
-            final File output;
             filePath = ( args.length == 0 ) ? ( ".." + File.separator + "Estadisticas" + File.separator ) : args[0];
-            output = new File(filePath);
+            final File output = new File(filePath);
             if ( !output.exists() ) {
                 output.mkdirs();
             }
@@ -325,8 +323,7 @@ class ConcurrencyExperiment_Basic
     TDLambdaLearning instanceOfTdLearningImplementation(
             final INeuralNetworkInterface perceptronInterface
     ) {
-        return new TDLambdaLearning(perceptronInterface,
-                afterState,
+        return new TDLambdaLearning(perceptronInterface, AFTER_STATE,
                 getAlpha(),
                 getLambda(),
                 isReplaceEligibilityTraces(),

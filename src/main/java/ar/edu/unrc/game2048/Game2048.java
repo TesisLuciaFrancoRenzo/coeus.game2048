@@ -25,11 +25,11 @@ class Game2048
     private final EncogConfiguration2048  neuralNetworkConfiguration;
     private final int                     numberToWin;
     private final boolean                 printHistory;
-    private       GameBoard               board;
-    private State gameState = State.start;
-    private int lastTurn;
-    private int maxNumber;
-    private int score;
+    private GameBoard board     = null;
+    private State     gameState = State.START;
+    private int       lastTurn  = 0;
+    private int       maxNumber = 0;
+    private int       score     = 0;
 
     public
     Game2048(
@@ -49,17 +49,18 @@ class Game2048
     void main( final String... args ) {
         final Game2048 game = new Game2048(null, null, 2048, false);
         System.out.println("Press \"ENTER\" to continue...");
-        final Scanner scanner = new Scanner(System.in, "UTF-8");
-        String        line;
-        do {
-            line = scanner.nextLine();
-            game.processInput(line);
-        } while ( line.compareToIgnoreCase("q") != 0 );
+        try ( Scanner scanner = new Scanner(System.in, "UTF-8") ) {
+            String line;
+            do {
+                line = scanner.nextLine();
+                game.processInput(line);
+            } while ( line.compareToIgnoreCase("q") != 0 );
+        }
     }
 
     @Override
     public
-    boolean canExploreThisTurn( long currentTurn ) {
+    boolean canExploreThisTurn( final long currentTurn ) {
         return ( neuralNetworkConfiguration != null )
                ? neuralNetworkConfiguration.canExploreThisTurn(currentTurn)
                : nTupleSystemConfiguration.canExploreThisTurn(currentTurn);
@@ -73,16 +74,16 @@ class Game2048
     ) {
         final GameBoard futureBoard = (GameBoard) turnInitialState.getCopy();
         switch ( (Action) action ) {
-            case left:
+            case LEFT:
                 futureBoard.moveLeft();
                 break;
-            case right:
+            case RIGHT:
                 futureBoard.moveRight();
                 break;
-            case up:
+            case UP:
                 futureBoard.moveUp();
                 break;
-            case down:
+            case DOWN:
                 futureBoard.moveDown();
                 break;
             default:
@@ -102,10 +103,10 @@ class Game2048
             finalBoard.clearInterns(true);
             finalBoard.addRandomTile();
             if ( finalBoard.isTerminalState() ) {
-                gameState = State.over;
+                gameState = State.OVER;
             }
         } else if ( maxNumber == numberToWin ) {
-            gameState = State.won;
+            gameState = State.WON;
         }
         return finalBoard;
     }
@@ -134,12 +135,12 @@ class Game2048
 
     private
     void draw() {
-        if ( gameState == State.running ) {
+        if ( gameState == State.RUNNING ) {
             System.out.println(board + "\nmaxNumber=" + maxNumber + " score=" + score);
         } else {
-            if ( gameState == State.won ) {
+            if ( gameState == State.WON ) {
                 System.out.println(board + "\nGanaste!");
-            } else if ( gameState == State.over ) {
+            } else if ( gameState == State.OVER ) {
                 System.out.println(board + "\nPerdiste!");
             }
         }
@@ -222,7 +223,7 @@ class Game2048
         score = 0;
         lastTurn = 0;
         maxNumber = 0;
-        gameState = State.running;
+        gameState = State.RUNNING;
         board = new GameBoard(this);
         board.clearInterns(true);
         board.addRandomTile();
@@ -243,7 +244,7 @@ class Game2048
 
     public
     boolean isRunning() {
-        return gameState == State.running;
+        return gameState == State.RUNNING;
     }
 
     @Override
@@ -251,10 +252,10 @@ class Game2048
     List< IAction > listAllPossibleActions( final IState turnInitialState ) {
         final ArrayList< IAction > actions = new ArrayList<>(4);
         final GameBoard            state   = (GameBoard) turnInitialState;
-        if ( state.canMoveUp() ) { actions.add(Action.up); }
-        if ( state.canMoveDown() ) { actions.add(Action.down); }
-        if ( state.canMoveLeft() ) { actions.add(Action.left); }
-        if ( state.canMoveRight() ) { actions.add(Action.right); }
+        if ( state.canMoveUp() ) { actions.add(Action.UP); }
+        if ( state.canMoveDown() ) { actions.add(Action.DOWN); }
+        if ( state.canMoveLeft() ) { actions.add(Action.LEFT); }
+        if ( state.canMoveRight() ) { actions.add(Action.RIGHT); }
         return actions;
     }
 
@@ -322,9 +323,9 @@ class Game2048
     }
 
     enum State {
-        start,
-        won,
-        running,
-        over
+        START,
+        WON,
+        RUNNING,
+        OVER
     }
 }

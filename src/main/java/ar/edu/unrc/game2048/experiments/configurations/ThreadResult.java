@@ -34,7 +34,7 @@ class ThreadResult {
     private       double          maxTurn;
     private       double          minScore;
     private       double          minTurn;
-    private       int             processedGames;
+    private int processedGames = 0;
     private       double          totalScore;
     private       double          totalTurn;
     private       int             winGames;
@@ -49,12 +49,12 @@ class ThreadResult {
         for ( int i = 0; i <= 17; i++ ) {
             tileStatistics.add(0);
         }
-        totalScore = 0;
-        totalTurn = 0;
-        maxScore = 0;
-        minScore = Integer.MAX_VALUE;
-        maxTurn = 0;
-        minTurn = Integer.MAX_VALUE;
+        totalScore = 0.0d;
+        totalTurn = 0.0d;
+        maxScore = 0.0d;
+        minScore = Double.MAX_VALUE;
+        maxTurn = 0.0d;
+        minTurn = Double.MAX_VALUE;
     }
 
     /**
@@ -127,7 +127,7 @@ class ThreadResult {
      */
     public
     double getMaxTurn() {
-        return ( winGames > 0 ) ? maxTurn : 0;
+        return ( winGames > 0 ) ? maxTurn : 0.0d;
     }
 
     /**
@@ -135,7 +135,7 @@ class ThreadResult {
      */
     public
     double getMeanScore() {
-        return totalScore / ( processedGames * 1.0d );
+        return totalScore / ( (double) processedGames * 1.0d );
     }
 
     /**
@@ -143,7 +143,7 @@ class ThreadResult {
      */
     public
     double getMeanTurn() {
-        return ( winGames > 0 ) ? ( totalTurn / ( winGames * 1.0d ) ) : 0;
+        return ( winGames > 0 ) ? ( totalTurn / ( (double) winGames * 1.0d ) ) : 0.0d;
     }
 
     /**
@@ -159,7 +159,7 @@ class ThreadResult {
      */
     public
     double getMinTurn() {
-        return ( winGames > 0 ) ? minTurn : 0;
+        return ( winGames > 0 ) ? minTurn : 0.0d;
     }
 
     /**
@@ -193,6 +193,6 @@ class ThreadResult {
      */
     public
     double getWinRate() {
-        return ( winGames * 100.0d ) / ( processedGames * 1.0d );
+        return ( (double) winGames * 100.0d ) / ( (double) processedGames * 1.0d );
     }
 }

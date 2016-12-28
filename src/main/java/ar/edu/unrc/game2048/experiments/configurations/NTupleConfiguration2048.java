@@ -29,7 +29,7 @@ import org.encog.util.arrayutil.NormalizedField;
 import java.util.List;
 import java.util.function.Function;
 
-import static ar.edu.unrc.coeus.tdlearning.learning.ELearningStyle.afterState;
+import static ar.edu.unrc.coeus.tdlearning.learning.ELearningStyle.AFTER_STATE;
 
 /**
  * @author lucia bressan, franco pellegrini, renzo bianchini
@@ -38,13 +38,13 @@ public abstract
 class NTupleConfiguration2048
         extends LearningExperiment
         implements Cloneable, IConfiguration2048 {
-    protected Function< Double, Double > activationFunction;
-    protected List< SamplePointValue >   allSamplePointPossibleValues;
-    protected boolean                    concurrency;
-    protected Function< Double, Double > derivedActivationFunction;
-    protected int[]                      nTuplesLength;
-    protected NormalizedField            normOutput;
-    private   NTupleSystem               nTupleSystem;
+    protected Function< Double, Double > activationFunction           = null;
+    protected List< SamplePointValue >   allSamplePointPossibleValues = null;
+    protected boolean                    concurrency                  = false;
+    protected Function< Double, Double > derivedActivationFunction    = null;
+    protected int[]                      nTuplesLength                = null;
+    protected NormalizedField            normOutput                   = null;
+    private   NTupleSystem               nTupleSystem                 = null;
 
     /**
      * @return
@@ -141,7 +141,7 @@ class NTupleConfiguration2048
     TDLambdaLearning instanceOfTdLearningImplementation(
             final NTupleSystem nTupleSystem
     ) {
-        return new TDLambdaLearning(nTupleSystem, afterState, ( getAlpha() != null ) ? getAlpha()[0] : null,
+        return new TDLambdaLearning(nTupleSystem, AFTER_STATE, ( getAlpha() != null ) ? getAlpha()[0] : null,
                 getLambda(),
                 getEligibilityTraceLength(),
                 isReplaceEligibilityTraces(),

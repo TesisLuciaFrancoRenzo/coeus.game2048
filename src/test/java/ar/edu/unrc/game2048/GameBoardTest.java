@@ -29,14 +29,14 @@ import static org.hamcrest.MatcherAssert.assertThat;
 /**
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
-@SuppressWarnings( { "UnusedAssignment" } )
+@SuppressWarnings( "UnusedAssignment" )
 public
 class GameBoardTest {
 
     private final Tile[][]                      emptyBoard;
     private final ConfigNTupleBasicLinear_32768 nTupleConfiguration;
     private final Tile[][]                      randomBoard;
-    private       Game2048                      game;
+    private Game2048 game = null;
 
     /**
      *
@@ -267,10 +267,10 @@ class GameBoardTest {
         board.setTiles(randomBoard);
         board.clearInterns(true);
 
-        final Integer[] expResult = { 0, 2, 13 };
         final Integer[] result    = new Integer[3];
         board.getAvailableSpace().toArray(result);
 
+        final Integer[] expResult = { 0, 2, 13 };
         Assert.assertArrayEquals(expResult, result);
 
         // =========================================== //

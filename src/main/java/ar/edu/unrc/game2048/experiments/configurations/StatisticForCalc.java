@@ -28,14 +28,14 @@ import java.util.List;
 public
 class StatisticForCalc {
 
-    private double         maxScore;
-    private double         maxTurn;
-    private double         meanScore;
-    private double         meanTurn;
-    private double         minScore;
-    private double         minTurn;
-    private List< Double > tileStatistics;
-    private double         winRate;
+    private double         maxScore       = 0.0;
+    private double         maxTurn        = 0.0;
+    private double         meanScore      = 0.0;
+    private double         meanTurn       = 0.0;
+    private double         minScore       = 0.0;
+    private double         minTurn        = 0.0;
+    private List< Double > tileStatistics = null;
+    private double         winRate        = 0.0;
 
     /**
      * @return puntaje máximo.

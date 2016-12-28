@@ -48,12 +48,12 @@ class EncogExperimentInterface
     /**
      * función de activación
      */
-    protected List< Function< Double, Double > > activationFunction;
+    protected List< Function< Double, Double > > activationFunction = null;
 
     /**
      * derivada de la función de activación
      */
-    protected List< Function< Double, Double > > derivedActivationFunction;
+    protected List< Function< Double, Double > > derivedActivationFunction = null;
 
     /**
      * @param perceptronConfiguration configuración
@@ -199,9 +199,9 @@ class EncogExperimentInterface
             throw new IllegalArgumentException("la cantidad de capas es de mínimo 2 para un perceptrón (incluyendo entrada y salida)");
         }
         final BasicNetwork perceptron = new BasicNetwork();
-        ActivationFunction function;
         perceptron.addLayer(new BasicLayer(null, perceptronConfiguration.containBias(), perceptronConfiguration.getNeuronQuantityInLayer()[0]));
-        final int getNeuronQuantityInLayerLength = perceptronConfiguration.getNeuronQuantityInLayer().length - 1;
+        final int          getNeuronQuantityInLayerLength = perceptronConfiguration.getNeuronQuantityInLayer().length - 1;
+        ActivationFunction function;
         for ( int i = 1; i < getNeuronQuantityInLayerLength; i++ ) {
             function = perceptronConfiguration.getActivationFunctionForEncog()[i - 1].clone();
             perceptron.addLayer(new BasicLayer(function,

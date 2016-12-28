@@ -119,10 +119,10 @@ class ReportCollector {
     private static
     File workingDir() {
         if ( WORKING_DIRECTORY == null ) {
-            final String Recurso = ReportCollector.class.getSimpleName() + ".class";
             try {
-                final URL url = ReportCollector.class.getResource(Recurso);
-                File      f;
+                final String Recurso = ReportCollector.class.getSimpleName() + ".class";
+                final URL    url     = ReportCollector.class.getResource(Recurso);
+                File         f;
 
                 switch ( url.getProtocol() ) {
                     case "file":
@@ -133,9 +133,9 @@ class ReportCollector {
                         WORKING_DIRECTORY = f.getParentFile();
                         break;
                     case "jar":
-                        final String expected = "!/" + Recurso;
                         String s = url.toString();
                         s = s.substring(4);
+                        final String expected = "!/" + Recurso;
                         s = s.substring(0, s.length() - expected.length());
                         f = new File(new URL(s).toURI());
                         do {

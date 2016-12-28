@@ -32,17 +32,17 @@ enum Action
     /**
      * Arriba
      */
-    up,
+    UP,
     /**
      * Abajo
      */
-    down,
+    DOWN,
     /**
      * Izquierda
      */
-    left,
+    LEFT,
     /**
      * Derecha
      */
-    right
+    RIGHT
 }

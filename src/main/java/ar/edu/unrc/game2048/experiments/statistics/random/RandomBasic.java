@@ -44,10 +44,8 @@ class RandomBasic
     public static
     void main( final String... args )
             throws Exception {
-        final String filePath;
-        filePath = ( args.length == 0 ) ? ( ".." + File.separator + "Perceptrones ENTRENADOS" + File.separator ) : args[0];
+        final String filePath = ( args.length == 0 ) ? ( ".." + File.separator + "Perceptrones ENTRENADOS" + File.separator ) : args[0];
         final LearningExperiment experiment   = new RandomBasic();
-        final boolean            printHistory = false;
 
         experiment.setStatisticsOnly(true);
         experiment.createLogs(false);
@@ -58,6 +56,7 @@ class RandomBasic
         experiment.setSimulationsForStatistics(8);
         experiment.setRunStatisticsForBackups(false);
         experiment.setExportToExcel(false);
+        final boolean printHistory = false;
         experiment.start(-1, filePath, true, null, printHistory);
 
         Toolkit.getDefaultToolkit().beep();

@@ -62,12 +62,6 @@ class EncogExperimentInterfaceTest {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
 
-            public
-            EncogConfiguration2048 clone()
-                    throws CloneNotSupportedException {
-                return super.clone();
-            }
-
             @Override
             public
             Double computeNumericRepresentationFor(
@@ -392,12 +386,6 @@ class EncogExperimentInterfaceTest {
                     final List< Double > normalizedPerceptronInput
             ) {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            public
-            EncogConfiguration2048 clone()
-                    throws CloneNotSupportedException {
-                return super.clone();
             }
 
             @Override

@@ -123,16 +123,16 @@ class GreedyExperimentInterface
         } else {
             final Action bestAction = bestActions.get(TDLambdaLearning.randomBetween(0, bestActions.size() - 1));
             switch ( bestAction ) {
-                case left:
+                case LEFT:
                     game.getBoard().moveLeft();
                     break;
-                case right:
+                case RIGHT:
                     game.getBoard().moveRight();
                     break;
-                case down:
+                case DOWN:
                     game.getBoard().canMoveDown();
                     break;
-                case up:
+                case UP:
                     game.getBoard().moveUp();
                     break;
                 default:

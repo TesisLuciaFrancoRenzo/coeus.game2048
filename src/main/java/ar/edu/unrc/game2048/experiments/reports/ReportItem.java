@@ -19,12 +19,12 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 class ReportItem
         implements Comparable< ReportItem > {
 
-    protected Double  bestValue;
-    protected boolean failed;
-    protected String  file;
-    protected String  trainingNumber;
-    private   File    bestNeuralNetworkFile;
-    private   String  motive;
+    protected Double  bestValue             = null;
+    protected boolean failed                = false;
+    protected String  file                  = null;
+    protected String  trainingNumber        = null;
+    private   File    bestNeuralNetworkFile = null;
+    private   String  motive                = null;
 
     @Override
     public

@@ -30,7 +30,7 @@ import org.encog.util.arrayutil.NormalizedField;
 
 import java.util.List;
 
-import static ar.edu.unrc.coeus.tdlearning.learning.ELearningStyle.afterState;
+import static ar.edu.unrc.coeus.tdlearning.learning.ELearningStyle.AFTER_STATE;
 
 /**
  * @author lucia bressan, franco pellegrini, renzo bianchini
@@ -42,14 +42,14 @@ class EncogConfiguration2048
 
     public static final Class< ? >[] PARAMETER_TYPE = { Boolean.class };
 
-    protected ActivationFunction[] activationFunctionForEncog;
-    protected double               activationFunctionMax;
-    protected double               activationFunctionMin;
-    protected boolean hasBias = true;
-    protected BasicNetwork    neuralNetwork;
-    protected int[]           neuronQuantityInLayer;
-    protected NormalizedField normInput;
-    protected NormalizedField normOutput;
+    protected ActivationFunction[] activationFunctionForEncog = null;
+    protected double               activationFunctionMax      = 0.0;
+    protected double               activationFunctionMin      = 0.0;
+    protected boolean              hasBias                    = true;
+    protected BasicNetwork         neuralNetwork              = null;
+    protected int[]                neuronQuantityInLayer      = null;
+    protected NormalizedField      normInput                  = null;
+    protected NormalizedField      normOutput                 = null;
 
     /**
      * @param board
@@ -204,8 +204,7 @@ class EncogConfiguration2048
     TDLambdaLearning instanceOfTdLearningImplementation(
             final INeuralNetworkInterface perceptronInterface
     ) {
-        return new TDLambdaLearning(perceptronInterface,
-                afterState,
+        return new TDLambdaLearning(perceptronInterface, AFTER_STATE,
                 getAlpha(),
                 getLambda(),
                 isReplaceEligibilityTraces(),

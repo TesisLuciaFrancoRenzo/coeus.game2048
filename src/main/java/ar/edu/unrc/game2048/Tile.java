@@ -8,7 +8,7 @@ import ar.edu.unrc.coeus.tdlearning.training.ntuple.SamplePointValue;
 public
 class Tile
         implements SamplePointValue {
-    private boolean merged;
+    private boolean merged = false;
     private int     value;
 
     public

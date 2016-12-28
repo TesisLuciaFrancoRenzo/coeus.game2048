@@ -42,7 +42,6 @@ class ConfigNTupleBasicLinear_32768
         activationFunction = FunctionUtils.LINEAR;
         derivedActivationFunction = FunctionUtils.LINEAR_DERIVED;
         concurrency = false;
-        final int maxTile = 15;
 
         nTuplesLength = new int[17];
         for ( int i = 0; i < 17; i++ ) {
@@ -51,6 +50,7 @@ class ConfigNTupleBasicLinear_32768
 
         allSamplePointPossibleValues = new ArrayList<>();
         allSamplePointPossibleValues.add(null);
+        final int maxTile = 15;
         for ( int i = 1; i <= maxTile; i++ ) {
             allSamplePointPossibleValues.add(new Tile((int) Math.pow(2, i)));
         }

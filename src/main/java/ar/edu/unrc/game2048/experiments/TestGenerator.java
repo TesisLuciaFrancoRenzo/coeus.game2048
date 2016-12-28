@@ -163,36 +163,6 @@ class TestGenerator {
     public static
     void main( final String... args )
             throws Exception {
-        final String    filePath                                       = ".." + File.separator + "Perceptrones ENTRENADOS" + File.separator;
-        List< Double >  lambdaList                                     = new ArrayList<>();
-        List< String >  experimentClassNameList                        = new ArrayList<>();
-        List< Double >  alphaList                                      = new ArrayList<>();
-        List< Integer > annealingAlphaList                             = new ArrayList<>();
-        List< Double >  gammaList                                      = new ArrayList<>();
-        List< Double >  whenStartToExplore                             = new ArrayList<>();
-        List< Double >  fixedExplorationRate                           = new ArrayList<>();
-        List< Double >  interpolatedExplorationRateFinalValues         = new ArrayList<>();
-        List< Integer > interpolatedExplorationRateFinishInterpolation = new ArrayList<>();
-        List< Double >  interpolatedExplorationRateInitialValues       = new ArrayList<>();
-        List< Integer > interpolatedExplorationRateStartInterpolation  = new ArrayList<>();
-        final String    experimentDirName;
-        final int       repetitions;
-        final int       maxTrainingThreads;
-        final int       simulationsForStatistics;
-        final boolean   runBackupStatistics;
-        final boolean   statisticsOnly;
-        final int       gamesToPlay;
-        final int       saveEvery;
-        final int       saveBackupEvery;
-        final int       tileToWinForStatistics;
-        final boolean[] concurrentLayer;
-        final int       gamesToPlayPerThreadForStats;
-        final boolean   replacingTraces;
-        final boolean   accumulatingTraces;
-        final int       eligibilityTraceLength;
-        final boolean   createLogs;
-        final boolean   canCollectStatistics;
-        final boolean   concurrencyInComputeBestPossibleAction;
         //============================== fin de configuraciones manuales ==================================
 
         if ( args.length == 0 ) {
@@ -200,48 +170,48 @@ class TestGenerator {
             System.exit(-1);
         } else {
 
-            lambdaList.clear();
-            experimentClassNameList.clear();
-            alphaList.clear();
-            annealingAlphaList.clear();
-            gammaList.clear();
-            fixedExplorationRate.clear();
-            interpolatedExplorationRateFinalValues.clear();
-            interpolatedExplorationRateFinishInterpolation.clear();
-            interpolatedExplorationRateInitialValues.clear();
-            interpolatedExplorationRateStartInterpolation.clear();
+            List< Double >  lambdaList;
+            List< String >  experimentClassNameList;
+            List< Double >  alphaList;
+            List< Integer > annealingAlphaList;
+            List< Double >  gammaList;
+            List< Double >  fixedExplorationRate                           = new ArrayList<>();
+            List< Double >  interpolatedExplorationRateFinalValues         = new ArrayList<>();
+            List< Integer > interpolatedExplorationRateFinishInterpolation = new ArrayList<>();
+            List< Double >  interpolatedExplorationRateInitialValues       = new ArrayList<>();
+            List< Integer > interpolatedExplorationRateStartInterpolation  = new ArrayList<>();
 
             final ArgumentLoader arguments = new ArgumentLoader(args);
 
-            experimentDirName = arguments.getArg("experimentDirName");
+            final String experimentDirName = arguments.getArg("experimentDirName");
             experimentClassNameList = ArgumentLoader.parseStringArray(arguments.getArg("experimentClassNameList"));
-            createLogs = Boolean.parseBoolean(arguments.getArg("createLogs"));
-            canCollectStatistics = Boolean.parseBoolean(arguments.getArg("canCollectStatistics"));
+            final boolean createLogs           = Boolean.parseBoolean(arguments.getArg("createLogs"));
+            final boolean canCollectStatistics = Boolean.parseBoolean(arguments.getArg("canCollectStatistics"));
 
-            repetitions = Integer.parseInt(arguments.getArg("repetitions"));
-            maxTrainingThreads = Integer.parseInt(arguments.getArg("maxTrainingThreads"));
+            final int repetitions        = Integer.parseInt(arguments.getArg("repetitions"));
+            final int maxTrainingThreads = Integer.parseInt(arguments.getArg("maxTrainingThreads"));
 
-            gamesToPlay = Integer.parseInt(arguments.getArg("gamesToPlay"));
-            gamesToPlayPerThreadForStats = Integer.parseInt(arguments.getArg("gamesToPlayPerThreadForStats"));
-            saveEvery = Integer.parseInt(arguments.getArg("saveEvery"));
-            saveBackupEvery = Integer.parseInt(arguments.getArg("saveBackupEvery"));
+            final int gamesToPlay                  = Integer.parseInt(arguments.getArg("gamesToPlay"));
+            final int gamesToPlayPerThreadForStats = Integer.parseInt(arguments.getArg("gamesToPlayPerThreadForStats"));
+            final int saveEvery                    = Integer.parseInt(arguments.getArg("saveEvery"));
+            final int saveBackupEvery              = Integer.parseInt(arguments.getArg("saveBackupEvery"));
 
-            statisticsOnly = Boolean.parseBoolean(arguments.getArg("statisticsOnly"));
-            simulationsForStatistics = Integer.parseInt(arguments.getArg("simulationsForStatistics"));
-            tileToWinForStatistics = Integer.parseInt(arguments.getArg("tileToWinForStatistics"));
-            runBackupStatistics = Boolean.parseBoolean(arguments.getArg("runBackupStatistics"));
+            final boolean statisticsOnly           = Boolean.parseBoolean(arguments.getArg("statisticsOnly"));
+            final int     simulationsForStatistics = Integer.parseInt(arguments.getArg("simulationsForStatistics"));
+            final int     tileToWinForStatistics   = Integer.parseInt(arguments.getArg("tileToWinForStatistics"));
+            final boolean runBackupStatistics      = Boolean.parseBoolean(arguments.getArg("runBackupStatistics"));
 
             lambdaList = ArgumentLoader.parseDoubleArray(arguments.getArg("lambdaList"));
-            eligibilityTraceLength = Integer.parseInt(arguments.getArg("eligibilityTraceLength"));
-            replacingTraces = Boolean.parseBoolean(arguments.getArg("replacingTraces"));
-            accumulatingTraces = Boolean.parseBoolean(arguments.getArg("accumulatingTraces"));
+            final int     eligibilityTraceLength = Integer.parseInt(arguments.getArg("eligibilityTraceLength"));
+            final boolean replacingTraces        = Boolean.parseBoolean(arguments.getArg("replacingTraces"));
+            final boolean accumulatingTraces     = Boolean.parseBoolean(arguments.getArg("accumulatingTraces"));
 
             annealingAlphaList = ArgumentLoader.parseIntegerArray(arguments.getArg("annealingAlphaList"));
             alphaList = ArgumentLoader.parseDoubleArray(arguments.getArg("alphaList"));
             gammaList = ArgumentLoader.parseDoubleArray(arguments.getArg("gammaList"));
-            concurrentLayer = ArgumentLoader.parseBooleanArray(arguments.getArg("concurrentLayerList"));
-            concurrencyInComputeBestPossibleAction = Boolean.parseBoolean(arguments.getArg("concurrencyInComputeBestPossibleAction"));
-            whenStartToExplore = ArgumentLoader.parseDoubleArray(arguments.getArg("whenStartToExplore"));
+            final boolean[] concurrentLayer                        = ArgumentLoader.parseBooleanArray(arguments.getArg("concurrentLayerList"));
+            final boolean   concurrencyInComputeBestPossibleAction = Boolean.parseBoolean(arguments.getArg("concurrencyInComputeBestPossibleAction"));
+            List< Double >  whenStartToExplore                     = ArgumentLoader.parseDoubleArray(arguments.getArg("whenStartToExplore"));
             try {
                 interpolatedExplorationRateInitialValues = ArgumentLoader.parseDoubleArray(arguments.getArg("explorationRateInitialValueList"));
                 interpolatedExplorationRateFinalValues = ArgumentLoader.parseDoubleArray(arguments.getArg("explorationRateFinalValuesList"));
@@ -268,7 +238,8 @@ class TestGenerator {
                     System.exit(-1);
                 }
             }
-            long time = System.currentTimeMillis();
+            long         time     = System.currentTimeMillis();
+            final String filePath = ".." + File.separator + "Perceptrones ENTRENADOS" + File.separator;
             runAllConfigs(repetitions,
                     canCollectStatistics,
                     maxTrainingThreads,
@@ -286,8 +257,7 @@ class TestGenerator {
                     saveEvery,
                     saveBackupEvery,
                     gamesToPlayPerThreadForStats,
-                    tileToWinForStatistics,
-                    simulationsForStatistics, whenStartToExplore,
+                    tileToWinForStatistics, simulationsForStatistics, whenStartToExplore,
                     fixedExplorationRate,
                     interpolatedExplorationRateInitialValues,
                     interpolatedExplorationRateFinalValues,
@@ -349,7 +319,7 @@ class TestGenerator {
                                 for ( int w = 0; w < whenStartToExplore.size(); w++ ) {
                                     if ( explorationRateList != null ) {
                                         for ( int l = 0; l < explorationRateList.size(); l++ ) {
-                                            if ( lambdaList.get(j) == 0 ) {
+                                            if ( lambdaList.get(j) == 0.0d ) {
                                                 number++;
                                                 experiments.add(new GeneratorConfig(a,
                                                         canCollectStatistics,
@@ -413,7 +383,7 @@ class TestGenerator {
                                             for ( int o = 0; o < explorationRateFinalValues.size(); o++ ) {
                                                 for ( int p = 0; p < explorationRateStartInterpolation.size(); p++ ) {
                                                     for ( int q = 0; q < explorationRateFinishInterpolation.size(); q++ ) {
-                                                        if ( lambdaList.get(j) == 0 ) {
+                                                        if ( lambdaList.get(j) == 0.0d ) {
                                                             number++;
                                                             experiments.add(new GeneratorConfig(a,
                                                                     canCollectStatistics,
@@ -558,13 +528,15 @@ class TestGenerator {
             final boolean concurrencyInComputeBestPossibleAction
     ) {
         try {
-            final String explorationRateString;
-            explorationRateString = "-w" + expConfig.getWhenStartToExplore() + ( ( explorationRateList != null )
-                                                                                 ? ( "-explorationRate_" + expConfig.getExplorationRate() )
-                                                                                 : "-explorationRate_" + expConfig.getExplorationRateInitialValue() +
-                                                                                   '_' + expConfig.getExplorationRateFinalValue() + '_' +
-                                                                                   expConfig.getExplorationRateStartInterpolation() + '_' +
-                                                                                   expConfig.getExplorationRateFinishInterpolation() );
+            final String explorationRateString = "-w" + expConfig.getWhenStartToExplore() + ( ( explorationRateList != null )
+                                                                                              ? ( "-explorationRate_" +
+                                                                                                  expConfig.getExplorationRate() )
+                                                                                              : "-explorationRate_" +
+                                                                                                expConfig.getExplorationRateInitialValue() + '_' +
+                                                                                                expConfig.getExplorationRateFinalValue() + '_' +
+                                                                                                expConfig.getExplorationRateStartInterpolation() +
+                                                                                                '_' +
+                                                                                                expConfig.getExplorationRateFinishInterpolation() );
             final String newFilePath = filePath + experimentDirName + File.separator + expConfig.getRepetitions() + "-alpha_" + expConfig.getAlpha() +
                                        ( ( expConfig.getAnnealingAlpha() > 0 ) ? ( "-anneal_" + expConfig.getAnnealingAlpha() ) : "" ) + "-lambda_" +
                                        expConfig.getLambda() + "-gamma_" + expConfig.getGamma() + explorationRateString + "-replaceTraces_" +
@@ -622,10 +594,9 @@ class TestGenerator {
                     throw new IllegalArgumentException("no se reconoce la clase: " + expConfig.getClassName());
             }
 
-            final LearningExperiment cloneExperiment;
-            cloneExperiment = (LearningExperiment) ( ( classParameters != null )
-                                                     ? classConstructor.newInstance(classParameters)
-                                                     : classConstructor.newInstance() );
+            final LearningExperiment cloneExperiment = (LearningExperiment) ( ( classParameters != null )
+                                                                              ? classConstructor.newInstance(classParameters)
+                                                                              : classConstructor.newInstance() );
             cloneExperiment.setExperimentName(expConfig.getClassName());
             configAndExecute(expConfig.isCanCollectStatistics(),
                     expConfig.getNumber(),
@@ -642,8 +613,7 @@ class TestGenerator {
                     saveEvery,
                     saveBackupEvery,
                     gamesToPlayPerThreadForStatistics,
-                    tileToWinForStatistics,
-                    simulationsForStatistics, expConfig.getWhenStartToExplore(),
+                    tileToWinForStatistics, simulationsForStatistics, expConfig.getWhenStartToExplore(),
                     expConfig.getExplorationRate(),
                     expConfig.getExplorationRateInitialValue(),
                     expConfig.getExplorationRateFinalValue(),
@@ -653,7 +623,8 @@ class TestGenerator {
                     concurrentLayer,
                     expConfig.isReplaceTraces(),
                     concurrencyInComputeBestPossibleAction);
-        } catch ( NoSuchMethodException | ClassCastException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex ) {
+        } catch ( NoSuchMethodException | ClassCastException | InstantiationException | IllegalAccessException | IllegalArgumentException |
+                InvocationTargetException ex ) {
             Logger.getLogger(TestGenerator.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

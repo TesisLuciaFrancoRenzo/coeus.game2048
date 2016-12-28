@@ -37,8 +37,8 @@ class ConfigNTupleBasicTanHSimplified_512
 
     private static final int maxReward = 100_000;
     private static final int minReward = -100_000;
-    private int maxTile;
-    private int numSamples;
+    private final int maxTile;
+    private final int numSamples;
 
     /**
      * Configuración para jugar hasta 512, con función de activación Tangente Hiperbólica, y puntaje parcial.

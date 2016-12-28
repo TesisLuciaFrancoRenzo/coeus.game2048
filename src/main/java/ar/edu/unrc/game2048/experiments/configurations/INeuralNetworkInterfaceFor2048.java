@@ -43,8 +43,8 @@ class INeuralNetworkInterfaceFor2048
     /**
      *
      */
-    protected EncogConfiguration2048  perceptronConfiguration;
-    private   NTupleConfiguration2048 nTupleConfiguration;
+    protected EncogConfiguration2048  perceptronConfiguration = null;
+    private   NTupleConfiguration2048 nTupleConfiguration     = null;
 
     /**
      * @param perceptronConfiguration configuración del Perceptrón.
@@ -147,23 +147,22 @@ class INeuralNetworkInterfaceFor2048
         // evaluamos cada acción aplicada al estado inicial y elegimos la mejor
         // acción basada en las predicciones del problema
         final List< IAction > possibleActions = game.listAllPossibleActions(game.getBoard());
-        final Action bestAction = (Action) TDLambdaLearning.computeBestPossibleAction(game,
-                ELearningStyle.afterState,
+        final Action bestAction = (Action) TDLambdaLearning.computeBestPossibleAction(game, ELearningStyle.AFTER_STATE,
                 game.getBoard(),
                 possibleActions,
                 null,
                 learningMethod.isComputeParallelBestPossibleAction(), null).getAction();
         switch ( bestAction ) {
-            case left:
+            case LEFT:
                 game.getBoard().moveLeft();
                 break;
-            case right:
+            case RIGHT:
                 game.getBoard().moveRight();
                 break;
-            case down:
+            case DOWN:
                 game.getBoard().moveDown();
                 break;
-            case up:
+            case UP:
                 game.getBoard().moveUp();
                 break;
             default:

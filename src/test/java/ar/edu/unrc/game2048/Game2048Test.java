@@ -37,7 +37,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public
 class Game2048Test {
 
-    private       Game2048      game;
+    private Game2048 game = null;
 
     /**
      *
@@ -58,8 +58,6 @@ class Game2048Test {
     void testListAllPossibleActions() {
         System.out.println("listAllPossibleActions");
         game = new Game2048(null, null, 2_048, false);
-        IState state1;
-        IState state2;
 
         //inicializamos un tablero terminal
         GameBoard board = new GameBoard(game);
@@ -88,10 +86,10 @@ class Game2048Test {
         board.clearInterns(true);
 
         @SuppressWarnings( "MismatchedQueryAndUpdateOfCollection" ) final Set< IAction > expResult = new HashSet<>();
-        expResult.add(Action.down);
-        expResult.add(Action.up);
+        expResult.add(Action.DOWN);
+        expResult.add(Action.UP);
 
-        state1 = game.computeAfterState(board, Action.down); //para comparar luego
+        IState state1 = game.computeAfterState(board, Action.DOWN); //para comparar luego
         assertThat(state1, notNullValue());
 
         result = game.listAllPossibleActions(board);
@@ -104,18 +102,18 @@ class Game2048Test {
 
         //verificamos que si se llama al afterState antes de listAllPossibleActions
         // con los mismos tableros, devuelven instancias diferentes, pero con el mismo contenido lógico
-        state2 = game.computeAfterState(board, Action.down);
+        IState state2 = game.computeAfterState(board, Action.DOWN);
         Assert.assertNotSame(state1, state2);
         assertThat(state1, is(state2));
 
         //verificamos que próximas llamadas a computeAfterState retorne valores ya calculados y no los calcule otra vez
-        state1 = game.computeAfterState(board, Action.down);
+        state1 = game.computeAfterState(board, Action.DOWN);
         assertThat(state1, notNullValue());
-        state2 = game.computeAfterState(board, Action.down);
+        state2 = game.computeAfterState(board, Action.DOWN);
         assertThat(state2, notNullValue());
         assertThat(state1, is(state2));
 
-        state2 = game.computeAfterState(board, Action.up);
+        state2 = game.computeAfterState(board, Action.UP);
         Assert.assertNotSame(state1, state2);
 
         // =========================================== //
@@ -131,10 +129,10 @@ class Game2048Test {
         board.clearInterns(true);
 
         expResult.clear();
-        expResult.add(Action.down);
-        expResult.add(Action.up);
-        expResult.add(Action.right);
-        expResult.add(Action.left);
+        expResult.add(Action.DOWN);
+        expResult.add(Action.UP);
+        expResult.add(Action.RIGHT);
+        expResult.add(Action.LEFT);
         result = game.listAllPossibleActions(board);
         assertThat(result.size(), is(4));
         resultSet = new HashSet<>(game.listAllPossibleActions(board));
@@ -143,13 +141,13 @@ class Game2048Test {
         }
 
         //verificamos que próximas llamadas a computeAfterState retorne valores ya calculados y no los calcule otra vez
-        state1 = game.computeAfterState(board, Action.right);
+        state1 = game.computeAfterState(board, Action.RIGHT);
         assertThat(state1, notNullValue());
-        state2 = game.computeAfterState(board, Action.right);
+        state2 = game.computeAfterState(board, Action.RIGHT);
         assertThat(state2, notNullValue());
         assertThat(state1, is(state2));
 
-        state2 = game.computeAfterState(board, Action.left);
+        state2 = game.computeAfterState(board, Action.LEFT);
         Assert.assertNotSame(state1, state2);
     }
 

@@ -63,72 +63,72 @@ class LearningExperiment {
     /**
      * Nombre del archivo con los datos de la ultima red neuronal guardada en disco.
      */
-    public static final String     LAST_SAVE_DATA              = "_last_save_data";
+    public static final String                         LAST_SAVE_DATA                         = "_last_save_data";
     /**
      * Nombre que se le agrega a los archivos de redes neuronales inicializados sin entrenamiento, para comparar al
      * final del experimento con la versión entrenada.
      */
-    public static final String     RANDOM                      = "_random";
+    public static final String                         RANDOM                                 = "_random";
     /**
      * Nombre que se le agrega a los archivos de redes neuronales con entrenamiento.
      */
-    public static final String     TRAINED                     = "_trained";
+    public static final String                         TRAINED                                = "_trained";
     /**
      * Formato para fechas.
      */
-    private final       DateFormat dateFormat                  = new SimpleDateFormat(DATE_FORMATTER_PATTERN);
+    private final       DateFormat                     dateFormat                             = new SimpleDateFormat(DATE_FORMATTER_PATTERN);
     /**
      * Formato para fechas en los nombres de archivos.
      */
-    private final       DateFormat simpleDateFormat            = new SimpleDateFormat(DATE_FILE_FORMATTER_PATTERN);
+    private final       DateFormat                     simpleDateFormat                       = new SimpleDateFormat(DATE_FILE_FORMATTER_PATTERN);
     /**
      * Experimento encargad de las estadísticas.
      */
-    protected StatisticExperiment statisticExperiment;
-    private   double[]            alpha;
-    private   int                 annealingT;
-    private   int                 backupNumber;
-    private   int                 bestGame;
-    private   double              bestMaxTile;
-    private   StatisticCalculator bestPossibleActionTimes;
-    private   double              bestWinRate;
-    private   boolean             canCollectStatistics;
-    private   boolean             concurrencyInComputeBestPossibleAction;
-    private   boolean[]           concurrencyInLayer;
-    private   long                elapsedTime;
-    private int eligibilityTraceLength = -1;
-    private String                     experimentName;
-    private EExplorationRateAlgorithms explorationRate;
-    private double                     explorationRateFinalValue;
-    private int                        explorationRateFinishDecrementing;
-    private double                     explorationRateInitialValue;
-    private int                        explorationRateStartDecrementing;
-    private boolean exportToExcel = true;
-    private int                            gamesToPlay;
-    private int                            gamesToPlayPerThreadForStatistics;
-    private double                         gamma;
-    private boolean                        initializePerceptronRandomized;
-    private double                         lambda;
-    private int                            lastSavedGamePlayedNumber;
-    private TDLambdaLearning               learningAlgorithm;
-    private ELearningRateAdaptation        learningRateAdaptation;
-    private boolean                        logsActivated;
-    private StatisticCalculator            maxTileEstimator;
-    private StatisticCalculator            maxTurnAvg;
-    private INeuralNetworkInterfaceFor2048 neuralNetworkInterfaceFor2048;
-    private String                         neuralNetworkName;
-    private boolean                        replaceEligibilityTraces;
-    private boolean                        runStatisticsForBackups;
-    private int sampleSizeForEstimation = 2_000;
-    private int     saveBackupEvery;
-    private int     saveEvery;
-    private int     simulationsForStatistics;
-    private boolean statisticsOnly;
-    private int tileToWinForStatistics = 2_048;
-    private int                 tileToWinForTraining;
-    private StatisticCalculator trainingTimes;
-    private double whenStartToExplore = 1.0d;
-    private StatisticCalculator winRateEstimator;
+    protected           StatisticExperiment            statisticExperiment                    = null;
+    private             double[]                       alpha                                  = null;
+    private             int                            annealingT                             = 0;
+    private             int                            backupNumber                           = 0;
+    private             int                            bestGame                               = 0;
+    private             double                         bestMaxTile                            = 0.0;
+    private             StatisticCalculator            bestPossibleActionTimes                = null;
+    private             double                         bestWinRate                            = 0.0;
+    private             boolean                        canCollectStatistics                   = false;
+    private             boolean                        concurrencyInComputeBestPossibleAction = false;
+    private             boolean[]                      concurrencyInLayer                     = null;
+    private             long                           elapsedTime                            = 0L;
+    private             int                            eligibilityTraceLength                 = -1;
+    private             String                         experimentName                         = null;
+    private             EExplorationRateAlgorithms     explorationRate                        = null;
+    private             double                         explorationRateFinalValue              = 0.0;
+    private             int                            explorationRateFinishDecrementing      = 0;
+    private             double                         explorationRateInitialValue            = 0.0;
+    private             int                            explorationRateStartDecrementing       = 0;
+    private             boolean                        exportToExcel                          = true;
+    private             int                            gamesToPlay                            = 0;
+    private             int                            gamesToPlayPerThreadForStatistics      = 0;
+    private             double                         gamma                                  = 0.0;
+    private             boolean                        initializePerceptronRandomized         = false;
+    private             double                         lambda                                 = 0.0;
+    private             int                            lastSavedGamePlayedNumber              = 0;
+    private             TDLambdaLearning               learningAlgorithm                      = null;
+    private             ELearningRateAdaptation        learningRateAdaptation                 = null;
+    private             boolean                        logsActivated                          = false;
+    private             StatisticCalculator            maxTileEstimator                       = null;
+    private             StatisticCalculator            maxTurnAvg                             = null;
+    private             INeuralNetworkInterfaceFor2048 neuralNetworkInterfaceFor2048          = null;
+    private             String                         neuralNetworkName                      = null;
+    private             boolean                        replaceEligibilityTraces               = false;
+    private             boolean                        runStatisticsForBackups                = false;
+    private             int                            sampleSizeForEstimation                = 2_000;
+    private             int                            saveBackupEvery                        = 0;
+    private             int                            saveEvery                              = 0;
+    private             int                            simulationsForStatistics               = 0;
+    private             boolean                        statisticsOnly                         = false;
+    private             int                            tileToWinForStatistics                 = 2_048;
+    private             int                            tileToWinForTraining                   = 0;
+    private             StatisticCalculator            trainingTimes                          = null;
+    private             double                         whenStartToExplore                     = 1.0d;
+    private             StatisticCalculator            winRateEstimator                       = null;
 
     private static
     void printErrorInFile(
@@ -140,7 +140,7 @@ class LearningExperiment {
             if ( !dumpFile.exists() ) {
                 dumpFile.createNewFile();
             }
-            DateFormat dateFormat = new SimpleDateFormat(DATE_FORMATTER_PATTERN);
+            final DateFormat dateFormat = new SimpleDateFormat(DATE_FORMATTER_PATTERN);
             printStream = new PrintStream(new FileOutputStream(dumpFile, true), true, "UTF-8");
             final String msj =
                     "* " + dateFormat.format(new Date()) + "----------------------------------------------------------------------------\n" +
@@ -157,12 +157,8 @@ class LearningExperiment {
     }
 
     public
-    boolean canExploreThisTurn( long currentTurn ) {
-        if ( whenStartToExplore >= 1 ) {
-            return true;
-        } else {
-            return ( currentTurn > 1 ) && ( currentTurn > ( maxTurnAvg.getAverage() * whenStartToExplore ) );
-        }
+    boolean canExploreThisTurn( final long currentTurn ) {
+        return whenStartToExplore >= 1 || ( currentTurn > 1 ) && ( currentTurn > ( maxTurnAvg.getAverage() * whenStartToExplore ) );
     }
 
     /**
@@ -257,18 +253,11 @@ class LearningExperiment {
     }
 
     /**
-     * Establece el nombre del experimento basado en el nombre de la clase {@code experimentClass}.
-     *
-     * @param experimentClass clase de la cual extraer el nombre del experimento.
+     * @param experimentName nombre del experimento.
      */
     public
-    void setExperimentName( final Class experimentClass ) {
-        String    className = experimentClass.getName();
-        final int lastDot   = className.lastIndexOf('.');
-        if ( lastDot != -1 ) {
-            className = className.substring(lastDot + 1);
-        }
-        experimentName = className;
+    void setExperimentName( final String experimentName ) {
+        this.experimentName = experimentName;
     }
 
     /**
@@ -503,7 +492,7 @@ class LearningExperiment {
      * @param whenStartToExplore
      */
     public
-    void setWhenStartToExplore( double whenStartToExplore ) {
+    void setWhenStartToExplore( final double whenStartToExplore ) {
         this.whenStartToExplore = whenStartToExplore;
     }
 
@@ -628,11 +617,9 @@ class LearningExperiment {
             throw new IllegalArgumentException("se debe configurar cada cuanto guardar backups del perceptron mediante la variable saveBackupEvery");
         }
         System.out.println("Starting " + neuralNetworkName + ( ( numberForShow == -1 ) ? "" : " Trainer Nº " + numberForShow ));
-        final String dirPath = createPathToDir(experimentPath);
-        final String bugFilePath;
-        bugFilePath = ( ( errorDumpDir == null ? dirPath : errorDumpDir ) + ERROR_DUMP + ".txt" );
-        final File historyFile;
-        historyFile = printHistory ? new File(dirPath + HISTORY_DUMP + ".txt") : null;
+        final String dirPath     = createPathToDir(experimentPath);
+        final String bugFilePath = ( ( errorDumpDir == null ? dirPath : errorDumpDir ) + ERROR_DUMP + ".txt" );
+        final File   historyFile = printHistory ? new File(dirPath + HISTORY_DUMP + ".txt") : null;
         maxTileEstimator = new StatisticCalculator(sampleSizeForEstimation, 2);
         winRateEstimator = new StatisticCalculator(sampleSizeForEstimation, 2);
         maxTurnAvg = new StatisticCalculator(sampleSizeForEstimation, 2);
@@ -645,14 +632,12 @@ class LearningExperiment {
                     dirPathFile.mkdirs();
                 }
             }
-            final String filePath         = dirPath + neuralNetworkName;
-            final File   perceptronFile   = new File(filePath + TRAINED + ".ser");
-            final File   lastSaveDataFile = new File(filePath + LAST_SAVE_DATA + ".txt");
-            final File   configFile;
-            configFile = new File(( errorDumpDir == null ? filePath : errorDumpDir ) + CONFIG + ".txt");
+            final String filePath   = dirPath + neuralNetworkName;
+            final File   configFile = new File(( errorDumpDir == null ? filePath : errorDumpDir ) + CONFIG + ".txt");
             backupNumber = 0;
             lastSavedGamePlayedNumber = 0;
             elapsedTime = 0;
+            final File lastSaveDataFile = new File(filePath + LAST_SAVE_DATA + ".txt");
             if ( lastSaveDataFile.exists() ) {
                 try ( BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(lastSaveDataFile), "UTF-8")) ) {
                     String line = reader.readLine();
@@ -702,8 +687,9 @@ class LearningExperiment {
                 zeroNumbers = Integer.toString(gamesToPlay / saveBackupEvery).length();
             }
 
-            boolean backupRandomPerceptron = false;
-            File    randomPerceptronFile   = null;
+            boolean    backupRandomPerceptron = false;
+            File       randomPerceptronFile   = null;
+            final File perceptronFile         = new File(filePath + TRAINED + ".ser");
             if ( createPerceptronFile ) {
                 randomPerceptronFile = new File(filePath + RANDOM + ".ser");
                 if ( !perceptronFile.exists() ) {
@@ -867,11 +853,18 @@ class LearningExperiment {
     }
 
     /**
-     * @param experimentName nombre del experimento.
+     * Establece el nombre del experimento basado en el nombre de la clase {@code experimentClass}.
+     *
+     * @param experimentClass clase de la cual extraer el nombre del experimento.
      */
     public
-    void setExperimentName( final String experimentName ) {
-        this.experimentName = experimentName;
+    void setExperimentName( final Class experimentClass ) {
+        String    className = experimentClass.getName();
+        final int lastDot   = className.lastIndexOf('.');
+        if ( lastDot != -1 ) {
+            className = className.substring(lastDot + 1);
+        }
+        experimentName = className;
     }
 
     /**
@@ -895,7 +888,7 @@ class LearningExperiment {
         if ( ( finalValue < 0 ) || ( finalValue > 1 ) ) {
             throw new IllegalArgumentException("finalValue debe estar en el intervalo [0,1]");
         }
-        explorationRate = EExplorationRateAlgorithms.linear;
+        explorationRate = EExplorationRateAlgorithms.LINEAR;
         explorationRateInitialValue = initialValue;
         explorationRateStartDecrementing = startDecrementing;
         explorationRateFinalValue = finalValue;
@@ -910,7 +903,7 @@ class LearningExperiment {
         if ( ( value < 0 ) || ( value > 1 ) ) {
             throw new IllegalArgumentException("value debe estar en el intervalo [0,1]");
         }
-        explorationRate = EExplorationRateAlgorithms.fixed;
+        explorationRate = EExplorationRateAlgorithms.FIXED;
         explorationRateInitialValue = value;
     }
 
@@ -937,7 +930,7 @@ class LearningExperiment {
      */
     public
     void setLearningRateAdaptationToAnnealing( final int annealingT ) {
-        learningRateAdaptation = ELearningRateAdaptation.annealing;
+        learningRateAdaptation = ELearningRateAdaptation.ANNEALING;
         this.annealingT = annealingT;
     }
 
@@ -946,7 +939,7 @@ class LearningExperiment {
      */
     public
     void setLearningRateAdaptationToFixed() {
-        learningRateAdaptation = ELearningRateAdaptation.fixed;
+        learningRateAdaptation = ELearningRateAdaptation.FIXED;
     }
 
     /**
@@ -1009,20 +1002,19 @@ class LearningExperiment {
             final File historyFile
     )
             throws Exception {
-        File perceptronFileBackup;
         switch ( learningRateAdaptation ) {
-            case fixed:
+            case FIXED:
                 learningAlgorithm.setFixedLearningRate();
                 break;
-            case annealing:
+            case ANNEALING:
                 learningAlgorithm.setAnnealingLearningRate(annealingT);
                 break;
         }
         switch ( explorationRate ) {
-            case fixed:
+            case FIXED:
                 learningAlgorithm.setFixedExplorationRate(explorationRateInitialValue);
                 break;
-            case linear:
+            case LINEAR:
                 learningAlgorithm.setLinearExplorationRate(explorationRateInitialValue,
                         explorationRateStartDecrementing,
                         explorationRateFinalValue,
@@ -1038,11 +1030,10 @@ class LearningExperiment {
         ByteArrayOutputStream     bestSavedGameCache = new ByteArrayOutputStream();
         boolean                   needToSaveBestGame = false;
         final StatisticCalculator timePerTurn        = new StatisticCalculator();
-        Double                    lastTimePerTurn;
 
         for ( int i = lastSavedGamePlayedNumber + 1; i <= gamesToPlay; i++ ) {
-            final long start = System.nanoTime();
-            lastTimePerTurn = learningAlgorithm.solveAndTrainOnce(game, i);
+            final long start           = System.nanoTime();
+            Double     lastTimePerTurn = learningAlgorithm.solveAndTrainOnce(game, i);
             elapsedTime += System.nanoTime() - start;
             if ( game.isPrintHistory() ) {
                 try ( BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(historyFile, true), "UTF-8")) ) {
@@ -1135,7 +1126,8 @@ class LearningExperiment {
             }
             if ( ( i % saveBackupEvery ) == 0 ) {
                 backupNumber++;
-                perceptronFileBackup = new File(filePath + TRAINED + "_BackupN-" + String.format("%0" + zeroNumbers + 'd', backupNumber) + ".ser");
+                File perceptronFileBackup =
+                        new File(filePath + TRAINED + "_BackupN-" + String.format("%0" + zeroNumbers + 'd', backupNumber) + ".ser");
                 neuralNetworkInterfaceFor2048.saveNeuralNetwork(perceptronFileBackup);
                 System.out.println("============ Perceptron Exportado Exitosamente (BACKUP " + backupNumber + ") ============");
                 writeConfig = true;
