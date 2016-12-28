@@ -48,27 +48,27 @@ class LearningExperiment {
     /**
      * Nombre para el archivo salvado con mejor entrenamiento hasta el momento
      */
-    public static final String     BEST_TRAINED                = "_best_trained";
+    public static final String BEST_TRAINED                = "_best_trained";
     /**
      * Extensión de las configuraciones de entrenamiento del experimento.
      */
-    public static final String     CONFIG                      = "_config";
-    public static final String     DATE_FILE_FORMATTER_PATTERN = "dd-MM-yyyy_HH'h'mm'm'ss's'";
-    public static final String     DATE_FORMATTER_PATTERN      = "dd/MM/yyyy HH:mm:ss";
+    public static final String CONFIG                      = "_config";
+    public static final String DATE_FILE_FORMATTER_PATTERN = "dd-MM-yyyy_HH'h'mm'm'ss's'";
+    public static final String DATE_FORMATTER_PATTERN      = "dd/MM/yyyy HH:mm:ss";
     /**
      * Nombre del archivo para las salidas de errores.
      */
-    public static final String     ERROR_DUMP                  = "ERROR_DUMP";
-    public static final String     HISTORY_DUMP                = "HISTORY_DUMP";
+    public static final String ERROR_DUMP                  = "ERROR_DUMP";
+    public static final String HISTORY_DUMP                = "HISTORY_DUMP";
     /**
      * Nombre del archivo con los datos de la ultima red neuronal guardada en disco.
      */
-    public static final String                         LAST_SAVE_DATA                         = "_last_save_data";
+    public static final String LAST_SAVE_DATA              = "_last_save_data";
     /**
      * Nombre que se le agrega a los archivos de redes neuronales inicializados sin entrenamiento, para comparar al
      * final del experimento con la versión entrenada.
      */
-    public static final String                         RANDOM                                 = "_random";
+    public static final String RANDOM                      = "_random";
     /**
      * Nombre que se le agrega a los archivos de redes neuronales con entrenamiento.
      */
@@ -158,7 +158,8 @@ class LearningExperiment {
 
     public
     boolean canExploreThisTurn( final long currentTurn ) {
-        return whenStartToExplore >= 1 || ( currentTurn > 1 ) && ( currentTurn > ( maxTurnAvg.getAverage() * whenStartToExplore ) );
+        return ( whenStartToExplore >= 1 ) ||
+               ( ( maxTurnAvg.getItemCounter() > 0 ) && ( currentTurn > ( maxTurnAvg.getAverage() * whenStartToExplore ) ) );
     }
 
     /**
@@ -1032,8 +1033,8 @@ class LearningExperiment {
         final StatisticCalculator timePerTurn        = new StatisticCalculator();
 
         for ( int i = lastSavedGamePlayedNumber + 1; i <= gamesToPlay; i++ ) {
-            final long start           = System.nanoTime();
-            Double     lastTimePerTurn = learningAlgorithm.solveAndTrainOnce(game, i);
+            final long   start           = System.nanoTime();
+            final Double lastTimePerTurn = learningAlgorithm.solveAndTrainOnce(game, i);
             elapsedTime += System.nanoTime() - start;
             if ( game.isPrintHistory() ) {
                 try ( BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(historyFile, true), "UTF-8")) ) {
@@ -1126,7 +1127,7 @@ class LearningExperiment {
             }
             if ( ( i % saveBackupEvery ) == 0 ) {
                 backupNumber++;
-                File perceptronFileBackup =
+                final File perceptronFileBackup =
                         new File(filePath + TRAINED + "_BackupN-" + String.format("%0" + zeroNumbers + 'd', backupNumber) + ".ser");
                 neuralNetworkInterfaceFor2048.saveNeuralNetwork(perceptronFileBackup);
                 System.out.println("============ Perceptron Exportado Exitosamente (BACKUP " + backupNumber + ") ============");
@@ -1145,7 +1146,10 @@ class LearningExperiment {
                     .append(" ms.\n")
                     .append("bestPossibleActionTimes = ")
                     .append(bestPossibleActionTimes.getAverage())
-                    .append(" ms.\n").append("trainingTimes = ").append(trainingTimes.getAverage()).append(" ms.\n"));
+                    .append(" ms.\n")
+                    .append("trainingTimes = ")
+                    .append(trainingTimes.getAverage())
+                    .append(" ms.\n"));
             Toolkit.getDefaultToolkit().beep();
         }
     }
