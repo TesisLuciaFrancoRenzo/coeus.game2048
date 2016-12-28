@@ -59,6 +59,14 @@ class Game2048
 
     @Override
     public
+    boolean canExploreThisTurn( long currentTurn ) {
+        return ( neuralNetworkConfiguration != null )
+               ? neuralNetworkConfiguration.canExploreThisTurn(currentTurn)
+               : nTupleSystemConfiguration.canExploreThisTurn(currentTurn);
+    }
+
+    @Override
+    public
     IState computeAfterState(
             final IState turnInitialState,
             final IAction action

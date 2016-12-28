@@ -167,6 +167,7 @@ class TestGenerator {
         List< Double >  alphaList                                      = new ArrayList<>();
         List< Integer > annealingAlphaList                             = new ArrayList<>();
         List< Double >  gammaList                                      = new ArrayList<>();
+        List< Double >  whenStartToExplore                             = new ArrayList<>();
         List< Double >  fixedExplorationRate                           = new ArrayList<>();
         List< Double >  interpolatedExplorationRateFinalValues         = new ArrayList<>();
         List< Integer > interpolatedExplorationRateFinishInterpolation = new ArrayList<>();
@@ -238,6 +239,7 @@ class TestGenerator {
             gammaList = ArgumentLoader.parseDoubleArray(arguments.getArg("gammaList"));
             concurrentLayer = ArgumentLoader.parseBooleanArray(arguments.getArg("concurrentLayerList"));
             concurrencyInComputeBestPossibleAction = Boolean.parseBoolean(arguments.getArg("concurrencyInComputeBestPossibleAction"));
+            whenStartToExplore = ArgumentLoader.parseDoubleArray(arguments.getArg("whenStartToExplore"));
             try {
                 interpolatedExplorationRateInitialValues = ArgumentLoader.parseDoubleArray(arguments.getArg("explorationRateInitialValueList"));
                 interpolatedExplorationRateFinalValues = ArgumentLoader.parseDoubleArray(arguments.getArg("explorationRateFinalValuesList"));
@@ -283,7 +285,7 @@ class TestGenerator {
                     saveBackupEvery,
                     gamesToPlayPerThreadForStats,
                     tileToWinForStatistics,
-                    simulationsForStatistics,
+                    simulationsForStatistics, whenStartToExplore,
                     fixedExplorationRate,
                     interpolatedExplorationRateInitialValues,
                     interpolatedExplorationRateFinalValues,
@@ -322,6 +324,7 @@ class TestGenerator {
             final int gamesToPlayPerThreadForStatistics,
             final int tileToWinForStatistics,
             final int simulationsForStatistics,
+            final List< Double > whenStartToExplore,
             final List< Double > explorationRateList,
             final List< Double > explorationRateInitialValues,
             final List< Double > explorationRateFinalValues,
@@ -341,27 +344,10 @@ class TestGenerator {
                     for ( int j = 0; j < lambdaList.size(); j++ ) {
                         for ( int k = 0; k < gammaList.size(); k++ ) {
                             for ( int m = 0; m < annealingAlphaList.size(); m++ ) {
-                                if ( explorationRateList != null ) {
-                                    for ( int l = 0; l < explorationRateList.size(); l++ ) {
-                                        if ( lambdaList.get(j) == 0 ) {
-                                            number++;
-                                            experiments.add(new GeneratorConfig(a,
-                                                    canCollectStatistics,
-                                                    experimentClassNameList.get(className),
-                                                    alphaList.get(i),
-                                                    annealingAlphaList.get(m),
-                                                    lambdaList.get(j),
-                                                    eligibilityTraceLength,
-                                                    gammaList.get(k),
-                                                    explorationRateList.get(l),
-                                                    null,
-                                                    null,
-                                                    null,
-                                                    null,
-                                                    false,
-                                                    number));
-                                        } else {
-                                            if ( accumulatingTraces ) {
+                                for ( int w = 0; w < whenStartToExplore.size(); w++ ) {
+                                    if ( explorationRateList != null ) {
+                                        for ( int l = 0; l < explorationRateList.size(); l++ ) {
+                                            if ( lambdaList.get(j) == 0 ) {
                                                 number++;
                                                 experiments.add(new GeneratorConfig(a,
                                                         canCollectStatistics,
@@ -371,6 +357,7 @@ class TestGenerator {
                                                         lambdaList.get(j),
                                                         eligibilityTraceLength,
                                                         gammaList.get(k),
+                                                        whenStartToExplore.get(w),
                                                         explorationRateList.get(l),
                                                         null,
                                                         null,
@@ -378,51 +365,53 @@ class TestGenerator {
                                                         null,
                                                         false,
                                                         number));
-                                            }
-                                            if ( replacingTraces ) {
-                                                number++;
-                                                experiments.add(new GeneratorConfig(a,
-                                                        canCollectStatistics,
-                                                        experimentClassNameList.get(className),
-                                                        alphaList.get(i),
-                                                        annealingAlphaList.get(m),
-                                                        lambdaList.get(j),
-                                                        eligibilityTraceLength,
-                                                        gammaList.get(k),
-                                                        explorationRateList.get(l),
-                                                        null,
-                                                        null,
-                                                        null,
-                                                        null,
-                                                        true,
-                                                        number));
+                                            } else {
+                                                if ( accumulatingTraces ) {
+                                                    number++;
+                                                    experiments.add(new GeneratorConfig(a,
+                                                            canCollectStatistics,
+                                                            experimentClassNameList.get(className),
+                                                            alphaList.get(i),
+                                                            annealingAlphaList.get(m),
+                                                            lambdaList.get(j),
+                                                            eligibilityTraceLength,
+                                                            gammaList.get(k),
+                                                            whenStartToExplore.get(w),
+                                                            explorationRateList.get(l),
+                                                            null,
+                                                            null,
+                                                            null,
+                                                            null,
+                                                            false,
+                                                            number));
+                                                }
+                                                if ( replacingTraces ) {
+                                                    number++;
+                                                    experiments.add(new GeneratorConfig(a,
+                                                            canCollectStatistics,
+                                                            experimentClassNameList.get(className),
+                                                            alphaList.get(i),
+                                                            annealingAlphaList.get(m),
+                                                            lambdaList.get(j),
+                                                            eligibilityTraceLength,
+                                                            gammaList.get(k),
+                                                            whenStartToExplore.get(w),
+                                                            explorationRateList.get(l),
+                                                            null,
+                                                            null,
+                                                            null,
+                                                            null,
+                                                            true,
+                                                            number));
+                                                }
                                             }
                                         }
-                                    }
-                                } else {
-                                    for ( int n = 0; n < explorationRateInitialValues.size(); n++ ) {
-                                        for ( int o = 0; o < explorationRateFinalValues.size(); o++ ) {
-                                            for ( int p = 0; p < explorationRateStartInterpolation.size(); p++ ) {
-                                                for ( int q = 0; q < explorationRateFinishInterpolation.size(); q++ ) {
-                                                    if ( lambdaList.get(j) == 0 ) {
-                                                        number++;
-                                                        experiments.add(new GeneratorConfig(a,
-                                                                canCollectStatistics,
-                                                                experimentClassNameList.get(className),
-                                                                alphaList.get(i),
-                                                                annealingAlphaList.get(m),
-                                                                lambdaList.get(j),
-                                                                eligibilityTraceLength,
-                                                                gammaList.get(k),
-                                                                null,
-                                                                explorationRateInitialValues.get(n),
-                                                                explorationRateFinalValues.get(o),
-                                                                explorationRateStartInterpolation.get(p),
-                                                                explorationRateFinishInterpolation.get(q),
-                                                                false,
-                                                                number));
-                                                    } else {
-                                                        if ( accumulatingTraces ) {
+                                    } else {
+                                        for ( int n = 0; n < explorationRateInitialValues.size(); n++ ) {
+                                            for ( int o = 0; o < explorationRateFinalValues.size(); o++ ) {
+                                                for ( int p = 0; p < explorationRateStartInterpolation.size(); p++ ) {
+                                                    for ( int q = 0; q < explorationRateFinishInterpolation.size(); q++ ) {
+                                                        if ( lambdaList.get(j) == 0 ) {
                                                             number++;
                                                             experiments.add(new GeneratorConfig(a,
                                                                     canCollectStatistics,
@@ -432,6 +421,7 @@ class TestGenerator {
                                                                     lambdaList.get(j),
                                                                     eligibilityTraceLength,
                                                                     gammaList.get(k),
+                                                                    whenStartToExplore.get(w),
                                                                     null,
                                                                     explorationRateInitialValues.get(n),
                                                                     explorationRateFinalValues.get(o),
@@ -439,24 +429,45 @@ class TestGenerator {
                                                                     explorationRateFinishInterpolation.get(q),
                                                                     false,
                                                                     number));
-                                                        }
-                                                        if ( replacingTraces ) {
-                                                            number++;
-                                                            experiments.add(new GeneratorConfig(a,
-                                                                    canCollectStatistics,
-                                                                    experimentClassNameList.get(className),
-                                                                    alphaList.get(i),
-                                                                    annealingAlphaList.get(m),
-                                                                    lambdaList.get(j),
-                                                                    eligibilityTraceLength,
-                                                                    gammaList.get(k),
-                                                                    null,
-                                                                    explorationRateInitialValues.get(n),
-                                                                    explorationRateFinalValues.get(o),
-                                                                    explorationRateStartInterpolation.get(p),
-                                                                    explorationRateFinishInterpolation.get(q),
-                                                                    true,
-                                                                    number));
+                                                        } else {
+                                                            if ( accumulatingTraces ) {
+                                                                number++;
+                                                                experiments.add(new GeneratorConfig(a,
+                                                                        canCollectStatistics,
+                                                                        experimentClassNameList.get(className),
+                                                                        alphaList.get(i),
+                                                                        annealingAlphaList.get(m),
+                                                                        lambdaList.get(j),
+                                                                        eligibilityTraceLength,
+                                                                        gammaList.get(k),
+                                                                        whenStartToExplore.get(w),
+                                                                        null,
+                                                                        explorationRateInitialValues.get(n),
+                                                                        explorationRateFinalValues.get(o),
+                                                                        explorationRateStartInterpolation.get(p),
+                                                                        explorationRateFinishInterpolation.get(q),
+                                                                        false,
+                                                                        number));
+                                                            }
+                                                            if ( replacingTraces ) {
+                                                                number++;
+                                                                experiments.add(new GeneratorConfig(a,
+                                                                        canCollectStatistics,
+                                                                        experimentClassNameList.get(className),
+                                                                        alphaList.get(i),
+                                                                        annealingAlphaList.get(m),
+                                                                        lambdaList.get(j),
+                                                                        eligibilityTraceLength,
+                                                                        gammaList.get(k),
+                                                                        whenStartToExplore.get(w),
+                                                                        null,
+                                                                        explorationRateInitialValues.get(n),
+                                                                        explorationRateFinalValues.get(o),
+                                                                        explorationRateStartInterpolation.get(p),
+                                                                        explorationRateFinishInterpolation.get(q),
+                                                                        true,
+                                                                        number));
+                                                            }
                                                         }
                                                     }
                                                 }
@@ -546,11 +557,12 @@ class TestGenerator {
     ) {
         try {
             final String explorationRateString;
-            explorationRateString = ( explorationRateList != null )
-                                    ? ( "-explorationRate_" + expConfig.getExplorationRate() )
-                                    : "-explorationRate_" + expConfig.getExplorationRateInitialValue() + '_' +
-                                      expConfig.getExplorationRateFinalValue() + '_' + expConfig.getExplorationRateStartInterpolation() + '_' +
-                                      expConfig.getExplorationRateFinishInterpolation();
+            explorationRateString = "-w" + expConfig.getWhenStartToExplore() + ( ( explorationRateList != null )
+                                                                                 ? ( "-explorationRate_" + expConfig.getExplorationRate() )
+                                                                                 : "-explorationRate_" + expConfig.getExplorationRateInitialValue() +
+                                                                                   '_' + expConfig.getExplorationRateFinalValue() + '_' +
+                                                                                   expConfig.getExplorationRateStartInterpolation() + '_' +
+                                                                                   expConfig.getExplorationRateFinishInterpolation() );
             final String newFilePath = filePath + experimentDirName + File.separator + expConfig.getRepetitions() + "-alpha_" + expConfig.getAlpha() +
                                        ( ( expConfig.getAnnealingAlpha() > 0 ) ? ( "-anneal_" + expConfig.getAnnealingAlpha() ) : "" ) + "-lambda_" +
                                        expConfig.getLambda() + "-gamma_" + expConfig.getGamma() + explorationRateString + "-replaceTraces_" +

@@ -26,6 +26,8 @@ package ar.edu.unrc.game2048.experiments.configurations;
 public
 interface IConfiguration2048 {
 
+    boolean canExploreThisTurn( long currentTurn );
+
     /**
      * @param value salida de la red neuronal.
      *

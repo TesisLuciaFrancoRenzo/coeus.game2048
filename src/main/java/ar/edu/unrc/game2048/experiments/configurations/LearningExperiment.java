@@ -114,6 +114,7 @@ class LearningExperiment {
     private ELearningRateAdaptation        learningRateAdaptation;
     private boolean                        logsActivated;
     private StatisticCalculator            maxTileEstimator;
+    private StatisticCalculator            maxTurnAvg;
     private INeuralNetworkInterfaceFor2048 neuralNetworkInterfaceFor2048;
     private String                         neuralNetworkName;
     private boolean                        replaceEligibilityTraces;
@@ -126,6 +127,7 @@ class LearningExperiment {
     private int tileToWinForStatistics = 2_048;
     private int                 tileToWinForTraining;
     private StatisticCalculator trainingTimes;
+    private double whenStartToExplore = 1.0d;
     private StatisticCalculator winRateEstimator;
 
     private static
@@ -151,6 +153,15 @@ class LearningExperiment {
             if ( printStream != null ) {
                 printStream.close();
             }
+        }
+    }
+
+    public
+    boolean canExploreThisTurn( long currentTurn ) {
+        if ( whenStartToExplore >= 1 ) {
+            return true;
+        } else {
+            return ( currentTurn > 1 ) && ( currentTurn > ( maxTurnAvg.getAverage() * whenStartToExplore ) );
         }
     }
 
@@ -246,18 +257,11 @@ class LearningExperiment {
     }
 
     /**
-     * Establece el nombre del experimento basado en el nombre de la clase {@code experimentClass}.
-     *
-     * @param experimentClass clase de la cual extraer el nombre del experimento.
+     * @param experimentName nombre del experimento.
      */
     public
-    void setExperimentName( final Class experimentClass ) {
-        String    className = experimentClass.getName();
-        final int lastDot   = className.lastIndexOf('.');
-        if ( lastDot != -1 ) {
-            className = className.substring(lastDot + 1);
-        }
-        experimentName = className;
+    void setExperimentName( final String experimentName ) {
+        this.experimentName = experimentName;
     }
 
     /**
@@ -481,6 +485,21 @@ class LearningExperiment {
         return trainingTimes.getAverage();
     }
 
+    public
+    double getWhenStartToExplore() {
+        return whenStartToExplore;
+    }
+
+    /**
+     * Numero entre 0.0d y 1.0d que multiplica el promedio de los turnos actuales, para determinar desde que turno se comienza a explorar.
+     *
+     * @param whenStartToExplore
+     */
+    public
+    void setWhenStartToExplore( double whenStartToExplore ) {
+        this.whenStartToExplore = whenStartToExplore;
+    }
+
     /**
      * Valores que se deben inicializar del experimento, por ejemplo:
      * <ul>
@@ -609,6 +628,7 @@ class LearningExperiment {
         historyFile = printHistory ? new File(dirPath + HISTORY_DUMP + ".txt") : null;
         maxTileEstimator = new StatisticCalculator(sampleSizeForEstimation, 2);
         winRateEstimator = new StatisticCalculator(sampleSizeForEstimation, 2);
+        maxTurnAvg = new StatisticCalculator(sampleSizeForEstimation, 2);
 
         try {
             final Date now = new Date();
@@ -839,11 +859,18 @@ class LearningExperiment {
     }
 
     /**
-     * @param experimentName nombre del experimento.
+     * Establece el nombre del experimento basado en el nombre de la clase {@code experimentClass}.
+     *
+     * @param experimentClass clase de la cual extraer el nombre del experimento.
      */
     public
-    void setExperimentName( final String experimentName ) {
-        this.experimentName = experimentName;
+    void setExperimentName( final Class experimentClass ) {
+        String    className = experimentClass.getName();
+        final int lastDot   = className.lastIndexOf('.');
+        if ( lastDot != -1 ) {
+            className = className.substring(lastDot + 1);
+        }
+        experimentName = className;
     }
 
     /**
@@ -1040,6 +1067,7 @@ class LearningExperiment {
             final int percent = (int) ( ( ( i * 1.0d ) / ( gamesToPlay * 1.0d ) ) * 100.0d );
             winRateEstimator.addSample(( game.getMaxNumber() >= tileToWinForStatistics ) ? 100 : 0);
             maxTileEstimator.addSample(game.getMaxNumber());
+            maxTurnAvg.addSample(game.getLastTurn());
 
             final StringBuilder msj = new StringBuilder().append(( needToSaveBestGame ) ? "!! " : "");
             if ( numberForShow == -1 ) {
@@ -1057,11 +1085,16 @@ class LearningExperiment {
                     .append(" (")
                     .append("winRate ")
                     .append(winRateEstimator.printableFullCapacityAverage())
-                    .append(" % - maxTile ").append(maxTileEstimator.printableFullCapacityAverage()).append(')')
+                    .append(" % - maxTile ")
+                    .append(maxTileEstimator.printableFullCapacityAverage())
+                    .append(')')
                     .append("\tRandomChoices = ")
                     .append(learningAlgorithm.getRandomChoicesCounter())
                     .append("\tturno alcanzado = ")
                     .append(game.getLastTurn())
+                    .append(" (avg=")
+                    .append(maxTurnAvg.printableAverage())
+                    .append(")")
                     .append("\tcurrent alpha = ")
                     .append(Arrays.toString(learningAlgorithm.getCurrentAlpha()))
                     .append("\tcurrentExplorationRate = ")
@@ -1119,8 +1152,7 @@ class LearningExperiment {
                     .append(" ms.\n")
                     .append("bestPossibleActionTimes = ")
                     .append(bestPossibleActionTimes.getAverage())
-                    .append(" ms.\n")
-                    .append("trainingTimes = ").append(trainingTimes.getAverage()).append(" ms.\n"));
+                    .append(" ms.\n").append("trainingTimes = ").append(trainingTimes.getAverage()).append(" ms.\n"));
             Toolkit.getDefaultToolkit().beep();
         }
     }

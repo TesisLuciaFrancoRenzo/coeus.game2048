@@ -41,6 +41,7 @@ class GeneratorConfig {
     private final int     number;
     private final int     repetitions;
     private final boolean replaceTraces;
+    private final double  whenStartToExplore;
 
     /**
      * @param className
@@ -66,6 +67,7 @@ class GeneratorConfig {
             final double lambda,
             final int eligibilityTraceLength,
             final Double gamma,
+            final double whenStartToExplore,
             final Double explorationRate,
             final Double explorationRateInitialValue,
             final Double explorationRateFinalValue,
@@ -81,6 +83,7 @@ class GeneratorConfig {
         this.lambda = lambda;
         this.eligibilityTraceLength = eligibilityTraceLength;
         this.gamma = gamma;
+        this.whenStartToExplore = whenStartToExplore;
         this.explorationRate = explorationRate;
         this.explorationRateFinishInterpolation = explorationRateFinishInterpolation;
         this.replaceTraces = replaceTraces;
@@ -187,6 +190,11 @@ class GeneratorConfig {
     public
     int getRepetitions() {
         return repetitions;
+    }
+
+    public
+    double getWhenStartToExplore() {
+        return whenStartToExplore;
     }
 
     public
