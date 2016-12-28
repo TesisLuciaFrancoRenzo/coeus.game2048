@@ -294,7 +294,7 @@ class TestGenerator {
                     filePath,
                     concurrentLayer,
                     concurrencyInComputeBestPossibleAction);
-            time = time - System.currentTimeMillis();
+            time = System.currentTimeMillis() - time;
             System.out.println("\ntiempo de ejecución = " + time + " ms.");
             Toolkit.getDefaultToolkit().beep();
         }
@@ -493,7 +493,12 @@ class TestGenerator {
                                     saveBackupEvery,
                                     0,
                                     tileToWinForStatistics,
-                                    0, explorationRateList, filePath, concurrentLayer, expConfig, concurrencyInComputeBestPossibleAction);
+                                    0,
+                                    explorationRateList,
+                                    filePath,
+                                    concurrentLayer,
+                                    expConfig,
+                                    concurrencyInComputeBestPossibleAction);
                         }
                     });
                 }
