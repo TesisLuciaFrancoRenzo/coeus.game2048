@@ -256,18 +256,11 @@ class LearningExperiment {
     }
 
     /**
-     * Establece el nombre del experimento basado en el nombre de la clase {@code experimentClass}.
-     *
-     * @param experimentClass clase de la cual extraer el nombre del experimento.
+     * @param experimentName nombre del experimento.
      */
     public
-    void setExperimentName( final Class experimentClass ) {
-        String    className = experimentClass.getName();
-        final int lastDot   = className.lastIndexOf('.');
-        if ( lastDot != -1 ) {
-            className = className.substring(lastDot + 1);
-        }
-        experimentName = className;
+    void setExperimentName( final String experimentName ) {
+        this.experimentName = experimentName;
     }
 
     /**
@@ -863,11 +856,18 @@ class LearningExperiment {
     }
 
     /**
-     * @param experimentName nombre del experimento.
+     * Establece el nombre del experimento basado en el nombre de la clase {@code experimentClass}.
+     *
+     * @param experimentClass clase de la cual extraer el nombre del experimento.
      */
     public
-    void setExperimentName( final String experimentName ) {
-        this.experimentName = experimentName;
+    void setExperimentName( final Class experimentClass ) {
+        String    className = experimentClass.getName();
+        final int lastDot   = className.lastIndexOf('.');
+        if ( lastDot != -1 ) {
+            className = className.substring(lastDot + 1);
+        }
+        experimentName = className;
     }
 
     /**
@@ -1090,10 +1090,10 @@ class LearningExperiment {
                     .append(" (avg=")
                     .append(maxTurnAvg.printableAverage())
                     .append(")")
-                    .append("\tcurrent alpha = ")
-                    .append(Arrays.toString(learningAlgorithm.getCurrentAlpha()))
                     .append("\tcurrentExplorationRate = ")
-                    .append(learningAlgorithm.getCurrentExplorationRate());
+                    .append(learningAlgorithm.getCurrentExplorationRate())
+                    .append("\tcurrent alpha = ")
+                    .append(learningAlgorithm.getCurrentAlpha()[0]);
 
             System.out.println(msj);
 
