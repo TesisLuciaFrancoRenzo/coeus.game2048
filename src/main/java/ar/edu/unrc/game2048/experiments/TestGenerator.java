@@ -32,6 +32,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.*;
 import java.util.logging.Level;
@@ -314,8 +315,8 @@ class TestGenerator {
             final boolean[] concurrentLayer,
             final boolean concurrencyInComputeBestPossibleAction
     ) {
-        final List< GeneratorConfig > experiments = new ArrayList<>();
-        int                           number      = 0;
+        final Collection< GeneratorConfig > experiments = new ArrayList<>();
+        int                                 number      = 0;
         for ( int a = 0; a < repetitions; a++ ) {
             for ( int className = 0; className < experimentClassNameList.size(); className++ ) {
                 for ( int i = 0; i < alphaList.size(); i++ ) {

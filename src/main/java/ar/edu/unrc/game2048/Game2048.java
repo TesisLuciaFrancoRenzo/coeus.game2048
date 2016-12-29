@@ -250,8 +250,8 @@ class Game2048
     @Override
     public
     List< IAction > listAllPossibleActions( final IState turnInitialState ) {
-        final ArrayList< IAction > actions = new ArrayList<>(4);
-        final GameBoard            state   = (GameBoard) turnInitialState;
+        final List< IAction > actions = new ArrayList<>(4);
+        final GameBoard       state   = (GameBoard) turnInitialState;
         if ( state.canMoveUp() ) { actions.add(Action.UP); }
         if ( state.canMoveDown() ) { actions.add(Action.DOWN); }
         if ( state.canMoveLeft() ) { actions.add(Action.LEFT); }

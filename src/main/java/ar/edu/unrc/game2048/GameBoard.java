@@ -127,7 +127,7 @@ class GameBoard
     }
 
     public
-    List< Integer > getAvailableSpace() {
+    Collection< Integer > getAvailableSpace() {
         return availableSpace;
     }
 
@@ -336,7 +336,7 @@ class GameBoard
                 if ( tiles[r][c] == null ) {
                     out.append("-\t");
                 } else {
-                    out.append(tiles[r][c].getValue()).append("\t");
+                    out.append(tiles[r][c].getValue()).append('\t');
                 }
             }
             out.append('\n');
