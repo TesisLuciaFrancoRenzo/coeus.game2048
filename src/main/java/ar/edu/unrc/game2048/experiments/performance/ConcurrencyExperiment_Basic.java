@@ -33,6 +33,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -261,8 +262,7 @@ class ConcurrencyExperiment_Basic
         outputResults.append("GAMES_TO_PLAY = ").append(GAMES_TO_PLAY).append('\n');
         outputResults.append("MAX_INNER_LAYERS = ").append(MAX_INNER_LAYERS).append('\n');
         outputResults.append("MAX_NEURON_QUANTITY = ")
-                .append(MAX_NEURON_QUANTITY)
-                .append(" (").append(Math.pow(2, MAX_NEURON_QUANTITY))
+                .append(MAX_NEURON_QUANTITY).append(" (").append(Math.pow(2, MAX_NEURON_QUANTITY))
                 .append(')')
                 .append('\n');
         outputResults.append("MIN_NEURON_QUANTITY = ")
@@ -328,7 +328,7 @@ class ConcurrencyExperiment_Basic
                 getLambda(),
                 isReplaceEligibilityTraces(),
                 getGamma(),
-                getConcurrencyInLayer(),
+                getConcurrencyInLayer(), new Random(),
                 true);
     }
 

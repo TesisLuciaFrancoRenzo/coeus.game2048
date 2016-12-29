@@ -27,6 +27,7 @@ import ar.edu.unrc.game2048.experiments.configurations.librariesinterfaces.NTupl
 import org.encog.util.arrayutil.NormalizedField;
 
 import java.util.List;
+import java.util.Random;
 import java.util.function.Function;
 
 import static ar.edu.unrc.coeus.tdlearning.learning.ELearningStyle.AFTER_STATE;
@@ -145,8 +146,7 @@ class NTupleConfiguration2048
                 getLambda(),
                 getEligibilityTraceLength(),
                 isReplaceEligibilityTraces(),
-                getGamma(),
-                getConcurrencyInLayer(), isCanCollectStatistics());
+                getGamma(), getConcurrencyInLayer(), new Random(), isCanCollectStatistics());
     }
 
     @Override

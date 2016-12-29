@@ -29,6 +29,7 @@ import org.encog.neural.networks.BasicNetwork;
 import org.encog.util.arrayutil.NormalizedField;
 
 import java.util.List;
+import java.util.Random;
 
 import static ar.edu.unrc.coeus.tdlearning.learning.ELearningStyle.AFTER_STATE;
 
@@ -209,7 +210,7 @@ class EncogConfiguration2048
                 getLambda(),
                 isReplaceEligibilityTraces(),
                 getGamma(),
-                getConcurrencyInLayer(),
+                getConcurrencyInLayer(), new Random(),
                 isCanCollectStatistics());
     }
 
