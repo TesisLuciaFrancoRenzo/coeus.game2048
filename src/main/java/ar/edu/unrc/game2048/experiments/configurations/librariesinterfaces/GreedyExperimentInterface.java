@@ -33,6 +33,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Interfaz de experimentos entre la IA greedy y Coeus
@@ -42,6 +43,8 @@ import java.util.List;
 public
 class GreedyExperimentInterface
         extends INeuralNetworkInterfaceFor2048 {
+
+    private final Random random = new Random();
 
     /**
      * @param perceptronConfiguration configuración
@@ -121,7 +124,7 @@ class GreedyExperimentInterface
         if ( bestActions.isEmpty() ) {
             throw new IllegalArgumentException("no se encontró mejor acción.");
         } else {
-            final Action bestAction = bestActions.get(TDLambdaLearning.randomBetween(0, bestActions.size() - 1));
+            final Action bestAction = bestActions.get(TDLambdaLearning.randomBetween(0, bestActions.size() - 1, random));
             switch ( bestAction ) {
                 case LEFT:
                     game.getBoard().moveLeft();

@@ -26,6 +26,7 @@ import ar.edu.unrc.game2048.experiments.configurations.INeuralNetworkInterfaceFo
 
 import java.io.File;
 import java.io.OutputStream;
+import java.util.Random;
 
 /**
  * Interfaz de experimentos entre IA random y Coeus
@@ -35,6 +36,8 @@ import java.io.OutputStream;
 public
 class RandomExperimentInterface
         extends INeuralNetworkInterfaceFor2048 {
+
+    private final Random random = new Random();
 
     /**
      * @param perceptronConfiguration configuración
@@ -84,7 +87,7 @@ class RandomExperimentInterface
             final Game2048 game,
             final TDLambdaLearning learningMethod
     ) {
-        switch ( TDLambdaLearning.randomBetween(1, 4) ) {
+        switch ( TDLambdaLearning.randomBetween(1, 4, random) ) {
             case 1:
                 game.getBoard().moveLeft();
                 break;

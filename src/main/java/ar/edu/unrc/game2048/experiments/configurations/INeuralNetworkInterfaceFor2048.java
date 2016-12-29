@@ -28,6 +28,7 @@ import ar.edu.unrc.game2048.Game2048;
 import java.io.File;
 import java.io.OutputStream;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Representación de la configuración de las redes neuronales, ya sea NTupla o Perceptrón.
@@ -40,11 +41,12 @@ public abstract
 class INeuralNetworkInterfaceFor2048
         implements Cloneable {
 
+    private final Random                  random                  = new Random();
     /**
      *
      */
-    protected EncogConfiguration2048  perceptronConfiguration = null;
-    private   NTupleConfiguration2048 nTupleConfiguration     = null;
+    protected     EncogConfiguration2048  perceptronConfiguration = null;
+    private       NTupleConfiguration2048 nTupleConfiguration     = null;
 
     /**
      * @param perceptronConfiguration configuración del Perceptrón.
@@ -150,8 +152,7 @@ class INeuralNetworkInterfaceFor2048
         final Action bestAction = (Action) TDLambdaLearning.computeBestPossibleAction(game, ELearningStyle.AFTER_STATE,
                 game.getBoard(),
                 possibleActions,
-                null,
-                learningMethod.isComputeParallelBestPossibleAction(), null).getAction();
+                null, learningMethod.isComputeParallelBestPossibleAction(), random, null).getAction();
         switch ( bestAction ) {
             case LEFT:
                 game.getBoard().moveLeft();
