@@ -3,6 +3,7 @@ package ar.edu.unrc.game2048.experiments.configurations;
 import ar.edu.unrc.coeus.interfaces.INeuralNetworkInterface;
 import ar.edu.unrc.coeus.tdlearning.learning.TDLambdaLearning;
 import ar.edu.unrc.game2048.Game2048;
+import ar.edu.unrc.game2048.Tile;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellReference;
@@ -595,8 +596,7 @@ class StatisticExperiment {
                         turnNumber++;
                     }
                     //calculamos estadisticas
-                    results.get(i).addStatisticForTile((int) ( Math.log(games.get(i).getMaxNumber()) / Math.log(2) ));
-                    //TODO revisar esto que cambio, ya que se pedia el CODE y no el valor
+                    results.get(i).addStatisticForTile(Tile.getCodeFromTileValue(games.get(i).getMaxNumber()));
                     results.get(i).addScore(games.get(i).getScore());
 
                     if ( games.get(i).getMaxNumber() >= tileToWinForStatistics ) {

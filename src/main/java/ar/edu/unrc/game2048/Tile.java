@@ -9,11 +9,16 @@ public
 class Tile
         implements SamplePointValue {
     private boolean merged = false;
-    private int     value;
+    private int value;
 
     public
     Tile( final int val ) {
         value = val;
+    }
+
+    public static
+    int getCodeFromTileValue( int tileValue ) {
+        return (int) ( Math.log(tileValue) / Math.log(2) );
     }
 
     boolean canMergeWith( final Tile other ) {
