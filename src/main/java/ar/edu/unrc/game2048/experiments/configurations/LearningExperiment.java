@@ -89,25 +89,25 @@ class LearningExperiment {
     protected           StatisticExperiment        statisticExperiment                    = null;
     private             double[]                   alpha                                  = null;
     private             int                        annealingT                             = 0;
-    private             int                            backupNumber                           = 0;
-    private             int                            bestGame                               = 0;
-    private             double                         bestMaxTile                            = 0.0;
+    private             int                        backupNumber                           = 0;
+    private             int                        bestGame                               = 0;
+    private             double                     bestMaxTile                            = 0.0;
     private             StatisticCalculator        bestPossibleActionTimes                = null;
     private             double                     bestWinRate                            = 0.0;
     private             boolean                    canCollectStatistics                   = false;
     private             boolean                    concurrencyInComputeBestPossibleAction = false;
     private             boolean[]                  concurrencyInLayer                     = null;
-    private             long                       elapsedTimeMilis                       = 0L;
+    private             long                       elapsedTimeMilliseconds                = 0L;
     private             int                        eligibilityTraceLength                 = -1;
     private             String                     experimentName                         = null;
     private             EExplorationRateAlgorithms explorationRate                        = null;
     private             double                     explorationRateFinalValue              = 0.0;
     private             int                        explorationRateFinishDecrementing      = 0;
-    private             double                         explorationRateInitialValue            = 0.0;
-    private             int                            explorationRateStartDecrementing       = 0;
-    private             boolean                        exportToExcel                          = true;
-    private             int                            gamesToPlay                            = 0;
-    private             int                            gamesToPlayPerThreadForStatistics      = 0;
+    private             double                     explorationRateInitialValue            = 0.0;
+    private             int                        explorationRateStartDecrementing       = 0;
+    private             boolean                    exportToExcel                          = true;
+    private             int                        gamesToPlay                            = 0;
+    private             int                        gamesToPlayPerThreadForStatistics      = 0;
     private             double                         gamma                                  = 0.0;
     private             boolean                        initializePerceptronRandomized         = false;
     private             double                         lambda                                 = 0.0;
@@ -646,7 +646,7 @@ class LearningExperiment {
             final File   configFile = new File(( errorDumpDir == null ? filePath : errorDumpDir ) + CONFIG + ".txt");
             backupNumber = 0;
             lastSavedGamePlayedNumber = 0;
-            elapsedTimeMilis = 0;
+            elapsedTimeMilliseconds = 0;
             final File lastSaveDataFile = new File(filePath + LAST_SAVE_DATA + ".txt");
             if ( lastSaveDataFile.exists() ) {
                 try ( BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(lastSaveDataFile), "UTF-8")) ) {
@@ -664,7 +664,7 @@ class LearningExperiment {
                     if ( line == null ) {
                         throw new IllegalArgumentException("el archivo de configuración no tiene un formato válido");
                     }
-                    elapsedTimeMilis = Long.parseLong(line);
+                    elapsedTimeMilliseconds = Long.parseLong(line);
                     try {
                         line = reader.readLine();
                         if ( line == null ) {
@@ -1037,7 +1037,7 @@ class LearningExperiment {
         for ( int i = lastSavedGamePlayedNumber + 1; i <= gamesToPlay; i++ ) {
             final long   start           = System.currentTimeMillis();
             final Double lastTimePerTurn = learningAlgorithm.solveAndTrainOnce(game, i);
-            elapsedTimeMilis += System.currentTimeMillis() - start;
+            elapsedTimeMilliseconds += System.currentTimeMillis() - start;
             if ( game.isPrintHistory() ) {
                 try ( BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(historyFile, true), "UTF-8")) ) {
                     out.append("\n========== NEW GAME (")
@@ -1087,8 +1087,7 @@ class LearningExperiment {
                     .append(learningAlgorithm.getRandomChoicesCounter())
                     .append("\tturno alcanzado = ")
                     .append(game.getLastTurn())
-                    .append(" (avg=")
-                    .append(maxTurnAvg.printableAverage()).append(')')
+                    .append(" (avg=").append(maxTurnAvg.printableAverage()).append(')')
                     .append("\tcurrentExplorationRate = ")
                     .append(learningAlgorithm.getCurrentExplorationRate())
                     .append("\tcurrent alpha = ")
@@ -1135,17 +1134,17 @@ class LearningExperiment {
                 writeConfig = true;
             }
             if ( writeConfig ) {
-                final long   hs      = elapsedTimeMilis / 3_600_000L;
-                final long   hsRest  = elapsedTimeMilis % 3_600_000L;
+                final long   hs      = elapsedTimeMilliseconds / 3_600_000L;
+                final long   hsRest  = elapsedTimeMilliseconds % 3_600_000L;
                 final long   min     = hsRest / 60_000L;
                 final long   restMin = hsRest % 60_000L;
                 final double seg     = restMin / 1_000d;
 
                 try ( BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(lastSaveDataFile), "UTF-8")) ) {
-                    out.write(Integer.toString(i) + '\n' + Integer.toString(backupNumber) + '\n' + Long.toString(elapsedTimeMilis) + '\n' +
+                    out.write(Integer.toString(i) + '\n' + Integer.toString(backupNumber) + '\n' + Long.toString(elapsedTimeMilliseconds) + '\n' +
                               Integer.toString(bestGame) + '\n' + Double.toString(bestWinRate) + '\n' + Double.toString(bestMaxTile) +
-                              "\n\ntiempo de ejecución = " + hs + "h " + min + "m " + decimalFormat.format(seg) + "s (total: " + elapsedTimeMilis +
-                              " ms).");
+                              "\n\ntiempo de ejecución = " + hs + "h " + min + "m " + decimalFormat.format(seg) + "s (total: " +
+                              elapsedTimeMilliseconds + " ms).");
                 }
             }
         }

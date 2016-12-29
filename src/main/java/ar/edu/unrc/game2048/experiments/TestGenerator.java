@@ -238,8 +238,8 @@ class TestGenerator {
                     System.exit(-1);
                 }
             }
-            long         miliseconds = System.currentTimeMillis();
-            final String filePath    = ".." + File.separator + "Perceptrones ENTRENADOS" + File.separator;
+            long         milliseconds = System.currentTimeMillis();
+            final String filePath     = ".." + File.separator + "Perceptrones ENTRENADOS" + File.separator;
             runAllConfigs(repetitions,
                     canCollectStatistics,
                     maxTrainingThreads,
@@ -255,8 +255,7 @@ class TestGenerator {
                     createLogs,
                     gamesToPlay,
                     saveEvery,
-                    saveBackupEvery,
-                    gamesToPlayPerThreadForStats, tileToWinForStatistics, simulationsForStatistics, whenStartToExplore,
+                    saveBackupEvery, gamesToPlayPerThreadForStats, tileToWinForStatistics, simulationsForStatistics, whenStartToExplore,
                     fixedExplorationRate,
                     interpolatedExplorationRateInitialValues,
                     interpolatedExplorationRateFinalValues,
@@ -267,16 +266,16 @@ class TestGenerator {
                     filePath,
                     concurrentLayer,
                     concurrencyInComputeBestPossibleAction);
-            miliseconds = System.currentTimeMillis() - miliseconds;
+            milliseconds = System.currentTimeMillis() - milliseconds;
 
-            final long   hs      = miliseconds / 3_600_000L;
-            final long   hsRest  = miliseconds % 3_600_000L;
+            final long   hs      = milliseconds / 3_600_000L;
+            final long   hsRest  = milliseconds % 3_600_000L;
             final long   min     = hsRest / 60_000L;
             final long   restMin = hsRest % 60_000L;
             final double seg     = restMin / 1_000d;
 
             DecimalFormat formatter = new DecimalFormat("#.###");
-            System.out.println("\ntiempo de ejecución = " + hs + "h " + min + "m " + formatter.format(seg) + "s (total: " + miliseconds + " ms).");
+            System.out.println("\ntiempo de ejecución = " + hs + "h " + min + "m " + formatter.format(seg) + "s (total: " + milliseconds + " ms).");
             Toolkit.getDefaultToolkit().beep();
         }
     }
@@ -619,7 +618,10 @@ class TestGenerator {
                     gamesToPlay,
                     saveEvery,
                     saveBackupEvery,
-                    gamesToPlayPerThreadForStatistics, tileToWinForStatistics, simulationsForStatistics, expConfig.getWhenStartToExplore(),
+                    gamesToPlayPerThreadForStatistics,
+                    tileToWinForStatistics,
+                    simulationsForStatistics,
+                    expConfig.getWhenStartToExplore(),
                     expConfig.getExplorationRate(),
                     expConfig.getExplorationRateInitialValue(),
                     expConfig.getExplorationRateFinalValue(),
