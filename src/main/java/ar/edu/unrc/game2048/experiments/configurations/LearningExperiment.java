@@ -29,6 +29,7 @@ import ar.edu.unrc.game2048.Game2048;
 import java.awt.*;
 import java.io.*;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -48,59 +49,60 @@ class LearningExperiment {
     /**
      * Nombre para el archivo salvado con mejor entrenamiento hasta el momento
      */
-    public static final String BEST_TRAINED                = "_best_trained";
+    public static final String                     BEST_TRAINED                           = "_best_trained";
     /**
      * Extensión de las configuraciones de entrenamiento del experimento.
      */
-    public static final String CONFIG                      = "_config";
-    public static final String DATE_FILE_FORMATTER_PATTERN = "dd-MM-yyyy_HH'h'mm'm'ss's'";
-    public static final String DATE_FORMATTER_PATTERN      = "dd/MM/yyyy HH:mm:ss";
+    public static final String                     CONFIG                                 = "_config";
+    public static final String                     DATE_FILE_FORMATTER_PATTERN            = "dd-MM-yyyy_HH'h'mm'm'ss's'";
+    public static final String                     DATE_FORMATTER_PATTERN                 = "dd/MM/yyyy HH:mm:ss";
     /**
      * Nombre del archivo para las salidas de errores.
      */
-    public static final String ERROR_DUMP                  = "ERROR_DUMP";
-    public static final String HISTORY_DUMP                = "HISTORY_DUMP";
+    public static final String                     ERROR_DUMP                             = "ERROR_DUMP";
+    public static final String                     HISTORY_DUMP                           = "HISTORY_DUMP";
     /**
      * Nombre del archivo con los datos de la ultima red neuronal guardada en disco.
      */
-    public static final String LAST_SAVE_DATA              = "_last_save_data";
+    public static final String                     LAST_SAVE_DATA                         = "_last_save_data";
     /**
      * Nombre que se le agrega a los archivos de redes neuronales inicializados sin entrenamiento, para comparar al
      * final del experimento con la versión entrenada.
      */
-    public static final String RANDOM                      = "_random";
+    public static final String                     RANDOM                                 = "_random";
     /**
      * Nombre que se le agrega a los archivos de redes neuronales con entrenamiento.
      */
-    public static final String                         TRAINED                                = "_trained";
+    public static final String                     TRAINED                                = "_trained";
     /**
      * Formato para fechas.
      */
-    private final       DateFormat                     dateFormat                             = new SimpleDateFormat(DATE_FORMATTER_PATTERN);
+    private final       DateFormat                 dateFormat                             = new SimpleDateFormat(DATE_FORMATTER_PATTERN);
+    private final       DecimalFormat              decimalFormat                          = new DecimalFormat("#.###");
     /**
      * Formato para fechas en los nombres de archivos.
      */
-    private final       DateFormat                     simpleDateFormat                       = new SimpleDateFormat(DATE_FILE_FORMATTER_PATTERN);
+    private final       DateFormat                 simpleDateFormat                       = new SimpleDateFormat(DATE_FILE_FORMATTER_PATTERN);
     /**
      * Experimento encargad de las estadísticas.
      */
-    protected           StatisticExperiment            statisticExperiment                    = null;
-    private             double[]                       alpha                                  = null;
-    private             int                            annealingT                             = 0;
+    protected           StatisticExperiment        statisticExperiment                    = null;
+    private             double[]                   alpha                                  = null;
+    private             int                        annealingT                             = 0;
     private             int                            backupNumber                           = 0;
     private             int                            bestGame                               = 0;
     private             double                         bestMaxTile                            = 0.0;
-    private             StatisticCalculator            bestPossibleActionTimes                = null;
-    private             double                         bestWinRate                            = 0.0;
-    private             boolean                        canCollectStatistics                   = false;
-    private             boolean                        concurrencyInComputeBestPossibleAction = false;
-    private             boolean[]                      concurrencyInLayer                     = null;
-    private             long                           elapsedTime                            = 0L;
-    private             int                            eligibilityTraceLength                 = -1;
-    private             String                         experimentName                         = null;
-    private             EExplorationRateAlgorithms     explorationRate                        = null;
-    private             double                         explorationRateFinalValue              = 0.0;
-    private             int                            explorationRateFinishDecrementing      = 0;
+    private             StatisticCalculator        bestPossibleActionTimes                = null;
+    private             double                     bestWinRate                            = 0.0;
+    private             boolean                    canCollectStatistics                   = false;
+    private             boolean                    concurrencyInComputeBestPossibleAction = false;
+    private             boolean[]                  concurrencyInLayer                     = null;
+    private             long                       elapsedTimeMilis                       = 0L;
+    private             int                        eligibilityTraceLength                 = -1;
+    private             String                     experimentName                         = null;
+    private             EExplorationRateAlgorithms explorationRate                        = null;
+    private             double                     explorationRateFinalValue              = 0.0;
+    private             int                        explorationRateFinishDecrementing      = 0;
     private             double                         explorationRateInitialValue            = 0.0;
     private             int                            explorationRateStartDecrementing       = 0;
     private             boolean                        exportToExcel                          = true;
@@ -254,11 +256,18 @@ class LearningExperiment {
     }
 
     /**
-     * @param experimentName nombre del experimento.
+     * Establece el nombre del experimento basado en el nombre de la clase {@code experimentClass}.
+     *
+     * @param experimentClass clase de la cual extraer el nombre del experimento.
      */
     public
-    void setExperimentName( final String experimentName ) {
-        this.experimentName = experimentName;
+    void setExperimentName( final Class experimentClass ) {
+        String    className = experimentClass.getName();
+        final int lastDot   = className.lastIndexOf('.');
+        if ( lastDot != -1 ) {
+            className = className.substring(lastDot + 1);
+        }
+        experimentName = className;
     }
 
     /**
@@ -637,7 +646,7 @@ class LearningExperiment {
             final File   configFile = new File(( errorDumpDir == null ? filePath : errorDumpDir ) + CONFIG + ".txt");
             backupNumber = 0;
             lastSavedGamePlayedNumber = 0;
-            elapsedTime = 0;
+            elapsedTimeMilis = 0;
             final File lastSaveDataFile = new File(filePath + LAST_SAVE_DATA + ".txt");
             if ( lastSaveDataFile.exists() ) {
                 try ( BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(lastSaveDataFile), "UTF-8")) ) {
@@ -655,7 +664,7 @@ class LearningExperiment {
                     if ( line == null ) {
                         throw new IllegalArgumentException("el archivo de configuración no tiene un formato válido");
                     }
-                    elapsedTime = Long.parseLong(line);
+                    elapsedTimeMilis = Long.parseLong(line);
                     try {
                         line = reader.readLine();
                         if ( line == null ) {
@@ -854,18 +863,11 @@ class LearningExperiment {
     }
 
     /**
-     * Establece el nombre del experimento basado en el nombre de la clase {@code experimentClass}.
-     *
-     * @param experimentClass clase de la cual extraer el nombre del experimento.
+     * @param experimentName nombre del experimento.
      */
     public
-    void setExperimentName( final Class experimentClass ) {
-        String    className = experimentClass.getName();
-        final int lastDot   = className.lastIndexOf('.');
-        if ( lastDot != -1 ) {
-            className = className.substring(lastDot + 1);
-        }
-        experimentName = className;
+    void setExperimentName( final String experimentName ) {
+        this.experimentName = experimentName;
     }
 
     /**
@@ -1033,9 +1035,9 @@ class LearningExperiment {
         final StatisticCalculator timePerTurn        = new StatisticCalculator();
 
         for ( int i = lastSavedGamePlayedNumber + 1; i <= gamesToPlay; i++ ) {
-            final long   start           = System.nanoTime();
+            final long   start           = System.currentTimeMillis();
             final Double lastTimePerTurn = learningAlgorithm.solveAndTrainOnce(game, i);
-            elapsedTime += System.nanoTime() - start;
+            elapsedTimeMilis += System.currentTimeMillis() - start;
             if ( game.isPrintHistory() ) {
                 try ( BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(historyFile, true), "UTF-8")) ) {
                     out.append("\n========== NEW GAME (")
@@ -1134,9 +1136,17 @@ class LearningExperiment {
                 writeConfig = true;
             }
             if ( writeConfig ) {
+                final long   hs      = elapsedTimeMilis / 3_600_000L;
+                final long   hsRest  = elapsedTimeMilis % 3_600_000L;
+                final long   min     = hsRest / 60_000L;
+                final long   restMin = hsRest % 60_000L;
+                final double seg     = restMin / 1_000d;
+
                 try ( BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(lastSaveDataFile), "UTF-8")) ) {
-                    out.write(Integer.toString(i) + '\n' + Integer.toString(backupNumber) + '\n' + Long.toString(elapsedTime) + '\n' +
-                              Integer.toString(bestGame) + '\n' + Double.toString(bestWinRate) + '\n' + Double.toString(bestMaxTile));
+                    out.write(Integer.toString(i) + '\n' + Integer.toString(backupNumber) + '\n' + Long.toString(elapsedTimeMilis) + '\n' +
+                              Integer.toString(bestGame) + '\n' + Double.toString(bestWinRate) + '\n' + Double.toString(bestMaxTile) +
+                              "\n\ntiempo de ejecución = " + hs + "h " + min + "m " + decimalFormat.format(seg) + "s (total: " + elapsedTimeMilis +
+                              " ms).");
                 }
             }
         }

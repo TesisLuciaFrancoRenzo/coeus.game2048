@@ -30,6 +30,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.*;
@@ -48,7 +49,7 @@ class TestGenerator {
     /**
      *
      */
-    public static final int NO_ANNEALING = -1;
+    private static final int NO_ANNEALING = -1;
 
     /**
      * @param numberForShow
@@ -74,7 +75,7 @@ class TestGenerator {
      * @param filePath
      * @param concurrentLayer
      */
-    public static
+    private static
     void configAndExecute(
             final boolean canCollectStatistics,
             final int numberForShow,
@@ -170,23 +171,12 @@ class TestGenerator {
             System.exit(-1);
         } else {
 
-            List< Double >  lambdaList;
-            List< String >  experimentClassNameList;
-            List< Double >  alphaList;
-            List< Integer > annealingAlphaList;
-            List< Double >  gammaList;
-            List< Double >  fixedExplorationRate                           = new ArrayList<>();
-            List< Double >  interpolatedExplorationRateFinalValues         = new ArrayList<>();
-            List< Integer > interpolatedExplorationRateFinishInterpolation = new ArrayList<>();
-            List< Double >  interpolatedExplorationRateInitialValues       = new ArrayList<>();
-            List< Integer > interpolatedExplorationRateStartInterpolation  = new ArrayList<>();
-
             final ArgumentLoader arguments = new ArgumentLoader(args);
 
-            final String experimentDirName = arguments.getArg("experimentDirName");
-            experimentClassNameList = ArgumentLoader.parseStringArray(arguments.getArg("experimentClassNameList"));
-            final boolean createLogs           = Boolean.parseBoolean(arguments.getArg("createLogs"));
-            final boolean canCollectStatistics = Boolean.parseBoolean(arguments.getArg("canCollectStatistics"));
+            final String         experimentDirName       = arguments.getArg("experimentDirName");
+            final List< String > experimentClassNameList = ArgumentLoader.parseStringArray(arguments.getArg("experimentClassNameList"));
+            final boolean        createLogs              = Boolean.parseBoolean(arguments.getArg("createLogs"));
+            final boolean        canCollectStatistics    = Boolean.parseBoolean(arguments.getArg("canCollectStatistics"));
 
             final int repetitions        = Integer.parseInt(arguments.getArg("repetitions"));
             final int maxTrainingThreads = Integer.parseInt(arguments.getArg("maxTrainingThreads"));
@@ -201,17 +191,26 @@ class TestGenerator {
             final int     tileToWinForStatistics   = Integer.parseInt(arguments.getArg("tileToWinForStatistics"));
             final boolean runBackupStatistics      = Boolean.parseBoolean(arguments.getArg("runBackupStatistics"));
 
-            lambdaList = ArgumentLoader.parseDoubleArray(arguments.getArg("lambdaList"));
-            final int     eligibilityTraceLength = Integer.parseInt(arguments.getArg("eligibilityTraceLength"));
-            final boolean replacingTraces        = Boolean.parseBoolean(arguments.getArg("replacingTraces"));
-            final boolean accumulatingTraces     = Boolean.parseBoolean(arguments.getArg("accumulatingTraces"));
+            final List< Double > lambdaList             = ArgumentLoader.parseDoubleArray(arguments.getArg("lambdaList"));
+            final int            eligibilityTraceLength = Integer.parseInt(arguments.getArg("eligibilityTraceLength"));
+            final boolean        replacingTraces        = Boolean.parseBoolean(arguments.getArg("replacingTraces"));
+            final boolean        accumulatingTraces     = Boolean.parseBoolean(arguments.getArg("accumulatingTraces"));
 
-            annealingAlphaList = ArgumentLoader.parseIntegerArray(arguments.getArg("annealingAlphaList"));
-            alphaList = ArgumentLoader.parseDoubleArray(arguments.getArg("alphaList"));
-            gammaList = ArgumentLoader.parseDoubleArray(arguments.getArg("gammaList"));
-            final boolean[] concurrentLayer                        = ArgumentLoader.parseBooleanArray(arguments.getArg("concurrentLayerList"));
-            final boolean   concurrencyInComputeBestPossibleAction = Boolean.parseBoolean(arguments.getArg("concurrencyInComputeBestPossibleAction"));
-            List< Double >  whenStartToExplore                     = ArgumentLoader.parseDoubleArray(arguments.getArg("whenStartToExplore"));
+            final List< Integer > annealingAlphaList                             =
+                    ArgumentLoader.parseIntegerArray(arguments.getArg("annealingAlphaList"));
+            final List< Double >  alphaList                                      = ArgumentLoader.parseDoubleArray(arguments.getArg("alphaList"));
+            final List< Double >  gammaList                                      = ArgumentLoader.parseDoubleArray(arguments.getArg("gammaList"));
+            final boolean[]       concurrentLayer                                =
+                    ArgumentLoader.parseBooleanArray(arguments.getArg("concurrentLayerList"));
+            final boolean         concurrencyInComputeBestPossibleAction         =
+                    Boolean.parseBoolean(arguments.getArg("concurrencyInComputeBestPossibleAction"));
+            final List< Double >  whenStartToExplore                             =
+                    ArgumentLoader.parseDoubleArray(arguments.getArg("whenStartToExplore"));
+            List< Integer >       interpolatedExplorationRateStartInterpolation  = new ArrayList<>();
+            List< Double >        interpolatedExplorationRateInitialValues       = new ArrayList<>();
+            List< Integer >       interpolatedExplorationRateFinishInterpolation = new ArrayList<>();
+            List< Double >        interpolatedExplorationRateFinalValues         = new ArrayList<>();
+            List< Double >        fixedExplorationRate                           = new ArrayList<>();
             try {
                 interpolatedExplorationRateInitialValues = ArgumentLoader.parseDoubleArray(arguments.getArg("explorationRateInitialValueList"));
                 interpolatedExplorationRateFinalValues = ArgumentLoader.parseDoubleArray(arguments.getArg("explorationRateFinalValuesList"));
@@ -238,8 +237,8 @@ class TestGenerator {
                     System.exit(-1);
                 }
             }
-            long         time     = System.currentTimeMillis();
-            final String filePath = ".." + File.separator + "Perceptrones ENTRENADOS" + File.separator;
+            long         miliseconds = System.currentTimeMillis();
+            final String filePath    = ".." + File.separator + "Perceptrones ENTRENADOS" + File.separator;
             runAllConfigs(repetitions,
                     canCollectStatistics,
                     maxTrainingThreads,
@@ -256,8 +255,7 @@ class TestGenerator {
                     gamesToPlay,
                     saveEvery,
                     saveBackupEvery,
-                    gamesToPlayPerThreadForStats,
-                    tileToWinForStatistics, simulationsForStatistics, whenStartToExplore,
+                    gamesToPlayPerThreadForStats, tileToWinForStatistics, simulationsForStatistics, whenStartToExplore,
                     fixedExplorationRate,
                     interpolatedExplorationRateInitialValues,
                     interpolatedExplorationRateFinalValues,
@@ -268,14 +266,22 @@ class TestGenerator {
                     filePath,
                     concurrentLayer,
                     concurrencyInComputeBestPossibleAction);
-            time = System.currentTimeMillis() - time;
-            System.out.println("\ntiempo de ejecución = " + time + " ms.");
+            miliseconds = System.currentTimeMillis() - miliseconds;
+
+            final long   hs      = miliseconds / 3_600_000L;
+            final long   hsRest  = miliseconds % 3_600_000L;
+            final long   min     = hsRest / 60_000L;
+            final long   restMin = hsRest % 60_000L;
+            final double seg     = restMin / 1_000d;
+
+            DecimalFormat formatter = new DecimalFormat("#.###");
+            System.out.println("\ntiempo de ejecución = " + hs + "h " + min + "m " + formatter.format(seg) + "s (total: " + miliseconds + " ms).");
             Toolkit.getDefaultToolkit().beep();
         }
     }
 
     @SuppressWarnings( "ForLoopReplaceableByForEach" )
-    public static
+    private static
     void runAllConfigs(
             final int repetitions,
             final boolean canCollectStatistics,
@@ -612,8 +618,7 @@ class TestGenerator {
                     gamesToPlay,
                     saveEvery,
                     saveBackupEvery,
-                    gamesToPlayPerThreadForStatistics,
-                    tileToWinForStatistics, simulationsForStatistics, expConfig.getWhenStartToExplore(),
+                    gamesToPlayPerThreadForStatistics, tileToWinForStatistics, simulationsForStatistics, expConfig.getWhenStartToExplore(),
                     expConfig.getExplorationRate(),
                     expConfig.getExplorationRateInitialValue(),
                     expConfig.getExplorationRateFinalValue(),
