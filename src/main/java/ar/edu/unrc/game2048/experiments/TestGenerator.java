@@ -207,11 +207,11 @@ class TestGenerator {
                     Boolean.parseBoolean(arguments.getArg("concurrencyInComputeBestPossibleAction"));
             final List< Double >  whenStartToExplore                             =
                     ArgumentLoader.parseDoubleArray(arguments.getArg("whenStartToExplore"));
-            List< Integer >       interpolatedExplorationRateStartInterpolation  = new ArrayList<>();
-            List< Double >        interpolatedExplorationRateInitialValues       = new ArrayList<>();
-            List< Integer >       interpolatedExplorationRateFinishInterpolation = new ArrayList<>();
-            List< Double >        interpolatedExplorationRateFinalValues         = new ArrayList<>();
-            List< Double >        fixedExplorationRate                           = new ArrayList<>();
+            List< Integer >       interpolatedExplorationRateStartInterpolation  = null;
+            List< Double >        interpolatedExplorationRateInitialValues       = null;
+            List< Integer >       interpolatedExplorationRateFinishInterpolation = null;
+            List< Double >        interpolatedExplorationRateFinalValues         = null;
+            List< Double >        fixedExplorationRate                           = null;
             try {
                 interpolatedExplorationRateInitialValues = ArgumentLoader.parseDoubleArray(arguments.getArg("explorationRateInitialValueList"));
                 interpolatedExplorationRateFinalValues = ArgumentLoader.parseDoubleArray(arguments.getArg("explorationRateFinalValuesList"));
@@ -225,13 +225,8 @@ class TestGenerator {
                     System.err.println("La cantidad de parámetros de exploration rate no coinciden");
                     System.exit(-1);
                 }
-                fixedExplorationRate = null;
             } catch ( final Exception e ) {
                 try {
-                    interpolatedExplorationRateInitialValues = null;
-                    interpolatedExplorationRateFinalValues = null;
-                    interpolatedExplorationRateStartInterpolation = null;
-                    interpolatedExplorationRateFinishInterpolation = null;
                     fixedExplorationRate = ArgumentLoader.parseDoubleArray(arguments.getArg("fixedExplorationRateList"));
                 } catch ( final Exception e2 ) {
                     System.err.println("No se encuentran parámetros para explorationRate constantes o variables");
@@ -254,8 +249,7 @@ class TestGenerator {
                     runBackupStatistics,
                     createLogs,
                     gamesToPlay,
-                    saveEvery,
-                    saveBackupEvery, gamesToPlayPerThreadForStats, tileToWinForStatistics, simulationsForStatistics, whenStartToExplore,
+                    saveEvery, saveBackupEvery, gamesToPlayPerThreadForStats, tileToWinForStatistics, simulationsForStatistics, whenStartToExplore,
                     fixedExplorationRate,
                     interpolatedExplorationRateInitialValues,
                     interpolatedExplorationRateFinalValues,
