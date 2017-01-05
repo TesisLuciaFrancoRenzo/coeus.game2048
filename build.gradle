@@ -2,7 +2,7 @@ group 'ar.edu.unrc'
 version '1.0.0'
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '3.3'
+    gradleVersion = '3.2'
 }
 
 //https://docs.gradle.org/current/userguide/standard_plugins.html
@@ -25,7 +25,7 @@ compileJava {
 
 dependencies {
     compile group: 'ar.edu.unrc', name: 'coeus', version: '1.0.0'
-    compile group: 'org.encog', name: 'encog-core', version: '3.2.0'
+    compile group: 'org.encog', name: 'encog-core', version: '3.3.0'
     compile group: 'org.apache.poi', name: 'poi', version: '3.11'
     compile group: 'commons-logging', name: 'commons-logging', version: '1.2'
     compile group: 'log4j', name: 'log4j', version: '1.2.17'
