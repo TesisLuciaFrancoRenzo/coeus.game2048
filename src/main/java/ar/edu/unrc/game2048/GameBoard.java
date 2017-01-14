@@ -23,10 +23,11 @@ class GameBoard
     private boolean checkingAvailableMoves = false;
     private int     highestValue           = 0;
     private int     partialScore           = 0;
-    private       Tile[][]        tiles;
+    private Tile[][] tiles;
 
     public
     GameBoard( final Game2048 game ) {
+        super();
         this.game = game;
         tiles = new Tile[side][side];
         availableSpace = new LinkedList<>();
@@ -122,8 +123,7 @@ class GameBoard
              : ( gameBoard.normalizedPerceptronInput != null ) ) {
             return false;
         }
-        if ( !availableSpace.equals(gameBoard.availableSpace) ) { return false; }
-        return Arrays.deepEquals(tiles, gameBoard.tiles);
+        return availableSpace.equals(gameBoard.availableSpace) && Arrays.deepEquals(tiles, gameBoard.tiles);
     }
 
     public
@@ -220,8 +220,7 @@ class GameBoard
     List< GreedyStateProbability > listAllPossibleNextTurnStateFromAfterState() {
         final List< GreedyStateProbability > output = new ArrayList<>(16);
         for ( int value = 1; value <= 2; value++ ) {
-            final double probability;
-            probability = ( value == 1 ) ? 0.9 : 0.1;
+            final double probability = ( value == 1 ) ? 0.9 : 0.1;
             clearInterns(false);
             final int availableSpaceSize = availableSpace.size() - 1;
             for ( int index = 0; index < availableSpaceSize; index++ ) {

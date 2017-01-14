@@ -57,6 +57,7 @@ class ConfigPerceptronNTupleTanHSimplified_512
      */
     public
     ConfigPerceptronNTupleTanHSimplified_512( final Boolean hasBias ) {
+        super();
         this.hasBias = hasBias;
         setTileToWinForTraining(512);
 

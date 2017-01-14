@@ -38,6 +38,7 @@ class ConfigNTupleBasicLinear_512
      */
     public
     ConfigNTupleBasicLinear_512() {
+        super();
         setTileToWinForTraining(512);
         activationFunction = FunctionUtils.LINEAR;
         derivedActivationFunction = FunctionUtils.LINEAR_DERIVED;

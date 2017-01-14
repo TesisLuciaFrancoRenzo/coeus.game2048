@@ -13,11 +13,12 @@ class Tile
 
     public
     Tile( final int val ) {
+        super();
         value = val;
     }
 
     public static
-    int getCodeFromTileValue( int tileValue ) {
+    int getCodeFromTileValue( final int tileValue ) {
         return (int) ( Math.log(tileValue) / Math.log(2) );
     }
 
@@ -55,8 +56,8 @@ class Tile
         return -1;
     }
 
-    void setMerged( final boolean m ) {
-        merged = m;
+    void setMerged( final boolean merged ) {
+        this.merged = merged;
     }
 
     @Override

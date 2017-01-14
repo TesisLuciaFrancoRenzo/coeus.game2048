@@ -35,8 +35,8 @@ public
 class ConfigNTupleBasicTanHSimplified_512
         extends NTupleConfiguration2048 {
 
-    private static final int maxReward = 100_000;
-    private static final int minReward = -100_000;
+    private static final int MAX_REWARD = 100_000;
+    private static final int MIN_REWARD = -100_000;
     private final int maxTile;
     private final int numSamples;
 
@@ -45,6 +45,7 @@ class ConfigNTupleBasicTanHSimplified_512
      */
     public
     ConfigNTupleBasicTanHSimplified_512() {
+        super();
 
         setTileToWinForTraining(512);
 
@@ -57,7 +58,7 @@ class ConfigNTupleBasicTanHSimplified_512
         numSamples = 8;
         maxTile = 9;
 
-        normOutput = new NormalizedField(NormalizationAction.Normalize, null, maxReward, minReward, activationFunctionMax, activationFunctionMin);
+        normOutput = new NormalizedField(NormalizationAction.Normalize, null, MAX_REWARD, MIN_REWARD, activationFunctionMax, activationFunctionMin);
 
         nTuplesLength = new int[numSamples];
         for ( int i = 0; i < numSamples; i++ ) {
@@ -140,8 +141,8 @@ class ConfigNTupleBasicTanHSimplified_512
     @Override
     public
     double normalizeValueToPerceptronOutput( final Object value ) {
-        if ( (Double) value > maxReward ) {
-            throw new IllegalArgumentException("value no puede ser mayor a maxReward=" + maxReward);
+        if ( (Double) value > MAX_REWARD ) {
+            throw new IllegalArgumentException("value no puede ser mayor a MAX_REWARD=" + MAX_REWARD);
         }
         return normOutput.normalize((Double) value);
     }

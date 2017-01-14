@@ -146,7 +146,7 @@ class ReportCollector {
                     default:
                         throw new IllegalArgumentException("not supported format");
                 }
-            } catch ( URISyntaxException | MalformedURLException | IllegalArgumentException e ) {
+            } catch ( URISyntaxException | MalformedURLException | IllegalArgumentException ignored ) {
                 WORKING_DIRECTORY = new File(".");
             }
         }

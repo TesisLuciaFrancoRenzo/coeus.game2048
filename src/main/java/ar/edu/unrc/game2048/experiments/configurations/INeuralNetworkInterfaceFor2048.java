@@ -53,6 +53,7 @@ class INeuralNetworkInterfaceFor2048
      */
     protected
     INeuralNetworkInterfaceFor2048( final EncogConfiguration2048 perceptronConfiguration ) {
+        super();
         this.perceptronConfiguration = perceptronConfiguration;
     }
 
@@ -61,6 +62,7 @@ class INeuralNetworkInterfaceFor2048
      */
     protected
     INeuralNetworkInterfaceFor2048( final NTupleConfiguration2048 nTupleConfiguration ) {
+        super();
         this.nTupleConfiguration = nTupleConfiguration;
     }
 
@@ -151,8 +153,7 @@ class INeuralNetworkInterfaceFor2048
         final List< IAction > possibleActions = game.listAllPossibleActions(game.getBoard());
         final Action bestAction = (Action) TDLambdaLearning.computeBestPossibleAction(game, ELearningStyle.AFTER_STATE,
                 game.getBoard(),
-                possibleActions,
-                null, learningMethod.isComputeParallelBestPossibleAction(), random, null).getAction();
+                possibleActions, null, learningMethod.isComputeParallelBestPossibleAction(), random, null).getAction();
         switch ( bestAction ) {
             case LEFT:
                 game.getBoard().moveLeft();

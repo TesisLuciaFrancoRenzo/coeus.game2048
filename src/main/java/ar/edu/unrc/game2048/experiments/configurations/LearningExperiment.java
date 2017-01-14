@@ -108,11 +108,11 @@ class LearningExperiment {
     private             boolean                    exportToExcel                          = true;
     private             int                        gamesToPlay                            = 0;
     private             int                        gamesToPlayPerThreadForStatistics      = 0;
-    private             double                         gamma                                  = 0.0;
-    private             boolean                        initializePerceptronRandomized         = false;
-    private             double                         lambda                                 = 0.0;
-    private             int                            lastSavedGamePlayedNumber              = 0;
-    private             TDLambdaLearning               learningAlgorithm                      = null;
+    private             double                     gamma                                  = 0.0;
+    private             boolean                    initializePerceptronRandomized         = false;
+    private             double                     lambda                                 = 0.0;
+    private             int                        lastSavedGamePlayedNumber              = 0;
+    private             TDLambdaLearning           learningAlgorithm                      = null;
     private             ELearningRateAdaptation        learningRateAdaptation                 = null;
     private             boolean                        logsActivated                          = false;
     private             StatisticCalculator            maxTileEstimator                       = null;
@@ -676,7 +676,7 @@ class LearningExperiment {
                             throw new IllegalArgumentException("el archivo de configuración no tiene un formato válido");
                         }
                         bestWinRate = Double.parseDouble(line);
-                    } catch ( final Exception e ) {
+                    } catch ( final Exception ignored ) {
                         bestGame = 0;
                         bestWinRate = 0;
                     }
@@ -686,7 +686,7 @@ class LearningExperiment {
                             throw new IllegalArgumentException("el archivo de configuración no tiene un formato válido");
                         }
                         bestMaxTile = Double.parseDouble(line);
-                    } catch ( final Exception e ) {
+                    } catch ( final Exception ignored ) {
                         bestMaxTile = 0;
                     }
                 }
@@ -1086,8 +1086,7 @@ class LearningExperiment {
                     .append("\tRandomChoices = ")
                     .append(learningAlgorithm.getRandomChoicesCounter())
                     .append("\tturno alcanzado = ")
-                    .append(game.getLastTurn())
-                    .append(" (avg=").append(maxTurnAvg.printableAverage()).append(')')
+                    .append(game.getLastTurn()).append(" (avg=").append(maxTurnAvg.printableAverage()).append(')')
                     .append("\tcurrentExplorationRate = ")
                     .append(learningAlgorithm.getCurrentExplorationRate())
                     .append("\tcurrent alpha = ")
@@ -1134,13 +1133,12 @@ class LearningExperiment {
                 writeConfig = true;
             }
             if ( writeConfig ) {
-                final long   hs      = elapsedTimeMilliseconds / 3_600_000L;
-                final long   hsRest  = elapsedTimeMilliseconds % 3_600_000L;
-                final long   min     = hsRest / 60_000L;
-                final long   restMin = hsRest % 60_000L;
-                final double seg     = restMin / 1_000d;
-
                 try ( BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(lastSaveDataFile), "UTF-8")) ) {
+                    final long   hs      = elapsedTimeMilliseconds / 3_600_000L;
+                    final long   hsRest  = elapsedTimeMilliseconds % 3_600_000L;
+                    final long   min     = hsRest / 60_000L;
+                    final long   restMin = hsRest % 60_000L;
+                    final double seg     = restMin / 1_000.0d;
                     out.write(Integer.toString(i) + '\n' + Integer.toString(backupNumber) + '\n' + Long.toString(elapsedTimeMilliseconds) + '\n' +
                               Integer.toString(bestGame) + '\n' + Double.toString(bestWinRate) + '\n' + Double.toString(bestMaxTile) +
                               "\n\ntiempo de ejecución = " + hs + "h " + min + "m " + decimalFormat.format(seg) + "s (total: " +

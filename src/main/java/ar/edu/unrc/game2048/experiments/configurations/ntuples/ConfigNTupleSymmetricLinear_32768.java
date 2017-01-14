@@ -38,6 +38,7 @@ class ConfigNTupleSymmetricLinear_32768
      */
     public
     ConfigNTupleSymmetricLinear_32768() {
+        super();
         setTileToWinForTraining(32768);
 
         activationFunction = FunctionUtils.LINEAR;

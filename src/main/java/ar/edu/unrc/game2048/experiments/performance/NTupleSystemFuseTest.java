@@ -26,8 +26,7 @@ class NTupleSystemFuseTest {
         for ( int i = 0; i < numFiles; i++ ) {
             nTupleSystems.add(new NTupleSystem(nTupleConfiguration.getAllSamplePointPossibleValues(),
                     nTupleConfiguration.getNTuplesLength(),
-                    nTupleConfiguration.getActivationFunction(),
-                    nTupleConfiguration.getDerivedActivationFunction(), false));
+                    nTupleConfiguration.getActivationFunction(), nTupleConfiguration.getDerivedActivationFunction(), false));
             nTupleSystems.get(i)
                     .load(new File(dir + i + "-alpha_0.005-anneal_2000000-lambda_0.0-gamma_1.0-explorationRate_0.1_0.01_0_500000-resetTraces_false" +
                                    dirEnd));

@@ -55,6 +55,7 @@ class ConfigPerceptronNTupleLinearSimplified_512
      */
     public
     ConfigPerceptronNTupleLinearSimplified_512( final Boolean hasBias ) {
+        super();
         this.hasBias = hasBias;
         setTileToWinForTraining(512);
 

@@ -35,15 +35,16 @@ class ThreadResult {
     private       double          minScore;
     private       double          minTurn;
     private int processedGames = 0;
-    private       double          totalScore;
-    private       double          totalTurn;
-    private       int             winGames;
+    private double totalScore;
+    private double totalTurn;
+    private int    winGames;
 
     /**
      * Nuevo resultado de simulación.
      */
     public
     ThreadResult() {
+        super();
         winGames = 0;
         tileStatistics = new ArrayList<>(18);
         for ( int i = 0; i <= 17; i++ ) {
@@ -135,7 +136,7 @@ class ThreadResult {
      */
     public
     double getMeanScore() {
-        return totalScore / ( (double) processedGames * 1.0d );
+        return totalScore / ( processedGames * 1.0d );
     }
 
     /**
@@ -143,7 +144,7 @@ class ThreadResult {
      */
     public
     double getMeanTurn() {
-        return ( winGames > 0 ) ? ( totalTurn / ( (double) winGames * 1.0d ) ) : 0.0d;
+        return ( winGames > 0 ) ? ( totalTurn / ( winGames * 1.0d ) ) : 0.0d;
     }
 
     /**
@@ -193,6 +194,6 @@ class ThreadResult {
      */
     public
     double getWinRate() {
-        return ( (double) winGames * 100.0d ) / ( (double) processedGames * 1.0d );
+        return ( winGames * 100.0d ) / ( processedGames * 1.0d );
     }
 }

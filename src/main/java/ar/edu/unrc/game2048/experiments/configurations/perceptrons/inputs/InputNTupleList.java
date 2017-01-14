@@ -24,6 +24,7 @@ class InputNTupleList
      */
     public
     InputNTupleList() {
+        super();
         set = new HashSet<>();
     }
 

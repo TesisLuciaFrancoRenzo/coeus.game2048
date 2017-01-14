@@ -88,6 +88,7 @@ class StatisticExperiment {
     StatisticExperiment(
             final LearningExperiment learningExperiment
     ) {
+        super();
         this.learningExperiment = learningExperiment;
     }
 
@@ -528,7 +529,7 @@ class StatisticExperiment {
                             final double value = Double.parseDouble(line.trim().replaceFirst(",", "."));
                             lastTileStatistic++;
                             tileStatistics.add(value);
-                        } catch ( final NumberFormatException numberFormatException ) {
+                        } catch ( final NumberFormatException ignored ) {
                         }
                     }
 

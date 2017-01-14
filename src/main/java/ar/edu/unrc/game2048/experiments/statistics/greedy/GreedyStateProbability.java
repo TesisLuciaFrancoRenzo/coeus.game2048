@@ -40,6 +40,7 @@ class GreedyStateProbability {
             final IState nextTurnState,
             final double probability
     ) {
+        super();
         this.nextTurnState = nextTurnState;
         this.probability = probability;
     }

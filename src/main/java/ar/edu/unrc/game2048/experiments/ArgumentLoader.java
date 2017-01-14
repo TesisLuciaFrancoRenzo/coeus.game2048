@@ -37,6 +37,7 @@ class ArgumentLoader {
      */
     public
     ArgumentLoader( final String... args ) {
+        super();
         map = new HashMap<>(args.length);
         for ( final String arg : args ) {
             final int index = arg.indexOf('=');

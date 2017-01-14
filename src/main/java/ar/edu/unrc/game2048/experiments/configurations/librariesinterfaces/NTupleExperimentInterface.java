@@ -79,7 +79,8 @@ class NTupleExperimentInterface
         final NTupleSystem nTupleSystem = new NTupleSystem(getNTupleConfiguration().getAllSamplePointPossibleValues(),
                 getNTupleConfiguration().getNTuplesLength(),
                 getNTupleConfiguration().getActivationFunction(),
-                getNTupleConfiguration().getDerivedActivationFunction(), getNTupleConfiguration().isConcurrency());
+                getNTupleConfiguration().getDerivedActivationFunction(),
+                getNTupleConfiguration().isConcurrency());
         if ( randomized ) {
             nTupleSystem.randomize();
         }

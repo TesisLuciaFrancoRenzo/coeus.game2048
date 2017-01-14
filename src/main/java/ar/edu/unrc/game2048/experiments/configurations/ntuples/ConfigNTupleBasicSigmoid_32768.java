@@ -35,14 +35,15 @@ public
 class ConfigNTupleBasicSigmoid_32768
         extends NTupleConfiguration2048 {
 
-    private static final int maxReward = 800_000;
-    private static final int minReward = 0;
+    private static final int MAX_REWARD = 800_000;
+    private static final int MIN_REWARD = 0;
 
     /**
      * Configuración para jugar hasta 32.768, con función de activación Sigmoideo, y puntaje parcial.
      */
     public
     ConfigNTupleBasicSigmoid_32768() {
+        super();
 
         setTileToWinForTraining(32768);
         activationFunction = FunctionUtils.SIGMOID;
@@ -52,7 +53,7 @@ class ConfigNTupleBasicSigmoid_32768
         final double activationFunctionMin = 0;
         final int    maxTile               = 15;
 
-        normOutput = new NormalizedField(NormalizationAction.Normalize, null, maxReward, minReward, activationFunctionMax, activationFunctionMin);
+        normOutput = new NormalizedField(NormalizationAction.Normalize, null, MAX_REWARD, MIN_REWARD, activationFunctionMax, activationFunctionMin);
 
         nTuplesLength = new int[17];
         for ( int i = 0; i < 17; i++ ) {
@@ -141,8 +142,8 @@ class ConfigNTupleBasicSigmoid_32768
     @Override
     public
     double normalizeValueToPerceptronOutput( final Object value ) {
-        if ( (Double) value > maxReward ) {
-            throw new IllegalArgumentException("value no puede ser mayor a maxReward=" + maxReward);
+        if ( (Double) value > MAX_REWARD ) {
+            throw new IllegalArgumentException("value no puede ser mayor a MAX_REWARD=" + MAX_REWARD);
         }
         return normOutput.normalize((Double) value);
     }

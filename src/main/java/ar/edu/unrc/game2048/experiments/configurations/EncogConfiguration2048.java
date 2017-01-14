@@ -209,8 +209,7 @@ class EncogConfiguration2048
                 getAlpha(),
                 getLambda(),
                 isReplaceEligibilityTraces(),
-                getGamma(),
-                getConcurrencyInLayer(), new Random(),
+                getGamma(), getConcurrencyInLayer(), new Random(),
                 isCanCollectStatistics());
     }
 

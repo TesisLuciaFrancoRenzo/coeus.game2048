@@ -76,6 +76,7 @@ class GeneratorConfig {
             final boolean replaceTraces,
             final int number
     ) {
+        super();
         this.repetitions = repetitions;
         this.canCollectStatistics = canCollectStatistics;
         this.alpha = alpha;

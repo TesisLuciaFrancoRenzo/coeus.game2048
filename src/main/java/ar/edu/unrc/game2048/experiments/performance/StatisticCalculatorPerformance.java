@@ -22,6 +22,7 @@ class StatisticCalculatorPerformance {
      */
     public
     StatisticCalculatorPerformance( final Integer defaultCapacity ) {
+        super();
         experiment = new ArrayList<>(defaultCapacity);
     }
 
@@ -57,7 +58,7 @@ class StatisticCalculatorPerformance {
                 max = sample;
             }
         }
-        avg /= ( (double) experiment.size() * 1.0d );
+        avg /= ( experiment.size() * 1.0d );
         final String[] output = new String[2];
         output[0] = "Promedio: " + avg + "ms. Mínimo: " + min + "ms. Máximo: " + max + "ms.";
         output[1] = avg + "\t" + min + '\t' + max;

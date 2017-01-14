@@ -38,6 +38,7 @@ class ConfigNTupleBasicLinearSimplified_512
      */
     public
     ConfigNTupleBasicLinearSimplified_512() {
+        super();
         setTileToWinForTraining(512);
         final int numSamples = 8;
         final int maxTile    = 9;

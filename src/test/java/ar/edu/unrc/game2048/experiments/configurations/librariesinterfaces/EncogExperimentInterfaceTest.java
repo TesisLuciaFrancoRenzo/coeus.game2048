@@ -501,13 +501,16 @@ class EncogExperimentInterfaceTest {
 
             if ( perceptron.getActivation(layer) instanceof ActivationTANH ) {
                 assertThat("capa=" + layer + " activationEncog=" + activationEncog + " vs activationInterface=" + activationInterface,
-                        encogInterface.getActivationFunction(layer), is(FunctionUtils.TANH));
+                        encogInterface.getActivationFunction(layer),
+                        is(FunctionUtils.TANH));
             } else if ( perceptron.getActivation(layer) instanceof ActivationSigmoid ) {
                 assertThat("capa=" + layer + " activationEncog=" + activationEncog + " vs activationInterface=" + activationInterface,
-                        encogInterface.getActivationFunction(layer), is(FunctionUtils.SIGMOID));
+                        encogInterface.getActivationFunction(layer),
+                        is(FunctionUtils.SIGMOID));
             } else if ( perceptron.getActivation(layer) instanceof ActivationLinear ) {
                 assertThat("capa=" + layer + " activationEncog=" + activationEncog + " vs activationInterface=" + activationInterface,
-                        encogInterface.getActivationFunction(layer), is(FunctionUtils.LINEAR));
+                        encogInterface.getActivationFunction(layer),
+                        is(FunctionUtils.LINEAR));
             } else {
                 throw new IllegalArgumentException("El test esta pensado para utilizar TANH, Sigmoid o Linear como función de activación");
             }

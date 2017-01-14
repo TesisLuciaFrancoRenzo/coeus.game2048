@@ -38,6 +38,7 @@ class Game2048
             final int numberToWin,
             final boolean printHistory
     ) {
+        super();
         historyLog = printHistory ? new StringBuilder() : null;
         this.numberToWin = numberToWin;
         this.neuralNetworkConfiguration = neuralNetworkConfiguration;

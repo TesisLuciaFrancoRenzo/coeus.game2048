@@ -145,8 +145,7 @@ class NTupleConfiguration2048
         return new TDLambdaLearning(nTupleSystem, AFTER_STATE, ( getAlpha() != null ) ? getAlpha()[0] : null,
                 getLambda(),
                 getEligibilityTraceLength(),
-                isReplaceEligibilityTraces(),
-                getGamma(), getConcurrencyInLayer(), new Random(), isCanCollectStatistics());
+                isReplaceEligibilityTraces(), getGamma(), getConcurrencyInLayer(), new Random(), isCanCollectStatistics());
     }
 
     @Override

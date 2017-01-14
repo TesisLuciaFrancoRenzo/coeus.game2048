@@ -225,10 +225,10 @@ class TestGenerator {
                     System.err.println("La cantidad de parámetros de exploration rate no coinciden");
                     System.exit(-1);
                 }
-            } catch ( final Exception e ) {
+            } catch ( final Exception ignored ) {
                 try {
                     fixedExplorationRate = ArgumentLoader.parseDoubleArray(arguments.getArg("fixedExplorationRateList"));
-                } catch ( final Exception e2 ) {
+                } catch ( final Exception ignored2 ) {
                     System.err.println("No se encuentran parámetros para explorationRate constantes o variables");
                     System.exit(-1);
                 }
@@ -249,7 +249,12 @@ class TestGenerator {
                     runBackupStatistics,
                     createLogs,
                     gamesToPlay,
-                    saveEvery, saveBackupEvery, gamesToPlayPerThreadForStats, tileToWinForStatistics, simulationsForStatistics, whenStartToExplore,
+                    saveEvery,
+                    saveBackupEvery,
+                    gamesToPlayPerThreadForStats,
+                    tileToWinForStatistics,
+                    simulationsForStatistics,
+                    whenStartToExplore,
                     fixedExplorationRate,
                     interpolatedExplorationRateInitialValues,
                     interpolatedExplorationRateFinalValues,
@@ -266,9 +271,9 @@ class TestGenerator {
             final long   hsRest  = milliseconds % 3_600_000L;
             final long   min     = hsRest / 60_000L;
             final long   restMin = hsRest % 60_000L;
-            final double seg     = restMin / 1_000d;
+            final double seg     = restMin / 1_000.0d;
 
-            DecimalFormat formatter = new DecimalFormat("#.###");
+            final DecimalFormat formatter = new DecimalFormat("#.###");
             System.out.println("\ntiempo de ejecución = " + hs + "h " + min + "m " + formatter.format(seg) + "s (total: " + milliseconds + " ms).");
             Toolkit.getDefaultToolkit().beep();
         }

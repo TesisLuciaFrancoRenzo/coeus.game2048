@@ -267,7 +267,7 @@ class GameBoardTest {
         board.setTiles(randomBoard);
         board.clearInterns(true);
 
-        final Integer[] result    = new Integer[3];
+        final Integer[] result = new Integer[3];
         board.getAvailableSpace().toArray(result);
 
         final Integer[] expResult = { 0, 2, 13 };

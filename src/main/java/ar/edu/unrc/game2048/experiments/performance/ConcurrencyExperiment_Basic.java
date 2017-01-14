@@ -50,55 +50,47 @@ class ConcurrencyExperiment_Basic
      *
      */
     @SuppressWarnings( "PublicField" )
-    public static int GAMES_TO_PLAY;
-
-    /**
-     *
-     */
-    @SuppressWarnings( "PublicField" )
-    public static int MAX_INNER_LAYERS;
-
-    /**
-     *
-     */
-    @SuppressWarnings( "PublicField" )
-    public static int MAX_NEURON_QUANTITY;
-
-    /**
-     *
-     */
-    @SuppressWarnings( "PublicField" )
-    public static int MIN_NEURON_QUANTITY;
-
-    /**
-     *
-     */
-    @SuppressWarnings( "PublicField" )
-    public static int SAMPLES_PER_EXPERIMENT;
-
-    /**
-     *
-     */
-    @SuppressWarnings( "PublicField" )
     public static ConcurrencyConfig currentConfig;
-
     /**
      *
      */
     @SuppressWarnings( "PublicField" )
-    public static String filePath;
-
+    public static String            filePath;
     /**
      *
      */
     @SuppressWarnings( "PublicField" )
-    public static StringBuilder outputForGraphicsResults;
-
+    public static int               gamesToPlay;
     /**
      *
      */
     @SuppressWarnings( "PublicField" )
-    public static StringBuilder outputResults;
+    public static int               maxInnerLayers;
+    /**
+     *
+     */
+    @SuppressWarnings( "PublicField" )
+    public static int               maxNeuronQuantity;
+    /**
+     *
+     */
+    @SuppressWarnings( "PublicField" )
+    public static int               minNeuronQuantity;
+    /**
+     *
+     */
+    @SuppressWarnings( "PublicField" )
+    public static StringBuilder     outputForGraphicsResults;
+    /**
+     *
+     */
+    @SuppressWarnings( "PublicField" )
+    public static StringBuilder     outputResults;
+    /**
+     *
+     */
+    @SuppressWarnings( "PublicField" )
+    public static int               samplesPerExperiment;
 
     /**
      * Ejecuta un experimento.
@@ -114,7 +106,7 @@ class ConcurrencyExperiment_Basic
             final boolean trainConcurrency,
             final boolean evaluateConcurrency
     ) {
-        for ( int innerLayerQuantity = 1; innerLayerQuantity <= MAX_INNER_LAYERS; innerLayerQuantity++ ) {
+        for ( int innerLayerQuantity = 1; innerLayerQuantity <= maxInnerLayers; innerLayerQuantity++ ) {
             System.out.println("===============================================================================");
             System.out.println("Capas intermedias: " + innerLayerQuantity);
             outputForGraphicsResults.append("============ Capas intermedias: ")
@@ -128,9 +120,7 @@ class ConcurrencyExperiment_Basic
 
             final StringBuilder trainingOutput = new StringBuilder();
             final StringBuilder evaluateOutput = new StringBuilder();
-            for ( int innerLayersNeuronQuantity = MIN_NEURON_QUANTITY;
-                  innerLayersNeuronQuantity <= MAX_NEURON_QUANTITY;
-                  innerLayersNeuronQuantity++ ) {
+            for ( int innerLayersNeuronQuantity = minNeuronQuantity; innerLayersNeuronQuantity <= maxNeuronQuantity; innerLayersNeuronQuantity++ ) {
                 // Primer experimento, con 1 capa, en serie
                 currentConfig = new ConcurrencyConfig();
                 currentConfig.setConcurrencyInEvaluate(evaluateConcurrency);
@@ -163,9 +153,9 @@ class ConcurrencyExperiment_Basic
                 System.out.println(currentConfig);
                 System.out.println("========================================================");
 
-                final StatisticCalculatorPerformance trainingStats     = new StatisticCalculatorPerformance(SAMPLES_PER_EXPERIMENT);
-                final StatisticCalculatorPerformance bestPossibleStats = new StatisticCalculatorPerformance(SAMPLES_PER_EXPERIMENT);
-                for ( int i = 1; i <= SAMPLES_PER_EXPERIMENT; i++ ) {
+                final StatisticCalculatorPerformance trainingStats     = new StatisticCalculatorPerformance(samplesPerExperiment);
+                final StatisticCalculatorPerformance bestPossibleStats = new StatisticCalculatorPerformance(samplesPerExperiment);
+                for ( int i = 1; i <= samplesPerExperiment; i++ ) {
                     System.out.println("Calculo de muestra N" + i);
                     long time = System.currentTimeMillis();
                     startStatistics(trainingStats, bestPossibleStats);
@@ -215,11 +205,11 @@ class ConcurrencyExperiment_Basic
                 output.mkdirs();
             }
 
-            SAMPLES_PER_EXPERIMENT = 10;
-            GAMES_TO_PLAY = 20;
-            MAX_INNER_LAYERS = 1;
-            MAX_NEURON_QUANTITY = 12;
-            MIN_NEURON_QUANTITY = 2;
+            samplesPerExperiment = 10;
+            gamesToPlay = 20;
+            maxInnerLayers = 1;
+            maxNeuronQuantity = 12;
+            minNeuronQuantity = 2;
 
             outputResults = new StringBuilder();
             outputForGraphicsResults = new StringBuilder();
@@ -258,17 +248,14 @@ class ConcurrencyExperiment_Basic
     private static
     void printConfig( final StringBuilder outputResults ) {
         outputResults.append("====================================").append('\n');
-        outputResults.append("SAMPLES_PER_EXPERIMENT = ").append(SAMPLES_PER_EXPERIMENT).append('\n');
-        outputResults.append("GAMES_TO_PLAY = ").append(GAMES_TO_PLAY).append('\n');
-        outputResults.append("MAX_INNER_LAYERS = ").append(MAX_INNER_LAYERS).append('\n');
-        outputResults.append("MAX_NEURON_QUANTITY = ")
-                .append(MAX_NEURON_QUANTITY).append(" (").append(Math.pow(2, MAX_NEURON_QUANTITY))
+        outputResults.append("samplesPerExperiment = ").append(samplesPerExperiment).append('\n');
+        outputResults.append("gamesToPlay = ").append(gamesToPlay).append('\n');
+        outputResults.append("maxInnerLayers = ").append(maxInnerLayers).append('\n');
+        outputResults.append("maxNeuronQuantity = ").append(maxNeuronQuantity).append(" (").append(Math.pow(2, maxNeuronQuantity))
                 .append(')')
                 .append('\n');
-        outputResults.append("MIN_NEURON_QUANTITY = ")
-                .append(MIN_NEURON_QUANTITY)
-                .append(" (")
-                .append(Math.pow(2, MIN_NEURON_QUANTITY))
+        outputResults.append("minNeuronQuantity = ").append(minNeuronQuantity)
+                .append(" (").append(Math.pow(2, minNeuronQuantity))
                 .append(')')
                 .append('\n');
         outputResults.append("====================================").append('\n');
@@ -288,7 +275,7 @@ class ConcurrencyExperiment_Basic
         experiment.setEligibilityTraceLength(-1);
         experiment.setGamma(1);
         experiment.setExplorationRateToFixed(0);
-        experiment.setGamesToPlay(GAMES_TO_PLAY);
+        experiment.setGamesToPlay(gamesToPlay);
         experiment.setSaveEvery(10_000); //no se guarda nada
         experiment.setSaveBackupEvery(10_000); //no se hacen backup
         experiment.setInitializePerceptronRandomized(false);
@@ -327,8 +314,7 @@ class ConcurrencyExperiment_Basic
                 getAlpha(),
                 getLambda(),
                 isReplaceEligibilityTraces(),
-                getGamma(),
-                getConcurrencyInLayer(), new Random(),
+                getGamma(), getConcurrencyInLayer(), new Random(),
                 true);
     }
 

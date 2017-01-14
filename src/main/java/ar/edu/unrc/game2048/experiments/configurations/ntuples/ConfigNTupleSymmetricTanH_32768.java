@@ -35,8 +35,8 @@ public
 class ConfigNTupleSymmetricTanH_32768
         extends NTupleConfiguration2048 {
 
-    private static final int maxReward = 800_000;
-    private static final int minReward = -800_000;
+    private static final int MAX_REWARD = 800_000;
+    private static final int MIN_REWARD = -800_000;
 
     /**
      * Configuración para jugar hasta 32.768 con tablero simétrico, con función de activación Tangente Hiperbólica, y
@@ -44,6 +44,7 @@ class ConfigNTupleSymmetricTanH_32768
      */
     public
     ConfigNTupleSymmetricTanH_32768() {
+        super();
         setTileToWinForTraining(32768);
 
         activationFunction = FunctionUtils.TANH;
@@ -52,7 +53,7 @@ class ConfigNTupleSymmetricTanH_32768
         final double activationFunctionMax = 1;
         final double activationFunctionMin = -1;
 
-        normOutput = new NormalizedField(NormalizationAction.Normalize, null, maxReward, minReward, activationFunctionMax, activationFunctionMin);
+        normOutput = new NormalizedField(NormalizationAction.Normalize, null, MAX_REWARD, MIN_REWARD, activationFunctionMax, activationFunctionMin);
 
         nTuplesLength = new int[4];
         nTuplesLength[0] = 6;
@@ -112,8 +113,8 @@ class ConfigNTupleSymmetricTanH_32768
     @Override
     public
     double normalizeValueToPerceptronOutput( final Object value ) {
-        if ( (Double) value > maxReward ) {
-            throw new IllegalArgumentException("value no puede ser mayor a maxReward=" + maxReward);
+        if ( (Double) value > MAX_REWARD ) {
+            throw new IllegalArgumentException("value no puede ser mayor a MAX_REWARD=" + MAX_REWARD);
         }
         return normOutput.normalize((Double) value);
     }
