@@ -6,7 +6,6 @@ task wrapper(type: Wrapper) {
 }
 
 //https://docs.gradle.org/current/userguide/standard_plugins.html
-apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'java'
 apply plugin: 'findbugs'
@@ -49,12 +48,23 @@ allprojects {
 mainClassName = "ar.edu.unrc.game2048.Game2048"
 
 //create a single Jar with all dependencies
-task fatFinalJar(type: Jar) {
+task finalFatJar(type: Jar) {
     manifest {
         attributes 'Implementation-Title': rootProject.name,
-                'Implementation-Version': version
+                'Application-Name': 'Game 2048',
+                'Implementation-Version': version,
+                'Built-By': 'Lucia Bressan, Renzo Bianchini, Franco Gastón Pellegrini',
+                'Built-Date': new Date(),
+                'Built-Java': System.getProperty('java.version'),
+                'Main-Class': mainClassName,
+                'Sealed': 'true'
     }
     baseName = project.name
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
     with jar
+}
+
+configure(finalFatJar) {
+    group = 'distribution'
+    description = 'Create a big Jar with all dependency'
 }

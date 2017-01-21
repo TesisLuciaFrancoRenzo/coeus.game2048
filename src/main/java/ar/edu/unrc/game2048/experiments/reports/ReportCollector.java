@@ -5,8 +5,6 @@
  */
 package ar.edu.unrc.game2048.experiments.reports;
 
-import com.sun.istack.internal.NotNull;
-
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
@@ -106,7 +104,7 @@ class ReportCollector {
     }
 
     private static
-    void workFiles( @NotNull final File... files ) {
+    void workFiles( final File... files ) {
         for ( final File file : files ) {
             if ( file.isDirectory() ) {
                 workFiles(file.listFiles()); // Calls same method again.
