@@ -118,12 +118,10 @@ class GameBoard
         if ( highestValue != gameBoard.highestValue ) { return false; }
         if ( partialScore != gameBoard.partialScore ) { return false; }
         if ( !game.equals(gameBoard.game) ) { return false; }
-        if ( ( normalizedPerceptronInput != null )
-             ? !normalizedPerceptronInput.equals(gameBoard.normalizedPerceptronInput)
-             : ( gameBoard.normalizedPerceptronInput != null ) ) {
-            return false;
-        }
-        return availableSpace.equals(gameBoard.availableSpace) && Arrays.deepEquals(tiles, gameBoard.tiles);
+        return ( ( normalizedPerceptronInput != null )
+                 ? normalizedPerceptronInput.equals(gameBoard.normalizedPerceptronInput)
+                 : gameBoard.normalizedPerceptronInput == null ) && availableSpace.equals(gameBoard.availableSpace) &&
+               Arrays.deepEquals(tiles, gameBoard.tiles);
     }
 
     public

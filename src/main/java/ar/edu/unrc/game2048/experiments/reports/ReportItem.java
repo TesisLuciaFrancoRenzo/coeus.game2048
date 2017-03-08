@@ -5,6 +5,8 @@
  */
 package ar.edu.unrc.game2048.experiments.reports;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -28,7 +30,7 @@ class ReportItem
 
     @Override
     public
-    int compareTo( final ReportItem o ) {
+    int compareTo( @NotNull final ReportItem o ) {
         return bestValue.compareTo(o.bestValue) * -1;
     }
 
