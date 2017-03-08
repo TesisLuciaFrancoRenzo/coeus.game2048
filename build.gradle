@@ -23,6 +23,7 @@ compileJava {
 }
 
 dependencies {
+    compile group: 'org.jetbrains', name: 'annotations', version: '15.0'
     compile group: 'ar.edu.unrc', name: 'coeus', version: '1.0.0'
     compile group: 'org.encog', name: 'encog-core', version: '3.3.0'
     compile group: 'org.apache.poi', name: 'poi', version: '3.11'
