@@ -21,8 +21,8 @@ package ar.edu.unrc.game2048.experiments.configurations.ntuples;
 import ar.edu.unrc.coeus.tdlearning.training.ntuple.SamplePointValue;
 import ar.edu.unrc.coeus.utils.FunctionUtils;
 import ar.edu.unrc.game2048.GameBoard;
-import ar.edu.unrc.game2048.NTupleConfiguration2048;
 import ar.edu.unrc.game2048.Tile;
+import ar.edu.unrc.game2048.experiments.configurations.NTupleConfiguration2048;
 
 import java.util.ArrayList;
 
@@ -38,11 +38,11 @@ class ConfigNTupleBasicLinear_32768
      */
     public
     ConfigNTupleBasicLinear_32768() {
+        super();
         setTileToWinForTraining(32768);
         activationFunction = FunctionUtils.LINEAR;
         derivedActivationFunction = FunctionUtils.LINEAR_DERIVED;
         concurrency = false;
-        int maxTile = 15;
 
         nTuplesLength = new int[17];
         for ( int i = 0; i < 17; i++ ) {
@@ -50,8 +50,10 @@ class ConfigNTupleBasicLinear_32768
         }
 
         allSamplePointPossibleValues = new ArrayList<>();
-        for ( int i = 0; i <= maxTile; i++ ) {
-            allSamplePointPossibleValues.add(new Tile(i));
+        allSamplePointPossibleValues.add(null);
+        final int maxTile = 15;
+        for ( int i = 1; i <= maxTile; i++ ) {
+            allSamplePointPossibleValues.add(new Tile((int) Math.pow(2, i)));
         }
     }
 
@@ -62,101 +64,75 @@ class ConfigNTupleBasicLinear_32768
      */
     @Override
     public
-    Object clone()
+    ConfigNTupleBasicLinear_32768 clone()
             throws CloneNotSupportedException {
-        return super.clone(); //To change body of generated methods, choose Tools | Templates.
+        return (ConfigNTupleBasicLinear_32768) super.clone();
     }
 
     @Override
     public
-    double deNormalizeValueFromNeuralNetworkOutput( Object value ) {
+    double deNormalizeValueFromNeuralNetworkOutput( final Object value ) {
         return (double) value;
     }
 
     @Override
     public
-    double getBoardReward(
-            GameBoard board,
-            int outputNeuron
-    ) {
-        return board.getPartialScore();
-    }
-
-    @Override
-    public
     SamplePointValue[] getNTuple(
-            GameBoard board,
-            int nTupleIndex
+            final GameBoard board,
+            final int nTupleIndex
     ) {
+        final Tile[][] tiles = board.getTiles();
         switch ( nTupleIndex ) {
             // verticales
-            case 0: {
-                return new SamplePointValue[] { board.tileAt(0, 0), board.tileAt(0, 1), board.tileAt(0, 2), board.tileAt(0, 3) };
-            }
-            case 1: {
-                return new SamplePointValue[] { board.tileAt(1, 0), board.tileAt(1, 1), board.tileAt(1, 2), board.tileAt(1, 3) };
-            }
-            case 2: {
-                return new SamplePointValue[] { board.tileAt(2, 0), board.tileAt(2, 1), board.tileAt(2, 2), board.tileAt(2, 3) };
-            }
-            case 3: {
-                return new SamplePointValue[] { board.tileAt(3, 0), board.tileAt(3, 1), board.tileAt(3, 2), board.tileAt(3, 3) };
-            }
+            case 0:
+                return new SamplePointValue[] { tiles[0][0], tiles[0][1], tiles[0][2], tiles[0][3] };
+            case 1:
+                return new SamplePointValue[] { tiles[1][0], tiles[1][1], tiles[1][2], tiles[1][3] };
+            case 2:
+                return new SamplePointValue[] { tiles[2][0], tiles[2][1], tiles[2][2], tiles[2][3] };
+            case 3:
+                return new SamplePointValue[] { tiles[3][0], tiles[3][1], tiles[3][2], tiles[3][3] };
             // horizontales
-            case 4: {
-                return new SamplePointValue[] { board.tileAt(0, 0), board.tileAt(1, 0), board.tileAt(2, 0), board.tileAt(3, 0) };
-            }
-            case 5: {
-                return new SamplePointValue[] { board.tileAt(0, 1), board.tileAt(1, 1), board.tileAt(2, 1), board.tileAt(3, 1) };
-            }
-            case 6: {
-                return new SamplePointValue[] { board.tileAt(0, 2), board.tileAt(1, 2), board.tileAt(2, 2), board.tileAt(3, 2) };
-            }
-            case 7: {
-                return new SamplePointValue[] { board.tileAt(0, 3), board.tileAt(1, 3), board.tileAt(2, 3), board.tileAt(3, 3) };
-            }
+            case 4:
+                return new SamplePointValue[] { tiles[0][0], tiles[1][0], tiles[2][0], tiles[3][0] };
+            case 5:
+                return new SamplePointValue[] { tiles[0][1], tiles[1][1], tiles[2][1], tiles[3][1] };
+            case 6:
+                return new SamplePointValue[] { tiles[0][2], tiles[1][2], tiles[2][2], tiles[3][2] };
+            case 7:
+                return new SamplePointValue[] { tiles[0][3], tiles[1][3], tiles[2][3], tiles[3][3] };
             // cuadrados
             // primera fila de rectángulos
-            case 8: {
-                return new SamplePointValue[] { board.tileAt(0, 0), board.tileAt(0, 1), board.tileAt(1, 1), board.tileAt(1, 0) };
-            }
-            case 9: {
-                return new SamplePointValue[] { board.tileAt(1, 0), board.tileAt(1, 1), board.tileAt(2, 1), board.tileAt(2, 0) };
-            }
-            case 10: {
-                return new SamplePointValue[] { board.tileAt(2, 0), board.tileAt(2, 1), board.tileAt(3, 1), board.tileAt(3, 0) };
-            }
+            case 8:
+                return new SamplePointValue[] { tiles[0][0], tiles[0][1], tiles[1][1], tiles[1][0] };
+            case 9:
+                return new SamplePointValue[] { tiles[1][0], tiles[1][1], tiles[2][1], tiles[2][0] };
+            case 10:
+                return new SamplePointValue[] { tiles[2][0], tiles[2][1], tiles[3][1], tiles[3][0] };
             //segunda fila de rectángulos
-            case 11: {
-                return new SamplePointValue[] { board.tileAt(0, 1), board.tileAt(0, 2), board.tileAt(1, 2), board.tileAt(1, 1) };
-            }
-            case 12: {
-                return new SamplePointValue[] { board.tileAt(1, 1), board.tileAt(1, 2), board.tileAt(2, 2), board.tileAt(2, 1) };
-            }
-            case 13: {
-                return new SamplePointValue[] { board.tileAt(2, 1), board.tileAt(2, 2), board.tileAt(3, 2), board.tileAt(3, 1) };
-            }
+            case 11:
+                return new SamplePointValue[] { tiles[0][1], tiles[0][2], tiles[1][2], tiles[1][1] };
+            case 12:
+                return new SamplePointValue[] { tiles[1][1], tiles[1][2], tiles[2][2], tiles[2][1] };
+            case 13:
+                return new SamplePointValue[] { tiles[2][1], tiles[2][2], tiles[3][2], tiles[3][1] };
             //tercera fila de rectángulos
-            case 14: {
-                return new SamplePointValue[] { board.tileAt(0, 2), board.tileAt(0, 3), board.tileAt(1, 3), board.tileAt(1, 2) };
-            }
-            case 15: {
-                return new SamplePointValue[] { board.tileAt(1, 2), board.tileAt(1, 3), board.tileAt(2, 3), board.tileAt(2, 2) };
-            }
-            case 16: {
-                return new SamplePointValue[] { board.tileAt(2, 2), board.tileAt(2, 3), board.tileAt(3, 3), board.tileAt(3, 2) };
-            }
+            case 14:
+                return new SamplePointValue[] { tiles[0][2], tiles[0][3], tiles[1][3], tiles[1][2] };
+            case 15:
+                return new SamplePointValue[] { tiles[1][2], tiles[1][3], tiles[2][3], tiles[2][2] };
+            case 16:
+                return new SamplePointValue[] { tiles[2][2], tiles[2][3], tiles[3][3], tiles[3][2] };
 
-            default: {
+            default:
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
         }
     }
 
 
     @Override
     public
-    double normalizeValueToPerceptronOutput( Object value ) {
+    double normalizeValueToPerceptronOutput( final Object value ) {
         return (double) value;
     }
 

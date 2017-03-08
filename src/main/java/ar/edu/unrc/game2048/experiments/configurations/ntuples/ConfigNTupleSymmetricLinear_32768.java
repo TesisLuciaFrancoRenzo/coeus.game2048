@@ -21,8 +21,8 @@ package ar.edu.unrc.game2048.experiments.configurations.ntuples;
 import ar.edu.unrc.coeus.tdlearning.training.ntuple.SamplePointValue;
 import ar.edu.unrc.coeus.utils.FunctionUtils;
 import ar.edu.unrc.game2048.GameBoard;
-import ar.edu.unrc.game2048.NTupleConfiguration2048;
 import ar.edu.unrc.game2048.Tile;
+import ar.edu.unrc.game2048.experiments.configurations.NTupleConfiguration2048;
 
 import java.util.ArrayList;
 
@@ -38,12 +38,13 @@ class ConfigNTupleSymmetricLinear_32768
      */
     public
     ConfigNTupleSymmetricLinear_32768() {
+        super();
         setTileToWinForTraining(32768);
 
         activationFunction = FunctionUtils.LINEAR;
         derivedActivationFunction = FunctionUtils.LINEAR_DERIVED;
         concurrency = false;
-        int maxTile = 15;
+        final int maxTile = 15;
 
         nTuplesLength = new int[4];
         nTuplesLength[0] = 6;
@@ -52,8 +53,9 @@ class ConfigNTupleSymmetricLinear_32768
         nTuplesLength[3] = 4;
 
         allSamplePointPossibleValues = new ArrayList<>();
-        for ( int i = 0; i <= maxTile; i++ ) {
-            allSamplePointPossibleValues.add(new Tile(i));
+        allSamplePointPossibleValues.add(null);
+        for ( int i = 1; i <= maxTile; i++ ) {
+            allSamplePointPossibleValues.add(new Tile((int) Math.pow(2, i)));
         }
     }
 
@@ -64,61 +66,43 @@ class ConfigNTupleSymmetricLinear_32768
      */
     @Override
     public
-    Object clone()
+    ConfigNTupleSymmetricLinear_32768 clone()
             throws CloneNotSupportedException {
-        return super.clone(); //To change body of generated methods, choose Tools | Templates.
+        return (ConfigNTupleSymmetricLinear_32768) super.clone();
     }
 
     @Override
     public
-    double deNormalizeValueFromNeuralNetworkOutput( Object value ) {
+    double deNormalizeValueFromNeuralNetworkOutput( final Object value ) {
         return (double) value;
     }
 
     @Override
     public
-    double getBoardReward(
-            GameBoard board,
-            int outputNeuron
-    ) {
-        return board.getPartialScore();
-    }
-
-
-    @Override
-    public
     SamplePointValue[] getNTuple(
-            GameBoard board,
-            int nTupleIndex
+            final GameBoard board,
+            final int nTupleIndex
     ) {
+        final Tile[][] tiles = board.getTiles();
         switch ( nTupleIndex ) {
             // rectángulos
-            case 0: {
-                return new SamplePointValue[] {
-                        board.tileAt(0, 0), board.tileAt(0, 1), board.tileAt(0, 2), board.tileAt(1, 0), board.tileAt(1, 1), board.tileAt(1, 2)
-                };
-            }
-            case 1: {
-                return new SamplePointValue[] {
-                        board.tileAt(1, 0), board.tileAt(1, 1), board.tileAt(1, 2), board.tileAt(2, 0), board.tileAt(2, 1), board.tileAt(2, 2)
-                };
-            }
+            case 0:
+                return new SamplePointValue[] { tiles[0][0], tiles[0][1], tiles[0][2], tiles[1][0], tiles[1][1], tiles[1][2] };
+            case 1:
+                return new SamplePointValue[] { tiles[1][0], tiles[1][1], tiles[1][2], tiles[2][0], tiles[2][1], tiles[2][2] };
             // verticales
-            case 2: {
-                return new SamplePointValue[] { board.tileAt(2, 0), board.tileAt(2, 1), board.tileAt(2, 2), board.tileAt(2, 3) };
-            }
-            case 3: {
-                return new SamplePointValue[] { board.tileAt(3, 0), board.tileAt(3, 1), board.tileAt(3, 2), board.tileAt(3, 3) };
-            }
-            default: {
+            case 2:
+                return new SamplePointValue[] { tiles[2][0], tiles[2][1], tiles[2][2], tiles[2][3] };
+            case 3:
+                return new SamplePointValue[] { tiles[3][0], tiles[3][1], tiles[3][2], tiles[3][3] };
+            default:
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
         }
     }
 
     @Override
     public
-    double normalizeValueToPerceptronOutput( Object value ) {
+    double normalizeValueToPerceptronOutput( final Object value ) {
         return (double) value;
     }
 }

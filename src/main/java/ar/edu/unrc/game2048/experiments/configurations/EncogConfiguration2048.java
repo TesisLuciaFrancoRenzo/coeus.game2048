@@ -16,20 +16,22 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ar.edu.unrc.game2048;
+package ar.edu.unrc.game2048.experiments.configurations;
 
 import ar.edu.unrc.coeus.interfaces.INeuralNetworkInterface;
 import ar.edu.unrc.coeus.tdlearning.learning.TDLambdaLearning;
 import ar.edu.unrc.coeus.tdlearning.training.ntuple.NTupleSystem;
-import ar.edu.unrc.game2048.experiments.configurations.LearningExperiment;
+import ar.edu.unrc.game2048.Game2048;
+import ar.edu.unrc.game2048.GameBoard;
 import ar.edu.unrc.game2048.experiments.configurations.librariesinterfaces.EncogExperimentInterface;
 import org.encog.engine.network.activation.ActivationFunction;
 import org.encog.neural.networks.BasicNetwork;
 import org.encog.util.arrayutil.NormalizedField;
 
 import java.util.List;
+import java.util.Random;
 
-import static ar.edu.unrc.coeus.tdlearning.learning.ELearningStyle.afterState;
+import static ar.edu.unrc.coeus.tdlearning.learning.ELearningStyle.AFTER_STATE;
 
 /**
  * @author lucia bressan, franco pellegrini, renzo bianchini
@@ -39,17 +41,16 @@ class EncogConfiguration2048
         extends LearningExperiment
         implements Cloneable, IConfiguration2048 {
 
-    public final static Class< ? >[] PARAMETER_TYPE = { Boolean.class };
+    public static final Class< ? >[] PARAMETER_TYPE = { Boolean.class };
 
-    protected ActivationFunction[] activationFunctionForEncog;
-    protected double               activationFunctionMax;
-    protected double               activationFunctionMin;
-    protected boolean hasBias = true;
-    protected BasicNetwork    neuralNetwork;
-    protected int[]           neuronQuantityInLayer;
-    protected NormalizedField normInput;
-    protected NormalizedField normOutput;
-    protected int tileToWin = -1;
+    protected ActivationFunction[] activationFunctionForEncog = null;
+    protected double               activationFunctionMax      = 0.0;
+    protected double               activationFunctionMin      = 0.0;
+    protected boolean              hasBias                    = true;
+    protected BasicNetwork         neuralNetwork              = null;
+    protected int[]                neuronQuantityInLayer      = null;
+    protected NormalizedField      normInput                  = null;
+    protected NormalizedField      normOutput                 = null;
 
     /**
      * @param board
@@ -66,9 +67,9 @@ class EncogConfiguration2048
      */
     @Override
     public
-    Object clone()
+    EncogConfiguration2048 clone()
             throws CloneNotSupportedException {
-        return super.clone(); //To change body of generated methods, choose Tools | Templates.
+        return (EncogConfiguration2048) super.clone();
     }
 
     /**
@@ -104,7 +105,7 @@ class EncogConfiguration2048
      */
     public
     void setActivationFunctionForEncog(
-            ActivationFunction[] activationFunctionForEncog
+            final ActivationFunction[] activationFunctionForEncog
     ) {
         this.activationFunctionForEncog = activationFunctionForEncog;
     }
@@ -121,7 +122,7 @@ class EncogConfiguration2048
      * @param activationFunctionMax
      */
     public
-    void setActivationFunctionMax( double activationFunctionMax ) {
+    void setActivationFunctionMax( final double activationFunctionMax ) {
         this.activationFunctionMax = activationFunctionMax;
     }
 
@@ -137,7 +138,7 @@ class EncogConfiguration2048
      * @param activationFunctionMin
      */
     public
-    void setActivationFunctionMin( double activationFunctionMin ) {
+    void setActivationFunctionMin( final double activationFunctionMin ) {
         this.activationFunctionMin = activationFunctionMin;
     }
 
@@ -153,7 +154,7 @@ class EncogConfiguration2048
      * @param neuralNetwork the neuralNetwork to set
      */
     public
-    void setNeuralNetwork( BasicNetwork neuralNetwork ) {
+    void setNeuralNetwork( final BasicNetwork neuralNetwork ) {
         this.neuralNetwork = neuralNetwork;
     }
 
@@ -169,7 +170,7 @@ class EncogConfiguration2048
      * @param neuronQuantityInLayer the neuronQuantityInLayer to set
      */
     public
-    void setNeuronQuantityInLayer( int[] neuronQuantityInLayer ) {
+    void setNeuronQuantityInLayer( final int[] neuronQuantityInLayer ) {
         this.neuronQuantityInLayer = neuronQuantityInLayer;
     }
 
@@ -202,22 +203,20 @@ class EncogConfiguration2048
     @Override
     public
     TDLambdaLearning instanceOfTdLearningImplementation(
-            INeuralNetworkInterface perceptronInterface
+            final INeuralNetworkInterface perceptronInterface
     ) {
-        return new TDLambdaLearning(perceptronInterface,
-                afterState,
+        return new TDLambdaLearning(perceptronInterface, AFTER_STATE,
                 getAlpha(),
                 getLambda(),
                 isReplaceEligibilityTraces(),
-                getGamma(),
-                getConcurrencyInLayer(),
+                getGamma(), getConcurrencyInLayer(), new Random(),
                 isCanCollectStatistics());
     }
 
     @Override
     public
     TDLambdaLearning instanceOfTdLearningImplementation(
-            NTupleSystem nTupleSystem
+            final NTupleSystem nTupleSystem
     ) {
         return null;
     }
@@ -240,7 +239,7 @@ class EncogConfiguration2048
      * @param hasBias
      */
     public
-    void setHasBias( boolean hasBias ) {
+    void setHasBias( final boolean hasBias ) {
         this.hasBias = hasBias;
     }
 

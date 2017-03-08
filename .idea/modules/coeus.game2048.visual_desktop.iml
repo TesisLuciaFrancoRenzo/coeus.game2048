@@ -11,7 +11,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="coeus.game2048.visual_main" />
     <orderEntry type="module" module-name="coeus_main" />
-    <orderEntry type="library" name="Gradle: org.encog:encog-core:3.2.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.encog:encog-core:3.3.0" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.commons:commons-math3:3.0" level="project" />
   </component>
 </module>

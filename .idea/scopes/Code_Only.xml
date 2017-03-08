@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="Code Only" pattern="src[group:coeus]:*..*||src[group:coeus.game2048]:*..*||src[group:coeus.game2048.visual]:*..*||test[group:coeus]:*..*||test[group:coeus.game2048]:*..*" />
+</component>

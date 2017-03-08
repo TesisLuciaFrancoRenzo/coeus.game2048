@@ -13,11 +13,11 @@ import org.encog.engine.network.activation.ActivationFunction;
 public
 class ConcurrencyConfig {
 
-    private ActivationFunction[] activationFunctionForEncog;
-    private double[]             alphas;
-    private boolean              concurrencyInEvaluate;
-    private boolean[]            concurrencyInLayer;
-    private int[]                neuronQuantityInLayer;
+    private ActivationFunction[] activationFunctionForEncog = null;
+    private double[]             alphas                     = null;
+    private boolean              concurrencyInEvaluate      = false;
+    private boolean[]            concurrencyInLayer         = null;
+    private int[]                neuronQuantityInLayer      = null;
 
     /**
      * @return activationFunctionForEncog
@@ -32,7 +32,7 @@ class ConcurrencyConfig {
      */
     public
     void setActivationFunctionForEncog(
-            ActivationFunction[] activationFunctionForEncog
+            final ActivationFunction[] activationFunctionForEncog
     ) {
         this.activationFunctionForEncog = activationFunctionForEncog;
     }
@@ -49,7 +49,7 @@ class ConcurrencyConfig {
      * @param alphas
      */
     public
-    void setAlphas( double[] alphas ) {
+    void setAlphas( final double[] alphas ) {
         this.alphas = alphas;
     }
 
@@ -65,7 +65,7 @@ class ConcurrencyConfig {
      * @param concurrencyInLayer
      */
     public
-    void setConcurrencyInLayer( boolean[] concurrencyInLayer ) {
+    void setConcurrencyInLayer( final boolean[] concurrencyInLayer ) {
         this.concurrencyInLayer = concurrencyInLayer;
     }
 
@@ -81,7 +81,7 @@ class ConcurrencyConfig {
      * @param neuronQuantityInLayer
      */
     public
-    void setNeuronQuantityInLayer( int[] neuronQuantityInLayer ) {
+    void setNeuronQuantityInLayer( final int[] neuronQuantityInLayer ) {
         this.neuronQuantityInLayer = neuronQuantityInLayer;
     }
 
@@ -97,7 +97,7 @@ class ConcurrencyConfig {
      * @param concurrencyInEvaluate
      */
     public
-    void setConcurrencyInEvaluate( boolean concurrencyInEvaluate ) {
+    void setConcurrencyInEvaluate( final boolean concurrencyInEvaluate ) {
         this.concurrencyInEvaluate = concurrencyInEvaluate;
     }
 
@@ -108,7 +108,7 @@ class ConcurrencyConfig {
     @Override
     public
     String toString() {
-        StringBuilder output = new StringBuilder();
+        final StringBuilder output = new StringBuilder();
 
         output.append("evaluate concurrency: ");
         output.append(concurrencyInEvaluate);
@@ -137,7 +137,7 @@ class ConcurrencyConfig {
         if ( activationFunctionForEncog != null ) {
             output.append('\n');
             output.append("activationFunctionForEncog: ");
-            for ( ActivationFunction activationFunction : activationFunctionForEncog ) {
+            for ( final ActivationFunction activationFunction : activationFunctionForEncog ) {
                 output.append(activationFunction.getClass().getName()).append(", ");
             }
         }

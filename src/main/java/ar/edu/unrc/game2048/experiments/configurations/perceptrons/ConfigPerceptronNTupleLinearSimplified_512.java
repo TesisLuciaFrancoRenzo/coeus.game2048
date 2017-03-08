@@ -20,10 +20,10 @@ package ar.edu.unrc.game2048.experiments.configurations.perceptrons;
 
 import ar.edu.unrc.coeus.tdlearning.training.ntuple.NTupleSystem;
 import ar.edu.unrc.coeus.tdlearning.training.ntuple.SamplePointValue;
-import ar.edu.unrc.game2048.EncogConfiguration2048;
 import ar.edu.unrc.game2048.Game2048;
 import ar.edu.unrc.game2048.GameBoard;
 import ar.edu.unrc.game2048.Tile;
+import ar.edu.unrc.game2048.experiments.configurations.EncogConfiguration2048;
 import org.encog.engine.network.activation.ActivationFunction;
 import org.encog.engine.network.activation.ActivationLinear;
 
@@ -55,6 +55,7 @@ class ConfigPerceptronNTupleLinearSimplified_512
      */
     public
     ConfigPerceptronNTupleLinearSimplified_512( final Boolean hasBias ) {
+        super();
         this.hasBias = hasBias;
         setTileToWinForTraining(512);
 
@@ -70,8 +71,10 @@ class ConfigPerceptronNTupleLinearSimplified_512
 
         allSamplePointPossibleValues = new ArrayList<>();
         mapSamplePointValuesIndex = new HashMap<>();
-        for ( int spvIndex = 0; spvIndex <= maxTile; spvIndex++ ) {
-            allSamplePointPossibleValues.add(new Tile(spvIndex));
+        allSamplePointPossibleValues.add(null);
+        mapSamplePointValuesIndex.put(null, 0);
+        for ( int spvIndex = 1; spvIndex <= maxTile; spvIndex++ ) {
+            allSamplePointPossibleValues.add(new Tile((int) Math.pow(2, spvIndex)));
             mapSamplePointValuesIndex.put(allSamplePointPossibleValues.get(spvIndex), spvIndex);
         }
 
@@ -81,7 +84,7 @@ class ConfigPerceptronNTupleLinearSimplified_512
         nTuplesWeightQuantityIndex[0] = lastNTuplesWeightQuantity;
 
         for ( int nTupleIndex = 0; nTupleIndex < nTuplesLength.length; nTupleIndex++ ) {
-            int nTuplesWeightQuantity = (int) Math.pow(mapSamplePointValuesIndex.size(), nTuplesLength[nTupleIndex]);
+            final int nTuplesWeightQuantity = (int) Math.pow(mapSamplePointValuesIndex.size(), nTuplesLength[nTupleIndex]);
             lutSize += nTuplesWeightQuantity;
             if ( nTupleIndex > 0 ) {
                 nTuplesWeightQuantityIndex[nTupleIndex] = nTuplesWeightQuantityIndex[nTupleIndex - 1] + lastNTuplesWeightQuantity;
@@ -107,8 +110,8 @@ class ConfigPerceptronNTupleLinearSimplified_512
      */
     public
     int calculateIndex(
-            int nTupleIndex,
-            SamplePointValue[] nTuple
+            final int nTupleIndex,
+            final SamplePointValue[] nTuple
     ) {
         return nTuplesWeightQuantityIndex[nTupleIndex] +
                NTupleSystem.calculateLocalIndex(nTupleIndex, nTuplesLength, nTuple, mapSamplePointValuesIndex);
@@ -117,11 +120,11 @@ class ConfigPerceptronNTupleLinearSimplified_512
     @Override
     public
     void calculateNormalizedPerceptronInput(
-            GameBoard board,
-            List< Double > normalizedPerceptronInput
+            final GameBoard board,
+            final List< Double > normalizedPerceptronInput
     ) {
         for ( int i = 0; i < numSamples; i++ ) {
-            normalizedPerceptronInput.add(calculateIndex(i, getNTuple(board, i)), 1d);
+            normalizedPerceptronInput.add(calculateIndex(i, getNTuple(board, i)), 1.0d);
         }
     }
 
@@ -130,23 +133,23 @@ class ConfigPerceptronNTupleLinearSimplified_512
      */
     @Override
     public
-    Object clone()
+    ConfigPerceptronNTupleLinearSimplified_512 clone()
             throws CloneNotSupportedException {
-        return super.clone(); //To change body of generated methods, choose Tools | Templates.
+        return (ConfigPerceptronNTupleLinearSimplified_512) super.clone();
     }
 
     @Override
     public
     Double computeNumericRepresentationFor(
-            Game2048 game,
-            Object[] output
+            final Game2048 game,
+            final Object[] output
     ) {
         return (Double) output[0];
     }
 
     @Override
     public
-    double deNormalizeValueFromNeuralNetworkOutput( Object value ) {
+    double deNormalizeValueFromNeuralNetworkOutput( final Object value ) {
         return (Double) value;
     }
 
@@ -156,15 +159,6 @@ class ConfigPerceptronNTupleLinearSimplified_512
     public
     List< SamplePointValue > getAllSamplePointPossibleValues() {
         return allSamplePointPossibleValues;
-    }
-
-    @Override
-    public
-    double getBoardReward(
-            GameBoard board,
-            int outputNeuron
-    ) {
-        return board.getPartialScore();
     }
 
     /**
@@ -191,39 +185,31 @@ class ConfigPerceptronNTupleLinearSimplified_512
      */
     public
     SamplePointValue[] getNTuple(
-            GameBoard board,
-            int nTupleIndex
+            final GameBoard board,
+            final int nTupleIndex
     ) {
+        final Tile[][] tiles = board.getTiles();
         switch ( nTupleIndex ) {
             // verticales
-            case 0: {
-                return new SamplePointValue[] { board.tileAt(0, 0), board.tileAt(0, 1), board.tileAt(0, 2), board.tileAt(0, 3) };
-            }
-            case 1: {
-                return new SamplePointValue[] { board.tileAt(1, 0), board.tileAt(1, 1), board.tileAt(1, 2), board.tileAt(1, 3) };
-            }
-            case 2: {
-                return new SamplePointValue[] { board.tileAt(2, 0), board.tileAt(2, 1), board.tileAt(2, 2), board.tileAt(2, 3) };
-            }
-            case 3: {
-                return new SamplePointValue[] { board.tileAt(3, 0), board.tileAt(3, 1), board.tileAt(3, 2), board.tileAt(3, 3) };
-            }
+            case 0:
+                return new SamplePointValue[] { tiles[0][0], tiles[0][1], tiles[0][2], tiles[0][3] };
+            case 1:
+                return new SamplePointValue[] { tiles[1][0], tiles[1][1], tiles[1][2], tiles[1][3] };
+            case 2:
+                return new SamplePointValue[] { tiles[2][0], tiles[2][1], tiles[2][2], tiles[2][3] };
+            case 3:
+                return new SamplePointValue[] { tiles[3][0], tiles[3][1], tiles[3][2], tiles[3][3] };
             // horizontales
-            case 4: {
-                return new SamplePointValue[] { board.tileAt(0, 0), board.tileAt(1, 0), board.tileAt(2, 0), board.tileAt(3, 0) };
-            }
-            case 5: {
-                return new SamplePointValue[] { board.tileAt(0, 1), board.tileAt(1, 1), board.tileAt(2, 1), board.tileAt(3, 1) };
-            }
-            case 6: {
-                return new SamplePointValue[] { board.tileAt(0, 2), board.tileAt(1, 2), board.tileAt(2, 2), board.tileAt(3, 2) };
-            }
-            case 7: {
-                return new SamplePointValue[] { board.tileAt(0, 3), board.tileAt(1, 3), board.tileAt(2, 3), board.tileAt(3, 3) };
-            }
-            default: {
+            case 4:
+                return new SamplePointValue[] { tiles[0][0], tiles[1][0], tiles[2][0], tiles[3][0] };
+            case 5:
+                return new SamplePointValue[] { tiles[0][1], tiles[1][1], tiles[2][1], tiles[3][1] };
+            case 6:
+                return new SamplePointValue[] { tiles[0][2], tiles[1][2], tiles[2][2], tiles[3][2] };
+            case 7:
+                return new SamplePointValue[] { tiles[0][3], tiles[1][3], tiles[2][3], tiles[3][3] };
+            default:
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
         }
     }
 
@@ -259,7 +245,7 @@ class ConfigPerceptronNTupleLinearSimplified_512
 
     @Override
     public
-    double normalizeValueToPerceptronOutput( Object value ) {
+    double normalizeValueToPerceptronOutput( final Object value ) {
         return (Double) value;
     }
 

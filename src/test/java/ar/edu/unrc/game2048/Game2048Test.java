@@ -20,11 +20,12 @@ package ar.edu.unrc.game2048;
 
 import ar.edu.unrc.coeus.tdlearning.interfaces.IAction;
 import ar.edu.unrc.coeus.tdlearning.interfaces.IState;
-import ar.edu.unrc.coeus.tdlearning.interfaces.IStatePerceptron;
-import org.junit.*;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.*;
@@ -36,40 +37,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public
 class Game2048Test {
 
-    private final TileContainer tileContainer;
-    private       Game2048      game;
-
-    /**
-     *
-     */
-    public
-    Game2048Test() {
-        tileContainer = new TileContainer(17);
-    }
-
-    /**
-     *
-     */
-    @BeforeClass
-    public static
-    void setUpClass() {
-    }
-
-    /**
-     *
-     */
-    @AfterClass
-    public static
-    void tearDownClass() {
-    }
-
-    /**
-     *
-     */
-    @Before
-    public
-    void setUp() {
-    }
+    private Game2048 game = null;
 
     /**
      *
@@ -78,7 +46,6 @@ class Game2048Test {
     public
     void tearDown() {
         if ( game != null ) {
-            game.dispose();
             game = null;
         }
     }
@@ -86,113 +53,101 @@ class Game2048Test {
     /**
      * Test of listAllPossibleActions method, of class Game2048.
      */
-    @SuppressWarnings( "unchecked" )
     @Test
     public
     void testListAllPossibleActions() {
         System.out.println("listAllPossibleActions");
-        game = new Game2048(null, null, 2_048, 0, false);
-        IStatePerceptron state1;
-        IState           state2;
+        game = new Game2048(null, null, 2_048, false);
 
         //inicializamos un tablero terminal
-        GameBoard board = new GameBoard(game, tileContainer);
-        Tile[] terminalBoard = {
-                tileContainer.getTile(7), tileContainer.getTile(1), tileContainer.
-                getTile(3), tileContainer.getTile(2), tileContainer.getTile(1), tileContainer.getTile(4), tileContainer.
-                getTile(5), tileContainer.getTile(1), tileContainer.getTile(3), tileContainer.getTile(5), tileContainer.
-                getTile(1), tileContainer.getTile(6), tileContainer.getTile(1), tileContainer.getTile(8), tileContainer.
-                getTile(5), tileContainer.getTile(2)
+        GameBoard board = new GameBoard(game);
+        final Tile[][] terminalBoard = {
+                { new Tile(128), new Tile(2), new Tile(8), new Tile(4) },
+                { new Tile(2), new Tile(16), new Tile(32), new Tile(2) },
+                { new Tile(8), new Tile(32), new Tile(2), new Tile(64) },
+                { new Tile(2), new Tile(256), new Tile(32), new Tile(4) }
         };
         board.setTiles(terminalBoard);
-        board.updateInternalState(true);
+        board.clearInterns(true);
 
-        ArrayList< IAction > result = game.listAllPossibleActions(board);
+        List< IAction > result = game.listAllPossibleActions(board);
         assertThat(result.isEmpty(), is(true));
 
         // =========================================== //
         //inicializamos un tablero no terminal
-        board = new GameBoard(game, tileContainer);
-        Tile[] fullNotTerminalBoard = {
-                tileContainer.getTile(7), tileContainer.getTile(1), tileContainer.
-                getTile(3), tileContainer.getTile(2), tileContainer.getTile(1), tileContainer.getTile(4), tileContainer.
-                getTile(5), tileContainer.getTile(1), tileContainer.getTile(3), tileContainer.getTile(5), tileContainer.
-                getTile(1), tileContainer.getTile(6), tileContainer.getTile(1), tileContainer.getTile(8), tileContainer.
-                getTile(1), tileContainer.getTile(2)
+        board = new GameBoard(game);
+        final Tile[][] fullNotTerminalBoard = {
+                { new Tile(128), new Tile(2), new Tile(8), new Tile(4) },
+                { new Tile(2), new Tile(16), new Tile(32), new Tile(2) },
+                { new Tile(8), new Tile(32), new Tile(2), new Tile(64) },
+                { new Tile(2), new Tile(256), new Tile(2), new Tile(4) }
         };
         board.setTiles(fullNotTerminalBoard);
-        board.updateInternalState(true);
+        board.clearInterns(true);
 
-        @SuppressWarnings( "MismatchedQueryAndUpdateOfCollection" ) Set< IAction > expResult = new HashSet<>();
-        expResult.add(Action.down);
-        expResult.add(Action.up);
+        @SuppressWarnings( "MismatchedQueryAndUpdateOfCollection" ) final Set< IAction > expResult = new HashSet<>();
+        expResult.add(Action.DOWN);
+        expResult.add(Action.UP);
 
-        state1 = game.computeAfterState(board, Action.down); //para comparar luego
+        IState state1 = game.computeAfterState(board, Action.DOWN); //para comparar luego
         assertThat(state1, notNullValue());
 
         result = game.listAllPossibleActions(board);
         assertThat(result.size(), is(2));
 
         Set< IAction > resultSet = new HashSet<>(game.listAllPossibleActions(board));
-        for ( IAction action : resultSet ) {
+        for ( final IAction action : resultSet ) {
             assertThat(resultSet, hasItem(action));
         }
 
         //verificamos que si se llama al afterState antes de listAllPossibleActions
         // con los mismos tableros, devuelven instancias diferentes, pero con el mismo contenido lógico
-        state2 = game.computeAfterState(board, Action.down);
+        IState state2 = game.computeAfterState(board, Action.DOWN);
         Assert.assertNotSame(state1, state2);
-        assertThat(state1, is((GameBoard) state2));
+        assertThat(state1, is(state2));
 
         //verificamos que próximas llamadas a computeAfterState retorne valores ya calculados y no los calcule otra vez
-        state1 = game.computeAfterState(board, Action.down);
+        state1 = game.computeAfterState(board, Action.DOWN);
         assertThat(state1, notNullValue());
-        state2 = game.computeAfterState(board, Action.down);
+        state2 = game.computeAfterState(board, Action.DOWN);
         assertThat(state2, notNullValue());
         assertThat(state1, is(state2));
 
-        state2 = game.computeAfterState(board, Action.up);
+        state2 = game.computeAfterState(board, Action.UP);
         Assert.assertNotSame(state1, state2);
-
-        //verificamos que valores no calculados retornen null
-        state1 = game.computeAfterState(board, Action.left);
-        Assert.assertNull(state1);
-        state1 = game.computeAfterState(board, Action.right);
-        Assert.assertNull(state1);
 
         // =========================================== //
         //inicializamos un tablero con muchos movimientos terminal
-        board = new GameBoard(game, tileContainer);
-        Tile[] multipleMovesTerminalBoard = {
-                tileContainer.getTile(7), tileContainer.getTile(1), tileContainer.
-                getTile(3), tileContainer.getTile(2), tileContainer.getTile(1), tileContainer.getTile(0), tileContainer.
-                getTile(5), tileContainer.getTile(1), tileContainer.getTile(3), tileContainer.getTile(5), tileContainer.
-                getTile(1), tileContainer.getTile(6), tileContainer.getTile(1), tileContainer.getTile(8), tileContainer.
-                getTile(1), tileContainer.getTile(2)
+        board = new GameBoard(game);
+        final Tile[][] multipleMovesTerminalBoard = {
+                { new Tile(128), new Tile(2), new Tile(8), new Tile(4) },
+                { new Tile(2), null, new Tile(32), new Tile(2) },
+                { new Tile(8), new Tile(32), new Tile(2), new Tile(64) },
+                { new Tile(2), new Tile(256), new Tile(2), new Tile(4) }
         };
         board.setTiles(multipleMovesTerminalBoard);
-        board.updateInternalState(true);
+        board.clearInterns(true);
 
         expResult.clear();
-        expResult.add(Action.down);
-        expResult.add(Action.up);
-        expResult.add(Action.right);
-        expResult.add(Action.left);
+        expResult.add(Action.DOWN);
+        expResult.add(Action.UP);
+        expResult.add(Action.RIGHT);
+        expResult.add(Action.LEFT);
         result = game.listAllPossibleActions(board);
         assertThat(result.size(), is(4));
         resultSet = new HashSet<>(game.listAllPossibleActions(board));
-        for ( IAction action : resultSet ) {
+        for ( final IAction action : resultSet ) {
             assertThat(result, hasItem(action));
         }
 
         //verificamos que próximas llamadas a computeAfterState retorne valores ya calculados y no los calcule otra vez
-        state1 = game.computeAfterState(board, Action.right);
+        state1 = game.computeAfterState(board, Action.RIGHT);
         assertThat(state1, notNullValue());
-        state2 = game.computeAfterState(board, Action.right);
+        state2 = game.computeAfterState(board, Action.RIGHT);
         assertThat(state2, notNullValue());
         assertThat(state1, is(state2));
 
-        state2 = game.computeAfterState(board, Action.left);
+        state2 = game.computeAfterState(board, Action.LEFT);
         Assert.assertNotSame(state1, state2);
     }
 

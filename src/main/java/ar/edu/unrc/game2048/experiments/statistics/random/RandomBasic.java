@@ -42,16 +42,10 @@ class RandomBasic
      * @throws Exception
      */
     public static
-    void main( String[] args )
+    void main( final String... args )
             throws Exception {
-        String filePath;
-        if ( args.length == 0 ) {
-            filePath = ".." + File.separator + "Perceptrones ENTRENADOS" + File.separator;
-        } else {
-            filePath = args[0];
-        }
-        LearningExperiment experiment   = new RandomBasic();
-        boolean            printHistory = false;
+        final String             filePath   = ( args.length == 0 ) ? ( ".." + File.separator + "Perceptrones ENTRENADOS" + File.separator ) : args[0];
+        final LearningExperiment experiment = new RandomBasic();
 
         experiment.setStatisticsOnly(true);
         experiment.createLogs(false);
@@ -62,12 +56,12 @@ class RandomBasic
         experiment.setSimulationsForStatistics(8);
         experiment.setRunStatisticsForBackups(false);
         experiment.setExportToExcel(false);
-        experiment.start(-1, filePath, 0, true, null, printHistory);
+        final boolean printHistory = false;
+        experiment.start(-1, filePath, true, null, printHistory);
 
         Toolkit.getDefaultToolkit().beep();
     }
 
-    @SuppressWarnings( "unchecked" )
     @Override
     public
     void initialize() {
@@ -82,7 +76,7 @@ class RandomBasic
     @Override
     public
     TDLambdaLearning instanceOfTdLearningImplementation(
-            INeuralNetworkInterface perceptronInterface
+            final INeuralNetworkInterface perceptronInterface
     ) {
         return null;
     }
@@ -90,7 +84,7 @@ class RandomBasic
     @Override
     public
     TDLambdaLearning instanceOfTdLearningImplementation(
-            NTupleSystem nTupleSystem
+            final NTupleSystem nTupleSystem
     ) {
         return null;
     }

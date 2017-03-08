@@ -24,8 +24,8 @@ class ReportCollector {
     private static Map< String, ReportItem > items;
 
     private static
-    double extractNumber( String line ) {
-        int index = line.indexOf(':');
+    double extractNumber( final String line ) {
+        final int index = line.indexOf(':');
         assert index != -1;
         return Double.parseDouble(line.substring(index + 1).trim().replaceFirst(",", "."));
     }
@@ -33,25 +33,21 @@ class ReportCollector {
     /**
      * @param args the command line arguments
      *
-     * @throws java.io.IOException
+     * @throws IOException
      */
     public static
-    void main( String[] args )
+    void main( final String... args )
             throws IOException {
-        if ( args.length != 0 ) {
-            WORKING_DIRECTORY = new File(args[0]);
-        } else {
-            WORKING_DIRECTORY = workingDir();
-        }
+        WORKING_DIRECTORY = ( args.length == 0 ) ? workingDir() : new File(args[0]);
         items = new HashMap<>();
         assert WORKING_DIRECTORY != null;
         workFiles(WORKING_DIRECTORY.listFiles());
-        List< ReportItem > finalReportItems = new ArrayList<>(items.values());
+        final List< ReportItem > finalReportItems = new ArrayList<>(items.values());
 
         Collections.sort(finalReportItems);
         Collections.sort(finalReportItems);
 
-        File output = new File("./BestResults.txt");
+        final File output = new File("./BestResults.txt");
         try ( PrintStream printStream = new PrintStream(output, "UTF-8") ) {
             finalReportItems.
                     forEach(( reportItem ) -> {
@@ -62,37 +58,37 @@ class ReportCollector {
     }
 
     private static
-    void parseFile( File file ) {
+    void parseFile( final File file ) {
         //cargamos el archivo ya guardado
         try ( BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8")) ) {
             for ( String line = br.readLine(); line != null; line = br.readLine() ) {
                 if ( line.matches("Win rate: [-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?") ) {
-                    ReportItem reportItem = new ReportItem();
+                    final ReportItem reportItem = new ReportItem();
                     reportItem.setFile(file.getCanonicalPath().replace(WORKING_DIRECTORY.getCanonicalPath(), ""));
                     try {
-                        File neuralNetworkFile = new File(file.getCanonicalPath().replace("_STATISTICS.txt", ".ser"));
+                        final File neuralNetworkFile = new File(file.getCanonicalPath().replace("_STATISTICS.txt", ".ser"));
                         if ( neuralNetworkFile.exists() ) {
                             reportItem.setBestNeuralNetworkSerFile(neuralNetworkFile);
                         }
-                    } catch ( IOException ex ) {
+                    } catch ( final IOException ex ) {
                         Logger.getLogger(ReportCollector.class.getName()).log(Level.SEVERE, null, ex);
                     }
 
-                    String indexToFind = "_trained_BackupN-";
-                    int    index       = reportItem.getFile().indexOf(indexToFind);
+                    final String indexToFind = "_trained_BackupN-";
+                    int          index       = reportItem.getFile().indexOf(indexToFind);
 
                     if ( index < 0 ) {
                         System.err.println(" no se encuentra _trained_BackupN- en el nombre del archivo");
                     } else {
-                        String key = reportItem.getFile().substring(0, index);
+                        final String key = reportItem.getFile().substring(0, index);
 
                         index += indexToFind.length();
-                        int index2 = reportItem.getFile().indexOf('_', index);
+                        final int index2 = reportItem.getFile().indexOf('_', index);
                         reportItem.setTrainingNumber(reportItem.getFile().substring(index, index2));
                         reportItem.setBestValue(extractNumber(line));
 
                         if ( items.containsKey(key) ) {
-                            ReportItem oldReportItem = items.get(key);
+                            final ReportItem oldReportItem = items.get(key);
                             if ( reportItem.getBestValue() > oldReportItem.getBestValue() ) {
                                 items.put(key, reportItem);
                             }
@@ -102,14 +98,14 @@ class ReportCollector {
                     }
                 }
             }
-        } catch ( IOException ex ) {
+        } catch ( final IOException ex ) {
             Logger.getLogger(ReportCollector.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     private static
-    void workFiles( File[] files ) {
-        for ( File file : files ) {
+    void workFiles( final File... files ) {
+        for ( final File file : files ) {
             if ( file.isDirectory() ) {
                 workFiles(file.listFiles()); // Calls same method again.
             } else if ( file.getName().matches(".+_trained_BackupN-\\d+_STATISTICS\\.txt") ) {
@@ -121,34 +117,34 @@ class ReportCollector {
     private static
     File workingDir() {
         if ( WORKING_DIRECTORY == null ) {
-            String Recurso = ReportCollector.class.getSimpleName() + ".class";
             try {
-                URL url = ReportCollector.class.getResource(Recurso);
+                final String Recurso = ReportCollector.class.getSimpleName() + ".class";
+                final URL    url     = ReportCollector.class.getResource(Recurso);
+                File         f;
+
                 switch ( url.getProtocol() ) {
-                    case "file": {
-                        File f = new File(url.toURI());
+                    case "file":
+                        f = new File(url.toURI());
                         do {
-
                             f = f.getParentFile();
                         } while ( !f.isDirectory() );
                         WORKING_DIRECTORY = f.getParentFile();
                         break;
-                    }
-                    case "jar": {
-                        String expected = "!/" + Recurso;
-                        String s        = url.toString();
+                    case "jar":
+                        String s = url.toString();
                         s = s.substring(4);
+                        final String expected = "!/" + Recurso;
                         s = s.substring(0, s.length() - expected.length());
-                        File f = new File(new URL(s).toURI());
+                        f = new File(new URL(s).toURI());
                         do {
-
                             f = f.getParentFile();
                         } while ( !f.isDirectory() );
                         WORKING_DIRECTORY = f.getParentFile();
                         break;
-                    }
+                    default:
+                        throw new IllegalArgumentException("not supported format");
                 }
-            } catch ( URISyntaxException | MalformedURLException e ) {
+            } catch ( URISyntaxException | MalformedURLException | IllegalArgumentException ignored ) {
                 WORKING_DIRECTORY = new File(".");
             }
         }

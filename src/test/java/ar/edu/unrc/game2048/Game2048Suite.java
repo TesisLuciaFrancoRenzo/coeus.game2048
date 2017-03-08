@@ -19,55 +19,16 @@
 package ar.edu.unrc.game2048;
 
 import ar.edu.unrc.game2048.experiments.ExperimentsSuite;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 
 /**
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
 @RunWith( Suite.class )
-@Suite.SuiteClasses( { GameBoardTest.class, Game2048Test.class, ExperimentsSuite.class } )
+@SuiteClasses( { GameBoardTest.class, Game2048Test.class, ExperimentsSuite.class } )
 public
 class Game2048Suite {
-
-    /**
-     * @throws Exception
-     */
-    @BeforeClass
-    public static
-    void setUpClass()
-            throws Exception {
-    }
-
-    /**
-     * @throws Exception
-     */
-    @AfterClass
-    public static
-    void tearDownClass()
-            throws Exception {
-    }
-
-    /**
-     * @throws Exception
-     */
-    @Before
-    public
-    void setUp()
-            throws Exception {
-    }
-
-    /**
-     * @throws Exception
-     */
-    @After
-    public
-    void tearDown()
-            throws Exception {
-    }
 
 }

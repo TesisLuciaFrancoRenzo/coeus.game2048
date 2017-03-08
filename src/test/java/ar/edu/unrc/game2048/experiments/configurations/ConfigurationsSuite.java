@@ -19,55 +19,17 @@
 package ar.edu.unrc.game2048.experiments.configurations;
 
 import ar.edu.unrc.game2048.experiments.configurations.librariesinterfaces.LibrariesSuite;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
+import ar.edu.unrc.game2048.experiments.configurations.perceptrons.PerceptronsSuite;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 
 /**
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
 @RunWith( Suite.class )
-@Suite.SuiteClasses( { LibrariesSuite.class, ar.edu.unrc.game2048.experiments.configurations.perceptrons.PerceptronsSuite.class } )
+@SuiteClasses( { LibrariesSuite.class, PerceptronsSuite.class } )
 public
 class ConfigurationsSuite {
-
-    /**
-     * @throws Exception
-     */
-    @BeforeClass
-    public static
-    void setUpClass()
-            throws Exception {
-    }
-
-    /**
-     * @throws Exception
-     */
-    @AfterClass
-    public static
-    void tearDownClass()
-            throws Exception {
-    }
-
-    /**
-     * @throws Exception
-     */
-    @Before
-    public
-    void setUp()
-            throws Exception {
-    }
-
-    /**
-     * @throws Exception
-     */
-    @After
-    public
-    void tearDown()
-            throws Exception {
-    }
 
 }

@@ -24,6 +24,7 @@ class InputNTupleList
      */
     public
     InputNTupleList() {
+        super();
         set = new HashSet<>();
     }
 
@@ -34,7 +35,7 @@ class InputNTupleList
      */
     @Override
     public
-    boolean add( Double e ) {
+    boolean add( final Double e ) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -45,8 +46,8 @@ class InputNTupleList
     @Override
     public
     void add(
-            int index,
-            Double element
+            final int index,
+            final Double element
     ) {
         set.add(index);
     }
@@ -58,7 +59,7 @@ class InputNTupleList
      */
     @Override
     public
-    boolean addAll( Collection< ? extends Double > c ) {
+    boolean addAll( final Collection< ? extends Double > c ) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -71,8 +72,8 @@ class InputNTupleList
     @Override
     public
     boolean addAll(
-            int index,
-            Collection< ? extends Double > c
+            final int index,
+            final Collection< ? extends Double > c
     ) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -93,7 +94,7 @@ class InputNTupleList
      */
     @Override
     public
-    boolean contains( Object o ) {
+    boolean contains( final Object o ) {
         return set.contains(o);
     }
 
@@ -104,7 +105,7 @@ class InputNTupleList
      */
     @Override
     public
-    boolean containsAll( Collection< ? > c ) {
+    boolean containsAll( final Collection< ? > c ) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -115,8 +116,8 @@ class InputNTupleList
      */
     @Override
     public
-    Double get( int index ) {
-        return ( set.contains(index) ) ? 1d : 0d;
+    Double get( final int index ) {
+        return ( set.contains(index) ) ? 1.0d : 0.0d;
     }
 
     /**
@@ -134,7 +135,7 @@ class InputNTupleList
      */
     @Override
     public
-    int indexOf( Object o ) {
+    int indexOf( final Object o ) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -163,7 +164,7 @@ class InputNTupleList
      */
     @Override
     public
-    int lastIndexOf( Object o ) {
+    int lastIndexOf( final Object o ) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -183,7 +184,7 @@ class InputNTupleList
      */
     @Override
     public
-    ListIterator< Double > listIterator( int index ) {
+    ListIterator< Double > listIterator( final int index ) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -194,7 +195,7 @@ class InputNTupleList
      */
     @Override
     public
-    boolean remove( Object o ) {
+    boolean remove( final Object o ) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -205,7 +206,7 @@ class InputNTupleList
      */
     @Override
     public
-    Double remove( int index ) {
+    Double remove( final int index ) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -216,7 +217,7 @@ class InputNTupleList
      */
     @Override
     public
-    boolean removeAll( Collection< ? > c ) {
+    boolean removeAll( final Collection< ? > c ) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -227,7 +228,7 @@ class InputNTupleList
      */
     @Override
     public
-    boolean retainAll( Collection< ? > c ) {
+    boolean retainAll( final Collection< ? > c ) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -240,8 +241,8 @@ class InputNTupleList
     @Override
     public
     Double set(
-            int index,
-            Double element
+            final int index,
+            final Double element
     ) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -264,8 +265,8 @@ class InputNTupleList
     @Override
     public
     List< Double > subList(
-            int fromIndex,
-            int toIndex
+            final int fromIndex,
+            final int toIndex
     ) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -287,7 +288,7 @@ class InputNTupleList
      */
     @Override
     public
-    < T > T[] toArray( T[] a ) {
+    < T > T[] toArray( final T[] a ) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

@@ -16,20 +16,21 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ar.edu.unrc.game2048;
+package ar.edu.unrc.game2048.experiments.configurations;
 
 import ar.edu.unrc.coeus.interfaces.INeuralNetworkInterface;
 import ar.edu.unrc.coeus.tdlearning.learning.TDLambdaLearning;
 import ar.edu.unrc.coeus.tdlearning.training.ntuple.NTupleSystem;
 import ar.edu.unrc.coeus.tdlearning.training.ntuple.SamplePointValue;
-import ar.edu.unrc.game2048.experiments.configurations.LearningExperiment;
+import ar.edu.unrc.game2048.GameBoard;
 import ar.edu.unrc.game2048.experiments.configurations.librariesinterfaces.NTupleExperimentInterface;
 import org.encog.util.arrayutil.NormalizedField;
 
 import java.util.List;
+import java.util.Random;
 import java.util.function.Function;
 
-import static ar.edu.unrc.coeus.tdlearning.learning.ELearningStyle.afterState;
+import static ar.edu.unrc.coeus.tdlearning.learning.ELearningStyle.AFTER_STATE;
 
 /**
  * @author lucia bressan, franco pellegrini, renzo bianchini
@@ -38,13 +39,13 @@ public abstract
 class NTupleConfiguration2048
         extends LearningExperiment
         implements Cloneable, IConfiguration2048 {
-    protected Function< Double, Double > activationFunction;
-    protected List< SamplePointValue >   allSamplePointPossibleValues;
-    protected boolean                    concurrency;
-    protected Function< Double, Double > derivedActivationFunction;
-    protected int[]                      nTuplesLength;
-    protected NormalizedField            normOutput;
-    private   NTupleSystem               nTupleSystem;
+    protected Function< Double, Double > activationFunction           = null;
+    protected List< SamplePointValue >   allSamplePointPossibleValues = null;
+    protected boolean                    concurrency                  = false;
+    protected Function< Double, Double > derivedActivationFunction    = null;
+    protected int[]                      nTuplesLength                = null;
+    protected NormalizedField            normOutput                   = null;
+    private   NTupleSystem               nTupleSystem                 = null;
 
     /**
      * @return
@@ -53,9 +54,9 @@ class NTupleConfiguration2048
      */
     @Override
     public
-    Object clone()
+    NTupleConfiguration2048 clone()
             throws CloneNotSupportedException {
-        return super.clone(); //To change body of generated methods, choose Tools | Templates.
+        return (NTupleConfiguration2048) super.clone();
     }
 
     /**
@@ -106,7 +107,7 @@ class NTupleConfiguration2048
      * @param nTupleSystem
      */
     public
-    void setNTupleSystem( NTupleSystem nTupleSystem ) {
+    void setNTupleSystem( final NTupleSystem nTupleSystem ) {
         this.nTupleSystem = nTupleSystem;
     }
 
@@ -139,20 +140,18 @@ class NTupleConfiguration2048
     @Override
     public
     TDLambdaLearning instanceOfTdLearningImplementation(
-            NTupleSystem nTupleSystem
+            final NTupleSystem nTupleSystem
     ) {
-        return new TDLambdaLearning(nTupleSystem, afterState, ( getAlpha() != null ) ? getAlpha()[0] : null,
+        return new TDLambdaLearning(nTupleSystem, AFTER_STATE, ( getAlpha() != null ) ? getAlpha()[0] : null,
                 getLambda(),
                 getEligibilityTraceLength(),
-                isReplaceEligibilityTraces(),
-                getGamma(),
-                getConcurrencyInLayer(), isCanCollectStatistics());
+                isReplaceEligibilityTraces(), getGamma(), getConcurrencyInLayer(), new Random(), isCanCollectStatistics());
     }
 
     @Override
     public
     TDLambdaLearning instanceOfTdLearningImplementation(
-            INeuralNetworkInterface perceptronInterface
+            final INeuralNetworkInterface perceptronInterface
     ) {
         return null;
     }

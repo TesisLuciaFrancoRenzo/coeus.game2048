@@ -22,35 +22,36 @@ import ar.edu.unrc.coeus.interfaces.INeuralNetworkInterface;
 import ar.edu.unrc.coeus.tdlearning.interfaces.IAction;
 import ar.edu.unrc.coeus.tdlearning.learning.TDLambdaLearning;
 import ar.edu.unrc.game2048.Action;
-import ar.edu.unrc.game2048.EncogConfiguration2048;
 import ar.edu.unrc.game2048.Game2048;
 import ar.edu.unrc.game2048.GameBoard;
+import ar.edu.unrc.game2048.experiments.configurations.EncogConfiguration2048;
 import ar.edu.unrc.game2048.experiments.configurations.INeuralNetworkInterfaceFor2048;
 import ar.edu.unrc.game2048.experiments.statistics.greedy.GreedyStateProbability;
 
 import java.io.File;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-
-import static java.awt.event.KeyEvent.*;
+import java.util.Random;
 
 /**
  * Interfaz de experimentos entre la IA greedy y Coeus
  *
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
-@SuppressWarnings( "unchecked" )
 public
 class GreedyExperimentInterface
         extends INeuralNetworkInterfaceFor2048 {
+
+    private final Random random = new Random();
 
     /**
      * @param perceptronConfiguration configuración
      */
     public
     GreedyExperimentInterface(
-            EncogConfiguration2048 perceptronConfiguration
+            final EncogConfiguration2048 perceptronConfiguration
     ) {
         super(perceptronConfiguration);
     }
@@ -60,9 +61,9 @@ class GreedyExperimentInterface
      */
     @Override
     public
-    Object clone()
+    GreedyExperimentInterface clone()
             throws CloneNotSupportedException {
-        return super.clone(); //To change body of generated methods, choose Tools | Templates.
+        return (GreedyExperimentInterface) super.clone();
     }
 
     @Override
@@ -80,9 +81,9 @@ class GreedyExperimentInterface
     @Override
     public
     void loadOrCreatePerceptron(
-            File perceptronFile,
-            boolean randomizedIfNotExist,
-            boolean createPerceptronFile
+            final File perceptronFile,
+            final boolean randomizedIfNotExist,
+            final boolean createPerceptronFile
     )
             throws Exception {
     }
@@ -90,21 +91,21 @@ class GreedyExperimentInterface
     @Override
     public
     void playATurn(
-            Game2048 game,
-            TDLambdaLearning learningMethod
+            final Game2048 game,
+            final TDLambdaLearning learningMethod
     ) {
-        GameBoard            actualBoard     = game.getBoard();
-        List< Action >       bestActions     = new ArrayList<>(4);
-        double               bestReward      = -100d;
-        ArrayList< IAction > possibleActions = game.listAllPossibleActions(actualBoard);
-        for ( IAction action : possibleActions ) {
-            GameBoard                      afterState            = (GameBoard) game.computeAfterState(actualBoard, action);
-            List< GreedyStateProbability > allPossibleNextStates = game.listAllPossibleNextTurnStateFromAfterState(afterState);
-            Double reward = allPossibleNextStates.stream().mapToDouble(( nextStateProb ) -> {
+        final GameBoard           actualBoard     = game.getBoard();
+        final List< Action >      bestActions     = new ArrayList<>(4);
+        double                    bestReward      = -100.0d;
+        final Iterable< IAction > possibleActions = game.listAllPossibleActions(actualBoard);
+        for ( final IAction action : possibleActions ) {
+            final GameBoard                      afterState            = (GameBoard) game.computeAfterState(actualBoard, action);
+            final List< GreedyStateProbability > allPossibleNextStates = game.listAllPossibleNextTurnStateFromAfterState(afterState);
+            final Double reward = allPossibleNextStates.stream().mapToDouble(( nextStateProb ) -> {
                 if ( ( (GameBoard) nextStateProb.getNextTurnState() ).isAWin() || ( (GameBoard) nextStateProb.getNextTurnState() ).isFull() ) {
                     return ( (GameBoard) nextStateProb.getNextTurnState() ).getPartialScore() * 4 * nextStateProb.getProbability();
                 } else {
-                    ArrayList< IAction > possibleNextActions = game.listAllPossibleActions(actualBoard);
+                    Collection< IAction > possibleNextActions = game.listAllPossibleActions(actualBoard);
                     return possibleNextActions.stream().mapToDouble(( nextAction ) -> {
                         GameBoard nextAfterState = (GameBoard) game.computeAfterState(nextStateProb.getNextTurnState(), nextAction);
                         return nextAfterState.getPartialScore();
@@ -120,44 +121,40 @@ class GreedyExperimentInterface
             }
         }
 
-        if ( !bestActions.isEmpty() ) {
-            Action bestAction = bestActions.get(TDLambdaLearning.randomBetween(0, bestActions.size() - 1));
-            switch ( bestAction ) {
-                case left: {
-                    game.processInput(VK_LEFT);
-                    break;
-                }
-                case right: {
-                    game.processInput(VK_RIGHT);
-                    break;
-                }
-                case down: {
-                    game.processInput(VK_DOWN);
-                    break;
-                }
-                case up: {
-                    game.processInput(VK_UP);
-                    break;
-                }
-                default: {
-                    throw new IllegalArgumentException("no se encontró mejor acción.");
-                }
-            }
-        } else {
+        if ( bestActions.isEmpty() ) {
             throw new IllegalArgumentException("no se encontró mejor acción.");
+        } else {
+            final Action bestAction = bestActions.get(TDLambdaLearning.randomBetween(0, bestActions.size() - 1, random));
+            switch ( bestAction ) {
+                case LEFT:
+                    game.getBoard().moveLeft();
+                    break;
+                case RIGHT:
+                    game.getBoard().moveRight();
+                    break;
+                case DOWN:
+                    game.getBoard().canMoveDown();
+                    break;
+                case UP:
+                    game.getBoard().moveUp();
+                    break;
+                default:
+                    throw new IllegalStateException("Mejor acción no reconocida");
+            }
+            game.setCurrentState(game.computeNextTurnStateFromAfterState(game.getBoard()));
         }
 
     }
 
     @Override
     public
-    void saveNeuralNetwork( File perceptronFile )
+    void saveNeuralNetwork( final File perceptronFile )
             throws Exception {
     }
 
     @Override
     public
-    void saveNeuralNetwork( OutputStream outputStream )
+    void saveNeuralNetwork( final OutputStream outputStream )
             throws Exception {
 
     }

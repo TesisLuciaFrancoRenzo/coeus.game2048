@@ -34,27 +34,28 @@ class ThreadResult {
     private       double          maxTurn;
     private       double          minScore;
     private       double          minTurn;
-    private       int             processedGames;
-    private       double          totalScore;
-    private       double          totalTurn;
-    private int winGames = 0;
+    private int processedGames = 0;
+    private double totalScore;
+    private double totalTurn;
+    private int    winGames;
 
     /**
      * Nuevo resultado de simulación.
      */
     public
     ThreadResult() {
+        super();
         winGames = 0;
         tileStatistics = new ArrayList<>(18);
         for ( int i = 0; i <= 17; i++ ) {
             tileStatistics.add(0);
         }
-        totalScore = 0;
-        totalTurn = 0;
-        maxScore = 0;
-        minScore = Integer.MAX_VALUE;
-        maxTurn = 0;
-        minTurn = Integer.MAX_VALUE;
+        totalScore = 0.0d;
+        totalTurn = 0.0d;
+        maxScore = 0.0d;
+        minScore = Double.MAX_VALUE;
+        maxTurn = 0.0d;
+        minTurn = Double.MAX_VALUE;
     }
 
     /**
@@ -63,7 +64,7 @@ class ThreadResult {
      * @param lastTurn turno alcanzado en el último juego.
      */
     public
-    void addLastTurn( int lastTurn ) {
+    void addLastTurn( final int lastTurn ) {
         assert lastTurn != 0;
         totalTurn += lastTurn;
         if ( lastTurn > maxTurn ) {
@@ -88,7 +89,7 @@ class ThreadResult {
      * @param score puntaje actual alcanzado en el último juego.
      */
     public
-    void addScore( double score ) {
+    void addScore( final double score ) {
         totalScore += score;
         if ( score > maxScore ) {
             maxScore = score;
@@ -102,7 +103,7 @@ class ThreadResult {
      * @param tileCode aumenta en 1 el valor del tile alcanzado en el último partido.
      */
     public
-    void addStatisticForTile( int tileCode ) {
+    void addStatisticForTile( final int tileCode ) {
         tileStatistics.set(tileCode, tileStatistics.get(tileCode) + 1);
     }
 
@@ -127,11 +128,7 @@ class ThreadResult {
      */
     public
     double getMaxTurn() {
-        if ( winGames > 0 ) {
-            return maxTurn;
-        } else {
-            return 0;
-        }
+        return ( winGames > 0 ) ? maxTurn : 0.0d;
     }
 
     /**
@@ -139,7 +136,7 @@ class ThreadResult {
      */
     public
     double getMeanScore() {
-        return totalScore / ( processedGames * 1d );
+        return totalScore / ( processedGames * 1.0d );
     }
 
     /**
@@ -147,11 +144,7 @@ class ThreadResult {
      */
     public
     double getMeanTurn() {
-        if ( winGames > 0 ) {
-            return totalTurn / ( winGames * 1d );
-        } else {
-            return 0;
-        }
+        return ( winGames > 0 ) ? ( totalTurn / ( winGames * 1.0d ) ) : 0.0d;
     }
 
     /**
@@ -167,11 +160,7 @@ class ThreadResult {
      */
     public
     double getMinTurn() {
-        if ( winGames > 0 ) {
-            return minTurn;
-        } else {
-            return 0;
-        }
+        return ( winGames > 0 ) ? minTurn : 0.0d;
     }
 
     /**
@@ -186,7 +175,7 @@ class ThreadResult {
      * @param value nueva cantidad de partidas procesadas en la simulación hasta ahora.
      */
     public
-    void setProcessedGames( int value ) {
+    void setProcessedGames( final int value ) {
         processedGames = value;
     }
 
@@ -196,7 +185,7 @@ class ThreadResult {
      * @return
      */
     public
-    Integer getStatisticForTile( int tileCode ) {
+    Integer getStatisticForTile( final int tileCode ) {
         return tileStatistics.get(tileCode);
     }
 
@@ -205,6 +194,6 @@ class ThreadResult {
      */
     public
     double getWinRate() {
-        return ( winGames * 100d ) / ( processedGames * 1d );
+        return ( winGames * 100.0d ) / ( processedGames * 1.0d );
     }
 }

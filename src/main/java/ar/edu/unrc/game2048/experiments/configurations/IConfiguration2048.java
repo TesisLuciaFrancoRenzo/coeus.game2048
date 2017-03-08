@@ -16,47 +16,30 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ar.edu.unrc.game2048;
+package ar.edu.unrc.game2048.experiments.configurations;
 
 /**
- * @author lucia bressan, franco pellegrini, renzo bianchini pellegrini
+ * Estructura que debe tener una configuración para un experimento.
+ *
+ * @author lucia bressan, franco pellegrini, renzo bianchini
  */
 public
-interface IGame {
+interface IConfiguration2048 {
+
+    boolean canExploreThisTurn( long currentTurn );
 
     /**
-     * Cierra el juego liberando recursos
-     */
-    void dispose();
-
-    /**
-     * devuelve el numero mas alto obtenido en el tablero
+     * @param value salida de la red neuronal.
      *
-     * @return
+     * @return {@code value} desnormalizado.
      */
-    int getMaxNumber();
+    double deNormalizeValueFromNeuralNetworkOutput( Object value );
 
     /**
-     * @return puntaje acumulado hasta el punto actual del juego
-     */
-    int getScore();
-
-    /**
-     * @return true si se perdió el juego
-     */
-    boolean iLoose();
-
-    /**
-     * @return true si se gano el juego
-     */
-    boolean iWin();
-
-    /**
-     * Procesa una tecla y el juego reacciona. La tecla "esc" reinicia el juego, y "up" " down" " left" "right" se usan
-     * para jugar. Los códigos de dichas teclas son los mismos que se pueden encontrar en la clase KeyEvent.
+     * @param value valor a normalizar.
      *
-     * @param keyCode
+     * @return {@code value} normalizado con el estilo de las neuronas de salida.
      */
-    void processInput( int keyCode );
+    double normalizeValueToPerceptronOutput( Object value );
 
 }
