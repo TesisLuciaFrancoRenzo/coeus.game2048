@@ -119,8 +119,8 @@ class GameBoard
         if ( partialScore != gameBoard.partialScore ) { return false; }
         if ( !game.equals(gameBoard.game) ) { return false; }
         return ( ( normalizedPerceptronInput != null )
-                 ? normalizedPerceptronInput.equals(gameBoard.normalizedPerceptronInput)
-                 : gameBoard.normalizedPerceptronInput == null ) && availableSpace.equals(gameBoard.availableSpace) &&
+                 ? normalizedPerceptronInput.equals(gameBoard.normalizedPerceptronInput) : ( gameBoard.normalizedPerceptronInput == null ) ) &&
+               availableSpace.equals(gameBoard.availableSpace) &&
                Arrays.deepEquals(tiles, gameBoard.tiles);
     }
 
