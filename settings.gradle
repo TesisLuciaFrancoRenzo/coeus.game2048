@@ -1,2 +1,5 @@
 rootProject.name = 'coeus.game2048'
 
+if (file("../coeus").exists()) {
+    includeBuild "../coeus"
+}
