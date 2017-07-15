@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-267325705/coeus.iml" filepath="$PROJECT_DIR$/.idea/modules/-267325705/coeus.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/1929125019/coeus.iml" filepath="$PROJECT_DIR$/.idea/modules/1929125019/coeus.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/coeus.game2048.iml" filepath="$PROJECT_DIR$/.idea/modules/coeus.game2048.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/coeus.game2048.visual.iml" filepath="$PROJECT_DIR$/.idea/modules/coeus.game2048.visual.iml" />
@@ -13,7 +14,9 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/coeus.game2048.visual_test.iml" filepath="$PROJECT_DIR$/.idea/modules/coeus.game2048.visual_test.iml" group="coeus.game2048.visual" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/coeus.game2048_main.iml" filepath="$PROJECT_DIR$/.idea/modules/coeus.game2048_main.iml" group="coeus.game2048" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/coeus.game2048_test.iml" filepath="$PROJECT_DIR$/.idea/modules/coeus.game2048_test.iml" group="coeus.game2048" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-267325705/coeus_main.iml" filepath="$PROJECT_DIR$/.idea/modules/-267325705/coeus_main.iml" group="coeus" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/1929125019/coeus_main.iml" filepath="$PROJECT_DIR$/.idea/modules/1929125019/coeus_main.iml" group="coeus" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-267325705/coeus_test.iml" filepath="$PROJECT_DIR$/.idea/modules/-267325705/coeus_test.iml" group="coeus" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/1929125019/coeus_test.iml" filepath="$PROJECT_DIR$/.idea/modules/1929125019/coeus_test.iml" group="coeus" />
     </modules>
   </component>
