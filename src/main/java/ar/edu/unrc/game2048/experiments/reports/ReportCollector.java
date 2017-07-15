@@ -47,7 +47,7 @@ class ReportCollector {
         Collections.sort(finalReportItems);
         Collections.sort(finalReportItems);
 
-        final File output = new File("./BestResults.txt");
+        final File output = new File(WORKING_DIRECTORY.getCanonicalPath() + File.separator + "BestResults.txt");
         try ( PrintStream printStream = new PrintStream(output, "UTF-8") ) {
             finalReportItems.
                     forEach(( reportItem ) -> {
