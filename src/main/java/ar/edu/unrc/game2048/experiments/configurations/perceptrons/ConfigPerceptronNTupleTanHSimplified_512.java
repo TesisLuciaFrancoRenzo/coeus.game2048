@@ -34,8 +34,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Configuración para jugar hasta 512, tablero de tipo NTupla, con función de activación Tangente Hiperbólica, y puntaje
- * parcial.
+ * Configuración para jugar hasta 512, tablero de tipo NTupla, con función de activación Tangente Hiperbólica, y puntaje parcial.
  *
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */

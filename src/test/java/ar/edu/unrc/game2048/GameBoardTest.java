@@ -33,16 +33,17 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public
 class GameBoardTest {
 
-    private final Tile[][]                      emptyBoard;
-    private final ConfigNTupleBasicLinear_32768 nTupleConfiguration;
-    private final Tile[][]                      randomBoard;
+    private Tile[][] emptyBoard;
     private Game2048 game = null;
+    private ConfigNTupleBasicLinear_32768 nTupleConfiguration;
+    private Tile[][]                      randomBoard;
 
     /**
      *
      */
+    @Before
     public
-    GameBoardTest() {
+    void setUp() {
         emptyBoard = new Tile[][] {
                 { null, null, null, null }, { null, null, null, null }, { null, null, null, null }, { null, null, null, null }
         };
@@ -54,14 +55,6 @@ class GameBoardTest {
                 { new Tile(16), null, new Tile(2), new Tile(16) }
         };
         nTupleConfiguration = new ConfigNTupleBasicLinear_32768();
-    }
-
-    /**
-     *
-     */
-    @Before
-    public
-    void setUp() {
         game = new Game2048(null, nTupleConfiguration, 2_048, false);
     }
 
@@ -187,7 +180,7 @@ class GameBoardTest {
 
         boolean expResult = true;
         boolean result    = board.isTerminalState();
-        Assert.assertEquals(expResult, result);
+        Assert.assertThat(result, is(expResult));
 
         // =========================================== //
         board = new GameBoard(game);
@@ -202,7 +195,7 @@ class GameBoardTest {
 
         expResult = false;
         result = board.isTerminalState();
-        Assert.assertEquals(expResult, result);
+        Assert.assertThat(result, is(expResult));
 
         // =========================================== //
         board = new GameBoard(game);
@@ -211,7 +204,7 @@ class GameBoardTest {
 
         expResult = false;
         result = board.isTerminalState();
-        Assert.assertEquals(expResult, result);
+        Assert.assertThat(result, is(expResult));
 
         // =========================================== //
         board = new GameBoard(game);
@@ -227,7 +220,7 @@ class GameBoardTest {
 
         expResult = true;
         result = board.isTerminalState();
-        Assert.assertEquals(expResult, result);
+        Assert.assertThat(result, is(expResult));
     }
 
     /**
@@ -246,13 +239,13 @@ class GameBoardTest {
         int  y         = 0;
         Tile expResult = null;
         Tile result    = board.tileAt(x, y);
-        Assert.assertEquals(expResult, result);
+        Assert.assertThat(result, is(expResult));
 
         x = 3;
         y = 3;
         expResult = new Tile(16);
         result = board.tileAt(x, y);
-        Assert.assertEquals(expResult, result);
+        Assert.assertThat(result, is(expResult));
     }
 
     /**
@@ -271,7 +264,7 @@ class GameBoardTest {
         board.getAvailableSpace().toArray(result);
 
         final Integer[] expResult = { 0, 2, 13 };
-        Assert.assertArrayEquals(expResult, result);
+        Assert.assertThat(result, is(expResult));
 
         // =========================================== //
     }

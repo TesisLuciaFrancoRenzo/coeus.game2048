@@ -433,19 +433,10 @@ class StatisticExperiment {
     }
 
     /**
-     * Se deben inicializar:
-     * <ul>
-     * <li>private int delayPerMove;</li>
-     * <li>private IPlayingExperiment playingExperiment;</li>
-     * <li>private String fileName;</li>
-     * </ul>
-     * Las siguientes variables se inicializan automáticamente, pero pueden ser modificadas:
-     * <ul>
-     * <li>private int tileToWin;</li>
-     * <li>private String experimentName;</li>
-     * <li>private EncogConfiguration2048 perceptronConfiguration;</li>
-     * <li>private TDLambdaLearning learningMethod;</li>
-     * </ul>
+     * Se deben inicializar: <ul> <li>private int delayPerMove;</li> <li>private IPlayingExperiment playingExperiment;</li> <li>private String
+     * fileName;</li> </ul> Las siguientes variables se inicializan automáticamente, pero pueden ser modificadas: <ul> <li>private int tileToWin;</li>
+     * <li>private String experimentName;</li> <li>private EncogConfiguration2048 perceptronConfiguration;</li> <li>private TDLambdaLearning
+     * learningMethod;</li> </ul>
      *
      * @throws Exception
      */
@@ -495,7 +486,6 @@ class StatisticExperiment {
     public
     void processFile(
             final String fileToProcess,
-            //TODO y si no existe? agregar parche
             final boolean createNeuralNetworkFile,
             final boolean printHistory
     )
@@ -705,13 +695,7 @@ class StatisticExperiment {
         final File[] allFiles = ( new File(dirPath) ).listFiles();
         assert allFiles != null;
         Arrays.sort(allFiles, ( Object o1, Object o2 ) -> {
-            if ( ( (File) o1 ).lastModified() > ( (File) o2 ).lastModified() ) {
-                return +1;
-            } else if ( ( (File) o1 ).lastModified() < ( (File) o2 ).lastModified() ) {
-                return -1;
-            } else {
-                return 0;
-            }
+            return Long.compare(( (File) o1 ).lastModified(), ( (File) o2 ).lastModified());
         });
         final List< File >                  backupFiles    = new ArrayList<>();
         final Map< File, StatisticForCalc > resultsPerFile = new HashMap<>();
@@ -731,13 +715,7 @@ class StatisticExperiment {
             }
         }
         backupFiles.sort(( Object o1, Object o2 ) -> {
-            if ( ( (File) o1 ).lastModified() > ( (File) o2 ).lastModified() ) {
-                return +1;
-            } else if ( ( (File) o1 ).lastModified() < ( (File) o2 ).lastModified() ) {
-                return -1;
-            } else {
-                return 0;
-            }
+            return Long.compare(( (File) o1 ).lastModified(), ( (File) o2 ).lastModified());
         });
 
         if ( exportToExcel ) {

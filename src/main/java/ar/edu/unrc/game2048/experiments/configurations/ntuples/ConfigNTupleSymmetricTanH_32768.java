@@ -39,8 +39,7 @@ class ConfigNTupleSymmetricTanH_32768
     private static final int MIN_REWARD = -800_000;
 
     /**
-     * Configuración para jugar hasta 32.768 con tablero simétrico, con función de activación Tangente Hiperbólica, y
-     * puntaje parcial.
+     * Configuración para jugar hasta 32.768 con tablero simétrico, con función de activación Tangente Hiperbólica, y puntaje parcial.
      */
     public
     ConfigNTupleSymmetricTanH_32768() {

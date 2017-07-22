@@ -8,8 +8,8 @@ package ar.edu.unrc.game2048.experiments.configurations.perceptrons.inputs;
 import java.util.*;
 
 /**
- * Implementación de una Lista, útil para almacenar valores binarios, optimizada para no ocupar memoria con los valores
- * 0. Utilizada para las entradas de una red neuronal grande.
+ * Implementación de una Lista, útil para almacenar valores binarios, optimizada para no ocupar memoria con los valores 0. Utilizada para las entradas
+ * de una red neuronal grande.
  *
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */

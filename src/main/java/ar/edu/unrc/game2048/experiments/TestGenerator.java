@@ -39,8 +39,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Tests parametrizables mediante parámetros, útil para correr variedades de simulaciones sin recompilar el
- * programa.
+ * Tests parametrizables mediante parámetros, útil para correr variedades de simulaciones sin recompilar el programa.
  *
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
@@ -168,7 +167,7 @@ class TestGenerator {
         //============================== fin de configuraciones manuales ==================================
 
         if ( args.length == 0 ) {
-            System.err.println("No se encuentran parámetros de configuración"); //TODO detallar
+            System.err.println("No se encuentran parámetros de configuración");
             System.exit(-1);
         } else {
 
@@ -462,9 +461,7 @@ class TestGenerator {
         if ( !statisticsOnly ) {
             try {
                 final BlockingQueue< GeneratorConfig > queue = new ArrayBlockingQueue<>(experiments.size());
-                for ( final GeneratorConfig config : experiments ) {
-                    queue.add(config);
-                }
+                queue.addAll(experiments);
 
                 final ExecutorService pool = Executors.newFixedThreadPool(maxTrainingThreads);
 

@@ -254,8 +254,7 @@ class ConcurrencyExperiment_Basic
         outputResults.append("maxNeuronQuantity = ").append(maxNeuronQuantity).append(" (").append(Math.pow(2, maxNeuronQuantity))
                 .append(')')
                 .append('\n');
-        outputResults.append("minNeuronQuantity = ").append(minNeuronQuantity)
-                .append(" (").append(Math.pow(2, minNeuronQuantity))
+        outputResults.append("minNeuronQuantity = ").append(minNeuronQuantity).append(" (").append(Math.pow(2, minNeuronQuantity))
                 .append(')')
                 .append('\n');
         outputResults.append("====================================").append('\n');
@@ -311,10 +310,7 @@ class ConcurrencyExperiment_Basic
             final INeuralNetworkInterface perceptronInterface
     ) {
         return new TDLambdaLearning(perceptronInterface, AFTER_STATE,
-                getAlpha(),
-                getLambda(),
-                isReplaceEligibilityTraces(),
-                getGamma(), getConcurrencyInLayer(), new Random(),
+                getAlpha(), getLambda(), isReplaceEligibilityTraces(), getGamma(), getConcurrencyInLayer(), new Random(),
                 true);
     }
 

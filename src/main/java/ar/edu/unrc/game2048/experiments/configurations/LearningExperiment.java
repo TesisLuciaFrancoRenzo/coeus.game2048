@@ -49,70 +49,70 @@ class LearningExperiment {
     /**
      * Nombre para el archivo salvado con mejor entrenamiento hasta el momento
      */
-    public static final String                     BEST_TRAINED                           = "_best_trained";
+    public static final String                         BEST_TRAINED                           = "_best_trained";
     /**
      * Extensión de las configuraciones de entrenamiento del experimento.
      */
-    public static final String                     CONFIG                                 = "_config";
-    public static final String                     DATE_FILE_FORMATTER_PATTERN            = "dd-MM-yyyy_HH'h'mm'm'ss's'";
-    public static final String                     DATE_FORMATTER_PATTERN                 = "dd/MM/yyyy HH:mm:ss";
+    public static final String                         CONFIG                                 = "_config";
+    public static final String                         DATE_FILE_FORMATTER_PATTERN            = "dd-MM-yyyy_HH'h'mm'm'ss's'";
+    public static final String                         DATE_FORMATTER_PATTERN                 = "dd/MM/yyyy HH:mm:ss";
     /**
      * Nombre del archivo para las salidas de errores.
      */
-    public static final String                     ERROR_DUMP                             = "ERROR_DUMP";
-    public static final String                     HISTORY_DUMP                           = "HISTORY_DUMP";
+    public static final String                         ERROR_DUMP                             = "ERROR_DUMP";
+    public static final String                         HISTORY_DUMP                           = "HISTORY_DUMP";
     /**
      * Nombre del archivo con los datos de la ultima red neuronal guardada en disco.
      */
-    public static final String                     LAST_SAVE_DATA                         = "_last_save_data";
+    public static final String                         LAST_SAVE_DATA                         = "_last_save_data";
     /**
-     * Nombre que se le agrega a los archivos de redes neuronales inicializados sin entrenamiento, para comparar al
-     * final del experimento con la versión entrenada.
+     * Nombre que se le agrega a los archivos de redes neuronales inicializados sin entrenamiento, para comparar al final del experimento con la
+     * versión entrenada.
      */
-    public static final String                     RANDOM                                 = "_random";
+    public static final String                         RANDOM                                 = "_random";
     /**
      * Nombre que se le agrega a los archivos de redes neuronales con entrenamiento.
      */
-    public static final String                     TRAINED                                = "_trained";
+    public static final String                         TRAINED                                = "_trained";
     /**
      * Formato para fechas.
      */
-    private final       DateFormat                 dateFormat                             = new SimpleDateFormat(DATE_FORMATTER_PATTERN);
-    private final       DecimalFormat              decimalFormat                          = new DecimalFormat("#.###");
+    private final       DateFormat                     dateFormat                             = new SimpleDateFormat(DATE_FORMATTER_PATTERN);
+    private final       DecimalFormat                  decimalFormat                          = new DecimalFormat("#.###");
     /**
      * Formato para fechas en los nombres de archivos.
      */
-    private final       DateFormat                 simpleDateFormat                       = new SimpleDateFormat(DATE_FILE_FORMATTER_PATTERN);
+    private final       DateFormat                     simpleDateFormat                       = new SimpleDateFormat(DATE_FILE_FORMATTER_PATTERN);
     /**
      * Experimento encargad de las estadísticas.
      */
-    protected           StatisticExperiment        statisticExperiment                    = null;
-    private             double[]                   alpha                                  = null;
-    private             int                        annealingT                             = 0;
-    private             int                        backupNumber                           = 0;
-    private             int                        bestGame                               = 0;
-    private             double                     bestMaxTile                            = 0.0;
-    private             StatisticCalculator        bestPossibleActionTimes                = null;
-    private             double                     bestWinRate                            = 0.0;
-    private             boolean                    canCollectStatistics                   = false;
-    private             boolean                    concurrencyInComputeBestPossibleAction = false;
-    private             boolean[]                  concurrencyInLayer                     = null;
-    private             long                       elapsedTimeMilliseconds                = 0L;
-    private             int                        eligibilityTraceLength                 = -1;
-    private             String                     experimentName                         = null;
-    private             EExplorationRateAlgorithms explorationRate                        = null;
-    private             double                     explorationRateFinalValue              = 0.0;
-    private             int                        explorationRateFinishDecrementing      = 0;
-    private             double                     explorationRateInitialValue            = 0.0;
-    private             int                        explorationRateStartDecrementing       = 0;
-    private             boolean                    exportToExcel                          = true;
-    private             int                        gamesToPlay                            = 0;
-    private             int                        gamesToPlayPerThreadForStatistics      = 0;
-    private             double                     gamma                                  = 0.0;
-    private             boolean                    initializePerceptronRandomized         = false;
-    private             double                     lambda                                 = 0.0;
-    private             int                        lastSavedGamePlayedNumber              = 0;
-    private             TDLambdaLearning           learningAlgorithm                      = null;
+    protected           StatisticExperiment            statisticExperiment                    = null;
+    private             double[]                       alpha                                  = null;
+    private             int                            annealingT                             = 0;
+    private             int                            backupNumber                           = 0;
+    private             int                            bestGame                               = 0;
+    private             double                         bestMaxTile                            = 0.0;
+    private             StatisticCalculator            bestPossibleActionTimes                = null;
+    private             double                         bestWinRate                            = 0.0;
+    private             boolean                        canCollectStatistics                   = false;
+    private             boolean                        concurrencyInComputeBestPossibleAction = false;
+    private             boolean[]                      concurrencyInLayer                     = null;
+    private             long                           elapsedTimeMilliseconds                = 0L;
+    private             int                            eligibilityTraceLength                 = -1;
+    private             String                         experimentName                         = null;
+    private             EExplorationRateAlgorithms     explorationRate                        = null;
+    private             double                         explorationRateFinalValue              = 0.0;
+    private             int                            explorationRateFinishDecrementing      = 0;
+    private             double                         explorationRateInitialValue            = 0.0;
+    private             int                            explorationRateStartDecrementing       = 0;
+    private             boolean                        exportToExcel                          = true;
+    private             int                            gamesToPlay                            = 0;
+    private             int                            gamesToPlayPerThreadForStatistics      = 0;
+    private             double                         gamma                                  = 0.0;
+    private             boolean                        initializePerceptronRandomized         = false;
+    private             double                         lambda                                 = 0.0;
+    private             int                            lastSavedGamePlayedNumber              = 0;
+    private             TDLambdaLearning               learningAlgorithm                      = null;
     private             ELearningRateAdaptation        learningRateAdaptation                 = null;
     private             boolean                        logsActivated                          = false;
     private             StatisticCalculator            maxTileEstimator                       = null;
@@ -256,12 +256,15 @@ class LearningExperiment {
     }
 
     /**
-     * @param experimentName nombre del experimento.
+     * Valores que se deben inicializar del experimento, por ejemplo: <ul> <li>private double alpha;</li> <li>private double lambda;</li> <li>private
+     * int gamesToPlay;</li> <li>private int saveBackupEvery;</li> <li>private int tileToWinForTraining;</li> <li>private String experimentName;</li>
+     * <li>private String neuralNetworkName;</li> <li>private EncogConfiguration2048 perceptronConfiguration; </li> <li>private
+     * INeuralNetworkInterfaceFor2048 neuralNetworkInterfaceFor2048;</li> <li>private TDTrainerMethod trainerMethod;</li> <li>private int
+     * gamesToPlayPerThreadForStatistics;</li> <li>private int simulationsForStatistics;</li> <li>private boolean statisticsOnly;</li> <li>private
+     * TDLambdaLearning learningAlgorithm</li> </ul> etc.
      */
-    public
-    void setExperimentName( final String experimentName ) {
-        this.experimentName = experimentName;
-    }
+    public abstract
+    void initialize();
 
     /**
      * @return cantidad de partidos a jugar en el experimento.
@@ -500,27 +503,19 @@ class LearningExperiment {
     }
 
     /**
-     * Valores que se deben inicializar del experimento, por ejemplo:
-     * <ul>
-     * <li>private double alpha;</li>
-     * <li>private double lambda;</li>
-     * <li>private int gamesToPlay;</li>
-     * <li>private int saveBackupEvery;</li>
-     * <li>private int tileToWinForTraining;</li>
-     * <li>private String experimentName;</li>
-     * <li>private String neuralNetworkName;</li>
-     * <li>private EncogConfiguration2048 perceptronConfiguration; </li>
-     * <li>private INeuralNetworkInterfaceFor2048 neuralNetworkInterfaceFor2048;</li>
-     * <li>private TDTrainerMethod trainerMethod;</li>
-     * <li>private int gamesToPlayPerThreadForStatistics;</li>
-     * <li>private int simulationsForStatistics;</li>
-     * <li>private boolean statisticsOnly;</li>
-     * <li>private TDLambdaLearning learningAlgorithm</li>
-     * </ul>
-     * etc.
+     * Establece el nombre del experimento basado en el nombre de la clase {@code experimentClass}.
+     *
+     * @param experimentClass clase de la cual extraer el nombre del experimento.
      */
-    public abstract
-    void initialize();
+    public
+    void setExperimentName( final Class experimentClass ) {
+        String    className = experimentClass.getName();
+        final int lastDot   = className.lastIndexOf('.');
+        if ( lastDot != -1 ) {
+            className = className.substring(lastDot + 1);
+        }
+        experimentName = className;
+    }
 
     /**
      * @param neuralNetworkInterface interfaz que conecta la red neuronal con el algoritmo de TDLearning
@@ -706,7 +701,6 @@ class LearningExperiment {
             // Si hay un perceptron ya entrenado, lo buscamos en el archivo.
             // En caso contrario creamos un perceptron vacío, inicializado al azar
             neuralNetworkInterfaceFor2048.loadOrCreatePerceptron(perceptronFile, initializePerceptronRandomized, createPerceptronFile);
-            //FIXME que hacer si esta ROTO? solucionar esto
 
             //creamos una interfaz de comunicación entre la red neuronal de encog y el algoritmo de entrenamiento
             if ( backupRandomPerceptron ) {
@@ -856,18 +850,11 @@ class LearningExperiment {
     }
 
     /**
-     * Establece el nombre del experimento basado en el nombre de la clase {@code experimentClass}.
-     *
-     * @param experimentClass clase de la cual extraer el nombre del experimento.
+     * @param experimentName nombre del experimento.
      */
     public
-    void setExperimentName( final Class experimentClass ) {
-        String    className = experimentClass.getName();
-        final int lastDot   = className.lastIndexOf('.');
-        if ( lastDot != -1 ) {
-            className = className.substring(lastDot + 1);
-        }
-        experimentName = className;
+    void setExperimentName( final String experimentName ) {
+        this.experimentName = experimentName;
     }
 
     /**
@@ -1085,8 +1072,7 @@ class LearningExperiment {
                     .append(')')
                     .append("\tRandomChoices = ")
                     .append(learningAlgorithm.getRandomChoicesCounter())
-                    .append("\tturno alcanzado = ")
-                    .append(game.getLastTurn()).append(" (avg=").append(maxTurnAvg.printableAverage()).append(')')
+                    .append("\tturno alcanzado = ").append(game.getLastTurn()).append(" (avg=").append(maxTurnAvg.printableAverage()).append(')')
                     .append("\tcurrentExplorationRate = ")
                     .append(learningAlgorithm.getCurrentExplorationRate())
                     .append("\tcurrent alpha = ")
