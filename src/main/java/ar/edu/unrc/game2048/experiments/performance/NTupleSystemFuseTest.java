@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * La colocamos como deprecated, porque los pocos experimientos que realizamos tarda mucho en obtener resultados. Lo que hacemos es entrenar
+ * La colocamos como deprecated, porque los pocos experimentos que realizamos tarda mucho en obtener resultados. Lo que hacemos es entrenar
  * diferentes cerebro, y luego los unimos, los clonamos y volvemos a entrenar.
  *
  * @author lucia bressan, franco pellegrini, renzo bianchini

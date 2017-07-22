@@ -36,7 +36,7 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static ar.edu.unrc.game2048.experiments.TestGenerator.getMsj;
+import static ar.edu.unrc.game2048.experiments.GeneratorConfig.getMsj;
 
 /**
  * Experimento especializado para aprendizaje de redes neuronales.
@@ -503,18 +503,11 @@ class LearningExperiment {
     }
 
     /**
-     * Establece el nombre del experimento basado en el nombre de la clase {@code experimentClass}.
-     *
-     * @param experimentClass clase de la cual extraer el nombre del experimento.
+     * @param experimentName nombre del experimento.
      */
     public
-    void setExperimentName( final Class experimentClass ) {
-        String    className = experimentClass.getName();
-        final int lastDot   = className.lastIndexOf('.');
-        if ( lastDot != -1 ) {
-            className = className.substring(lastDot + 1);
-        }
-        experimentName = className;
+    void setExperimentName( final String experimentName ) {
+        this.experimentName = experimentName;
     }
 
     /**
@@ -850,11 +843,18 @@ class LearningExperiment {
     }
 
     /**
-     * @param experimentName nombre del experimento.
+     * Establece el nombre del experimento basado en el nombre de la clase {@code experimentClass}.
+     *
+     * @param experimentClass clase de la cual extraer el nombre del experimento.
      */
     public
-    void setExperimentName( final String experimentName ) {
-        this.experimentName = experimentName;
+    void setExperimentName( final Class experimentClass ) {
+        String    className = experimentClass.getName();
+        final int lastDot   = className.lastIndexOf('.');
+        if ( lastDot != -1 ) {
+            className = className.substring(lastDot + 1);
+        }
+        experimentName = className;
     }
 
     /**
@@ -1072,7 +1072,11 @@ class LearningExperiment {
                     .append(')')
                     .append("\tRandomChoices = ")
                     .append(learningAlgorithm.getRandomChoicesCounter())
-                    .append("\tturno alcanzado = ").append(game.getLastTurn()).append(" (avg=").append(maxTurnAvg.printableAverage()).append(')')
+                    .append("\tturno alcanzado = ")
+                    .append(game.getLastTurn())
+                    .append(" (avg=")
+                    .append(maxTurnAvg.printableAverage())
+                    .append(')')
                     .append("\tcurrentExplorationRate = ")
                     .append(learningAlgorithm.getCurrentExplorationRate())
                     .append("\tcurrent alpha = ")
