@@ -32,7 +32,7 @@ class GreedyStateProbability {
     private double probability;
 
     /**
-     * @param nextTurnState posible siguiente estado luego de calcular acciones no determinísticas.
+     * @param nextTurnState posible siguiente estado luego de calcular acciones estocásticas.
      * @param probability   probabilidad de que ocurra {@code nextTurnState} como estado efectivo en el siguiente turno
      */
     public
@@ -54,7 +54,7 @@ class GreedyStateProbability {
     }
 
     /**
-     * @param nextTurnState posible siguiente estado luego de calcular acciones no determinísticas.
+     * @param nextTurnState posible siguiente estado luego de calcular acciones estocásticas.
      */
     public
     void setNextTurnState( final IState nextTurnState ) {
