@@ -150,7 +150,7 @@ class Game2048
 
     @Override
     public
-    Object[] evaluateBoardWithPerceptron( final IState state ) {
+    Object[] evaluateStateWithPerceptron( final IState state ) {
         //dependiendo de que tipo de red neuronal utilizamos, evaluamos las entradas y calculamos una salida
         if ( ( neuralNetworkConfiguration != null ) && ( neuralNetworkConfiguration.getNeuralNetwork() != null ) ) {
             if ( neuralNetworkConfiguration.getNeuralNetwork() instanceof BasicNetwork ) { //es sobre la librería encog
