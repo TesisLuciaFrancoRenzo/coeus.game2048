@@ -152,7 +152,11 @@ class INeuralNetworkInterfaceFor2048
         // acción basada en las predicciones del problema
         final List< IAction > possibleActions = game.listAllPossibleActions(game.getBoard());
         final Action bestAction = (Action) TDLambdaLearning.computeBestPossibleAction(game, ELearningStyle.AFTER_STATE,
-                game.getBoard(), possibleActions, null, learningMethod.isComputeParallelBestPossibleAction(), random, null).getAction();
+                game.getBoard(),
+                possibleActions,
+                learningMethod.isComputeParallelBestPossibleAction(),
+                random,
+                null).getAction();
         switch ( bestAction ) {
             case LEFT:
                 game.getBoard().moveLeft();

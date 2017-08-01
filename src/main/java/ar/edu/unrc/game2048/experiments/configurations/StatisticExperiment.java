@@ -576,7 +576,7 @@ class StatisticExperiment {
                 // Si hay un perceptron ya entrenado, lo buscamos en el archivo.
                 // En caso contrario creamos un perceptron vacío, inicializado al azar
                 for ( results.get(i).setProcessedGames(1); results.get(i).getProcessedGames() < gamesToPlay; results.get(i).addProcessedGames() ) {
-                    games.get(i).initialize(null); //reset
+                    games.get(i).initialize(); //reset
                     int turnNumber = 0;
                     while ( games.get(i).isRunning() ) {
                         if ( tdLambdaLearning.isEmpty() ) {

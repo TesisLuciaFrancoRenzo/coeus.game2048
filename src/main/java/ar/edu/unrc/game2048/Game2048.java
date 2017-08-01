@@ -115,8 +115,7 @@ class Game2048
     @Override
     public
     Double computeNumericRepresentationFor(
-            final Object[] output,
-            final IActor actor
+            final Object[] output
     ) {
         if ( neuralNetworkConfiguration != null ) {
             return neuralNetworkConfiguration.computeNumericRepresentationFor(this, output);
@@ -177,12 +176,6 @@ class Game2048
         throw new UnsupportedOperationException("only Encog and NTupleSystem is implemented");
     }
 
-    @Override
-    public
-    IActor getActorToTrain() {
-        return null;
-    }
-
     public
     GameBoard getBoard() {
         return board;
@@ -220,7 +213,7 @@ class Game2048
 
     @Override
     public
-    IState initialize( final IActor actor ) {
+    IState initialize() {
         score = 0;
         lastTurn = 0;
         maxNumber = 0;
@@ -308,7 +301,7 @@ class Game2048
                 }
                 break;
             case "n":
-                initialize(null);
+                initialize();
                 break;
             default:
                 break;
