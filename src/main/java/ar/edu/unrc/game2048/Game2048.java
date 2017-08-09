@@ -96,7 +96,7 @@ class Game2048
     @Override
     public
     IState computeNextTurnStateFromAfterState( final IState afterState ) {
-        final GameBoard finalBoard = (GameBoard) afterState.getCopy(); //FIXME optimizar?
+        final GameBoard finalBoard = (GameBoard) afterState.getCopy();
         maxNumber = ( finalBoard.getHighestValue() > maxNumber ) ? finalBoard.getHighestValue() : maxNumber;
         score += finalBoard.getPartialScore();
         lastTurn++;
