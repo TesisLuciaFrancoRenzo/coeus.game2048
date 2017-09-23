@@ -309,8 +309,14 @@ class ConcurrencyExperiment_Basic
     TDLambdaLearning instanceOfTdLearningImplementation(
             final INeuralNetworkInterface perceptronInterface
     ) {
-        return new TDLambdaLearning(perceptronInterface, AFTER_STATE,
-                getAlpha(), getLambda(), isReplaceEligibilityTraces(), getGamma(), getConcurrencyInLayer(), new Random(),
+        return new TDLambdaLearning(perceptronInterface,
+                AFTER_STATE,
+                getAlpha(),
+                getLambda(),
+                isReplaceEligibilityTraces(),
+                getGamma(),
+                getConcurrencyInLayer(),
+                new Random(),
                 true);
     }
 

@@ -41,9 +41,9 @@ class PNTuple512Test {
 
         //----------------------
         final ConfigNTupleBasicTanHSimplified_512 nTupleConfiguration2 = new ConfigNTupleBasicTanHSimplified_512();
-        final Game2048 game2 =
+        final Game2048                            game2                =
                 new Game2048(null, nTupleConfiguration2, (int) Math.pow(2, nTupleConfiguration2.getMaxTile()), false);
-        final GameBoard board2 = new GameBoard(game2);
+        final GameBoard                           board2               = new GameBoard(game2);
         board2.setTiles(new Tile[][] {
                 { null, new Tile(16), null, new Tile(512) },
                 { new Tile(16), new Tile(64), new Tile(16), new Tile(16) },

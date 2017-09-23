@@ -84,7 +84,7 @@ class TestGenerator {
             final List< Double >  gammaList                                      = ArgumentLoader.parseDoubleArray(arguments.getArg("gammaList"));
             final boolean[]       concurrentLayer                                =
                     ArgumentLoader.parseBooleanArray(arguments.getArg("concurrentLayerList"));
-            final boolean         computeBestPossibleActionConcurrently         =
+            final boolean         computeBestPossibleActionConcurrently          =
                     Boolean.parseBoolean(arguments.getArg("computeBestPossibleActionConcurrently"));
             final List< Double >  whenStartToExplore                             =
                     ArgumentLoader.parseDoubleArray(arguments.getArg("whenStartToExplore"));

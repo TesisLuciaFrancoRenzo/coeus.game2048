@@ -205,8 +205,14 @@ class EncogConfiguration2048
     TDLambdaLearning instanceOfTdLearningImplementation(
             final INeuralNetworkInterface perceptronInterface
     ) {
-        return new TDLambdaLearning(perceptronInterface, AFTER_STATE,
-                getAlpha(), getLambda(), isReplaceEligibilityTraces(), getGamma(), getConcurrencyInLayer(), new Random(),
+        return new TDLambdaLearning(perceptronInterface,
+                AFTER_STATE,
+                getAlpha(),
+                getLambda(),
+                isReplaceEligibilityTraces(),
+                getGamma(),
+                getConcurrencyInLayer(),
+                new Random(),
                 isCanCollectStatistics());
     }
 
