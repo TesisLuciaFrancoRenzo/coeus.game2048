@@ -35,8 +35,8 @@ public
 class ConfigNTupleSymmetricTanH_32768
         extends NTupleConfiguration2048 {
 
-    private static final int MAX_REWARD = 800_000;
-    private static final int MIN_REWARD = -800_000;
+    private static final int MAX_REWARD = 458_752;
+    private static final int MIN_REWARD = -458_752;
 
     /**
      * Configuración para jugar hasta 32.768 con tablero simétrico, con función de activación Tangente Hiperbólica, y puntaje parcial.
