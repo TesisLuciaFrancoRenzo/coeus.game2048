@@ -90,17 +90,17 @@ class LearningExperiment {
     private             double[]                       alpha                                  = null;
     private             int                            annealingT                             = 0;
     private             int                            backupNumber                           = 0;
-    private             int                            bestGame                               = 0;
-    private             double                         bestMaxTile                            = 0.0;
-    private             StatisticCalculator            bestPossibleActionTimes                = null;
-    private             double                         bestWinRate                            = 0.0;
-    private             boolean                        canCollectStatistics                   = false;
-    private             boolean                        concurrencyInComputeBestPossibleAction = false;
-    private             boolean[]                      concurrencyInLayer                     = null;
-    private             long                           elapsedTimeMilliseconds                = 0L;
-    private             int                            eligibilityTraceLength                 = -1;
-    private             String                         experimentName                         = null;
-    private             EExplorationRateAlgorithms     explorationRate                        = null;
+    private             int                        bestGame                              = 0;
+    private             double                     bestMaxTile                           = 0.0;
+    private             StatisticCalculator        bestPossibleActionTimes               = null;
+    private             double                     bestWinRate                           = 0.0;
+    private             boolean                    canCollectStatistics                  = false;
+    private             boolean                    computeBestPossibleActionConcurrently = false;
+    private             boolean[]                  concurrencyInLayer                    = null;
+    private             long                       elapsedTimeMilliseconds               = 0L;
+    private             int                        eligibilityTraceLength                = -1;
+    private             String                     experimentName                        = null;
+    private             EExplorationRateAlgorithms explorationRate                       = null;
     private             double                         explorationRateFinalValue              = 0.0;
     private             int                            explorationRateFinishDecrementing      = 0;
     private             double                         explorationRateInitialValue            = 0.0;
@@ -703,11 +703,11 @@ class LearningExperiment {
 
             if ( neuralNetworkInterfaceFor2048.getNeuralNetworkInterface() != null ) {
                 learningAlgorithm = instanceOfTdLearningImplementation(neuralNetworkInterfaceFor2048.getNeuralNetworkInterface());
-                learningAlgorithm.setComputeParallelBestPossibleAction(concurrencyInComputeBestPossibleAction);
+                learningAlgorithm.setComputeBestPossibleActionConcurrently(computeBestPossibleActionConcurrently);
             }
             if ( neuralNetworkInterfaceFor2048.getNTupleConfiguration() != null ) {
                 learningAlgorithm = instanceOfTdLearningImplementation(neuralNetworkInterfaceFor2048.getNTupleConfiguration().getNTupleSystem());
-                learningAlgorithm.setComputeParallelBestPossibleAction(concurrencyInComputeBestPossibleAction);
+                learningAlgorithm.setComputeBestPossibleActionConcurrently(computeBestPossibleActionConcurrently);
             }
 
             if ( ( learningAlgorithm == null ) && !statisticsOnly ) {
@@ -788,7 +788,7 @@ class LearningExperiment {
             out.write("annealingT: " + annealingT + '\n');
             out.write("learningRateAdaptation: " + learningRateAdaptation + '\n');
             out.write("initializePerceptronRandomized: " + initializePerceptronRandomized + '\n');
-            out.write("concurrencyInComputeBestPossibleAction: " + concurrencyInComputeBestPossibleAction + '\n');
+            out.write("computeBestPossibleActionConcurrently: " + computeBestPossibleActionConcurrently + '\n');
             out.write("concurrencyInLayer: " + Arrays.toString(concurrencyInLayer) + '\n');
             out.write("whenStartToExplore: " + whenStartToExplore + '\n');
             out.write("explorationRate: " + explorationRate + '\n');
@@ -835,11 +835,11 @@ class LearningExperiment {
     }
 
     /**
-     * @param parallel true si se debe activar concurrencia en los cálculos de elegir la mejor acción posible.
+     * @param concurrency true si se debe activar concurrencia en los cálculos de elegir la mejor acción posible.
      */
     public
-    void setConcurrencyInComputeBestPossibleAction( final boolean parallel ) {
-        concurrencyInComputeBestPossibleAction = parallel;
+    void setComputeBestPossibleActionConcurrently( final boolean concurrency ) {
+        computeBestPossibleActionConcurrently = concurrency;
     }
 
     /**

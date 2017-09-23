@@ -268,7 +268,7 @@ class ConcurrencyExperiment_Basic
         final LearningExperiment experiment = new ConcurrencyExperiment_Basic();
         experiment.setAlpha(currentConfig.getAlphas());
         experiment.setConcurrencyInLayer(currentConfig.getConcurrencyInLayer());
-        experiment.setConcurrencyInComputeBestPossibleAction(currentConfig.isConcurrencyInEvaluate());
+        experiment.setComputeBestPossibleActionConcurrently(currentConfig.isConcurrencyInEvaluate());
         experiment.setLearningRateAdaptationToAnnealing(500_000);
         experiment.setLambda(0.7);
         experiment.setEligibilityTraceLength(-1);
@@ -278,7 +278,7 @@ class ConcurrencyExperiment_Basic
         experiment.setSaveEvery(10_000); //no se guarda nada
         experiment.setSaveBackupEvery(10_000); //no se hacen backup
         experiment.setInitializePerceptronRandomized(false);
-        experiment.setConcurrencyInComputeBestPossibleAction(false);
+        experiment.setComputeBestPossibleActionConcurrently(false);
         experiment.createLogs(false);
         experiment.setStatisticsOnly(false);
         experiment.setRunStatisticsForBackups(false);

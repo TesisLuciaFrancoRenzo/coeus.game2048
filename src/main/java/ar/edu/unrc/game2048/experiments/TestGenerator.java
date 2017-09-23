@@ -84,8 +84,8 @@ class TestGenerator {
             final List< Double >  gammaList                                      = ArgumentLoader.parseDoubleArray(arguments.getArg("gammaList"));
             final boolean[]       concurrentLayer                                =
                     ArgumentLoader.parseBooleanArray(arguments.getArg("concurrentLayerList"));
-            final boolean         concurrencyInComputeBestPossibleAction         =
-                    Boolean.parseBoolean(arguments.getArg("concurrencyInComputeBestPossibleAction"));
+            final boolean         computeBestPossibleActionConcurrently         =
+                    Boolean.parseBoolean(arguments.getArg("computeBestPossibleActionConcurrently"));
             final List< Double >  whenStartToExplore                             =
                     ArgumentLoader.parseDoubleArray(arguments.getArg("whenStartToExplore"));
             List< Integer >       interpolatedExplorationRateStartInterpolation  = null;
@@ -145,7 +145,7 @@ class TestGenerator {
                     accumulatingTraces,
                     filePath,
                     concurrentLayer,
-                    concurrencyInComputeBestPossibleAction);
+                    computeBestPossibleActionConcurrently);
             milliseconds = System.currentTimeMillis() - milliseconds;
 
             final long   hs      = milliseconds / 3_600_000L;
@@ -193,7 +193,7 @@ class TestGenerator {
             final boolean accumulatingTraces,
             final String filePath,
             final boolean[] concurrentLayer,
-            final boolean concurrencyInComputeBestPossibleAction
+            final boolean computeBestPossibleActionConcurrently
     ) {
         final Collection< GeneratorConfig > experiments = new ArrayList<>();
         int                                 number      = 0;
@@ -366,7 +366,7 @@ class TestGenerator {
                                     filePath,
                                     concurrentLayer,
                                     expConfig,
-                                    concurrencyInComputeBestPossibleAction);
+                                    computeBestPossibleActionConcurrently);
                         }
                     });
                 }
@@ -391,6 +391,6 @@ class TestGenerator {
                 filePath,
                 concurrentLayer,
                 expConfig,
-                concurrencyInComputeBestPossibleAction));
+                computeBestPossibleActionConcurrently));
     }
 }

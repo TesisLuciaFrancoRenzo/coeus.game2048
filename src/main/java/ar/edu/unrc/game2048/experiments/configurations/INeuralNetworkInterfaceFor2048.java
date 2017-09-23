@@ -154,7 +154,7 @@ class INeuralNetworkInterfaceFor2048
         final Action bestAction = (Action) TDLambdaLearning.computeBestPossibleAction(game, ELearningStyle.AFTER_STATE,
                 game.getBoard(),
                 possibleActions,
-                learningMethod.isComputeParallelBestPossibleAction(),
+                learningMethod.isComputeBestPossibleActionConcurrently(),
                 random,
                 null).getAction();
         switch ( bestAction ) {

@@ -166,7 +166,7 @@ class GeneratorConfig {
             final String filePath,
             final boolean[] concurrentLayer,
             final boolean replaceEligibilityTraces,
-            final boolean concurrencyInComputeBestPossibleAction
+            final boolean computeBestPossibleActionConcurrently
     ) {
         experiment.setCanCollectStatistics(canCollectStatistics);
         experiment.setStatisticsOnly(statisticsOnly);
@@ -188,7 +188,7 @@ class GeneratorConfig {
                     explorationRateFinishInterpolation);
         }
         experiment.setInitializePerceptronRandomized(false);
-        experiment.setConcurrencyInComputeBestPossibleAction(concurrencyInComputeBestPossibleAction);
+        experiment.setComputeBestPossibleActionConcurrently(computeBestPossibleActionConcurrently);
         experiment.setConcurrencyInLayer(concurrentLayer);
         experiment.setTileToWinForStatistics(tileToWinForStatistics);
         if ( annealingAlpha == NO_ANNEALING ) {
@@ -235,7 +235,7 @@ class GeneratorConfig {
             final String filePath,
             final boolean[] concurrentLayer,
             final GeneratorConfig expConfig,
-            final boolean concurrencyInComputeBestPossibleAction
+            final boolean computeBestPossibleActionConcurrently
     ) {
         try {
             final String explorationRateString = "-w" + expConfig.getWhenStartToExplore() + ( ( explorationRateList != null )
@@ -334,7 +334,7 @@ class GeneratorConfig {
                     newFilePath,
                     concurrentLayer,
                     expConfig.isReplaceTraces(),
-                    concurrencyInComputeBestPossibleAction);
+                    computeBestPossibleActionConcurrently);
         } catch ( NoSuchMethodException | ClassCastException | InstantiationException | IllegalAccessException | IllegalArgumentException |
                 InvocationTargetException ex ) {
             Logger.getLogger(TestGenerator.class.getName()).log(Level.SEVERE, null, ex);
