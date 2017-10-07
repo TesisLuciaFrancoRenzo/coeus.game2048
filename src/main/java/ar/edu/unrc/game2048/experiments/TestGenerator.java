@@ -31,7 +31,8 @@ import java.util.logging.Logger;
 import static ar.edu.unrc.game2048.experiments.GeneratorConfig.runOneConfig;
 
 /**
- * Tests parametrizables mediante parámetros, útil para correr variedades de simulaciones sin recompilar el programa.
+ * Tests parametrizables, útil para correr diferentes instancias de {@link ar.edu.unrc.coeus.tdlearning.learning.TDLambdaLearning} sin recompilar el
+ * programa.
  *
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
