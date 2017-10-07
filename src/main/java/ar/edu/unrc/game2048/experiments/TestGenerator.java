@@ -47,7 +47,6 @@ class TestGenerator {
     public static
     void main( final String... args )
             throws Exception {
-        //============================== fin de configuraciones manuales ==================================
 
         if ( args.length == 0 ) {
             System.err.println("No se encuentran parámetros de configuración");
