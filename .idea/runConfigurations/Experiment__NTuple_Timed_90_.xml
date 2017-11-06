@@ -1,0 +1,23 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Experiment: NTuple Timed 90%" type="Application" factoryName="Application">
+    <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+      <pattern>
+        <option name="PATTERN" value="ar.edu.unrc.game2048.experiments.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <extension name="org.jetbrains.fluid.java.FluidRunConfigurationExtension" fluid.enabledBundledTracers="false" fluid.enabledBundledTracers.list="" />
+    <option name="MAIN_CLASS_NAME" value="ar.edu.unrc.game2048.experiments.TestGenerator" />
+    <option name="VM_PARAMETERS" value="" />
+    <option name="PROGRAM_PARAMETERS" value="experimentDirName=NTuple-Timed90 experimentClassNameList=[ConfigNTupleBasicTanH_32768] createLogs=false canCollectStatistics=false repetitions=10 maxTrainingThreads=1 gamesToPlay=1000000 winRateLimit=90.0 gamesToPlayPerThreadForStats=1000 saveEvery=5000 saveBackupEvery=15000 statisticsOnly=false simulationsForStatistics=8 tileToWinForStatistics=2048 runBackupStatistics=true lambdaList=[0.0] eligibilityTraceLength=-1 replacingTraces=true accumulatingTraces=false annealingAlphaList=[400000] alphaList=[0.005] gammaList=[1] concurrentLayerList=[false,false] computeBestPossibleActionConcurrently=false whenStartToExplore=[0.5] explorationRateInitialValueList=[0.005] explorationRateFinalValuesList=[0.0005] explorationRateStartInterpolationList=[0] explorationRateFinishInterpolationList=[400000]" />
+    <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
+    <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+    <option name="ALTERNATIVE_JRE_PATH" />
+    <option name="ENABLE_SWING_INSPECTOR" value="false" />
+    <option name="ENV_VARIABLES" />
+    <option name="PASS_PARENT_ENVS" value="true" />
+    <module name="coeus.game2048_main" />
+    <envs />
+    <method />
+  </configuration>
+</component>

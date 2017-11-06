@@ -125,6 +125,7 @@ class GeneratorConfig {
      * @param annealingAlpha
      * @param gamma
      * @param gamesToPlay
+     * @param winRateLimit
      * @param saveEvery
      * @param saveBackupEvery
      * @param gamesToPlayPerThreadForStatistics
@@ -144,6 +145,7 @@ class GeneratorConfig {
             final int numberForShow,
             final LearningExperiment experiment,
             final boolean statisticsOnly,
+            final boolean ignoreStatistics,
             final boolean runStatisticsForBackups,
             final boolean createLogs,
             final double lambda,
@@ -152,6 +154,7 @@ class GeneratorConfig {
             final int annealingAlpha,
             final double gamma,
             final int gamesToPlay,
+            final double winRateLimit,
             final int saveEvery,
             final int saveBackupEvery,
             final int gamesToPlayPerThreadForStatistics,
@@ -170,6 +173,7 @@ class GeneratorConfig {
     ) {
         experiment.setCanCollectStatistics(canCollectStatistics);
         experiment.setStatisticsOnly(statisticsOnly);
+        experiment.setIgnoreStatistics(ignoreStatistics);
         experiment.setRunStatisticsForBackups(runStatisticsForBackups);
         experiment.createLogs(createLogs);
         experiment.setLambda(lambda);
@@ -197,6 +201,7 @@ class GeneratorConfig {
             experiment.setLearningRateAdaptationToAnnealing(annealingAlpha);
         }
         experiment.setGamesToPlay(gamesToPlay);
+        experiment.setWinRateLimit(winRateLimit);
         experiment.setSaveEvery(saveEvery);
         experiment.setSaveBackupEvery(saveBackupEvery);
         experiment.setGamesToPlayPerThreadForStatistics(gamesToPlayPerThreadForStatistics);
@@ -224,8 +229,10 @@ class GeneratorConfig {
             final String experimentDirName,
             final boolean statisticsOnly,
             final boolean runStatisticsForBackups,
+            final boolean ignoreStatistics,
             final boolean createLogs,
             final int gamesToPlay,
+            final double winRateLimit,
             final int saveEvery,
             final int saveBackupEvery,
             final int gamesToPlayPerThreadForStatistics,
@@ -311,7 +318,7 @@ class GeneratorConfig {
             configAndExecute(expConfig.isCanCollectStatistics(),
                     expConfig.getNumber(),
                     cloneExperiment,
-                    statisticsOnly,
+                    statisticsOnly, ignoreStatistics,
                     runStatisticsForBackups,
                     createLogs,
                     expConfig.getLambda(),
@@ -319,7 +326,7 @@ class GeneratorConfig {
                     expConfig.getAlpha(),
                     expConfig.getAnnealingAlpha(),
                     expConfig.getGamma(),
-                    gamesToPlay,
+                    gamesToPlay, winRateLimit,
                     saveEvery,
                     saveBackupEvery,
                     gamesToPlayPerThreadForStatistics,

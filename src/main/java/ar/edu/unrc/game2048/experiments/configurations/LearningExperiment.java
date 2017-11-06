@@ -25,6 +25,7 @@ import ar.edu.unrc.coeus.tdlearning.learning.TDLambdaLearning;
 import ar.edu.unrc.coeus.tdlearning.training.ntuple.NTupleSystem;
 import ar.edu.unrc.coeus.utils.StatisticCalculator;
 import ar.edu.unrc.game2048.Game2048;
+import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
 import java.io.*;
@@ -49,88 +50,90 @@ class LearningExperiment {
     /**
      * Nombre para el archivo salvado con mejor entrenamiento hasta el momento
      */
-    public static final String                         BEST_TRAINED                          = "_best_trained";
+    public static final String                     BEST_TRAINED                          = "_best_trained";
     /**
      * Extensión de las configuraciones de entrenamiento del experimento.
      */
-    public static final String                         CONFIG                                = "_config";
-    public static final String                         DATE_FILE_FORMATTER_PATTERN           = "dd-MM-yyyy_HH'h'mm'm'ss's'";
-    public static final String                         DATE_FORMATTER_PATTERN                = "dd/MM/yyyy HH:mm:ss";
+    public static final String                     CONFIG                                = "_config";
+    public static final String                     DATE_FILE_FORMATTER_PATTERN           = "dd-MM-yyyy_HH'h'mm'm'ss's'";
+    public static final String                     DATE_FORMATTER_PATTERN                = "dd/MM/yyyy HH:mm:ss";
     /**
      * Nombre del archivo para las salidas de errores.
      */
-    public static final String                         ERROR_DUMP                            = "ERROR_DUMP";
-    public static final String                         HISTORY_DUMP                          = "HISTORY_DUMP";
+    public static final String                     ERROR_DUMP                            = "ERROR_DUMP";
+    public static final String                     HISTORY_DUMP                          = "HISTORY_DUMP";
     /**
      * Nombre del archivo con los datos de la ultima red neuronal guardada en disco.
      */
-    public static final String                         LAST_SAVE_DATA                        = "_last_save_data";
+    public static final String                     LAST_SAVE_DATA                        = "_last_save_data";
     /**
      * Nombre que se le agrega a los archivos de redes neuronales inicializados sin entrenamiento, para comparar al final del experimento con la
      * versión entrenada.
      */
-    public static final String                         RANDOM                                = "_random";
+    public static final String                     RANDOM                                = "_random";
     /**
      * Nombre que se le agrega a los archivos de redes neuronales con entrenamiento.
      */
-    public static final String                         TRAINED                               = "_trained";
+    public static final String                     TRAINED                               = "_trained";
     /**
      * Formato para fechas.
      */
-    private final       DateFormat                     dateFormat                            = new SimpleDateFormat(DATE_FORMATTER_PATTERN);
-    private final       DecimalFormat                  decimalFormat                         = new DecimalFormat("#.###");
+    private final       DateFormat                 dateFormat                            = new SimpleDateFormat(DATE_FORMATTER_PATTERN);
+    private final       DecimalFormat              decimalFormat                         = new DecimalFormat("#.###");
     /**
      * Formato para fechas en los nombres de archivos.
      */
-    private final       DateFormat                     simpleDateFormat                      = new SimpleDateFormat(DATE_FILE_FORMATTER_PATTERN);
+    private final       DateFormat                 simpleDateFormat                      = new SimpleDateFormat(DATE_FILE_FORMATTER_PATTERN);
     /**
      * Experimento encargad de las estadísticas.
      */
-    protected           StatisticExperiment            statisticExperiment                   = null;
-    private             double[]                       alpha                                 = null;
-    private             int                            annealingT                            = 0;
-    private             int                            backupNumber                          = 0;
-    private             int                            bestGame                              = 0;
-    private             double                         bestMaxTile                           = 0.0;
-    private             StatisticCalculator            bestPossibleActionTimes               = null;
-    private             double                         bestWinRate                           = 0.0;
-    private             boolean                        canCollectStatistics                  = false;
-    private             boolean                        computeBestPossibleActionConcurrently = false;
-    private             boolean[]                      concurrencyInLayer                    = null;
-    private             long                           elapsedTimeMilliseconds               = 0L;
-    private             int                            eligibilityTraceLength                = -1;
-    private             String                         experimentName                        = null;
-    private             EExplorationRateAlgorithms     explorationRate                       = null;
-    private             double                         explorationRateFinalValue             = 0.0;
-    private             int                            explorationRateFinishDecrementing     = 0;
-    private             double                         explorationRateInitialValue           = 0.0;
-    private             int                            explorationRateStartDecrementing      = 0;
-    private             boolean                        exportToExcel                         = true;
-    private             int                            gamesToPlay                           = 0;
-    private             int                            gamesToPlayPerThreadForStatistics     = 0;
-    private             double                         gamma                                 = 0.0;
-    private             boolean                        initializePerceptronRandomized        = false;
-    private             double                         lambda                                = 0.0;
-    private             int                            lastSavedGamePlayedNumber             = 0;
-    private             TDLambdaLearning               learningAlgorithm                     = null;
-    private             ELearningRateAdaptation        learningRateAdaptation                = null;
-    private             boolean                        logsActivated                         = false;
-    private             StatisticCalculator            maxTileEstimator                      = null;
-    private             StatisticCalculator            maxTurnAvg                            = null;
-    private             INeuralNetworkInterfaceFor2048 neuralNetworkInterfaceFor2048         = null;
-    private             String                         neuralNetworkName                     = null;
-    private             boolean                        replaceEligibilityTraces              = false;
-    private             boolean                        runStatisticsForBackups               = false;
-    private             int                            sampleSizeForEstimation               = 2_000;
-    private             int                            saveBackupEvery                       = 0;
-    private             int                            saveEvery                             = 0;
-    private             int                            simulationsForStatistics              = 0;
-    private             boolean                        statisticsOnly                        = false;
-    private             int                            tileToWinForStatistics                = 2_048;
-    private             int                            tileToWinForTraining                  = 0;
-    private             StatisticCalculator            trainingTimes                         = null;
-    private             double                         whenStartToExplore                    = 1.0d;
-    private             StatisticCalculator            winRateEstimator                      = null;
+    protected           StatisticExperiment        statisticExperiment                   = null;
+    private             double[]                   alpha                                 = null;
+    private             int                        annealingT                            = 0;
+    private             int                        backupNumber                          = 0;
+    private             int                        bestGame                              = 0;
+    private             double                     bestMaxTile                           = 0.0;
+    private             StatisticCalculator        bestPossibleActionTimes               = null;
+    private             double                     bestWinRate                           = 0.0;
+    private             boolean                    canCollectStatistics                  = false;
+    private             boolean                    computeBestPossibleActionConcurrently = false;
+    private             boolean[]                  concurrencyInLayer                    = null;
+    private             long                       elapsedTimeMilliseconds               = 0L;
+    private             int                        eligibilityTraceLength                = -1;
+    private             String                     experimentName                        = null;
+    private             EExplorationRateAlgorithms explorationRate                       = null;
+    private             double                     explorationRateFinalValue             = 0.0;
+    private             int                        explorationRateFinishDecrementing     = 0;
+    private             double                     explorationRateInitialValue           = 0.0;
+    private             int                        explorationRateStartDecrementing      = 0;
+    private             boolean                    exportToExcel                         = true;
+    private             int                        gamesToPlay                           = 0;
+    private             int                        gamesToPlayPerThreadForStatistics     = 0;
+    private             double                     gamma                                 = 0.0;
+    private boolean ignoreStatistics;
+    private boolean                        initializePerceptronRandomized = false;
+    private double                         lambda                         = 0.0;
+    private int                            lastSavedGamePlayedNumber      = 0;
+    private TDLambdaLearning               learningAlgorithm              = null;
+    private ELearningRateAdaptation        learningRateAdaptation         = null;
+    private boolean                        logsActivated                  = false;
+    private StatisticCalculator            maxTileEstimator               = null;
+    private StatisticCalculator            maxTurnAvg                     = null;
+    private INeuralNetworkInterfaceFor2048 neuralNetworkInterfaceFor2048  = null;
+    private String                         neuralNetworkName              = null;
+    private boolean                        replaceEligibilityTraces       = false;
+    private boolean                        runStatisticsForBackups        = false;
+    private int                            sampleSizeForEstimation        = 2_000;
+    private int                            saveBackupEvery                = 0;
+    private int                            saveEvery                      = 0;
+    private int                            simulationsForStatistics       = 0;
+    private boolean                        statisticsOnly                 = false;
+    private int                            tileToWinForStatistics         = 2_048;
+    private int                            tileToWinForTraining           = 0;
+    private StatisticCalculator            trainingTimes                  = null;
+    private double                         whenStartToExplore             = 1.0d;
+    private StatisticCalculator            winRateEstimator               = null;
+    private double winRateLimit;
 
     private static
     void printErrorInFile(
@@ -182,6 +185,25 @@ class LearningExperiment {
     public
     String createPathToDir( final String experimentPath ) {
         return experimentPath + neuralNetworkInterfaceFor2048.getLibName() + File.separator + experimentName + File.separator;
+    }
+
+    private
+    void exportConfig(
+            final File file,
+            final int gameNumber
+    )
+            throws IOException {
+        try ( BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8")) ) {
+            final long   hs      = elapsedTimeMilliseconds / 3_600_000L;
+            final long   hsRest  = elapsedTimeMilliseconds % 3_600_000L;
+            final long   min     = hsRest / 60_000L;
+            final long   restMin = hsRest % 60_000L;
+            final double seg     = restMin / 1_000.0d;
+            out.write(Integer.toString(gameNumber) + '\n' + Integer.toString(backupNumber) + '\n' + Long.toString(elapsedTimeMilliseconds) + '\n' +
+                      Integer.toString(bestGame) + '\n' + Double.toString(bestWinRate) + '\n' + Double.toString(bestMaxTile) +
+                      "\n\ntiempo de ejecución = " + hs + "h " + min + "m " + decimalFormat.format(seg) + "s (total: " + elapsedTimeMilliseconds +
+                      " ms).");
+        }
     }
 
     /**
@@ -255,16 +277,56 @@ class LearningExperiment {
         return experimentName;
     }
 
-    /**
-     * Valores que se deben inicializar del experimento, por ejemplo: <ul> <li>private double alpha;</li> <li>private double lambda;</li> <li>private
-     * int gamesToPlay;</li> <li>private int saveBackupEvery;</li> <li>private int tileToWinForTraining;</li> <li>private String experimentName;</li>
-     * <li>private String neuralNetworkName;</li> <li>private EncogConfiguration2048 perceptronConfiguration; </li> <li>private
-     * INeuralNetworkInterfaceFor2048 neuralNetworkInterfaceFor2048;</li> <li>private TDTrainerMethod trainerMethod;</li> <li>private int
-     * gamesToPlayPerThreadForStatistics;</li> <li>private int simulationsForStatistics;</li> <li>private boolean statisticsOnly;</li> <li>private
-     * TDLambdaLearning learningAlgorithm</li> </ul> etc.
-     */
-    public abstract
-    void initialize();
+    @NotNull
+    private
+    File getLatestDataFromFile( String filePath )
+            throws IOException {
+        final File lastSaveDataFile = new File(filePath + LAST_SAVE_DATA + ".txt");
+        if ( lastSaveDataFile.exists() ) {
+            try ( BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(lastSaveDataFile), "UTF-8")) ) {
+                String line = reader.readLine();
+                if ( line == null ) {
+                    throw new IllegalArgumentException("el archivo de configuración no tiene un formato válido");
+                }
+                lastSavedGamePlayedNumber = Integer.parseInt(line);
+                line = reader.readLine();
+                if ( line == null ) {
+                    throw new IllegalArgumentException("el archivo de configuración no tiene un formato válido");
+                }
+                backupNumber = Integer.parseInt(line);
+                line = reader.readLine();
+                if ( line == null ) {
+                    throw new IllegalArgumentException("el archivo de configuración no tiene un formato válido");
+                }
+                elapsedTimeMilliseconds = Long.parseLong(line);
+                try {
+                    line = reader.readLine();
+                    if ( line == null ) {
+                        throw new IllegalArgumentException("el archivo de configuración no tiene un formato válido");
+                    }
+                    bestGame = Integer.parseInt(line);
+                    line = reader.readLine();
+                    if ( line == null ) {
+                        throw new IllegalArgumentException("el archivo de configuración no tiene un formato válido");
+                    }
+                    bestWinRate = Double.parseDouble(line);
+                } catch ( final Exception ignored ) {
+                    bestGame = 0;
+                    bestWinRate = 0;
+                }
+                try {
+                    line = reader.readLine();
+                    if ( line == null ) {
+                        throw new IllegalArgumentException("el archivo de configuración no tiene un formato válido");
+                    }
+                    bestMaxTile = Double.parseDouble(line);
+                } catch ( final Exception ignored ) {
+                    bestMaxTile = 0;
+                }
+            }
+        }
+        return lastSaveDataFile;
+    }
 
     /**
      * @return cantidad de partidos a jugar en el experimento.
@@ -330,6 +392,11 @@ class LearningExperiment {
     public
     void setLambda( final double lambda ) {
         this.lambda = lambda;
+    }
+
+    public
+    double getWinRateLimit() {
+        return winRateLimit;
     }
 
     /**
@@ -502,19 +569,25 @@ class LearningExperiment {
         this.whenStartToExplore = whenStartToExplore;
     }
 
-    /**
-     * Establece el nombre del experimento basado en el nombre de la clase {@code experimentClass}.
-     *
-     * @param experimentClass clase de la cual extraer el nombre del experimento.
-     */
     public
-    void setExperimentName( final Class experimentClass ) {
-        String    className = experimentClass.getName();
-        final int lastDot   = className.lastIndexOf('.');
-        if ( lastDot != -1 ) {
-            className = className.substring(lastDot + 1);
-        }
-        experimentName = className;
+    void setWinRateLimit( final double winRateLimit ) {
+        this.winRateLimit = winRateLimit;
+    }
+
+    /**
+     * Valores que se deben inicializar del experimento, por ejemplo: <ul> <li>private double alpha;</li> <li>private double lambda;</li> <li>private
+     * int gamesToPlay;</li> <li>private int saveBackupEvery;</li> <li>private int tileToWinForTraining;</li> <li>private String experimentName;</li>
+     * <li>private String neuralNetworkName;</li> <li>private EncogConfiguration2048 perceptronConfiguration; </li> <li>private
+     * INeuralNetworkInterfaceFor2048 neuralNetworkInterfaceFor2048;</li> <li>private TDTrainerMethod trainerMethod;</li> <li>private int
+     * gamesToPlayPerThreadForStatistics;</li> <li>private int simulationsForStatistics;</li> <li>private boolean statisticsOnly;</li> <li>private
+     * TDLambdaLearning learningAlgorithm</li> </ul> etc.
+     */
+    public abstract
+    void initialize();
+
+    public
+    boolean isIgnoreStatistics() {
+        return ignoreStatistics;
     }
 
     /**
@@ -548,47 +621,8 @@ class LearningExperiment {
     }
 
     public
-    boolean isReplaceEligibilityTraces() {
-        return replaceEligibilityTraces;
-    }
-
-    public
-    void setReplaceEligibilityTraces( final boolean replaceEligibilityTraces ) {
-        this.replaceEligibilityTraces = replaceEligibilityTraces;
-    }
-
-    /**
-     * @return true si se debe realizar estadísticas sobre las copias de las redes neuronales, realizadas a través del tiempo de entrenamiento total,
-     * para notar su progreso.
-     */
-    public
-    boolean isRunStatisticsForBackups() {
-        return runStatisticsForBackups;
-    }
-
-    /**
-     * @param runStatisticsForBackups true si se debe realizar estadísticas sobre las copias de las redes neuronales, realizadas a través del tiempo
-     *                                de entrenamiento total, para notar su progreso.
-     */
-    public
-    void setRunStatisticsForBackups( final boolean runStatisticsForBackups ) {
-        this.runStatisticsForBackups = runStatisticsForBackups;
-    }
-
-    /**
-     * @return true si solo se están ejecutando experimentos de cálculos de estadísticas.
-     */
-    public
-    boolean isStatisticsOnly() {
-        return statisticsOnly;
-    }
-
-    /**
-     * @param statisticsOnly true si solo se están ejecutando experimentos de cálculos de estadísticas.
-     */
-    public
-    void setStatisticsOnly( final boolean statisticsOnly ) {
-        this.statisticsOnly = statisticsOnly;
+    void setIgnoreStatistics( boolean ignoreStatistics ) {
+        this.ignoreStatistics = ignoreStatistics;
     }
 
     /**
@@ -635,55 +669,9 @@ class LearningExperiment {
             backupNumber = 0;
             lastSavedGamePlayedNumber = 0;
             elapsedTimeMilliseconds = 0;
-            final File lastSaveDataFile = new File(filePath + LAST_SAVE_DATA + ".txt");
-            if ( lastSaveDataFile.exists() ) {
-                try ( BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(lastSaveDataFile), "UTF-8")) ) {
-                    String line = reader.readLine();
-                    if ( line == null ) {
-                        throw new IllegalArgumentException("el archivo de configuración no tiene un formato válido");
-                    }
-                    lastSavedGamePlayedNumber = Integer.parseInt(line);
-                    line = reader.readLine();
-                    if ( line == null ) {
-                        throw new IllegalArgumentException("el archivo de configuración no tiene un formato válido");
-                    }
-                    backupNumber = Integer.parseInt(line);
-                    line = reader.readLine();
-                    if ( line == null ) {
-                        throw new IllegalArgumentException("el archivo de configuración no tiene un formato válido");
-                    }
-                    elapsedTimeMilliseconds = Long.parseLong(line);
-                    try {
-                        line = reader.readLine();
-                        if ( line == null ) {
-                            throw new IllegalArgumentException("el archivo de configuración no tiene un formato válido");
-                        }
-                        bestGame = Integer.parseInt(line);
-                        line = reader.readLine();
-                        if ( line == null ) {
-                            throw new IllegalArgumentException("el archivo de configuración no tiene un formato válido");
-                        }
-                        bestWinRate = Double.parseDouble(line);
-                    } catch ( final Exception ignored ) {
-                        bestGame = 0;
-                        bestWinRate = 0;
-                    }
-                    try {
-                        line = reader.readLine();
-                        if ( line == null ) {
-                            throw new IllegalArgumentException("el archivo de configuración no tiene un formato válido");
-                        }
-                        bestMaxTile = Double.parseDouble(line);
-                    } catch ( final Exception ignored ) {
-                        bestMaxTile = 0;
-                    }
-                }
-            }
+            File lastSaveDataFile = getLatestDataFromFile(filePath);
 
-            int zeroNumbers = 1;
-            if ( !statisticsOnly ) {
-                zeroNumbers = Integer.toString(gamesToPlay / saveBackupEvery).length();
-            }
+            int zeroNumbers = Integer.toString(gamesToPlay / saveBackupEvery).length();
 
             boolean    backupRandomPerceptron = false;
             File       randomPerceptronFile   = null;
@@ -734,39 +722,121 @@ class LearningExperiment {
                     tileToWinForTraining,
                     printHistory);
 
-            if ( !statisticsOnly ) {
-                //comenzamos a entrenar y guardar estadisticas en el archivo de log
-                if ( logsActivated ) {
-                    try ( PrintStream printStream = new PrintStream(logFile, "UTF-8") ) {
-                        training(numberForShow, game, printStream, perceptronFile, lastSaveDataFile, filePath, zeroNumbers, historyFile);
+            int originalGamesToPlay = gamesToPlay;
+            if ( winRateLimit <= 0 ) {
+                if ( !statisticsOnly ) {
+                    //comenzamos a entrenar y guardar estadisticas en el archivo de log
+                    if ( logsActivated ) {
+                        try ( PrintStream printStream = new PrintStream(logFile, "UTF-8") ) {
+                            training(numberForShow, game, printStream, perceptronFile, lastSaveDataFile, filePath, zeroNumbers, historyFile, false);
+                        }
+                    } else {
+                        training(numberForShow, game, null, perceptronFile, lastSaveDataFile, filePath, zeroNumbers, historyFile, false);
                     }
-                } else {
-                    training(numberForShow, game, null, perceptronFile, lastSaveDataFile, filePath, zeroNumbers, historyFile);
                 }
-            }
 
-            System.out.println("Training Finished.");
+                System.out.println("Training Finished.");
 
-            if ( ( simulationsForStatistics > 0 ) && ( gamesToPlayPerThreadForStatistics > 0 ) ) {
-                statisticExperiment = new StatisticExperiment(this) {
-                    @Override
-                    protected
-                    void initializeStatistics() {
-                        setGamesToPlayPerThread(gamesToPlayPerThreadForStatistics);
-                        saveBackupEvery(saveBackupEvery);
-                        setSimulations(simulationsForStatistics);
-                        setLearningMethod(learningAlgorithm);
-                        setTileToWinForStatistics(tileToWinForStatistics);
-                        setExportToExcel(exportToExcel);
-                        setRunStatisticsForBackups(runStatisticsForBackups);
+                if ( !ignoreStatistics && ( simulationsForStatistics > 0 ) && ( gamesToPlayPerThreadForStatistics > 0 ) ) {
+                    statisticExperiment = new StatisticExperiment(this) {
+                        @Override
+                        protected
+                        void initializeStatistics() {
+                            setGamesToPlayPerThread(gamesToPlayPerThreadForStatistics);
+                            saveBackupEvery(saveBackupEvery);
+                            setSimulations(simulationsForStatistics);
+                            setLearningMethod(learningAlgorithm);
+                            setTileToWinForStatistics(tileToWinForStatistics);
+                            setExportToExcel(exportToExcel);
+                            setRunStatisticsForBackups(runStatisticsForBackups);
+                        }
+                    };
+                    statisticExperiment.setFileName(experimentName);
+                    statisticExperiment.start(experimentPath, createPerceptronFile, printHistory);
+                }
+            } else {
+                gamesToPlay = 0;
+                while ( bestWinRate < winRateLimit ) {
+                    lastSaveDataFile = getLatestDataFromFile(filePath);
+                    gamesToPlay = gamesToPlay + saveBackupEvery;
+                    //comenzamos a entrenar y guardar estadisticas en el archivo de log
+                    if ( logsActivated ) {
+                        try ( PrintStream printStream = new PrintStream(logFile, "UTF-8") ) {
+                            training(numberForShow, game, printStream, perceptronFile, lastSaveDataFile, filePath, zeroNumbers, historyFile, true);
+                        }
+                    } else {
+                        training(numberForShow, game, null, perceptronFile, lastSaveDataFile, filePath, zeroNumbers, historyFile, true);
                     }
-                };
-                statisticExperiment.setFileName(experimentName);
-                statisticExperiment.start(experimentPath, createPerceptronFile, printHistory);
+
+                    System.out.println("Training at " + gamesToPlay + " Finished.");
+
+                    statisticExperiment = new StatisticExperiment(this) {
+                        @Override
+                        protected
+                        void initializeStatistics() {
+                            setGamesToPlayPerThread(gamesToPlayPerThreadForStatistics);
+                            saveBackupEvery(saveBackupEvery);
+                            setSimulations(simulationsForStatistics);
+                            setLearningMethod(learningAlgorithm);
+                            setTileToWinForStatistics(tileToWinForStatistics);
+                            setExportToExcel(exportToExcel);
+                            setRunStatisticsForBackups(true);
+                            setBackupStatisticOnly(true);
+                        }
+                    };
+                    statisticExperiment.setFileName(experimentName);
+                    statisticExperiment.start(experimentPath, createPerceptronFile, printHistory);
+                    bestWinRate = statisticExperiment.getWinRate();
+                    exportConfig(lastSaveDataFile, gamesToPlay);
+                }
             }
         } catch ( final Exception ex ) {
             printErrorInFile(ex, new File(bugFilePath));
         }
+    }
+
+    public
+    boolean isReplaceEligibilityTraces() {
+        return replaceEligibilityTraces;
+    }
+
+    public
+    void setReplaceEligibilityTraces( final boolean replaceEligibilityTraces ) {
+        this.replaceEligibilityTraces = replaceEligibilityTraces;
+    }
+
+    /**
+     * @return true si se debe realizar estadísticas sobre las copias de las redes neuronales, realizadas a través del tiempo de entrenamiento total,
+     * para notar su progreso.
+     */
+    public
+    boolean isRunStatisticsForBackups() {
+        return runStatisticsForBackups;
+    }
+
+    /**
+     * @param runStatisticsForBackups true si se debe realizar estadísticas sobre las copias de las redes neuronales, realizadas a través del tiempo
+     *                                de entrenamiento total, para notar su progreso.
+     */
+    public
+    void setRunStatisticsForBackups( final boolean runStatisticsForBackups ) {
+        this.runStatisticsForBackups = runStatisticsForBackups;
+    }
+
+    /**
+     * @return true si solo se están ejecutando experimentos de cálculos de estadísticas.
+     */
+    public
+    boolean isStatisticsOnly() {
+        return statisticsOnly;
+    }
+
+    /**
+     * @param statisticsOnly true si solo se están ejecutando experimentos de cálculos de estadísticas.
+     */
+    public
+    void setStatisticsOnly( final boolean statisticsOnly ) {
+        this.statisticsOnly = statisticsOnly;
     }
 
     @SuppressWarnings( "HardcodedFileSeparator" )
@@ -782,6 +852,7 @@ class LearningExperiment {
                                       ? String.valueOf(neuralNetworkInterfaceFor2048.getPerceptronConfiguration().containBias())
                                       : "false" ) + '\n');
             out.write("gamesToPlay: " + gamesToPlay + '\n');
+            out.write("winRateLimit: " + winRateLimit + '\n');
             out.write("gamesToPlayPerThreadForStatistics: " + gamesToPlayPerThreadForStatistics + '\n');
             out.write("statisticsOnly: " + statisticsOnly + '\n');
             out.write("simulationsForStatistics: " + simulationsForStatistics + '\n');
@@ -842,6 +913,14 @@ class LearningExperiment {
     }
 
     /**
+     * @param experimentName nombre del experimento.
+     */
+    public
+    void setExperimentName( final String experimentName ) {
+        this.experimentName = experimentName;
+    }
+
+    /**
      * @param concurrency true si se debe activar concurrencia en los cálculos de elegir la mejor acción posible.
      */
     public
@@ -850,11 +929,18 @@ class LearningExperiment {
     }
 
     /**
-     * @param experimentName nombre del experimento.
+     * Establece el nombre del experimento basado en el nombre de la clase {@code experimentClass}.
+     *
+     * @param experimentClass clase de la cual extraer el nombre del experimento.
      */
     public
-    void setExperimentName( final String experimentName ) {
-        this.experimentName = experimentName;
+    void setExperimentName( final Class experimentClass ) {
+        String    className = experimentClass.getName();
+        final int lastDot   = className.lastIndexOf('.');
+        if ( lastDot != -1 ) {
+            className = className.substring(lastDot + 1);
+        }
+        experimentName = className;
     }
 
     /**
@@ -989,7 +1075,8 @@ class LearningExperiment {
             final File lastSaveDataFile,
             final String filePath,
             final int zeroNumbers,
-            final File historyFile
+            final File historyFile,
+            final boolean ignoreBestPerceptronComputations
     )
             throws Exception {
         switch ( learningRateAdaptation ) {
@@ -1018,8 +1105,8 @@ class LearningExperiment {
         }
 
         ByteArrayOutputStream     bestSavedGameCache = new ByteArrayOutputStream();
-        boolean                   needToSaveBestGame = false;
         final StatisticCalculator timePerTurn        = new StatisticCalculator();
+
 
         for ( int i = lastSavedGamePlayedNumber + 1; i <= gamesToPlay; i++ ) {
             final long   start           = System.currentTimeMillis();
@@ -1051,7 +1138,7 @@ class LearningExperiment {
             maxTileEstimator.addSample(game.getMaxNumber());
             maxTurnAvg.addSample(game.getLastTurn());
 
-            final StringBuilder msj = new StringBuilder().append(( needToSaveBestGame ) ? "!! " : "");
+            final StringBuilder msj = new StringBuilder();
             if ( numberForShow == -1 ) {
                 msj.append("Juego número ");
             } else {
@@ -1088,14 +1175,14 @@ class LearningExperiment {
             Double averageWinRate  = winRateEstimator.getFullCapacityAverage();
             if ( averageMaxValue == null ) { averageMaxValue = 0.0d; }
             if ( averageWinRate == null ) { averageWinRate = 0.0d; }
-            if ( ( averageWinRate > bestWinRate ) ||
-                 ( ( averageWinRate >= 100.0d ) && ( averageWinRate >= bestWinRate ) && ( averageMaxValue > bestMaxTile ) ) ) {
+            if ( !ignoreBestPerceptronComputations && ( ( averageWinRate > bestWinRate ) ||
+                                                        ( ( averageWinRate >= 100.0d ) && ( averageWinRate >= bestWinRate ) &&
+                                                          ( averageMaxValue > bestMaxTile ) ) ) ) {
                 bestMaxTile = averageMaxValue;
                 bestGame = i;
                 bestWinRate = averageWinRate;
                 bestSavedGameCache = new ByteArrayOutputStream();
                 neuralNetworkInterfaceFor2048.saveNeuralNetwork(bestSavedGameCache);
-                needToSaveBestGame = true;
                 System.out.println("** ¡NUEVO RECORD! winRate de " + bestWinRate + "% - maxTile " + bestMaxTile + " **");
             }
 
@@ -1105,11 +1192,10 @@ class LearningExperiment {
             boolean writeConfig = false;
             if ( ( ( i % saveEvery ) == 0 ) || ( ( i % saveBackupEvery ) == 0 ) ) {
                 neuralNetworkInterfaceFor2048.saveNeuralNetwork(perceptronFile);
-                if ( needToSaveBestGame && ( bestSavedGameCache.size() > 0 ) ) {
+                if ( bestSavedGameCache.size() > 0 ) {
                     try ( FileOutputStream f2 = new FileOutputStream(filePath + BEST_TRAINED + ".ser", false) ) {
                         bestSavedGameCache.writeTo(f2);
                     }
-                    needToSaveBestGame = false;
                 }
                 System.out.println("============ Perceptron Exportado Exitosamente (SAVE) ============");
                 writeConfig = true;
@@ -1123,17 +1209,7 @@ class LearningExperiment {
                 writeConfig = true;
             }
             if ( writeConfig ) {
-                try ( BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(lastSaveDataFile), "UTF-8")) ) {
-                    final long   hs      = elapsedTimeMilliseconds / 3_600_000L;
-                    final long   hsRest  = elapsedTimeMilliseconds % 3_600_000L;
-                    final long   min     = hsRest / 60_000L;
-                    final long   restMin = hsRest % 60_000L;
-                    final double seg     = restMin / 1_000.0d;
-                    out.write(Integer.toString(i) + '\n' + Integer.toString(backupNumber) + '\n' + Long.toString(elapsedTimeMilliseconds) + '\n' +
-                              Integer.toString(bestGame) + '\n' + Double.toString(bestWinRate) + '\n' + Double.toString(bestMaxTile) +
-                              "\n\ntiempo de ejecución = " + hs + "h " + min + "m " + decimalFormat.format(seg) + "s (total: " +
-                              elapsedTimeMilliseconds + " ms).");
-                }
+                exportConfig(lastSaveDataFile, i);
             }
         }
         if ( learningAlgorithm.canCollectStatistics() ) {

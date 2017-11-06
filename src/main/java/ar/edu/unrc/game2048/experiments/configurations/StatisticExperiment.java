@@ -62,15 +62,16 @@ class StatisticExperiment {
      * Experimento de aprendizaje.
      */
     protected final LearningExperiment learningExperiment;
-    private String           experimentName          = null;
-    private boolean          exportToExcel           = true;
-    private String           fileName                = null;
-    private int              gamesToPlay             = 0;
-    private TDLambdaLearning learningMethod          = null;
-    private double           maxScore                = 0.0;
-    private double           maxTurn                 = 0.0;
-    private double           meanScore               = 0.0;
-    private double           meanTurn                = 0.0;
+    private boolean          backupStatisticOnly = false;
+    private String           experimentName      = null;
+    private boolean          exportToExcel       = true;
+    private String           fileName            = null;
+    private int              gamesToPlay         = 0;
+    private TDLambdaLearning learningMethod      = null;
+    private double           maxScore            = 0.0;
+    private double           maxTurn             = 0.0;
+    private double           meanScore           = 0.0;
+    private double           meanTurn            = 0.0;
     private double           minScore                = 0.0;
     private double           minTurn                 = 0.0;
     private boolean          runStatisticsForBackups = false;
@@ -383,6 +384,36 @@ class StatisticExperiment {
         this.learningMethod = learningMethod;
     }
 
+    public
+    double getMaxScore() {
+        return maxScore;
+    }
+
+    public
+    double getMaxTurn() {
+        return maxTurn;
+    }
+
+    public
+    double getMeanScore() {
+        return meanScore;
+    }
+
+    public
+    double getMeanTurn() {
+        return meanTurn;
+    }
+
+    public
+    double getMinScore() {
+        return minScore;
+    }
+
+    public
+    double getMinTurn() {
+        return minTurn;
+    }
+
     /**
      * @return cantidad de simulaciones a realizar (concurrentemente).
      */
@@ -432,6 +463,11 @@ class StatisticExperiment {
         this.tileToWin = tileToWin;
     }
 
+    public
+    double getWinRate() {
+        return winRate;
+    }
+
     /**
      * Se deben inicializar: <ul> <li>private int delayPerMove;</li> <li>private IPlayingExperiment playingExperiment;</li> <li>private String
      * fileName;</li> </ul> Las siguientes variables se inicializan automáticamente, pero pueden ser modificadas: <ul> <li>private int tileToWin;</li>
@@ -442,6 +478,16 @@ class StatisticExperiment {
      */
     protected abstract
     void initializeStatistics();
+
+    public
+    boolean isBackupStatisticOnly() {
+        return backupStatisticOnly;
+    }
+
+    public
+    void setBackupStatisticOnly( boolean backupStatisticOnly ) {
+        this.backupStatisticOnly = backupStatisticOnly;
+    }
 
     /**
      * Configura las cabeceras de las tablas en la hoja de cálculo.
@@ -687,9 +733,11 @@ class StatisticExperiment {
         processFile(dirPath + experimentName + LearningExperiment.RANDOM, createNeuralNetworkFile, printHistory);
         final StatisticForCalc resultsRandom = getTileStatistics();
 
-        //hacemos estadisticas del mejor perceptron, si es necesario
-        System.out.print("Starting " + experimentName + LearningExperiment.BEST_TRAINED + " Statistics... ");
-        processFile(dirPath + experimentName + LearningExperiment.BEST_TRAINED, createNeuralNetworkFile, printHistory);
+        if ( !backupStatisticOnly ) {
+            //hacemos estadisticas del mejor perceptron, si es necesario
+            System.out.print("Starting " + experimentName + LearningExperiment.BEST_TRAINED + " Statistics... ");
+            processFile(dirPath + experimentName + LearningExperiment.BEST_TRAINED, createNeuralNetworkFile, printHistory);
+        }
 
         //calculamos las estadisticas de los backup si es necesario
         final File[] allFiles = ( new File(dirPath) ).listFiles();

@@ -63,10 +63,11 @@ class TestGenerator {
             final int repetitions        = Integer.parseInt(arguments.getArg("repetitions"));
             final int maxTrainingThreads = Integer.parseInt(arguments.getArg("maxTrainingThreads"));
 
-            final int gamesToPlay                  = Integer.parseInt(arguments.getArg("gamesToPlay"));
-            final int gamesToPlayPerThreadForStats = Integer.parseInt(arguments.getArg("gamesToPlayPerThreadForStats"));
-            final int saveEvery                    = Integer.parseInt(arguments.getArg("saveEvery"));
-            final int saveBackupEvery              = Integer.parseInt(arguments.getArg("saveBackupEvery"));
+            final int    gamesToPlay                  = Integer.parseInt(arguments.getArg("gamesToPlay"));
+            final double winRateLimit                 = Double.parseDouble(arguments.getArg("winRateLimit"));
+            final int    gamesToPlayPerThreadForStats = Integer.parseInt(arguments.getArg("gamesToPlayPerThreadForStats"));
+            final int    saveEvery                    = Integer.parseInt(arguments.getArg("saveEvery"));
+            final int    saveBackupEvery              = Integer.parseInt(arguments.getArg("saveBackupEvery"));
 
             final boolean statisticsOnly           = Boolean.parseBoolean(arguments.getArg("statisticsOnly"));
             final int     simulationsForStatistics = Integer.parseInt(arguments.getArg("simulationsForStatistics"));
@@ -129,7 +130,7 @@ class TestGenerator {
                     statisticsOnly,
                     runBackupStatistics,
                     createLogs,
-                    gamesToPlay,
+                    gamesToPlay, winRateLimit,
                     saveEvery,
                     saveBackupEvery,
                     gamesToPlayPerThreadForStats,
@@ -178,6 +179,7 @@ class TestGenerator {
             final boolean runStatisticsForBackups,
             final boolean createLogs,
             final int gamesToPlay,
+            final double winRateLimit,
             final int saveEvery,
             final int saveBackupEvery,
             final int gamesToPlayPerThreadForStatistics,
@@ -354,14 +356,12 @@ class TestGenerator {
                         while ( ( expConfig = queue.poll() ) != null ) {
                             runOneConfig(experimentDirName,
                                     statisticsOnly,
-                                    false,
+                                    false, true,
                                     createLogs,
-                                    gamesToPlay,
+                                    gamesToPlay, winRateLimit,
                                     saveEvery,
-                                    saveBackupEvery,
-                                    0,
-                                    tileToWinForStatistics,
-                                    0,
+                                    saveBackupEvery, gamesToPlayPerThreadForStatistics,
+                                    tileToWinForStatistics, simulationsForStatistics,
                                     explorationRateList,
                                     filePath,
                                     concurrentLayer,
@@ -379,9 +379,9 @@ class TestGenerator {
 
         experiments.forEach(expConfig -> runOneConfig(experimentDirName,
                 true,
-                runStatisticsForBackups,
+                runStatisticsForBackups, false,
                 createLogs,
-                gamesToPlay,
+                gamesToPlay, winRateLimit,
                 saveEvery,
                 saveBackupEvery,
                 gamesToPlayPerThreadForStatistics,
