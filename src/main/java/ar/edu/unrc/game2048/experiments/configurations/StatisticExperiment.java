@@ -62,16 +62,16 @@ class StatisticExperiment {
      * Experimento de aprendizaje.
      */
     protected final LearningExperiment learningExperiment;
-    private boolean          backupStatisticOnly = false;
-    private String           experimentName      = null;
-    private boolean          exportToExcel       = true;
-    private String           fileName            = null;
-    private int              gamesToPlay         = 0;
-    private TDLambdaLearning learningMethod      = null;
-    private double           maxScore            = 0.0;
-    private double           maxTurn             = 0.0;
-    private double           meanScore           = 0.0;
-    private double           meanTurn            = 0.0;
+    private boolean          backupStatisticOnly     = false;
+    private String           experimentName          = null;
+    private boolean          exportToExcel           = true;
+    private String           fileName                = null;
+    private int              gamesToPlay             = 0;
+    private TDLambdaLearning learningMethod          = null;
+    private double           maxScore                = 0.0;
+    private double           maxTurn                 = 0.0;
+    private double           meanScore               = 0.0;
+    private double           meanTurn                = 0.0;
     private double           minScore                = 0.0;
     private double           minTurn                 = 0.0;
     private boolean          runStatisticsForBackups = false;
@@ -124,16 +124,16 @@ class StatisticExperiment {
                 final Font fontCellTitle = wb.createFont();
                 fontCellTitle.setFontHeightInPoints((short) 10);
                 fontCellTitle.setFontName("Arial");
-                fontCellTitle.setBoldweight(Font.BOLDWEIGHT_BOLD);
+                fontCellTitle.setBold(true);
                 final CellStyle CellStyleTitle = wb.createCellStyle();
                 CellStyleTitle.setWrapText(true);
-                CellStyleTitle.setAlignment(CellStyle.ALIGN_CENTER);
-                CellStyleTitle.setVerticalAlignment(CellStyle.VERTICAL_TOP);
+                CellStyleTitle.setAlignment(HorizontalAlignment.CENTER);
+                CellStyleTitle.setVerticalAlignment(VerticalAlignment.CENTER);
                 CellStyleTitle.setFont(fontCellTitle);
 
                 // Establecemos el tipo de sombreado de nuestra celda
                 CellStyleTitle.setFillBackgroundColor(IndexedColors.LIGHT_CORNFLOWER_BLUE.getIndex());
-                CellStyleTitle.setFillPattern(CellStyle.SOLID_FOREGROUND);
+                CellStyleTitle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
                 final int colStartTitle = 2;
                 final int rowStartTitle = 0;
                 loadTitle(rowStartTitle, colStartTitle, sheet, backupFiles.size(), CellStyleTitle);
@@ -143,13 +143,13 @@ class StatisticExperiment {
                 final CellStyle cellStyle = wb.createCellStyle();
                 cellStyle.setWrapText(true);
                 // We are now ready to set borders for this style. Draw a thin left border
-                cellStyle.setBorderLeft(CellStyle.BORDER_THIN);
+                cellStyle.setBorderLeft(BorderStyle.THIN);
                 // Add medium right border
-                cellStyle.setBorderRight(CellStyle.BORDER_THIN);
+                cellStyle.setBorderRight(BorderStyle.THIN);
                 // Add dashed top border
-                cellStyle.setBorderTop(CellStyle.BORDER_THIN);
+                cellStyle.setBorderTop(BorderStyle.THIN);
                 // Add dotted bottom border
-                cellStyle.setBorderBottom(CellStyle.BORDER_THIN);
+                cellStyle.setBorderBottom(BorderStyle.THIN);
                 //estilo celdas finalizado
 
                 //configuraciones basadas en el spreadsheet
@@ -162,7 +162,7 @@ class StatisticExperiment {
                 for ( int tile = 0; tile <= tiles; tile++ ) {
                     row = sheet.getRow(( tile + rowStart ) - 1);
                     for ( int file = 0; file < backupFiles.size(); file++ ) {
-                        cell = row.createCell(file + colStart, Cell.CELL_TYPE_NUMERIC);
+                        cell = row.createCell(file + colStart, CellType.NUMERIC);
                         cell.setCellStyle(cellStyle);
                         cellDoubleValue = resultsPerFile.get(backupFiles.get(file)).getTileStatistics().get(tile);
                         cell.setCellValue(cellDoubleValue);
@@ -172,7 +172,7 @@ class StatisticExperiment {
                     for ( int tile = 0; tile <= tiles; tile++ ) {
                         row = sheet.getRow(( tile + rowStart ) - 1);
                         final int file = 0;
-                        cell = row.createCell(( file + colStart ) - 1, Cell.CELL_TYPE_NUMERIC);
+                        cell = row.createCell(( file + colStart ) - 1, CellType.NUMERIC);
                         cellDoubleValue = resultsRandom.getTileStatistics().get(tile);
                         cell.setCellStyle(cellStyle);
                         cell.setCellValue(cellDoubleValue);
@@ -185,14 +185,14 @@ class StatisticExperiment {
                 loadTitle(rowStartTitle, colStartTitle, sheet, backupFiles.size(), CellStyleTitle);
                 row = sheet.getRow(rowStart - 1);
                 for ( int file = 0; file < backupFiles.size(); file++ ) {
-                    cell = row.createCell(file + colStart, Cell.CELL_TYPE_NUMERIC);
+                    cell = row.createCell(file + colStart, CellType.NUMERIC);
                     cell.setCellStyle(cellStyle);
                     cellDoubleValue = resultsPerFile.get(backupFiles.get(file)).getMinScore();
                     cell.setCellValue(cellDoubleValue);
                 }
                 if ( resultsRandom != null ) {
                     final int file = 0;
-                    cell = row.createCell(( file + colStart ) - 1, Cell.CELL_TYPE_NUMERIC);
+                    cell = row.createCell(( file + colStart ) - 1, CellType.NUMERIC);
                     cellDoubleValue = resultsRandom.getMinScore();
                     cell.setCellStyle(cellStyle);
                     cell.setCellValue(cellDoubleValue);
@@ -201,14 +201,14 @@ class StatisticExperiment {
                 rowStart = 3;
                 row = sheet.getRow(rowStart - 1);
                 for ( int file = 0; file < backupFiles.size(); file++ ) {
-                    cell = row.createCell(file + colStart, Cell.CELL_TYPE_NUMERIC);
+                    cell = row.createCell(file + colStart, CellType.NUMERIC);
                     cellDoubleValue = resultsPerFile.get(backupFiles.get(file)).getMeanScore();
                     cell.setCellStyle(cellStyle);
                     cell.setCellValue(cellDoubleValue);
                 }
                 if ( resultsRandom != null ) {
                     final int file = 0;
-                    cell = row.createCell(( file + colStart ) - 1, Cell.CELL_TYPE_NUMERIC);
+                    cell = row.createCell(( file + colStart ) - 1, CellType.NUMERIC);
                     cellDoubleValue = resultsRandom.getMeanScore();
                     cell.setCellStyle(cellStyle);
                     cell.setCellValue(cellDoubleValue);
@@ -217,14 +217,14 @@ class StatisticExperiment {
                 rowStart = 4;
                 row = sheet.getRow(rowStart - 1);
                 for ( int file = 0; file < backupFiles.size(); file++ ) {
-                    cell = row.createCell(file + colStart, Cell.CELL_TYPE_NUMERIC);
+                    cell = row.createCell(file + colStart, CellType.NUMERIC);
                     cellDoubleValue = resultsPerFile.get(backupFiles.get(file)).getMaxScore();
                     cell.setCellStyle(cellStyle);
                     cell.setCellValue(cellDoubleValue);
                 }
                 if ( resultsRandom != null ) {
                     final int file = 0;
-                    cell = row.createCell(( file + colStart ) - 1, Cell.CELL_TYPE_NUMERIC);
+                    cell = row.createCell(( file + colStart ) - 1, CellType.NUMERIC);
                     cellDoubleValue = resultsRandom.getMaxScore();
                     cell.setCellStyle(cellStyle);
                     cell.setCellValue(cellDoubleValue);
@@ -238,7 +238,7 @@ class StatisticExperiment {
                 loadTitle(rowStartTitle + 2, colStartTitle, sheet, backupFiles.size(), CellStyleTitle);
                 row = sheet.getRow(rowStart - 1);
                 for ( int file = 0; file < backupFiles.size(); file++ ) {
-                    cell = row.createCell(file + colStart, Cell.CELL_TYPE_NUMERIC);
+                    cell = row.createCell(file + colStart, CellType.NUMERIC);
                     cell.setCellStyle(cellStyle);
                     cellDoubleValue = resultsPerFile.get(backupFiles.get(file)).getWinRate();
                     assert ( cellDoubleValue <= 100 ) && ( cellDoubleValue >= 0 );
@@ -246,7 +246,7 @@ class StatisticExperiment {
                 }
                 if ( resultsRandom != null ) {
                     final int file = 0;
-                    cell = row.createCell(( file + colStart ) - 1, Cell.CELL_TYPE_NUMERIC);
+                    cell = row.createCell(( file + colStart ) - 1, CellType.NUMERIC);
                     cell.setCellStyle(cellStyle);
                     cellDoubleValue = resultsRandom.getWinRate();
                     assert ( cellDoubleValue <= 100 ) && ( cellDoubleValue >= 0 );
@@ -254,14 +254,14 @@ class StatisticExperiment {
                 }
                 // creamos la celda para calcular máxima/mejor red entrenada
                 row = sheet.getRow(3);
-                cell = row.createCell(2, Cell.CELL_TYPE_FORMULA);
+                cell = row.createCell(2, CellType.FORMULA);
                 cell.setCellStyle(cellStyle);
                 final int    maxCol       = ( backupFiles.size() + colStart ) - 1;
                 final String columnLetter = CellReference.convertNumToColString(maxCol);
                 String       formula      = "MAX(C2:" + columnLetter + "2)";
                 cell.setCellFormula(formula);
 
-                cell = row.createCell(3, Cell.CELL_TYPE_FORMULA);
+                cell = row.createCell(3, CellType.FORMULA);
                 cell.setCellStyle(cellStyle);
                 formula = "HLOOKUP(C4,C2:" + columnLetter + "3,2)";
                 cell.setCellFormula(formula);
@@ -271,14 +271,14 @@ class StatisticExperiment {
                 loadTitle(rowStartTitle, colStartTitle, sheet, backupFiles.size(), CellStyleTitle);
                 row = sheet.getRow(rowStart - 1);
                 for ( int file = 0; file < backupFiles.size(); file++ ) {
-                    cell = row.createCell(file + colStart, Cell.CELL_TYPE_NUMERIC);
+                    cell = row.createCell(file + colStart, CellType.NUMERIC);
                     cell.setCellStyle(cellStyle);
                     cellDoubleValue = resultsPerFile.get(backupFiles.get(file)).getMinTurn();
                     cell.setCellValue(cellDoubleValue);
                 }
                 if ( resultsRandom != null ) {
                     final int file = 0;
-                    cell = row.createCell(( file + colStart ) - 1, Cell.CELL_TYPE_NUMERIC);
+                    cell = row.createCell(( file + colStart ) - 1, CellType.NUMERIC);
                     cell.setCellStyle(cellStyle);
                     cellDoubleValue = resultsRandom.getMinTurn();
                     cell.setCellValue(cellDoubleValue);
@@ -287,14 +287,14 @@ class StatisticExperiment {
                 rowStart = 3;
                 row = sheet.getRow(rowStart - 1);
                 for ( int file = 0; file < backupFiles.size(); file++ ) {
-                    cell = row.createCell(file + colStart, Cell.CELL_TYPE_NUMERIC);
+                    cell = row.createCell(file + colStart, CellType.NUMERIC);
                     cell.setCellStyle(cellStyle);
                     cellDoubleValue = resultsPerFile.get(backupFiles.get(file)).getMeanTurn();
                     cell.setCellValue(cellDoubleValue);
                 }
                 if ( resultsRandom != null ) {
                     final int file = 0;
-                    cell = row.createCell(( file + colStart ) - 1, Cell.CELL_TYPE_NUMERIC);
+                    cell = row.createCell(( file + colStart ) - 1, CellType.NUMERIC);
                     cell.setCellStyle(cellStyle);
                     cellDoubleValue = resultsRandom.getMeanTurn();
                     cell.setCellValue(cellDoubleValue);
@@ -303,14 +303,14 @@ class StatisticExperiment {
                 rowStart = 4;
                 row = sheet.getRow(rowStart - 1);
                 for ( int file = 0; file < backupFiles.size(); file++ ) {
-                    cell = row.createCell(file + colStart, Cell.CELL_TYPE_NUMERIC);
+                    cell = row.createCell(file + colStart, CellType.NUMERIC);
                     cell.setCellStyle(cellStyle);
                     cellDoubleValue = resultsPerFile.get(backupFiles.get(file)).getMaxTurn();
                     cell.setCellValue(cellDoubleValue);
                 }
                 if ( resultsRandom != null ) {
                     final int file = 0;
-                    cell = row.createCell(( file + colStart ) - 1, Cell.CELL_TYPE_NUMERIC);
+                    cell = row.createCell(( file + colStart ) - 1, CellType.NUMERIC);
                     cell.setCellStyle(cellStyle);
                     cellDoubleValue = resultsRandom.getMaxTurn();
                     cell.setCellValue(cellDoubleValue);
@@ -509,7 +509,7 @@ class StatisticExperiment {
         final int totalGames = saveBackupEvery;
         final Row row1       = sheet.getRow(rowStartTitle);
         for ( int file = 1; file <= backupFilesSize; file++ ) {
-            final Cell cell = row1.createCell(file + colStartTitle, Cell.CELL_TYPE_NUMERIC);
+            final Cell cell = row1.createCell(file + colStartTitle, CellType.NUMERIC);
             cell.setCellStyle(CellStyleTitle);
             final Integer value    = totalGames * file;
             final String  valueStr = value.toString();
@@ -734,9 +734,12 @@ class StatisticExperiment {
         final StatisticForCalc resultsRandom = getTileStatistics();
 
         if ( !backupStatisticOnly ) {
-            //hacemos estadisticas del mejor perceptron, si es necesario
-            System.out.print("Starting " + experimentName + LearningExperiment.BEST_TRAINED + " Statistics... ");
-            processFile(dirPath + experimentName + LearningExperiment.BEST_TRAINED, createNeuralNetworkFile, printHistory);
+            File bestFile = new File(dirPath + experimentName + LearningExperiment.BEST_TRAINED);
+            if ( bestFile.exists() ) {
+                //hacemos estadisticas del mejor perceptron, si es necesario
+                System.out.print("Starting " + experimentName + LearningExperiment.BEST_TRAINED + " Statistics... ");
+                processFile(dirPath + experimentName + LearningExperiment.BEST_TRAINED, createNeuralNetworkFile, printHistory);
+            }
         }
 
         //calculamos las estadisticas de los backup si es necesario
