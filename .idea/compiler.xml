@@ -9,7 +9,7 @@
       <module name="coeus.game2048.visual_main" target="1.8" />
       <module name="coeus.game2048.visual_test" target="1.9" />
       <module name="coeus.game2048_main" target="1.8" />
-      <module name="coeus.game2048_test" target="1.8" />
+      <module name="coeus.game2048_test" target="1.9" />
       <module name="coeus_main" target="1.8" />
       <module name="coeus_test" target="1.9" />
     </bytecodeTargetLevel>
