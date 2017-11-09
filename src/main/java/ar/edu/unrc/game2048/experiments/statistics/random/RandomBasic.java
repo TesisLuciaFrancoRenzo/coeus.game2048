@@ -52,7 +52,7 @@ class RandomBasic
         experiment.setSaveEvery(100_000_000);
         experiment.setSaveBackupEvery(100_000_000);
         //para calcular estadisticas
-        experiment.setGamesToPlayPerThreadForStatistics(1_000);
+        experiment.setGamesToPlayPerThreadForStatistics(10_000);
         experiment.setSimulationsForStatistics(8);
         experiment.setRunStatisticsForBackups(false);
         experiment.setExportToExcel(false);
