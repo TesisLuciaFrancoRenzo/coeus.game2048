@@ -4,6 +4,7 @@ import ar.edu.unrc.coeus.tdlearning.interfaces.IState;
 import ar.edu.unrc.coeus.tdlearning.interfaces.IStateNTuple;
 import ar.edu.unrc.coeus.tdlearning.interfaces.IStatePerceptron;
 import ar.edu.unrc.coeus.tdlearning.training.ntuple.SamplePointValue;
+import ar.edu.unrc.game2048.experiments.configurations.EncogConfiguration2048;
 import ar.edu.unrc.game2048.experiments.configurations.perceptrons.inputs.InputNTupleList;
 import ar.edu.unrc.game2048.experiments.statistics.greedy.GreedyStateProbability;
 
@@ -32,12 +33,13 @@ class GameBoard
         tiles = new Tile[side][side];
         availableSpace = new LinkedList<>();
         //inicializamos el tablero para su traducción a las entradas de la red neuronal
-        if ( game.getNeuralNetworkConfiguration() != null ) {
-            if ( game.getNeuralNetworkConfiguration().useNTupleList() ) {
+        final EncogConfiguration2048 neuralNetworkConfiguration = game.getNeuralNetworkConfiguration();
+        if ( neuralNetworkConfiguration != null ) {
+            if ( neuralNetworkConfiguration.useNTupleList() ) {
                 normalizedPerceptronInput = new InputNTupleList();
             } else {
-                normalizedPerceptronInput = new ArrayList<>(game.getNeuralNetworkConfiguration().getNeuronQuantityInLayer()[0]);
-                final int neuronQuantityInLayerLength = game.getNeuralNetworkConfiguration().getNeuronQuantityInLayer()[0];
+                normalizedPerceptronInput = new ArrayList<>(neuralNetworkConfiguration.getNeuronQuantityInLayer()[0]);
+                final int neuronQuantityInLayerLength = neuralNetworkConfiguration.getNeuronQuantityInLayer()[0];
                 for ( int i = 0; i < neuronQuantityInLayerLength; i++ ) {
                     normalizedPerceptronInput.add(null);
                 }
@@ -354,9 +356,10 @@ class GameBoard
 
     private
     void updateNormalizedPerceptronInput() {
-        if ( game.getNeuralNetworkConfiguration() != null ) {
+        final EncogConfiguration2048 neuralNetworkConfiguration = game.getNeuralNetworkConfiguration();
+        if ( neuralNetworkConfiguration != null ) {
             //   assert this.getMaxTileNumberCode() != 0;
-            game.getNeuralNetworkConfiguration().calculateNormalizedPerceptronInput(this, normalizedPerceptronInput);
+            neuralNetworkConfiguration.calculateNormalizedPerceptronInput(this, normalizedPerceptronInput);
         }
     }
 }

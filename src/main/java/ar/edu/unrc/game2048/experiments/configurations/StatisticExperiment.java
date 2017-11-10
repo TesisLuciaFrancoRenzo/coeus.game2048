@@ -621,24 +621,30 @@ class StatisticExperiment {
             IntStream.range(0, simulations).parallel().forEach(i -> {
                 // Si hay un perceptron ya entrenado, lo buscamos en el archivo.
                 // En caso contrario creamos un perceptron vacío, inicializado al azar
-                for ( results.get(i).setProcessedGames(1); results.get(i).getProcessedGames() < gamesToPlay; results.get(i).addProcessedGames() ) {
-                    games.get(i).initialize(); //reset
+                final ThreadResult threadResult = results.get(i);
+                for ( threadResult.setProcessedGames(1); threadResult.getProcessedGames() < gamesToPlay; threadResult.addProcessedGames() ) {
+                    final Game2048 game2048 = games.get(i);
+                    game2048.initialize(); //reset
                     int turnNumber = 0;
-                    while ( games.get(i).isRunning() ) {
+                    while ( game2048.isRunning() ) {
                         if ( tdLambdaLearning.isEmpty() ) {
-                            neuralNetworkInterfaces.get(i).playATurn(games.get(i), null);
+                            neuralNetworkInterfaces.get(i).playATurn(game2048, null);
                         } else {
-                            neuralNetworkInterfaces.get(i).playATurn(games.get(i), tdLambdaLearning.get(i));
+                            neuralNetworkInterfaces.get(i).playATurn(game2048, tdLambdaLearning.get(i));
                         }
                         turnNumber++;
                     }
                     //calculamos estadisticas
-                    results.get(i).addStatisticForTile(Tile.getCodeFromTileValue(games.get(i).getMaxNumber()));
-                    results.get(i).addScore(games.get(i).getScore());
+                    threadResult.addStatisticForTile(Tile.getCodeFromTileValue(game2048.getMaxNumber()));
+                    threadResult.addScore(game2048.getScore());
 
-                    if ( games.get(i).getMaxNumber() >= tileToWinForStatistics ) {
-                        results.get(i).addWin();
-                        results.get(i).addLastTurn(turnNumber);
+                    if ( game2048.getMaxNumber() >= tileToWinForStatistics ) {
+                        threadResult.addWin();
+                        threadResult.addLastTurn(turnNumber);
+                    }
+                    if ( threadResult.getProcessedGames() % 100 == 0 ) {
+                        System.out.println("Thread " + i + " -> Ultimo resultado = " + game2048.getMaxNumber() + " turnNumber=" + turnNumber + " - " +
+                                           threadResult.getProcessedGames() + "/" + gamesToPlay);
                     }
                 }
             });

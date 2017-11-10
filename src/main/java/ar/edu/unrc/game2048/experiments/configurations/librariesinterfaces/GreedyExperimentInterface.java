@@ -133,7 +133,7 @@ class GreedyExperimentInterface
                     game.getBoard().moveRight();
                     break;
                 case DOWN:
-                    game.getBoard().canMoveDown();
+                    game.getBoard().moveDown();
                     break;
                 case UP:
                     game.getBoard().moveUp();
