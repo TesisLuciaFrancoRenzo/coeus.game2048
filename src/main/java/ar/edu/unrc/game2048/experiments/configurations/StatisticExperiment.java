@@ -642,10 +642,11 @@ class StatisticExperiment {
                         threadResult.addWin();
                         threadResult.addLastTurn(turnNumber);
                     }
-                    if ( threadResult.getProcessedGames() % 100 == 0 ) {
-                        System.out.println("Thread " + i + " -> Ultimo resultado = " + game2048.getMaxNumber() + " turnNumber=" + turnNumber + " - " +
-                                           threadResult.getProcessedGames() + "/" + gamesToPlay);
-                    }
+                    //                    if ( threadResult.getProcessedGames() % 100 == 0 ) {
+                    //                        System.out.println("Thread " + i + " -> Ultimo resultado = " + game2048.getMaxNumber() + "
+                    // turnNumber=" + turnNumber + " - " +
+                    //                                           threadResult.getProcessedGames() + "/" + gamesToPlay);
+                    //                    }
                 }
             });
 
