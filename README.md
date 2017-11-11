@@ -5,6 +5,7 @@
 # Caso de estudio para la librería Coeus: Juego 2048.
 Este caso de prueba basó sus configuraciones en las ideas del paper de Marcin Szubert 
 y Wojciech Jaskowski, para así ser capaz de comparar y analizar los resultados finales.
+Para mas detalles referirse al [Informe](https://docs.google.com/document/d/1arNnKmmV7xc9qDrgPNbtxQXO8b81HknmJQKCshfAzUU/edit?usp=sharing) del mismo.
 
 ## El Juego
 2048 es un juego Solitario de tipo rompecabezas creado por Gabriele Cirulli y 
