@@ -91,3 +91,6 @@ Si queremos entrenar una red neuronal usando NTuplas, hasta que gane un 90% de l
 ```
 java -cp coeus.game2048-1.0.0.jar ar.edu.unrc.game2048.experiments.TestGenerator experimentDirName=NTuple-Timed90 experimentClassNameList=[ConfigNTupleBasicTanH_32768] createLogs=false canCollectStatistics=false repetitions=10 maxTrainingThreads=1 gamesToPlay=1000000 winRateLimit=90.0 gamesToPlayPerThreadForStats=1000 saveEvery=5000 saveBackupEvery=15000 statisticsOnly=false simulationsForStatistics=8 tileToWinForStatistics=2048 runBackupStatistics=true lambdaList=[0.0] eligibilityTraceLength=-1 replacingTraces=true accumulatingTraces=false annealingAlphaList=[400000] alphaList=[0.005] gammaList=[1] concurrentLayerList=[false,false] computeBestPossibleActionConcurrently=false whenStartToExplore=[1.0] fixedExplorationRateList=[0] 
 ``` 
+
+## Licencia
+[![GNU GPL v3.0](http://www.gnu.org/graphics/gplv3-127x51.png)](http://www.gnu.org/licenses/gpl.html)
