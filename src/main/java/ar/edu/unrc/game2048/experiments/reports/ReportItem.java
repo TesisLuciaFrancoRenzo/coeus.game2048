@@ -47,16 +47,6 @@ class ReportItem
         }
     }
 
-    void failed( final String motive ) {
-        failed = true;
-        this.motive = motive;
-    }
-
-    public
-    File getBestNeuralNetworkFile() {
-        return bestNeuralNetworkFile;
-    }
-
     /**
      * @return the bestValue
      */
@@ -86,27 +76,11 @@ class ReportItem
     }
 
     /**
-     * @return the trainingNumber
-     */
-    public
-    String getTrainingNumber() {
-        return trainingNumber;
-    }
-
-    /**
      * @param trainingNumber the trainingNumber to set
      */
     public
     void setTrainingNumber( final String trainingNumber ) {
         this.trainingNumber = trainingNumber;
-    }
-
-    /**
-     * @return the failed
-     */
-    public
-    boolean isFailed() {
-        return failed;
     }
 
     void setBestNeuralNetworkSerFile( final File bestNeuralNetworkFile ) {

@@ -39,11 +39,6 @@ import static ar.edu.unrc.game2048.experiments.GeneratorConfig.runOneConfig;
 public
 class TestGenerator {
 
-    /**
-     * @param args
-     *
-     * @throws Exception
-     */
     public static
     void main( final String... args )
             throws Exception {

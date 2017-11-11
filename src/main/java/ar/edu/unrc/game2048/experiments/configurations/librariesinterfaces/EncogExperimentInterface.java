@@ -256,11 +256,6 @@ class EncogExperimentInterface
             throws Exception {
     }
 
-    /**
-     * Utilizado con propósitos de testing.
-     *
-     * @param neuralNetwork
-     */
     public
     void setNeuralNetworkForTesting( final BasicNetwork neuralNetwork ) {
         perceptronConfiguration.setNeuralNetwork(neuralNetwork);

@@ -125,7 +125,7 @@ class INeuralNetworkInterfaceFor2048
      * @param randomizedIfNotExist true si debe inicializar al azar los pesos y bias al crear una nueva red neuronal.
      * @param createFile           true si debe crear una nueva red neuronal.
      *
-     * @throws Exception
+     * @throws Exception si hay errores durante la carga o creación del perceptrón.
      */
     public abstract
     void loadOrCreatePerceptron(
@@ -182,7 +182,7 @@ class INeuralNetworkInterfaceFor2048
      *
      * @param neuralNetworkFile red neuronal a salvar en archivo.
      *
-     * @throws Exception
+     * @throws Exception si hay errores durante el guardado del perceptron.
      */
     public abstract
     void saveNeuralNetwork( final File neuralNetworkFile )
@@ -192,7 +192,7 @@ class INeuralNetworkInterfaceFor2048
     /**
      * Guarda la red neuronal en un archivo
      *
-     * @throws Exception
+     * @throws Exception si hay errores durante el guardado del perceptrón.
      */
     public abstract
     void saveNeuralNetwork( final OutputStream outputStream )

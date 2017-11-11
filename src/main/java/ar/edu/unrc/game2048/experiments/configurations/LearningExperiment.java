@@ -75,10 +75,6 @@ class LearningExperiment {
      * Nombre que se le agrega a los archivos de redes neuronales con entrenamiento.
      */
     public static final String                     TRAINED                               = "_trained";
-    /**
-     * Formato para fechas.
-     */
-    private final       DateFormat                 dateFormat                            = new SimpleDateFormat(DATE_FORMATTER_PATTERN);
     private final       DecimalFormat              decimalFormat                         = new DecimalFormat("#.###");
     /**
      * Formato para fechas en los nombres de archivos.
@@ -222,22 +218,6 @@ class LearningExperiment {
         this.alpha = alpha;
     }
 
-    /**
-     * @return partido en el que el annealing alcanza la mitad del valor inicial.
-     */
-    protected
-    int getAnnealingT() {
-        return annealingT;
-    }
-
-    /**
-     * @param annealingT partido en el que el annealing alcanza la mitad del valor inicial.
-     */
-    protected
-    void setAnnealingT( final int annealingT ) {
-        this.annealingT = annealingT;
-    }
-
     public
     double getBestPossibleActionTimesAverage() {
         return bestPossibleActionTimes.getAverage();
@@ -275,6 +255,43 @@ class LearningExperiment {
     public
     String getExperimentName() {
         return experimentName;
+    }
+
+    /**
+     * @return gamma.
+     */
+    public
+    double getGamma() {
+        return gamma;
+    }
+
+    /**
+     * @param gamma nueva gamma.
+     */
+    public
+    void setGamma( final double gamma ) {
+        this.gamma = gamma;
+    }
+
+    /**
+     * @return lambda.
+     */
+    public
+    double getLambda() {
+        return lambda;
+    }
+
+    /**
+     * @param lambda nueva lambda.
+     */
+    public
+    void setLambda( final double lambda ) {
+        this.lambda = lambda;
+    }
+
+    public
+    boolean isReplaceEligibilityTraces() {
+        return replaceEligibilityTraces;
     }
 
     @NotNull
@@ -329,111 +346,6 @@ class LearningExperiment {
     }
 
     /**
-     * @return cantidad de partidos a jugar en el experimento.
-     */
-    protected
-    int getGamesToPlay() {
-        return gamesToPlay;
-    }
-
-    /**
-     * @param gamesToPlay cantidad de partidos a jugar en el experimento.
-     */
-    public
-    void setGamesToPlay( final int gamesToPlay ) {
-        this.gamesToPlay = gamesToPlay;
-    }
-
-    /**
-     * @return cantidad de juegos a jugar por procesador en el cálculo de estadísticas.
-     */
-    public
-    int getGamesToPlayPerThreadForStatistics() {
-        return gamesToPlayPerThreadForStatistics;
-    }
-
-    /**
-     * @param gamesToPlayPerThreadForStatistics cantidad de juegos a jugar por procesador en el cálculo de estadísticas.
-     */
-    public
-    void setGamesToPlayPerThreadForStatistics(
-            final int gamesToPlayPerThreadForStatistics
-    ) {
-        this.gamesToPlayPerThreadForStatistics = gamesToPlayPerThreadForStatistics;
-    }
-
-    /**
-     * @return gamma.
-     */
-    public
-    double getGamma() {
-        return gamma;
-    }
-
-    /**
-     * @param gamma nueva gamma.
-     */
-    public
-    void setGamma( final double gamma ) {
-        this.gamma = gamma;
-    }
-
-    /**
-     * @return lambda.
-     */
-    public
-    double getLambda() {
-        return lambda;
-    }
-
-    /**
-     * @param lambda nueva lambda.
-     */
-    public
-    void setLambda( final double lambda ) {
-        this.lambda = lambda;
-    }
-
-    public
-    double getWinRateLimit() {
-        return winRateLimit;
-    }
-
-    /**
-     * @return algoritmo de entrenamiento utilizado en el experimento.
-     */
-    protected
-    TDLambdaLearning getLearningAlgorithm() {
-        return learningAlgorithm;
-    }
-
-    /**
-     * @param learningAlgorithm algoritmo de entrenamiento utilizado en el experimento.
-     */
-    protected
-    void setLearningAlgorithm( final TDLambdaLearning learningAlgorithm ) {
-        this.learningAlgorithm = learningAlgorithm;
-    }
-
-    /**
-     * @return Tipo de adaptación de tasa de aprendizaje utilizado.
-     */
-    public
-    ELearningRateAdaptation getLearningRateAdaptation() {
-        return learningRateAdaptation;
-    }
-
-    /**
-     * @param learningRateAdaptation Tipo de adaptación de tasa de aprendizaje utilizado.
-     */
-    public
-    void setLearningRateAdaptation(
-            final ELearningRateAdaptation learningRateAdaptation
-    ) {
-        this.learningRateAdaptation = learningRateAdaptation;
-    }
-
-    /**
      * @return interfaz utilizada para comunicar la red neuronal con el algoritmo de entrenamiento.
      */
     protected
@@ -449,88 +361,6 @@ class LearningExperiment {
             final INeuralNetworkInterfaceFor2048 neuralNetworkInterfaceFor2048
     ) {
         this.neuralNetworkInterfaceFor2048 = neuralNetworkInterfaceFor2048;
-    }
-
-    /**
-     * @return nombre de la red neuronal.
-     */
-    public
-    String getNeuralNetworkName() {
-        return neuralNetworkName;
-    }
-
-    /**
-     * @param neuralNetworkName establece nombre de la red neuronal.
-     */
-    public
-    void setNeuralNetworkName( final String neuralNetworkName ) {
-        this.neuralNetworkName = neuralNetworkName;
-    }
-
-    public
-    int getSampleSizeForEstimation() {
-        return sampleSizeForEstimation;
-    }
-
-    public
-    void setSampleSizeForEstimation( final int sampleSizeForEstimation ) {
-        this.sampleSizeForEstimation = sampleSizeForEstimation;
-    }
-
-    /**
-     * @return intervalo que establece cada cuántas partidas se debe realizar un una copia de la red neuronal actual.
-     */
-    public
-    int getSaveBackupEvery() {
-        return saveBackupEvery;
-    }
-
-    /**
-     * @param saveBackupEvery intervalo que establece cada cuántas partidas se debe realizar un una copia de la red neuronal actual.
-     */
-    public
-    void setSaveBackupEvery( final int saveBackupEvery ) {
-        this.saveBackupEvery = saveBackupEvery;
-    }
-
-    /**
-     * @return intervalo que establece cada cuántas partidas se debe guardar en un archivo, el estado de la red neuronal actual.
-     */
-    public
-    int getSaveEvery() {
-        return saveEvery;
-    }
-
-    /**
-     * @param saveEvery intervalo que establece cada cuántas partidas se debe guardar en un archivo, el estado de la red neuronal actual.
-     */
-    public
-    void setSaveEvery( final int saveEvery ) {
-        this.saveEvery = saveEvery;
-    }
-
-    /**
-     * @return cantidad de simulaciones que se realizan para calcular estadísticas, por procesador.
-     */
-    protected
-    int getSimulationsForStatistics() {
-        return simulationsForStatistics;
-    }
-
-    /**
-     * @param simulationsForStatistics cantidad de simulaciones que se realizan para calcular estadísticas, por procesador.
-     */
-    public
-    void setSimulationsForStatistics( final int simulationsForStatistics ) {
-        this.simulationsForStatistics = simulationsForStatistics;
-    }
-
-    /**
-     * @return Experimento de estadísticas asociado.
-     */
-    protected
-    StatisticExperiment getStatisticExperiment() {
-        return statisticExperiment;
     }
 
     /**
@@ -554,26 +384,6 @@ class LearningExperiment {
         return trainingTimes.getAverage();
     }
 
-    public
-    double getWhenStartToExplore() {
-        return whenStartToExplore;
-    }
-
-    /**
-     * Numero entre 0.0d y 1.0d que multiplica el promedio de los turnos actuales, para determinar desde que turno se comienza a explorar.
-     *
-     * @param whenStartToExplore
-     */
-    public
-    void setWhenStartToExplore( final double whenStartToExplore ) {
-        this.whenStartToExplore = whenStartToExplore;
-    }
-
-    public
-    void setWinRateLimit( final double winRateLimit ) {
-        this.winRateLimit = winRateLimit;
-    }
-
     /**
      * Valores que se deben inicializar del experimento, por ejemplo: <ul> <li>private double alpha;</li> <li>private double lambda;</li> <li>private
      * int gamesToPlay;</li> <li>private int saveBackupEvery;</li> <li>private int tileToWinForTraining;</li> <li>private String experimentName;</li>
@@ -584,11 +394,6 @@ class LearningExperiment {
      */
     public abstract
     void initialize();
-
-    public
-    boolean isIgnoreStatistics() {
-        return ignoreStatistics;
-    }
 
     /**
      * @param neuralNetworkInterface interfaz que conecta la red neuronal con el algoritmo de TDLearning
@@ -621,8 +426,8 @@ class LearningExperiment {
     }
 
     public
-    void setIgnoreStatistics( boolean ignoreStatistics ) {
-        this.ignoreStatistics = ignoreStatistics;
+    void setReplaceEligibilityTraces( final boolean replaceEligibilityTraces ) {
+        this.replaceEligibilityTraces = replaceEligibilityTraces;
     }
 
     /**
@@ -633,6 +438,7 @@ class LearningExperiment {
      * @param experimentPath       Ruta del directorio donde se guardan los resultados.
      * @param createPerceptronFile true si se deben crear las redes neuronales si no existen.
      * @param errorDumpDir         directorio donde se vuelcan los archivos de errores.
+     * @param printHistory         true si se debe imprimir historial
      */
     protected
     void runExperiment(
@@ -795,48 +601,19 @@ class LearningExperiment {
         }
     }
 
-    public
-    boolean isReplaceEligibilityTraces() {
-        return replaceEligibilityTraces;
-    }
-
-    public
-    void setReplaceEligibilityTraces( final boolean replaceEligibilityTraces ) {
-        this.replaceEligibilityTraces = replaceEligibilityTraces;
-    }
-
     /**
-     * @return true si se debe realizar estadísticas sobre las copias de las redes neuronales, realizadas a través del tiempo de entrenamiento total,
-     * para notar su progreso.
+     * Establece el nombre del experimento basado en el nombre de la clase {@code experimentClass}.
+     *
+     * @param experimentClass clase de la cual extraer el nombre del experimento.
      */
     public
-    boolean isRunStatisticsForBackups() {
-        return runStatisticsForBackups;
-    }
-
-    /**
-     * @param runStatisticsForBackups true si se debe realizar estadísticas sobre las copias de las redes neuronales, realizadas a través del tiempo
-     *                                de entrenamiento total, para notar su progreso.
-     */
-    public
-    void setRunStatisticsForBackups( final boolean runStatisticsForBackups ) {
-        this.runStatisticsForBackups = runStatisticsForBackups;
-    }
-
-    /**
-     * @return true si solo se están ejecutando experimentos de cálculos de estadísticas.
-     */
-    public
-    boolean isStatisticsOnly() {
-        return statisticsOnly;
-    }
-
-    /**
-     * @param statisticsOnly true si solo se están ejecutando experimentos de cálculos de estadísticas.
-     */
-    public
-    void setStatisticsOnly( final boolean statisticsOnly ) {
-        this.statisticsOnly = statisticsOnly;
+    void setExperimentName( final Class experimentClass ) {
+        String    className = experimentClass.getName();
+        final int lastDot   = className.lastIndexOf('.');
+        if ( lastDot != -1 ) {
+            className = className.substring(lastDot + 1);
+        }
+        experimentName = className;
     }
 
     @SuppressWarnings( "HardcodedFileSeparator" )
@@ -913,14 +690,6 @@ class LearningExperiment {
     }
 
     /**
-     * @param experimentName nombre del experimento.
-     */
-    public
-    void setExperimentName( final String experimentName ) {
-        this.experimentName = experimentName;
-    }
-
-    /**
      * @param concurrency true si se debe activar concurrencia en los cálculos de elegir la mejor acción posible.
      */
     public
@@ -929,18 +698,11 @@ class LearningExperiment {
     }
 
     /**
-     * Establece el nombre del experimento basado en el nombre de la clase {@code experimentClass}.
-     *
-     * @param experimentClass clase de la cual extraer el nombre del experimento.
+     * @param experimentName nombre del experimento.
      */
     public
-    void setExperimentName( final Class experimentClass ) {
-        String    className = experimentClass.getName();
-        final int lastDot   = className.lastIndexOf('.');
-        if ( lastDot != -1 ) {
-            className = className.substring(lastDot + 1);
-        }
-        experimentName = className;
+    void setExperimentName( final String experimentName ) {
+        this.experimentName = experimentName;
     }
 
     /**
@@ -992,6 +754,29 @@ class LearningExperiment {
     }
 
     /**
+     * @param gamesToPlay cantidad de partidos a jugar en el experimento.
+     */
+    public
+    void setGamesToPlay( final int gamesToPlay ) {
+        this.gamesToPlay = gamesToPlay;
+    }
+
+    /**
+     * @param gamesToPlayPerThreadForStatistics cantidad de juegos a jugar por procesador en el cálculo de estadísticas.
+     */
+    public
+    void setGamesToPlayPerThreadForStatistics(
+            final int gamesToPlayPerThreadForStatistics
+    ) {
+        this.gamesToPlayPerThreadForStatistics = gamesToPlayPerThreadForStatistics;
+    }
+
+    public
+    void setIgnoreStatistics( boolean ignoreStatistics ) {
+        this.ignoreStatistics = ignoreStatistics;
+    }
+
+    /**
      * @param randomized true si se debe inicializar las redes neuronales de forma al azar.
      */
     public
@@ -1002,7 +787,7 @@ class LearningExperiment {
     /**
      * Establece una tasa de aprendizaje con annealing de valor {@code annealingT}.
      *
-     * @param annealingT
+     * @param annealingT valor de annealing
      */
     public
     void setLearningRateAdaptationToAnnealing( final int annealingT ) {
@@ -1019,11 +804,75 @@ class LearningExperiment {
     }
 
     /**
+     * @param neuralNetworkName establece nombre de la red neuronal.
+     */
+    public
+    void setNeuralNetworkName( final String neuralNetworkName ) {
+        this.neuralNetworkName = neuralNetworkName;
+    }
+
+    /**
+     * @param runStatisticsForBackups true si se debe realizar estadísticas sobre las copias de las redes neuronales, realizadas a través del tiempo
+     *                                de entrenamiento total, para notar su progreso.
+     */
+    public
+    void setRunStatisticsForBackups( final boolean runStatisticsForBackups ) {
+        this.runStatisticsForBackups = runStatisticsForBackups;
+    }
+
+    /**
+     * @param saveBackupEvery intervalo que establece cada cuántas partidas se debe realizar un una copia de la red neuronal actual.
+     */
+    public
+    void setSaveBackupEvery( final int saveBackupEvery ) {
+        this.saveBackupEvery = saveBackupEvery;
+    }
+
+    /**
+     * @param saveEvery intervalo que establece cada cuántas partidas se debe guardar en un archivo, el estado de la red neuronal actual.
+     */
+    public
+    void setSaveEvery( final int saveEvery ) {
+        this.saveEvery = saveEvery;
+    }
+
+    /**
+     * @param simulationsForStatistics cantidad de simulaciones que se realizan para calcular estadísticas, por procesador.
+     */
+    public
+    void setSimulationsForStatistics( final int simulationsForStatistics ) {
+        this.simulationsForStatistics = simulationsForStatistics;
+    }
+
+    /**
+     * @param statisticsOnly true si solo se están ejecutando experimentos de cálculos de estadísticas.
+     */
+    public
+    void setStatisticsOnly( final boolean statisticsOnly ) {
+        this.statisticsOnly = statisticsOnly;
+    }
+
+    /**
      * @param winValue valor utilizado para finalizar el juego como que se ganó, para el cálculo de estadísticas y el winRate.
      */
     public
     void setTileToWinForStatistics( final int winValue ) {
         tileToWinForStatistics = winValue;
+    }
+
+    /**
+     * Numero entre 0.0d y 1.0d que multiplica el promedio de los turnos actuales, para determinar desde que turno se comienza a explorar.
+     *
+     * @param whenStartToExplore Numero entre 0.0d y 1.0d
+     */
+    public
+    void setWhenStartToExplore( final double whenStartToExplore ) {
+        this.whenStartToExplore = whenStartToExplore;
+    }
+
+    public
+    void setWinRateLimit( final double winRateLimit ) {
+        this.winRateLimit = winRateLimit;
     }
 
     /**
@@ -1034,6 +883,7 @@ class LearningExperiment {
      * @param experimentPath       Ruta del directorio donde se guardan los resultados.
      * @param createPerceptronFile true si se deben crear las redes neuronales si no existen.
      * @param errorDumpDir         directorio donde se vuelcan los archivos de errores.
+     * @param printHistory         true si debe imprimir historia.
      */
     public
     void start(
@@ -1063,8 +913,9 @@ class LearningExperiment {
      * @param lastSaveDataFile archivo donde se guardan los datos del ultimo entrenamiento, para poder continuar en caso de interrupciones.
      * @param filePath         ruta en donde se guardan los resultados.
      * @param zeroNumbers      cantidad de ceros a la izquierda en los números de los archivos de backup.
+     * @param historyFile      true si debe imprimir historia.
      *
-     * @throws Exception
+     * @throws Exception error durante entrenamiento.
      */
     protected
     void training(

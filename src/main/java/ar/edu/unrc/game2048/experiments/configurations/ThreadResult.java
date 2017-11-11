@@ -182,7 +182,7 @@ class ThreadResult {
     /**
      * @param tileCode cantidad de veces que se alcanzo este valor de tile al terminar las partidas.
      *
-     * @return
+     * @return valor estadístico.
      */
     public
     Integer getStatisticForTile( final int tileCode ) {

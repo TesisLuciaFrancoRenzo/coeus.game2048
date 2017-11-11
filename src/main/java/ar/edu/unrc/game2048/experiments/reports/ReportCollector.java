@@ -33,7 +33,7 @@ class ReportCollector {
     /**
      * @param args the command line arguments
      *
-     * @throws IOException
+     * @throws IOException si no se puede escribir el archivo de salida
      */
     public static
     void main( final String... args )

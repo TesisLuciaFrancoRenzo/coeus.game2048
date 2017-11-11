@@ -29,7 +29,7 @@ class StatisticCalculatorPerformance {
     /**
      * Agrega una muestra de tiempo al cálculo.
      *
-     * @param milliseconds
+     * @param milliseconds milisegundos para agregar a las estadísticas
      */
     public
     void addSample( final double milliseconds ) {
@@ -39,7 +39,7 @@ class StatisticCalculatorPerformance {
     /**
      * Calcula las estadísticas.
      *
-     * @return
+     * @return un arreglo con [0]=resultados listos para mostrar, y [1]=resultados listos para parsear
      */
     public
     String[] computeBasicStatistics() {
@@ -65,9 +65,6 @@ class StatisticCalculatorPerformance {
         return output;
     }
 
-    /**
-     * @return
-     */
     @Override
     public
     String toString() {

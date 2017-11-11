@@ -28,21 +28,12 @@ class InputNTupleList
         set = new HashSet<>();
     }
 
-    /**
-     * @param e
-     *
-     * @return
-     */
     @Override
     public
     boolean add( final Double e ) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    /**
-     * @param index
-     * @param element
-     */
     @Override
     public
     void add(
@@ -52,23 +43,12 @@ class InputNTupleList
         set.add(index);
     }
 
-    /**
-     * @param c
-     *
-     * @return
-     */
     @Override
     public
     boolean addAll( final Collection< ? extends Double > c ) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    /**
-     * @param index
-     * @param c
-     *
-     * @return
-     */
     @Override
     public
     boolean addAll(
@@ -87,33 +67,18 @@ class InputNTupleList
         set.clear();
     }
 
-    /**
-     * @param o
-     *
-     * @return
-     */
     @Override
     public
     boolean contains( final Object o ) {
         return set.contains(o);
     }
 
-    /**
-     * @param c
-     *
-     * @return
-     */
     @Override
     public
     boolean containsAll( final Collection< ? > c ) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    /**
-     * @param index
-     *
-     * @return
-     */
     @Override
     public
     Double get( final int index ) {
@@ -128,116 +93,66 @@ class InputNTupleList
         return set.size();
     }
 
-    /**
-     * @param o
-     *
-     * @return
-     */
     @Override
     public
     int indexOf( final Object o ) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    /**
-     * @return
-     */
     @Override
     public
     boolean isEmpty() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    /**
-     * @return
-     */
     @Override
     public
     Iterator< Double > iterator() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    /**
-     * @param o
-     *
-     * @return
-     */
     @Override
     public
     int lastIndexOf( final Object o ) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    /**
-     * @return
-     */
     @Override
     public
     ListIterator< Double > listIterator() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    /**
-     * @param index
-     *
-     * @return
-     */
     @Override
     public
     ListIterator< Double > listIterator( final int index ) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    /**
-     * @param o
-     *
-     * @return
-     */
     @Override
     public
     boolean remove( final Object o ) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    /**
-     * @param index
-     *
-     * @return
-     */
     @Override
     public
     Double remove( final int index ) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    /**
-     * @param c
-     *
-     * @return
-     */
     @Override
     public
     boolean removeAll( final Collection< ? > c ) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    /**
-     * @param c
-     *
-     * @return
-     */
     @Override
     public
     boolean retainAll( final Collection< ? > c ) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    /**
-     * @param index
-     * @param element
-     *
-     * @return
-     */
     @Override
     public
     Double set(
@@ -247,21 +162,13 @@ class InputNTupleList
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    /**
-     * @return
-     */
     @Override
     public
     int size() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    /**
-     * @param fromIndex
-     * @param toIndex
-     *
-     * @return
-     */
+
     @Override
     public
     List< Double > subList(
@@ -271,21 +178,12 @@ class InputNTupleList
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    /**
-     * @return
-     */
     @Override
     public
     Object[] toArray() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    /**
-     * @param <T>
-     * @param a
-     *
-     * @return
-     */
     @Override
     public
     < T > T[] toArray( final T[] a ) {

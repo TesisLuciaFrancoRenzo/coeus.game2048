@@ -49,12 +49,11 @@ class EncogConfiguration2048
     protected boolean              hasBias                    = true;
     protected BasicNetwork         neuralNetwork              = null;
     protected int[]                neuronQuantityInLayer      = null;
-    protected NormalizedField      normInput                  = null;
     protected NormalizedField      normOutput                 = null;
 
     /**
-     * @param board
-     * @param normalizedPerceptronInput
+     * @param board tablero a calcular
+     * @param normalizedPerceptronInput lista de salida, que representa las entradas del perceptron normalizadas
      */
     public abstract
     void calculateNormalizedPerceptronInput(
@@ -73,10 +72,10 @@ class EncogConfiguration2048
     }
 
     /**
-     * @param game
-     * @param output
+     * @param game problema
+     * @param output salida del perceptrón.
      *
-     * @return
+     * @return interpretación numérica para el tablero actual del juego, util para comparaciones
      */
     public abstract
     Double computeNumericRepresentationFor(
@@ -85,7 +84,7 @@ class EncogConfiguration2048
     );
 
     /**
-     * @return
+     * @return true si el perceptrón contiene bias
      */
     public
     boolean containBias() {
@@ -111,35 +110,17 @@ class EncogConfiguration2048
     }
 
     /**
-     * @return
+     * @return true si se permite concurrencia en la capa de entrada
      */
-    public
-    double getActivationFunctionMax() {
-        return activationFunctionMax;
-    }
+    public abstract
+    boolean isConcurrentInputEnabled();
 
     /**
-     * @param activationFunctionMax
+     * @param activationFunctionMax valor maximo soportado por la función de activación
      */
     public
     void setActivationFunctionMax( final double activationFunctionMax ) {
         this.activationFunctionMax = activationFunctionMax;
-    }
-
-    /**
-     * @return
-     */
-    public
-    double getActivationFunctionMin() {
-        return activationFunctionMin;
-    }
-
-    /**
-     * @param activationFunctionMin
-     */
-    public
-    void setActivationFunctionMin( final double activationFunctionMin ) {
-        this.activationFunctionMin = activationFunctionMin;
     }
 
     /**
@@ -172,22 +153,6 @@ class EncogConfiguration2048
     public
     void setNeuronQuantityInLayer( final int[] neuronQuantityInLayer ) {
         this.neuronQuantityInLayer = neuronQuantityInLayer;
-    }
-
-    /**
-     * @return
-     */
-    public
-    NormalizedField getNormInput() {
-        return normInput;
-    }
-
-    /**
-     * @return
-     */
-    public
-    NormalizedField getNormOutput() {
-        return normOutput;
     }
 
     @Override
@@ -225,29 +190,15 @@ class EncogConfiguration2048
     }
 
     /**
-     * @return
-     */
-    public abstract
-    boolean isConcurrentInputEnabled();
-
-    /**
-     * @return
+     * @param activationFunctionMin valor mínimo soportado por la función de activación
      */
     public
-    boolean isHasBias() {
-        return hasBias;
+    void setActivationFunctionMin( final double activationFunctionMin ) {
+        this.activationFunctionMin = activationFunctionMin;
     }
 
     /**
-     * @param hasBias
-     */
-    public
-    void setHasBias( final boolean hasBias ) {
-        this.hasBias = hasBias;
-    }
-
-    /**
-     * @return
+     * @return true si se usan NTupleList.
      */
     public abstract
     boolean useNTupleList();

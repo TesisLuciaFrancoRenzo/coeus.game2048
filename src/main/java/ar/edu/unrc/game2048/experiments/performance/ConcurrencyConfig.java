@@ -46,7 +46,7 @@ class ConcurrencyConfig {
     }
 
     /**
-     * @param alphas
+     * @param alphas a utilizar
      */
     public
     void setAlphas( final double[] alphas ) {
@@ -62,11 +62,11 @@ class ConcurrencyConfig {
     }
 
     /**
-     * @param concurrencyInLayer
+     * @param concurrencyInEvaluate true si se utiliza concurrencia al evaluar estados.
      */
     public
-    void setConcurrencyInLayer( final boolean[] concurrencyInLayer ) {
-        this.concurrencyInLayer = concurrencyInLayer;
+    void setConcurrencyInEvaluate( final boolean concurrencyInEvaluate ) {
+        this.concurrencyInEvaluate = concurrencyInEvaluate;
     }
 
     /**
@@ -78,11 +78,11 @@ class ConcurrencyConfig {
     }
 
     /**
-     * @param neuronQuantityInLayer
+     * @param concurrencyInLayer establece que capas utiliza concurrencia en sus cálculos.
      */
     public
-    void setNeuronQuantityInLayer( final int[] neuronQuantityInLayer ) {
-        this.neuronQuantityInLayer = neuronQuantityInLayer;
+    void setConcurrencyInLayer( final boolean[] concurrencyInLayer ) {
+        this.concurrencyInLayer = concurrencyInLayer;
     }
 
     /**
@@ -94,16 +94,13 @@ class ConcurrencyConfig {
     }
 
     /**
-     * @param concurrencyInEvaluate
+     * @param neuronQuantityInLayer cantidad de neuronas en cada capa.
      */
     public
-    void setConcurrencyInEvaluate( final boolean concurrencyInEvaluate ) {
-        this.concurrencyInEvaluate = concurrencyInEvaluate;
+    void setNeuronQuantityInLayer( final int[] neuronQuantityInLayer ) {
+        this.neuronQuantityInLayer = neuronQuantityInLayer;
     }
 
-    /**
-     * @return
-     */
     @SuppressWarnings( "ForLoopReplaceableByForEach" )
     @Override
     public

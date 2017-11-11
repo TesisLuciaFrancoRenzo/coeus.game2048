@@ -68,11 +68,6 @@ class ConfigNTupleSymmetricTanH_32768
         }
     }
 
-    /**
-     * @return
-     *
-     * @throws CloneNotSupportedException
-     */
     @Override
     public
     ConfigNTupleSymmetricTanH_32768 clone()

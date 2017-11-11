@@ -67,11 +67,6 @@ class ConfigNTupleBasicSigmoid_32768
         }
     }
 
-    /**
-     * @return
-     *
-     * @throws CloneNotSupportedException
-     */
     @Override
     public
     ConfigNTupleBasicSigmoid_32768 clone()

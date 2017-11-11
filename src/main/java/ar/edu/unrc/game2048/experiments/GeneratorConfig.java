@@ -62,21 +62,7 @@ class GeneratorConfig {
     private final boolean replaceTraces;
     private final double  whenStartToExplore;
 
-    /**
-     * @param className
-     * @param alpha
-     * @param annealingAlpha
-     * @param lambda
-     * @param gamma
-     * @param explorationRate
-     * @param explorationRateInitialValue
-     * @param replaceTraces
-     * @param explorationRateFinalValue
-     * @param number
-     * @param explorationRateStartInterpolation
-     * @param explorationRateFinishInterpolation
-     */
-    public
+    protected
     GeneratorConfig(
             final int repetitions,
             final boolean canCollectStatistics,
@@ -114,31 +100,6 @@ class GeneratorConfig {
         this.className = className;
     }
 
-    /**
-     * @param numberForShow
-     * @param experiment
-     * @param statisticsOnly
-     * @param runStatisticsForBackups
-     * @param createLogs
-     * @param lambda
-     * @param alpha
-     * @param annealingAlpha
-     * @param gamma
-     * @param gamesToPlay
-     * @param winRateLimit
-     * @param saveEvery
-     * @param saveBackupEvery
-     * @param gamesToPlayPerThreadForStatistics
-     * @param tileToWinForStatistics
-     * @param simulationsForStatistics
-     * @param explorationRate
-     * @param explorationRateInitialValue
-     * @param explorationRateFinalValue
-     * @param explorationRateStartInterpolation
-     * @param explorationRateFinishInterpolation
-     * @param filePath
-     * @param concurrentLayer
-     */
     protected static
     void configAndExecute(
             final boolean canCollectStatistics,
@@ -317,16 +278,14 @@ class GeneratorConfig {
             cloneExperiment.setExperimentName(expConfig.getClassName());
             configAndExecute(expConfig.isCanCollectStatistics(),
                     expConfig.getNumber(),
-                    cloneExperiment,
-                    statisticsOnly, ignoreStatistics,
+                    cloneExperiment, statisticsOnly, ignoreStatistics,
                     runStatisticsForBackups,
                     createLogs,
                     expConfig.getLambda(),
                     expConfig.getEligibilityTraceLength(),
                     expConfig.getAlpha(),
                     expConfig.getAnnealingAlpha(),
-                    expConfig.getGamma(),
-                    gamesToPlay, winRateLimit,
+                    expConfig.getGamma(), gamesToPlay, winRateLimit,
                     saveEvery,
                     saveBackupEvery,
                     gamesToPlayPerThreadForStatistics,
@@ -365,7 +324,7 @@ class GeneratorConfig {
     }
 
     /**
-     * @return
+     * @return nombre de la clase
      */
     public
     String getClassName() {

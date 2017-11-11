@@ -99,8 +99,8 @@ class StatisticExperiment {
      * @param resultsPerFile Mapeo de los archivos asociados a los resultados parseados.
      * @param resultsRandom  Mapeo de los archivos asociados a los resultados parseados de la red sin entrenamiento.
      *
-     * @throws IOException
-     * @throws InvalidFormatException
+     * @throws IOException            al escribir archivos.
+     * @throws InvalidFormatException en formatos.
      */
     public
     void exportToExcel(
@@ -327,108 +327,6 @@ class StatisticExperiment {
     }
 
     /**
-     * @return nombre del experimento.
-     */
-    protected
-    String getExperimentName() {
-        return experimentName;
-    }
-
-    /**
-     * @param experimentName nuevo nombre del experimento.
-     */
-    protected
-    void setExperimentName( final String experimentName ) {
-        this.experimentName = experimentName;
-    }
-
-    /**
-     * @return nombre del archivo sobre el cual trabajar.
-     */
-    protected
-    String getFileName() {
-        return fileName;
-    }
-
-    /**
-     * @param fileName nuevo nombre del archivo sobre el cual trabajar.
-     */
-    protected
-    void setFileName( final String fileName ) {
-        this.fileName = fileName;
-    }
-
-    /**
-     * @return cantidad de partidas a jugar.
-     */
-    protected
-    int getGamesToPlay() {
-        return gamesToPlay;
-    }
-
-    /**
-     * @return método TDLearning elegido.
-     */
-    protected
-    TDLambdaLearning getLearningMethod() {
-        return learningMethod;
-    }
-
-    /**
-     * @param learningMethod nuevo método TDLearning
-     */
-    protected
-    void setLearningMethod( final TDLambdaLearning learningMethod ) {
-        this.learningMethod = learningMethod;
-    }
-
-    public
-    double getMaxScore() {
-        return maxScore;
-    }
-
-    public
-    double getMaxTurn() {
-        return maxTurn;
-    }
-
-    public
-    double getMeanScore() {
-        return meanScore;
-    }
-
-    public
-    double getMeanTurn() {
-        return meanTurn;
-    }
-
-    public
-    double getMinScore() {
-        return minScore;
-    }
-
-    public
-    double getMinTurn() {
-        return minTurn;
-    }
-
-    /**
-     * @return cantidad de simulaciones a realizar (concurrentemente).
-     */
-    protected
-    int getSimulations() {
-        return simulations;
-    }
-
-    /**
-     * @param threads cantidad de simulaciones a realizar (concurrentemente).
-     */
-    public
-    void setSimulations( final int threads ) {
-        simulations = threads;
-    }
-
-    /**
      * @return las estadísticas listas para ser exportadas en la hoja de cálculo.
      */
     public
@@ -445,22 +343,6 @@ class StatisticExperiment {
         return statistic;
     }
 
-    /**
-     * @return valor considerado como ganador en una partida.
-     */
-    protected
-    int getTileToWin() {
-        return tileToWin;
-    }
-
-    /**
-     * @param tileToWin valor considerado como ganador en una partida.
-     */
-    protected
-    void setTileToWin( final int tileToWin ) {
-        this.tileToWin = tileToWin;
-    }
-
     public
     double getWinRate() {
         return winRate;
@@ -474,16 +356,6 @@ class StatisticExperiment {
      */
     protected abstract
     void initializeStatistics();
-
-    public
-    boolean isBackupStatisticOnly() {
-        return backupStatisticOnly;
-    }
-
-    public
-    void setBackupStatisticOnly( boolean backupStatisticOnly ) {
-        this.backupStatisticOnly = backupStatisticOnly;
-    }
 
     /**
      * Configura las cabeceras de las tablas en la hoja de cálculo.
@@ -523,7 +395,7 @@ class StatisticExperiment {
      * @param fileToProcess           archivo a procesar.
      * @param createNeuralNetworkFile true si debe crear los perceptrones faltantes.
      *
-     * @throws Exception
+     * @throws Exception al leer o escribir un archivo de configuración o estadística
      */
     public
     void processFile(
@@ -714,7 +586,7 @@ class StatisticExperiment {
      * @param experimentPath          directorio de la red neuronal.
      * @param createNeuralNetworkFile crea redes neuronales en caso de no existir.
      *
-     * @throws Exception
+     * @throws Exception al ejecutar el experimento.
      */
     protected
     void run(
@@ -748,9 +620,7 @@ class StatisticExperiment {
         //calculamos las estadisticas de los backup si es necesario
         final File[] allFiles = ( new File(dirPath) ).listFiles();
         assert allFiles != null;
-        Arrays.sort(allFiles, ( Object o1, Object o2 ) -> {
-            return Long.compare(( (File) o1 ).lastModified(), ( (File) o2 ).lastModified());
-        });
+        Arrays.sort(allFiles, Comparator.comparingLong(o -> o.lastModified()));
         final List< File >                  backupFiles    = new ArrayList<>();
         final Map< File, StatisticForCalc > resultsPerFile = new HashMap<>();
         for ( final File f : allFiles ) {
@@ -768,9 +638,7 @@ class StatisticExperiment {
                 backupFiles.add(f);
             }
         }
-        backupFiles.sort(( Object o1, Object o2 ) -> {
-            return Long.compare(( (File) o1 ).lastModified(), ( (File) o2 ).lastModified());
-        });
+        backupFiles.sort(Comparator.comparingLong(o -> o.lastModified()));
 
         if ( exportToExcel ) {
             exportToExcel(filePath, backupFiles, resultsPerFile, resultsRandom);
@@ -785,12 +653,25 @@ class StatisticExperiment {
         this.saveBackupEvery = saveBackupEvery;
     }
 
+    public
+    void setBackupStatisticOnly( boolean backupStatisticOnly ) {
+        this.backupStatisticOnly = backupStatisticOnly;
+    }
+
     /**
      * @param exportToExcel true si se debe exportar los resultados a una hoja de cálculo.
      */
     public
     void setExportToExcel( final boolean exportToExcel ) {
         this.exportToExcel = exportToExcel;
+    }
+
+    /**
+     * @param fileName nuevo nombre del archivo sobre el cual trabajar.
+     */
+    protected
+    void setFileName( final String fileName ) {
+        this.fileName = fileName;
     }
 
     /**
@@ -802,11 +683,27 @@ class StatisticExperiment {
     }
 
     /**
+     * @param learningMethod nuevo método TDLearning
+     */
+    protected
+    void setLearningMethod( final TDLambdaLearning learningMethod ) {
+        this.learningMethod = learningMethod;
+    }
+
+    /**
      * @param runStatisticsForBackups true si debe computar estadísticas sobre los archivos de respaldo.
      */
     public
     void setRunStatisticsForBackups( final boolean runStatisticsForBackups ) {
         this.runStatisticsForBackups = runStatisticsForBackups;
+    }
+
+    /**
+     * @param threads cantidad de simulaciones a realizar (concurrentemente).
+     */
+    public
+    void setSimulations( final int threads ) {
+        simulations = threads;
     }
 
     /**

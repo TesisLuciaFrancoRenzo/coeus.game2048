@@ -59,11 +59,6 @@ class ConfigNTupleSymmetricLinear_32768
         }
     }
 
-    /**
-     * @return
-     *
-     * @throws CloneNotSupportedException
-     */
     @Override
     public
     ConfigNTupleSymmetricLinear_32768 clone()

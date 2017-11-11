@@ -254,7 +254,7 @@ class Game2048
     }
 
     /**
-     * @param afterState
+     * @param afterState a calcular.
      *
      * @return lista de todos los posibles siguientes turnos desde {@code afterState}
      */

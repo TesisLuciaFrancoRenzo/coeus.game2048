@@ -66,11 +66,6 @@ class ConfigNTupleBasicTanH_32768
         }
     }
 
-    /**
-     * @return
-     *
-     * @throws CloneNotSupportedException
-     */
     @Override
     public
     ConfigNTupleBasicTanH_32768 clone()

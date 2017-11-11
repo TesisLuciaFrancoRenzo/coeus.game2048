@@ -191,9 +191,6 @@ class ConcurrencyExperiment_Basic
         }
     }
 
-    /**
-     * @param args
-     */
     public static
     void main( final String[] args ) {
         try {

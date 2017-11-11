@@ -72,11 +72,6 @@ class ConfigNTupleBasicTanHSimplified_512
         }
     }
 
-    /**
-     * @return
-     *
-     * @throws CloneNotSupportedException
-     */
     @Override
     public
     ConfigNTupleBasicTanHSimplified_512 clone()
@@ -128,14 +123,6 @@ class ConfigNTupleBasicTanHSimplified_512
             default:
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
-    }
-
-    /**
-     * @return número de muestras
-     */
-    public
-    int getNumSamples() {
-        return numSamples;
     }
 
     @Override

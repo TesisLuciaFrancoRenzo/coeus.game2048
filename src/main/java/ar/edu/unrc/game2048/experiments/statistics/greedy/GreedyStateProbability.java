@@ -54,14 +54,6 @@ class GreedyStateProbability {
     }
 
     /**
-     * @param nextTurnState posible siguiente estado luego de calcular acciones estocásticas.
-     */
-    public
-    void setNextTurnState( final IState nextTurnState ) {
-        this.nextTurnState = nextTurnState;
-    }
-
-    /**
      * @return probabilidad de que ocurra {@code nextTurnState} como estado efectivo en el siguiente turno
      */
     public
@@ -69,14 +61,4 @@ class GreedyStateProbability {
         return probability;
     }
 
-    /**
-     * @param probability probabilidad de que se alcance el estado {@code nextTurnState}
-     */
-    public
-    void setProbability( final double probability ) {
-        if ( ( probability < 0 ) && ( probability > 1 ) ) {
-            throw new IllegalArgumentException("probability debe estar en el rango 0<=probability<=1");
-        }
-        this.probability = probability;
-    }
 }

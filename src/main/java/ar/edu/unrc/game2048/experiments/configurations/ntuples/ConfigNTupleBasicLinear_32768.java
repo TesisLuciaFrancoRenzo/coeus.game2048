@@ -57,11 +57,6 @@ class ConfigNTupleBasicLinear_32768
         }
     }
 
-    /**
-     * @return
-     *
-     * @throws CloneNotSupportedException
-     */
     @Override
     public
     ConfigNTupleBasicLinear_32768 clone()

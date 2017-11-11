@@ -214,7 +214,7 @@ class GameBoard
     }
 
     /**
-     * @return
+     * @return lista de todos los posibles estados a los cuales se pueden llegar desde el afterState actual.
      */
     public
     List< GreedyStateProbability > listAllPossibleNextTurnStateFromAfterState() {

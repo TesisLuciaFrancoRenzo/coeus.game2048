@@ -50,7 +50,7 @@ class ConfigPerceptronNTupleLinearSimplified_512
     private final boolean                              useNTupleList;
 
     /**
-     * @param hasBias
+     * @param hasBias true si debe usar bias.
      */
     public
     ConfigPerceptronNTupleLinearSimplified_512( final Boolean hasBias ) {
@@ -101,12 +101,6 @@ class ConfigPerceptronNTupleLinearSimplified_512
         //        activationFunctionMin = -1;
     }
 
-    /**
-     * @param nTupleIndex
-     * @param nTuple
-     *
-     * @return
-     */
     public
     int calculateIndex(
             final int nTupleIndex,
@@ -152,36 +146,6 @@ class ConfigPerceptronNTupleLinearSimplified_512
         return (Double) value;
     }
 
-    /**
-     * @return allSamplePointPossibleValues
-     */
-    public
-    List< SamplePointValue > getAllSamplePointPossibleValues() {
-        return allSamplePointPossibleValues;
-    }
-
-    /**
-     * @return mapSamplePointValuesIndex
-     */
-    public
-    HashMap< SamplePointValue, Integer > getMapSamplePointValuesIndex() {
-        return mapSamplePointValuesIndex;
-    }
-
-    /**
-     * @return maxTile
-     */
-    public
-    int getMaxTile() {
-        return maxTile;
-    }
-
-    /**
-     * @param board
-     * @param nTupleIndex
-     *
-     * @return
-     */
     public
     SamplePointValue[] getNTuple(
             final GameBoard board,
@@ -210,30 +174,6 @@ class ConfigPerceptronNTupleLinearSimplified_512
             default:
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
-    }
-
-    /**
-     * @return longitud de las nTuplas.
-     */
-    public
-    int[] getNTuplesLength() {
-        return nTuplesLength;
-    }
-
-    /**
-     * @return nTuplesWeightQuantityIndex
-     */
-    public
-    int[] getNTuplesWeightQuantityIndex() {
-        return nTuplesWeightQuantityIndex;
-    }
-
-    /**
-     * @return numero de muestras.
-     */
-    public
-    int getNumSamples() {
-        return numSamples;
     }
 
     @Override

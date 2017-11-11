@@ -47,11 +47,6 @@ class NTupleConfiguration2048
     protected NormalizedField            normOutput                   = null;
     private   NTupleSystem               nTupleSystem                 = null;
 
-    /**
-     * @return
-     *
-     * @throws CloneNotSupportedException
-     */
     @Override
     public
     NTupleConfiguration2048 clone()
@@ -60,7 +55,7 @@ class NTupleConfiguration2048
     }
 
     /**
-     * @return
+     * @return función de activación
      */
     public
     Function< Double, Double > getActivationFunction() {
@@ -68,7 +63,7 @@ class NTupleConfiguration2048
     }
 
     /**
-     * @return
+     * @return posibles valores que tiene un SamplePoint
      */
     public
     List< SamplePointValue > getAllSamplePointPossibleValues() {
@@ -76,19 +71,13 @@ class NTupleConfiguration2048
     }
 
     /**
-     * @return
+     * @return derivada de la función de activación
      */
     public
     Function< Double, Double > getDerivedActivationFunction() {
         return derivedActivationFunction;
     }
 
-    /**
-     * @param board
-     * @param nTupleIndex
-     *
-     * @return
-     */
     public abstract
     SamplePointValue[] getNTuple(
             GameBoard board,
@@ -103,28 +92,14 @@ class NTupleConfiguration2048
         return nTupleSystem;
     }
 
-    /**
-     * @param nTupleSystem
-     */
     public
     void setNTupleSystem( final NTupleSystem nTupleSystem ) {
         this.nTupleSystem = nTupleSystem;
     }
 
-    /**
-     * @return
-     */
     public
     int[] getNTuplesLength() {
         return nTuplesLength;
-    }
-
-    /**
-     * @return
-     */
-    public
-    NormalizedField getNormOutput() {
-        return normOutput;
     }
 
     @Override
@@ -162,9 +137,6 @@ class NTupleConfiguration2048
         return null;
     }
 
-    /**
-     * @return
-     */
     public
     boolean isConcurrency() {
         return concurrency;
