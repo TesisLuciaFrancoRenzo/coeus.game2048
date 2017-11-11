@@ -17,8 +17,6 @@ import java.util.stream.IntStream;
 import static java.lang.Math.round;
 
 /**
- * @param
- *
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
 public abstract
@@ -473,8 +471,6 @@ class StatisticExperiment {
      * fileName;</li> </ul> Las siguientes variables se inicializan automáticamente, pero pueden ser modificadas: <ul> <li>private int tileToWin;</li>
      * <li>private String experimentName;</li> <li>private EncogConfiguration2048 perceptronConfiguration;</li> <li>private TDLambdaLearning
      * learningMethod;</li> </ul>
-     *
-     * @throws Exception
      */
     protected abstract
     void initializeStatistics();

@@ -97,8 +97,6 @@ class ConcurrencyExperiment_Basic
      *
      * @param trainConcurrency    true si debe entrenar usando concurrencia.
      * @param evaluateConcurrency true si debe evaluar decisiones usando concurrencia.
-     *
-     * @throws Exception
      */
     @SuppressWarnings( "HardcodedFileSeparator" )
     public static

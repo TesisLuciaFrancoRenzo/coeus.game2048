@@ -33,8 +33,6 @@ import java.util.Random;
 /**
  * Representación de la configuración de las redes neuronales, ya sea NTupla o Perceptrón.
  *
- * @param
- *
  * @author lucia bressan, franco pellegrini, renzo bianchini
  */
 public abstract
