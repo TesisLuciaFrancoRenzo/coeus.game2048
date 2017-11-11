@@ -35,7 +35,6 @@ millones de juegos jugados, sólo se ha ganado un 1%. La dificultad del juego ju
 con la simplicidad de sus reglas lo convierten en un interesante banco de pruebas 
 para los métodos de inteligencia artificial.
 
-
 ## Instalación
 El proyecto esta construido utilizando Gradle (incorporado en el 
 repositorio). 
