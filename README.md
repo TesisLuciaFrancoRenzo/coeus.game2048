@@ -51,3 +51,39 @@ repositorio).
 usar.  
 - `gradlew test`:  ejecuta los test de JUnit.
 - `gradlew javadoc`:  compila javadoc.
+
+## Instrucciones de uso
+`java -jar ar.edu.unrc.game2048.experiments.TestGenerator [parameters]`
+
+los parámetros deben ser:
+- experimentClassNameList: clases con las implementaciones del perceptron, las cuales pueden ser 
+`ConfigNTupleBasicLinear_512, ConfigNTupleBasicLinear_32768, 
+ConfigNTupleBasicLinearSimplified_512, ConfigNTupleBasicSigmoid_32768, 
+ConfigNTupleBasicTanH_32768, ConfigNTupleBasicTanHSimplified_512, 
+ConfigNTupleSymmetricLinear_32768, ConfigNTupleSymmetricTanH_32768`
+- gamesToPlay: cantidad de partidos a jugar. 
+- winRateLimit: porcentaje de tasa de victoria utilizado para finalizar el entrenamiento (-1 es sin límite).
+- gamesToPlayPerThreadForStatistic: cantidad de juegos a jugar por procesador en el cálculo de estadísticas.
+- saveEvery: intervalo que establece cada cuántas partidas se debe guardar en un archivo, el estado de la red neuronal actual.
+- saveBackupEvery: intervalo que establece cada cuántas partidas se debe realizar un una copia de la red neuronal actual.
+- simulationsForStatistics: cantidad de simulaciones que se realizan para calcular estadísticas, por procesador.
+- tileToWinForStatistics: valor que se considera como ganador, a la hora de ejecutar estadísticas.
+- eligibilityTraceLength: longitud máxima que puede tener la traza de elegibilidad
+- gammaList: Lista de tasa de descuento
+- concurrentLayerList: Lista de valores booleanos que indican si hay o no concurrencia en cada capa
+- computeBestPossibleActionConcurrently: Computar la mejor posible acción que me maximice la recompensa final de manera concurrente
+- lambdaList: Lista de  decaimiento exponencial de la traza de elegibilidad.
+- annealingAlphaList: tiempo de recocido de la taza de aprendizaje
+- alphaList: Lista de tasa de aprendizajes
+- whenStartToExplore: Número entre 0.0 y 1.0 que multiplica el promedio de los turnos actuales, para determinar desde qué turno se comienza a explorar.
+- fixedExplorationRateList: Lista de tasa de explotación, cada valor indica la  probabilidad de que el movimiento actual sea al azar
+- explorationRateInitialValueList: Lista de valores iniciales de interpolación para Exploration Rate.
+- explorationRateFinalValuesList: Lista de valores finales de interpolación para Exploration Rate.
+- explorationRateStartInterpolationList: Lista de valores que indican desde qué partido se va a empezar a atenuar el valor inicial de la interpolación para el Exploration Rate.
+- explorationRateFinishInterpolationList: Lista de valores que indican desde qué partido se va a finalizar la atenuación del valor inicial de la interpolación para el Exploration Rate.
+
+##### Ejemplo
+Si queremos entrenar una red neuronal usando NTuplas, hasta que gane un 90% de las veces, usamos:
+```
+java -jar ar.edu.unrc.game2048.experiments.TestGenerator experimentDirName=NTuple-Timed90 experimentClassNameList=[ConfigNTupleBasicTanH_32768] createLogs=false canCollectStatistics=false repetitions=10 maxTrainingThreads=1 gamesToPlay=1000000 winRateLimit=90.0 gamesToPlayPerThreadForStats=1000 saveEvery=5000 saveBackupEvery=15000 statisticsOnly=false simulationsForStatistics=8 tileToWinForStatistics=2048 runBackupStatistics=true lambdaList=[0.0] eligibilityTraceLength=-1 replacingTraces=true accumulatingTraces=false annealingAlphaList=[400000] alphaList=[0.005] gammaList=[1] concurrentLayerList=[false,false] computeBestPossibleActionConcurrently=false whenStartToExplore=[1.0] fixedExplorationRateList=[0] 
+``` 
