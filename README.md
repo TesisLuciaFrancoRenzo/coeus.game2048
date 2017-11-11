@@ -45,8 +45,8 @@ repositorio).
 - Tener configurada la variable de entorno ***JAVA_HOME***. 
 
 ##### Dependencias
-- Proyecto git de [Coeus](https://github.com/TesisLuciaFrancoRenzo/coeus) en un direcotrio contiguo a este proyecto 
-(o libreria jar en el directrio lib)
+- Proyecto git de [Coeus](https://github.com/TesisLuciaFrancoRenzo/coeus) en un directorio contiguo a este proyecto 
+(o librería jar en el directorio lib)
 
 ##### Instrucciones Recomendadas
 - `gradlew clean`: limpia los directorios del proyecto.   
