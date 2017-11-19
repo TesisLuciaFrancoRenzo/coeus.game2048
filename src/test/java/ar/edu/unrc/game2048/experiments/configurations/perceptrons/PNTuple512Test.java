@@ -6,7 +6,7 @@ import ar.edu.unrc.game2048.GameBoard;
 import ar.edu.unrc.game2048.Tile;
 import ar.edu.unrc.game2048.experiments.configurations.ntuples.ConfigNTupleBasicTanHSimplified_512;
 import ar.edu.unrc.game2048.experiments.configurations.perceptrons.inputs.InputNTupleList;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;

@@ -19,9 +19,9 @@
 package ar.edu.unrc.game2048;
 
 import ar.edu.unrc.game2048.experiments.configurations.ntuples.ConfigNTupleBasicLinear_32768;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -41,7 +41,7 @@ class GameBoardTest {
     /**
      *
      */
-    @Before
+    @BeforeEach
     public
     void setUp() {
         emptyBoard = new Tile[][] {
@@ -61,26 +61,28 @@ class GameBoardTest {
     /**
      * Test of tileAt method, of class GameBoard.
      */
-    @Test( expected = ArrayIndexOutOfBoundsException.class )
+    @Test()
     public
     void testFailTileAt() {
         System.out.println("tileAt Fail");
 
-        GameBoard board = new GameBoard(game);
-        board.setTiles(randomBoard);
-        board.clearInterns(true);
+        Assertions.assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
+            GameBoard board = new GameBoard(game);
+            board.setTiles(randomBoard);
+            board.clearInterns(true);
 
-        int  x      = 3;
-        int  y      = 4;
-        Tile result = board.tileAt(x, y);
+            int  x      = 3;
+            int  y      = 4;
+            Tile result = board.tileAt(x, y);
 
-        board = new GameBoard(game);
-        board.setTiles(randomBoard);
-        board.clearInterns(true);
+            board = new GameBoard(game);
+            board.setTiles(randomBoard);
+            board.clearInterns(true);
 
-        x = -1;
-        y = 0;
-        result = board.tileAt(x, y);
+            x = -1;
+            y = 0;
+            result = board.tileAt(x, y);
+        });
     }
 
     /**
@@ -180,7 +182,7 @@ class GameBoardTest {
 
         boolean expResult = true;
         boolean result    = board.isTerminalState();
-        Assert.assertThat(result, is(expResult));
+        assertThat(result, is(expResult));
 
         // =========================================== //
         board = new GameBoard(game);
@@ -195,7 +197,7 @@ class GameBoardTest {
 
         expResult = false;
         result = board.isTerminalState();
-        Assert.assertThat(result, is(expResult));
+        assertThat(result, is(expResult));
 
         // =========================================== //
         board = new GameBoard(game);
@@ -204,7 +206,7 @@ class GameBoardTest {
 
         expResult = false;
         result = board.isTerminalState();
-        Assert.assertThat(result, is(expResult));
+        assertThat(result, is(expResult));
 
         // =========================================== //
         board = new GameBoard(game);
@@ -220,7 +222,7 @@ class GameBoardTest {
 
         expResult = true;
         result = board.isTerminalState();
-        Assert.assertThat(result, is(expResult));
+        assertThat(result, is(expResult));
     }
 
     /**
@@ -239,13 +241,13 @@ class GameBoardTest {
         int  y         = 0;
         Tile expResult = null;
         Tile result    = board.tileAt(x, y);
-        Assert.assertThat(result, is(expResult));
+        assertThat(result, is(expResult));
 
         x = 3;
         y = 3;
         expResult = new Tile(16);
         result = board.tileAt(x, y);
-        Assert.assertThat(result, is(expResult));
+        assertThat(result, is(expResult));
     }
 
     /**
@@ -264,7 +266,7 @@ class GameBoardTest {
         board.getAvailableSpace().toArray(result);
 
         final Integer[] expResult = { 0, 2, 13 };
-        Assert.assertThat(result, is(expResult));
+        assertThat(result, is(expResult));
 
         // =========================================== //
     }
